@@ -68,7 +68,7 @@
                             <asp:UpdatePanel ID="UpdatePanel4" runat="server">
                                 <ContentTemplate>
                                     <asp:Label ID="Label4" runat="server" Text="Тип клапана:"></asp:Label>
-                                    <asp:RadioButtonList ID="tvRadioButtonList1" runat="server" AutoPostBack="True" required="required">
+                                    <asp:RadioButtonList ID="tvRadioButtonList1" runat="server" AutoPostBack="True" required="required" OnSelectedIndexChanged="tvRadioButtonList1_SelectedIndexChanged">
                                         <asp:ListItem>2-х ходовой седельный</asp:ListItem>
                                         <asp:ListItem>3-х ходовой смесительный</asp:ListItem>
                                     </asp:RadioButtonList>
@@ -97,9 +97,7 @@
                                 </ContentTemplate>
                             </asp:UpdatePanel>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-10">
+                    
                             <div class="col border">
                                 <asp:Label ID="Label8" runat="server" Text="Потери давления в системе:"></asp:Label>
                                 <div class="col">
@@ -140,7 +138,7 @@
                                     </asp:UpdatePanel>
                                 </div>
                             </div>
-                        </div>
+                        
                         <div class="col border">
                             <asp:Label ID="Label12" runat="server" Text="Потери давления на клапане:"></asp:Label>
                             <div class="col">
@@ -340,10 +338,18 @@
                                     </ContentTemplate>
                                 </asp:UpdatePanel>
                             </div>
+                            <asp:Button ID="vButton" runat="server" type="submit" Text="Рассчитать"  />
                         </div>
-                        <asp:Button ID="vButton" runat="server" type="submit" Text="Рассчитать"  />
+                        
+                         
                     </div>
-                </div>
+                    <div class="col-2">
+                    <asp:UpdatePanel ID="UpdatePanel16" runat="server">
+                        <ContentTemplate>
+                            <asp:Image ID="vPictureBox" runat="server" class="valve-image" />
+                        </ContentTemplate>
+                    </asp:UpdatePanel>
+                    </div>
             </form>
         </div>
     </body>

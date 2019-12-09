@@ -43,4 +43,25 @@ public partial class TRV : System.Web.UI.Page
 
     }
 
+    private void changeImage(int index)
+    {
+        switch (index)
+        {
+            case 0:
+                vPictureBox.ImageUrl = @"\Content\images\TRV-2.png";
+                break;
+            case 1:
+                vPictureBox.ImageUrl = @"\Content\images\TRV-3.png";
+                break;
+            default:
+                vPictureBox.ImageUrl = null;
+                break;
+        }
+    }
+
+
+    protected void tvRadioButtonList1_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        changeImage(tvRadioButtonList1.SelectedIndex);
+    }
 }
