@@ -6,6 +6,7 @@
     <head runat="server">
         <link href="Content/bootstrap.min.css" rel="stylesheet" />
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
         <link href="Content/css/style.css" rel="stylesheet" />
         <title></title>
     </head>
