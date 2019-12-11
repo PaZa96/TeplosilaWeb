@@ -43,20 +43,20 @@
                             <asp:UpdatePanel ID="UpdatePanel3" runat="server">
                                 <ContentTemplate>
                                     <asp:Label ID="Label3" runat="server" Text="Область применения (система) / Схема присоединения"></asp:Label><br/>                      
-                                    <asp:RadioButton ID="aaRadioButton1" runat="server"  Text="Горячее водоснабжение" AutoPostBack="True" required="required"/>
-                                    <asp:RadioButtonList ID="aa1RadioButtonList1" required="required" CssClass="childRadio" runat="server" RepeatDirection="Horizontal" Enabled="False"  AutoPostBack="True">
+                                    <asp:RadioButton ID="aaRadioButton1" runat="server"  Text="Горячее водоснабжение" AutoPostBack="True" required="required" OnCheckedChanged="aaRadioButton1_CheckedChanged"/>
+                                    <asp:RadioButtonList ID="aa1RadioButtonList1" required="required" CssClass="childRadio" runat="server" RepeatDirection="Horizontal" Enabled="False"  AutoPostBack="True" OnSelectedIndexChanged="aa1RadioButtonList1_SelectedIndexChanged">
                                         <asp:ListItem>Открытая</asp:ListItem>
                                         <asp:ListItem>Закрытая (через теплообменник)</asp:ListItem>
                                     </asp:RadioButtonList>
                         
-                                    <asp:RadioButton ID="aaRadioButton2" runat="server" Text="Отопление" AutoPostBack="True" required="required"/>
-                                    <asp:RadioButtonList ID="aa2RadioButtonList1" required="required" CssClass="childRadio" runat="server" RepeatDirection="Horizontal" Enabled="False" AutoPostBack="True">
+                                    <asp:RadioButton ID="aaRadioButton2" runat="server" Text="Отопление" AutoPostBack="True" required="required" OnCheckedChanged="aaRadioButton2_CheckedChanged"/>
+                                    <asp:RadioButtonList ID="aa2RadioButtonList1" required="required" CssClass="childRadio" runat="server" RepeatDirection="Horizontal" Enabled="False" AutoPostBack="True" OnSelectedIndexChanged="aa2RadioButtonList1_SelectedIndexChanged">
                                         <asp:ListItem>Зависимая</asp:ListItem>
                                         <asp:ListItem>Независимая (через теплообменник)</asp:ListItem>
                                     </asp:RadioButtonList>
                         
-                                    <asp:RadioButton ID="aaRadioButton3" runat="server" Text="Вентиляция" AutoPostBack="True"  required="required"/>
-                                    <asp:RadioButtonList ID="aa3RadioButtonList1" required="required" CssClass="childRadio" runat="server" RepeatDirection="Horizontal" Enabled="False"  AutoPostBack="True">
+                                    <asp:RadioButton ID="aaRadioButton3" runat="server" Text="Вентиляция" AutoPostBack="True"  required="required" OnCheckedChanged="aaRadioButton3_CheckedChanged"/>
+                                    <asp:RadioButtonList ID="aa3RadioButtonList1" required="required" CssClass="childRadio" runat="server" RepeatDirection="Horizontal" Enabled="False"  AutoPostBack="True" OnSelectedIndexChanged="aa3RadioButtonList1_SelectedIndexChanged">
                                         <asp:ListItem>Зависимая</asp:ListItem>
                                         <asp:ListItem>Независимая (через теплообменник)</asp:ListItem>
                                     </asp:RadioButtonList>
@@ -80,7 +80,7 @@
                             <asp:UpdatePanel ID="UpdatePanel5" runat="server">
                                 <ContentTemplate>
                                     <asp:Label ID="Label5" runat="server" Text="Рабочая среда:"></asp:Label>
-                                    <asp:RadioButtonList ID="ws2RadioButtonList1" runat="server" AutoPostBack="True"  required="required">
+                                    <asp:RadioButtonList ID="ws2RadioButtonList1" runat="server" AutoPostBack="True"  required="required" OnSelectedIndexChanged="ws2RadioButtonList1_SelectedIndexChanged">
                                         <asp:ListItem>Вода</asp:ListItem>
                                         <asp:ListItem>Этиленгликоль</asp:ListItem>  
                                         <asp:ListItem>Пропиленгликоль</asp:ListItem>                      
@@ -105,7 +105,7 @@
                                         <ContentTemplate>
                                             <asp:Label ID="Label9" runat="server" Text="&#916;Pсист = "></asp:Label>
                                             <asp:TextBox ID="lpvTextBox2" runat="server" Enabled="False" type="number" TextMode="Number" required="required"></asp:TextBox>
-                                            <asp:DropDownList ID="lpvDropDownList2" runat="server" AutoPostBack="True" Enabled="False">
+                                            <asp:DropDownList ID="lpvDropDownList2" runat="server" AutoPostBack="True" Enabled="False" OnSelectedIndexChanged="lpvDropDownList2_SelectedIndexChanged">
                                             <asp:ListItem>выбрать</asp:ListItem>
                                             <asp:ListItem>МПа</asp:ListItem>
                                             <asp:ListItem>кПа</asp:ListItem>
@@ -125,7 +125,7 @@
                                         <ContentTemplate>
                                             <asp:Label ID="Label10" runat="server" Text="&#916;Pто = "></asp:Label>
                                             <asp:TextBox ID="lpvTextBox21" runat="server" Enabled="False" type="number" required="required"></asp:TextBox>
-                                            <asp:DropDownList ID="lpvDropDownList21" runat="server"  AutoPostBack="True" Enabled="False"  >
+                                            <asp:DropDownList ID="lpvDropDownList21" runat="server"  AutoPostBack="True" Enabled="False" OnSelectedIndexChanged="lpvDropDownList21_SelectedIndexChanged"  >
                                             <asp:ListItem>выбрать</asp:ListItem>
                                             <asp:ListItem>МПа</asp:ListItem>
                                             <asp:ListItem>кПа</asp:ListItem>
@@ -146,7 +146,7 @@
                                     <ContentTemplate>
                                         <asp:Label ID="Label13" runat="server" Text="&#916;Pкл = "></asp:Label>
                                         <asp:TextBox ID="lpvTextBox1" runat="server" Enabled="False" type="number" required="required"></asp:TextBox>
-                                        <asp:DropDownList ID="lpvDropDownList1" runat="server" AutoPostBack="True" Enabled="False">
+                                        <asp:DropDownList ID="lpvDropDownList1" runat="server" AutoPostBack="True" Enabled="False" OnSelectedIndexChanged="lpvDropDownList1_SelectedIndexChanged">
                                         <asp:ListItem>выбрать</asp:ListItem>
                                         <asp:ListItem>МПа</asp:ListItem>
                                         <asp:ListItem>кПа</asp:ListItem>
@@ -169,7 +169,7 @@
                                         <asp:Label ID="Label26" runat="server" Text="Давление перед клапаном:"></asp:Label><br/>
                                         <asp:Label ID="Label21" runat="server" Text="P' = "></asp:Label>
                                         <asp:TextBox ID="calcvTextBox1" runat="server" Enabled="False" type="number" TextMode="Number" required="required" ></asp:TextBox>
-                                        <asp:DropDownList ID="calcvDropDownList1" runat="server" AutoPostBack="True" Enabled="False">
+                                        <asp:DropDownList ID="calcvDropDownList1" runat="server" AutoPostBack="True" Enabled="False" OnSelectedIndexChanged="calcvDropDownList1_SelectedIndexChanged">
                                         <asp:ListItem>выбрать</asp:ListItem>
                                         <asp:ListItem>МПа</asp:ListItem>
                                         <asp:ListItem>кПа</asp:ListItem>
@@ -195,11 +195,11 @@
                             <div>
                                 <asp:UpdatePanel ID="UpdatePanel13" runat="server">
                                     <ContentTemplate>
-                                        <asp:RadioButton ID="fvRadioButton1" runat="server" Text="Задать max величину расхода через клапан:" AutoPostBack="True"  /><br/>
+                                        <asp:RadioButton ID="fvRadioButton1" runat="server" Text="Задать max величину расхода через клапан:" AutoPostBack="True"   OnCheckedChanged="fvRadioButton1_CheckedChanged"/><br/>
                                         <div class="col">
                                             <asp:Label ID="Label28" runat="server" Text="Gкл = "></asp:Label>
                                             <asp:TextBox ID="fvTextBox1" runat="server" Enabled="False" type="number" required="required"></asp:TextBox>
-                                            <asp:DropDownList ID="fvDropDownList1" runat="server"  AutoPostBack="True" Enabled="False"  >
+                                            <asp:DropDownList ID="fvDropDownList1" runat="server"  AutoPostBack="True" Enabled="False" OnSelectedIndexChanged="fvDropDownList1_SelectedIndexChanged"  >
                                                 <asp:ListItem>выбрать</asp:ListItem>
                                                 <asp:ListItem>м3/ч</asp:ListItem>
                                                 <asp:ListItem>л/с</asp:ListItem>
@@ -218,7 +218,7 @@
                             <div>
                                 <asp:UpdatePanel ID="UpdatePanel14" runat="server">
                                     <ContentTemplate>
-                                        <asp:RadioButton ID="fvRadioButton2" runat="server" Text="Вычислить max величину расхода через клапан:" AutoPostBack="True"  /> 
+                                        <asp:RadioButton ID="fvRadioButton2" runat="server" Text="Вычислить max величину расхода через клапан:" AutoPostBack="True" OnCheckedChanged="fvRadioButton2_CheckedChanged"  /> 
                                         <div class="col">
                                             <table class="table table-bordered col-8">
                                               <thead>
@@ -240,7 +240,7 @@
                                                   </td>
                                                   <td class="text-center">
                                                     <asp:Label ID="Label32" runat="server" Text="T2 = "></asp:Label>
-                                                    <asp:TextBox ID="fvTextBox" runat="server" Enabled="False" type="number" Width="60px" required="required"></asp:TextBox>
+                                                    <asp:TextBox ID="fvTextBox3" runat="server" Enabled="False" type="number" Width="60px" required="required"></asp:TextBox>
                                                     <asp:Label ID="Label33" runat="server" Text=" &#8451;"></asp:Label>
                                                   </td>
                                                 </tr>
@@ -292,7 +292,7 @@
 
                                             <asp:Label ID="Label45" runat="server" Text="Тепловая мощность Q = "></asp:Label>
                                             <asp:TextBox ID="fvTextBox10" runat="server" Enabled="False" type="number" TextMode="Number" required="required"></asp:TextBox>
-                                            <asp:DropDownList ID="fvDropDownList2" runat="server"  AutoPostBack="True" Enabled="False">
+                                            <asp:DropDownList ID="fvDropDownList2" runat="server"  AutoPostBack="True" Enabled="False" OnSelectedIndexChanged="fvDropDownList2_SelectedIndexChanged">
                                                 <asp:ListItem>выбрать</asp:ListItem>
                                                 <asp:ListItem Value="кВт">кВт</asp:ListItem>
                                                 <asp:ListItem>МВт</asp:ListItem>
@@ -316,22 +316,22 @@
                                 <asp:UpdatePanel ID="UpdatePanel15" runat="server">
                                     <ContentTemplate>
                                         <asp:Label ID="Label47" runat="server" Text="Напряжение питания:"></asp:Label>
-                                        <asp:RadioButtonList ID="tdRadioButtonList1" runat="server" AutoPostBack="True">
+                                        <asp:RadioButtonList ID="tdRadioButtonList1" runat="server" AutoPostBack="True" OnSelectedIndexChanged="tdRadioButtonList1_SelectedIndexChanged">
                                             <asp:ListItem Selected="True">230 VAC</asp:ListItem>
                                             <asp:ListItem>24 VAC / VDC</asp:ListItem>
                                         </asp:RadioButtonList>
                                         <asp:Label ID="Label49" runat="server" Text="Напряжение питания:"></asp:Label>
-                                        <asp:RadioButtonList ID="tdRadioButtonList2" runat="server" AutoPostBack="True" >
+                                        <asp:RadioButtonList ID="tdRadioButtonList2" runat="server" AutoPostBack="True" OnSelectedIndexChanged="tdRadioButtonList2_SelectedIndexChanged" >
                                             <asp:ListItem Selected="True">Трёхпозиционное</asp:ListItem>
                                             <asp:ListItem>Аналоговое 4-20 mA (2-10 V)</asp:ListItem>
                                         </asp:RadioButtonList>
                                         <asp:Label ID="Label50" runat="server" Text="Наличие датчика положения 4-20 mA:"></asp:Label>
-                                        <asp:RadioButtonList ID="tdRadioButtonList3" runat="server" AutoPostBack="True" >
+                                        <asp:RadioButtonList ID="tdRadioButtonList3" runat="server" AutoPostBack="True" OnSelectedIndexChanged="tdRadioButtonList3_SelectedIndexChanged" >
                                             <asp:ListItem>Да</asp:ListItem>
                                             <asp:ListItem Selected="True">Нет</asp:ListItem>
                                         </asp:RadioButtonList>
                                         <asp:Label ID="Label51" runat="server" Text="Наличие возвратного механизма (функция безопасности):"></asp:Label>
-                                        <asp:RadioButtonList ID="tdRadioButtonList4" runat="server" AutoPostBack="True">
+                                        <asp:RadioButtonList ID="tdRadioButtonList4" runat="server" AutoPostBack="True" OnSelectedIndexChanged="tdRadioButtonList4_SelectedIndexChanged">
                                              <asp:ListItem> Да</asp:ListItem>
                                             <asp:ListItem Selected="True"> Нет</asp:ListItem>
                                         </asp:RadioButtonList>
