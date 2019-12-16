@@ -6,7 +6,7 @@
     <head runat="server">
         <link href="Content/bootstrap.min.css" rel="stylesheet" />
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
         <link href="Content/css/style.css" rel="stylesheet" />
         <title></title>
     </head>
@@ -20,11 +20,11 @@
                             <asp:Label ID="Label1" runat="server" Text="Место установки:"></asp:Label>
                             <asp:UpdatePanel ID="UpdatePanel1" runat="server">
                                 <ContentTemplate>
-                                    <asp:RadioButtonList ID="sprRadioButtonList1" runat="server" style="margin-left: 0px" AutoPostBack="True" required="required">
+                                    <asp:RadioButtonList ID="spvRadioButtonList1" runat="server" style="margin-left: 0px" AutoPostBack="True" required="required" OnSelectedIndexChanged="spvRadioButtonList1_SelectedIndexChanged">
                                         <asp:ListItem>ЦТП</asp:ListItem>
                                         <asp:ListItem>ИТП</asp:ListItem>
                                     </asp:RadioButtonList>
-                                    <asp:RequiredFieldValidator ID="sprRequiredFieldValidator1" runat="server" ControlToValidate="sprRadioButtonList1" Display="Dynamic" ErrorMessage="Выберите необходимое значение" ForeColor="Red" SetFocusOnError="True">Выберите необходимое значение</asp:RequiredFieldValidator>
+                                    <asp:RequiredFieldValidator ID="spvRequiredFieldValidator1" runat="server" ControlToValidate="spvRadioButtonList1" Display="Dynamic" ErrorMessage="Выберите необходимое значение" ForeColor="Red" SetFocusOnError="True">Выберите необходимое значение</asp:RequiredFieldValidator>
                                 </ContentTemplate>
                             </asp:UpdatePanel>
                         </div>
@@ -32,11 +32,11 @@
                             <asp:UpdatePanel ID="UpdatePanel2" runat="server">
                                 <ContentTemplate>
                                     <asp:Label ID="Label2" runat="server" Text="Наличие регулятора перепада давления:"></asp:Label>
-                                    <asp:RadioButtonList ID="prvRadioButtonList1" required="required" runat="server" AutoPostBack="True" >
+                                    <asp:RadioButtonList ID="rpvRadioButtonList1" required="required" runat="server" AutoPostBack="True" >
                                         <asp:ListItem>Да</asp:ListItem>
                                         <asp:ListItem>Нет</asp:ListItem>
                                     </asp:RadioButtonList>
-                                    <asp:RequiredFieldValidator ID="prvRequiredFieldValidator1" runat="server" ControlToValidate="prvRadioButtonList1" Display="Dynamic" ErrorMessage="Выберите необходимое значение" ForeColor="Red" SetFocusOnError="True">Выберите необходимое значение</asp:RequiredFieldValidator>
+                                    <asp:RequiredFieldValidator ID="rpvRequiredFieldValidator1" runat="server" ControlToValidate="rpvRadioButtonList1" Display="Dynamic" ErrorMessage="Выберите необходимое значение" ForeColor="Red" SetFocusOnError="True">Выберите необходимое значение</asp:RequiredFieldValidator>
                                 </ContentTemplate>
                             </asp:UpdatePanel>
                         </div>
@@ -221,7 +221,7 @@
                                     <ContentTemplate>
                                         <asp:RadioButton ID="fvRadioButton2" runat="server" Text="Вычислить max величину расхода через клапан:" AutoPostBack="True" OnCheckedChanged="fvRadioButton2_CheckedChanged"  /> 
                                         <div class="col">
-                                            <table class="table table-bordered col-8">
+                                            <table class="table table-bordered col">
                                               <thead>
                                                 <tr>
                                                   <th scope="col"></th>
@@ -339,7 +339,7 @@
                                     </ContentTemplate>
                                 </asp:UpdatePanel>
                             </div>
-                            <asp:Button ID="vButton" runat="server" type="submit" Text="Рассчитать"  />
+                            <asp:Button ID="vButton" runat="server" type="submit" Text="Рассчитать" OnClick="vButton_Click"  />
                         </div>
                         
                          
@@ -350,6 +350,7 @@
                             <asp:Image ID="vPictureBox" runat="server" class="valve-image" />
                         </ContentTemplate>
                     </asp:UpdatePanel>
+                    </div>
                     </div>
             </form>
         </div>
