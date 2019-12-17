@@ -61,7 +61,7 @@
                                         <asp:ListItem>Зависимая</asp:ListItem>
                                         <asp:ListItem>Независимая (через теплообменник)</asp:ListItem>
                                     </asp:RadioButtonList>
-                                   
+                                    <asp:CustomValidator ID="CustomValidator8" runat="server" ControlToValidate="RadioButtonList3" Display="Dynamic" ErrorMessage="CustomValidator" ForeColor="Red" OnServerValidate="CustomValidator8_ServerValidate" SetFocusOnError="True"></asp:CustomValidator>
                                 </ContentTemplate>
                             </asp:UpdatePanel>
                         </div>
@@ -157,7 +157,7 @@
                                         <br />
                                         <asp:RangeValidator ID="lpvRangeValidator1" runat="server" ControlToValidate="lpvTextBox1" Display="Dynamic" ErrorMessage="Неверно указано значение давления" ForeColor="Red" MaximumValue="99999999" MinimumValue="1" SetFocusOnError="True">Неверно указано значение давления</asp:RangeValidator>
                                                
-                                        <asp:CustomValidator ID="lpvCustomValidator1" runat="server" ControlToValidate="lpvTextBox1" Display="Dynamic" ErrorMessage="CustomValidator" ForeColor="Red"  SetFocusOnError="True"></asp:CustomValidator>
+                                        <asp:CustomValidator ID="lpvCustomValidator1" runat="server" ControlToValidate="lpvTextBox1" Display="Dynamic" ErrorMessage="CustomValidator" ForeColor="Red"  SetFocusOnError="True" OnServerValidate="lpvCustomValidator1_ServerValidate"></asp:CustomValidator>
                                     </ContentTemplate>
                                 </asp:UpdatePanel>
                             </div>
@@ -179,14 +179,14 @@
                                         </asp:DropDownList><br />
                                         <asp:RangeValidator ID="calcvRangeValidator1" runat="server" ControlToValidate="calcvTextBox1" Display="Dynamic" ErrorMessage="Неверно указано значение давления" ForeColor="Red" MaximumValue="99999999" MinimumValue="1" SetFocusOnError="True">Неверно указано значение давления</asp:RangeValidator>
                                     
-                                        <asp:CustomValidator ID="calcvCustomValidator1" runat="server" ErrorMessage="CustomValidator" ControlToValidate="calcvTextBox1" Display="Dynamic" ForeColor="Red"  SetFocusOnError="True"></asp:CustomValidator>
+                                        <asp:CustomValidator ID="calcvCustomValidator1" runat="server" ErrorMessage="CustomValidator" ControlToValidate="calcvTextBox1" Display="Dynamic" ForeColor="Red"  SetFocusOnError="True" OnServerValidate="calcvCustomValidator1_ServerValidate"></asp:CustomValidator>
                                         <br/>
                                         <asp:Label ID="Label22" runat="server" Text="Максимальная температура теплоносителя через клапан:"></asp:Label><br/>
                                         <asp:Label ID="Label23" runat="server" Text="T1 = "></asp:Label>
                                         <asp:TextBox ID="calcvTextBox2" runat="server" Enabled="False" type="number" required="required"></asp:TextBox>
                                         <asp:Label ID="Label24" runat="server" Text=" &#8451;"></asp:Label>
                                         <asp:RangeValidator ID="calcvRangeValidator2" runat="server" ErrorMessage="Неверно указано значение температуры" ControlToValidate="calcvTextBox2" Display="Dynamic" ForeColor="Red" MaximumValue="9999999" MinimumValue="0" SetFocusOnError="True" Type="Double">Неверно указано значение температуры</asp:RangeValidator>
-                                        <asp:CustomValidator ID="calcvCustomValidator2" runat="server" ErrorMessage="CustomValidator" ControlToValidate="calcvTextBox2" Display="Dynamic" ForeColor="Red" SetFocusOnError="True"></asp:CustomValidator>
+                                        <asp:CustomValidator ID="calcvCustomValidator2" runat="server" ErrorMessage="CustomValidator" ControlToValidate="calcvTextBox2" Display="Dynamic" ForeColor="Red" SetFocusOnError="True" OnServerValidate="calcvCustomValidator2_ServerValidate"></asp:CustomValidator>
                                                 
                                     </ContentTemplate>
                                 </asp:UpdatePanel>
@@ -288,6 +288,8 @@
                                               </tbody>
                                             </table>
                                             
+                                            <asp:CustomValidator ID="tvCustomValidator1" runat="server" ControlToValidate="tvRadioButtonList1" Display="Dynamic" ErrorMessage="CustomValidator" ForeColor="Red" OnServerValidate="tvCustomValidator1_ServerValidate" SetFocusOnError="True"></asp:CustomValidator>
+                                            
                                             <br />
                                             <br />
 
@@ -340,6 +342,17 @@
                                 </asp:UpdatePanel>
                             </div>
                             <asp:Button ID="vButton" runat="server" type="submit" Text="Рассчитать" OnClick="vButton_Click"  />
+                            <br />
+                            <asp:Label ID="LabelError" runat="server" Font-Bold="True" Font-Size="Medium" Font-Strikeout="False" ForeColor="Red" Text="Label"></asp:Label>
+                            <br />
+                            <asp:Label ID="Label52" runat="server" Enabled="False" Text="Результаты расчёта"></asp:Label>
+                            <br />
+                            <br />
+                            <asp:GridView ID="GridView1" runat="server">
+                            </asp:GridView>
+                            <br />
+                            <br />
+                            <asp:Button ID="Button2" runat="server" Text="Button" />
                         </div>
                         
                          
@@ -354,5 +367,7 @@
                     </div>
             </form>
         </div>
+        <p>
+            &nbsp;</p>
     </body>
 </html>
