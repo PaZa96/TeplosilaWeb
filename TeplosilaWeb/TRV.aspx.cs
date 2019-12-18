@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using GemBox.Spreadsheet;
+using System.Data;
 
 public partial class TRV : System.Web.UI.Page
 {
@@ -116,10 +117,10 @@ public partial class TRV : System.Web.UI.Page
         switch (index)
         {
             case 0:
-                vPictureBox.ImageUrl = @"\Content\images\TRV-2.png";
+                vPictureBox.ImageUrl = HttpContext.Current.Server.MapPath("/Content/images/TRV-2.png");
                 break;
             case 1:
-                vPictureBox.ImageUrl = @"\Content\images\TRV-3.png";
+                vPictureBox.ImageUrl = HttpContext.Current.Server.MapPath("/Content/images/TRV-3.png");
                 break;
             default:
                 vPictureBox.ImageUrl = null;
@@ -458,6 +459,8 @@ public partial class TRV : System.Web.UI.Page
 
     public double customConverterToDouble(string tb)
     {
+         
+        
         double afterConvert;
 
         if (tb.IndexOf(".") != -1)
@@ -681,7 +684,7 @@ public partial class TRV : System.Web.UI.Page
             switch (index)
             {
                 case 0:
-                    jsonText = File.ReadAllText(Directory.GetCurrentDirectory() + @"\data.txt");
+                    jsonText = File.ReadAllText(HttpContext.Current.Server.MapPath(@"Content/data/data.txt"));
                     break;
                 case 1:
                     jsonText = File.ReadAllText(Directory.GetCurrentDirectory() + @"\data-two.txt");
@@ -1511,33 +1514,33 @@ public partial class TRV : System.Web.UI.Page
 
 
         SpreadsheetInfo.SetLicense("FREE-LIMITED-KEY");
-
-        if (!File.Exists(Directory.GetCurrentDirectory() + "\\properties\\htrv.xlsx"))
+        
+        if (!File.Exists(HttpContext.Current.Server.MapPath(@"Content/properties/htrv.xlsx")))
         {
             LabelError.Text += "Не найден файл характеристик";
 
             return null;
         }
-        else if (!File.Exists(Directory.GetCurrentDirectory() + "\\properties\\htrv3.xlsx"))
+        else if (!File.Exists(HttpContext.Current.Server.MapPath(@"Content/properties/htrv3.xlsx")))
         {
             LabelError.Text += "Не найден файл характеристик";
             return null;
         }
-        else if (!File.Exists(Directory.GetCurrentDirectory() + "\\properties\\gtrv.xlsx"))
+        else if (!File.Exists(HttpContext.Current.Server.MapPath(@"Content/properties/gtrv.xlsx")))
         {
             LabelError.Text += "Не найден файл габаритов";
             return null;
         }
-        else if (!File.Exists(Directory.GetCurrentDirectory() + "\\properties\\gtrv3.xlsx"))
+        else if (!File.Exists(HttpContext.Current.Server.MapPath(@"Content/properties/gtrv3.xlsx")))
         {
             LabelError.Text += "Не найден файл габаритов";
             return null;
         }
 
-        ExcelFile efHtrv = ExcelFile.Load(Directory.GetCurrentDirectory() + ((tvRadioButtonList1.SelectedIndex == 0) ? "\\properties\\htrv.xlsx" : "\\properties\\htrv3.xlsx"));
+        ExcelFile efHtrv = ExcelFile.Load(HttpContext.Current.Server.MapPath(((tvRadioButtonList1.SelectedIndex == 0) ? "Content\\properties\\htrv.xlsx" : "\\Content\\properties\\htrv3.xlsx")));
         ExcelWorksheet wsHtrv = efHtrv.Worksheets[0];
 
-        ExcelFile efGtrv = ExcelFile.Load(Directory.GetCurrentDirectory() + ((tvRadioButtonList1.SelectedIndex == 0) ? "\\properties\\gtrv.xlsx" : "\\properties\\gtrv3.xlsx"));
+        ExcelFile efGtrv = ExcelFile.Load(HttpContext.Current.Server.MapPath(((tvRadioButtonList1.SelectedIndex == 0) ? "Content\\properties\\gtrv.xlsx" : "Content\\properties\\gtrv3.xlsx")));
         ExcelWorksheet wsGtrv = efGtrv.Worksheets[0];
 
         //ws.Cells["C4"].Value = r_input_dict[3];
@@ -2562,21 +2565,29 @@ public partial class TRV : System.Web.UI.Page
                                             ,"PP67"
                                             ,"PP68"
                                         };
-                                                DataGridViewColumn column;
-                                                /*column = new DataGridViewCheckBoxColumn();
-                                                column.DataPropertyName = "Column0";
-                                                column.Name = "Column0";
-                                                column.HeaderText = "";
-                                                dataGridView2.Columns.Add(column);*/
+                                                //DataGridViewColumn column;
+                                                ///*column = new DataGridViewCheckBoxColumn();
+                                                //column.DataPropertyName = "Column0";
+                                                //column.Name = "Column0";
+                                                //column.HeaderText = "";
+                                                //dataGridView2.Columns.Add(column);*/
+
+                                                //for (int i = 0; i < titles.Count(); i++)
+                                                //{
+                                                //    column = new DataGridViewTextBoxColumn();
+                                                //    column.DataPropertyName = "Column" + i.ToString();
+                                                //    column.Name = "Column" + i.ToString();
+                                                //    column.HeaderText = titles[i];
+                                                //    if (i > 10) column.Visible = false;
+                                                //    dataGridView2.Columns.Add(column);
+                                                //}
+
+                                                DataTable dt = new DataTable();
+                                                DataRow dr;
 
                                                 for (int i = 0; i < titles.Count(); i++)
                                                 {
-                                                    column = new DataGridViewTextBoxColumn();
-                                                    column.DataPropertyName = "Column" + i.ToString();
-                                                    column.Name = "Column" + i.ToString();
-                                                    column.HeaderText = titles[i];
-                                                    if (i > 10) column.Visible = false;
-                                                    dataGridView2.Columns.Add(column);
+                                                    dt.Columns.Add(new DataColumn(titles[i]));
                                                 }
 
                                                 int maxCount = -1;
@@ -2590,7 +2601,12 @@ public partial class TRV : System.Web.UI.Page
 
                                                 for (int i = 0; i < maxCount; i++)
                                                 {
-                                                    dataGridView2.Rows.Add();
+                                                    dr = dt.NewRow();
+
+                                                    dt.Rows.Add(dr);
+                                                    GridView1.DataSource = dt;
+                                                    GridView1.DataBind();
+
                                                     for (int j = 0; j < gtr.Count(); j++)
                                                     {
                                                         int index = -1;
@@ -2635,24 +2651,26 @@ public partial class TRV : System.Web.UI.Page
                                                             string tmp = gtr.ElementAt(j).Value[i];
                                                             if (String.IsNullOrWhiteSpace(tmp))
                                                             {
-                                                                if (dataGridView2.Rows.Count > 1)
+                                                                if (GridView1.Rows.Count > 1)
                                                                 {
-                                                                    dataGridView2.Rows[dataGridView2.Rows.Count - 1].Cells[index - 1].Value = dataGridView2.Rows[dataGridView2.Rows.Count - 2].Cells[index - 1].Value;
+                                                                    dt.Rows[GridView1.Rows.Count - 1][index - 1] = dt.Rows[GridView1.Rows.Count - 2][index - 1];
                                                                 }
                                                             }
                                                             else
                                                             {
-                                                                dataGridView2.Rows[dataGridView2.Rows.Count - 1].Cells[index - 1].Value = tmp;
+                                                                dt.Rows[GridView1.Rows.Count - 1][index - 1] = tmp;
                                                             }
                                                         }
                                                         else
                                                         {
-                                                            if (dataGridView2.Rows.Count > 1)
+                                                            if (GridView1.Rows.Count > 1)
                                                             {
-                                                                dataGridView2.Rows[dataGridView2.Rows.Count - 1].Cells[index - 1].Value = dataGridView2.Rows[dataGridView2.Rows.Count - 2].Cells[index - 1].Value;
+                                                                dt.Rows[GridView1.Rows.Count - 1][index - 1] = dt.Rows[GridView1.Rows.Count - 2][index - 1];
                                                             }
                                                         }
                                                     }
+                                                    GridView1.DataSource = dt;
+                                                    GridView1.DataBind();
                                                 }
 
                                             }
@@ -2792,12 +2810,30 @@ public partial class TRV : System.Web.UI.Page
     {
         ValidateTemperature(tvRadioButtonList1, calcvTextBox2, args, calcvCustomValidator2);
     }
-
+    
     protected void tvCustomValidator1_ServerValidate(object source, ServerValidateEventArgs args)
     {
         ValidateTemperatureTable(args);
     }
-
+    protected void aaCustomValidator8_ServerValidate(object source, ServerValidateEventArgs args)
+    {
+        if (aaRadioButton1.Checked || aaRadioButton2.Checked || aaRadioButton3.Checked)
+        {
+            if (aa1RadioButtonList1.SelectedIndex > 0 || aa2RadioButtonList1.SelectedIndex > 0 || aa3RadioButtonList1.SelectedIndex > 0)
+            {
+                args.IsValid = true;
+            }
+            else
+            {
+                aaCustomValidator8.ErrorMessage = "Выберите необходимое значение";
+                args.IsValid = false;
+            }
+        }
+        else
+        {
+            args.IsValid = true;
+        }
+    }
     //----------------------------Support Functions---------------------------------
 
     public void ValidateTemperature(RadioButtonList radioButtonList, TextBox textBox, ServerValidateEventArgs args, CustomValidator customValidator)
@@ -2833,13 +2869,67 @@ public partial class TRV : System.Web.UI.Page
         }
     }
 
-    public void ValidateTemperatureTable(ServerValidateEventArgs args)
+    public void CheckValidTextBox(TextBox textBox, CustomValidator customValidator, ServerValidateEventArgs args)
     {
-        if (customConverterToDouble(fvTextBox2.Text) <= 0 || customConverterToDouble(fvTextBox3.Text) <= 0 || customConverterToDouble(fvTextBox4.Text) <= 0 || customConverterToDouble(fvTextBox5.Text) <= 0 || customConverterToDouble(fvTextBox6.Text) <= 0 || customConverterToDouble(fvTextBox7.Text) <= 0 || customConverterToDouble(fvTextBox8.Text) <= 0 || customConverterToDouble(fvTextBox9.Text) <= 0)
+        if (textBox.Enabled || customConverterToDouble(textBox.Text) <= 0)
         {
-            tvCustomValidator1.ErrorMessage = "Неверно указано значение температуры";
+            tvCustomValidator1.ErrorMessage = "На температуру свыше 220&#8451; вариантов нет";
             args.IsValid = false;
             return;
+        }
+    }
+
+    public void ValidateTemperatureTable(ServerValidateEventArgs args)
+    {
+
+
+        CheckValidTextBox(fvTextBox2, tvCustomValidator1, args);
+        CheckValidTextBox(fvTextBox3, tvCustomValidator1, args);
+        CheckValidTextBox(fvTextBox4, tvCustomValidator1, args);
+        CheckValidTextBox(fvTextBox5, tvCustomValidator1, args);
+        CheckValidTextBox(fvTextBox6, tvCustomValidator1, args);
+        CheckValidTextBox(fvTextBox7, tvCustomValidator1, args);
+        CheckValidTextBox(fvTextBox8, tvCustomValidator1, args);
+        CheckValidTextBox(fvTextBox9, tvCustomValidator1, args);
+
+      
+
+
+        if (String.IsNullOrWhiteSpace(fvTextBox3.Text) || String.IsNullOrWhiteSpace(fvTextBox2.Text))
+        {
+            if (customConverterToDouble(fvTextBox3.Text) >= customConverterToDouble(fvTextBox2.Text))
+            {
+                tvCustomValidator1.ErrorMessage = "Неверно указано значение температуры";
+                args.IsValid = false;
+                return;
+            }
+        }
+        if (String.IsNullOrWhiteSpace(fvTextBox5.Text) || String.IsNullOrWhiteSpace(fvTextBox4.Text))
+        {
+            if (customConverterToDouble(fvTextBox5.Text) >= customConverterToDouble(fvTextBox4.Text))
+            {
+                tvCustomValidator1.ErrorMessage = "Неверно указано значение температуры";
+                args.IsValid = false;
+                return;
+            } 
+        }
+        if (String.IsNullOrWhiteSpace(fvTextBox7.Text) || String.IsNullOrWhiteSpace(fvTextBox6.Text))
+        {
+            if (customConverterToDouble(fvTextBox7.Text) >= customConverterToDouble(fvTextBox6.Text))
+            {
+                tvCustomValidator1.ErrorMessage = "Неверно указано значение температуры";
+                args.IsValid = false;
+                return;
+            } 
+        }
+        if (String.IsNullOrWhiteSpace(fvTextBox9.Text) || String.IsNullOrWhiteSpace(fvTextBox8.Text))
+        {
+            if (customConverterToDouble(fvTextBox9.Text) >= customConverterToDouble(fvTextBox8.Text))
+            {
+                tvCustomValidator1.ErrorMessage = "Неверно указано значение температуры";
+                args.IsValid = false;
+                return;
+            }
         }
 
         if (tvRadioButtonList1.SelectedIndex == 0)
@@ -2861,30 +2951,214 @@ public partial class TRV : System.Web.UI.Page
             }
         }
 
-        if (customConverterToDouble(fvTextBox3.Text) >= customConverterToDouble(fvTextBox2.Text))
-        {
-            tvCustomValidator1.ErrorMessage = "Неверно указано значение температуры";
-            args.IsValid = false;
-            return;
-        }
-        if (customConverterToDouble(fvTextBox5.Text) >= customConverterToDouble(fvTextBox4.Text))
-        {
-            tvCustomValidator1.ErrorMessage = "Неверно указано значение температуры";
-            args.IsValid = false;
-            return;
-        }
-        if (customConverterToDouble(fvTextBox7.Text) >= customConverterToDouble(fvTextBox6.Text))
-        {
-            tvCustomValidator1.ErrorMessage = "Неверно указано значение температуры";
-            args.IsValid = false;
-            return;
-        }
-        if (customConverterToDouble(fvTextBox9.Text) >= customConverterToDouble(fvTextBox8.Text))
-        {
-            tvCustomValidator1.ErrorMessage = "Неверно указано значение температуры";
-            args.IsValid = false;
-            return;
-        }
     }
-    
+
+
+
+
+
+
+    protected void fvTextBox10_TextChanged(object sender, EventArgs e)
+    {
+
+    }
+
+    protected void GridView1_SelectedIndexChanged(object sender, EventArgs e)
+    {
+
+    }
+
+    protected void GridView1_RowDataBound(object sender, GridViewRowEventArgs e)
+    {
+        int index = GridView1.SelectedIndex;
+    }
+
+
+
+
+    protected void Button2_Click(object sender, EventArgs e)
+    {
+        (sender as Button).Enabled = false;
+
+        //SaveForm saveForm = new SaveForm();
+        //this.textBox4.Text = "";
+        //this.textBox3.Text = "";
+        //saveForm.ShowDialog(this);
+        //this.textBox4.Text = saveForm.textBox1.Text;
+        //this.textBox3.Text = saveForm.textBox2.Text;
+
+        //SaveFileDialog saveFileDialog1 = new SaveFileDialog();
+
+        //saveFileDialog1.Filter = "pdf files (*.pdf)|*.pdf";
+        //saveFileDialog1.FilterIndex = 2;
+        //saveFileDialog1.RestoreDirectory = true;
+
+        //if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+        //{
+        //    if (File.Exists(saveFileDialog1.FileName))
+        //    {
+        //        try
+        //        {
+        //            File.Delete(saveFileDialog1.FileName);
+        //        }
+        //        catch (Exception)
+        //        {
+        //            LabelError.Text += "Пожалуйста, закройте выбранный вами pdf файл!\nИ повторите попытку.";
+        //            (sender as Button).Enabled = true;
+        //            return;
+        //        }
+        //    }
+
+        //    v_input_dict[2] = (this.textBox3.Text != "") ? this.textBox3.Text : "-";
+        //    v_input_dict[8] = (this.textBox6.Text != "") ? this.textBox6.Text : "-";
+
+        //    int pos = 42;
+
+        //    foreach (DataGridViewRow r in dataGridView2.SelectedRows)
+        //    {
+        //        foreach (DataGridViewCell c in r.Cells)
+        //        {
+        //            if (!(c.OwningColumn is DataGridViewCheckBoxColumn))
+        //            {
+        //                if (pos == 52)
+        //                {
+        //                    v_input_dict[pos] = c.Value.ToString();
+        //                    v_input_dict[pos + 1] = c.Value.ToString();
+        //                    pos++;
+        //                }
+        //                else if (pos >= 64) v_input_dict[pos + 1] = c.Value.ToString();
+        //                else v_input_dict[pos] = c.Value.ToString();
+
+
+        //                pos++;
+        //            }
+        //            else
+        //            {
+        //                if (!(Convert.ToBoolean(c.Value) == true))
+        //                {
+        //                    break;
+        //                }
+        //            }
+
+        //        }
+        //    }
+
+
+        //    SpreadsheetInfo.SetLicense("FREE-LIMITED-KEY");
+
+        //    if (!File.Exists(Directory.GetCurrentDirectory() + "\\templates\\templateTRV.xlsx"))
+        //    {
+        //        LabelError.Text += "Не найден файл шаблона";
+        //        return;
+        //    }
+
+        //    ExcelFile ef = ExcelFile.Load(Directory.GetCurrentDirectory() + "\\templates\\templateTRV.xlsx");
+
+        //    ExcelWorksheet ws = ef.Worksheets[0];
+
+        //    ws.PrintOptions.TopMargin = 0.1 / 2.54;
+        //    ws.PrintOptions.BottomMargin = 0.1 / 2.54;
+        //    ws.PrintOptions.LeftMargin = 1.78 / 2.54;
+        //    ws.PrintOptions.RightMargin = 0.78 / 2.54;
+
+        //    ws.Cells["K46"].Value = v_input_dict[0];
+
+        //    ws.Cells["J2"].Value = v_input_dict[1];
+        //    ws.Cells["B3"].Value = v_input_dict[2];
+
+        //    ws.Cells["C4"].Value = v_input_dict[3];
+        //    ws.Cells["J4"].Value = v_input_dict[4];
+        //    ws.Cells["C5"].Value = v_input_dict[5];
+        //    ws.Cells["J5"].Value = v_input_dict[6];
+        //    ws.Cells["C6"].Value = v_input_dict[7];
+        //    ws.Cells["J6"].Value = v_input_dict[8];
+
+        //    ws.Cells["C8"].Value = v_input_dict[9];
+
+        //    ws.Cells["E9"].Value = v_input_dict[10];
+        //    ws.Cells["F9"].Value = v_input_dict[11];
+        //    ws.Cells["J9"].Value = v_input_dict[12];
+        //    ws.Cells["K9"].Value = v_input_dict[13];
+
+        //    ws.Cells["E10"].Value = v_input_dict[14];
+        //    ws.Cells["F10"].Value = v_input_dict[15];
+        //    ws.Cells["E11"].Value = v_input_dict[16];
+        //    ws.Cells["F11"].Value = v_input_dict[17];
+        //    ws.Cells["E12"].Value = v_input_dict[18];
+
+        //    // пар
+        //    ws.Cells["J10"].Value = "-";
+        //    ws.Cells["K10"].Value = "-";
+        //    ws.Cells["J11"].Value = "-";
+        //    ws.Cells["K11"].Value = "-";
+        //    ws.Cells["J12"].Value = "-";
+        //    // пар
+
+        //    ws.Cells["E14"].Value = v_input_dict[24];
+        //    ws.Cells["I14"].Value = v_input_dict[25];
+        //    ws.Cells["E15"].Value = v_input_dict[26];
+        //    ws.Cells["I15"].Value = v_input_dict[27];
+        //    ws.Cells["E16"].Value = v_input_dict[28];
+        //    ws.Cells["I16"].Value = v_input_dict[29];
+        //    ws.Cells["E17"].Value = v_input_dict[30];
+        //    ws.Cells["I17"].Value = v_input_dict[31];
+
+        //    ws.Cells["I18"].Value = v_input_dict[32];
+        //    ws.Cells["K18"].Value = v_input_dict[33];
+        //    ws.Cells["I19"].Value = v_input_dict[34];
+        //    ws.Cells["K19"].Value = v_input_dict[35];
+
+        //    ws.Cells["C21"].Value = v_input_dict[36];
+        //    ws.Cells["C22"].Value = v_input_dict[37];
+
+        //    ws.Cells["J21"].Value = v_input_dict[38];
+        //    ws.Cells["J22"].Value = v_input_dict[39];
+
+        //    ws.Cells["E24"].Value = v_input_dict[40];
+        //    ws.Cells["E25"].Value = v_input_dict[41];
+
+        //    ws.Cells["A28"].Value = v_input_dict[42];
+        //    ws.Cells["B28"].Value = v_input_dict[43];
+        //    ws.Cells["C28"].Value = v_input_dict[44];
+        //    ws.Cells["D28"].Value = v_input_dict[45];
+        //    ws.Cells["E28"].Value = v_input_dict[46];
+        //    ws.Cells["F28"].Value = v_input_dict[47];
+        //    ws.Cells["G28"].Value = v_input_dict[48];
+        //    ws.Cells["H28"].Value = v_input_dict[49];
+        //    ws.Cells["I28"].Value = v_input_dict[50];
+        //    ws.Cells["J28"].Value = v_input_dict[51];
+        //    ws.Cells["K28"].Value = v_input_dict[52];
+
+        //    ws.Cells["A32"].Value = v_input_dict[53];
+        //    ws.Cells["B32"].Value = v_input_dict[54];
+        //    ws.Cells["C32"].Value = v_input_dict[55];
+        //    ws.Cells["D32"].Value = v_input_dict[56];
+        //    ws.Cells["E32"].Value = v_input_dict[57];
+        //    ws.Cells["F32"].Value = v_input_dict[58];
+        //    ws.Cells["G32"].Value = v_input_dict[59];
+        //    ws.Cells["H32"].Value = v_input_dict[60];
+        //    ws.Cells["I32"].Value = v_input_dict[61];
+        //    ws.Cells["J32"].Value = v_input_dict[62];
+        //    ws.Cells["K32"].Value = v_input_dict[63];
+
+        //    ws.Cells["G37"].Value = v_input_dict[65];
+        //    ws.Cells["G38"].Value = v_input_dict[66];
+        //    ws.Cells["G39"].Value = v_input_dict[67];
+        //    ws.Cells["G40"].Value = v_input_dict[68];
+
+
+        //    ws.Pictures.Add(Directory.GetCurrentDirectory() + "\\images\\trv\\" + ((v_input_dict[7] == this.tvRadioButtonList1.Items[tvRadioButtonList1.SelectedIndex].Text) ? "Габаритный TRV и TRV-P.png" : "Габаритный TRV-3.png"), "A37", "B46");
+
+        //    ef.Save(saveFileDialog1.FileName);
+
+        //    if (File.Exists(saveFileDialog1.FileName)) System.Diagnostics.Process.Start(saveFileDialog1.FileName);
+
+
+        //}
+        //    (sender as Button).Enabled = true;
+    }
+
+
+
+   
 }
