@@ -30,3 +30,7 @@ label {
     width: 100%;
     margin-top: 30vh;
 }
+
+th:nth-child(n+12){
+    display: none;
+}

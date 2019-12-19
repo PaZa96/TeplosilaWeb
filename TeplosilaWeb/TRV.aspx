@@ -169,7 +169,7 @@
                                     <ContentTemplate>
                                         <asp:Label ID="Label26" runat="server" Text="Давление перед клапаном:"></asp:Label><br/>
                                         <asp:Label ID="Label21" runat="server" Text="P' = "></asp:Label>
-                                        <asp:TextBox ID="calcvTextBox1" runat="server" Enabled="False" type="number" TextMode="Number" required="required" ></asp:TextBox>
+                                        <asp:TextBox ID="calcvTextBox1" runat="server" Enabled="False" type="number" required="required" ></asp:TextBox>
                                         <asp:DropDownList ID="calcvDropDownList1" runat="server" AutoPostBack="True" Enabled="False" OnSelectedIndexChanged="calcvDropDownList1_SelectedIndexChanged">
                                         <asp:ListItem>выбрать</asp:ListItem>
                                         <asp:ListItem>МПа</asp:ListItem>
@@ -289,7 +289,7 @@
                                               </tbody>
                                             </table>
                                             
-                                            <asp:CustomValidator ID="tvCustomValidator1" runat="server" ControlToValidate="tvRadioButtonList1" Display="Dynamic" ErrorMessage="CustomValidator" ForeColor="Red" SetFocusOnError="True" ></asp:CustomValidator>
+                                            <asp:CustomValidator ID="tvCustomValidator1" runat="server" ControlToValidate="tvRadioButtonList1" Display="Dynamic" ErrorMessage="CustomValidator" ForeColor="Red" SetFocusOnError="True" OnServerValidate="tvCustomValidator1_ServerValidate" ></asp:CustomValidator>
                                             
                                             <br />
                                             <br />

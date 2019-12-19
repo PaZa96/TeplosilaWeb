@@ -117,10 +117,10 @@ public partial class TRV : System.Web.UI.Page
         switch (index)
         {
             case 0:
-                vPictureBox.ImageUrl = HttpContext.Current.Server.MapPath("/Content/images/TRV-2.png");
+                vPictureBox.ImageUrl = HttpContext.Current.Server.MapPath(@"/Content/images/TRV-2.png");
                 break;
             case 1:
-                vPictureBox.ImageUrl = HttpContext.Current.Server.MapPath("/Content/images/TRV-3.png");
+                vPictureBox.ImageUrl = HttpContext.Current.Server.MapPath(@"/Content/images/TRV-3.png");
                 break;
             default:
                 vPictureBox.ImageUrl = null;
@@ -450,7 +450,7 @@ public partial class TRV : System.Web.UI.Page
             {
 
                 int jj = keyValuePairs[ddl.ID];
-                result = (customConverterToDouble(tb.Text) * arr[jj - 1] / arr[3]);
+                result = (customConverterToDouble(tb.Text) * arr[jj - 1] / arr[ddl.SelectedIndex - 1]);
             }
         }
         return result;
@@ -2166,9 +2166,22 @@ public partial class TRV : System.Web.UI.Page
         v_in_dict.Add(52, "-");
     }
 
+    private void ResetColorToAllControls()
+    {
+        fvTextBox1.BackColor = SystemColors.Window;
+        fvTextBox2.BackColor = SystemColors.Window;
+        fvTextBox3.BackColor = SystemColors.Window;
+        fvTextBox4.BackColor = SystemColors.Window;
+        fvTextBox5.BackColor = SystemColors.Window;
+        fvTextBox6.BackColor = SystemColors.Window;
+        fvTextBox7.BackColor = SystemColors.Window;
+        fvTextBox8.BackColor = SystemColors.Window;
+        fvTextBox9.BackColor = SystemColors.Window;
+    }
+
     protected void vButton_Click(object sender, EventArgs e)
     {
-        //ResetColorToAllControls();
+        ResetColorToAllControls();
 
         GridView1.Columns.Clear();
         GridView1.DataSource = null;
@@ -2360,8 +2373,8 @@ public partial class TRV : System.Web.UI.Page
                                         }
 
                                         if (!String.IsNullOrWhiteSpace(fvTextBox10.Text))
-                                        {
-                                            p30 = Math.Round(((Convert.ToDouble(fvTextBox10.Text) * arrConvert2[fvDropDownList2.SelectedIndex - 1] * 3.6) / (math_30_cp() * dt)), 2);
+                                        {   
+                                            p30 = Math.Round(((customConverterToDouble(fvTextBox10.Text) * arrConvert2[fvDropDownList2.SelectedIndex - 1] * 3.6) / (math_30_cp() * dt)), 2);
                                             fvTextBox11.Text = p30.ToString();
                                         }
                                         else
@@ -2770,6 +2783,7 @@ public partial class TRV : System.Web.UI.Page
         {
             lpvCustomValidator1.ErrorMessage = "Неверно указано значение давления";
             args.IsValid = false;
+            
         }
     }
 
@@ -2781,7 +2795,7 @@ public partial class TRV : System.Web.UI.Page
             {
                 calcvCustomValidator2.ErrorMessage = "На давление свыше 25 бар вариантов нет";
                 args.IsValid = false;
-
+                
             }
             else if (convertArrToBar(arrConvert3, calcvDropDownList1, calcvTextBox1) <= PressureBeforeValve3x)
             {
@@ -2791,6 +2805,8 @@ public partial class TRV : System.Web.UI.Page
             {
                 calcvTextBox1.Text = PressureBeforeValve2x.ToString();
             }
+            args.IsValid = true;
+            
         }
         else
         {
@@ -2798,10 +2814,13 @@ public partial class TRV : System.Web.UI.Page
             {
                 calcvCustomValidator2.ErrorMessage = "На давление свыше 16 бар вариантов нет";
                 args.IsValid = false;
+                
             }
             else if (convertArrToBar(arrConvert3, calcvDropDownList1, calcvTextBox1) <= PressureBeforeValve3x)
             {
                 calcvTextBox1.Text = PressureBeforeValve3x.ToString();
+                args.IsValid = true;
+                
             }
         }
     }
@@ -2813,7 +2832,7 @@ public partial class TRV : System.Web.UI.Page
     
     protected void tvCustomValidator1_ServerValidate(object source, ServerValidateEventArgs args)
     {
-        ValidateTemperatureTable(args);
+        if (!ValidateTemperatureTable(args)) { args.IsValid = false; };
     }
     protected void aaCustomValidator8_ServerValidate(object source, ServerValidateEventArgs args)
     {
@@ -2827,6 +2846,7 @@ public partial class TRV : System.Web.UI.Page
             {
                 aaCustomValidator8.ErrorMessage = "Выберите необходимое значение";
                 args.IsValid = false;
+                
             }
         }
         else
@@ -2869,88 +2889,67 @@ public partial class TRV : System.Web.UI.Page
         }
     }
 
-    public void CheckValidTextBox(TextBox textBox, CustomValidator customValidator, ServerValidateEventArgs args)
+    public bool CheckValidTextBox(TextBox textBox, CustomValidator customValidator, ServerValidateEventArgs args)
     {
-        if (textBox.Enabled || customConverterToDouble(textBox.Text) <= 0)
-        {
-            tvCustomValidator1.ErrorMessage = "На температуру свыше 220&#8451; вариантов нет";
-            args.IsValid = false;
-            return;
-        }
-    }
-
-    public void ValidateTemperatureTable(ServerValidateEventArgs args)
-    {
-
-
-        CheckValidTextBox(fvTextBox2, tvCustomValidator1, args);
-        CheckValidTextBox(fvTextBox3, tvCustomValidator1, args);
-        CheckValidTextBox(fvTextBox4, tvCustomValidator1, args);
-        CheckValidTextBox(fvTextBox5, tvCustomValidator1, args);
-        CheckValidTextBox(fvTextBox6, tvCustomValidator1, args);
-        CheckValidTextBox(fvTextBox7, tvCustomValidator1, args);
-        CheckValidTextBox(fvTextBox8, tvCustomValidator1, args);
-        CheckValidTextBox(fvTextBox9, tvCustomValidator1, args);
-
-      
-
-
-        if (String.IsNullOrWhiteSpace(fvTextBox3.Text) || String.IsNullOrWhiteSpace(fvTextBox2.Text))
-        {
-            if (customConverterToDouble(fvTextBox3.Text) >= customConverterToDouble(fvTextBox2.Text))
-            {
-                tvCustomValidator1.ErrorMessage = "Неверно указано значение температуры";
-                args.IsValid = false;
-                return;
-            }
-        }
-        if (String.IsNullOrWhiteSpace(fvTextBox5.Text) || String.IsNullOrWhiteSpace(fvTextBox4.Text))
-        {
-            if (customConverterToDouble(fvTextBox5.Text) >= customConverterToDouble(fvTextBox4.Text))
-            {
-                tvCustomValidator1.ErrorMessage = "Неверно указано значение температуры";
-                args.IsValid = false;
-                return;
-            } 
-        }
-        if (String.IsNullOrWhiteSpace(fvTextBox7.Text) || String.IsNullOrWhiteSpace(fvTextBox6.Text))
-        {
-            if (customConverterToDouble(fvTextBox7.Text) >= customConverterToDouble(fvTextBox6.Text))
-            {
-                tvCustomValidator1.ErrorMessage = "Неверно указано значение температуры";
-                args.IsValid = false;
-                return;
-            } 
-        }
-        if (String.IsNullOrWhiteSpace(fvTextBox9.Text) || String.IsNullOrWhiteSpace(fvTextBox8.Text))
-        {
-            if (customConverterToDouble(fvTextBox9.Text) >= customConverterToDouble(fvTextBox8.Text))
-            {
-                tvCustomValidator1.ErrorMessage = "Неверно указано значение температуры";
-                args.IsValid = false;
-                return;
-            }
-        }
-
         if (tvRadioButtonList1.SelectedIndex == 0)
         {
-            if (customConverterToDouble(fvTextBox2.Text) > MaxT2x || customConverterToDouble(fvTextBox3.Text) > MaxT2x || customConverterToDouble(fvTextBox4.Text) > MaxT2x || customConverterToDouble(fvTextBox5.Text) > MaxT2x || customConverterToDouble(fvTextBox6.Text) > MaxT2x || customConverterToDouble(fvTextBox7.Text) > MaxT2x || customConverterToDouble(fvTextBox8.Text) > MaxT2x || customConverterToDouble(fvTextBox9.Text) > MaxT2x)
+            if (textBox.Enabled)
             {
-                tvCustomValidator1.ErrorMessage = "На температуру свыше 220&#8451; вариантов нет";
-                args.IsValid = false;
-                return;
+                if (String.IsNullOrWhiteSpace(textBox.Text))
+                {
+                    args.IsValid = false;
+                    return false;
+                }
+                else
+                {
+                    if (customConverterToDouble(fvTextBox2.Text) > MaxT2x)
+                    {
+                        tvCustomValidator1.ErrorMessage = "На температуру свыше 220&#8451; вариантов нет";
+                        args.IsValid = false;
+                        return false;
+                    }
+                }
             }
         }
-        else if (tvRadioButtonList1.SelectedIndex == 1)
+        else
         {
-            if (customConverterToDouble(fvTextBox2.Text) > MaxT3x || customConverterToDouble(fvTextBox3.Text) > MaxT3x || customConverterToDouble(fvTextBox4.Text) > MaxT3x || customConverterToDouble(fvTextBox5.Text) > MaxT3x || customConverterToDouble(fvTextBox6.Text) > MaxT3x || customConverterToDouble(fvTextBox7.Text) > MaxT3x || customConverterToDouble(fvTextBox8.Text) > MaxT3x || customConverterToDouble(fvTextBox9.Text) > MaxT3x)
+            if (textBox.Enabled)
             {
-                tvCustomValidator1.ErrorMessage = "На температуру свыше 150&#8451; вариантов нет";
-                args.IsValid = false;
-                return;
+                if (String.IsNullOrWhiteSpace(textBox.Text))
+                {
+                    args.IsValid = false;
+                    return false;
+                }
+                else
+                {
+                    if (customConverterToDouble(textBox.Text) > MaxT3x)
+                    {
+                        tvCustomValidator1.ErrorMessage = "На температуру свыше 220&#8451; вариантов нет";
+                        args.IsValid = false;
+                        return false;
+                    }
+                }
             }
         }
+        return true;
+    }
 
+    public bool ValidateTemperatureTable(ServerValidateEventArgs args)
+    {
+        if (!CheckValidTextBox(fvTextBox2, tvCustomValidator1, args)) 
+        { 
+            args.IsValid = false; 
+            return false; 
+        };
+        if (!CheckValidTextBox(fvTextBox3, tvCustomValidator1, args)) { args.IsValid = false; return false; };
+        if (!CheckValidTextBox(fvTextBox4, tvCustomValidator1, args)) { args.IsValid = false; return false; };
+        if (!CheckValidTextBox(fvTextBox5, tvCustomValidator1, args)) { args.IsValid = false; return false; };
+        if (!CheckValidTextBox(fvTextBox6, tvCustomValidator1, args)) { args.IsValid = false; return false; };
+        if (!CheckValidTextBox(fvTextBox7, tvCustomValidator1, args)) { args.IsValid = false; return false; };
+        if (!CheckValidTextBox(fvTextBox8, tvCustomValidator1, args)) { args.IsValid = false; return false; };
+        if (!CheckValidTextBox(fvTextBox9, tvCustomValidator1, args)) { args.IsValid = false; return false; };
+
+        return true;
     }
 
 
@@ -3158,7 +3157,4 @@ public partial class TRV : System.Web.UI.Page
         //    (sender as Button).Enabled = true;
     }
 
-
-
-   
 }
