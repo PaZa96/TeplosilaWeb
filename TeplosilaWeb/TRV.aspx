@@ -14,7 +14,7 @@
         <div class="container">
             <form id="form1" runat="server">
                 <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
-                <div class="row">
+                <div class="row jumbotron">
                     <div class="col-10">
                         <div class="col border">
                             <asp:Label ID="Label1" runat="server" Text="Место установки:"></asp:Label>
@@ -200,7 +200,7 @@
                                         <asp:RadioButton ID="fvRadioButton1" runat="server" Text="Задать max величину расхода через клапан:" AutoPostBack="True"   OnCheckedChanged="fvRadioButton1_CheckedChanged"/><br/>
                                         <div class="col">
                                             <asp:Label ID="Label28" runat="server" Text="Gкл = "></asp:Label>
-                                            <asp:TextBox ID="fvTextBox1" runat="server" Enabled="False" type="number" required="required"></asp:TextBox>
+                                            <asp:TextBox ID="fvTextBox1" runat="server"  Enabled="False" type="number" required="required"></asp:TextBox>
                                             <asp:DropDownList ID="fvDropDownList1" runat="server"  AutoPostBack="True" Enabled="False" OnSelectedIndexChanged="fvDropDownList1_SelectedIndexChanged"  >
                                                 <asp:ListItem>выбрать</asp:ListItem>
                                                 <asp:ListItem>м3/ч</asp:ListItem>
@@ -221,7 +221,7 @@
                                 <asp:UpdatePanel ID="UpdatePanel14" runat="server">
                                     <ContentTemplate>
                                         <asp:RadioButton ID="fvRadioButton2" runat="server" Text="Вычислить max величину расхода через клапан:" AutoPostBack="True" OnCheckedChanged="fvRadioButton2_CheckedChanged"  /> 
-                                        <div class="col">
+                                        <div class="col table-responsive-md">
                                             <table class="table table-bordered col">
                                               <thead>
                                                 <tr>
@@ -276,8 +276,8 @@
                                                 <tr>
                                                   <td>Вентиляции</td>
                                                    <td class="text-center">
-                                                    <asp:Label ID="Label40" runat="server" Text="T11 = "></asp:Label>
-                                                    <asp:TextBox ID="fvTextBox8" runat="server" Enabled="False" type="number" Width="60px" required="required"></asp:TextBox>
+                                                    <asp:Label ID="Label40"  runat="server" Text="T11 = "></asp:Label>
+                                                    <asp:TextBox ID="fvTextBox8"  runat="server" Enabled="False" type="number" Width="60px" required="required"></asp:TextBox>
                                                     <asp:Label ID="Label41" runat="server" Text=" &#8451;"></asp:Label>
                                                   </td>
                                                   <td class="text-center">
@@ -293,19 +293,20 @@
                                             
                                             <br />
                                             <br />
-
-                                            <asp:Label ID="Label45" runat="server" Text="Тепловая мощность Q = "></asp:Label>
-                                            <asp:TextBox ID="fvTextBox10" runat="server" Enabled="False"  required="required" OnTextChanged="fvTextBox10_TextChanged"></asp:TextBox>
-                                            <asp:DropDownList ID="fvDropDownList2" runat="server"  AutoPostBack="True" Enabled="False" OnSelectedIndexChanged="fvDropDownList2_SelectedIndexChanged">
-                                                <asp:ListItem>выбрать</asp:ListItem>
-                                                <asp:ListItem Value="кВт">кВт</asp:ListItem>
-                                                <asp:ListItem>МВт</asp:ListItem>
-                                                <asp:ListItem>Вт</asp:ListItem>
-                                                <asp:ListItem>Гкал/ч</asp:ListItem>
-                                                <asp:ListItem>ккал/ч</asp:ListItem>
+                                            
+                                            <asp:Label ID="Label45" runat="server"  Text="Тепловая мощность Q = "></asp:Label>
+                                            <asp:TextBox ID="fvTextBox10" runat="server" Enabled="False"   required="required" OnTextChanged="fvTextBox10_TextChanged" TextMode="Number"></asp:TextBox>
+                                            <asp:DropDownList ID="fvDropDownList2" runat="server"   AutoPostBack="True" Enabled="False" OnSelectedIndexChanged="fvDropDownList2_SelectedIndexChanged">
+                                                <asp:ListItem class="dropdown-item">выбрать</asp:ListItem>
+                                                <asp:ListItem Value="кВт" class="dropdown-item">кВт</asp:ListItem>
+                                                <asp:ListItem class="dropdown-item">МВт</asp:ListItem>
+                                                <asp:ListItem class="dropdown-item">Вт</asp:ListItem>
+                                                <asp:ListItem class="dropdown-item">Гкал/ч</asp:ListItem>
+                                                <asp:ListItem class="dropdown-item">ккал/ч</asp:ListItem>
                                             </asp:DropDownList><br />
                                             <asp:RangeValidator ID="fvRangeValidator2" runat="server" ControlToValidate="fvTextBox10" Display="Dynamic" ErrorMessage="Неверно указано значение давления" ForeColor="Red" MaximumValue="99999999" MinimumValue="0">Неверно указано значение давления</asp:RangeValidator>
                                     <br/>
+                                            
                                             <asp:Label ID="Label46" runat="server" Text="Максимальный расход Gкл = "></asp:Label>
                                             <asp:TextBox ID="fvTextBox11" runat="server" Enabled="False" type="number" ReadOnly="True" required="required"></asp:TextBox>
                                             <asp:Label ID="Label48" runat="server" Text=" кг/ч"></asp:Label>
@@ -349,11 +350,13 @@
                             <asp:Label ID="Label52" runat="server" Enabled="False" Text="Результаты расчёта"></asp:Label>
                             <br />
                             <br />
-                            <asp:GridView ID="GridView1" runat="server" OnRowDataBound="GridView1_RowDataBound" OnSelectedIndexChanged="GridView1_SelectedIndexChanged">
+                            <div class="table-responsive-lg">
+                            <asp:GridView ID="GridView1" CssClass="table" runat="server" OnRowDataBound="GridView1_RowDataBound" OnSelectedIndexChanged="GridView1_SelectedIndexChanged">
                             </asp:GridView>
+                                </div>
                             <br />
                             <br />
-                            <asp:Button ID="Button2" runat="server" Text="Button" OnClick="Button2_Click" />
+                            <asp:Button ID="Button2" runat="server" Text="Button" CssClass="btn btn-primary" OnClick="Button2_Click" />
                         </div>
                         
                          

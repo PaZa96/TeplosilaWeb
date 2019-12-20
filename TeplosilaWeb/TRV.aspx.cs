@@ -117,10 +117,10 @@ public partial class TRV : System.Web.UI.Page
         switch (index)
         {
             case 0:
-                vPictureBox.ImageUrl = HttpContext.Current.Server.MapPath(@"/Content/images/TRV-2.png");
+                vPictureBox.ImageUrl = @"/Content/images/TRV-2.png";
                 break;
             case 1:
-                vPictureBox.ImageUrl = HttpContext.Current.Server.MapPath(@"/Content/images/TRV-3.png");
+                vPictureBox.ImageUrl = @"/Content/images/TRV-3.png";
                 break;
             default:
                 vPictureBox.ImageUrl = null;
@@ -2186,6 +2186,7 @@ public partial class TRV : System.Web.UI.Page
         GridView1.Columns.Clear();
         GridView1.DataSource = null;
         GridView1.DataBind();
+       
 
         readFile(0);
         Dictionary<string, double> g_dict = new Dictionary<string, double>();
@@ -2597,6 +2598,7 @@ public partial class TRV : System.Web.UI.Page
 
                                                 DataTable dt = new DataTable();
                                                 DataRow dr;
+                                                //for (int i = 0; i < titles.Count(); i++)       
 
                                                 for (int i = 0; i < titles.Count(); i++)
                                                 {
