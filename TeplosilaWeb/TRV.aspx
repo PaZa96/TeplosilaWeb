@@ -295,7 +295,7 @@
                                             <br />
                                             
                                             <asp:Label ID="Label45" runat="server"  Text="Тепловая мощность Q = "></asp:Label>
-                                            <asp:TextBox ID="fvTextBox10" runat="server" Enabled="False"   required="required" OnTextChanged="fvTextBox10_TextChanged" TextMode="Number"></asp:TextBox>
+                                            <asp:TextBox ID="fvTextBox10" runat="server" Enabled="False"  required="required" OnTextChanged="fvTextBox10_TextChanged"></asp:TextBox>
                                             <asp:DropDownList ID="fvDropDownList2" runat="server"   AutoPostBack="True" Enabled="False" OnSelectedIndexChanged="fvDropDownList2_SelectedIndexChanged">
                                                 <asp:ListItem class="dropdown-item">выбрать</asp:ListItem>
                                                 <asp:ListItem Value="кВт" class="dropdown-item">кВт</asp:ListItem>
@@ -343,6 +343,8 @@
                                     </ContentTemplate>
                                 </asp:UpdatePanel>
                             </div>
+                              <asp:UpdatePanel ID="UpdatePanel9" runat="server">
+                                    <ContentTemplate>
                             <asp:Button ID="vButton" runat="server" type="submit" Text="Рассчитать" OnClick="vButton_Click"  />
                             <br />
                             <asp:Label ID="LabelError" runat="server" Font-Bold="True" Font-Size="Medium" Font-Strikeout="False" ForeColor="Red" Text="Label"></asp:Label>
@@ -351,15 +353,27 @@
                             <br />
                             <br />
                             <div class="table-responsive-lg">
-                            <asp:GridView ID="GridView1" CssClass="table" runat="server" OnRowDataBound="GridView1_RowDataBound" OnSelectedIndexChanged="GridView1_SelectedIndexChanged">
+                            <asp:GridView ID="GridView1" CssClass="table" runat="server" OnRowDataBound="GridView1_RowDataBound" OnSelectedIndexChanged="GridView1_SelectedIndexChanged" AutoGenerateSelectButton="True">
+                                <Columns>
+                
+</Columns>
+                                <RowStyle Font-Size="Small" />
+                                <SelectedRowStyle BackColor="#ff7d00" Font-Bold="True" ForeColor="White" />
                             </asp:GridView>
                                 </div>
                             <br />
+                                        <asp:Label ID="Label53" runat="server" Text="Объект:"></asp:Label>
+                                        <br />
+                                        <asp:TextBox ID="objTextBox1" runat="server" Enabled="False"></asp:TextBox>
+                                        <br />
                             <br />
                             <asp:Button ID="Button2" runat="server" Text="Button" CssClass="btn btn-primary" OnClick="Button2_Click" />
                         </div>
                         
-                         
+                                        <br />
+                        
+                           </ContentTemplate>
+                                </asp:UpdatePanel>
                     </div>
                     <div class="col-2">
                     <asp:UpdatePanel ID="UpdatePanel16" runat="server">

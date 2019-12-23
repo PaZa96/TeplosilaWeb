@@ -9,6 +9,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using GemBox.Spreadsheet;
 using System.Data;
+using System.Net;
 
 public partial class TRV : System.Web.UI.Page
 {
@@ -512,9 +513,17 @@ public partial class TRV : System.Web.UI.Page
         }
         else
         {
-            tdRadioButtonList4.ClearSelection();
-            tdRadioButtonList4.SelectedIndex = 1;
-            tdRadioButtonList4.Items[0].Enabled = true;
+            if (tdRadioButtonList4.SelectedIndex == 0)
+            {
+                
+            }
+            else
+            {
+                tdRadioButtonList4.ClearSelection();
+                tdRadioButtonList4.SelectedIndex = 1;
+                tdRadioButtonList4.Items[0].Enabled = true;
+            }
+            
         }
     }
 
@@ -2182,7 +2191,8 @@ public partial class TRV : System.Web.UI.Page
     protected void vButton_Click(object sender, EventArgs e)
     {
         ResetColorToAllControls();
-
+        DisableTextBox(objTextBox1);
+    
         GridView1.Columns.Clear();
         GridView1.DataSource = null;
         GridView1.DataBind();
@@ -2768,7 +2778,7 @@ public partial class TRV : System.Web.UI.Page
         this.GridView1.Visible = true;
         this.GridView1.Height = 250;
         this.Button2.Visible = true;
-        this.Button2.Enabled = false;
+        this.Button2.Enabled = true;
 
     }
 
@@ -2972,6 +2982,7 @@ public partial class TRV : System.Web.UI.Page
     protected void GridView1_RowDataBound(object sender, GridViewRowEventArgs e)
     {
         int index = GridView1.SelectedIndex;
+        objTextBox1.Enabled = true;
     }
 
 
@@ -2979,7 +2990,19 @@ public partial class TRV : System.Web.UI.Page
 
     protected void Button2_Click(object sender, EventArgs e)
     {
-        (sender as Button).Enabled = false;
+        //экспорт файла из папки на сервере на компьютер клиента
+        //string MyPath = HttpContext.Current.Server.MapPath("");
+        //int Путь = MyPath.Length + 1;
+        //Response.ClearContent();
+        //Response.AddHeader("Content-Disposition", "attachment; filename=" + this.fvTextBox1.Text.Substring(Путь) + "");
+        //Response.ContentType = "application/octet-strean";
+        //string importAddress = "http://www.xn--c1abmbzbn.xn--p1ai/NetMyCar/" + this.fvTextBox1.Text.Substring(Путь);
+        //using (var web = new WebClient())
+        //using (var importStream = web.OpenRead(importAddress))
+        //{ importStream.CopyTo(Response.OutputStream); }
+        //Response.End();
+
+
 
         //SaveForm saveForm = new SaveForm();
         //this.textBox4.Text = "";
@@ -3013,150 +3036,149 @@ public partial class TRV : System.Web.UI.Page
         //    v_input_dict[2] = (this.textBox3.Text != "") ? this.textBox3.Text : "-";
         //    v_input_dict[8] = (this.textBox6.Text != "") ? this.textBox6.Text : "-";
 
-        //    int pos = 42;
-
-        //    foreach (DataGridViewRow r in dataGridView2.SelectedRows)
+            int pos = 42;
+        
+        
+        foreach (var c in GridView1.Rows[GridView1.SelectedRow.RowIndex].Cells)
+        {
+        //if (!(c.OwningColumn is DataGridViewCheckBoxColumn))
+        //{
+        //    if (pos == 52)
         //    {
-        //        foreach (DataGridViewCell c in r.Cells)
-        //        {
-        //            if (!(c.OwningColumn is DataGridViewCheckBoxColumn))
-        //            {
-        //                if (pos == 52)
-        //                {
-        //                    v_input_dict[pos] = c.Value.ToString();
-        //                    v_input_dict[pos + 1] = c.Value.ToString();
-        //                    pos++;
-        //                }
-        //                else if (pos >= 64) v_input_dict[pos + 1] = c.Value.ToString();
-        //                else v_input_dict[pos] = c.Value.ToString();
-
-
-        //                pos++;
-        //            }
-        //            else
-        //            {
-        //                if (!(Convert.ToBoolean(c.Value) == true))
-        //                {
-        //                    break;
-        //                }
-        //            }
-
-        //        }
+        //        v_input_dict[pos] = c.Value.ToString();
+        //        v_input_dict[pos + 1] = c.Value.ToString();
+        //        pos++;
         //    }
+        //    else if (pos >= 64) v_input_dict[pos + 1] = c.Value.ToString();
+        //    else v_input_dict[pos] = c.Value.ToString();
 
 
-        //    SpreadsheetInfo.SetLicense("FREE-LIMITED-KEY");
-
-        //    if (!File.Exists(Directory.GetCurrentDirectory() + "\\templates\\templateTRV.xlsx"))
-        //    {
-        //        LabelError.Text += "Не найден файл шаблона";
-        //        return;
-        //    }
-
-        //    ExcelFile ef = ExcelFile.Load(Directory.GetCurrentDirectory() + "\\templates\\templateTRV.xlsx");
-
-        //    ExcelWorksheet ws = ef.Worksheets[0];
-
-        //    ws.PrintOptions.TopMargin = 0.1 / 2.54;
-        //    ws.PrintOptions.BottomMargin = 0.1 / 2.54;
-        //    ws.PrintOptions.LeftMargin = 1.78 / 2.54;
-        //    ws.PrintOptions.RightMargin = 0.78 / 2.54;
-
-        //    ws.Cells["K46"].Value = v_input_dict[0];
-
-        //    ws.Cells["J2"].Value = v_input_dict[1];
-        //    ws.Cells["B3"].Value = v_input_dict[2];
-
-        //    ws.Cells["C4"].Value = v_input_dict[3];
-        //    ws.Cells["J4"].Value = v_input_dict[4];
-        //    ws.Cells["C5"].Value = v_input_dict[5];
-        //    ws.Cells["J5"].Value = v_input_dict[6];
-        //    ws.Cells["C6"].Value = v_input_dict[7];
-        //    ws.Cells["J6"].Value = v_input_dict[8];
-
-        //    ws.Cells["C8"].Value = v_input_dict[9];
-
-        //    ws.Cells["E9"].Value = v_input_dict[10];
-        //    ws.Cells["F9"].Value = v_input_dict[11];
-        //    ws.Cells["J9"].Value = v_input_dict[12];
-        //    ws.Cells["K9"].Value = v_input_dict[13];
-
-        //    ws.Cells["E10"].Value = v_input_dict[14];
-        //    ws.Cells["F10"].Value = v_input_dict[15];
-        //    ws.Cells["E11"].Value = v_input_dict[16];
-        //    ws.Cells["F11"].Value = v_input_dict[17];
-        //    ws.Cells["E12"].Value = v_input_dict[18];
-
-        //    // пар
-        //    ws.Cells["J10"].Value = "-";
-        //    ws.Cells["K10"].Value = "-";
-        //    ws.Cells["J11"].Value = "-";
-        //    ws.Cells["K11"].Value = "-";
-        //    ws.Cells["J12"].Value = "-";
-        //    // пар
-
-        //    ws.Cells["E14"].Value = v_input_dict[24];
-        //    ws.Cells["I14"].Value = v_input_dict[25];
-        //    ws.Cells["E15"].Value = v_input_dict[26];
-        //    ws.Cells["I15"].Value = v_input_dict[27];
-        //    ws.Cells["E16"].Value = v_input_dict[28];
-        //    ws.Cells["I16"].Value = v_input_dict[29];
-        //    ws.Cells["E17"].Value = v_input_dict[30];
-        //    ws.Cells["I17"].Value = v_input_dict[31];
-
-        //    ws.Cells["I18"].Value = v_input_dict[32];
-        //    ws.Cells["K18"].Value = v_input_dict[33];
-        //    ws.Cells["I19"].Value = v_input_dict[34];
-        //    ws.Cells["K19"].Value = v_input_dict[35];
-
-        //    ws.Cells["C21"].Value = v_input_dict[36];
-        //    ws.Cells["C22"].Value = v_input_dict[37];
-
-        //    ws.Cells["J21"].Value = v_input_dict[38];
-        //    ws.Cells["J22"].Value = v_input_dict[39];
-
-        //    ws.Cells["E24"].Value = v_input_dict[40];
-        //    ws.Cells["E25"].Value = v_input_dict[41];
-
-        //    ws.Cells["A28"].Value = v_input_dict[42];
-        //    ws.Cells["B28"].Value = v_input_dict[43];
-        //    ws.Cells["C28"].Value = v_input_dict[44];
-        //    ws.Cells["D28"].Value = v_input_dict[45];
-        //    ws.Cells["E28"].Value = v_input_dict[46];
-        //    ws.Cells["F28"].Value = v_input_dict[47];
-        //    ws.Cells["G28"].Value = v_input_dict[48];
-        //    ws.Cells["H28"].Value = v_input_dict[49];
-        //    ws.Cells["I28"].Value = v_input_dict[50];
-        //    ws.Cells["J28"].Value = v_input_dict[51];
-        //    ws.Cells["K28"].Value = v_input_dict[52];
-
-        //    ws.Cells["A32"].Value = v_input_dict[53];
-        //    ws.Cells["B32"].Value = v_input_dict[54];
-        //    ws.Cells["C32"].Value = v_input_dict[55];
-        //    ws.Cells["D32"].Value = v_input_dict[56];
-        //    ws.Cells["E32"].Value = v_input_dict[57];
-        //    ws.Cells["F32"].Value = v_input_dict[58];
-        //    ws.Cells["G32"].Value = v_input_dict[59];
-        //    ws.Cells["H32"].Value = v_input_dict[60];
-        //    ws.Cells["I32"].Value = v_input_dict[61];
-        //    ws.Cells["J32"].Value = v_input_dict[62];
-        //    ws.Cells["K32"].Value = v_input_dict[63];
-
-        //    ws.Cells["G37"].Value = v_input_dict[65];
-        //    ws.Cells["G38"].Value = v_input_dict[66];
-        //    ws.Cells["G39"].Value = v_input_dict[67];
-        //    ws.Cells["G40"].Value = v_input_dict[68];
-
-
-        //    ws.Pictures.Add(Directory.GetCurrentDirectory() + "\\images\\trv\\" + ((v_input_dict[7] == this.tvRadioButtonList1.Items[tvRadioButtonList1.SelectedIndex].Text) ? "Габаритный TRV и TRV-P.png" : "Габаритный TRV-3.png"), "A37", "B46");
-
-        //    ef.Save(saveFileDialog1.FileName);
-
-        //    if (File.Exists(saveFileDialog1.FileName)) System.Diagnostics.Process.Start(saveFileDialog1.FileName);
-
-
+        //    pos++;
         //}
-        //    (sender as Button).Enabled = true;
-    }
+        //else
+        //{
+        //    if (!(Convert.ToBoolean(c.) == true))
+        //    {
+        //        break;
+        //    }
+        //}
+
+        }
+            
+
+
+            SpreadsheetInfo.SetLicense("FREE-LIMITED-KEY");
+
+        if (!File.Exists(HttpContext.Current.Server.MapPath("\\Content\\templates\\templateTRV.xlsx")))
+        {
+            LabelError.Text += "Не найден файл шаблона";
+            return;
+        }
+
+        ExcelFile ef = ExcelFile.Load(HttpContext.Current.Server.MapPath("\\Content\\templates\\templateTRV.xlsx"));
+
+        ExcelWorksheet ws = ef.Worksheets[0];
+
+        ws.PrintOptions.TopMargin = 0.1 / 2.54;
+        ws.PrintOptions.BottomMargin = 0.1 / 2.54;
+        ws.PrintOptions.LeftMargin = 1.78 / 2.54;
+        ws.PrintOptions.RightMargin = 0.78 / 2.54;
+
+        ws.Cells["K46"].Value = v_input_dict[0];
+
+        ws.Cells["J2"].Value = v_input_dict[1];
+        ws.Cells["B3"].Value = v_input_dict[2];
+
+        ws.Cells["C4"].Value = v_input_dict[3];
+        ws.Cells["J4"].Value = v_input_dict[4];
+        ws.Cells["C5"].Value = v_input_dict[5];
+        ws.Cells["J5"].Value = v_input_dict[6];
+        ws.Cells["C6"].Value = v_input_dict[7];
+        ws.Cells["J6"].Value = v_input_dict[8];
+
+        ws.Cells["C8"].Value = v_input_dict[9];
+
+        ws.Cells["E9"].Value = v_input_dict[10];
+        ws.Cells["F9"].Value = v_input_dict[11];
+        ws.Cells["J9"].Value = v_input_dict[12];
+        ws.Cells["K9"].Value = v_input_dict[13];
+
+        ws.Cells["E10"].Value = v_input_dict[14];
+        ws.Cells["F10"].Value = v_input_dict[15];
+        ws.Cells["E11"].Value = v_input_dict[16];
+        ws.Cells["F11"].Value = v_input_dict[17];
+        ws.Cells["E12"].Value = v_input_dict[18];
+
+        // пар
+        ws.Cells["J10"].Value = "-";
+        ws.Cells["K10"].Value = "-";
+        ws.Cells["J11"].Value = "-";
+        ws.Cells["K11"].Value = "-";
+        ws.Cells["J12"].Value = "-";
+        // пар
+
+        ws.Cells["E14"].Value = v_input_dict[24];
+        ws.Cells["I14"].Value = v_input_dict[25];
+        ws.Cells["E15"].Value = v_input_dict[26];
+        ws.Cells["I15"].Value = v_input_dict[27];
+        ws.Cells["E16"].Value = v_input_dict[28];
+        ws.Cells["I16"].Value = v_input_dict[29];
+        ws.Cells["E17"].Value = v_input_dict[30];
+        ws.Cells["I17"].Value = v_input_dict[31];
+
+        ws.Cells["I18"].Value = v_input_dict[32];
+        ws.Cells["K18"].Value = v_input_dict[33];
+        ws.Cells["I19"].Value = v_input_dict[34];
+        ws.Cells["K19"].Value = v_input_dict[35];
+
+        ws.Cells["C21"].Value = v_input_dict[36];
+        ws.Cells["C22"].Value = v_input_dict[37];
+
+        ws.Cells["J21"].Value = v_input_dict[38];
+        ws.Cells["J22"].Value = v_input_dict[39];
+
+        ws.Cells["E24"].Value = v_input_dict[40];
+        ws.Cells["E25"].Value = v_input_dict[41];
+
+        ws.Cells["A28"].Value = v_input_dict[42];
+        ws.Cells["B28"].Value = v_input_dict[43];
+        ws.Cells["C28"].Value = v_input_dict[44];
+        ws.Cells["D28"].Value = v_input_dict[45];
+        ws.Cells["E28"].Value = v_input_dict[46];
+        ws.Cells["F28"].Value = v_input_dict[47];
+        ws.Cells["G28"].Value = v_input_dict[48];
+        ws.Cells["H28"].Value = v_input_dict[49];
+        ws.Cells["I28"].Value = v_input_dict[50];
+        ws.Cells["J28"].Value = v_input_dict[51];
+        ws.Cells["K28"].Value = v_input_dict[52];
+
+        ws.Cells["A32"].Value = v_input_dict[53];
+        ws.Cells["B32"].Value = v_input_dict[54];
+        ws.Cells["C32"].Value = v_input_dict[55];
+        ws.Cells["D32"].Value = v_input_dict[56];
+        ws.Cells["E32"].Value = v_input_dict[57];
+        ws.Cells["F32"].Value = v_input_dict[58];
+        ws.Cells["G32"].Value = v_input_dict[59];
+        ws.Cells["H32"].Value = v_input_dict[60];
+        ws.Cells["I32"].Value = v_input_dict[61];
+        ws.Cells["J32"].Value = v_input_dict[62];
+        ws.Cells["K32"].Value = v_input_dict[63];
+
+        ws.Cells["G37"].Value = v_input_dict[65];
+        ws.Cells["G38"].Value = v_input_dict[66];
+        ws.Cells["G39"].Value = v_input_dict[67];
+        ws.Cells["G40"].Value = v_input_dict[68];
+
+
+        ws.Pictures.Add(Directory.GetCurrentDirectory() + "\\images\\trv\\" + ((v_input_dict[7] == this.tvRadioButtonList1.Items[tvRadioButtonList1.SelectedIndex].Text) ? "Габаритный TRV и TRV-P.png" : "Габаритный TRV-3.png"), "A37", "B46");
+
+            //    ef.Save(saveFileDialog1.FileName);
+
+            //    if (File.Exists(saveFileDialog1.FileName)) System.Diagnostics.Process.Start(saveFileDialog1.FileName);
+
+
+            //}
+            //(sender as Button).Enabled = true;
+        }
 
 }
