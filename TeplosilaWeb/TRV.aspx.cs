@@ -2192,7 +2192,7 @@ public partial class TRV : System.Web.UI.Page
     {
         ResetColorToAllControls();
         DisableTextBox(objTextBox1);
-    
+        objTextBox1.Enabled = false;
         GridView1.Columns.Clear();
         GridView1.DataSource = null;
         GridView1.DataBind();
@@ -2387,6 +2387,7 @@ public partial class TRV : System.Web.UI.Page
                                         {   
                                             p30 = Math.Round(((customConverterToDouble(fvTextBox10.Text) * arrConvert2[fvDropDownList2.SelectedIndex - 1] * 3.6) / (math_30_cp() * dt)), 2);
                                             fvTextBox11.Text = p30.ToString();
+                                            fvTextBox11.Enabled = true;
                                         }
                                         else
                                         {
@@ -2976,13 +2977,13 @@ public partial class TRV : System.Web.UI.Page
 
     protected void GridView1_SelectedIndexChanged(object sender, EventArgs e)
     {
-
+        objTextBox1.Enabled = true;
     }
 
     protected void GridView1_RowDataBound(object sender, GridViewRowEventArgs e)
     {
         int index = GridView1.SelectedIndex;
-        objTextBox1.Enabled = true;
+        
     }
 
 
@@ -3033,41 +3034,32 @@ public partial class TRV : System.Web.UI.Page
         //        }
         //    }
 
-        //    v_input_dict[2] = (this.textBox3.Text != "") ? this.textBox3.Text : "-";
-        //    v_input_dict[8] = (this.textBox6.Text != "") ? this.textBox6.Text : "-";
+            v_input_dict[2] = objTextBox1.Text;
+            v_input_dict[8] = "-";
 
             int pos = 42;
-        
-        
-        foreach (var c in GridView1.Rows[GridView1.SelectedRow.RowIndex].Cells)
+
+
+
+        for (int i = 1; i < GridView1.SelectedRow.Cells.Count; i++)
         {
-        //if (!(c.OwningColumn is DataGridViewCheckBoxColumn))
-        //{
-        //    if (pos == 52)
-        //    {
-        //        v_input_dict[pos] = c.Value.ToString();
-        //        v_input_dict[pos + 1] = c.Value.ToString();
-        //        pos++;
-        //    }
-        //    else if (pos >= 64) v_input_dict[pos + 1] = c.Value.ToString();
-        //    else v_input_dict[pos] = c.Value.ToString();
-
-
-        //    pos++;
-        //}
-        //else
-        //{
-        //    if (!(Convert.ToBoolean(c.) == true))
-        //    {
-        //        break;
-        //    }
-        //}
-
-        }
             
+            if (pos == 52)
+            {
+                v_input_dict[pos] = GridView1.SelectedRow.Cells[i].Text;
+                v_input_dict[pos + 1] = GridView1.SelectedRow.Cells[i].Text;
+                pos++;
+            }
+            else if (pos >= 64) v_input_dict[pos + 1] = GridView1.SelectedRow.Cells[i].Text;
+            else v_input_dict[pos] = GridView1.SelectedRow.Cells[i].Text;
 
 
-            SpreadsheetInfo.SetLicense("FREE-LIMITED-KEY");
+            pos++;
+                
+        }
+
+
+        SpreadsheetInfo.SetLicense("FREE-LIMITED-KEY");
 
         if (!File.Exists(HttpContext.Current.Server.MapPath("\\Content\\templates\\templateTRV.xlsx")))
         {
@@ -3170,15 +3162,31 @@ public partial class TRV : System.Web.UI.Page
         ws.Cells["G40"].Value = v_input_dict[68];
 
 
-        ws.Pictures.Add(Directory.GetCurrentDirectory() + "\\images\\trv\\" + ((v_input_dict[7] == this.tvRadioButtonList1.Items[tvRadioButtonList1.SelectedIndex].Text) ? "Габаритный TRV и TRV-P.png" : "Габаритный TRV-3.png"), "A37", "B46");
+        //ws.Pictures.Add(Directory.GetCurrentDirectory() + "\\images\\trv\\" + ((v_input_dict[7] == this.tvRadioButtonList1.Items[tvRadioButtonList1.SelectedIndex].Text) ? "Габаритный TRV и TRV-P.png" : "Габаритный TRV-3.png"), "A37", "B46");
 
-            //    ef.Save(saveFileDialog1.FileName);
+        ef.Save("C:\\Users\\pge27\\Desktop\\TeplosilaWeb\\TeplosilaWeb\\" + objTextBox1.Text +".pdf");
+        ef.Save("C:\\Users\\pge27\\Desktop\\TeplosilaWeb\\TeplosilaWeb\\" + objTextBox1.Text + ".xlsx");
 
-            //    if (File.Exists(saveFileDialog1.FileName)) System.Diagnostics.Process.Start(saveFileDialog1.FileName);
-
-
-            //}
-            //(sender as Button).Enabled = true;
+        
+        string MyPath = HttpContext.Current.Server.MapPath("\\" + objTextBox1.Text + ".xlsx");
+        string filePath = HttpContext.Current.Server.MapPath("\\" + objTextBox1.Text + ".xlsx");
+        FileInfo file = new FileInfo(filePath);
+        if (file.Exists)
+        {
+            Response.Clear();
+            Response.ClearHeaders();
+            Response.ClearContent();
+            Response.AddHeader("Content-Disposition", "attachment; filename=" + file.Name);
+            Response.AddHeader("Content-Length", file.Length.ToString());
+            Response.ContentType = "text/plain";
+            Response.Flush();
+            Response.TransmitFile(file.FullName);
+            Response.End();
         }
+
+
+        //}
+        //(sender as Button).Enabled = true;
+    }
 
 }

@@ -308,7 +308,7 @@
                                     <br/>
                                             
                                             <asp:Label ID="Label46" runat="server" Text="Максимальный расход Gкл = "></asp:Label>
-                                            <asp:TextBox ID="fvTextBox11" runat="server" Enabled="False" type="number" ReadOnly="True" required="required"></asp:TextBox>
+                                            <asp:TextBox ID="fvTextBox11" runat="server" Enabled="False" ReadOnly="True" ></asp:TextBox>
                                             <asp:Label ID="Label48" runat="server" Text=" кг/ч"></asp:Label>
                                         </div>
                                     </ContentTemplate>
@@ -345,7 +345,7 @@
                             </div>
                               <asp:UpdatePanel ID="UpdatePanel9" runat="server">
                                     <ContentTemplate>
-                            <asp:Button ID="vButton" runat="server" type="submit" Text="Рассчитать" OnClick="vButton_Click"  />
+                            <asp:Button ID="vButton" runat="server" type="submit" Text="Рассчитать" OnClick="vButton_Click" Width="100%"  />
                             <br />
                             <asp:Label ID="LabelError" runat="server" Font-Bold="True" Font-Size="Medium" Font-Strikeout="False" ForeColor="Red" Text="Label"></asp:Label>
                             <br />
@@ -353,10 +353,7 @@
                             <br />
                             <br />
                             <div class="table-responsive-lg">
-                            <asp:GridView ID="GridView1" CssClass="table" runat="server" OnRowDataBound="GridView1_RowDataBound" OnSelectedIndexChanged="GridView1_SelectedIndexChanged" AutoGenerateSelectButton="True">
-                                <Columns>
-                
-</Columns>
+                            <asp:GridView ID="GridView1" CssClass="table" runat="server" OnRowDataBound="GridView1_RowDataBound" OnSelectedIndexChanged="GridView1_SelectedIndexChanged" AutoGenerateSelectButton="True" Font-Size="X-Small">
                                 <RowStyle Font-Size="Small" />
                                 <SelectedRowStyle BackColor="#ff7d00" Font-Bold="True" ForeColor="White" />
                             </asp:GridView>
