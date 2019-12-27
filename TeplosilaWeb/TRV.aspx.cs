@@ -10,6 +10,7 @@ using System.Web.UI.WebControls;
 using GemBox.Spreadsheet;
 using System.Data;
 using System.Net;
+using System.Threading;
 
 public partial class TRV : System.Web.UI.Page
 {
@@ -3334,7 +3335,7 @@ public partial class TRV : System.Web.UI.Page
         string filePath = path + "\\" + objTextBox1.Text + ".xlsx";
 
         ef.Save(filePath);
-
+        Thread.Sleep(3000);
 
         //FileInfo file = new FileInfo(filePath);
 
@@ -3360,13 +3361,13 @@ public partial class TRV : System.Web.UI.Page
         WebClient myWebClient = new WebClient();
         // Concatenate the domain with the Web resource filename.
         myStringWebResource = remoteUri + fileName;
-        
+
+
+
         // Download the Web resource and save it into the current filesystem folder.
         myWebClient.DownloadFile(myStringWebResource, filePath);
-        
 
-
-        //}
-        //(sender as Button).Enabled = true;
     }
+
+    
 }
