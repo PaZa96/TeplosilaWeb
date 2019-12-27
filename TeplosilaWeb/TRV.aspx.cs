@@ -3166,14 +3166,14 @@ public partial class TRV : System.Web.UI.Page
 
         
 
-        string path = HttpContext.Current.Server.MapPath("\\Files\\PDF\\" + DateTime.Now.ToString("dd-mm-yyyy"));
+        string path = HttpContext.Current.Server.MapPath("\\Files\\PDF\\" + DateTime.Now.ToString("dd-MM-yyyy"));
         DirectoryInfo dirInfo = new DirectoryInfo(path);
         if (!dirInfo.Exists)
         {
             dirInfo.Create();
         }
 
-        string filePath = "\\" + path + objTextBox1.Text + ".pdf";
+        string filePath = path + "\\" + objTextBox1.Text + ".pdf";
 
         ef.Save(filePath);
 
@@ -3181,14 +3181,9 @@ public partial class TRV : System.Web.UI.Page
         FileInfo file = new FileInfo(filePath);
         if (file.Exists)
         {
-            Response.Clear();
-            Response.ClearHeaders();
-            Response.ClearContent();
+            Response.ContentType = "Application/pdf";
             Response.AddHeader("Content-Disposition", "attachment; filename=" + file.Name);
-            Response.AddHeader("Content-Length", file.Length.ToString());
-            Response.ContentType = "text/plain";
-            Response.Flush();
-            Response.TransmitFile(file.FullName);
+            Response.TransmitFile(file.ToString());
             Response.End();
         }
 
@@ -3328,32 +3323,43 @@ public partial class TRV : System.Web.UI.Page
         ws.Cells["G40"].Value = v_input_dict[68];
 
 
-        string path = HttpContext.Current.Server.MapPath("\\Files\\Excel\\" + DateTime.Now.ToString("dd-mm-yyyy"));
+        string path = HttpContext.Current.Server.MapPath("\\Files\\Excel\\" + DateTime.Now.ToString("dd-MM-yyyy"));
         DirectoryInfo dirInfo = new DirectoryInfo(path);
         if (!dirInfo.Exists)
         {
             dirInfo.Create();
         }
 
-        string filePath = "\\" + path + objTextBox1.Text + ".xlsx";
+        string filePath = path + "\\" + objTextBox1.Text + ".xlsx";
 
         ef.Save(filePath);
 
 
-        FileInfo file = new FileInfo(filePath);
+        //FileInfo file = new FileInfo(filePath);
 
-        if (file.Exists)
-        {
-            Response.Clear();
-            Response.ClearHeaders();
-            Response.ClearContent();
-            Response.AddHeader("Content-Disposition", "attachment; filename=" + file.Name);
-            Response.AddHeader("Content-Length", file.Length.ToString());
-            Response.ContentType = "text/plain";
-            Response.Flush();
-            Response.TransmitFile(file.FullName);
-            Response.End();
-        }
+        //if (file.Exists)
+        //{
+        //    Response.Clear();
+        //    Response.ClearHeaders();
+        //    Response.ClearContent();
+        //    Response.AddHeader("Content-Disposition", "attachment; filename=" + file.Name);
+        //    Response.AddHeader("Content-Length", file.Length.ToString());
+        //    Response.ContentType = "text/plain";
+        //    Response.Flush();
+        //    Response.TransmitFile(file.FullName);
+        //    Response.End();
+        //}
+
+        string remoteUri = "/TeplosilaWeb/Files/PDF/";
+        string fileName = objTextBox1.Text + ".xlsx", myStringWebResource = null;
+        // Create a new WebClient instance.
+        WebClient myWebClient = new WebClient();
+        // Concatenate the domain with the Web resource filename.
+        myStringWebResource = remoteUri + fileName;
+        
+        // Download the Web resource and save it into the current filesystem folder.
+        myWebClient.DownloadFile(myStringWebResource, fileName);
+        
 
 
         //}
