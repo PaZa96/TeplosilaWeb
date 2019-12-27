@@ -3350,7 +3350,7 @@ public partial class TRV : System.Web.UI.Page
         //    Response.End();
         //}
 
-        string remoteUri = "/TeplosilaWeb/Files/PDF/";
+        string remoteUri = "/TeplosilaWeb/Files/Excel/";
         string fileName = objTextBox1.Text + ".xlsx", myStringWebResource = null;
         // Create a new WebClient instance.
         WebClient myWebClient = new WebClient();
