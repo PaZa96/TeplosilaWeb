@@ -3166,14 +3166,14 @@ public partial class TRV : System.Web.UI.Page
 
         
 
-        string path = HttpContext.Current.Server.MapPath("\\PDF\\" + DateTime.Now.ToString("dd-mm-yyyy"));
+        string path = HttpContext.Current.Server.MapPath("\\Files\\PDF\\" + DateTime.Now.ToString("dd-mm-yyyy"));
         DirectoryInfo dirInfo = new DirectoryInfo(path);
         if (!dirInfo.Exists)
         {
             dirInfo.Create();
         }
 
-        string filePath = path + objTextBox1.Text + ".pdf";
+        string filePath = "\\" + path + objTextBox1.Text + ".pdf";
 
         ef.Save(filePath);
 
@@ -3328,14 +3328,14 @@ public partial class TRV : System.Web.UI.Page
         ws.Cells["G40"].Value = v_input_dict[68];
 
 
-        string path = HttpContext.Current.Server.MapPath("\\PDF\\" + DateTime.Now.ToString("dd-mm-yyyy"));
+        string path = HttpContext.Current.Server.MapPath("\\Files\\Excel\\" + DateTime.Now.ToString("dd-mm-yyyy"));
         DirectoryInfo dirInfo = new DirectoryInfo(path);
         if (!dirInfo.Exists)
         {
             dirInfo.Create();
         }
 
-        string filePath = path + objTextBox1.Text + ".xlsx";
+        string filePath = "\\" + path + objTextBox1.Text + ".xlsx";
 
         ef.Save(filePath);
 
