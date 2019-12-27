@@ -3164,12 +3164,20 @@ public partial class TRV : System.Web.UI.Page
 
         //ws.Pictures.Add(Directory.GetCurrentDirectory() + "\\images\\trv\\" + ((v_input_dict[7] == this.tvRadioButtonList1.Items[tvRadioButtonList1.SelectedIndex].Text) ? "Габаритный TRV и TRV-P.png" : "Габаритный TRV-3.png"), "A37", "B46");
 
-        ef.Save("C:\\Users\\pge27\\Desktop\\TeplosilaWeb\\TeplosilaWeb\\" + objTextBox1.Text +".pdf");
-        ef.Save("C:\\Users\\pge27\\Desktop\\TeplosilaWeb\\TeplosilaWeb\\" + objTextBox1.Text + ".xlsx");
+        
+
+        string path = HttpContext.Current.Server.MapPath("\\PDF\\" + DateTime.Now.ToString("dd-mm-yyyy"));
+        DirectoryInfo dirInfo = new DirectoryInfo(path);
+        if (!dirInfo.Exists)
+        {
+            dirInfo.Create();
+        }
+
+        string filePath = path + objTextBox1.Text + ".pdf";
+
+        ef.Save(filePath);
 
         
-        string MyPath = HttpContext.Current.Server.MapPath("\\" + objTextBox1.Text + ".xlsx");
-        string filePath = HttpContext.Current.Server.MapPath("\\" + objTextBox1.Text + ".xlsx");
         FileInfo file = new FileInfo(filePath);
         if (file.Exists)
         {
@@ -3189,4 +3197,166 @@ public partial class TRV : System.Web.UI.Page
         //(sender as Button).Enabled = true;
     }
 
+
+    protected void Button3_Click(object sender, EventArgs e)
+    {
+        v_input_dict[2] = objTextBox1.Text;
+        v_input_dict[8] = "-";
+
+        int pos = 42;
+
+
+
+        for (int i = 1; i < GridView1.SelectedRow.Cells.Count; i++)
+        {
+
+            if (pos == 52)
+            {
+                v_input_dict[pos] = GridView1.SelectedRow.Cells[i].Text;
+                v_input_dict[pos + 1] = GridView1.SelectedRow.Cells[i].Text;
+                pos++;
+            }
+            else if (pos >= 64) v_input_dict[pos + 1] = GridView1.SelectedRow.Cells[i].Text;
+            else v_input_dict[pos] = GridView1.SelectedRow.Cells[i].Text;
+
+
+            pos++;
+
+        }
+
+
+        SpreadsheetInfo.SetLicense("FREE-LIMITED-KEY");
+
+        if (!File.Exists(HttpContext.Current.Server.MapPath("\\Content\\templates\\templateTRV.xlsx")))
+        {
+            LabelError.Text += "Не найден файл шаблона";
+            return;
+        }
+
+        ExcelFile ef = ExcelFile.Load(HttpContext.Current.Server.MapPath("\\Content\\templates\\templateTRV.xlsx"));
+
+        ExcelWorksheet ws = ef.Worksheets[0];
+
+        ws.PrintOptions.TopMargin = 0.1 / 2.54;
+        ws.PrintOptions.BottomMargin = 0.1 / 2.54;
+        ws.PrintOptions.LeftMargin = 1.78 / 2.54;
+        ws.PrintOptions.RightMargin = 0.78 / 2.54;
+
+        ws.Cells["K46"].Value = v_input_dict[0];
+
+        ws.Cells["J2"].Value = v_input_dict[1];
+        ws.Cells["B3"].Value = v_input_dict[2];
+
+        ws.Cells["C4"].Value = v_input_dict[3];
+        ws.Cells["J4"].Value = v_input_dict[4];
+        ws.Cells["C5"].Value = v_input_dict[5];
+        ws.Cells["J5"].Value = v_input_dict[6];
+        ws.Cells["C6"].Value = v_input_dict[7];
+        ws.Cells["J6"].Value = v_input_dict[8];
+
+        ws.Cells["C8"].Value = v_input_dict[9];
+
+        ws.Cells["E9"].Value = v_input_dict[10];
+        ws.Cells["F9"].Value = v_input_dict[11];
+        ws.Cells["J9"].Value = v_input_dict[12];
+        ws.Cells["K9"].Value = v_input_dict[13];
+
+        ws.Cells["E10"].Value = v_input_dict[14];
+        ws.Cells["F10"].Value = v_input_dict[15];
+        ws.Cells["E11"].Value = v_input_dict[16];
+        ws.Cells["F11"].Value = v_input_dict[17];
+        ws.Cells["E12"].Value = v_input_dict[18];
+
+        // пар
+        ws.Cells["J10"].Value = "-";
+        ws.Cells["K10"].Value = "-";
+        ws.Cells["J11"].Value = "-";
+        ws.Cells["K11"].Value = "-";
+        ws.Cells["J12"].Value = "-";
+        // пар
+
+        ws.Cells["E14"].Value = v_input_dict[24];
+        ws.Cells["I14"].Value = v_input_dict[25];
+        ws.Cells["E15"].Value = v_input_dict[26];
+        ws.Cells["I15"].Value = v_input_dict[27];
+        ws.Cells["E16"].Value = v_input_dict[28];
+        ws.Cells["I16"].Value = v_input_dict[29];
+        ws.Cells["E17"].Value = v_input_dict[30];
+        ws.Cells["I17"].Value = v_input_dict[31];
+
+        ws.Cells["I18"].Value = v_input_dict[32];
+        ws.Cells["K18"].Value = v_input_dict[33];
+        ws.Cells["I19"].Value = v_input_dict[34];
+        ws.Cells["K19"].Value = v_input_dict[35];
+
+        ws.Cells["C21"].Value = v_input_dict[36];
+        ws.Cells["C22"].Value = v_input_dict[37];
+
+        ws.Cells["J21"].Value = v_input_dict[38];
+        ws.Cells["J22"].Value = v_input_dict[39];
+
+        ws.Cells["E24"].Value = v_input_dict[40];
+        ws.Cells["E25"].Value = v_input_dict[41];
+
+        ws.Cells["A28"].Value = v_input_dict[42];
+        ws.Cells["B28"].Value = v_input_dict[43];
+        ws.Cells["C28"].Value = v_input_dict[44];
+        ws.Cells["D28"].Value = v_input_dict[45];
+        ws.Cells["E28"].Value = v_input_dict[46];
+        ws.Cells["F28"].Value = v_input_dict[47];
+        ws.Cells["G28"].Value = v_input_dict[48];
+        ws.Cells["H28"].Value = v_input_dict[49];
+        ws.Cells["I28"].Value = v_input_dict[50];
+        ws.Cells["J28"].Value = v_input_dict[51];
+        ws.Cells["K28"].Value = v_input_dict[52];
+
+        ws.Cells["A32"].Value = v_input_dict[53];
+        ws.Cells["B32"].Value = v_input_dict[54];
+        ws.Cells["C32"].Value = v_input_dict[55];
+        ws.Cells["D32"].Value = v_input_dict[56];
+        ws.Cells["E32"].Value = v_input_dict[57];
+        ws.Cells["F32"].Value = v_input_dict[58];
+        ws.Cells["G32"].Value = v_input_dict[59];
+        ws.Cells["H32"].Value = v_input_dict[60];
+        ws.Cells["I32"].Value = v_input_dict[61];
+        ws.Cells["J32"].Value = v_input_dict[62];
+        ws.Cells["K32"].Value = v_input_dict[63];
+
+        ws.Cells["G37"].Value = v_input_dict[65];
+        ws.Cells["G38"].Value = v_input_dict[66];
+        ws.Cells["G39"].Value = v_input_dict[67];
+        ws.Cells["G40"].Value = v_input_dict[68];
+
+
+        string path = HttpContext.Current.Server.MapPath("\\PDF\\" + DateTime.Now.ToString("dd-mm-yyyy"));
+        DirectoryInfo dirInfo = new DirectoryInfo(path);
+        if (!dirInfo.Exists)
+        {
+            dirInfo.Create();
+        }
+
+        string filePath = path + objTextBox1.Text + ".xlsx";
+
+        ef.Save(filePath);
+
+
+        FileInfo file = new FileInfo(filePath);
+
+        if (file.Exists)
+        {
+            Response.Clear();
+            Response.ClearHeaders();
+            Response.ClearContent();
+            Response.AddHeader("Content-Disposition", "attachment; filename=" + file.Name);
+            Response.AddHeader("Content-Length", file.Length.ToString());
+            Response.ContentType = "text/plain";
+            Response.Flush();
+            Response.TransmitFile(file.FullName);
+            Response.End();
+        }
+
+
+        //}
+        //(sender as Button).Enabled = true;
+    }
 }

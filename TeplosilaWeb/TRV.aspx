@@ -364,8 +364,11 @@
                                         <asp:TextBox ID="objTextBox1" runat="server" Enabled="False"></asp:TextBox>
                                         <br />
                             <br />
-                            <asp:Button ID="Button2" runat="server" Text="Button" CssClass="btn btn-primary" OnClick="Button2_Click" />
+                            <asp:Button ID="Button2" runat="server" Text="Сохранить в PDF" CssClass="btn btn-primary" OnClick="Button2_Click" />
+                            <asp:Button ID="Button3" runat="server" Text="Сохранить в Excel" CssClass="btn btn-primary" OnClick="Button3_Click" />
                         </div>
+                        
+                                        
                         
                                         <br />
                         
