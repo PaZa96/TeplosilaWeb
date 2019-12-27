@@ -3181,9 +3181,10 @@ public partial class TRV : System.Web.UI.Page
         FileInfo file = new FileInfo(filePath);
         if (file.Exists)
         {
+            string str = Server.MapPath(@"~/Files/PDF/" + DateTime.Now.ToString("dd-MM-yyyy") + "/" + file.Name);
             Response.ContentType = "Application/pdf";
             Response.AddHeader("Content-Disposition", "attachment; filename=" + file.Name);
-            Response.TransmitFile(file.ToString());
+            Response.TransmitFile(str);
             Response.End();
         }
 
@@ -3350,7 +3351,10 @@ public partial class TRV : System.Web.UI.Page
         //    Response.End();
         //}
 
-        string remoteUri = "/TeplosilaWeb/Files/Excel/";
+        string absoluteURL = HttpContext.Current.Request.Url.AbsoluteUri;
+        string absolutePath = HttpContext.Current.Request.Url.AbsolutePath;
+
+        string remoteUri = absoluteURL.Replace(absolutePath, "/") + "TeplosilaWeb/Files/Excel/" + DateTime.Now.ToString("dd-MM-yyyy") + "/";
         string fileName = objTextBox1.Text + ".xlsx", myStringWebResource = null;
         // Create a new WebClient instance.
         WebClient myWebClient = new WebClient();
@@ -3358,7 +3362,7 @@ public partial class TRV : System.Web.UI.Page
         myStringWebResource = remoteUri + fileName;
         
         // Download the Web resource and save it into the current filesystem folder.
-        myWebClient.DownloadFile(myStringWebResource, fileName);
+        myWebClient.DownloadFile(myStringWebResource, filePath);
         
 
 
