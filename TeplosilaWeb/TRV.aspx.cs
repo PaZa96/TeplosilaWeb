@@ -3178,15 +3178,51 @@ public partial class TRV : System.Web.UI.Page
 
         ef.Save(filePath);
 
-        
-        FileInfo file = new FileInfo(filePath);
-        if (file.Exists)
+
+        //FileInfo file = new FileInfo(filePath);
+        //if (file.Exists)
+        //{
+        //    string str = Server.MapPath(@"~/Files/PDF/" + DateTime.Now.ToString("dd-MM-yyyy") + "/" + file.Name);
+        //    Response.ContentType = "Application/pdf";
+        //    Response.AddHeader("Content-Disposition", "attachment; filename=" + file.Name);
+        //    Response.TransmitFile(str);
+        //    Response.End();
+        //}
+
+        Response.ContentType = "application/pdf";
+        Response.AppendHeader("Content-Disposition", "attachment; filename="+ objTextBox1.Text + ".pdf");
+
+        // Write the file to the Response  
+        const int bufferLength = 10000;
+        byte[] buffer = new Byte[bufferLength];
+        int length = 0;
+        Stream download = null;
+        try
         {
-            string str = Server.MapPath(@"~/Files/PDF/" + DateTime.Now.ToString("dd-MM-yyyy") + "/" + file.Name);
-            Response.ContentType = "Application/pdf";
-            Response.AddHeader("Content-Disposition", "attachment; filename=" + file.Name);
-            Response.TransmitFile(str);
+            download = new FileStream(Server.MapPath("\\" + objTextBox1.Text + ".pdf"),
+                                                           FileMode.Open,
+                                                           FileAccess.Read);
+            do
+            {
+                if (Response.IsClientConnected)
+                {
+                    length = download.Read(buffer, 0, bufferLength);
+                    Response.OutputStream.Write(buffer, 0, length);
+                    buffer = new Byte[bufferLength];
+                }
+                else
+                {
+                    length = -1;
+                }
+            }
+            while (length > 0);
+            Response.Flush();
             Response.End();
+        }
+        finally
+        {
+            if (download != null)
+                download.Close();
         }
 
 
