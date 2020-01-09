@@ -11,6 +11,7 @@ using GemBox.Spreadsheet;
 using System.Data;
 using System.Net;
 using System.Threading;
+using System.Diagnostics;
 
 public partial class TRV : System.Web.UI.Page
 {
@@ -3178,58 +3179,99 @@ public partial class TRV : System.Web.UI.Page
 
         ef.Save(filePath);
 
+        WaitDownload(50);
 
-        //FileInfo file = new FileInfo(filePath);
-        //if (file.Exists)
-        //{
-        //    string str = Server.MapPath(@"~/Files/PDF/" + DateTime.Now.ToString("dd-MM-yyyy") + "/" + file.Name);
-        //    Response.ContentType = "Application/pdf";
-        //    Response.AddHeader("Content-Disposition", "attachment; filename=" + file.Name);
-        //    Response.TransmitFile(str);
-        //    Response.End();
-        //}
 
-        Response.ContentType = "application/pdf";
-        Response.AppendHeader("Content-Disposition", "attachment; filename="+ objTextBox1.Text + ".pdf");
 
-        // Write the file to the Response  
-        const int bufferLength = 10000;
-        byte[] buffer = new Byte[bufferLength];
-        int length = 0;
-        Stream download = null;
-        try
+
+        FileInfo file = new FileInfo(filePath);
+        if (file.Exists)
         {
-            download = new FileStream(Server.MapPath("\\" + objTextBox1.Text + ".pdf"),
-                                                           FileMode.Open,
-                                                           FileAccess.Read);
-            do
+            // The file path to download.
+
+            
+
+            // The file name used to save the file to the client's system..
+
+            string filename = Path.GetFileName(filePath);
+            System.IO.Stream stream = null;
+            try
             {
-                if (Response.IsClientConnected)
+                // Open the file into a stream.
+                stream = new FileStream(filePath, System.IO.FileMode.Open, System.IO.FileAccess.Read, System.IO.FileShare.Read);
+                // Total bytes to read:
+                long bytesToRead = stream.Length;
+                Response.ContentType = "application/octet-stream";
+                Response.AddHeader("Content-Disposition", "attachment; filename=" + filename);
+                // Read the bytes from the stream in small portions.
+                while (bytesToRead > 0)
                 {
-                    length = download.Read(buffer, 0, bufferLength);
-                    Response.OutputStream.Write(buffer, 0, length);
-                    buffer = new Byte[bufferLength];
-                }
-                else
-                {
-                    length = -1;
+                    // Make sure the client is still connected.
+                    if (Response.IsClientConnected)
+                    {
+                        // Read the data into the buffer and write into the
+                        // output stream.
+                        byte[] buffer = new Byte[10000];
+                        int length = stream.Read(buffer, 0, 10000);
+                        Response.OutputStream.Write(buffer, 0, length);
+                        Response.Flush();
+                        // We have already read some bytes.. need to read
+                        // only the remaining.
+                        bytesToRead = bytesToRead - length;
+                    }
+                    else
+                    {
+                        // Get out of the loop, if user is not connected anymore..
+                        bytesToRead = -1;
+                    }
                 }
             }
-            while (length > 0);
-            Response.Flush();
-            Response.End();
+            catch (Exception ex)
+            {
+                Response.Write(ex.Message);
+                // An error occurred..
+            }
+            finally
+            {
+                if (stream != null)
+                {
+                    stream.Close();
+                }
+            }
         }
-        finally
-        {
-            if (download != null)
-                download.Close();
-        }
+
+
 
 
         //}
         //(sender as Button).Enabled = true;
     }
 
+    
+
+    static void WaitDownload(int second)
+    {
+        Stopwatch sw = new Stopwatch(); // sw cotructor
+        sw.Start(); // starts the stopwatch
+        for (int i = 0; ; i++)
+        {
+            if (i % 100000 == 0) // if in 100000th iteration (could be any other large number
+                                 // depending on how often you want the time to be checked) 
+            {
+                sw.Stop(); // stop the time measurement
+                if (sw.ElapsedMilliseconds > second) // check if desired period of time has elapsed
+                {
+                    break; // if more than 5000 milliseconds have passed, stop looping and return
+                           // to the existing code
+                }
+                else
+                {
+                    sw.Start(); // if less than 5000 milliseconds have elapsed, continue looping
+                                // and resume time measurement
+                }
+            }
+        }
+    }
 
     protected void Button3_Click(object sender, EventArgs e)
     {
