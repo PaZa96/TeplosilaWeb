@@ -65,3 +65,11 @@ input[type=button], input[type=submit], input[type=reset] {
     cursor: pointer;
 
 }
+
+.hide-btn {
+    display: none;
+}
+
+.show-btn {
+    display:inline-block;
+}

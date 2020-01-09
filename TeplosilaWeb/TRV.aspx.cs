@@ -2198,7 +2198,10 @@ public partial class TRV : System.Web.UI.Page
         GridView1.Columns.Clear();
         GridView1.DataSource = null;
         GridView1.DataBind();
-       
+
+        
+
+
 
         readFile(0);
         Dictionary<string, double> g_dict = new Dictionary<string, double>();
@@ -2778,6 +2781,9 @@ public partial class TRV : System.Web.UI.Page
             return;
         }
 
+        Label52.Visible = true;
+        
+        GridView1.Enabled = true;
         this.GridView1.Visible = true;
         this.GridView1.Height = 250;
         this.Button2.Visible = true;
@@ -2979,12 +2985,16 @@ public partial class TRV : System.Web.UI.Page
 
     protected void GridView1_SelectedIndexChanged(object sender, EventArgs e)
     {
+        Label53.Visible = true;
         objTextBox1.Enabled = true;
+        objTextBox1.Visible = true;
+        
     }
 
     protected void GridView1_RowDataBound(object sender, GridViewRowEventArgs e)
     {
         int index = GridView1.SelectedIndex;
+        
         
     }
 
@@ -3075,7 +3085,7 @@ public partial class TRV : System.Web.UI.Page
 
         ws.PrintOptions.TopMargin = 0.1 / 2.54;
         ws.PrintOptions.BottomMargin = 0.1 / 2.54;
-        ws.PrintOptions.LeftMargin = 1.78 / 2.54;
+        ws.PrintOptions.LeftMargin = 1 / 2.54;
         ws.PrintOptions.RightMargin = 0.78 / 2.54;
 
         ws.Cells["K46"].Value = v_input_dict[0];
@@ -3175,76 +3185,30 @@ public partial class TRV : System.Web.UI.Page
             dirInfo.Create();
         }
 
-        string filePath = path + "\\" + objTextBox1.Text + ".pdf";
+        string fileName = "";
+
+        if (!String.IsNullOrWhiteSpace(objTextBox1.Text)) {
+            fileName = objTextBox1.Text;
+                }
+        else {
+            fileName += DateTime.Now.ToString("dd-MM-yyyy");
+        }
+
+        string filePath = path + "\\" + fileName + ".pdf";
 
         ef.Save(filePath);
 
         WaitDownload(50);
 
-
-
-
         FileInfo file = new FileInfo(filePath);
         if (file.Exists)
         {
-            // The file path to download.
-
-            
-
-            // The file name used to save the file to the client's system..
-
-            string filename = Path.GetFileName(filePath);
-            System.IO.Stream stream = null;
-            try
-            {
-                // Open the file into a stream.
-                stream = new FileStream(filePath, System.IO.FileMode.Open, System.IO.FileAccess.Read, System.IO.FileShare.Read);
-                // Total bytes to read:
-                long bytesToRead = stream.Length;
-                Response.ContentType = "application/octet-stream";
-                Response.AddHeader("Content-Disposition", "attachment; filename=" + filename);
-                // Read the bytes from the stream in small portions.
-                while (bytesToRead > 0)
-                {
-                    // Make sure the client is still connected.
-                    if (Response.IsClientConnected)
-                    {
-                        // Read the data into the buffer and write into the
-                        // output stream.
-                        byte[] buffer = new Byte[10000];
-                        int length = stream.Read(buffer, 0, 10000);
-                        Response.OutputStream.Write(buffer, 0, length);
-                        Response.Flush();
-                        // We have already read some bytes.. need to read
-                        // only the remaining.
-                        bytesToRead = bytesToRead - length;
-                    }
-                    else
-                    {
-                        // Get out of the loop, if user is not connected anymore..
-                        bytesToRead = -1;
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                Response.Write(ex.Message);
-                // An error occurred..
-            }
-            finally
-            {
-                if (stream != null)
-                {
-                    stream.Close();
-                }
-            }
+            Response.ContentType = "application/pdf";
+            Response.AppendHeader("Content-Disposition", "attachment; filename="+ file.Name);
+            Response.TransmitFile(file.FullName);
+            Response.End();
         }
 
-
-
-
-        //}
-        //(sender as Button).Enabled = true;
     }
 
     
@@ -3314,7 +3278,7 @@ public partial class TRV : System.Web.UI.Page
 
         ws.PrintOptions.TopMargin = 0.1 / 2.54;
         ws.PrintOptions.BottomMargin = 0.1 / 2.54;
-        ws.PrintOptions.LeftMargin = 1.78 / 2.54;
+        ws.PrintOptions.LeftMargin = 1 / 2.54;
         ws.PrintOptions.RightMargin = 0.78 / 2.54;
 
         ws.Cells["K46"].Value = v_input_dict[0];
@@ -3410,42 +3374,36 @@ public partial class TRV : System.Web.UI.Page
             dirInfo.Create();
         }
 
-        string filePath = path + "\\" + objTextBox1.Text + ".xlsx";
+        string fileName = "";
+
+        if (!String.IsNullOrWhiteSpace(objTextBox1.Text))
+        {
+            fileName = objTextBox1.Text;
+        }
+        else
+        {
+            fileName += DateTime.Now.ToString("dd-MM-yyyy");
+        }
+
+        string filePath = path + "\\" + fileName + ".xlsx";
 
         ef.Save(filePath);
-        Thread.Sleep(3000);
-
-        //FileInfo file = new FileInfo(filePath);
-
-        //if (file.Exists)
-        //{
-        //    Response.Clear();
-        //    Response.ClearHeaders();
-        //    Response.ClearContent();
-        //    Response.AddHeader("Content-Disposition", "attachment; filename=" + file.Name);
-        //    Response.AddHeader("Content-Length", file.Length.ToString());
-        //    Response.ContentType = "text/plain";
-        //    Response.Flush();
-        //    Response.TransmitFile(file.FullName);
-        //    Response.End();
-        //}
-
-        string absoluteURL = HttpContext.Current.Request.Url.AbsoluteUri;
-        string absolutePath = HttpContext.Current.Request.Url.AbsolutePath;
-
-        string remoteUri = absoluteURL.Replace(absolutePath, "/") + "TeplosilaWeb/Files/Excel/" + DateTime.Now.ToString("dd-MM-yyyy") + "/";
-        string fileName = objTextBox1.Text + ".xlsx", myStringWebResource = null;
-        // Create a new WebClient instance.
-        WebClient myWebClient = new WebClient();
-        // Concatenate the domain with the Web resource filename.
-        myStringWebResource = remoteUri + fileName;
+        WaitDownload(50);
 
 
 
-        // Download the Web resource and save it into the current filesystem folder.
-        myWebClient.DownloadFile(myStringWebResource, filePath);
+
+        FileInfo file = new FileInfo(filePath);
+        if (file.Exists)
+        {
+            Response.ContentType = "application/x-msexcel";
+            Response.AppendHeader("Content-Disposition", "attachment; filename=" + file.Name);
+            Response.TransmitFile(file.FullName);
+            Response.End();
+        }
+
 
     }
 
-    
+
 }
