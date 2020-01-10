@@ -17,7 +17,7 @@
         <form id="form1" runat="server">
             <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
             <div class="row jumbotron">
-                <div class="col-10">
+                <div class="col-xs-12 col-sm-10">
                     <div class="col border">
                         <asp:Label ID="Label1" runat="server" Text="Место установки:"></asp:Label>
                         <asp:UpdatePanel ID="UpdatePanel1" runat="server">
@@ -497,7 +497,7 @@
                         <asp:UpdatePanel ID="UpdatePanel9" runat="server">
                             <ContentTemplate>
                                 <asp:Label ID="LabelError" runat="server" Font-Bold="True" Font-Size="Medium"
-                                    Font-Strikeout="False" ForeColor="Red" Text="Label" Visible="False"></asp:Label>
+                                    Font-Strikeout="False" ForeColor="Red"></asp:Label>
                                 <br/>
                                 <asp:Button ID="vButton" runat="server" type="submit" Text="Рассчитать"
                                     OnClick="vButton_Click" Width="100%" />
@@ -535,6 +535,17 @@
                             btn2.style.add("show-btn");
                             btn3.style.add("show-btn");
                         }
+
+                        window.onload = function () {
+                            var element = document.getElementById('Label53');
+
+                        element.addEventListener("DOMNodeInserted", function (event) {
+                            alert("g");
+                        }, false);
+                        }
+                        // выбираем нужный элемент
+                        
+                        
                         
 
                     </script>
@@ -547,7 +558,7 @@
                         OnClick="Button3_Click" />
                 </div>
             </div>
-            <div class="col-2">
+            <div class="col-xs-12 col-sm-2">
                 <asp:UpdatePanel ID="UpdatePanel16" runat="server">
                     <ContentTemplate>
                         <asp:Image ID="vPictureBox" runat="server" class="valve-image" />

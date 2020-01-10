@@ -120,10 +120,10 @@ public partial class TRV : System.Web.UI.Page
         switch (index)
         {
             case 0:
-                vPictureBox.ImageUrl = @"/Content/images/TRV-2.png";
+                vPictureBox.ImageUrl = @"./Content/images/TRV-2.png";
                 break;
             case 1:
-                vPictureBox.ImageUrl = @"/Content/images/TRV-3.png";
+                vPictureBox.ImageUrl = @"./Content/images/TRV-3.png";
                 break;
             default:
                 vPictureBox.ImageUrl = null;
@@ -3073,13 +3073,13 @@ public partial class TRV : System.Web.UI.Page
 
         SpreadsheetInfo.SetLicense("FREE-LIMITED-KEY");
 
-        if (!File.Exists(HttpContext.Current.Server.MapPath("\\Content\\templates\\templateTRV.xlsx")))
+        if (!File.Exists(HttpContext.Current.Server.MapPath(@"./Content/templates/templateTRV.xlsx")))
         {
             LabelError.Text += "Не найден файл шаблона";
             return;
         }
 
-        ExcelFile ef = ExcelFile.Load(HttpContext.Current.Server.MapPath("\\Content\\templates\\templateTRV.xlsx"));
+        ExcelFile ef = ExcelFile.Load(HttpContext.Current.Server.MapPath(@"./Content/templates/templateTRV.xlsx"));
 
         ExcelWorksheet ws = ef.Worksheets[0];
 
@@ -3183,6 +3183,7 @@ public partial class TRV : System.Web.UI.Page
         if (!dirInfo.Exists)
         {
             dirInfo.Create();
+            
         }
 
         string fileName = "";
@@ -3199,16 +3200,17 @@ public partial class TRV : System.Web.UI.Page
         ef.Save(filePath);
 
         WaitDownload(50);
-
+        LabelError.Text += "dfs";
         FileInfo file = new FileInfo(filePath);
         if (file.Exists)
         {
+            LabelError.Text += "ok";
             Response.ContentType = "application/pdf";
             Response.AppendHeader("Content-Disposition", "attachment; filename="+ file.Name);
             Response.TransmitFile(file.FullName);
             Response.End();
         }
-
+        LabelError.Text += "End";
     }
 
     
@@ -3266,13 +3268,13 @@ public partial class TRV : System.Web.UI.Page
 
         SpreadsheetInfo.SetLicense("FREE-LIMITED-KEY");
 
-        if (!File.Exists(HttpContext.Current.Server.MapPath("\\Content\\templates\\templateTRV.xlsx")))
+        if (!File.Exists(HttpContext.Current.Server.MapPath(@"./Content/templates/templateTRV.xlsx")))
         {
             LabelError.Text += "Не найден файл шаблона";
             return;
         }
 
-        ExcelFile ef = ExcelFile.Load(HttpContext.Current.Server.MapPath("\\Content\\templates\\templateTRV.xlsx"));
+        ExcelFile ef = ExcelFile.Load(HttpContext.Current.Server.MapPath(@"./Content/templates/templateTRV.xlsx"));
 
         ExcelWorksheet ws = ef.Worksheets[0];
 
