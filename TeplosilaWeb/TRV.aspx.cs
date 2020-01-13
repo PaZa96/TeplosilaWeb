@@ -2195,9 +2195,9 @@ public partial class TRV : System.Web.UI.Page
         ResetColorToAllControls();
         DisableTextBox(objTextBox1);
         objTextBox1.Enabled = false;
-        GridView1.Columns.Clear();
-        GridView1.DataSource = null;
-        GridView1.DataBind();
+        GridView2.Columns.Clear();
+        GridView2.DataSource = null;
+        GridView2.DataBind();
 
         
 
@@ -2534,9 +2534,13 @@ public partial class TRV : System.Web.UI.Page
                                                     maxt2ResultLabel.Text = "Максимальная температура - 150 °С";
                                                 }*/
 
-                                                //ws2ResultLabel.Text = "Рабочая среда - " + (ws2RadioButtonList1.SelectedIndex == 0 ? "вода" : ((ws2RadioButtonList1.SelectedIndex == 1 ? "этиленгликоль " : "пропиленгликоль ") + g_dict["p14"] + "%, " + g_dict["p15"] + " °С"));
-                                                //maxt2ResultLabel.Text = "Максимальная температура - " + g_dict["vTMax"].ToString() + " °С";
-                                                //maxp2ResultLabel.Text = "Максимальное рабочее давление - 16 бар";
+
+                                                ws2ResultLabel.Visible = true;
+                                                maxp2ResultLabel.Visible = true;
+                                                maxt2ResultLabel.Visible = true;
+                                                ws2ResultLabel.Text = "Рабочая среда - " + (ws2RadioButtonList1.SelectedIndex == 0 ? "вода" : ((ws2RadioButtonList1.SelectedIndex == 1 ? "этиленгликоль " : "пропиленгликоль ") + g_dict["p14"] + "%, " + g_dict["p15"] + " °С"));
+                                                maxt2ResultLabel.Text = "Максимальная температура - " + g_dict["vTMax"].ToString() + " °С";
+                                                maxp2ResultLabel.Text = "Максимальное рабочее давление - 16 бар";
 
 
                                                 double t1_check = Convert.ToDouble(calcvTextBox2.Text);
@@ -2635,8 +2639,8 @@ public partial class TRV : System.Web.UI.Page
                                                     dr = dt.NewRow();
 
                                                     dt.Rows.Add(dr);
-                                                    GridView1.DataSource = dt;
-                                                    GridView1.DataBind();
+                                                    GridView2.DataSource = dt;
+                                                    GridView2.DataBind();
 
                                                     for (int j = 0; j < gtr.Count(); j++)
                                                     {
@@ -2682,26 +2686,26 @@ public partial class TRV : System.Web.UI.Page
                                                             string tmp = gtr.ElementAt(j).Value[i];
                                                             if (String.IsNullOrWhiteSpace(tmp))
                                                             {
-                                                                if (GridView1.Rows.Count > 1)
+                                                                if (GridView2.Rows.Count > 1)
                                                                 {
-                                                                    dt.Rows[GridView1.Rows.Count - 1][index - 1] = dt.Rows[GridView1.Rows.Count - 2][index - 1];
+                                                                    dt.Rows[GridView2.Rows.Count - 1][index - 1] = dt.Rows[GridView2.Rows.Count - 2][index - 1];
                                                                 }
                                                             }
                                                             else
                                                             {
-                                                                dt.Rows[GridView1.Rows.Count - 1][index - 1] = tmp;
+                                                                dt.Rows[GridView2.Rows.Count - 1][index - 1] = tmp;
                                                             }
                                                         }
                                                         else
                                                         {
-                                                            if (GridView1.Rows.Count > 1)
+                                                            if (GridView2.Rows.Count > 1)
                                                             {
-                                                                dt.Rows[GridView1.Rows.Count - 1][index - 1] = dt.Rows[GridView1.Rows.Count - 2][index - 1];
+                                                                dt.Rows[GridView2.Rows.Count - 1][index - 1] = dt.Rows[GridView2.Rows.Count - 2][index - 1];
                                                             }
                                                         }
                                                     }
-                                                    GridView1.DataSource = dt;
-                                                    GridView1.DataBind();
+                                                    GridView2.DataSource = dt;
+                                                    GridView2.DataBind();
                                                 }
 
                                             }
@@ -2783,11 +2787,13 @@ public partial class TRV : System.Web.UI.Page
 
         Label52.Visible = true;
         
-        GridView1.Enabled = true;
-        this.GridView1.Visible = true;
-        this.GridView1.Height = 250;
+        GridView2.Enabled = true;
+        this.GridView2.Visible = true;
+        this.GridView2.Height = 250;
         this.Button2.Visible = true;
         this.Button2.Enabled = true;
+        this.Button3.Visible = true;
+        this.Button3.Enabled = true;
 
     }
 
@@ -2983,7 +2989,7 @@ public partial class TRV : System.Web.UI.Page
 
     }
 
-    protected void GridView1_SelectedIndexChanged(object sender, EventArgs e)
+    protected void GridView2_SelectedIndexChanged(object sender, EventArgs e)
     {
         Label53.Visible = true;
         objTextBox1.Enabled = true;
@@ -2991,9 +2997,9 @@ public partial class TRV : System.Web.UI.Page
         
     }
 
-    protected void GridView1_RowDataBound(object sender, GridViewRowEventArgs e)
+    protected void GridView2_RowDataBound(object sender, GridViewRowEventArgs e)
     {
-        int index = GridView1.SelectedIndex;
+        int index = GridView2.SelectedIndex;
         
         
     }
@@ -3053,17 +3059,17 @@ public partial class TRV : System.Web.UI.Page
 
 
 
-        for (int i = 1; i < GridView1.SelectedRow.Cells.Count; i++)
+        for (int i = 1; i < GridView2.SelectedRow.Cells.Count; i++)
         {
             
             if (pos == 52)
             {
-                v_input_dict[pos] = GridView1.SelectedRow.Cells[i].Text;
-                v_input_dict[pos + 1] = GridView1.SelectedRow.Cells[i].Text;
+                v_input_dict[pos] = GridView2.SelectedRow.Cells[i].Text;
+                v_input_dict[pos + 1] = GridView2.SelectedRow.Cells[i].Text;
                 pos++;
             }
-            else if (pos >= 64) v_input_dict[pos + 1] = GridView1.SelectedRow.Cells[i].Text;
-            else v_input_dict[pos] = GridView1.SelectedRow.Cells[i].Text;
+            else if (pos >= 64) v_input_dict[pos + 1] = GridView2.SelectedRow.Cells[i].Text;
+            else v_input_dict[pos] = GridView2.SelectedRow.Cells[i].Text;
 
 
             pos++;
@@ -3178,7 +3184,7 @@ public partial class TRV : System.Web.UI.Page
 
         
 
-        string path = HttpContext.Current.Server.MapPath("\\Files\\PDF\\" + DateTime.Now.ToString("dd-MM-yyyy"));
+        string path = HttpContext.Current.Server.MapPath("\\Files\\TRV\\PDF\\" + DateTime.Now.ToString("dd-MM-yyyy"));
         DirectoryInfo dirInfo = new DirectoryInfo(path);
         if (!dirInfo.Exists)
         {
@@ -3246,17 +3252,17 @@ public partial class TRV : System.Web.UI.Page
 
 
 
-        for (int i = 1; i < GridView1.SelectedRow.Cells.Count; i++)
+        for (int i = 1; i < GridView2.SelectedRow.Cells.Count; i++)
         {
 
             if (pos == 52)
             {
-                v_input_dict[pos] = GridView1.SelectedRow.Cells[i].Text;
-                v_input_dict[pos + 1] = GridView1.SelectedRow.Cells[i].Text;
+                v_input_dict[pos] = GridView2.SelectedRow.Cells[i].Text;
+                v_input_dict[pos + 1] = GridView2.SelectedRow.Cells[i].Text;
                 pos++;
             }
-            else if (pos >= 64) v_input_dict[pos + 1] = GridView1.SelectedRow.Cells[i].Text;
-            else v_input_dict[pos] = GridView1.SelectedRow.Cells[i].Text;
+            else if (pos >= 64) v_input_dict[pos + 1] = GridView2.SelectedRow.Cells[i].Text;
+            else v_input_dict[pos] = GridView2.SelectedRow.Cells[i].Text;
 
 
             pos++;
@@ -3367,7 +3373,7 @@ public partial class TRV : System.Web.UI.Page
         ws.Cells["G40"].Value = v_input_dict[68];
 
 
-        string path = HttpContext.Current.Server.MapPath("\\Files\\Excel\\" + DateTime.Now.ToString("dd-MM-yyyy"));
+        string path = HttpContext.Current.Server.MapPath("\\Files\\TRV\\PDF\\" + DateTime.Now.ToString("dd-MM-yyyy"));
         DirectoryInfo dirInfo = new DirectoryInfo(path);
         if (!dirInfo.Exists)
         {

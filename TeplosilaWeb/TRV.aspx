@@ -506,10 +506,19 @@
                                 
                                 <asp:Label ID="Label52" runat="server" Enabled="False" Text="Результаты расчёта" Visible="False"></asp:Label>
                                 
+                                <br />
+                                <br />
+                                <asp:Label ID="ws2ResultLabel" runat="server" Text="Label" Visible="False"></asp:Label>
+                                <br />
+                                <asp:Label ID="maxt2ResultLabel" runat="server" Text="maxt2ResultLabel" Visible="False"></asp:Label>
+                                <br />
+                                <asp:Label ID="maxp2ResultLabel" runat="server" Text="Label" Visible="False"></asp:Label>
+                                <br />
+                                
                                 <div class="table-responsive-lg" onclick="ShowBTN()">
-                                    <asp:GridView ID="GridView1" CssClass="table" runat="server"
-                                        OnRowDataBound="GridView1_RowDataBound"
-                                        OnSelectedIndexChanged="GridView1_SelectedIndexChanged"
+                                    <asp:GridView ID="GridView2" CssClass="table" runat="server"
+                                        OnRowDataBound="GridView2_RowDataBound"
+                                        OnSelectedIndexChanged="GridView2_SelectedIndexChanged"
                                         AutoGenerateSelectButton="True" Font-Size="X-Small" Visible="False">
                                         <RowStyle Font-Size="Small" />
                                         <SelectedRowStyle BackColor="#ff7d00" Font-Bold="True" ForeColor="White" />
