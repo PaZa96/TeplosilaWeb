@@ -1962,4 +1962,100 @@ public partial class RDT : System.Web.UI.Page
             Response.End();
         }
     }
+
+    protected void eorRadioButtonList1_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        switch (eorRadioButtonList1.SelectedIndex)
+        {
+            case 0:
+                lp1ControlEnable(true);
+                lp2ControlEnable(false);
+                lp3ControlEnable(false);
+                lp4ControlEnable(false);
+                break;
+            case 1:
+                lp1ControlEnable(false);
+                lp2ControlEnable(true);
+                lp3ControlEnable(false);
+                lp4ControlEnable(false);
+                break;
+            case 2:
+                lp1ControlEnable(false);
+                lp2ControlEnable(false);
+                lp3ControlEnable(true);
+                lp4ControlEnable(false);
+                break;
+            case 3:
+                lp1ControlEnable(false);
+                lp2ControlEnable(false);
+                lp3ControlEnable(false);
+                lp4ControlEnable(true);
+                break;
+        }
+        dropDownListEnable(calcrDropDownList1, true);
+    }
+
+
+    public void lp1ControlEnable(bool flag)
+    {
+        dropDownListEnable(lp1DropDownList1, flag);
+        dropDownListEnable(lp1DropDownList2, flag);
+        dropDownListEnable(lp1DropDownList3, flag);
+        dropDownListEnable(lp1DropDownList4, flag);
+    }
+    public void lp2ControlEnable(bool flag)
+    {
+        dropDownListEnable(lp2DropDownList1, flag);
+        dropDownListEnable(lp2DropDownList2, flag);
+    }
+    public void lp3ControlEnable(bool flag)
+    {
+        dropDownListEnable(lp3DropDownList1, flag);
+        dropDownListEnable(lp3DropDownList2, flag);
+    }
+    public void lp4ControlEnable(bool flag)
+    {
+        dropDownListEnable(lp4DropDownList2, flag);
+    }
+
+    public void dropDownListEnable(DropDownList dropDownList, bool flag)
+    {
+        dropDownList.Enabled = flag;
+        dropDownList.ClearSelection();
+    }
+
+    public void textBoxEnabled(TextBox textBox, bool flag)
+    {
+        textBox.Enabled = flag;
+        textBox.Text = "";
+    }
+
+    protected void fprRadioButton1_CheckedChanged(object sender, EventArgs e)
+    {
+        if (fprRadioButton1.Checked)
+        {
+            fprRadioButton2.Checked = false;
+            textBoxEnabled(fprTextBox1, true); 
+            textBoxEnabled(fprTextBox2, false);
+            textBoxEnabled(fprTextBox3, false);
+            textBoxEnabled(fprTextBox4, false);
+            textBoxEnabled(fprTextBox5, false);
+            dropDownListEnable(fprDropDownList2, false);
+        }
+    }
+    
+
+    protected void fprRadioButton2_CheckedChanged(object sender, EventArgs e)
+    {
+        if (fprRadioButton2.Checked)
+        {
+            fprRadioButton1.Checked = false;
+            textBoxEnabled(fprTextBox1, false);
+            textBoxEnabled(fprTextBox2, true);
+            textBoxEnabled(fprTextBox3, true);
+            textBoxEnabled(fprTextBox4, false);
+            textBoxEnabled(fprTextBox5, true);
+            dropDownListEnable(fprDropDownList2, true);
+        }
+    }
 }
