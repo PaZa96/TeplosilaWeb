@@ -202,7 +202,7 @@
                     </div>
 
                     <div class="col border">
-                        <asp:Label ID="Label12" runat="server" Text="Потери давления на клапане:"></asp:Label>
+                        <asp:Label ID="Label12" runat="server" Text="Расчётные потери давления на клапане:"></asp:Label>
                         <div class="col">
                             <asp:UpdatePanel ID="UpdatePanel8" runat="server">
                                 <ContentTemplate>
@@ -217,6 +217,8 @@
                                         <asp:ListItem>бар</asp:ListItem>
                                         <asp:ListItem>м. в. ст.</asp:ListItem>
                                     </asp:DropDownList>
+                                    <br />
+                                    <asp:Label ID="Label54" runat="server" Text="(для корректной работы клапана потери давления <br/> на нем должны быть не менее, чем потери <br/> давления на регулируемом участке, т.е. <br/> в теплообменнике при независимой схеме присоединения <br/> или в системе при зависимой схеме присоединения)"></asp:Label>
                                     <br />
                                     <asp:RangeValidator ID="lpvRangeValidator1" runat="server"
                                         ControlToValidate="lpvTextBox1" Display="Dynamic"
