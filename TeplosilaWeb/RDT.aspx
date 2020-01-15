@@ -257,7 +257,7 @@
                                             <asp:ListItem>бар</asp:ListItem>
                                             <asp:ListItem>м. в. ст.</asp:ListItem>
                                         </asp:DropDownList>
-                                        <asp:RangeValidator ID="RangeValidator9" runat="server" ControlToValidate="lp4TextBox1" Display="Dynamic" ErrorMessage="Неверно указано значение давления" ForeColor="Red" MaximumValue="9999999" MinimumValue="0,00000001" SetFocusOnError="True" Type="Double"></asp:RangeValidator>
+                                        <asp:RangeValidator ID="RangeValidator9" runat="server" ControlToValidate="lp4TextBox2" Display="Dynamic" ErrorMessage="Неверно указано значение давления" ForeColor="Red" MaximumValue="9999999" MinimumValue="0,00000001" SetFocusOnError="True" Type="Double"></asp:RangeValidator>
                                         &nbsp;<asp:CustomValidator ID="CustomValidator7" runat="server" ControlToValidate="lp4TextBox2" Display="Dynamic" ErrorMessage="CustomValidator" ForeColor="Red" OnServerValidate="CustomValidator7_ServerValidate" SetFocusOnError="True"></asp:CustomValidator>
                                         <br />
                                     </div>
