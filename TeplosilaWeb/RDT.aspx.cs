@@ -48,6 +48,29 @@ public partial class RDT : System.Web.UI.Page
 
     }
 
+    private void changeImage(int index)
+    {
+        switch (index)
+        {
+            case 0:
+                rPictureBox.ImageUrl = @"./Content/images/RDT-RDT-P.jpg";
+                break;
+            case 1:
+                rPictureBox.ImageUrl = @"./Content/images/RDT-RDT-P.jpg";
+                break;
+            case 2:
+                rPictureBox.ImageUrl = @"./Content/images/RDT-S-RDT-B.jpg";
+                break;
+            case 3:
+                rPictureBox.ImageUrl = @"./Content/images/RDT-S-RDT-B.jpg";
+                break;
+
+            default:
+                rPictureBox.ImageUrl = null;
+                break;
+        }
+    }
+
     /// <summary>
     /// Рассчитывает физические свойства этиленгликоля.
     /// </summary>
@@ -2056,6 +2079,68 @@ public partial class RDT : System.Web.UI.Page
             textBoxEnabled(fprTextBox4, false);
             textBoxEnabled(fprTextBox5, true);
             dropDownListEnable(fprDropDownList2, true);
+        }
+    }
+
+    protected void CustomValidator1_ServerValidate(object source, ServerValidateEventArgs args)
+    {
+        if (convertArrToBar(arrConvert3, lp1DropDownList1, lp1TextBox1) > PressureBeforeValve3x)
+        {
+            CustomValidator1.ErrorMessage = "На давление свыше 16 бар вариантов нет";
+            args.IsValid = false;
+        }
+    }
+
+    protected void CustomValidator2_ServerValidate(object source, ServerValidateEventArgs args)
+    {
+        if(convertArrToBar(arrConvert3, lp1DropDownList2, lp1TextBox2) > convertArrToBar(arrConvert3, lp1DropDownList1, lp1TextBox1))
+        {
+            CustomValidator2.ErrorMessage = "Неверно указано значение давления";
+            args.IsValid = false;
+        }
+    }
+    protected void CustomValidator3_ServerValidate(object source, ServerValidateEventArgs args)
+    {
+        if (convertArrToBar(arrConvert3, lp2DropDownList1, lp2TextBox1) > PressureBeforeValve3x)
+        {
+            CustomValidator3.ErrorMessage = "На давление свыше 16 бар вариантов нет";
+            args.IsValid = false;
+        }
+    }
+
+    protected void CustomValidator4_ServerValidate(object source, ServerValidateEventArgs args)
+    {
+        if (convertArrToBar(arrConvert3, lp2DropDownList2, lp2TextBox2) > convertArrToBar(arrConvert3, lp2DropDownList1, lp2TextBox1))
+        {
+            CustomValidator4.ErrorMessage = "Неверно указано значение давления";
+            args.IsValid = false;
+        }
+    }
+
+    protected void CustomValidator5_ServerValidate(object source, ServerValidateEventArgs args)
+    {
+        if (convertArrToBar(arrConvert3, lp3DropDownList1, lp3TextBox1) > PressureBeforeValve3x)
+        {
+            CustomValidator5.ErrorMessage = "На давление свыше 16 бар вариантов нет";
+            args.IsValid = false;
+        }
+    }
+
+    protected void CustomValidator6_ServerValidate(object source, ServerValidateEventArgs args)
+    {
+        if (convertArrToBar(arrConvert3, lp3DropDownList2, lp3TextBox2) > convertArrToBar(arrConvert3, lp3DropDownList1, lp3TextBox1))
+        {
+            CustomValidator6.ErrorMessage = "Неверно указано значение давления";
+            args.IsValid = false;
+        }
+    }
+
+    protected void CustomValidator7_ServerValidate(object source, ServerValidateEventArgs args)
+    {
+        if (convertArrToBar(arrConvert3, lp4DropDownList2, lp4TextBox2) > PressureBeforeValve3x)
+        {
+            CustomValidator7.ErrorMessage = "На давление свыше 16 бар вариантов нет";
+            args.IsValid = false;
         }
     }
 }
