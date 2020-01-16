@@ -453,12 +453,14 @@ public partial class TRV : System.Web.UI.Page
             {
 
                 int jj = keyValuePairs[ddl.ID];
-                result = (customConverterToDouble(tb.Text) * arr[jj - 1] / arr[ddl.SelectedIndex - 1]);
+                if (jj > 0)
+                {
+                    result = (customConverterToDouble(tb.Text) * arr[jj - 1] / arr[2]);
+                }
             }
         }
         return result;
     }
-
 
     public double customConverterToDouble(string tb)
     {
@@ -2192,6 +2194,7 @@ public partial class TRV : System.Web.UI.Page
 
     protected void vButton_Click(object sender, EventArgs e)
     {
+        if (!Page.IsValid) { return; }
         ResetColorToAllControls();
         DisableTextBox(objTextBox1);
         objTextBox1.Enabled = false;

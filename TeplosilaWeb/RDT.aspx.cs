@@ -970,6 +970,7 @@ public partial class RDT : System.Web.UI.Page
 
     protected void rButton_Click(object sender, EventArgs e)
     {
+        if (!Page.IsValid) { return; }
         objTextBox1.Enabled = false;
         GridView1.Columns.Clear();
         GridView1.DataSource = null;
@@ -1429,14 +1430,18 @@ public partial class RDT : System.Web.UI.Page
             LabelError.Text += "Не выбрано место установки регулятора";
             return;
         }
-            Label52.Visible = true;
-            GridView1.Enabled = true;
-            GridView1.Visible = true;
-            GridView1.Height = 250;
-            this.Button2.Visible = true;
-            this.Button2.Enabled = true;
-            this.Button3.Visible = true;
-            this.Button3.Enabled = true;
+
+        Label52.Visible = true;
+        maxp1ResultLabel.Visible = true;
+        maxt1ResultLabel.Visible = true;
+        ws1ResultLabel.Visible = true;
+        GridView1.Enabled = true;
+        GridView1.Visible = true;
+        GridView1.Height = 250;
+        this.Button2.Visible = true;
+        this.Button2.Enabled = true;
+        this.Button3.Visible = true;
+        this.Button3.Enabled = true;
 
     }
 
@@ -1514,7 +1519,10 @@ public partial class RDT : System.Web.UI.Page
             {
 
                 int jj = keyValuePairs[ddl.ID];
-                result = (customConverterToDouble(tb.Text) * arr[jj - 1] / arr[ddl.SelectedIndex - 1]);
+                if (jj > 0)
+                {
+                    result = (customConverterToDouble(tb.Text) * arr[jj - 1] / arr[2]);
+                }
             }
         }
         return result;
@@ -1542,6 +1550,7 @@ public partial class RDT : System.Web.UI.Page
 
     protected void lp1DropDownList1_SelectedIndexChanged(object sender, EventArgs e)
     {
+        
         if (SetEnableTextBox(lp1DropDownList1, lp1TextBox1))
         {
             convertArr(arrConvert3, (sender as DropDownList), ref lp1TextBox1);
@@ -1551,6 +1560,7 @@ public partial class RDT : System.Web.UI.Page
 
     protected void lp1DropDownList2_SelectedIndexChanged(object sender, EventArgs e)
     {
+        
         if (SetEnableTextBox(lp1DropDownList2, lp1TextBox2))
         {
             convertArr(arrConvert3, (sender as DropDownList), ref lp1TextBox2);
@@ -1761,7 +1771,7 @@ public partial class RDT : System.Web.UI.Page
             ws.Cells["I40"].Value = r_input_dict[48];
             ws.Cells["K40"].Value = r_input_dict[49];
 
-            ws.Pictures.Add(Directory.GetCurrentDirectory() + "\\images\\rdt\\" + ((r_input_dict[4] == this.eorRadioButtonList1.Items[0].Text) || (r_input_dict[4] == eorRadioButtonList1.Items[1].Text) ? "Габаритный RDT и RDT-P.jpg" : "Габаритный RDT-S и RDT-B.jpg"), "A44", "B53");
+            ws.Pictures.Add(Directory.GetCurrentDirectory() + "\\images\\rdt\\" + ((r_input_dict[4] == this.eorRadioButtonList1.Items[0].Text) || (r_input_dict[4] == eorRadioButtonList1.Items[1].Text) ? "RDT-RDT-P.jpg" : "RDT-S-RDT-B.jpg"), "A44", "B53");
 
             getDimsR(ref r_input_dict);
 
@@ -1988,6 +1998,7 @@ public partial class RDT : System.Web.UI.Page
 
     protected void eorRadioButtonList1_SelectedIndexChanged(object sender, EventArgs e)
     {
+        changeImage(eorRadioButtonList1.SelectedIndex);
         switch (eorRadioButtonList1.SelectedIndex)
         {
             case 0:
@@ -2015,7 +2026,7 @@ public partial class RDT : System.Web.UI.Page
                 lp4ControlEnable(true);
                 break;
         }
-        dropDownListEnable(calcrDropDownList1, true);
+        
     }
 
 
@@ -2058,11 +2069,12 @@ public partial class RDT : System.Web.UI.Page
         if (fprRadioButton1.Checked)
         {
             fprRadioButton2.Checked = false;
-            textBoxEnabled(fprTextBox1, true); 
+            textBoxEnabled(fprTextBox1, false); 
             textBoxEnabled(fprTextBox2, false);
             textBoxEnabled(fprTextBox3, false);
             textBoxEnabled(fprTextBox4, false);
             textBoxEnabled(fprTextBox5, false);
+            dropDownListEnable(fprDropDownList1, true);
             dropDownListEnable(fprDropDownList2, false);
         }
     }
@@ -2077,14 +2089,15 @@ public partial class RDT : System.Web.UI.Page
             textBoxEnabled(fprTextBox2, true);
             textBoxEnabled(fprTextBox3, true);
             textBoxEnabled(fprTextBox4, false);
-            textBoxEnabled(fprTextBox5, true);
+            textBoxEnabled(fprTextBox5, false);
             dropDownListEnable(fprDropDownList2, true);
+            dropDownListEnable(fprDropDownList1, false);
         }
     }
 
     protected void CustomValidator1_ServerValidate(object source, ServerValidateEventArgs args)
     {
-        if (convertArrToBar(arrConvert3, lp1DropDownList1, lp1TextBox1) > PressureBeforeValve3x)
+        if (convertArrToBar(arrConvert3, lp1DropDownList3, lp1TextBox3) > PressureBeforeValve3x)
         {
             CustomValidator1.ErrorMessage = "На давление свыше 16 бар вариантов нет";
             args.IsValid = false;
@@ -2093,10 +2106,11 @@ public partial class RDT : System.Web.UI.Page
 
     protected void CustomValidator2_ServerValidate(object source, ServerValidateEventArgs args)
     {
-        if(convertArrToBar(arrConvert3, lp1DropDownList2, lp1TextBox2) > convertArrToBar(arrConvert3, lp1DropDownList1, lp1TextBox1))
+        if(convertArrToBar(arrConvert3, lp1DropDownList4, lp1TextBox4) >= convertArrToBar(arrConvert3, lp1DropDownList3, lp1TextBox3))
         {
             CustomValidator2.ErrorMessage = "Неверно указано значение давления";
             args.IsValid = false;
+
         }
     }
     protected void CustomValidator3_ServerValidate(object source, ServerValidateEventArgs args)
@@ -2110,7 +2124,7 @@ public partial class RDT : System.Web.UI.Page
 
     protected void CustomValidator4_ServerValidate(object source, ServerValidateEventArgs args)
     {
-        if (convertArrToBar(arrConvert3, lp2DropDownList2, lp2TextBox2) > convertArrToBar(arrConvert3, lp2DropDownList1, lp2TextBox1))
+        if (convertArrToBar(arrConvert3, lp2DropDownList2, lp2TextBox2) >= convertArrToBar(arrConvert3, lp2DropDownList1, lp2TextBox1))
         {
             CustomValidator4.ErrorMessage = "Неверно указано значение давления";
             args.IsValid = false;
@@ -2128,7 +2142,7 @@ public partial class RDT : System.Web.UI.Page
 
     protected void CustomValidator6_ServerValidate(object source, ServerValidateEventArgs args)
     {
-        if (convertArrToBar(arrConvert3, lp3DropDownList2, lp3TextBox2) > convertArrToBar(arrConvert3, lp3DropDownList1, lp3TextBox1))
+        if (convertArrToBar(arrConvert3, lp3DropDownList2, lp3TextBox2) >= convertArrToBar(arrConvert3, lp3DropDownList1, lp3TextBox1))
         {
             CustomValidator6.ErrorMessage = "Неверно указано значение давления";
             args.IsValid = false;
@@ -2143,4 +2157,32 @@ public partial class RDT : System.Web.UI.Page
             args.IsValid = false;
         }
     }
+
+    protected void CustomValidator8_ServerValidate(object source, ServerValidateEventArgs args)
+    {
+        double var1 = convertArrToBar(arrConvert3, lp1DropDownList1, lp1TextBox1) + convertArrToBar(arrConvert3, lp1DropDownList2, lp1TextBox2);
+        double var2 = convertArrToBar(arrConvert3, lp1DropDownList3, lp1TextBox3) - convertArrToBar(arrConvert3, lp1DropDownList4, lp1TextBox4);
+        if (var1 > var2) 
+        {
+            CustomValidator8.ErrorMessage = "Неверно указано значение давления";
+            args.IsValid = false;
+        }
+    }
+
+    protected void CustomValidator9_ServerValidate(object source, ServerValidateEventArgs args)
+    {
+        if (convertArrToBar(arrConvert3, calcrDropDownList1, calcrTextBox1) > PressureBeforeValve3x)
+        {
+            CustomValidator9.ErrorMessage = "На давление свыше 16 бар вариантов нет";
+            args.IsValid = false;
+        }
+    }
+
+    protected void ws1RadioButtonList1_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        dropDownListEnable(calcrDropDownList1, true);
+        textBoxEnabled(calcrTextBox2, true);
+    }
+
+   
 }
