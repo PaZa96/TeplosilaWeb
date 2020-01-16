@@ -450,7 +450,7 @@
                     <asp:Button ID="Button2" runat="server" Text="Сохранить в PDF" CssClass="btn btn-primary show-btn" OnClick="Button2_Click"
                          />
                     <asp:Button ID="Button3" runat="server" Text="Сохранить в Excel" CssClass="btn btn-primary show-btn"
-                        O OnClick="Button3_Click"/>
+                        OnClick="Button3_Click"/>
                 </div>
             </div>
             <div class="col-2">
@@ -460,7 +460,7 @@
                     </ContentTemplate>
                 </asp:UpdatePanel>
             </div>
-
+        </div>
         </form>
     </div>
 
