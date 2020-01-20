@@ -79,3 +79,11 @@ input[type=button], input[type=submit], input[type=reset] {
     vertical-align: top;
     border-top: 1px solid #dee2e6;
 }
+
+.btn-index {
+    border: 1px solid #f37134;
+    color: #fff;
+    background-color: #f37134;
+    border-color: #f37134;
+    border-radius: 5px;
+}
