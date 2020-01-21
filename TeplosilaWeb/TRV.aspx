@@ -257,7 +257,7 @@
                                     <asp:RangeValidator ID="calcvRangeValidator1" runat="server"
                                         ControlToValidate="calcvTextBox1" Display="Dynamic"
                                         ErrorMessage="Неверно указано значение давления" ForeColor="Red"
-                                        MaximumValue="99999999" MinimumValue="1" SetFocusOnError="True">Неверно указано
+                                        MaximumValue="99999999" MinimumValue="0,000001" SetFocusOnError="True">Неверно указано
                                         значение давления</asp:RangeValidator>
 
                                     <asp:CustomValidator ID="calcvCustomValidator1" runat="server"
@@ -506,16 +506,12 @@
                                 
                                 
                                 
-                                <asp:Label ID="Label52" runat="server" Enabled="False" Text="Результаты расчёта" Visible="False"></asp:Label>
+                                <asp:Label ID="Label52" runat="server" Enabled="False" Text="Результаты расчёта" Visible="False" Font-Size="Medium" Font-Bold="True"></asp:Label>
                                 
                                 <br />
-                                <br />
                                 <asp:Label ID="ws2ResultLabel" runat="server" Text="Label" Visible="False"></asp:Label>
-                                <br />
                                 <asp:Label ID="maxt2ResultLabel" runat="server" Text="maxt2ResultLabel" Visible="False"></asp:Label>
-                                <br />
                                 <asp:Label ID="maxp2ResultLabel" runat="server" Text="Label" Visible="False"></asp:Label>
-                                <br />
                                 
                                 <div class="table-responsive-lg" onclick="ShowBTN()">
                                     <asp:GridView ID="GridView2" CssClass="table" runat="server"
@@ -530,42 +526,22 @@
                                 <asp:Label ID="Label53" runat="server" CssClass="show-btn" Text="Объект:" Visible="False"></asp:Label>
                                 
                                 <asp:TextBox ID="objTextBox1" runat="server" Enabled="False" Visible="False"></asp:TextBox>
-                                
-
-                    
-
-
-
+                               
                     <script>
                         function ShowBTN() {
                             var element = document.getElementById('Label53');
                             var btn2 = document.getElementById('Button2');
                             var btn3 = document.getElementById('Button3');
-                            
-                            btn3.style.replace("hide-btn","show-btn");
-                            btn2.style.add("show-btn");
-                            btn3.style.add("show-btn");
-                        }
-
-                        window.onload = function () {
-                            var element = document.getElementById('Label53');
-
-                        element.addEventListener("DOMNodeInserted", function (event) {
-                            alert("g");
-                        }, false);
-                        }
-                        // выбираем нужный элемент
-                        
-                        
-                        
-
+                            btn2.classList.add("show-btn");
+                            btn3.classList.add("show-btn");
+                        };
                     </script>
 
                     </ContentTemplate>
                     </asp:UpdatePanel>
-                    <asp:Button ID="Button2" runat="server" Text="Сохранить в PDF" CssClass="btn btn-primary show-btn"
+                    <asp:Button ID="Button2" runat="server" Text="Сохранить в PDF" CssClass="btn btn-primary hide-btn"
                         OnClick="Button2_Click" />
-                    <asp:Button ID="Button3" runat="server" Text="Сохранить в Excel" CssClass="btn btn-primary show-btn"
+                    <asp:Button ID="Button3" runat="server" Text="Сохранить в Excel" CssClass="btn btn-primary hide-btn"
                         OnClick="Button3_Click" />
                 </div>
             </div>

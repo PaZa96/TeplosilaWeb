@@ -2997,7 +2997,9 @@ public partial class TRV : System.Web.UI.Page
         Label53.Visible = true;
         objTextBox1.Enabled = true;
         objTextBox1.Visible = true;
-        
+        string clientScript = "javascript:ShowBTN();";
+        this.Page.ClientScript.RegisterStartupScript(this.GetType(), "MyClientScript", clientScript);
+
     }
 
     protected void GridView2_RowDataBound(object sender, GridViewRowEventArgs e)

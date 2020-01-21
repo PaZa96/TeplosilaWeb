@@ -2184,5 +2184,13 @@ public partial class RDT : System.Web.UI.Page
         textBoxEnabled(calcrTextBox2, true);
     }
 
-   
+
+
+    protected void GridView1_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        string clientScript = "javascript:ShowBTN();";
+        this.Page.ClientScript.RegisterStartupScript(this.GetType(), "MyClientScript", clientScript);
+        objTextBox1.Visible = true;
+        Label53.Visible = true;
+    }
 }

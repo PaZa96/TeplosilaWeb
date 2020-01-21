@@ -419,7 +419,7 @@
                             <div class="table-responsive-lg" onclick="ShowBTN()">
                                 <asp:GridView ID="GridView1" CssClass="table" runat="server"
                                     
-                                    AutoGenerateSelectButton="True" Font-Size="X-Small" Visible="False">
+                                    AutoGenerateSelectButton="True" Font-Size="X-Small" Visible="False" OnSelectedIndexChanged="GridView1_SelectedIndexChanged">
                                     <RowStyle Font-Size="Small" />
                                     <SelectedRowStyle BackColor="#ff7d00" Font-Bold="True" ForeColor="White" />
                                 </asp:GridView>
@@ -430,26 +430,19 @@
 
                             <asp:TextBox ID="objTextBox1" runat="server" Enabled="False" Visible="False"></asp:TextBox>
 
-
-                            <script>
-                                function ShowBTN() {
-                                    var element = document.getElementById('Label53');
-                                    var btn2 = document.getElementById('Button2');
-                                    var btn3 = document.getElementById('Button3');
-
-                                    btn3.style.replace("hide-btn", "show-btn");
-                                    btn2.style.add("show-btn");
-                                    btn3.style.add("show-btn");
-                                }
-
-
-                            </script>
-
                         </ContentTemplate>
                     </asp:UpdatePanel>
-                    <asp:Button ID="Button2" runat="server" Text="Сохранить в PDF" CssClass="btn btn-primary show-btn" OnClick="Button2_Click"
+                        <script>
+                            function ShowBTN() {
+                                var btn2 = document.getElementById('Button2');
+                                var btn3 = document.getElementById('Button3');
+                                btn2.classList.add("show-btn");
+                                btn3.classList.add("show-btn");
+                        };
+                    </script>
+                    <asp:Button ID="Button2" runat="server" Text="Сохранить в PDF" CssClass="btn btn-primary hide-btn" OnClick="Button2_Click"
                          />
-                    <asp:Button ID="Button3" runat="server" Text="Сохранить в Excel" CssClass="btn btn-primary show-btn"
+                    <asp:Button ID="Button3" runat="server" Text="Сохранить в Excel" CssClass="btn btn-primary hide-btn"
                         OnClick="Button3_Click"/>
                 </div>
             </div>
