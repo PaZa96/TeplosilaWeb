@@ -86,4 +86,5 @@ input[type=button], input[type=submit], input[type=reset] {
     background-color: #f37134;
     border-color: #f37134;
     border-radius: 5px;
+    white-space: normal;
 }

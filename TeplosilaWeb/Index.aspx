@@ -14,10 +14,12 @@
     <div class="container">
         <form id="form1" runat="server">
             <div class="row jumbotron">
-                
-                <asp:Button ID="Button1" CssClass="btn btn-primary btn-lg btn-block btn-indexbtn" runat="server" Text="Программа подбора регулятора давления прямого действия" BackColor="#FF6600" ForeColor="White" PostBackUrl="~/RDT.aspx" />
-                <asp:Button ID="Button2" CssClass="btn btn-primary btn-lg btn-block btn-index" runat="server" Text="Программа подбора регулирующего клапана" BackColor="#FF6600" ForeColor="White" PostBackUrl="~/TRV.aspx" />
-
+                <div class="col">
+                    <asp:Button ID="Button1" CssClass="btn btn-primary btn-lg btn-block btn-index" runat="server" Text="Программа подбора регулятора давления прямого действия" BackColor="#FF6600" ForeColor="White" PostBackUrl="~/RDT.aspx" Height="100px" />
+                </div>
+                <div class="col">
+                    <asp:Button ID="Button2" CssClass="btn btn-primary btn-lg btn-block btn-index" runat="server" Text="Программа подбора регулирующего клапана" BackColor="#FF6600" ForeColor="White" PostBackUrl="~/TRV.aspx" Height="100px" />
+                </div>
             </div>
         </form>
     </div>
