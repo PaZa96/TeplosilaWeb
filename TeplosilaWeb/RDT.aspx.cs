@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Diagnostics;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Web;
@@ -397,7 +398,8 @@ public partial class RDT : System.Web.UI.Page
         }
         else
         {
-            foreach (Newtonsoft.Json.Linq.JObject el in ((eorRadioButtonList1.SelectedIndex == 2 || eorRadioButtonList1.SelectedIndex == 3) ? dataFromFile.table63 : dataFromFile.table61))
+            //foreach (Newtonsoft.Json.Linq.JObject el in ((this.eorRadioButton3.Checked || this.eorRadioButton4.Checked) ? dataFromFile.table63 : dataFromFile.table61))
+            foreach (Newtonsoft.Json.Linq.JObject el in dataFromFile.table61)
             {
                 double min = Convert.ToDouble(el.GetValue("min"));
                 double max = Convert.ToDouble(el.GetValue("max"));
@@ -618,9 +620,22 @@ public partial class RDT : System.Web.UI.Page
                     col_C = col_Ct;
                 }
 
+                bool meetEnd = false;
+
                 if (col_C == Convert.ToDouble(table10[table10.Count - 1]))
+                {
+
                     exit_t = true;
 
+                    foreach (string keyValue in listResult["C"])
+                    {
+                        if (keyValue.Equals(table10[table10.Count - 1].ToString()))
+                            meetEnd = true;
+                    }
+
+                }
+
+                if (meetEnd) break;
 
                 if (DN > col_C)
                 {
@@ -938,17 +953,32 @@ public partial class RDT : System.Web.UI.Page
 
     }
 
+    private double getPSbyT(double t)
+    {
+        return Math.Pow(t / 103, 1 / 0.242) - 0.892;
+    }
+
+    private double getTbyPS(double ps)
+    {
+        return 103 * Math.Pow(ps + 0.892, 0.242);
+    }
+
     private void getDimsR(ref Dictionary<int, string> r_in_dict)
     {
         //
         Newtonsoft.Json.Linq.JArray tableDimR = null;
         if (eorRadioButtonList1.SelectedIndex == 0 || eorRadioButtonList1.SelectedIndex == 1)
         {
-            if (r_in_dict[41].Contains("RDT-0.1") || r_in_dict[41].Contains("RDT-P-0.1"))
+            if (r_in_dict[41].Contains("-0.1-"))
                 tableDimR = dataFromFile.table20;
             else tableDimR = dataFromFile.table21;
         }
-        else tableDimR = dataFromFile.table22;
+        else
+        {
+            if (r_in_dict[41].Contains("-0.1-"))
+                tableDimR = dataFromFile.table22;
+            else tableDimR = dataFromFile.table23;
+        }
 
         foreach (Newtonsoft.Json.Linq.JObject el in tableDimR)
         {
@@ -1035,6 +1065,70 @@ public partial class RDT : System.Web.UI.Page
 
                     if (fprRadioButton1.Checked || fprRadioButton2.Checked)
                     {
+                        double checkVal;
+
+                        try
+                        {
+                            if (this.fprRadioButton1.Checked)
+                            {
+                                checkVal = Convert.ToDouble(this.fprTextBox1.Text);
+                                if (!(checkVal > 0))
+                                {
+                                    LabelError.Text += "Введите числовое значение больше нуля";
+                                    return;
+                                }
+                            }
+                        }
+                        catch (Exception)
+                        {
+                            LabelError.Text += "Неверно указано значение расхода через регулятор давления";
+                            return;
+                        }
+
+                        try
+                        {
+                            if (this.fprRadioButton2.Checked)
+                            {
+                                checkVal = Convert.ToDouble(this.fprTextBox2.Text);
+                            }
+                        }
+                        catch (Exception)
+                        {
+                            LabelError.Text += "Неверно указано значение температуры";
+                            return;
+                        }
+
+                        try
+                        {
+                            if (this.fprRadioButton2.Checked)
+                            {
+                                checkVal = Convert.ToDouble(this.fprTextBox3.Text);
+                            }
+                        }
+                        catch (Exception)
+                        {
+                            LabelError.Text += "Неверно указано значение температуры";
+                            return;
+                        }
+
+                        try
+                        {
+                            if (this.fprRadioButton2.Checked)
+                            {
+                                checkVal = Convert.ToDouble(this.fprTextBox4.Text);
+                                if (!(checkVal > 0))
+                                {
+                                    LabelError.Text += "Введите числовое значение больше нуля";
+                                    return;
+                                }
+                            }
+                        }
+                        catch (Exception)
+                        {
+                            LabelError.Text += "Неверно указано значение тепловой мощности";
+                            return;
+                        }
+
                         if (this.fprRadioButton1.Checked && this.checkTextBoxEmpty(this.fprTextBox1))
                         {
                             LabelError.Text += "Не задан расход через регулятор давления";
@@ -1055,7 +1149,7 @@ public partial class RDT : System.Web.UI.Page
                             LabelError.Text += "Не задано значение температуры";
                             return;
                         }
-                        else if (this.fprRadioButton2.Checked && Convert.ToDouble(this.fprTextBox2.Text) < Convert.ToDouble(this.fprTextBox3.Text))
+                        else if (this.fprRadioButton2.Checked && Convert.ToDouble(this.fprTextBox2.Text) <= Convert.ToDouble(this.fprTextBox3.Text))
                         {
                             LabelError.Text += "Неверно указано значение температуры";
                             return;
@@ -1075,8 +1169,16 @@ public partial class RDT : System.Web.UI.Page
                             Double p16, p25 = 0;
                             if (this.fprRadioButton2.Checked)
                             {
-                                p16 = Math.Round((Convert.ToDouble(this.fprTextBox4.Text) * arrConvert2[this.fprDropDownList2.SelectedIndex - 1]) * 3.6 / (this.math_16_cp() * (Convert.ToDouble(this.fprTextBox2.Text) - Convert.ToDouble(this.fprTextBox3.Text))), 2);
+                                try
+                                {
+                                    p16 = Math.Round((Convert.ToDouble(this.fprTextBox4.Text) * arrConvert2[this.fprDropDownList2.SelectedIndex - 1]) * 3.6 / (this.math_16_cp() * (Convert.ToDouble(this.fprTextBox2.Text) - Convert.ToDouble(this.fprTextBox3.Text))), 2);
 
+                                }
+                                catch (Exception)
+                                {
+                                    LabelError.Text += "Неверно указано значение тепловой мощности";
+                                    return;
+                                }
                                 this.fprTextBox5.Text = p16.ToString();
                             }
                             else
@@ -1110,10 +1212,69 @@ public partial class RDT : System.Web.UI.Page
                                 }
                                 else
                                 {
-                                    double p17 = Convert.ToDouble(this.lp1TextBox1.Text) * arrConvert3[this.lp1DropDownList1.SelectedIndex - 1] / arrConvert3[2];
-                                    double p19 = Convert.ToDouble(this.lp1TextBox2.Text) * arrConvert3[this.lp1DropDownList2.SelectedIndex - 1] / arrConvert3[2];
-                                    double p21 = Convert.ToDouble(this.lp1TextBox3.Text) * arrConvert3[this.lp1DropDownList3.SelectedIndex - 1] / arrConvert3[2];
-                                    double p23 = Convert.ToDouble(this.lp1TextBox4.Text) * arrConvert3[this.lp1DropDownList4.SelectedIndex - 1] / arrConvert3[2];
+                                   
+                                    double p17, p19, p21, p23;
+
+                                    try
+                                    {
+                                        p17 = Convert.ToDouble(this.lp1TextBox1.Text) * arrConvert3[this.lp1DropDownList1.SelectedIndex - 1] / arrConvert3[2];
+                                    }
+                                    catch (Exception)
+                                    {
+                                        LabelError.Text += "Неверно указано значение давления";
+                                        return;
+                                    }
+
+                                    try
+                                    {
+                                        p19 = Convert.ToDouble(this.lp1TextBox2.Text) * arrConvert3[this.lp1DropDownList2.SelectedIndex - 1] / arrConvert3[2];
+                                    }
+                                    catch (Exception)
+                                    {
+                                        LabelError.Text += "Неверно указано значение давления";
+                                        return;
+                                    }
+
+                                    try
+                                    {
+                                        p21 = Convert.ToDouble(this.lp1TextBox3.Text) * arrConvert3[this.lp1DropDownList3.SelectedIndex - 1] / arrConvert3[2];
+                                    }
+                                    catch (Exception)
+                                    {
+                                        LabelError.Text += "Неверно указано значение давления";
+                                        return;
+                                    }
+
+                                    try
+                                    {
+                                        p23 = Convert.ToDouble(this.lp1TextBox4.Text) * arrConvert3[this.lp1DropDownList4.SelectedIndex - 1] / arrConvert3[2];
+                                    }
+                                    catch (Exception)
+                                    {
+                                        LabelError.Text += "Неверно указано значение давления";
+                                        return;
+                                    }
+
+                                    if (!(p17 > 0))
+                                    {
+                                        LabelError.Text += "Введите числовое значение больше нуля"; 
+                                        return;
+                                    }
+                                    else if (!(p19 > 0))
+                                    {
+                                        LabelError.Text += "Введите числовое значение больше нуля";
+                                        return;
+                                    }
+                                    else if (!(p21 > 0))
+                                    {
+                                        LabelError.Text += "Введите числовое значение больше нуля";
+                                        return;
+                                    }
+                                    else if (!(p23 > 0))
+                                    {
+                                        LabelError.Text += "Введите числовое значение больше нуля";
+                                        return;
+                                    }
 
                                     if (!(p21 <= 16))
                                     {
@@ -1127,6 +1288,7 @@ public partial class RDT : System.Web.UI.Page
                                     }
                                     else if (!((p17 + p19) <= (p21 - p23)))
                                     {
+                                        lp1TextBox1.BackColor = Color.LightPink;
                                         LabelError.Text += "Суммарные потери давления на регуляторе и регулируемом участке превышают допустимый перепад давлений на вводе";
                                         return;
                                     }
@@ -1157,8 +1319,39 @@ public partial class RDT : System.Web.UI.Page
                                 }
                                 else
                                 {
-                                    double p26 = Convert.ToDouble(this.lp2TextBox1.Text) * arrConvert3[this.lp2DropDownList1.SelectedIndex - 1] / arrConvert3[2];
-                                    double p28 = Convert.ToDouble(this.lp2TextBox2.Text) * arrConvert3[this.lp2DropDownList2.SelectedIndex - 1] / arrConvert3[2];
+                                    
+                                    double p26, p28;
+
+                                    try
+                                    {
+                                        p26 = Convert.ToDouble(this.lp2TextBox1.Text) * arrConvert3[this.lp2DropDownList1.SelectedIndex - 1] / arrConvert3[2];
+                                    }
+                                    catch (Exception)
+                                    {
+                                        LabelError.Text += "Неверно указано значение давления";
+                                        return;
+                                    }
+
+                                    try
+                                    {
+                                        p28 = Convert.ToDouble(this.lp2TextBox2.Text) * arrConvert3[this.lp2DropDownList2.SelectedIndex - 1] / arrConvert3[2];
+                                    }
+                                    catch (Exception)
+                                    {
+                                        LabelError.Text += "Неверно указано значение давления";
+                                        return;
+                                    }
+
+                                    if (!(p26 > 0))
+                                    {
+                                        LabelError.Text += "Введите числовое значение больше нуля";
+                                        return;
+                                    }
+                                    else if (!(p28 > 0))
+                                    {
+                                        LabelError.Text += "Введите числовое значение больше нуля";
+                                        return;
+                                    }
 
                                     if (!(p26 <= 16))
                                     {
@@ -1193,8 +1386,39 @@ public partial class RDT : System.Web.UI.Page
                                 }
                                 else
                                 {
-                                    double p30 = Convert.ToDouble(this.lp3TextBox1.Text) * arrConvert3[this.lp3DropDownList1.SelectedIndex - 1] / arrConvert3[2];
-                                    double p32 = Convert.ToDouble(this.lp3TextBox2.Text) * arrConvert3[this.lp3DropDownList2.SelectedIndex - 1] / arrConvert3[2];
+                                    
+                                    double p30, p32;
+
+                                    try
+                                    {
+                                        p30 = Convert.ToDouble(this.lp3TextBox1.Text) * arrConvert3[this.lp3DropDownList1.SelectedIndex - 1] / arrConvert3[2];
+                                    }
+                                    catch (Exception)
+                                    {
+                                        LabelError.Text += "Неверно указано значение давления";
+                                        return;
+                                    }
+
+                                    try
+                                    {
+                                        p32 = Convert.ToDouble(this.lp3TextBox2.Text) * arrConvert3[this.lp3DropDownList2.SelectedIndex - 1] / arrConvert3[2];
+                                    }
+                                    catch (Exception)
+                                    {
+                                        LabelError.Text += "Неверно указано значение давления";
+                                        return;
+                                    }
+
+                                    if (!(p30 > 0))
+                                    {
+                                        LabelError.Text += "Введите числовое значение больше нуля";
+                                        return;
+                                    }
+                                    else if (!(p32 > 0))
+                                    {
+                                        LabelError.Text += "Введите числовое значение больше нуля";
+                                        return;
+                                    }
 
                                     if (!(p30 <= 16))
                                     {
@@ -1224,7 +1448,24 @@ public partial class RDT : System.Web.UI.Page
                                 }
                                 else
                                 {
-                                    double p19 = Convert.ToDouble(this.lp4TextBox2.Text) * arrConvert3[this.lp4DropDownList2.SelectedIndex - 1] / arrConvert3[2];
+                                    
+                                    double p19;
+
+                                    try
+                                    {
+                                        p19 = Convert.ToDouble(this.lp4TextBox2.Text) * arrConvert3[this.lp4DropDownList2.SelectedIndex - 1] / arrConvert3[2];
+                                    }
+                                    catch (Exception)
+                                    {
+                                        LabelError.Text += "Неверно указано значение давления";
+                                        return;
+                                    }
+
+                                    if (!(p19 > 0))
+                                    {
+                                        LabelError.Text += "Введите числовое значение больше нуля";
+                                        return;
+                                    }
 
                                     if (!(p19 <= 16))
                                     {
@@ -1307,9 +1548,9 @@ public partial class RDT : System.Web.UI.Page
                                     max_check = ob;
                                 }
                             }
-                            double ps_check = Convert.ToDouble(max_check.GetValue("ps"));
+                           //double ps_check = Convert.ToDouble(max_check.GetValue("ps"));
 
-                            if (((Convert.ToDouble(this.calcrTextBox1.Text) * arrConvert3[this.calcrDropDownList1.SelectedIndex - 1] / arrConvert3[2]) - ps_check) <= 0)
+                            if (((Convert.ToDouble(this.calcrTextBox1.Text) * arrConvert3[this.calcrDropDownList1.SelectedIndex - 1] / arrConvert3[2]) - getPSbyT(t1_check)) <= 0)
                             {
                                 LabelError.Text += "Указанная температура выше температуры парообразования. При указанной температуре в трубопроводе движется пар";
                                 return;
@@ -1326,12 +1567,12 @@ public partial class RDT : System.Web.UI.Page
                             string[] titles = new string[] {
                                 "Марка регулятора давления",
                                 "Номинальный диаметр DN, мм",
-                                "Пропускная пособность Kvs, м3/ч",
+                                "Пропускная способность Kvs, м3/ч",
                                 "Фактические потери давления на полностью открытом клапане при заданном расходе ∆Рф,\n бар\n",
                                 "Диапазон настройки,\n бар",
                                 "Скорость в выходном сечении регулятора V, м/с",
                                 "Шум, некачественное регулирование",
-                                "Предельно допустимый перепад давлений ∆Pпред, бар",
+                                "Предельно допустимый перепад давлений на регуляторе ∆Pпред, бар",
                                 "Кавитация"
                             };
 
