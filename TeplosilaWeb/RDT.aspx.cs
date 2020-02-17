@@ -232,7 +232,7 @@ public partial class RDT : System.Web.UI.Page
         }
         catch (Exception)
         {
-            //LabelError.Text += "Проверьте пожалуйста файл с данными!");
+            //LabelError.Text = "Проверьте пожалуйста файл с данными!");
         }
     }
 
@@ -1028,13 +1028,13 @@ public partial class RDT : System.Web.UI.Page
                         }
                         catch (Exception)
                         {
-                            LabelError.Text += "Не указано значение концентрации ";
+                            LabelError.Text = "Не указано значение концентрации ";
                             return;
                         }
 
                         if (p6 < 5 || p6 > 65)
                         {
-                            LabelError.Text += "Неверно указано значение концентрации ";
+                            LabelError.Text = "Неверно указано значение концентрации ";
                             return;
                         }
                         else
@@ -1048,13 +1048,13 @@ public partial class RDT : System.Web.UI.Page
                         }
                         catch (Exception)
                         {
-                            LabelError.Text += "Не указано значение температуры ";
+                            LabelError.Text = "Не указано значение температуры ";
                             return;
                         }
 
                         if (p7 < 0 || p7 > 150)
                         {
-                            LabelError.Text += "Неверно указано значение температуры ";
+                            LabelError.Text = "Неверно указано значение температуры ";
                             return;
                         }
                         else
@@ -1074,14 +1074,14 @@ public partial class RDT : System.Web.UI.Page
                                 checkVal = Convert.ToDouble(this.fprTextBox1.Text);
                                 if (!(checkVal > 0))
                                 {
-                                    LabelError.Text += "Введите числовое значение больше нуля";
+                                    LabelError.Text = "Введите числовое значение больше нуля";
                                     return;
                                 }
                             }
                         }
                         catch (Exception)
                         {
-                            LabelError.Text += "Неверно указано значение расхода через регулятор давления";
+                            LabelError.Text = "Неверно указано значение расхода через регулятор давления";
                             return;
                         }
 
@@ -1094,7 +1094,7 @@ public partial class RDT : System.Web.UI.Page
                         }
                         catch (Exception)
                         {
-                            LabelError.Text += "Неверно указано значение температуры";
+                            LabelError.Text = "Неверно указано значение температуры";
                             return;
                         }
 
@@ -1107,7 +1107,7 @@ public partial class RDT : System.Web.UI.Page
                         }
                         catch (Exception)
                         {
-                            LabelError.Text += "Неверно указано значение температуры";
+                            LabelError.Text = "Неверно указано значение температуры";
                             return;
                         }
 
@@ -1118,50 +1118,50 @@ public partial class RDT : System.Web.UI.Page
                                 checkVal = Convert.ToDouble(this.fprTextBox4.Text);
                                 if (!(checkVal > 0))
                                 {
-                                    LabelError.Text += "Введите числовое значение больше нуля";
+                                    LabelError.Text = "Введите числовое значение больше нуля";
                                     return;
                                 }
                             }
                         }
                         catch (Exception)
                         {
-                            LabelError.Text += "Неверно указано значение тепловой мощности";
+                            LabelError.Text = "Неверно указано значение тепловой мощности";
                             return;
                         }
 
                         if (this.fprRadioButton1.Checked && this.checkTextBoxEmpty(this.fprTextBox1))
                         {
-                            LabelError.Text += "Не задан расход через регулятор давления";
+                            LabelError.Text = "Не задан расход через регулятор давления";
                             return;
                         }
                         else if (this.fprRadioButton2.Checked && this.checkTextBoxEmpty(this.fprTextBox2))
                         {
-                            LabelError.Text += "Не задано значение температуры";
+                            LabelError.Text = "Не задано значение температуры";
                             return;
                         }
                         else if (this.fprRadioButton2.Checked && (Convert.ToDouble(this.fprTextBox2.Text) > 150))
                         {
-                            LabelError.Text += "На температуру свыше 150°С вариантов нет";
+                            LabelError.Text = "На температуру свыше 150°С вариантов нет";
                             return;
                         }
                         else if (this.fprRadioButton2.Checked && this.checkTextBoxEmpty(this.fprTextBox3))
                         {
-                            LabelError.Text += "Не задано значение температуры";
+                            LabelError.Text = "Не задано значение температуры";
                             return;
                         }
                         else if (this.fprRadioButton2.Checked && Convert.ToDouble(this.fprTextBox2.Text) <= Convert.ToDouble(this.fprTextBox3.Text))
                         {
-                            LabelError.Text += "Неверно указано значение температуры";
+                            LabelError.Text = "Неверно указано значение температуры";
                             return;
                         }
                         else if (this.fprRadioButton2.Checked && (Convert.ToDouble(this.fprTextBox3.Text) > 150))
                         {
-                            LabelError.Text += "На температуру свыше 150°С вариантов нет";
+                            LabelError.Text = "На температуру свыше 150°С вариантов нет";
                             return;
                         }
                         else if (this.fprRadioButton2.Checked && this.checkTextBoxEmpty(this.fprTextBox4))
                         {
-                            LabelError.Text += "Не задано значение тепловой мощности";
+                            LabelError.Text = "Не задано значение тепловой мощности";
                             return;
                         }
                         else
@@ -1176,7 +1176,7 @@ public partial class RDT : System.Web.UI.Page
                                 }
                                 catch (Exception)
                                 {
-                                    LabelError.Text += "Неверно указано значение тепловой мощности";
+                                    LabelError.Text = "Неверно указано значение тепловой мощности";
                                     return;
                                 }
                                 this.fprTextBox5.Text = p16.ToString();
@@ -1192,22 +1192,22 @@ public partial class RDT : System.Web.UI.Page
                             {
                                 if (this.checkTextBoxEmpty(this.lp1TextBox1))
                                 {
-                                    LabelError.Text += "Неверно указано значение давления";
+                                    LabelError.Text = "Неверно указано значение давления";
                                     return;
                                 }
                                 else if (this.checkTextBoxEmpty(this.lp1TextBox2))
                                 {
-                                    LabelError.Text += "Неверно указано значение давления";
+                                    LabelError.Text = "Неверно указано значение давления";
                                     return;
                                 }
                                 else if (this.checkTextBoxEmpty(this.lp1TextBox3))
                                 {
-                                    LabelError.Text += "Неверно указано значение давления";
+                                    LabelError.Text = "Неверно указано значение давления";
                                     return;
                                 }
                                 else if (this.checkTextBoxEmpty(this.lp1TextBox4))
                                 {
-                                    LabelError.Text += "Неверно указано значение давления";
+                                    LabelError.Text = "Неверно указано значение давления";
                                     return;
                                 }
                                 else
@@ -1221,7 +1221,7 @@ public partial class RDT : System.Web.UI.Page
                                     }
                                     catch (Exception)
                                     {
-                                        LabelError.Text += "Неверно указано значение давления";
+                                        LabelError.Text = "Неверно указано значение давления";
                                         return;
                                     }
 
@@ -1231,7 +1231,7 @@ public partial class RDT : System.Web.UI.Page
                                     }
                                     catch (Exception)
                                     {
-                                        LabelError.Text += "Неверно указано значение давления";
+                                        LabelError.Text = "Неверно указано значение давления";
                                         return;
                                     }
 
@@ -1241,7 +1241,7 @@ public partial class RDT : System.Web.UI.Page
                                     }
                                     catch (Exception)
                                     {
-                                        LabelError.Text += "Неверно указано значение давления";
+                                        LabelError.Text = "Неверно указано значение давления";
                                         return;
                                     }
 
@@ -1251,45 +1251,45 @@ public partial class RDT : System.Web.UI.Page
                                     }
                                     catch (Exception)
                                     {
-                                        LabelError.Text += "Неверно указано значение давления";
+                                        LabelError.Text = "Неверно указано значение давления";
                                         return;
                                     }
 
                                     if (!(p17 > 0))
                                     {
-                                        LabelError.Text += "Введите числовое значение больше нуля"; 
+                                        LabelError.Text = "Введите числовое значение больше нуля"; 
                                         return;
                                     }
                                     else if (!(p19 > 0))
                                     {
-                                        LabelError.Text += "Введите числовое значение больше нуля";
+                                        LabelError.Text = "Введите числовое значение больше нуля";
                                         return;
                                     }
                                     else if (!(p21 > 0))
                                     {
-                                        LabelError.Text += "Введите числовое значение больше нуля";
+                                        LabelError.Text = "Введите числовое значение больше нуля";
                                         return;
                                     }
                                     else if (!(p23 > 0))
                                     {
-                                        LabelError.Text += "Введите числовое значение больше нуля";
+                                        LabelError.Text = "Введите числовое значение больше нуля";
                                         return;
                                     }
 
                                     if (!(p21 <= 16))
                                     {
-                                        LabelError.Text += "На давление свыше 16 бар вариантов нет";
+                                        LabelError.Text = "На давление свыше 16 бар вариантов нет";
                                         return;
                                     }
                                     else if (!(p23 < p21))
                                     {
-                                        LabelError.Text += "Неверно указано значение давления";
+                                        LabelError.Text = "Неверно указано значение давления";
                                         return;
                                     }
                                     else if (!((p17 + p19) <= (p21 - p23)))
                                     {
                                         lp1TextBox1.BackColor = Color.LightPink;
-                                        LabelError.Text += "Суммарные потери давления на регуляторе и регулируемом участке превышают допустимый перепад давлений на вводе";
+                                        LabelError.Text = "Суммарные потери давления на регуляторе и регулируемом участке превышают допустимый перепад давлений на вводе";
                                         return;
                                     }
                                     else
@@ -1309,12 +1309,12 @@ public partial class RDT : System.Web.UI.Page
                             {
                                 if (this.checkTextBoxEmpty(this.lp2TextBox1))
                                 {
-                                    LabelError.Text += "Неверно указано значение давления";
+                                    LabelError.Text = "Неверно указано значение давления";
                                     return;
                                 }
                                 else if (this.checkTextBoxEmpty(this.lp2TextBox2))
                                 {
-                                    LabelError.Text += "Неверно указано значение давления";
+                                    LabelError.Text = "Неверно указано значение давления";
                                     return;
                                 }
                                 else
@@ -1328,7 +1328,7 @@ public partial class RDT : System.Web.UI.Page
                                     }
                                     catch (Exception)
                                     {
-                                        LabelError.Text += "Неверно указано значение давления";
+                                        LabelError.Text = "Неверно указано значение давления";
                                         return;
                                     }
 
@@ -1338,29 +1338,29 @@ public partial class RDT : System.Web.UI.Page
                                     }
                                     catch (Exception)
                                     {
-                                        LabelError.Text += "Неверно указано значение давления";
+                                        LabelError.Text = "Неверно указано значение давления";
                                         return;
                                     }
 
                                     if (!(p26 > 0))
                                     {
-                                        LabelError.Text += "Введите числовое значение больше нуля";
+                                        LabelError.Text = "Введите числовое значение больше нуля";
                                         return;
                                     }
                                     else if (!(p28 > 0))
                                     {
-                                        LabelError.Text += "Введите числовое значение больше нуля";
+                                        LabelError.Text = "Введите числовое значение больше нуля";
                                         return;
                                     }
 
                                     if (!(p26 <= 16))
                                     {
-                                        LabelError.Text += "На давление свыше 16 бар вариантов нет";
+                                        LabelError.Text = "На давление свыше 16 бар вариантов нет";
                                         return;
                                     }
                                     else if (!(p26 > p28))
                                     {
-                                        LabelError.Text += "Неверно указано значение давления";
+                                        LabelError.Text = "Неверно указано значение давления";
                                         return;
                                     }
                                     else
@@ -1376,12 +1376,12 @@ public partial class RDT : System.Web.UI.Page
                             {
                                 if (this.checkTextBoxEmpty(this.lp3TextBox1))
                                 {
-                                    LabelError.Text += "Неверно указано значение давления";
+                                    LabelError.Text = "Неверно указано значение давления";
                                     return;
                                 }
                                 else if (this.checkTextBoxEmpty(this.lp3TextBox2))
                                 {
-                                    LabelError.Text += "Неверно указано значение давления";
+                                    LabelError.Text = "Неверно указано значение давления";
                                     return;
                                 }
                                 else
@@ -1395,7 +1395,7 @@ public partial class RDT : System.Web.UI.Page
                                     }
                                     catch (Exception)
                                     {
-                                        LabelError.Text += "Неверно указано значение давления";
+                                        LabelError.Text = "Неверно указано значение давления";
                                         return;
                                     }
 
@@ -1405,29 +1405,29 @@ public partial class RDT : System.Web.UI.Page
                                     }
                                     catch (Exception)
                                     {
-                                        LabelError.Text += "Неверно указано значение давления";
+                                        LabelError.Text = "Неверно указано значение давления";
                                         return;
                                     }
 
                                     if (!(p30 > 0))
                                     {
-                                        LabelError.Text += "Введите числовое значение больше нуля";
+                                        LabelError.Text = "Введите числовое значение больше нуля";
                                         return;
                                     }
                                     else if (!(p32 > 0))
                                     {
-                                        LabelError.Text += "Введите числовое значение больше нуля";
+                                        LabelError.Text = "Введите числовое значение больше нуля";
                                         return;
                                     }
 
                                     if (!(p30 <= 16))
                                     {
-                                        LabelError.Text += "На давление свыше 16 бар вариантов нет";
+                                        LabelError.Text = "На давление свыше 16 бар вариантов нет";
                                         return;
                                     }
                                     else if (!(p30 > p32))
                                     {
-                                        LabelError.Text += "Неверно указано значение давления";
+                                        LabelError.Text = "Неверно указано значение давления";
                                         return;
                                     }
                                     else
@@ -1443,7 +1443,7 @@ public partial class RDT : System.Web.UI.Page
                             {
                                 if (this.checkTextBoxEmpty(this.lp4TextBox2))
                                 {
-                                    LabelError.Text += "Неверно указано значение давления";
+                                    LabelError.Text = "Неверно указано значение давления";
                                     return;
                                 }
                                 else
@@ -1457,19 +1457,19 @@ public partial class RDT : System.Web.UI.Page
                                     }
                                     catch (Exception)
                                     {
-                                        LabelError.Text += "Неверно указано значение давления";
+                                        LabelError.Text = "Неверно указано значение давления";
                                         return;
                                     }
 
                                     if (!(p19 > 0))
                                     {
-                                        LabelError.Text += "Введите числовое значение больше нуля";
+                                        LabelError.Text = "Введите числовое значение больше нуля";
                                         return;
                                     }
 
                                     if (!(p19 <= 16))
                                     {
-                                        LabelError.Text += "На давление свыше 16 бар вариантов нет";
+                                        LabelError.Text = "На давление свыше 16 бар вариантов нет";
                                         return;
                                     }
                                     else
@@ -1485,20 +1485,20 @@ public partial class RDT : System.Web.UI.Page
                             }
                             catch (Exception)
                             {
-                                LabelError.Text += "Неверно указано значение давления";
+                                LabelError.Text = "Неверно указано значение давления";
                                 return;
                             }
 
                             if (Convert.ToDouble(this.calcrTextBox1.Text) <= 0)
                             {
 
-                                LabelError.Text += "Неверно указано значение давления";
+                                LabelError.Text = "Неверно указано значение давления";
                                 return;
                             }
                             else if ((Convert.ToDouble(this.calcrTextBox1.Text) * arrConvert3[this.calcrDropDownList1.SelectedIndex - 1] / arrConvert3[2]) > 16)
                             {
 
-                                LabelError.Text += "На давление свыше 16 бар вариантов нет";
+                                LabelError.Text = "На давление свыше 16 бар вариантов нет";
                                 return;
                             }
 
@@ -1511,19 +1511,19 @@ public partial class RDT : System.Web.UI.Page
                             }
                             catch (Exception)
                             {
-                                LabelError.Text += "Неверно указано значение температуры";
+                                LabelError.Text = "Неверно указано значение температуры";
                                 return;
                             }
                             if (p35 <= 0)
                             {
 
-                                LabelError.Text += "Неверно указано значение температуры";
+                                LabelError.Text = "Неверно указано значение температуры";
                                 return;
                             }
                             else if (p35 > 150)
                             {
 
-                                LabelError.Text += "На температуру свыше 150°С вариантов нет";
+                                LabelError.Text = "На температуру свыше 150°С вариантов нет";
                                 return;
                             }
 
@@ -1552,7 +1552,7 @@ public partial class RDT : System.Web.UI.Page
 
                             if (((Convert.ToDouble(this.calcrTextBox1.Text) * arrConvert3[this.calcrDropDownList1.SelectedIndex - 1] / arrConvert3[2]) - getPSbyT(t1_check)) <= 0)
                             {
-                                LabelError.Text += "Указанная температура выше температуры парообразования. При указанной температуре в трубопроводе движется пар";
+                                LabelError.Text = "Указанная температура выше температуры парообразования. При указанной температуре в трубопроводе движется пар";
                                 return;
                             }
 
@@ -1650,25 +1650,25 @@ public partial class RDT : System.Web.UI.Page
                     }
                     else
                     {
-                        LabelError.Text += "Не выбран расход через регулятор давления";
+                        LabelError.Text = "Не выбран расход через регулятор давления";
                         return;
                     }
                 }
                 else
                 {
-                    LabelError.Text += "Не выбрана рабочая среда";
+                    LabelError.Text = "Не выбрана рабочая среда";
                     return;
                 }
             }
             else
             {
-                LabelError.Text += "Не выбрано исполнение регулятора";
+                LabelError.Text = "Не выбрано исполнение регулятора";
                 return;
             }
         }
         else
         {
-            LabelError.Text += "Не выбрано место установки регулятора";
+            LabelError.Text = "Не выбрано место установки регулятора";
             return;
         }
 
@@ -1922,7 +1922,7 @@ public partial class RDT : System.Web.UI.Page
 
             if (!File.Exists(HttpContext.Current.Server.MapPath("\\Content\\templates\\templateRDT.xlsx")))
             {
-                LabelError.Text += "Не найден файл шаблона";
+                LabelError.Text = "Не найден файл шаблона";
                 return;
             }
 
@@ -2012,7 +2012,7 @@ public partial class RDT : System.Web.UI.Page
             ws.Cells["I40"].Value = r_input_dict[48];
             ws.Cells["K40"].Value = r_input_dict[49];
 
-            ws.Pictures.Add(Directory.GetCurrentDirectory() + "\\images\\rdt\\" + ((r_input_dict[4] == this.eorRadioButtonList1.Items[0].Text) || (r_input_dict[4] == eorRadioButtonList1.Items[1].Text) ? "RDT-RDT-P.jpg" : "RDT-S-RDT-B.jpg"), "A44", "B53");
+            ws.Pictures.Add(Directory.GetCurrentDirectory() + "\\images\\" + ((r_input_dict[4] == this.eorRadioButtonList1.Items[0].Text) || (r_input_dict[4] == eorRadioButtonList1.Items[1].Text) ? "RDT-RDT-P.jpg" : "RDT-S-RDT-B.jpg"), "A44", "B53");
 
             getDimsR(ref r_input_dict);
 
@@ -2103,7 +2103,7 @@ public partial class RDT : System.Web.UI.Page
 
         if (!File.Exists(HttpContext.Current.Server.MapPath("\\Content\\templates\\templateRDT.xlsx")))
         {
-            LabelError.Text += "Не найден файл шаблона";
+            LabelError.Text = "Не найден файл шаблона";
             return;
         }
 
@@ -2432,6 +2432,7 @@ public partial class RDT : System.Web.UI.Page
         string clientScript = "javascript:ShowBTN();";
         this.Page.ClientScript.RegisterStartupScript(this.GetType(), "MyClientScript", clientScript);
         objTextBox1.Visible = true;
+        objTextBox1.Enabled = true;
         Label53.Visible = true;
     }
 }

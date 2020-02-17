@@ -398,7 +398,7 @@
                         <ContentTemplate>
                             <br />
                             <asp:Label ID="LabelError" runat="server" Font-Bold="True" Font-Size="Medium"
-                                Font-Strikeout="False" ForeColor="Red" Text="Label" Visible="False"></asp:Label>
+                                Font-Strikeout="False" ForeColor="Red"></asp:Label>
                             <br />
                             <asp:Button ID="rButton" runat="server" type="submit" Text="Рассчитать"
                                  Width="100%" OnClick="rButton_Click" />

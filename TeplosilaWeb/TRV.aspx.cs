@@ -3539,9 +3539,8 @@ public partial class TRV : System.Web.UI.Page
         ws.Cells["G40"].Value = v_input_dict[68];
 
 
-        //ws.Pictures.Add(Directory.GetCurrentDirectory() + "\\images\\trv\\" + ((v_input_dict[7] == this.tvRadioButtonList1.Items[tvRadioButtonList1.SelectedIndex].Text) ? "Габаритный TRV и TRV-P.png" : "Габаритный TRV-3.png"), "A37", "B46");
-
-        
+        ws.Pictures.Add(Directory.GetCurrentDirectory() + "\\images\\" + ((v_input_dict[7] == this.tvRadioButtonList1.Items[tvRadioButtonList1.SelectedIndex].Text) ? "TRV-2.png" : "TRV-3.png"), "A37", "B46");
+       
 
         string path = HttpContext.Current.Server.MapPath("\\Files\\TRV\\PDF\\" + DateTime.Now.ToString("dd-MM-yyyy"));
         DirectoryInfo dirInfo = new DirectoryInfo(path);
