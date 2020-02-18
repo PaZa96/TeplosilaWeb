@@ -12,6 +12,7 @@ using System.Data;
 using System.Net;
 using System.Threading;
 using System.Diagnostics;
+using TeplosilaWeb.App_Code;
 
 public partial class TRV : System.Web.UI.Page
 {
@@ -48,7 +49,7 @@ public partial class TRV : System.Web.UI.Page
         arrConvert2 = new double[5] { 1000, 1000000, 1, 1163000, 1.163 };
         arrConvert3 = new double[4] { 1000, 1, 100, 10 };
 
-
+        Logger.InitLogger();//инициализация - требуется один раз в начале
     }
 
     protected void tvRadioButtonList1_SelectedIndexChanged(object sender, EventArgs e)

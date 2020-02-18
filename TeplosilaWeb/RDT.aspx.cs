@@ -10,6 +10,8 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using TeplosilaWeb.App_Code;
+
 
 public partial class RDT : System.Web.UI.Page
 {
@@ -17,7 +19,7 @@ public partial class RDT : System.Web.UI.Page
     private const int PressureBeforeValve3x = 16;
     private const int MaxT2x = 220;
     private const int MaxT3x = 150;
-    private dynamic dataFromFile;
+    public dynamic dataFromFile;
     private double[,] convertTable;
 
     double[,] arrConvert1;
@@ -46,32 +48,12 @@ public partial class RDT : System.Web.UI.Page
         arrConvert2 = new double[5] { 1000, 1000000, 1, 1163000, 1.163 };
         arrConvert3 = new double[4] { 1000, 1, 100, 10 };
 
+        Logger.InitLogger();//инициализация - требуется один раз в начале
 
     }
 
-    private void changeImage(int index)
-    {
-        switch (index)
-        {
-            case 0:
-                rPictureBox.ImageUrl = @"./Content/images/RDT-RDT-P.jpg";
-                break;
-            case 1:
-                rPictureBox.ImageUrl = @"./Content/images/RDT-RDT-P.jpg";
-                break;
-            case 2:
-                rPictureBox.ImageUrl = @"./Content/images/RDT-S-RDT-B.jpg";
-                break;
-            case 3:
-                rPictureBox.ImageUrl = @"./Content/images/RDT-S-RDT-B.jpg";
-                break;
 
-            default:
-                rPictureBox.ImageUrl = null;
-                break;
-        }
-    }
-
+    //------------------------------------Math Function START--------------------------------------
     /// <summary>
     /// Рассчитывает физические свойства этиленгликоля.
     /// </summary>
@@ -149,23 +131,23 @@ public partial class RDT : System.Web.UI.Page
     {
         double avg_T = 0;
 
-        
-            if (this.fprRadioButton1.Checked)
+
+        if (this.fprRadioButton1.Checked)
+        {
+            if (this.ws1RadioButtonList1.SelectedIndex == 0)
             {
-                if (this.ws1RadioButtonList1.SelectedIndex == 0)
-                {
-                    avg_T = double.Parse(this.calcrTextBox2.Text);
-                }
-                else
-                {
-                    avg_T = Convert.ToDouble(this.ws1TextBox2.Text);
-                }
+                avg_T = double.Parse(this.calcrTextBox2.Text);
             }
             else
             {
-                avg_T = 0.5 * (double.Parse(this.fprTextBox2.Text) + double.Parse(this.fprTextBox3.Text));
+                avg_T = Convert.ToDouble(this.ws1TextBox2.Text);
             }
-        
+        }
+        else
+        {
+            avg_T = 0.5 * (double.Parse(this.fprTextBox2.Text) + double.Parse(this.fprTextBox3.Text));
+        }
+
 
         return avg_T;
     }
@@ -210,637 +192,636 @@ public partial class RDT : System.Web.UI.Page
         return cp / 1000; // * rr / 1000000;
     }
 
-    private void readFile(int index)
+    private double getPSbyT(double t)
     {
-        try
-        {
-            string jsonText = null;
-            this.dataFromFile = null;
-            switch (index)
-            {
-                case 0:
-                    jsonText = File.ReadAllText(HttpContext.Current.Server.MapPath(@"Content/data/data.txt"));
-                    break;
-                case 1:
-                    jsonText = File.ReadAllText(Directory.GetCurrentDirectory() + @"\data-two.txt");
-                    break;
-            }
-            if (jsonText != null)
-            {
-                this.dataFromFile = JsonConvert.DeserializeObject(jsonText);
-            }
-        }
-        catch (Exception)
-        {
-            //LabelError.Text = "Проверьте пожалуйста файл с данными!");
-        }
+        return Math.Pow(t / 103, 1 / 0.242) - 0.892;
     }
 
+    private double getTbyPS(double ps)
+    {
+        return 103 * Math.Pow(ps + 0.892, 0.242);
+    }
+
+    //------------------------------------Math Function END--------------------------------------
+
+
+    //------------------------------------Table Function START--------------------------------------
 
     private Dictionary<string, string[]> generatedTableR(Dictionary<string, double> g_dict)
     {
-        /*BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB*/
-        double Kv = 0, Gpg = 0, dPg = 0, g = 0;
-        int DN = 0;
-        double Kv_start = 0;
-        double tmpKv = 0;
-        string tmpA = "";
+        try
+        {
 
-        Dictionary<string, string[]> listResult = new Dictionary<string, string[]>();
-        listResult.Add("A", new string[] { });
-        listResult.Add("B", new string[] { });
-        listResult.Add("C", new string[] { });
-        listResult.Add("D", new string[] { });
-        listResult.Add("I", new string[] { });
-        listResult.Add("F", new string[] { });
-        listResult.Add("E", new string[] { });
-        listResult.Add("G", new string[] { });
-        listResult.Add("K", new string[] { });
-        Gpg = g_dict["p16"];
-        if (eorRadioButtonList1.SelectedIndex == 0)
-        {
-            dPg = Convert.ToDouble(this.lp1TextBox1.Text) * arrConvert3[this.lp1DropDownList1.SelectedIndex - 1];
-        }
-        else if (eorRadioButtonList1.SelectedIndex == 1)
-        {
-            dPg = Convert.ToDouble(this.lp2TextBox1.Text) * arrConvert3[this.lp2DropDownList1.SelectedIndex - 1] - Convert.ToDouble(this.lp2TextBox2.Text) * arrConvert3[this.lp2DropDownList2.SelectedIndex - 1];
-        }
-        else if (eorRadioButtonList1.SelectedIndex == 2)
-        {
-            dPg = Convert.ToDouble(this.lp3TextBox1.Text) * arrConvert3[this.lp3DropDownList1.SelectedIndex - 1] - Convert.ToDouble(this.lp3TextBox2.Text) * arrConvert3[this.lp3DropDownList2.SelectedIndex - 1];
-        }
-        else if (eorRadioButtonList1.SelectedIndex == 3)
-        {
-            dPg = Convert.ToDouble(this.lp4TextBox2.Text) * arrConvert3[this.lp4DropDownList2.SelectedIndex - 1];
-        }
+            /*BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB*/
+            double Kv = 0, Gpg = 0, dPg = 0, g = 0;
+            int DN = 0;
+            double Kv_start = 0;
+            double tmpKv = 0;
+            string tmpA = "";
 
-        /*if (dPg < 15) 
-        {
-            dPg = 80;
-        }*/
-
-        /*
-        double middle_T = 0;
-
-        if (this.fprRadioButton1.Checked)
-        {
-            if (this.ws1RadioButton1.Checked)
+            Dictionary<string, string[]> listResult = new Dictionary<string, string[]>();
+            listResult.Add("A", new string[] { });
+            listResult.Add("B", new string[] { });
+            listResult.Add("C", new string[] { });
+            listResult.Add("D", new string[] { });
+            listResult.Add("I", new string[] { });
+            listResult.Add("F", new string[] { });
+            listResult.Add("E", new string[] { });
+            listResult.Add("G", new string[] { });
+            listResult.Add("K", new string[] { });
+            Gpg = g_dict["p16"];
+            if (eorRadioButtonList1.SelectedIndex == 0)
             {
-                    middle_T = double.Parse(this.calcrTextBox2.Text);
+                dPg = Convert.ToDouble(this.lp1TextBox1.Text) * arrConvert3[this.lp1DropDownList1.SelectedIndex - 1];
             }
-            else
+            else if (eorRadioButtonList1.SelectedIndex == 1)
             {
-                    middle_T = Convert.ToDouble(this.ws1TextBox2.Text);
+                dPg = Convert.ToDouble(this.lp2TextBox1.Text) * arrConvert3[this.lp2DropDownList1.SelectedIndex - 1] - Convert.ToDouble(this.lp2TextBox2.Text) * arrConvert3[this.lp2DropDownList2.SelectedIndex - 1];
             }
-        }
-        else
-        {
-            middle_T = 0.5 * (double.Parse(this.fprTextBox2.Text) + double.Parse(this.fprTextBox3.Text));                
-        }*/
+            else if (eorRadioButtonList1.SelectedIndex == 2)
+            {
+                dPg = Convert.ToDouble(this.lp3TextBox1.Text) * arrConvert3[this.lp3DropDownList1.SelectedIndex - 1] - Convert.ToDouble(this.lp3TextBox2.Text) * arrConvert3[this.lp3DropDownList2.SelectedIndex - 1];
+            }
+            else if (eorRadioButtonList1.SelectedIndex == 3)
+            {
+                dPg = Convert.ToDouble(this.lp4TextBox2.Text) * arrConvert3[this.lp4DropDownList2.SelectedIndex - 1];
+            }
 
-        if (ws1RadioButtonList1.SelectedIndex == 0)
-        {
-            Water(GetAvgT(), ref g);
-        }
-        else if (ws1RadioButtonList1.SelectedIndex == 1)
-        {
-            double p6 = Convert.ToDouble(this.ws1TextBox1.Text);
-            double p7 = Math.Round(GetAvgT() / 10) * 10;
-            double cp = 0;
-            Etgl(p7, p6, ref g, ref cp);
-        }
-        else if (ws1RadioButtonList1.SelectedIndex == 2)
-        {
-            double p6 = Convert.ToDouble(this.ws1TextBox1.Text);
-            double p7 = Math.Round(GetAvgT() / 10) * 10;
-            double cp = 0;
-            Prgl(p7, p6, ref g, ref cp);
-        }
+            /*if (dPg < 15) 
+            {
+                dPg = 80;
+            }*/
 
-        /*
-        if (this.ws1RadioButton1.Checked)
-        {
-            //g = 1000;
+            /*
+            double middle_T = 0;
+
             if (this.fprRadioButton1.Checked)
             {
-                Water(double.Parse(this.calcrTextBox2.Text), ref g);
+                if (this.ws1RadioButton1.Checked)
+                {
+                        middle_T = double.Parse(this.calcrTextBox2.Text);
+                }
+                else
+                {
+                        middle_T = Convert.ToDouble(this.ws1TextBox2.Text);
+                }
             }
             else
             {
-                Water(0.5 * (double.Parse(this.fprTextBox2.Text) + double.Parse(this.fprTextBox3.Text)), ref g);
-            }
-        }
-        else 
-        {
-            double p6 = Convert.ToDouble(this.ws1TextBox1.Text);
-            double p7 = Math.Round(Convert.ToDouble(this.ws1TextBox2.Text) / 10) * 10;
-            /*foreach (Newtonsoft.Json.Linq.JProperty el in dataFromFile.table4)
+                middle_T = 0.5 * (double.Parse(this.fprTextBox2.Text) + double.Parse(this.fprTextBox3.Text));                
+            }*/
+
+            if (ws1RadioButtonList1.SelectedIndex == 0)
             {
-                string s = 0 + "";
-                string[] mas = el.Name.Split('-');
-                if ((Convert.ToDouble(mas[0]) <= p6) && (Convert.ToDouble(mas[1]) >= p6))
+                Water(GetAvgT(), ref g);
+            }
+            else if (ws1RadioButtonList1.SelectedIndex == 1)
+            {
+                double p6 = Convert.ToDouble(this.ws1TextBox1.Text);
+                double p7 = Math.Round(GetAvgT() / 10) * 10;
+                double cp = 0;
+                Etgl(p7, p6, ref g, ref cp);
+            }
+            else if (ws1RadioButtonList1.SelectedIndex == 2)
+            {
+                double p6 = Convert.ToDouble(this.ws1TextBox1.Text);
+                double p7 = Math.Round(GetAvgT() / 10) * 10;
+                double cp = 0;
+                Prgl(p7, p6, ref g, ref cp);
+            }
+
+            /*
+            if (this.ws1RadioButton1.Checked)
+            {
+                //g = 1000;
+                if (this.fprRadioButton1.Checked)
                 {
-                    double tmp_t = 0.0;
-                    foreach (Newtonsoft.Json.Linq.JObject val in el.Value)
-                    {
-                        if (Convert.ToDouble(val.GetValue("t")) == p7)
-                        {
-                            tmp_t = Convert.ToDouble(val.GetValue("sr"));
-                        }
-                    }
-                    g = tmp_t;
+                    Water(double.Parse(this.calcrTextBox2.Text), ref g);
                 }
-            }* /
-            Etgl(p7, p6, ref g);
-        }*/
-
-        Kv = 1.2 * (Gpg * 0.01) / (Math.Sqrt(dPg * 0.001 * g));
-        Newtonsoft.Json.Linq.JArray table5 = dataFromFile.table5;
-        Newtonsoft.Json.Linq.JArray table10 = dataFromFile.table10;
-        double col_B = Convert.ToDouble(table5[table5.Count - 1]);
-        int col_C = Convert.ToInt32(table10[table10.Count - 1]);
-
-
-        /*IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII*/
-
-        double I = 0;
-        Newtonsoft.Json.Linq.JObject tmpI = null;
-
-        if (eorRadioButtonList1.SelectedIndex == 0)
-        {
-            I = Convert.ToDouble(this.lp1TextBox2.Text) * arrConvert3[this.lp1DropDownList2.SelectedIndex - 1] / arrConvert3[2];
-        }
-        else if (eorRadioButtonList1.SelectedIndex == 1)
-        {
-            I = Convert.ToDouble(this.lp2TextBox2.Text) * arrConvert3[this.lp2DropDownList2.SelectedIndex - 1] / arrConvert3[2];
-        }
-        else if (eorRadioButtonList1.SelectedIndex == 2)
-        {
-            I = Convert.ToDouble(this.lp3TextBox1.Text) * arrConvert3[this.lp3DropDownList1.SelectedIndex - 1] / arrConvert3[2];
-        }
-        else if (eorRadioButtonList1.SelectedIndex == 3)
-        {
-            I = Convert.ToDouble(this.lp4TextBox2.Text) * arrConvert3[this.lp4DropDownList2.SelectedIndex - 1] / arrConvert3[2];
-        }
-
-        if (I < (((eorRadioButtonList1.SelectedIndex == 2 || eorRadioButtonList1.SelectedIndex == 3)) ? 0.16 : 0.08) || I > 15.8)
-        {
-            var _List = new List<string>();
-            if (listResult.ContainsKey("I"))
+                else
+                {
+                    Water(0.5 * (double.Parse(this.fprTextBox2.Text) + double.Parse(this.fprTextBox3.Text)), ref g);
+                }
+            }
+            else 
             {
-                _List.AddRange(listResult["I"]);
+                double p6 = Convert.ToDouble(this.ws1TextBox1.Text);
+                double p7 = Math.Round(Convert.ToDouble(this.ws1TextBox2.Text) / 10) * 10;
+                /*foreach (Newtonsoft.Json.Linq.JProperty el in dataFromFile.table4)
+                {
+                    string s = 0 + "";
+                    string[] mas = el.Name.Split('-');
+                    if ((Convert.ToDouble(mas[0]) <= p6) && (Convert.ToDouble(mas[1]) >= p6))
+                    {
+                        double tmp_t = 0.0;
+                        foreach (Newtonsoft.Json.Linq.JObject val in el.Value)
+                        {
+                            if (Convert.ToDouble(val.GetValue("t")) == p7)
+                            {
+                                tmp_t = Convert.ToDouble(val.GetValue("sr"));
+                            }
+                        }
+                        g = tmp_t;
+                    }
+                }* /
+                Etgl(p7, p6, ref g);
+            }*/
+
+            Kv = 1.2 * (Gpg * 0.01) / (Math.Sqrt(dPg * 0.001 * g));
+            Newtonsoft.Json.Linq.JArray table5 = dataFromFile.table5;
+            Newtonsoft.Json.Linq.JArray table10 = dataFromFile.table10;
+            double col_B = Convert.ToDouble(table5[table5.Count - 1]);
+            int col_C = Convert.ToInt32(table10[table10.Count - 1]);
+
+
+            /*IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII*/
+
+            double I = 0;
+            Newtonsoft.Json.Linq.JObject tmpI = null;
+
+            if (eorRadioButtonList1.SelectedIndex == 0)
+            {
+                I = Convert.ToDouble(this.lp1TextBox2.Text) * arrConvert3[this.lp1DropDownList2.SelectedIndex - 1] / arrConvert3[2];
+            }
+            else if (eorRadioButtonList1.SelectedIndex == 1)
+            {
+                I = Convert.ToDouble(this.lp2TextBox2.Text) * arrConvert3[this.lp2DropDownList2.SelectedIndex - 1] / arrConvert3[2];
+            }
+            else if (eorRadioButtonList1.SelectedIndex == 2)
+            {
+                I = Convert.ToDouble(this.lp3TextBox1.Text) * arrConvert3[this.lp3DropDownList1.SelectedIndex - 1] / arrConvert3[2];
+            }
+            else if (eorRadioButtonList1.SelectedIndex == 3)
+            {
+                I = Convert.ToDouble(this.lp4TextBox2.Text) * arrConvert3[this.lp4DropDownList2.SelectedIndex - 1] / arrConvert3[2];
             }
 
-            _List.AddRange(new string[] { "Решение по диапазону настройки не найдено" });
-            listResult["I"] = _List.ToArray();
-
-            return listResult;
-        }
-        else
-        {
-            //foreach (Newtonsoft.Json.Linq.JObject el in ((this.eorRadioButton3.Checked || this.eorRadioButton4.Checked) ? dataFromFile.table63 : dataFromFile.table61))
-            foreach (Newtonsoft.Json.Linq.JObject el in dataFromFile.table61)
+            if (I < (((eorRadioButtonList1.SelectedIndex == 2 || eorRadioButtonList1.SelectedIndex == 3)) ? 0.16 : 0.08) || I > 15.8)
             {
-                double min = Convert.ToDouble(el.GetValue("min"));
-                double max = Convert.ToDouble(el.GetValue("max"));
-                if ((min <= I) && (max >= I))
+                var _List = new List<string>();
+                if (listResult.ContainsKey("I"))
                 {
-                    if (tmpI != null)
-                    {
-                        double old_min = Convert.ToDouble(tmpI.GetValue("min"));
-                        double old_max = Convert.ToDouble(tmpI.GetValue("max"));
-                        double tmpSer = (min + (max - min) / 2);
-                        double tmpSer1 = (old_min + (old_max - old_min) / 2);
-                        double tmpSr = 0.0;
-                        double tmpSr1 = 0.0;
-                        if (I > tmpSer)
-                        {
-                            tmpSr = I - tmpSer;
-                        }
-                        else
-                        {
-                            tmpSr = tmpSer - I;
-                        }
+                    _List.AddRange(listResult["I"]);
+                }
 
-                        if (I > tmpSer1)
+                _List.AddRange(new string[] { "Решение по диапазону настройки не найдено" });
+                listResult["I"] = _List.ToArray();
+
+                return listResult;
+            }
+            else
+            {
+                //foreach (Newtonsoft.Json.Linq.JObject el in ((this.eorRadioButton3.Checked || this.eorRadioButton4.Checked) ? dataFromFile.table63 : dataFromFile.table61))
+                foreach (Newtonsoft.Json.Linq.JObject el in dataFromFile.table61)
+                {
+                    double min = Convert.ToDouble(el.GetValue("min"));
+                    double max = Convert.ToDouble(el.GetValue("max"));
+                    if ((min <= I) && (max >= I))
+                    {
+                        if (tmpI != null)
                         {
-                            tmpSr1 = I - tmpSer1;
+                            double old_min = Convert.ToDouble(tmpI.GetValue("min"));
+                            double old_max = Convert.ToDouble(tmpI.GetValue("max"));
+                            double tmpSer = (min + (max - min) / 2);
+                            double tmpSer1 = (old_min + (old_max - old_min) / 2);
+                            double tmpSr = 0.0;
+                            double tmpSr1 = 0.0;
+                            if (I > tmpSer)
+                            {
+                                tmpSr = I - tmpSer;
+                            }
+                            else
+                            {
+                                tmpSr = tmpSer - I;
+                            }
+
+                            if (I > tmpSer1)
+                            {
+                                tmpSr1 = I - tmpSer1;
+                            }
+                            else
+                            {
+                                tmpSr1 = tmpSer1 - I;
+                            }
+                            if (tmpSr < tmpSr1)
+                            {
+                                tmpI = el;
+                            }
                         }
                         else
-                        {
-                            tmpSr1 = tmpSer1 - I;
-                        }
-                        if (tmpSr < tmpSr1)
                         {
                             tmpI = el;
                         }
                     }
-                    else
+                }
+
+                var _List = new List<string>();
+                if (listResult.ContainsKey("I"))
+                {
+                    _List.AddRange(listResult["I"]);
+                }
+
+                _List.AddRange(new string[] { "" + tmpI.GetValue("min") + "..." + tmpI.GetValue("max") });
+                listResult["I"] = _List.ToArray();
+            }
+            /*/IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII*/
+
+
+            bool exit_t = false;
+
+
+            if (col_B == Convert.ToDouble(table5[table5.Count - 1]))
+            {
+                foreach (double el in table5)
+                {
+                    if ((el <= col_B) && (el >= Kv))
                     {
-                        tmpI = el;
+                        col_B = el;
                     }
                 }
             }
-
-            var _List = new List<string>();
-            if (listResult.ContainsKey("I"))
-            {
-                _List.AddRange(listResult["I"]);
-            }
-
-            _List.AddRange(new string[] { "" + tmpI.GetValue("min") + "..." + tmpI.GetValue("max") });
-            listResult["I"] = _List.ToArray();
-        }
-        /*/IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII*/
-
-
-        bool exit_t = false;
-
-
-        if (col_B == Convert.ToDouble(table5[table5.Count - 1]))
-        {
-            foreach (double el in table5)
-            {
-                if ((el <= col_B) && (el >= Kv))
-                {
-                    col_B = el;
-                }
-            }
-        }
-        else
-        {
-            double col_Bt = Convert.ToDouble(table5[table5.Count - 1]);
-            foreach (double el in table5)
-            {
-                if ((el <= col_Bt) && (el >= Kv) && (el > col_B))
-                {
-                    col_Bt = el;
-                }
-            }
-            col_B = col_Bt;
-        }
-
-        if (col_B == Convert.ToDouble(table5[table5.Count - 1]))
-            exit_t = true;
-
-
-        if (Kv > col_B)
-        {
-            exit_t = true;
-            var _List = new List<string>();
-
-            if (listResult.ContainsKey("B"))
-            {
-                _List.AddRange(listResult["B"]);
-            }
-
-            _List.AddRange(new string[] { "Решение не найдено" });
-            listResult["B"] = _List.ToArray();
-            return listResult;
-        }
-        else
-        {
-            Kv = Math.Round(col_B, 2);
-
-            var _List = new List<string>();
-
-            if (listResult.ContainsKey("B"))
-            {
-                _List.AddRange(listResult["B"]);
-            }
-
-            _List.AddRange(new string[] { Kv.ToString() });
-            listResult["B"] = _List.ToArray();
-        }
-        /*/BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB*/
-
-        /*AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA*/
-        /*CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC*/
-        Newtonsoft.Json.Linq.JArray table = null;
-        if (eorRadioButtonList1.SelectedIndex == 0)
-        {
-            table = dataFromFile.table71;
-        }
-        else if (eorRadioButtonList1.SelectedIndex == 1)
-        {
-            table = dataFromFile.table72;
-        }
-        else if (eorRadioButtonList1.SelectedIndex == 2)
-        {
-            table = dataFromFile.table73;
-        }
-        else if (eorRadioButtonList1.SelectedIndex == 3)
-        {
-            table = dataFromFile.table74;
-        }
-
-        if (tmpI != null)
-        {
-            List<string> listA = new List<string>(),
-                listB = new List<string>(),
-                listC = new List<string>();
-            foreach (Newtonsoft.Json.Linq.JObject ob in table)
-            {
-                if ((Convert.ToDouble(ob.GetValue("prop")) == Kv) &&
-                    (Convert.ToDouble(ob.GetValue("min")) == Convert.ToDouble(tmpI.GetValue("min")) &&
-                    Convert.ToDouble(ob.GetValue("max")) == Convert.ToDouble(tmpI.GetValue("max"))))
-                {
-
-                    listA.Add(ob.GetValue("name").ToString());
-                    listB.Add(ob.GetValue("prop").ToString());
-                    listC.Add(ob.GetValue("d").ToString());
-                    DN = int.Parse(ob.GetValue("d").ToString());
-                    tmpKv = Kv;
-
-                }
-            }
-
-            var a_List = new List<string>();
-            if (listResult.ContainsKey("A"))
-            {
-                a_List.AddRange(listResult["A"]);
-            }
-
-            a_List.AddRange(listA);
-            listResult["A"] = a_List.ToArray();
-
-            if (listResult.ContainsKey("B"))
-            {
-                listResult["B"] = listB.ToArray();
-            }
-
-            var c_List = new List<string>();
-            if (listResult.ContainsKey("C"))
-            {
-                c_List.AddRange(listResult["C"]);
-            }
-
-            c_List.AddRange(listC);
-            listResult["C"] = c_List.ToArray();
-
-        }
-        /*/CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC*/
-        /*/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA*/
-
-        double C = Convert.ToDouble(listResult["C"][listResult["C"].Count() - 1]),
-                V = Gpg * convertTable[1, 5] * Math.Pow((18.8 / C), 2);
-
-
-
-        double Pf = 1;
-
-        while (!exit_t && (V >= g_dict["vmax"]))
-        {
-            if (exit_t)
-                break;
             else
             {
-                // DN ближайший больший из table10
-
-                if (col_C == Convert.ToDouble(table10[table10.Count - 1]))
+                double col_Bt = Convert.ToDouble(table5[table5.Count - 1]);
+                foreach (double el in table5)
                 {
-                    foreach (int el in table10)
+                    if ((el <= col_Bt) && (el >= Kv) && (el > col_B))
                     {
-                        if ((el <= col_C) && (el > DN))
-                        {
-                            col_C = el;
-                        }
+                        col_Bt = el;
                     }
                 }
-                else
-                {
-                    int col_Ct = Convert.ToInt32(table10[table10.Count - 1]);
-                    foreach (int el in table10)
-                    {
-                        if ((el <= col_Ct) && (el >= DN) && (el > col_C))
-                        {
-                            col_Ct = el;
-                        }
-                    }
-                    col_C = col_Ct;
-                }
-
-                bool meetEnd = false;
-
-                if (col_C == Convert.ToDouble(table10[table10.Count - 1]))
-                {
-
-                    exit_t = true;
-
-                    foreach (string keyValue in listResult["C"])
-                    {
-                        if (keyValue.Equals(table10[table10.Count - 1].ToString()))
-                            meetEnd = true;
-                    }
-
-                }
-
-                if (meetEnd) break;
-
-                if (DN > col_C)
-                {
-                    exit_t = true;
-                    var _List = new List<string>();
-
-                    if (listResult.ContainsKey("C"))
-                    {
-                        _List.AddRange(listResult["C"]);
-                    }
-
-                    _List.AddRange(new string[] { "Решение не найдено" });
-                    listResult["C"] = _List.ToArray();
-                    return listResult;
-                }
-                else
-                {
-                    DN = col_C;
-
-                    var _List = new List<string>();
-
-                    if (listResult.ContainsKey("C"))
-                    {
-                        _List.AddRange(listResult["C"]);
-                    }
-
-                    _List.AddRange(new string[] { DN.ToString() });
-                    listResult["C"] = _List.ToArray();
-                }
-                /*/CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC*/
-
-                /*AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA*/
-                /*CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC*/
-
-
-                if (tmpI != null)
-                {
-                    List<string> listA = new List<string>(),
-                        listB = new List<string>();
-
-                    Kv_start = 1.2 * (Gpg * 0.01) / (Math.Sqrt(dPg * 0.001 * g));
-                    tmpKv = 300;
-                    tmpA = "";
-                    foreach (Newtonsoft.Json.Linq.JObject ob in table)
-                    {
-                        if ((Convert.ToDouble(ob.GetValue("d")) == DN) &&
-                            (Convert.ToDouble(ob.GetValue("min")) == Convert.ToDouble(tmpI.GetValue("min")) &&
-                            Convert.ToDouble(ob.GetValue("max")) == Convert.ToDouble(tmpI.GetValue("max"))))
-                        {
-                            if (Kv_start < Convert.ToDouble(ob.GetValue("prop")) && tmpKv > Convert.ToDouble(ob.GetValue("prop")))
-                            {
-                                tmpKv = Convert.ToDouble(ob.GetValue("prop"));
-                                tmpA = ob.GetValue("name").ToString();
-                            }
-                            //listA.Add(ob.GetValue("name").ToString());
-                            //listB.Add(ob.GetValue("prop").ToString());
-                            //DN = int.Parse(ob.GetValue("d").ToString());
-
-                        }
-                    }
-
-                    listA.Add(tmpA.ToString());
-                    listB.Add(tmpKv.ToString());
-
-                    var a_List = new List<string>();
-                    if (listResult.ContainsKey("A"))
-                    {
-                        a_List.AddRange(listResult["A"]);
-                    }
-
-                    a_List.AddRange(listA);
-                    listResult["A"] = a_List.ToArray();
-
-                    var b_List = new List<string>();
-                    if (listResult.ContainsKey("B"))
-                    {
-                        b_List.AddRange(listResult["B"]);
-                    }
-
-                    b_List.AddRange(listB);
-                    listResult["B"] = b_List.ToArray();
-
-                }
-                /*/CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC*/
-                /*/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA*/
-
+                col_B = col_Bt;
             }
 
-            V = Gpg * convertTable[1, 5] * Math.Pow((18.8 / DN), 2);
-
-        }
-
-        /*FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF*/
-        /*GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG*/
-        List<string> listD = new List<string>(),
-            listF = new List<string>(),
-            listG = new List<string>(),
-            listE = new List<string>(),
-            listK = new List<string>();
-
-        listD.AddRange(listResult["D"]);
-        listF.AddRange(listResult["F"]);
-        listG.AddRange(listResult["G"]);
-        listE.AddRange(listResult["E"]);
-        listK.AddRange(listResult["K"]);
-
-
-        for (int i = 0; i < listResult["C"].Count(); i++)
-        {
-            /*DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD*/
-            Pf = (Math.Pow(Gpg, 2) * 0.1) / (Math.Pow(double.Parse(listResult["B"].GetValue(i).ToString()), 2) * g);
-            Pf = Math.Round(Pf / 100, 2); /*Перевод с кПа в бар*/
-                                          //listResult["D"] = new string[] { Pf.ToString() };
-
-            listD.Add(Pf.ToString());
-
-            /*
-            var d_List = new List<string>();
-            if (listResult.ContainsKey("D"))
-            {
-                d_List.AddRange(listResult["D"]);
-            }
-
-            d_List.AddRange(new string[] { Pf.ToString() });
-            listResult["D"] = d_List.ToArray();*/
-            /*/DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD*/
-
-
-
-            C = Convert.ToDouble(listResult["C"][i]);
-            V = Gpg * convertTable[1, 5] * Math.Pow((18.8 / Convert.ToDouble(listResult["C"][i])), 2);
-
-            if (V < g_dict["vmax"])
+            if (col_B == Convert.ToDouble(table5[table5.Count - 1]))
                 exit_t = true;
 
-            listF.Add(Math.Round(V, 2).ToString());
-            if (V > g_dict["vmax"])
+
+            if (Kv > col_B)
             {
-                listE.Add((this.sprRadioButtonList1.SelectedIndex == 0) ? "возможен эрозийный износ клапана" : "возможен шум");
-            }
-            else if (V < 1.5)
-            {
-                listE.Add("возможен колебательный режим регулирования");
+                exit_t = true;
+                var _List = new List<string>();
+
+                if (listResult.ContainsKey("B"))
+                {
+                    _List.AddRange(listResult["B"]);
+                }
+
+                _List.AddRange(new string[] { "Решение не найдено" });
+                listResult["B"] = _List.ToArray();
+                return listResult;
             }
             else
             {
-                listE.Add("нет");
+                Kv = Math.Round(col_B, 2);
+
+                var _List = new List<string>();
+
+                if (listResult.ContainsKey("B"))
+                {
+                    _List.AddRange(listResult["B"]);
+                }
+
+                _List.AddRange(new string[] { Kv.ToString() });
+                listResult["B"] = _List.ToArray();
             }
+            /*/BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB*/
 
-
-            if (!String.IsNullOrWhiteSpace(this.calcrTextBox1.Text) && !String.IsNullOrWhiteSpace(this.calcrTextBox2.Text))
+            /*AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA*/
+            /*CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC*/
+            Newtonsoft.Json.Linq.JArray table = null;
+            if (eorRadioButtonList1.SelectedIndex == 0)
             {
-                double dn = 0.0;
-                double ps = 0.0;
-                foreach (Newtonsoft.Json.Linq.JObject ob in dataFromFile.table8)
-                {
-                    if (C == Convert.ToDouble(ob.GetValue("dn")))
-                    {
-                        dn = Convert.ToDouble(ob.GetValue("z"));
-                        break;
-                    }
-                }
-
-                double t1 = Convert.ToDouble(this.calcrTextBox2.Text);
-                Newtonsoft.Json.Linq.JObject max = dataFromFile.table9[dataFromFile.table9.Count - 1];
-                foreach (Newtonsoft.Json.Linq.JObject ob in dataFromFile.table9)
-                {
-                    if ((Convert.ToDouble(ob.GetValue("t1")) <= Convert.ToDouble(max.GetValue("t1"))) && (Convert.ToDouble(ob.GetValue("t1")) >= t1))
-                    {
-                        max = ob;
-                    }
-                }
-                ps = Convert.ToDouble(max.GetValue("ps"));
-
-                double G = Math.Round((dn * ((Convert.ToDouble(this.calcrTextBox1.Text) * arrConvert3[this.calcrDropDownList1.SelectedIndex - 1] / arrConvert3[2]) - ps)), 2);
-                listG.Add(G.ToString());
-
-                string K = "Нет";
-                if (G < Pf)//double.Parse(listResult["D"].GetValue(i).ToString()) )//Pf)
-                    K = "Угрожает опасность кавитации";
-                if (eorRadioButtonList1.SelectedIndex == 0 && (G < g_dict["p25"]))
-                    K = "Угрожает опасность кавитации";
-                if (eorRadioButtonList1.SelectedIndex == 1 && (G < (g_dict["p26"] - g_dict["p28"])))
-                    K = "Угрожает опасность кавитации";
-                if (eorRadioButtonList1.SelectedIndex == 2 && (G < (g_dict["p30"] - g_dict["p32"])))
-                    K = "Угрожает опасность кавитации";
-                if (eorRadioButtonList1.SelectedIndex == 3 && (G < g_dict["p19"]))
-                    K = "Угрожает опасность кавитации";
-
-                listK.Add(K);
+                table = dataFromFile.table71;
             }
-        }
-        listResult["D"] = listD.ToArray();
-        listResult["F"] = listF.ToArray();
-        listResult["E"] = listE.ToArray();
-        listResult["G"] = listG.ToArray();
-        listResult["K"] = listK.ToArray();
-        /*/GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG*/
-        /*/FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF*/
+            else if (eorRadioButtonList1.SelectedIndex == 1)
+            {
+                table = dataFromFile.table72;
+            }
+            else if (eorRadioButtonList1.SelectedIndex == 2)
+            {
+                table = dataFromFile.table73;
+            }
+            else if (eorRadioButtonList1.SelectedIndex == 3)
+            {
+                table = dataFromFile.table74;
+            }
 
-        return listResult;
+            if (tmpI != null)
+            {
+                List<string> listA = new List<string>(),
+                    listB = new List<string>(),
+                    listC = new List<string>();
+                foreach (Newtonsoft.Json.Linq.JObject ob in table)
+                {
+                    if ((Convert.ToDouble(ob.GetValue("prop")) == Kv) &&
+                        (Convert.ToDouble(ob.GetValue("min")) == Convert.ToDouble(tmpI.GetValue("min")) &&
+                        Convert.ToDouble(ob.GetValue("max")) == Convert.ToDouble(tmpI.GetValue("max"))))
+                    {
+
+                        listA.Add(ob.GetValue("name").ToString());
+                        listB.Add(ob.GetValue("prop").ToString());
+                        listC.Add(ob.GetValue("d").ToString());
+                        DN = int.Parse(ob.GetValue("d").ToString());
+                        tmpKv = Kv;
+
+                    }
+                }
+
+                var a_List = new List<string>();
+                if (listResult.ContainsKey("A"))
+                {
+                    a_List.AddRange(listResult["A"]);
+                }
+
+                a_List.AddRange(listA);
+                listResult["A"] = a_List.ToArray();
+
+                if (listResult.ContainsKey("B"))
+                {
+                    listResult["B"] = listB.ToArray();
+                }
+
+                var c_List = new List<string>();
+                if (listResult.ContainsKey("C"))
+                {
+                    c_List.AddRange(listResult["C"]);
+                }
+
+                c_List.AddRange(listC);
+                listResult["C"] = c_List.ToArray();
+
+            }
+            /*/CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC*/
+            /*/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA*/
+
+            double C = Convert.ToDouble(listResult["C"][listResult["C"].Count() - 1]),
+                    V = Gpg * convertTable[1, 5] * Math.Pow((18.8 / C), 2);
+
+
+
+            double Pf = 1;
+
+            while (!exit_t && (V >= g_dict["vmax"]))
+            {
+                if (exit_t)
+                    break;
+                else
+                {
+                    // DN ближайший больший из table10
+
+                    if (col_C == Convert.ToDouble(table10[table10.Count - 1]))
+                    {
+                        foreach (int el in table10)
+                        {
+                            if ((el <= col_C) && (el > DN))
+                            {
+                                col_C = el;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        int col_Ct = Convert.ToInt32(table10[table10.Count - 1]);
+                        foreach (int el in table10)
+                        {
+                            if ((el <= col_Ct) && (el >= DN) && (el > col_C))
+                            {
+                                col_Ct = el;
+                            }
+                        }
+                        col_C = col_Ct;
+                    }
+
+                    bool meetEnd = false;
+
+                    if (col_C == Convert.ToDouble(table10[table10.Count - 1]))
+                    {
+
+                        exit_t = true;
+
+                        foreach (string keyValue in listResult["C"])
+                        {
+                            if (keyValue.Equals(table10[table10.Count - 1].ToString()))
+                                meetEnd = true;
+                        }
+
+                    }
+
+                    if (meetEnd) break;
+
+                    if (DN > col_C)
+                    {
+                        exit_t = true;
+                        var _List = new List<string>();
+
+                        if (listResult.ContainsKey("C"))
+                        {
+                            _List.AddRange(listResult["C"]);
+                        }
+
+                        _List.AddRange(new string[] { "Решение не найдено" });
+                        listResult["C"] = _List.ToArray();
+                        return listResult;
+                    }
+                    else
+                    {
+                        DN = col_C;
+
+                        var _List = new List<string>();
+
+                        if (listResult.ContainsKey("C"))
+                        {
+                            _List.AddRange(listResult["C"]);
+                        }
+
+                        _List.AddRange(new string[] { DN.ToString() });
+                        listResult["C"] = _List.ToArray();
+                    }
+                    /*/CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC*/
+
+                    /*AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA*/
+                    /*CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC*/
+
+
+                    if (tmpI != null)
+                    {
+                        List<string> listA = new List<string>(),
+                            listB = new List<string>();
+
+                        Kv_start = 1.2 * (Gpg * 0.01) / (Math.Sqrt(dPg * 0.001 * g));
+                        tmpKv = 300;
+                        tmpA = "";
+                        foreach (Newtonsoft.Json.Linq.JObject ob in table)
+                        {
+                            if ((Convert.ToDouble(ob.GetValue("d")) == DN) &&
+                                (Convert.ToDouble(ob.GetValue("min")) == Convert.ToDouble(tmpI.GetValue("min")) &&
+                                Convert.ToDouble(ob.GetValue("max")) == Convert.ToDouble(tmpI.GetValue("max"))))
+                            {
+                                if (Kv_start < Convert.ToDouble(ob.GetValue("prop")) && tmpKv > Convert.ToDouble(ob.GetValue("prop")))
+                                {
+                                    tmpKv = Convert.ToDouble(ob.GetValue("prop"));
+                                    tmpA = ob.GetValue("name").ToString();
+                                }
+                                //listA.Add(ob.GetValue("name").ToString());
+                                //listB.Add(ob.GetValue("prop").ToString());
+                                //DN = int.Parse(ob.GetValue("d").ToString());
+
+                            }
+                        }
+
+                        listA.Add(tmpA.ToString());
+                        listB.Add(tmpKv.ToString());
+
+                        var a_List = new List<string>();
+                        if (listResult.ContainsKey("A"))
+                        {
+                            a_List.AddRange(listResult["A"]);
+                        }
+
+                        a_List.AddRange(listA);
+                        listResult["A"] = a_List.ToArray();
+
+                        var b_List = new List<string>();
+                        if (listResult.ContainsKey("B"))
+                        {
+                            b_List.AddRange(listResult["B"]);
+                        }
+
+                        b_List.AddRange(listB);
+                        listResult["B"] = b_List.ToArray();
+
+                    }
+                    /*/CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC*/
+                    /*/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA*/
+
+                }
+
+                V = Gpg * convertTable[1, 5] * Math.Pow((18.8 / DN), 2);
+
+            }
+
+            /*FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF*/
+            /*GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG*/
+            List<string> listD = new List<string>(),
+                listF = new List<string>(),
+                listG = new List<string>(),
+                listE = new List<string>(),
+                listK = new List<string>();
+
+            listD.AddRange(listResult["D"]);
+            listF.AddRange(listResult["F"]);
+            listG.AddRange(listResult["G"]);
+            listE.AddRange(listResult["E"]);
+            listK.AddRange(listResult["K"]);
+
+
+            for (int i = 0; i < listResult["C"].Count(); i++)
+            {
+                /*DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD*/
+                Pf = (Math.Pow(Gpg, 2) * 0.1) / (Math.Pow(double.Parse(listResult["B"].GetValue(i).ToString()), 2) * g);
+                Pf = Math.Round(Pf / 100, 2); /*Перевод с кПа в бар*/
+                                              //listResult["D"] = new string[] { Pf.ToString() };
+
+                listD.Add(Pf.ToString());
+
+                /*
+                var d_List = new List<string>();
+                if (listResult.ContainsKey("D"))
+                {
+                    d_List.AddRange(listResult["D"]);
+                }
+
+                d_List.AddRange(new string[] { Pf.ToString() });
+                listResult["D"] = d_List.ToArray();*/
+                /*/DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD*/
+
+
+
+                C = Convert.ToDouble(listResult["C"][i]);
+                V = Gpg * convertTable[1, 5] * Math.Pow((18.8 / Convert.ToDouble(listResult["C"][i])), 2);
+
+                if (V < g_dict["vmax"])
+                    exit_t = true;
+
+                listF.Add(Math.Round(V, 2).ToString());
+                if (V > g_dict["vmax"])
+                {
+                    listE.Add((this.sprRadioButtonList1.SelectedIndex == 0) ? "возможен эрозийный износ клапана" : "возможен шум");
+                }
+                else if (V < 1.5)
+                {
+                    listE.Add("возможен колебательный режим регулирования");
+                }
+                else
+                {
+                    listE.Add("нет");
+                }
+
+
+                if (!String.IsNullOrWhiteSpace(this.calcrTextBox1.Text) && !String.IsNullOrWhiteSpace(this.calcrTextBox2.Text))
+                {
+                    double dn = 0.0;
+                    double ps = 0.0;
+                    foreach (Newtonsoft.Json.Linq.JObject ob in dataFromFile.table8)
+                    {
+                        if (C == Convert.ToDouble(ob.GetValue("dn")))
+                        {
+                            dn = Convert.ToDouble(ob.GetValue("z"));
+                            break;
+                        }
+                    }
+
+                    double t1 = Convert.ToDouble(this.calcrTextBox2.Text);
+                    Newtonsoft.Json.Linq.JObject max = dataFromFile.table9[dataFromFile.table9.Count - 1];
+                    foreach (Newtonsoft.Json.Linq.JObject ob in dataFromFile.table9)
+                    {
+                        if ((Convert.ToDouble(ob.GetValue("t1")) <= Convert.ToDouble(max.GetValue("t1"))) && (Convert.ToDouble(ob.GetValue("t1")) >= t1))
+                        {
+                            max = ob;
+                        }
+                    }
+                    ps = Convert.ToDouble(max.GetValue("ps"));
+
+                    double G = Math.Round((dn * ((Convert.ToDouble(this.calcrTextBox1.Text) * arrConvert3[this.calcrDropDownList1.SelectedIndex - 1] / arrConvert3[2]) - ps)), 2);
+                    listG.Add(G.ToString());
+
+                    string K = "Нет";
+                    if (G < Pf)//double.Parse(listResult["D"].GetValue(i).ToString()) )//Pf)
+                        K = "Угрожает опасность кавитации";
+                    if (eorRadioButtonList1.SelectedIndex == 0 && (G < g_dict["p25"]))
+                        K = "Угрожает опасность кавитации";
+                    if (eorRadioButtonList1.SelectedIndex == 1 && (G < (g_dict["p26"] - g_dict["p28"])))
+                        K = "Угрожает опасность кавитации";
+                    if (eorRadioButtonList1.SelectedIndex == 2 && (G < (g_dict["p30"] - g_dict["p32"])))
+                        K = "Угрожает опасность кавитации";
+                    if (eorRadioButtonList1.SelectedIndex == 3 && (G < g_dict["p19"]))
+                        K = "Угрожает опасность кавитации";
+
+                    listK.Add(K);
+                }
+            }
+            listResult["D"] = listD.ToArray();
+            listResult["F"] = listF.ToArray();
+            listResult["E"] = listE.ToArray();
+            listResult["G"] = listG.ToArray();
+            listResult["K"] = listK.ToArray();
+            /*/GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG*/
+            /*/FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF*/
+
+            return listResult;
+        }
+        catch (Exception e)
+        {
+            Logger.Log.Error(e);
+            return null;
+        }
+        
     }
 
     private void mapInputParametersR(ref Dictionary<int, string> r_in_dict)
     {
+        try { 
         //
         r_in_dict.Add(0, System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString());
         r_in_dict.Add(1, DateTime.Now.ToShortDateString().ToString());
@@ -855,7 +836,7 @@ public partial class RDT : System.Web.UI.Page
 
         r_in_dict.Add(5, "Marka"); // Марка добавляется в диалоговом окне при сохранении
 
-        
+
         r_in_dict.Add(6, ws1RadioButtonList1.Items[ws1RadioButtonList1.SelectedIndex].Text + " " + ((this.ws1TextBox1.Enabled) ? (this.ws1TextBox1.Text + " %, " + this.ws1TextBox2.Text + " °С") : ""));
 
         r_in_dict.Add(7, (this.lp1TextBox1.Enabled) ? this.lp1TextBox1.Text : "-");
@@ -950,25 +931,21 @@ public partial class RDT : System.Web.UI.Page
         r_in_dict.Add(53, "-");
         r_in_dict.Add(54, "-");
 
-
+        }
+        catch (Exception e)
+        {
+            Logger.Log.Error(e);
+        }
     }
 
-    private double getPSbyT(double t)
-    {
-        return Math.Pow(t / 103, 1 / 0.242) - 0.892;
-    }
-
-    private double getTbyPS(double ps)
-    {
-        return 103 * Math.Pow(ps + 0.892, 0.242);
-    }
 
     private void getDimsR(ref Dictionary<int, string> r_in_dict)
     {
-        //
+        var vr = dataFromFile;
         Newtonsoft.Json.Linq.JArray tableDimR = null;
         if (eorRadioButtonList1.SelectedIndex == 0 || eorRadioButtonList1.SelectedIndex == 1)
         {
+            var vr1 = dataFromFile;
             if (r_in_dict[41].Contains("-0.1-"))
                 tableDimR = dataFromFile.table20;
             else tableDimR = dataFromFile.table21;
@@ -993,14 +970,331 @@ public partial class RDT : System.Web.UI.Page
         }
     }
 
+    //------------------------------------Table Function END--------------------------------------
+
+
+    //------------------------------------File Function START--------------------------------------
+
+    private void readFile(int index)
+    {
+        try
+        {
+            string jsonText = null;
+            this.dataFromFile = null;
+            switch (index)
+            {
+                case 0:
+                    jsonText = File.ReadAllText(HttpContext.Current.Server.MapPath(@"Content/data/data.txt"));
+                    break;
+                case 1:
+                    jsonText = File.ReadAllText(Directory.GetCurrentDirectory() + @"\data-two.txt");
+                    break;
+            }
+            if (jsonText != null)
+            {
+                dataFromFile = JsonConvert.DeserializeObject(jsonText);
+            }
+        }
+        
+        catch (Exception e)
+        {
+            Logger.Log.Error(e);
+            
+        }
+    }
+
+    private void changeImage(int index)
+    {
+        switch (index)
+        {
+            case 0:
+                rPictureBox.ImageUrl = @"./Content/images/RDT-RDT-P.jpg";
+                break;
+            case 1:
+                rPictureBox.ImageUrl = @"./Content/images/RDT-RDT-P.jpg";
+                break;
+            case 2:
+                rPictureBox.ImageUrl = @"./Content/images/RDT-S-RDT-B.jpg";
+                break;
+            case 3:
+                rPictureBox.ImageUrl = @"./Content/images/RDT-S-RDT-B.jpg";
+                break;
+
+            default:
+                rPictureBox.ImageUrl = null;
+                break;
+        }
+    }
+
+    //------------------------------------File Function END--------------------------------------
+
+
+    //------------------------------------Validation Function START--------------------------------------
+
+    protected void CustomValidator1_ServerValidate(object source, ServerValidateEventArgs args)
+    {
+        if (convertArrToBar(arrConvert3, lp1DropDownList3, lp1TextBox3) > PressureBeforeValve3x)
+        {
+            CustomValidator1.ErrorMessage = "На давление свыше 16 бар вариантов нет";
+            args.IsValid = false;
+        }
+    }
+
+    protected void CustomValidator2_ServerValidate(object source, ServerValidateEventArgs args)
+    {
+        if (convertArrToBar(arrConvert3, lp1DropDownList4, lp1TextBox4) >= convertArrToBar(arrConvert3, lp1DropDownList3, lp1TextBox3))
+        {
+            CustomValidator2.ErrorMessage = "Неверно указано значение давления";
+            args.IsValid = false;
+
+        }
+    }
+    protected void CustomValidator3_ServerValidate(object source, ServerValidateEventArgs args)
+    {
+        if (convertArrToBar(arrConvert3, lp2DropDownList1, lp2TextBox1) > PressureBeforeValve3x)
+        {
+            CustomValidator3.ErrorMessage = "На давление свыше 16 бар вариантов нет";
+            args.IsValid = false;
+        }
+    }
+
+    protected void CustomValidator4_ServerValidate(object source, ServerValidateEventArgs args)
+    {
+        if (convertArrToBar(arrConvert3, lp2DropDownList2, lp2TextBox2) >= convertArrToBar(arrConvert3, lp2DropDownList1, lp2TextBox1))
+        {
+            CustomValidator4.ErrorMessage = "Неверно указано значение давления";
+            args.IsValid = false;
+        }
+    }
+
+    protected void CustomValidator5_ServerValidate(object source, ServerValidateEventArgs args)
+    {
+        if (convertArrToBar(arrConvert3, lp3DropDownList1, lp3TextBox1) > PressureBeforeValve3x)
+        {
+            CustomValidator5.ErrorMessage = "На давление свыше 16 бар вариантов нет";
+            args.IsValid = false;
+        }
+    }
+
+    protected void CustomValidator6_ServerValidate(object source, ServerValidateEventArgs args)
+    {
+        if (convertArrToBar(arrConvert3, lp3DropDownList2, lp3TextBox2) >= convertArrToBar(arrConvert3, lp3DropDownList1, lp3TextBox1))
+        {
+            CustomValidator6.ErrorMessage = "Неверно указано значение давления";
+            args.IsValid = false;
+        }
+    }
+
+    protected void CustomValidator7_ServerValidate(object source, ServerValidateEventArgs args)
+    {
+        if (convertArrToBar(arrConvert3, lp4DropDownList2, lp4TextBox2) > PressureBeforeValve3x)
+        {
+            CustomValidator7.ErrorMessage = "На давление свыше 16 бар вариантов нет";
+            args.IsValid = false;
+        }
+    }
+
+    protected void CustomValidator8_ServerValidate(object source, ServerValidateEventArgs args)
+    {
+        double var1 = convertArrToBar(arrConvert3, lp1DropDownList1, lp1TextBox1) + convertArrToBar(arrConvert3, lp1DropDownList2, lp1TextBox2);
+        double var2 = convertArrToBar(arrConvert3, lp1DropDownList3, lp1TextBox3) - convertArrToBar(arrConvert3, lp1DropDownList4, lp1TextBox4);
+        if (var1 > var2)
+        {
+            CustomValidator8.ErrorMessage = "Неверно указано значение давления";
+            args.IsValid = false;
+        }
+    }
+
+    protected void CustomValidator9_ServerValidate(object source, ServerValidateEventArgs args)
+    {
+        if (convertArrToBar(arrConvert3, calcrDropDownList1, calcrTextBox1) > PressureBeforeValve3x)
+        {
+            CustomValidator9.ErrorMessage = "На давление свыше 16 бар вариантов нет";
+            args.IsValid = false;
+        }
+    }
+
+    //------------------------------------Validation Function END--------------------------------------
+
+
+
+    //------------------------------------Support Function START--------------------------------------
+
     private bool checkTextBoxEmpty(TextBox tb)
     {
         return tb.Text == "";
     }
 
+    public void DisableTextBox(TextBox textBox)
+    {
+        textBox.Enabled = false;
+        textBox.Text = "";
+    }
+
+    public bool SetEnableTextBox(DropDownList dropDownList, TextBox textBox)
+    {
+        bool flag = false;
+
+        if (dropDownList.SelectedIndex == 0)
+        {
+            DisableTextBox(textBox);
+            flag = false;
+        }
+        else
+        {
+            textBox.Enabled = true;
+            flag = true;
+        }
+
+        return flag;
+    }
+
+    private void SavePrevSelectedIndexDDL(string id, int key)
+    {
+        if (!keyValuePairs.ContainsKey(id))
+        {
+            keyValuePairs.Add(id, key);
+        }
+        else
+        {
+            keyValuePairs[id] = key;
+        }
+    }
+
+    private void convertArrDouble(double[,] arr, DropDownList ddl, ref TextBox tb)
+    {
+        if (ddl.SelectedIndex > 0)
+        {
+            if (!String.IsNullOrWhiteSpace(tb.Text))
+            {
+                int jj = keyValuePairs[ddl.ID];
+
+                if (jj > 0)
+                {
+                    tb.Text = (customConverterToDouble(tb.Text) * arr[(jj - 1), (ddl.SelectedIndex - 1)]).ToString().Replace(",", ".");
+                }
+            }
+        }
+    }
+
+    private void convertArr(double[] arr, DropDownList ddl, ref TextBox tb)
+    {
+        if (ddl.SelectedIndex > 0)
+        {
+            if (!String.IsNullOrWhiteSpace(tb.Text))
+            {
+                int jj = keyValuePairs[ddl.ID];
+                tb.Text = (customConverterToDouble(tb.Text) * arr[jj - 1] / arr[ddl.SelectedIndex - 1]).ToString().Replace(",", ".");
+            }
+        }
+    }
+
+    private double convertArrToBar(double[] arr, DropDownList ddl, TextBox tb)
+    {
+        double result = 0;
+
+        if (ddl.SelectedIndex > 0)
+        {
+            if (!String.IsNullOrWhiteSpace(tb.Text))
+            {
+
+                int jj = keyValuePairs[ddl.ID];
+                if (jj > 0)
+                {
+                    result = (customConverterToDouble(tb.Text) * arr[jj - 1] / arr[2]);
+                }
+            }
+        }
+        return result;
+    }
+
+
+    public double customConverterToDouble(string tb)
+    {
+
+
+        double afterConvert;
+
+        if (tb.IndexOf(".") != -1)
+        {
+            string beforeConvert = tb.Replace(".", ",");
+            afterConvert = Convert.ToDouble(beforeConvert);
+        }
+        else
+        {
+            afterConvert = Convert.ToDouble(tb);
+        }
+
+        return afterConvert;
+    }
+
+    public void lp1ControlEnable(bool flag)
+    {
+        dropDownListEnable(lp1DropDownList1, flag);
+        dropDownListEnable(lp1DropDownList2, flag);
+        dropDownListEnable(lp1DropDownList3, flag);
+        dropDownListEnable(lp1DropDownList4, flag);
+    }
+    public void lp2ControlEnable(bool flag)
+    {
+        dropDownListEnable(lp2DropDownList1, flag);
+        dropDownListEnable(lp2DropDownList2, flag);
+    }
+    public void lp3ControlEnable(bool flag)
+    {
+        dropDownListEnable(lp3DropDownList1, flag);
+        dropDownListEnable(lp3DropDownList2, flag);
+    }
+    public void lp4ControlEnable(bool flag)
+    {
+        dropDownListEnable(lp4DropDownList2, flag);
+    }
+
+    public void dropDownListEnable(DropDownList dropDownList, bool flag)
+    {
+        dropDownList.Enabled = flag;
+        dropDownList.ClearSelection();
+    }
+
+    public void textBoxEnabled(TextBox textBox, bool flag)
+    {
+        textBox.Enabled = flag;
+        textBox.Text = "";
+    }
+
+    static void WaitDownload(int second)
+    {
+        Stopwatch sw = new Stopwatch(); // sw cotructor
+        sw.Start(); // starts the stopwatch
+        for (int i = 0; ; i++)
+        {
+            if (i % 100000 == 0) // if in 100000th iteration (could be any other large number
+                                 // depending on how often you want the time to be checked) 
+            {
+                sw.Stop(); // stop the time measurement
+                if (sw.ElapsedMilliseconds > second) // check if desired period of time has elapsed
+                {
+                    break; // if more than 5000 milliseconds have passed, stop looping and return
+                           // to the existing code
+                }
+                else
+                {
+                    sw.Start(); // if less than 5000 milliseconds have elapsed, continue looping
+                                // and resume time measurement
+                }
+            }
+        }
+    }
+
+    //------------------------------------Support Function END--------------------------------------
+
+    //------------------------------------Event Function START--------------------------------------
+
     protected void rButton_Click(object sender, EventArgs e)
     {
+        
         if (!Page.IsValid) { return; }
+        try { 
         objTextBox1.Enabled = false;
         GridView1.Columns.Clear();
         GridView1.DataSource = null;
@@ -1684,110 +1978,17 @@ public partial class RDT : System.Web.UI.Page
         this.Button3.Visible = true;
         this.Button3.Enabled = true;
 
-    }
-
-    public void DisableTextBox(TextBox textBox)
-    {
-        textBox.Enabled = false;
-        textBox.Text = "";
-    }
-
-    public bool SetEnableTextBox(DropDownList dropDownList, TextBox textBox)
-    {
-        bool flag = false;
-
-        if (dropDownList.SelectedIndex == 0)
-        {
-            DisableTextBox(textBox);
-            flag = false;
         }
-        else
+        catch (Exception er)
         {
-            textBox.Enabled = true;
-            flag = true;
+            Logger.Log.Error(er);
+            
         }
 
-        return flag;
-    }
-
-    private void SavePrevSelectedIndexDDL(string id, int key)
-    {
-        if (!keyValuePairs.ContainsKey(id))
-        {
-            keyValuePairs.Add(id, key);
-        }
-        else
-        {
-            keyValuePairs[id] = key;
-        }
-    }
-
-    private void convertArrDouble(double[,] arr, DropDownList ddl, ref TextBox tb)
-    {
-        if (ddl.SelectedIndex > 0)
-        {
-            if (!String.IsNullOrWhiteSpace(tb.Text))
-            {
-                int jj = keyValuePairs[ddl.ID];
-
-                if (jj > 0)
-                {
-                    tb.Text = (customConverterToDouble(tb.Text) * arr[(jj - 1), (ddl.SelectedIndex - 1)]).ToString().Replace(",", ".");
-                }
-            }
-        }
-    }
-
-    private void convertArr(double[] arr, DropDownList ddl, ref TextBox tb)
-    {
-        if (ddl.SelectedIndex > 0)
-        {
-            if (!String.IsNullOrWhiteSpace(tb.Text))
-            {
-                int jj = keyValuePairs[ddl.ID];
-                tb.Text = (customConverterToDouble(tb.Text) * arr[jj - 1] / arr[ddl.SelectedIndex - 1]).ToString().Replace(",", ".");
-            }
-        }
-    }
-
-    private double convertArrToBar(double[] arr, DropDownList ddl, TextBox tb)
-    {
-        double result = 0;
-
-        if (ddl.SelectedIndex > 0)
-        {
-            if (!String.IsNullOrWhiteSpace(tb.Text))
-            {
-
-                int jj = keyValuePairs[ddl.ID];
-                if (jj > 0)
-                {
-                    result = (customConverterToDouble(tb.Text) * arr[jj - 1] / arr[2]);
-                }
-            }
-        }
-        return result;
     }
 
 
-    public double customConverterToDouble(string tb)
-    {
-
-
-        double afterConvert;
-
-        if (tb.IndexOf(".") != -1)
-        {
-            string beforeConvert = tb.Replace(".", ",");
-            afterConvert = Convert.ToDouble(beforeConvert);
-        }
-        else
-        {
-            afterConvert = Convert.ToDouble(tb);
-        }
-
-        return afterConvert;
-    }
+    
 
     protected void lp1DropDownList1_SelectedIndexChanged(object sender, EventArgs e)
     {
@@ -1901,7 +2102,9 @@ public partial class RDT : System.Web.UI.Page
 
     protected void Button2_Click(object sender, EventArgs e)
     {
-        
+        try
+        {
+            this.readFile(0);
             r_input_dict[2] = objTextBox1.Text;
             //r_input_dict.Add(2, (this.textBox2.Text != "")? this.textBox2.Text : "-");
 
@@ -1910,15 +2113,15 @@ public partial class RDT : System.Web.UI.Page
 
             int pos = 41;
 
-            for(int r = 1; r < GridView1.SelectedRow.Cells.Count; r++)
-            {                    
+            for (int r = 1; r < GridView1.SelectedRow.Cells.Count; r++)
+            {
                 r_input_dict[pos] = GridView1.SelectedRow.Cells[r].Text;
                 pos++;
-   
+
             }
 
 
-        SpreadsheetInfo.SetLicense("FREE-LIMITED-KEY");
+            SpreadsheetInfo.SetLicense("FREE-LIMITED-KEY");
 
             if (!File.Exists(HttpContext.Current.Server.MapPath("\\Content\\templates\\templateRDT.xlsx")))
             {
@@ -1930,10 +2133,10 @@ public partial class RDT : System.Web.UI.Page
 
             ExcelWorksheet ws = ef.Worksheets[0];
 
-            ws.PrintOptions.TopMargin = 0.1 / 2.54;
-            ws.PrintOptions.BottomMargin = 0.1 / 2.54;
-            ws.PrintOptions.LeftMargin = 1.78 / 2.54;
-            ws.PrintOptions.RightMargin = 0.78 / 2.54;
+            ws.PrintOptions.TopMargin = 0.2 / 2.54;
+            ws.PrintOptions.BottomMargin = 0.2 / 2.54;
+            ws.PrintOptions.LeftMargin = 1 / 2.54;
+            ws.PrintOptions.RightMargin = 1 / 2.54;
 
             ws.Cells["K53"].Value = r_input_dict[0];
 
@@ -2012,9 +2215,11 @@ public partial class RDT : System.Web.UI.Page
             ws.Cells["I40"].Value = r_input_dict[48];
             ws.Cells["K40"].Value = r_input_dict[49];
 
-            ws.Pictures.Add(Directory.GetCurrentDirectory() + "\\images\\" + ((r_input_dict[4] == this.eorRadioButtonList1.Items[0].Text) || (r_input_dict[4] == eorRadioButtonList1.Items[1].Text) ? "RDT-RDT-P.jpg" : "RDT-S-RDT-B.jpg"), "A44", "B53");
-
             getDimsR(ref r_input_dict);
+
+            ws.Pictures.Add(HttpContext.Current.Server.MapPath("\\Content\\images\\" + ((r_input_dict[4] == this.eorRadioButtonList1.Items[0].Text) || (r_input_dict[4] == eorRadioButtonList1.Items[1].Text) ? "RDT-RDT-P.jpg" : "RDT-S-RDT-B.jpg")), "A44", "B53");
+
+
 
             ws.Cells["F44"].Value = r_input_dict[51];
             ws.Cells["F45"].Value = r_input_dict[52];
@@ -2054,186 +2259,181 @@ public partial class RDT : System.Web.UI.Page
                 Response.TransmitFile(file.FullName);
                 Response.End();
             }
-        
-            
-    }
-    static void WaitDownload(int second)
-    {
-        Stopwatch sw = new Stopwatch(); // sw cotructor
-        sw.Start(); // starts the stopwatch
-        for (int i = 0; ; i++)
+        }
+
+        catch (Exception er)
         {
-            if (i % 100000 == 0) // if in 100000th iteration (could be any other large number
-                                 // depending on how often you want the time to be checked) 
-            {
-                sw.Stop(); // stop the time measurement
-                if (sw.ElapsedMilliseconds > second) // check if desired period of time has elapsed
-                {
-                    break; // if more than 5000 milliseconds have passed, stop looping and return
-                           // to the existing code
-                }
-                else
-                {
-                    sw.Start(); // if less than 5000 milliseconds have elapsed, continue looping
-                                // and resume time measurement
-                }
-            }
+            Logger.Log.Error(er);
+
         }
     }
+    
 
     protected void Button3_Click(object sender, EventArgs e)
     {
-        r_input_dict[2] = objTextBox1.Text;
-        //r_input_dict.Add(2, (this.textBox2.Text != "")? this.textBox2.Text : "-");
-
-        r_input_dict[5] = "-";
-        //r_input_dict.Add(5, (this.textBox5.Text != "") ? this.textBox5.Text : "-");
-
-        int pos = 41;
-
-        for (int r = 1; r < GridView1.SelectedRow.Cells.Count; r++)
+        try
         {
-            r_input_dict[pos] = GridView1.SelectedRow.Cells[r].Text;
-            pos++;
 
+
+            this.readFile(0);
+            r_input_dict[2] = objTextBox1.Text;
+            //r_input_dict.Add(2, (this.textBox2.Text != "")? this.textBox2.Text : "-");
+
+            r_input_dict[5] = "-";
+            //r_input_dict.Add(5, (this.textBox5.Text != "") ? this.textBox5.Text : "-");
+
+            int pos = 41;
+
+            for (int r = 1; r < GridView1.SelectedRow.Cells.Count; r++)
+            {
+                r_input_dict[pos] = GridView1.SelectedRow.Cells[r].Text;
+                pos++;
+
+            }
+
+
+            SpreadsheetInfo.SetLicense("FREE-LIMITED-KEY");
+
+            if (!File.Exists(HttpContext.Current.Server.MapPath("\\Content\\templates\\templateRDT.xlsx")))
+            {
+                LabelError.Text = "Не найден файл шаблона";
+                return;
+            }
+
+            ExcelFile ef = ExcelFile.Load(HttpContext.Current.Server.MapPath("\\Content\\templates\\templateRDT.xlsx"));
+
+            ExcelWorksheet ws = ef.Worksheets[0];
+
+            ws.PrintOptions.TopMargin = 0.2 / 2.54;
+            ws.PrintOptions.BottomMargin = 0.2 / 2.54;
+            ws.PrintOptions.LeftMargin = 1 / 2.54;
+            ws.PrintOptions.RightMargin = 1 / 2.54;
+
+            ws.Cells["K53"].Value = r_input_dict[0];
+
+            ws.Cells["J2"].Value = r_input_dict[1];
+            ws.Cells["C3"].Value = r_input_dict[2];
+            ws.Cells["C4"].Value = r_input_dict[3];
+            ws.Cells["C5"].Value = r_input_dict[4];
+            ws.Cells["C6"].Value = r_input_dict[5];
+            ws.Cells["C9"].Value = r_input_dict[6];
+
+            ws.Cells["I12"].Value = r_input_dict[7];
+            ws.Cells["K12"].Value = r_input_dict[8];
+
+            ws.Cells["I13"].Value = r_input_dict[9];
+            ws.Cells["K13"].Value = r_input_dict[10];
+
+            ws.Cells["I14"].Value = r_input_dict[11];
+            ws.Cells["K14"].Value = r_input_dict[12];
+
+            ws.Cells["I15"].Value = r_input_dict[13];
+            ws.Cells["K15"].Value = r_input_dict[14];
+
+            ws.Cells["I16"].Value = r_input_dict[15];
+
+            ws.Cells["D18"].Value = r_input_dict[16];
+            ws.Cells["E18"].Value = r_input_dict[17];
+
+            ws.Cells["D19"].Value = r_input_dict[18];
+            ws.Cells["E19"].Value = r_input_dict[19];
+
+            // пар
+            ws.Cells["J18"].Value = r_input_dict[20];
+            ws.Cells["K18"].Value = r_input_dict[21];
+
+            ws.Cells["J19"].Value = r_input_dict[22];
+            ws.Cells["K19"].Value = r_input_dict[23];
+
+            ws.Cells["J20"].Value = r_input_dict[24];
+            // пар
+
+            ws.Cells["I22"].Value = r_input_dict[25];
+            ws.Cells["K22"].Value = r_input_dict[26];
+
+            ws.Cells["I23"].Value = r_input_dict[27];
+            ws.Cells["K23"].Value = r_input_dict[28];
+
+            ws.Cells["I25"].Value = r_input_dict[29];
+            ws.Cells["K25"].Value = r_input_dict[30];
+
+            ws.Cells["I27"].Value = r_input_dict[31];
+            ws.Cells["K27"].Value = r_input_dict[32];
+
+            ws.Cells["I28"].Value = r_input_dict[33];
+
+            ws.Cells["I30"].Value = r_input_dict[34];
+
+            ws.Cells["I31"].Value = r_input_dict[35];
+
+            ws.Cells["I32"].Value = r_input_dict[36];
+            ws.Cells["K32"].Value = r_input_dict[37];
+
+            ws.Cells["I33"].Value = r_input_dict[38];
+            ws.Cells["K33"].Value = r_input_dict[381];
+
+            ws.Cells["E36"].Value = r_input_dict[39];
+
+            ws.Cells["E37"].Value = r_input_dict[40];
+
+            ws.Cells["A40"].Value = r_input_dict[41];
+            ws.Cells["B40"].Value = r_input_dict[42];
+            ws.Cells["C40"].Value = r_input_dict[43];
+            ws.Cells["D40"].Value = r_input_dict[44];
+            ws.Cells["F40"].Value = r_input_dict[45];
+            ws.Cells["G40"].Value = r_input_dict[46];
+            ws.Cells["H40"].Value = r_input_dict[47];
+            ws.Cells["I40"].Value = r_input_dict[48];
+            ws.Cells["K40"].Value = r_input_dict[49];
+
+            getDimsR(ref r_input_dict);
+
+            ws.Pictures.Add(HttpContext.Current.Server.MapPath("\\Content\\images\\" + ((r_input_dict[4] == this.eorRadioButtonList1.Items[0].Text) || (r_input_dict[4] == eorRadioButtonList1.Items[1].Text) ? "RDT-RDT-P.jpg" : "RDT-S-RDT-B.jpg")), "A44", "B53");
+
+
+            ws.Cells["F44"].Value = r_input_dict[51];
+            ws.Cells["F45"].Value = r_input_dict[52];
+            ws.Cells["F46"].Value = r_input_dict[53];
+            ws.Cells["F47"].Value = r_input_dict[54];
+
+
+            string path = HttpContext.Current.Server.MapPath("\\Files\\RDT\\PDF\\" + DateTime.Now.ToString("dd-MM-yyyy"));
+            DirectoryInfo dirInfo = new DirectoryInfo(path);
+            if (!dirInfo.Exists)
+            {
+                dirInfo.Create();
+            }
+
+            string fileName = "";
+
+            if (!String.IsNullOrWhiteSpace(objTextBox1.Text))
+            {
+                fileName = objTextBox1.Text;
+            }
+            else
+            {
+                fileName += DateTime.Now.ToString("dd-MM-yyyy");
+            }
+
+            string filePath = path + "\\" + fileName + ".xlsx";
+
+            ef.Save(filePath);
+
+            WaitDownload(50);
+
+            FileInfo file = new FileInfo(filePath);
+            if (file.Exists)
+            {
+                Response.ContentType = "application/x-msexcel";
+                Response.AppendHeader("Content-Disposition", "attachment; filename=" + file.Name);
+                Response.TransmitFile(file.FullName);
+                Response.End();
+            }
         }
-
-
-        SpreadsheetInfo.SetLicense("FREE-LIMITED-KEY");
-
-        if (!File.Exists(HttpContext.Current.Server.MapPath("\\Content\\templates\\templateRDT.xlsx")))
+        catch (Exception er)
         {
-            LabelError.Text = "Не найден файл шаблона";
-            return;
-        }
+            Logger.Log.Error(er);
 
-        ExcelFile ef = ExcelFile.Load(HttpContext.Current.Server.MapPath("\\Content\\templates\\templateRDT.xlsx"));
-
-        ExcelWorksheet ws = ef.Worksheets[0];
-
-        ws.PrintOptions.TopMargin = 0.1 / 2.54;
-        ws.PrintOptions.BottomMargin = 0.1 / 2.54;
-        ws.PrintOptions.LeftMargin = 1.78 / 2.54;
-        ws.PrintOptions.RightMargin = 0.78 / 2.54;
-
-        ws.Cells["K53"].Value = r_input_dict[0];
-
-        ws.Cells["J2"].Value = r_input_dict[1];
-        ws.Cells["C3"].Value = r_input_dict[2];
-        ws.Cells["C4"].Value = r_input_dict[3];
-        ws.Cells["C5"].Value = r_input_dict[4];
-        ws.Cells["C6"].Value = r_input_dict[5];
-        ws.Cells["C9"].Value = r_input_dict[6];
-
-        ws.Cells["I12"].Value = r_input_dict[7];
-        ws.Cells["K12"].Value = r_input_dict[8];
-
-        ws.Cells["I13"].Value = r_input_dict[9];
-        ws.Cells["K13"].Value = r_input_dict[10];
-
-        ws.Cells["I14"].Value = r_input_dict[11];
-        ws.Cells["K14"].Value = r_input_dict[12];
-
-        ws.Cells["I15"].Value = r_input_dict[13];
-        ws.Cells["K15"].Value = r_input_dict[14];
-
-        ws.Cells["I16"].Value = r_input_dict[15];
-
-        ws.Cells["D18"].Value = r_input_dict[16];
-        ws.Cells["E18"].Value = r_input_dict[17];
-
-        ws.Cells["D19"].Value = r_input_dict[18];
-        ws.Cells["E19"].Value = r_input_dict[19];
-
-        // пар
-        ws.Cells["J18"].Value = r_input_dict[20];
-        ws.Cells["K18"].Value = r_input_dict[21];
-
-        ws.Cells["J19"].Value = r_input_dict[22];
-        ws.Cells["K19"].Value = r_input_dict[23];
-
-        ws.Cells["J20"].Value = r_input_dict[24];
-        // пар
-
-        ws.Cells["I22"].Value = r_input_dict[25];
-        ws.Cells["K22"].Value = r_input_dict[26];
-
-        ws.Cells["I23"].Value = r_input_dict[27];
-        ws.Cells["K23"].Value = r_input_dict[28];
-
-        ws.Cells["I25"].Value = r_input_dict[29];
-        ws.Cells["K25"].Value = r_input_dict[30];
-
-        ws.Cells["I27"].Value = r_input_dict[31];
-        ws.Cells["K27"].Value = r_input_dict[32];
-
-        ws.Cells["I28"].Value = r_input_dict[33];
-
-        ws.Cells["I30"].Value = r_input_dict[34];
-
-        ws.Cells["I31"].Value = r_input_dict[35];
-
-        ws.Cells["I32"].Value = r_input_dict[36];
-        ws.Cells["K32"].Value = r_input_dict[37];
-
-        ws.Cells["I33"].Value = r_input_dict[38];
-        ws.Cells["K33"].Value = r_input_dict[381];
-
-        ws.Cells["E36"].Value = r_input_dict[39];
-
-        ws.Cells["E37"].Value = r_input_dict[40];
-
-        ws.Cells["A40"].Value = r_input_dict[41];
-        ws.Cells["B40"].Value = r_input_dict[42];
-        ws.Cells["C40"].Value = r_input_dict[43];
-        ws.Cells["D40"].Value = r_input_dict[44];
-        ws.Cells["F40"].Value = r_input_dict[45];
-        ws.Cells["G40"].Value = r_input_dict[46];
-        ws.Cells["H40"].Value = r_input_dict[47];
-        ws.Cells["I40"].Value = r_input_dict[48];
-        ws.Cells["K40"].Value = r_input_dict[49];
-
-        ws.Pictures.Add(Directory.GetCurrentDirectory() + "\\images\\rdt\\" + ((r_input_dict[4] == this.eorRadioButtonList1.Items[0].Text) || (r_input_dict[4] == eorRadioButtonList1.Items[1].Text) ? "Габаритный RDT и RDT-P.jpg" : "Габаритный RDT-S и RDT-B.jpg"), "A44", "B53");
-
-        getDimsR(ref r_input_dict);
-
-        ws.Cells["F44"].Value = r_input_dict[51];
-        ws.Cells["F45"].Value = r_input_dict[52];
-        ws.Cells["F46"].Value = r_input_dict[53];
-        ws.Cells["F47"].Value = r_input_dict[54];
-
-
-        string path = HttpContext.Current.Server.MapPath("\\Files\\RDT\\PDF\\" + DateTime.Now.ToString("dd-MM-yyyy"));
-        DirectoryInfo dirInfo = new DirectoryInfo(path);
-        if (!dirInfo.Exists)
-        {
-            dirInfo.Create();
-        }
-
-        string fileName = "";
-
-        if (!String.IsNullOrWhiteSpace(objTextBox1.Text))
-        {
-            fileName = objTextBox1.Text;
-        }
-        else
-        {
-            fileName += DateTime.Now.ToString("dd-MM-yyyy");
-        }
-
-        string filePath = path + "\\" + fileName + ".xlsx";
-
-        ef.Save(filePath);
-
-        WaitDownload(50);
-
-        FileInfo file = new FileInfo(filePath);
-        if (file.Exists)
-        {
-            Response.ContentType = "application/x-msexcel";
-            Response.AppendHeader("Content-Disposition", "attachment; filename=" + file.Name);
-            Response.TransmitFile(file.FullName);
-            Response.End();
         }
     }
 
@@ -2271,40 +2471,6 @@ public partial class RDT : System.Web.UI.Page
     }
 
 
-    public void lp1ControlEnable(bool flag)
-    {
-        dropDownListEnable(lp1DropDownList1, flag);
-        dropDownListEnable(lp1DropDownList2, flag);
-        dropDownListEnable(lp1DropDownList3, flag);
-        dropDownListEnable(lp1DropDownList4, flag);
-    }
-    public void lp2ControlEnable(bool flag)
-    {
-        dropDownListEnable(lp2DropDownList1, flag);
-        dropDownListEnable(lp2DropDownList2, flag);
-    }
-    public void lp3ControlEnable(bool flag)
-    {
-        dropDownListEnable(lp3DropDownList1, flag);
-        dropDownListEnable(lp3DropDownList2, flag);
-    }
-    public void lp4ControlEnable(bool flag)
-    {
-        dropDownListEnable(lp4DropDownList2, flag);
-    }
-
-    public void dropDownListEnable(DropDownList dropDownList, bool flag)
-    {
-        dropDownList.Enabled = flag;
-        dropDownList.ClearSelection();
-    }
-
-    public void textBoxEnabled(TextBox textBox, bool flag)
-    {
-        textBox.Enabled = flag;
-        textBox.Text = "";
-    }
-
     protected void fprRadioButton1_CheckedChanged(object sender, EventArgs e)
     {
         if (fprRadioButton1.Checked)
@@ -2336,88 +2502,6 @@ public partial class RDT : System.Web.UI.Page
         }
     }
 
-    protected void CustomValidator1_ServerValidate(object source, ServerValidateEventArgs args)
-    {
-        if (convertArrToBar(arrConvert3, lp1DropDownList3, lp1TextBox3) > PressureBeforeValve3x)
-        {
-            CustomValidator1.ErrorMessage = "На давление свыше 16 бар вариантов нет";
-            args.IsValid = false;
-        }
-    }
-
-    protected void CustomValidator2_ServerValidate(object source, ServerValidateEventArgs args)
-    {
-        if(convertArrToBar(arrConvert3, lp1DropDownList4, lp1TextBox4) >= convertArrToBar(arrConvert3, lp1DropDownList3, lp1TextBox3))
-        {
-            CustomValidator2.ErrorMessage = "Неверно указано значение давления";
-            args.IsValid = false;
-
-        }
-    }
-    protected void CustomValidator3_ServerValidate(object source, ServerValidateEventArgs args)
-    {
-        if (convertArrToBar(arrConvert3, lp2DropDownList1, lp2TextBox1) > PressureBeforeValve3x)
-        {
-            CustomValidator3.ErrorMessage = "На давление свыше 16 бар вариантов нет";
-            args.IsValid = false;
-        }
-    }
-
-    protected void CustomValidator4_ServerValidate(object source, ServerValidateEventArgs args)
-    {
-        if (convertArrToBar(arrConvert3, lp2DropDownList2, lp2TextBox2) >= convertArrToBar(arrConvert3, lp2DropDownList1, lp2TextBox1))
-        {
-            CustomValidator4.ErrorMessage = "Неверно указано значение давления";
-            args.IsValid = false;
-        }
-    }
-
-    protected void CustomValidator5_ServerValidate(object source, ServerValidateEventArgs args)
-    {
-        if (convertArrToBar(arrConvert3, lp3DropDownList1, lp3TextBox1) > PressureBeforeValve3x)
-        {
-            CustomValidator5.ErrorMessage = "На давление свыше 16 бар вариантов нет";
-            args.IsValid = false;
-        }
-    }
-
-    protected void CustomValidator6_ServerValidate(object source, ServerValidateEventArgs args)
-    {
-        if (convertArrToBar(arrConvert3, lp3DropDownList2, lp3TextBox2) >= convertArrToBar(arrConvert3, lp3DropDownList1, lp3TextBox1))
-        {
-            CustomValidator6.ErrorMessage = "Неверно указано значение давления";
-            args.IsValid = false;
-        }
-    }
-
-    protected void CustomValidator7_ServerValidate(object source, ServerValidateEventArgs args)
-    {
-        if (convertArrToBar(arrConvert3, lp4DropDownList2, lp4TextBox2) > PressureBeforeValve3x)
-        {
-            CustomValidator7.ErrorMessage = "На давление свыше 16 бар вариантов нет";
-            args.IsValid = false;
-        }
-    }
-
-    protected void CustomValidator8_ServerValidate(object source, ServerValidateEventArgs args)
-    {
-        double var1 = convertArrToBar(arrConvert3, lp1DropDownList1, lp1TextBox1) + convertArrToBar(arrConvert3, lp1DropDownList2, lp1TextBox2);
-        double var2 = convertArrToBar(arrConvert3, lp1DropDownList3, lp1TextBox3) - convertArrToBar(arrConvert3, lp1DropDownList4, lp1TextBox4);
-        if (var1 > var2) 
-        {
-            CustomValidator8.ErrorMessage = "Неверно указано значение давления";
-            args.IsValid = false;
-        }
-    }
-
-    protected void CustomValidator9_ServerValidate(object source, ServerValidateEventArgs args)
-    {
-        if (convertArrToBar(arrConvert3, calcrDropDownList1, calcrTextBox1) > PressureBeforeValve3x)
-        {
-            CustomValidator9.ErrorMessage = "На давление свыше 16 бар вариантов нет";
-            args.IsValid = false;
-        }
-    }
 
     protected void ws1RadioButtonList1_SelectedIndexChanged(object sender, EventArgs e)
     {
@@ -2435,4 +2519,7 @@ public partial class RDT : System.Web.UI.Page
         objTextBox1.Enabled = true;
         Label53.Visible = true;
     }
+
+    //------------------------------------Event Function END--------------------------------------
+
 }
