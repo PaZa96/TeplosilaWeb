@@ -2273,8 +2273,6 @@ public partial class RDT : System.Web.UI.Page
     {
         try
         {
-
-
             this.readFile(0);
             r_input_dict[2] = objTextBox1.Text;
             //r_input_dict.Add(2, (this.textBox2.Text != "")? this.textBox2.Text : "-");
