@@ -2395,7 +2395,7 @@ public partial class RDT : System.Web.UI.Page
             ws.Cells["F47"].Value = r_input_dict[54];
 
 
-            string path = HttpContext.Current.Server.MapPath("\\Files\\RDT\\PDF\\" + DateTime.Now.ToString("dd-MM-yyyy"));
+            string path = HttpContext.Current.Server.MapPath("\\Files\\RDT\\Excel\\" + DateTime.Now.ToString("dd-MM-yyyy"));
             DirectoryInfo dirInfo = new DirectoryInfo(path);
             if (!dirInfo.Exists)
             {
