@@ -140,7 +140,7 @@ public partial class RDT : System.Web.UI.Page
             }
             else
             {
-                avg_T = Convert.ToDouble(this.ws1TextBox2.Text);
+                avg_T = customConverterToDouble(this.ws1TextBox2.Text);
             }
         }
         else
@@ -232,19 +232,19 @@ public partial class RDT : System.Web.UI.Page
             Gpg = g_dict["p16"];
             if (eorRadioButtonList1.SelectedIndex == 0)
             {
-                dPg = Convert.ToDouble(this.lp1TextBox1.Text) * arrConvert3[this.lp1DropDownList1.SelectedIndex - 1];
+                dPg = customConverterToDouble(this.lp1TextBox1.Text) * arrConvert3[this.lp1DropDownList1.SelectedIndex - 1];
             }
             else if (eorRadioButtonList1.SelectedIndex == 1)
             {
-                dPg = Convert.ToDouble(this.lp2TextBox1.Text) * arrConvert3[this.lp2DropDownList1.SelectedIndex - 1] - Convert.ToDouble(this.lp2TextBox2.Text) * arrConvert3[this.lp2DropDownList2.SelectedIndex - 1];
+                dPg = customConverterToDouble(this.lp2TextBox1.Text) * arrConvert3[this.lp2DropDownList1.SelectedIndex - 1] - customConverterToDouble(this.lp2TextBox2.Text) * arrConvert3[this.lp2DropDownList2.SelectedIndex - 1];
             }
             else if (eorRadioButtonList1.SelectedIndex == 2)
             {
-                dPg = Convert.ToDouble(this.lp3TextBox1.Text) * arrConvert3[this.lp3DropDownList1.SelectedIndex - 1] - Convert.ToDouble(this.lp3TextBox2.Text) * arrConvert3[this.lp3DropDownList2.SelectedIndex - 1];
+                dPg = customConverterToDouble(this.lp3TextBox1.Text) * arrConvert3[this.lp3DropDownList1.SelectedIndex - 1] - customConverterToDouble(this.lp3TextBox2.Text) * arrConvert3[this.lp3DropDownList2.SelectedIndex - 1];
             }
             else if (eorRadioButtonList1.SelectedIndex == 3)
             {
-                dPg = Convert.ToDouble(this.lp4TextBox2.Text) * arrConvert3[this.lp4DropDownList2.SelectedIndex - 1];
+                dPg = customConverterToDouble(this.lp4TextBox2.Text) * arrConvert3[this.lp4DropDownList2.SelectedIndex - 1];
             }
 
             /*if (dPg < 15) 
@@ -263,7 +263,7 @@ public partial class RDT : System.Web.UI.Page
                 }
                 else
                 {
-                        middle_T = Convert.ToDouble(this.ws1TextBox2.Text);
+                        middle_T = customConverterToDouble(this.ws1TextBox2.Text);
                 }
             }
             else
@@ -277,14 +277,14 @@ public partial class RDT : System.Web.UI.Page
             }
             else if (ws1RadioButtonList1.SelectedIndex == 1)
             {
-                double p6 = Convert.ToDouble(this.ws1TextBox1.Text);
+                double p6 = customConverterToDouble(this.ws1TextBox1.Text);
                 double p7 = Math.Round(GetAvgT() / 10) * 10;
                 double cp = 0;
                 Etgl(p7, p6, ref g, ref cp);
             }
             else if (ws1RadioButtonList1.SelectedIndex == 2)
             {
-                double p6 = Convert.ToDouble(this.ws1TextBox1.Text);
+                double p6 = customConverterToDouble(this.ws1TextBox1.Text);
                 double p7 = Math.Round(GetAvgT() / 10) * 10;
                 double cp = 0;
                 Prgl(p7, p6, ref g, ref cp);
@@ -305,20 +305,20 @@ public partial class RDT : System.Web.UI.Page
             }
             else 
             {
-                double p6 = Convert.ToDouble(this.ws1TextBox1.Text);
-                double p7 = Math.Round(Convert.ToDouble(this.ws1TextBox2.Text) / 10) * 10;
+                double p6 = customConverterToDouble(this.ws1TextBox1.Text);
+                double p7 = Math.Round(customConverterToDouble(this.ws1TextBox2.Text) / 10) * 10;
                 /*foreach (Newtonsoft.Json.Linq.JProperty el in dataFromFile.table4)
                 {
                     string s = 0 + "";
                     string[] mas = el.Name.Split('-');
-                    if ((Convert.ToDouble(mas[0]) <= p6) && (Convert.ToDouble(mas[1]) >= p6))
+                    if ((customConverterToDouble(mas[0]) <= p6) && (customConverterToDouble(mas[1]) >= p6))
                     {
                         double tmp_t = 0.0;
                         foreach (Newtonsoft.Json.Linq.JObject val in el.Value)
                         {
-                            if (Convert.ToDouble(val.GetValue("t")) == p7)
+                            if (customConverterToDouble(val.GetValue("t")) == p7)
                             {
-                                tmp_t = Convert.ToDouble(val.GetValue("sr"));
+                                tmp_t = customConverterToDouble(val.GetValue("sr"));
                             }
                         }
                         g = tmp_t;
@@ -341,19 +341,19 @@ public partial class RDT : System.Web.UI.Page
 
             if (eorRadioButtonList1.SelectedIndex == 0)
             {
-                I = Convert.ToDouble(this.lp1TextBox2.Text) * arrConvert3[this.lp1DropDownList2.SelectedIndex - 1] / arrConvert3[2];
+                I = customConverterToDouble(this.lp1TextBox2.Text) * arrConvert3[this.lp1DropDownList2.SelectedIndex - 1] / arrConvert3[2];
             }
             else if (eorRadioButtonList1.SelectedIndex == 1)
             {
-                I = Convert.ToDouble(this.lp2TextBox2.Text) * arrConvert3[this.lp2DropDownList2.SelectedIndex - 1] / arrConvert3[2];
+                I = customConverterToDouble(this.lp2TextBox2.Text) * arrConvert3[this.lp2DropDownList2.SelectedIndex - 1] / arrConvert3[2];
             }
             else if (eorRadioButtonList1.SelectedIndex == 2)
             {
-                I = Convert.ToDouble(this.lp3TextBox1.Text) * arrConvert3[this.lp3DropDownList1.SelectedIndex - 1] / arrConvert3[2];
+                I = customConverterToDouble(this.lp3TextBox1.Text) * arrConvert3[this.lp3DropDownList1.SelectedIndex - 1] / arrConvert3[2];
             }
             else if (eorRadioButtonList1.SelectedIndex == 3)
             {
-                I = Convert.ToDouble(this.lp4TextBox2.Text) * arrConvert3[this.lp4DropDownList2.SelectedIndex - 1] / arrConvert3[2];
+                I = customConverterToDouble(this.lp4TextBox2.Text) * arrConvert3[this.lp4DropDownList2.SelectedIndex - 1] / arrConvert3[2];
             }
 
             if (I < (((eorRadioButtonList1.SelectedIndex == 2 || eorRadioButtonList1.SelectedIndex == 3)) ? 0.16 : 0.08) || I > 15.8)
@@ -772,7 +772,7 @@ public partial class RDT : System.Web.UI.Page
                         }
                     }
 
-                    double t1 = Convert.ToDouble(this.calcrTextBox2.Text);
+                    double t1 = customConverterToDouble(this.calcrTextBox2.Text);
                     Newtonsoft.Json.Linq.JObject max = dataFromFile.table9[dataFromFile.table9.Count - 1];
                     foreach (Newtonsoft.Json.Linq.JObject ob in dataFromFile.table9)
                     {
@@ -783,7 +783,7 @@ public partial class RDT : System.Web.UI.Page
                     }
                     ps = Convert.ToDouble(max.GetValue("ps"));
 
-                    double G = Math.Round((dn * ((Convert.ToDouble(this.calcrTextBox1.Text) * arrConvert3[this.calcrDropDownList1.SelectedIndex - 1] / arrConvert3[2]) - ps)), 2);
+                    double G = Math.Round((dn * ((customConverterToDouble(this.calcrTextBox1.Text) * arrConvert3[this.calcrDropDownList1.SelectedIndex - 1] / arrConvert3[2]) - ps)), 2);
                     listG.Add(G.ToString());
 
                     string K = "Нет";
@@ -1171,7 +1171,7 @@ public partial class RDT : System.Web.UI.Page
 
                 if (jj > 0)
                 {
-                    tb.Text = (customConverterToDouble(tb.Text) * arr[(jj - 1), (ddl.SelectedIndex - 1)]).ToString().Replace(",", ".");
+                    tb.Text = (customConverterToDouble(tb.Text) * arr[(jj - 1), (ddl.SelectedIndex - 1)]).ToString();
                 }
             }
         }
@@ -1184,7 +1184,7 @@ public partial class RDT : System.Web.UI.Page
             if (!String.IsNullOrWhiteSpace(tb.Text))
             {
                 int jj = keyValuePairs[ddl.ID];
-                tb.Text = (customConverterToDouble(tb.Text) * arr[jj - 1] / arr[ddl.SelectedIndex - 1]).ToString().Replace(",", ".");
+                tb.Text = (customConverterToDouble((tb.Text).Replace(".", ",")) * arr[jj - 1] / arr[ddl.SelectedIndex - 1]).ToString().Replace(",", ".");
             }
         }
     }
@@ -1318,7 +1318,7 @@ public partial class RDT : System.Web.UI.Page
                         Double p7 = -1;
                         try
                         {
-                            p6 = Convert.ToDouble(this.ws1TextBox1.Text);
+                            p6 = customConverterToDouble(this.ws1TextBox1.Text);
                         }
                         catch (Exception)
                         {
@@ -1338,7 +1338,7 @@ public partial class RDT : System.Web.UI.Page
 
                         try
                         {
-                            p7 = Convert.ToDouble(this.ws1TextBox2.Text);
+                            p7 = customConverterToDouble(this.ws1TextBox2.Text);
                         }
                         catch (Exception)
                         {
@@ -1365,7 +1365,7 @@ public partial class RDT : System.Web.UI.Page
                         {
                             if (this.fprRadioButton1.Checked)
                             {
-                                checkVal = Convert.ToDouble(this.fprTextBox1.Text);
+                                checkVal = customConverterToDouble(this.fprTextBox1.Text);
                                 if (!(checkVal > 0))
                                 {
                                     LabelError.Text = "Введите числовое значение больше нуля";
@@ -1383,7 +1383,7 @@ public partial class RDT : System.Web.UI.Page
                         {
                             if (this.fprRadioButton2.Checked)
                             {
-                                checkVal = Convert.ToDouble(this.fprTextBox2.Text);
+                                checkVal = customConverterToDouble(this.fprTextBox2.Text);
                             }
                         }
                         catch (Exception)
@@ -1396,7 +1396,7 @@ public partial class RDT : System.Web.UI.Page
                         {
                             if (this.fprRadioButton2.Checked)
                             {
-                                checkVal = Convert.ToDouble(this.fprTextBox3.Text);
+                                checkVal = customConverterToDouble(this.fprTextBox3.Text);
                             }
                         }
                         catch (Exception)
@@ -1409,7 +1409,7 @@ public partial class RDT : System.Web.UI.Page
                         {
                             if (this.fprRadioButton2.Checked)
                             {
-                                checkVal = Convert.ToDouble(this.fprTextBox4.Text);
+                                checkVal = customConverterToDouble(this.fprTextBox4.Text);
                                 if (!(checkVal > 0))
                                 {
                                     LabelError.Text = "Введите числовое значение больше нуля";
@@ -1433,7 +1433,7 @@ public partial class RDT : System.Web.UI.Page
                             LabelError.Text = "Не задано значение температуры";
                             return;
                         }
-                        else if (this.fprRadioButton2.Checked && (Convert.ToDouble(this.fprTextBox2.Text) > 150))
+                        else if (this.fprRadioButton2.Checked && (customConverterToDouble(this.fprTextBox2.Text) > 150))
                         {
                             LabelError.Text = "На температуру свыше 150°С вариантов нет";
                             return;
@@ -1443,12 +1443,12 @@ public partial class RDT : System.Web.UI.Page
                             LabelError.Text = "Не задано значение температуры";
                             return;
                         }
-                        else if (this.fprRadioButton2.Checked && Convert.ToDouble(this.fprTextBox2.Text) <= Convert.ToDouble(this.fprTextBox3.Text))
+                        else if (this.fprRadioButton2.Checked && customConverterToDouble(this.fprTextBox2.Text) <= customConverterToDouble(this.fprTextBox3.Text))
                         {
                             LabelError.Text = "Неверно указано значение температуры";
                             return;
                         }
-                        else if (this.fprRadioButton2.Checked && (Convert.ToDouble(this.fprTextBox3.Text) > 150))
+                        else if (this.fprRadioButton2.Checked && (customConverterToDouble(this.fprTextBox3.Text) > 150))
                         {
                             LabelError.Text = "На температуру свыше 150°С вариантов нет";
                             return;
@@ -1465,7 +1465,7 @@ public partial class RDT : System.Web.UI.Page
                             {
                                 try
                                 {
-                                    p16 = Math.Round((Convert.ToDouble(this.fprTextBox4.Text) * arrConvert2[this.fprDropDownList2.SelectedIndex - 1]) * 3.6 / (this.math_16_cp() * (Convert.ToDouble(this.fprTextBox2.Text) - Convert.ToDouble(this.fprTextBox3.Text))), 2);
+                                    p16 = Math.Round((customConverterToDouble(this.fprTextBox4.Text) * arrConvert2[this.fprDropDownList2.SelectedIndex - 1]) * 3.6 / (this.math_16_cp() * (customConverterToDouble(this.fprTextBox2.Text) - customConverterToDouble(this.fprTextBox3.Text))), 2);
 
                                 }
                                 catch (Exception)
@@ -1477,7 +1477,7 @@ public partial class RDT : System.Web.UI.Page
                             }
                             else
                             {
-                                p16 = (Convert.ToDouble(this.fprTextBox1.Text) * arrConvert1[(this.fprDropDownList1.SelectedIndex - 1), 5]);
+                                p16 = (customConverterToDouble(this.fprTextBox1.Text) * arrConvert1[(this.fprDropDownList1.SelectedIndex - 1), 5]);
                             }
 
                             g_dict.Add("p16", p16);
@@ -1511,7 +1511,7 @@ public partial class RDT : System.Web.UI.Page
 
                                     try
                                     {
-                                        p17 = Convert.ToDouble(this.lp1TextBox1.Text) * arrConvert3[this.lp1DropDownList1.SelectedIndex - 1] / arrConvert3[2];
+                                        p17 = customConverterToDouble(this.lp1TextBox1.Text) * arrConvert3[this.lp1DropDownList1.SelectedIndex - 1] / arrConvert3[2];
                                     }
                                     catch (Exception)
                                     {
@@ -1521,7 +1521,7 @@ public partial class RDT : System.Web.UI.Page
 
                                     try
                                     {
-                                        p19 = Convert.ToDouble(this.lp1TextBox2.Text) * arrConvert3[this.lp1DropDownList2.SelectedIndex - 1] / arrConvert3[2];
+                                        p19 = customConverterToDouble(this.lp1TextBox2.Text) * arrConvert3[this.lp1DropDownList2.SelectedIndex - 1] / arrConvert3[2];
                                     }
                                     catch (Exception)
                                     {
@@ -1531,7 +1531,7 @@ public partial class RDT : System.Web.UI.Page
 
                                     try
                                     {
-                                        p21 = Convert.ToDouble(this.lp1TextBox3.Text) * arrConvert3[this.lp1DropDownList3.SelectedIndex - 1] / arrConvert3[2];
+                                        p21 = customConverterToDouble(this.lp1TextBox3.Text) * arrConvert3[this.lp1DropDownList3.SelectedIndex - 1] / arrConvert3[2];
                                     }
                                     catch (Exception)
                                     {
@@ -1541,7 +1541,7 @@ public partial class RDT : System.Web.UI.Page
 
                                     try
                                     {
-                                        p23 = Convert.ToDouble(this.lp1TextBox4.Text) * arrConvert3[this.lp1DropDownList4.SelectedIndex - 1] / arrConvert3[2];
+                                        p23 = customConverterToDouble(this.lp1TextBox4.Text) * arrConvert3[this.lp1DropDownList4.SelectedIndex - 1] / arrConvert3[2];
                                     }
                                     catch (Exception)
                                     {
@@ -1618,7 +1618,7 @@ public partial class RDT : System.Web.UI.Page
 
                                     try
                                     {
-                                        p26 = Convert.ToDouble(this.lp2TextBox1.Text) * arrConvert3[this.lp2DropDownList1.SelectedIndex - 1] / arrConvert3[2];
+                                        p26 = customConverterToDouble(this.lp2TextBox1.Text) * arrConvert3[this.lp2DropDownList1.SelectedIndex - 1] / arrConvert3[2];
                                     }
                                     catch (Exception)
                                     {
@@ -1628,7 +1628,7 @@ public partial class RDT : System.Web.UI.Page
 
                                     try
                                     {
-                                        p28 = Convert.ToDouble(this.lp2TextBox2.Text) * arrConvert3[this.lp2DropDownList2.SelectedIndex - 1] / arrConvert3[2];
+                                        p28 = customConverterToDouble(this.lp2TextBox2.Text) * arrConvert3[this.lp2DropDownList2.SelectedIndex - 1] / arrConvert3[2];
                                     }
                                     catch (Exception)
                                     {
@@ -1685,7 +1685,7 @@ public partial class RDT : System.Web.UI.Page
 
                                     try
                                     {
-                                        p30 = Convert.ToDouble(this.lp3TextBox1.Text) * arrConvert3[this.lp3DropDownList1.SelectedIndex - 1] / arrConvert3[2];
+                                        p30 = customConverterToDouble(this.lp3TextBox1.Text) * arrConvert3[this.lp3DropDownList1.SelectedIndex - 1] / arrConvert3[2];
                                     }
                                     catch (Exception)
                                     {
@@ -1695,7 +1695,7 @@ public partial class RDT : System.Web.UI.Page
 
                                     try
                                     {
-                                        p32 = Convert.ToDouble(this.lp3TextBox2.Text) * arrConvert3[this.lp3DropDownList2.SelectedIndex - 1] / arrConvert3[2];
+                                        p32 = customConverterToDouble(this.lp3TextBox2.Text) * arrConvert3[this.lp3DropDownList2.SelectedIndex - 1] / arrConvert3[2];
                                     }
                                     catch (Exception)
                                     {
@@ -1747,7 +1747,7 @@ public partial class RDT : System.Web.UI.Page
 
                                     try
                                     {
-                                        p19 = Convert.ToDouble(this.lp4TextBox2.Text) * arrConvert3[this.lp4DropDownList2.SelectedIndex - 1] / arrConvert3[2];
+                                        p19 = customConverterToDouble(this.lp4TextBox2.Text) * arrConvert3[this.lp4DropDownList2.SelectedIndex - 1] / arrConvert3[2];
                                     }
                                     catch (Exception)
                                     {
@@ -1775,7 +1775,7 @@ public partial class RDT : System.Web.UI.Page
 
                             try
                             {
-                                double ptemp = Convert.ToDouble(this.calcrTextBox1.Text);
+                                double ptemp = customConverterToDouble(this.calcrTextBox1.Text);
                             }
                             catch (Exception)
                             {
@@ -1783,13 +1783,13 @@ public partial class RDT : System.Web.UI.Page
                                 return;
                             }
 
-                            if (Convert.ToDouble(this.calcrTextBox1.Text) <= 0)
+                            if (customConverterToDouble(this.calcrTextBox1.Text) <= 0)
                             {
 
                                 LabelError.Text = "Неверно указано значение давления";
                                 return;
                             }
-                            else if ((Convert.ToDouble(this.calcrTextBox1.Text) * arrConvert3[this.calcrDropDownList1.SelectedIndex - 1] / arrConvert3[2]) > 16)
+                            else if ((customConverterToDouble(this.calcrTextBox1.Text) * arrConvert3[this.calcrDropDownList1.SelectedIndex - 1] / arrConvert3[2]) > 16)
                             {
 
                                 LabelError.Text = "На давление свыше 16 бар вариантов нет";
@@ -1801,7 +1801,7 @@ public partial class RDT : System.Web.UI.Page
                             double p35 = 0;
                             try
                             {
-                                p35 = Convert.ToDouble(this.calcrTextBox2.Text);
+                                p35 = customConverterToDouble(this.calcrTextBox2.Text);
                             }
                             catch (Exception)
                             {
@@ -1833,7 +1833,7 @@ public partial class RDT : System.Web.UI.Page
                             this.maxt1ResultLabel.Text = "Максимальная температура - " + (ws1RadioButtonList1.SelectedIndex == 0 ? "150 °С" : "150 °С");
                             this.maxp1ResultLabel.Text = "Максимальное рабочее давление - 16 бар";
 
-                            double t1_check = Convert.ToDouble(this.calcrTextBox2.Text);
+                            double t1_check = customConverterToDouble(this.calcrTextBox2.Text);
                             Newtonsoft.Json.Linq.JObject max_check = dataFromFile.table9[dataFromFile.table9.Count - 1];
                             foreach (Newtonsoft.Json.Linq.JObject ob in dataFromFile.table9)
                             {
@@ -1844,7 +1844,7 @@ public partial class RDT : System.Web.UI.Page
                             }
                            //double ps_check = Convert.ToDouble(max_check.GetValue("ps"));
 
-                            if (((Convert.ToDouble(this.calcrTextBox1.Text) * arrConvert3[this.calcrDropDownList1.SelectedIndex - 1] / arrConvert3[2]) - getPSbyT(t1_check)) <= 0)
+                            if (((customConverterToDouble(this.calcrTextBox1.Text) * arrConvert3[this.calcrDropDownList1.SelectedIndex - 1] / arrConvert3[2]) - getPSbyT(t1_check)) <= 0)
                             {
                                 LabelError.Text = "Указанная температура выше температуры парообразования. При указанной температуре в трубопроводе движется пар";
                                 return;
@@ -1965,7 +1965,7 @@ public partial class RDT : System.Web.UI.Page
             LabelError.Text = "Не выбрано место установки регулятора";
             return;
         }
-
+        LabelError.Text = "";
         Label52.Visible = true;
         maxp1ResultLabel.Visible = true;
         maxt1ResultLabel.Visible = true;

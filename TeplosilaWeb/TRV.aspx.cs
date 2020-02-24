@@ -426,7 +426,7 @@ public partial class TRV : System.Web.UI.Page
 
                 if (jj > 0)
                 {
-                    tb.Text = (customConverterToDouble(tb.Text) * arr[(jj - 1), (ddl.SelectedIndex - 1)]).ToString().Replace(",", ".");
+                    tb.Text = (customConverterToDouble((tb.Text)) * arr[(jj - 1), (ddl.SelectedIndex - 1)]).ToString().Replace(",", ".");
                 }
             }
         }
@@ -947,14 +947,14 @@ public partial class TRV : System.Web.UI.Page
         }
         else if (ws2RadioButtonList1.SelectedIndex == 1)
         {
-            double p6 = Convert.ToDouble(this.ws2TextBox1.Text);
+            double p6 = customConverterToDouble(this.ws2TextBox1.Text);
             double p7 = Math.Round(GetAvgT() / 10) * 10;
             double cp = 0;
             Etgl(p7, p6, ref g, ref cp);
         }
         else if (ws2RadioButtonList1.SelectedIndex == 2)
         {
-            double p6 = Convert.ToDouble(this.ws2TextBox1.Text);
+            double p6 = customConverterToDouble(this.ws2TextBox1.Text);
             double p7 = Math.Round(GetAvgT() / 10) * 10;
             double cp = 0;
             Prgl(p7, p6, ref g, ref cp);
@@ -1531,13 +1531,13 @@ public partial class TRV : System.Web.UI.Page
                 }
                 ps = Convert.ToDouble(max.GetValue("ps"));
 
-                double F = Math.Round((dn * ((Convert.ToDouble(this.calcvTextBox1.Text) * arrConvert3[this.calcvDropDownList1.SelectedIndex - 1] / arrConvert3[2]) - ps)), 2);
+                double F = Math.Round((dn * ((customConverterToDouble(this.calcvTextBox1.Text) * arrConvert3[this.calcvDropDownList1.SelectedIndex - 1] / arrConvert3[2]) - ps)), 2);
                 listF.Add(F.ToString());
 
                 string G_str = "Нет";
                 if (F < Pf)
                     G_str = "Угрожает опасность кавитации";
-                if (F < (Convert.ToDouble(this.lpvTextBox1.Text) * arrConvert3[this.calcvDropDownList1.SelectedIndex - 1] / arrConvert3[2]))
+                if (F < (customConverterToDouble(this.lpvTextBox1.Text) * arrConvert3[this.calcvDropDownList1.SelectedIndex - 1] / arrConvert3[2]))
                     G_str = "Угрожает опасность кавитации";
 
                 listG.Add(G_str);
@@ -2272,7 +2272,7 @@ public partial class TRV : System.Web.UI.Page
                                     Double p15 = -1;
                                     try
                                     {
-                                        p14 = Convert.ToDouble(ws2TextBox1.Text);
+                                        p14 = customConverterToDouble(ws2TextBox1.Text);
                                     }
                                     catch (Exception)
                                     {
@@ -2293,7 +2293,7 @@ public partial class TRV : System.Web.UI.Page
 
                                     try
                                     {
-                                        p15 = Convert.ToDouble(ws2TextBox2.Text);
+                                        p15 = customConverterToDouble(ws2TextBox2.Text);
                                     }
                                     catch (Exception)
                                     {
@@ -2318,7 +2318,7 @@ public partial class TRV : System.Web.UI.Page
                                 {
                                     if (this.lpvTextBox2.Enabled)
                                     {
-                                        checkValue = Convert.ToDouble(this.lpvTextBox2.Text);
+                                        checkValue = customConverterToDouble(this.lpvTextBox2.Text);
 
                                         if (!(checkValue > 0))
                                         {
@@ -2337,7 +2337,7 @@ public partial class TRV : System.Web.UI.Page
                                 {
                                     if (this.lpvTextBox21.Enabled)
                                     {
-                                        checkValue = Convert.ToDouble(this.lpvTextBox21.Text);
+                                        checkValue = customConverterToDouble(this.lpvTextBox21.Text);
 
                                         if (!(checkValue > 0))
                                         {
@@ -2356,7 +2356,7 @@ public partial class TRV : System.Web.UI.Page
                                 {
                                     if (this.lpvTextBox1.Enabled)
                                     {
-                                        checkValue = Convert.ToDouble(this.lpvTextBox1.Text);
+                                        checkValue = customConverterToDouble(this.lpvTextBox1.Text);
 
                                         if (!(checkValue > 0))
                                         {
@@ -2375,7 +2375,7 @@ public partial class TRV : System.Web.UI.Page
                                 {
                                     if (this.lpvTextBox2.Enabled)
                                     {
-                                        checkValue = Convert.ToDouble(this.lpvTextBox2.Text);
+                                        checkValue = customConverterToDouble(this.lpvTextBox2.Text);
 
                                         if (!(checkValue > 0))
                                         {
@@ -2394,7 +2394,7 @@ public partial class TRV : System.Web.UI.Page
                                 {
                                     if (this.calcvTextBox1.Enabled)
                                     {
-                                        checkValue = Convert.ToDouble(this.calcvTextBox1.Text);
+                                        checkValue = customConverterToDouble(this.calcvTextBox1.Text);
 
                                         if (!(checkValue > 0))
                                         {
@@ -2423,7 +2423,7 @@ public partial class TRV : System.Web.UI.Page
                                         {
                                             if (this.fvTextBox2.Enabled)
                                             {
-                                                checkVal = Convert.ToDouble(this.fvTextBox2.Text);
+                                                checkVal = customConverterToDouble(this.fvTextBox2.Text);
                                                 if (!(checkVal > 0))
                                                 {
                                                     LabelError.Text += "Неверно указано значение температуры";
@@ -2441,7 +2441,7 @@ public partial class TRV : System.Web.UI.Page
                                         {
                                             if (this.fvTextBox3.Enabled)
                                             {
-                                                checkVal = Convert.ToDouble(this.fvTextBox3.Text);
+                                                checkVal = customConverterToDouble(this.fvTextBox3.Text);
                                                 if (!(checkVal > 0))
                                                 {
                                                     LabelError.Text += "Неверно указано значение температуры";
@@ -2459,7 +2459,7 @@ public partial class TRV : System.Web.UI.Page
                                         {
                                             if (this.fvTextBox4.Enabled)
                                             {
-                                                checkVal = Convert.ToDouble(this.fvTextBox4.Text);
+                                                checkVal = customConverterToDouble(this.fvTextBox4.Text);
                                                 if (!(checkVal > 0))
                                                 {
                                                     LabelError.Text += "Неверно указано значение температуры";
@@ -2477,7 +2477,7 @@ public partial class TRV : System.Web.UI.Page
                                         {
                                             if (this.fvTextBox5.Enabled)
                                             {
-                                                checkVal = Convert.ToDouble(this.fvTextBox5.Text);
+                                                checkVal = customConverterToDouble(this.fvTextBox5.Text);
                                                 if (!(checkVal > 0))
                                                 {
                                                     LabelError.Text += "Неверно указано значение температуры";
@@ -2494,7 +2494,7 @@ public partial class TRV : System.Web.UI.Page
                                         {
                                             if (this.fvTextBox6.Enabled)
                                             {
-                                                checkVal = Convert.ToDouble(this.fvTextBox6.Text);
+                                                checkVal = customConverterToDouble(this.fvTextBox6.Text);
                                                 if (!(checkVal > 0))
                                                 {
                                                     LabelError.Text += "Неверно указано значение температуры";
@@ -2512,7 +2512,7 @@ public partial class TRV : System.Web.UI.Page
                                         {
                                             if (this.fvTextBox7.Enabled)
                                             {
-                                                checkVal = Convert.ToDouble(this.fvTextBox7.Text);
+                                                checkVal = customConverterToDouble(this.fvTextBox7.Text);
                                                 if (!(checkVal > 0))
                                                 {
                                                     LabelError.Text += "Неверно указано значение температуры";
@@ -2530,7 +2530,7 @@ public partial class TRV : System.Web.UI.Page
                                         {
                                             if (this.fvTextBox8.Enabled)
                                             {
-                                                checkVal = Convert.ToDouble(this.fvTextBox8.Text);
+                                                checkVal = customConverterToDouble(this.fvTextBox8.Text);
                                                 if (!(checkVal > 0))
                                                 {
                                                     LabelError.Text += "Неверно указано значение температуры";
@@ -2548,7 +2548,7 @@ public partial class TRV : System.Web.UI.Page
                                         {
                                             if (this.fvTextBox9.Enabled)
                                             {
-                                                checkVal = Convert.ToDouble(this.fvTextBox9.Text);
+                                                checkVal = customConverterToDouble(this.fvTextBox9.Text);
                                                 if (!(checkVal > 0))
                                                 {
                                                     LabelError.Text += "Неверно указано значение температуры";
@@ -2587,9 +2587,9 @@ public partial class TRV : System.Web.UI.Page
                                             }*/
                                             else
                                             {
-                                                dt = (Convert.ToDouble(fvTextBox2.Text) - Convert.ToDouble(fvTextBox3.Text)) > (Convert.ToDouble(fvTextBox4.Text) - Convert.ToDouble(fvTextBox5.Text)) ?
-                                                    (Convert.ToDouble(fvTextBox4.Text) - Convert.ToDouble(fvTextBox5.Text)) :
-                                                    (Convert.ToDouble(fvTextBox2.Text) - Convert.ToDouble(fvTextBox3.Text));
+                                                dt = (customConverterToDouble(fvTextBox2.Text) - customConverterToDouble(fvTextBox3.Text)) > (customConverterToDouble(fvTextBox4.Text) - customConverterToDouble(fvTextBox5.Text)) ?
+                                                    (customConverterToDouble(fvTextBox4.Text) - customConverterToDouble(fvTextBox5.Text)) :
+                                                    (customConverterToDouble(fvTextBox2.Text) - customConverterToDouble(fvTextBox3.Text));
                                             }
                                         }
                                         else if ((aaRadioButton2.Checked && tvRadioButtonList1.SelectedIndex == 0)
@@ -2606,7 +2606,7 @@ public partial class TRV : System.Web.UI.Page
                                             }
                                             else
                                             {
-                                                dt = (Convert.ToDouble(fvTextBox2.Text) - Convert.ToDouble(fvTextBox3.Text));
+                                                dt = (customConverterToDouble(fvTextBox2.Text) - customConverterToDouble(fvTextBox3.Text));
                                             }
                                         }
                                         else if (aaRadioButton2.Checked && tvRadioButtonList1.SelectedIndex == 1 && aa2RadioButtonList1.SelectedIndex == 0)
@@ -2615,7 +2615,7 @@ public partial class TRV : System.Web.UI.Page
 
                                             try
                                             {
-                                                checkVal = Convert.ToDouble(this.fvTextBox6.Text);
+                                                checkVal = customConverterToDouble(this.fvTextBox6.Text);
                                             }
                                             catch (Exception)
                                             {
@@ -2625,7 +2625,7 @@ public partial class TRV : System.Web.UI.Page
 
                                             try
                                             {
-                                                checkVal = Convert.ToDouble(this.fvTextBox7.Text);
+                                                checkVal = customConverterToDouble(this.fvTextBox7.Text);
                                             }
                                             catch (Exception)
                                             {
@@ -2643,14 +2643,14 @@ public partial class TRV : System.Web.UI.Page
                                             }
                                             else
                                             {
-                                                dt = (Convert.ToDouble(fvTextBox6.Text) - Convert.ToDouble(fvTextBox7.Text));
+                                                dt = (customConverterToDouble(fvTextBox6.Text) - customConverterToDouble(fvTextBox7.Text));
                                             }
                                         }
                                         else if (aaRadioButton3.Checked && tvRadioButtonList1.SelectedIndex == 1 && aa3RadioButtonList1.SelectedIndex == 0)
                                         {
                                             try
                                             {
-                                                checkVal = Convert.ToDouble(this.fvTextBox8.Text);
+                                                checkVal = customConverterToDouble(this.fvTextBox8.Text);
                                             }
                                             catch (Exception)
                                             {
@@ -2660,7 +2660,7 @@ public partial class TRV : System.Web.UI.Page
 
                                             try
                                             {
-                                                checkVal = Convert.ToDouble(this.fvTextBox9.Text);
+                                                checkVal = customConverterToDouble(this.fvTextBox9.Text);
                                             }
                                             catch (Exception)
                                             {
@@ -2677,47 +2677,47 @@ public partial class TRV : System.Web.UI.Page
                                             }
                                             else
                                             {
-                                                dt = (Convert.ToDouble(fvTextBox8.Text) - Convert.ToDouble(fvTextBox9.Text));
+                                                dt = (customConverterToDouble(fvTextBox8.Text) - customConverterToDouble(fvTextBox9.Text));
                                             }
                                         }
 
 
-                                        if (fvTextBox2.Enabled && Convert.ToDouble(fvTextBox2.Text) > g_dict["vTMax"])
+                                        if (fvTextBox2.Enabled && customConverterToDouble(fvTextBox2.Text) > g_dict["vTMax"])
                                         {
                                             LabelError.Text += "На температуру свыше " + g_dict["vTMax"].ToString() + "°С вариантов нет"; 
                                             return;
                                         }
-                                        else if (fvTextBox3.Enabled && Convert.ToDouble(fvTextBox3.Text) > g_dict["vTMax"])
+                                        else if (fvTextBox3.Enabled && customConverterToDouble(fvTextBox3.Text) > g_dict["vTMax"])
                                         {
                                             LabelError.Text += "На температуру свыше " + g_dict["vTMax"].ToString() + "°С вариантов нет"; 
                                             return;
                                         }
-                                        else if (fvTextBox4.Enabled && Convert.ToDouble(fvTextBox4.Text) > g_dict["vTMax"])
+                                        else if (fvTextBox4.Enabled && customConverterToDouble(fvTextBox4.Text) > g_dict["vTMax"])
                                         {
                                             LabelError.Text += "На температуру свыше " + g_dict["vTMax"].ToString() + "°С вариантов нет";
                                             return;
                                         }
-                                        else if (fvTextBox5.Enabled && Convert.ToDouble(fvTextBox5.Text) > g_dict["vTMax"])
+                                        else if (fvTextBox5.Enabled && customConverterToDouble(fvTextBox5.Text) > g_dict["vTMax"])
                                         {
                                             LabelError.Text += "На температуру свыше " + g_dict["vTMax"].ToString() + "°С вариантов нет";
                                             return;
                                         }
-                                        else if (fvTextBox6.Enabled && Convert.ToDouble(fvTextBox6.Text) > g_dict["vTMax"])
+                                        else if (fvTextBox6.Enabled && customConverterToDouble(fvTextBox6.Text) > g_dict["vTMax"])
                                         {
                                             LabelError.Text += "На температуру свыше " + g_dict["vTMax"].ToString() + "°С вариантов нет";
                                             return;
                                         }
-                                        else if (fvTextBox7.Enabled && Convert.ToDouble(fvTextBox7.Text) > g_dict["vTMax"])
+                                        else if (fvTextBox7.Enabled && customConverterToDouble(fvTextBox7.Text) > g_dict["vTMax"])
                                         {
                                             LabelError.Text += "На температуру свыше " + g_dict["vTMax"].ToString() + "°С вариантов нет";
                                             return;
                                         }
-                                        else if (fvTextBox8.Enabled && Convert.ToDouble(fvTextBox8.Text) > g_dict["vTMax"])
+                                        else if (fvTextBox8.Enabled && customConverterToDouble(fvTextBox8.Text) > g_dict["vTMax"])
                                         {
                                             LabelError.Text += "На температуру свыше " + g_dict["vTMax"].ToString() + "°С вариантов нет";
                                             return;
                                         }
-                                        else if (fvTextBox9.Enabled && Convert.ToDouble(fvTextBox9.Text) > g_dict["vTMax"])
+                                        else if (fvTextBox9.Enabled && customConverterToDouble(fvTextBox9.Text) > g_dict["vTMax"])
                                         {
                                             LabelError.Text += "На температуру свыше " + g_dict["vTMax"].ToString() + "°С вариантов нет";
                                             return;
@@ -2745,7 +2745,7 @@ public partial class TRV : System.Web.UI.Page
                                         double checkVal;
                                         try
                                         {
-                                            checkVal = Convert.ToDouble(this.fvTextBox1.Text);
+                                            checkVal = customConverterToDouble(this.fvTextBox1.Text);
                                         }
                                         catch (Exception)
                                         {
@@ -2755,7 +2755,7 @@ public partial class TRV : System.Web.UI.Page
 
                                         if (!String.IsNullOrWhiteSpace(fvTextBox1.Text))
                                         {
-                                            p30 = (Convert.ToDouble(fvTextBox1.Text) * arrConvert1[(fvDropDownList1.SelectedIndex - 1), 5]);
+                                            p30 = (customConverterToDouble(fvTextBox1.Text) * arrConvert1[(fvDropDownList1.SelectedIndex - 1), 5]);
                                         }
                                         else
                                         {
@@ -2781,7 +2781,7 @@ public partial class TRV : System.Web.UI.Page
                                                 double p35 = 0;
                                                 try
                                                 {
-                                                    p35 = Convert.ToDouble(calcvTextBox2.Text);
+                                                    p35 = customConverterToDouble(calcvTextBox2.Text);
                                                 }
                                                 catch (Exception) { }
 
@@ -2805,12 +2805,12 @@ public partial class TRV : System.Web.UI.Page
                                                     if ((aaRadioButton1.Checked && aa1RadioButtonList1.SelectedIndex == 0)
                                                         || (aaRadioButton2.Checked && aa2RadioButtonList1.SelectedIndex == 0)
                                                         || (aaRadioButton3.Checked && aa3RadioButtonList1.SelectedIndex == 0))
-                                                        p61 = Convert.ToDouble(lpvTextBox2.Text) * arrConvert3[lpvDropDownList2.SelectedIndex - 1];
+                                                        p61 = customConverterToDouble(lpvTextBox2.Text) * arrConvert3[lpvDropDownList2.SelectedIndex - 1];
 
                                                     else if ((aaRadioButton1.Checked && aa1RadioButtonList1.SelectedIndex == 1)
                                                         || (aaRadioButton2.Checked && aa2RadioButtonList1.SelectedIndex == 1)
                                                         || (aaRadioButton3.Checked && aa3RadioButtonList1.SelectedIndex == 1))
-                                                        p61 = Convert.ToDouble(lpvTextBox21.Text) * arrConvert3[lpvDropDownList21.SelectedIndex - 1];
+                                                        p61 = customConverterToDouble(lpvTextBox21.Text) * arrConvert3[lpvDropDownList21.SelectedIndex - 1];
                                                 }
                                                 catch (Exception) { }
 
@@ -2834,7 +2834,7 @@ public partial class TRV : System.Web.UI.Page
                                                 try
                                                 {
                                                     if (lpvTextBox1.Enabled)
-                                                        p62 = Convert.ToDouble(lpvTextBox1.Text) * arrConvert3[lpvDropDownList1.SelectedIndex - 1];
+                                                        p62 = customConverterToDouble(lpvTextBox1.Text) * arrConvert3[lpvDropDownList1.SelectedIndex - 1];
                                                 }
                                                 catch (Exception) { }
 
@@ -2850,7 +2850,7 @@ public partial class TRV : System.Web.UI.Page
                                                 try
                                                 {
                                                     if (calcvTextBox1.Enabled)
-                                                        p63 = Convert.ToDouble(calcvTextBox1.Text) * arrConvert3[calcvDropDownList1.SelectedIndex - 1];
+                                                        p63 = customConverterToDouble(calcvTextBox1.Text) * arrConvert3[calcvDropDownList1.SelectedIndex - 1];
                                                 }
                                                 catch (Exception) { }
 
@@ -2901,7 +2901,7 @@ public partial class TRV : System.Web.UI.Page
                                                 maxp2ResultLabel.Text = "Максимальное рабочее давление - 16 бар";
 
 
-                                                double t1_check = Convert.ToDouble(calcvTextBox2.Text);
+                                                double t1_check = customConverterToDouble(calcvTextBox2.Text);
                                                 Newtonsoft.Json.Linq.JObject max_check = dataFromFile.table9v[dataFromFile.table9v.Count - 1];
                                                 foreach (Newtonsoft.Json.Linq.JObject ob in dataFromFile.table9v)
                                                 {
@@ -2912,7 +2912,7 @@ public partial class TRV : System.Web.UI.Page
                                                 }
                                                 //double ps_check = Convert.ToDouble(max_check.GetValue("ps"));
 
-                                                if (((Convert.ToDouble(calcvTextBox1.Text) * arrConvert3[calcvDropDownList1.SelectedIndex - 1] / arrConvert3[2]) - getPSbyT(t1_check)) <= 0)
+                                                if (((customConverterToDouble(calcvTextBox1.Text) * arrConvert3[calcvDropDownList1.SelectedIndex - 1] / arrConvert3[2]) - getPSbyT(t1_check)) <= 0)
                                                 {
                                                     LabelError.Text += "Указанная температура выше температуры парообразования. При указанной температуре в трубопроводе движется пар";
                                                     return;

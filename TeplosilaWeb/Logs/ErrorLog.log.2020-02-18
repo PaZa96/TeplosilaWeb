@@ -1,0 +1,13 @@
+2020-02-18 19:06:28,769  INFO  Ура заработало!
+2020-02-18 20:34:42,747  ERROR System.Threading.ThreadAbortException: Поток находился в процессе прерывания.
+   в System.Threading.Thread.AbortInternal()
+   в System.Threading.Thread.Abort(Object stateInfo)
+   в System.Web.HttpResponse.AbortCurrentThread()
+   в System.Web.HttpResponse.End()
+   в RDT.Button2_Click(Object sender, EventArgs e) в C:\Users\pge27\Desktop\TeplosilaWeb\TeplosilaWeb\RDT.aspx.cs:строка 2260
+2020-02-18 20:35:44,329  ERROR System.Threading.ThreadAbortException: Поток находился в процессе прерывания.
+   в System.Threading.Thread.AbortInternal()
+   в System.Threading.Thread.Abort(Object stateInfo)
+   в System.Web.HttpResponse.AbortCurrentThread()
+   в System.Web.HttpResponse.End()
+   в RDT.Button2_Click(Object sender, EventArgs e) в C:\Users\pge27\Desktop\TeplosilaWeb\TeplosilaWeb\RDT.aspx.cs:строка 2260
