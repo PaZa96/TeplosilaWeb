@@ -54,36 +54,43 @@
                         <asp:UpdatePanel ID="UpdatePanel5" runat="server" UpdateMode="Conditional">
                             <ContentTemplate>
                                 <asp:Label ID="Label5" runat="server" Text="Рабочая среда:"></asp:Label>
-                                <asp:RadioButtonList ID="ws1RadioButtonList1" runat="server" AutoPostBack="True"
-                                    required="required" OnSelectedIndexChanged="ws1RadioButtonList1_SelectedIndexChanged">
+                                <div class="row">
+                                    <div class="col-3">
+                                        <asp:RadioButtonList ID="ws1RadioButtonList1" runat="server" AutoPostBack="True"
+                                            required="required" OnSelectedIndexChanged="ws1RadioButtonList1_SelectedIndexChanged">
                                     
-                                    <asp:ListItem>Вода</asp:ListItem>
-                                    <asp:ListItem>Этиленгликоль</asp:ListItem>
-                                    <asp:ListItem>Пропиленгликоль</asp:ListItem>
-                                </asp:RadioButtonList>
-                                <asp:TextBox ID="ws1TextBox1" runat="server" step="0.01" Enabled="False" type="number"
-                                    required="required" TextMode="Number"></asp:TextBox>
-                                <asp:Label ID="Label6" runat="server" Text="%(от 5% до 65%)"></asp:Label>
-                                &nbsp;&nbsp;&nbsp;
-                                <asp:RangeValidator ID="wsRangeValidator1" runat="server" Display="Dynamic"
-                                    ControlToValidate="ws1TextBox1"
-                                    ErrorMessage="Значение должно находится в диапазоне от 5% до 65%" ForeColor="Red"
-                                    MaximumValue="65" MinimumValue="5" SetFocusOnError="True" Type="Double"></asp:RangeValidator>
-                                <br />
-                                <asp:TextBox ID="ws1TextBox2" runat="server" step="0.01" Enabled="False" type="number"
-                                    required="required" TextMode="Number"></asp:TextBox>
-                                <asp:Label ID="Label7" runat="server" Text="&#8451; (от 0&#8451; до 150&#8451;)">
-                                </asp:Label>&nbsp;&nbsp;&nbsp;
-                                <asp:RangeValidator ID="wsRangeValidator2" runat="server"
-                                    ControlToValidate="ws1TextBox2" Display="Dynamic"
-                                    ErrorMessage="Значение должно находится в диапазоне от 0&amp;#8451 до 150&amp;#8451"
-                                    ForeColor="Red" MaximumValue="150" MinimumValue="0" SetFocusOnError="True"
-                                    Type="Double"></asp:RangeValidator>
-                                <br />
-                                <asp:RequiredFieldValidator ID="ws1RequiredFieldValidator1" runat="server"
-                                    ControlToValidate="ws1RadioButtonList1" Display="Dynamic"
-                                    ErrorMessage="Выберите необходимое значение" ForeColor="Red" SetFocusOnError="True">
-                                    Выберите необходимое значение</asp:RequiredFieldValidator>
+                                            <asp:ListItem>Вода</asp:ListItem>
+                                            <asp:ListItem>Этиленгликоль</asp:ListItem>
+                                            <asp:ListItem>Пропиленгликоль</asp:ListItem>
+                                        </asp:RadioButtonList>
+                                    </div>
+                                    <div class="col-9">
+                                        <br />
+                                        <asp:TextBox ID="ws1TextBox1" runat="server" step="0.01" Enabled="False" type="number"
+                                            required="required" TextMode="Number"></asp:TextBox>
+                                        <asp:Label ID="Label6" runat="server" Text="%(от 5% до 65%)"></asp:Label>
+                                        &nbsp;&nbsp;&nbsp;
+                                        <asp:RangeValidator ID="wsRangeValidator1" runat="server" Display="Dynamic"
+                                            ControlToValidate="ws1TextBox1"
+                                            ErrorMessage="Значение должно находится в диапазоне от 5% до 65%" ForeColor="Red"
+                                            MaximumValue="65" MinimumValue="5" SetFocusOnError="True" Type="Double"></asp:RangeValidator>
+                                        <br />
+                                        <asp:TextBox ID="ws1TextBox2" runat="server" step="0.01" Enabled="False" type="number"
+                                            required="required" TextMode="Number"></asp:TextBox>
+                                        <asp:Label ID="Label7" runat="server" Text="&#8451; (от 0&#8451; до 150&#8451;)">
+                                        </asp:Label>&nbsp;&nbsp;&nbsp;
+                                        <asp:RangeValidator ID="wsRangeValidator2" runat="server"
+                                            ControlToValidate="ws1TextBox2" Display="Dynamic"
+                                            ErrorMessage="Значение должно находится в диапазоне от 0&amp;#8451 до 150&amp;#8451"
+                                            ForeColor="Red" MaximumValue="150" MinimumValue="0" SetFocusOnError="True"
+                                            Type="Double"></asp:RangeValidator>
+                                        <br />
+                                        <asp:RequiredFieldValidator ID="ws1RequiredFieldValidator1" runat="server"
+                                            ControlToValidate="ws1RadioButtonList1" Display="Dynamic"
+                                            ErrorMessage="Выберите необходимое значение" ForeColor="Red" SetFocusOnError="True">
+                                            Выберите необходимое значение</asp:RequiredFieldValidator>
+                                    </div>
+                                </div>
                             </ContentTemplate>
                         </asp:UpdatePanel>
                     </div>

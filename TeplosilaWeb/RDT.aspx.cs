@@ -744,11 +744,9 @@ public partial class RDT : System.Web.UI.Page
                 if (V < g_dict["vmax"])
                     exit_t = true;
 
-                listF.Add(Math.Round(V, 2).ToString());
-                if (V > g_dict["vmax"])
-                {
-                    listE.Add((this.sprRadioButtonList1.SelectedIndex == 0) ? "возможен эрозийный износ клапана" : "возможен шум");
-                }
+                if (V > 3 && V <= 5 && this.sprRadioButtonList1.SelectedIndex == 0)
+                    listE.Add("возможен шум");
+                else if (V > 5) listE.Add("возможен эрозийный износ клапана");
                 else if (V < 1.5)
                 {
                     listE.Add("возможен колебательный режим регулирования");
@@ -2108,7 +2106,7 @@ public partial class RDT : System.Web.UI.Page
             r_input_dict[2] = objTextBox1.Text;
             //r_input_dict.Add(2, (this.textBox2.Text != "")? this.textBox2.Text : "-");
 
-            r_input_dict[5] = "-";
+            
             //r_input_dict.Add(5, (this.textBox5.Text != "") ? this.textBox5.Text : "-");
 
             int pos = 41;
@@ -2119,7 +2117,7 @@ public partial class RDT : System.Web.UI.Page
                 pos++;
 
             }
-
+            r_input_dict[5] = r_input_dict[42];
 
             SpreadsheetInfo.SetLicense("FREE-LIMITED-KEY");
 
@@ -2277,7 +2275,7 @@ public partial class RDT : System.Web.UI.Page
             r_input_dict[2] = objTextBox1.Text;
             //r_input_dict.Add(2, (this.textBox2.Text != "")? this.textBox2.Text : "-");
 
-            r_input_dict[5] = "-";
+            
             //r_input_dict.Add(5, (this.textBox5.Text != "") ? this.textBox5.Text : "-");
 
             int pos = 41;
@@ -2289,6 +2287,7 @@ public partial class RDT : System.Web.UI.Page
 
             }
 
+            r_input_dict[5] = r_input_dict[42];
 
             SpreadsheetInfo.SetLicense("FREE-LIMITED-KEY");
 
