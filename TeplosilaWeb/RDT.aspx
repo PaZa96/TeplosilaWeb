@@ -63,6 +63,8 @@
                                             <asp:ListItem>Этиленгликоль</asp:ListItem>
                                             <asp:ListItem>Пропиленгликоль</asp:ListItem>
                                         </asp:RadioButtonList>
+                                        <asp:RequiredFieldValidator ID="ws1RequiredFieldValidator1" runat="server" ControlToValidate="ws1RadioButtonList1" Display="Dynamic" ErrorMessage="Выберите необходимое значение" ForeColor="Red" SetFocusOnError="True">
+                                            Выберите необходимое значение</asp:RequiredFieldValidator>
                                     </div>
                                     <div class="col-9">
                                         <br />
@@ -85,10 +87,6 @@
                                             ForeColor="Red" MaximumValue="150" MinimumValue="0" SetFocusOnError="True"
                                             Type="Double"></asp:RangeValidator>
                                         <br />
-                                        <asp:RequiredFieldValidator ID="ws1RequiredFieldValidator1" runat="server"
-                                            ControlToValidate="ws1RadioButtonList1" Display="Dynamic"
-                                            ErrorMessage="Выберите необходимое значение" ForeColor="Red" SetFocusOnError="True">
-                                            Выберите необходимое значение</asp:RequiredFieldValidator>
                                     </div>
                                 </div>
                             </ContentTemplate>
@@ -105,7 +103,7 @@
                                     <div>
                                         <asp:Label ID="lpLabel1" runat="server" Text="Потери давления на регуляторе:"></asp:Label>
                                         <br />
-                                        <asp:Label ID="Label54" runat="server" Text="ΔPрд ="></asp:Label>
+                                        <asp:Label ID="Label54" runat="server" Text="ΔPрд ="></asp:Label>&nbsp;&nbsp;&nbsp;&nbsp;
                                         &nbsp;<asp:TextBox ID="lp1TextBox1" runat="server" Enabled="False" step="0.01"  required="required" TextMode="Number"></asp:TextBox>
                                         &nbsp;<asp:DropDownList ID="lp1DropDownList1" runat="server" Enabled="False" OnSelectedIndexChanged="lp1DropDownList1_SelectedIndexChanged" AutoPostBack="True">
                                            <asp:ListItem>выбрать</asp:ListItem>
@@ -118,7 +116,7 @@
                                         <br />
                                         <asp:Label ID="lpLabel2" runat="server" Text="Перепад давлений, поддерживаемый регулятором на регулируемом участке:"></asp:Label>
                                         <br />
-                                        <asp:Label ID="Label55" runat="server" Text="ΔPру ="></asp:Label>
+                                        <asp:Label ID="Label55" runat="server" Text="ΔPру ="></asp:Label>&nbsp;&nbsp;&nbsp;&nbsp;
                                         &nbsp;<asp:TextBox ID="lp1TextBox2" runat="server" Enabled="False" step="0.01" required="required" TextMode="Number"></asp:TextBox>
                                         &nbsp;<asp:DropDownList ID="lp1DropDownList2" runat="server" Enabled="False" OnSelectedIndexChanged="lp1DropDownList2_SelectedIndexChanged" AutoPostBack="True">
                                                <asp:ListItem>выбрать</asp:ListItem>
@@ -132,7 +130,7 @@
                                         <br />
                                         <asp:Label ID="lpLabel3" runat="server" Text="Давление в подающем трубопроводе на вводе ТП:"></asp:Label>
                                         <br />
-                                        <asp:Label ID="Label56" runat="server" Text="P1 ="></asp:Label>
+                                        <asp:Label ID="Label56" runat="server" Text="P1 = "></asp:Label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                         &nbsp;<asp:TextBox ID="lp1TextBox3" runat="server"  Enabled="False" step="0.01" required="required" TextMode="Number"></asp:TextBox>
                                         &nbsp;<asp:DropDownList ID="lp1DropDownList3" runat="server" Enabled="False" OnSelectedIndexChanged="lp1DropDownList3_SelectedIndexChanged" AutoPostBack="True">
                                                <asp:ListItem>выбрать</asp:ListItem>
@@ -146,7 +144,7 @@
                                         <br />
                                         <asp:Label ID="lpLabel4" runat="server" Text="Давление в обратном трубопроводе на вводе в ТП:"></asp:Label>
                                         <br />
-                                        <asp:Label ID="Label57" runat="server" Text="P2 ="></asp:Label>
+                                        <asp:Label ID="Label57" runat="server" Text="P2 = "></asp:Label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                         &nbsp;<asp:TextBox ID="lp1TextBox4" step="0.01" runat="server" Enabled="False" TextMode="Number" required="required"></asp:TextBox>
                                         &nbsp;<asp:DropDownList ID="lp1DropDownList4" runat="server" Enabled="False" OnSelectedIndexChanged="lp1DropDownList4_SelectedIndexChanged" AutoPostBack="True">
                                                <asp:ListItem>выбрать</asp:ListItem>
@@ -160,8 +158,8 @@
                                         <br />
                                         <asp:Label ID="lpLabel5" runat="server" Text="Максимальный перепад на регуляторе:"></asp:Label>
                                         <br />
-                                        <asp:Label ID="Label58" runat="server" Text="ΔPрд(max) = Р1 - Р2 - ΔРру ="></asp:Label>
-                                        &nbsp;<asp:TextBox ID="lp1TextBox5" runat="server"  Enabled="False" ReadOnly="True" ></asp:TextBox>
+                                        <asp:Label ID="Label58" runat="server" Text="ΔPрд(max) = Р1 - Р2 - ΔРру ="></asp:Label>&nbsp;&nbsp;&nbsp;&nbsp;
+                                        &nbsp;<asp:TextBox ID="lp1TextBox5" TextMode="Number" runat="server"  Enabled="False" ReadOnly="True" ></asp:TextBox>
                                         &nbsp;
                                         <asp:Label ID="Label59" runat="server" Text="бар"></asp:Label>
                                         <br />
@@ -177,7 +175,7 @@
                                     <div>
                                         <asp:Label ID="Label9" runat="server" Text="Давление перед регулятором:"></asp:Label>
                                         <br />
-                                       <asp:Label ID="Label3" runat="server" Text="P1 ="></asp:Label>
+                                       <asp:Label ID="Label3" runat="server" Text="P1 = "></asp:Label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                         &nbsp;<asp:TextBox ID="lp2TextBox1" runat="server" step="0.01" Enabled="False" TextMode="Number" required="required"></asp:TextBox>
                                         &nbsp;<asp:DropDownList ID="lp2DropDownList1" runat="server" Enabled="False" OnSelectedIndexChanged="lp2DropDownList1_SelectedIndexChanged" AutoPostBack="True">
                                            <asp:ListItem>выбрать</asp:ListItem>
@@ -216,7 +214,7 @@
                                     <div>
                                         <asp:Label ID="Label11" runat="server" Text="Требуемое давление перед регулятором:"></asp:Label>
                                         <br />
-                                       <asp:Label ID="Label12" runat="server" Text="Р(треб)"></asp:Label>
+                                       <asp:Label ID="Label12" runat="server" Text="Р(треб) ="></asp:Label>
                                         &nbsp;<asp:TextBox ID="lp3TextBox1" runat="server" step="0.01" Enabled="False" TextMode="Number" required="required"></asp:TextBox>
                                         &nbsp;<asp:DropDownList ID="lp3DropDownList1" runat="server" Enabled="False" OnSelectedIndexChanged="lp3DropDownList1_SelectedIndexChanged" AutoPostBack="True">
                                            <asp:ListItem>выбрать</asp:ListItem>
@@ -230,7 +228,7 @@
                                         <br />
                                         <asp:Label ID="Label13" runat="server" Text="Давление после регулятора:"></asp:Label>
                                         <br />
-                                        <asp:Label ID="Label14" runat="server" Text="Р2 ="></asp:Label>
+                                        <asp:Label ID="Label14" runat="server" Text="Р2 = "></asp:Label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                         &nbsp;<asp:TextBox ID="lp3TextBox2" runat="server" step="0.01" Enabled="False" TextMode="Number" required="required"></asp:TextBox>
                                         &nbsp;<asp:DropDownList ID="lp3DropDownList2" runat="server" Enabled="False" OnSelectedIndexChanged="lp3DropDownList2_SelectedIndexChanged" AutoPostBack="True">
                                                <asp:ListItem>выбрать</asp:ListItem>
@@ -255,7 +253,7 @@
                                     <div>
                                         <asp:Label ID="Label16" runat="server" Text="Давление перед регулятором:"></asp:Label>
                                         <br />
-                                       <asp:Label ID="Label17" runat="server" Text="РΔPру ="></asp:Label>
+                                       <asp:Label ID="Label17" runat="server" Text="ΔPру = "></asp:Label>&nbsp;&nbsp;&nbsp;
                                         &nbsp;<asp:TextBox ID="lp4TextBox2" runat="server" Enabled="False" step="0.01" TextMode="Number" required="required"></asp:TextBox>
                                         &nbsp;<asp:DropDownList ID="lp4DropDownList2" runat="server" Enabled="False" OnSelectedIndexChanged="lp4DropDownList2_SelectedIndexChanged" AutoPostBack="True">
                                            <asp:ListItem>выбрать</asp:ListItem>
@@ -280,7 +278,7 @@
                                 <ContentTemplate>
                                     <asp:Label ID="Label19" runat="server" Text="Давление перед регулятором:"></asp:Label>
                                     <br />
-                                    <asp:Label ID="Label21" runat="server" Text="P' = "></asp:Label>
+                                    <asp:Label ID="Label21" runat="server" Text="P' = "></asp:Label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                     <asp:TextBox ID="calcrTextBox1" runat="server" step="0.01" Enabled="False" type="number"
                                         required="required" TextMode="Number"></asp:TextBox>
                                     <asp:DropDownList ID="calcrDropDownList1" runat="server" AutoPostBack="True"
@@ -301,7 +299,7 @@
                                     <br />
                                     <asp:Label ID="Label22" runat="server"
                                         Text="Температура теплоносителя через регулятор (максимальная):"></asp:Label><br />
-                                    <asp:Label ID="Label23" runat="server" Text="T1 = "></asp:Label>
+                                    <asp:Label ID="Label23" runat="server" Text="T1 = "></asp:Label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                     <asp:TextBox ID="calcrTextBox2" runat="server" step="0.01" Enabled="False" type="number"
                                         required="required" TextMode="Number"></asp:TextBox>
                                     <asp:Label ID="Label24" runat="server" Text=" &#8451;"></asp:Label>
@@ -324,7 +322,7 @@
                                         Text="Задать max величину расхода через регулятор давления:" AutoPostBack="True" OnCheckedChanged="fprRadioButton1_CheckedChanged"
                                          /><br />
                                     <div class="col">
-                                        <asp:Label ID="Label28" runat="server" Text="Gкл = "></asp:Label>
+                                        <asp:Label ID="Label28" runat="server" Text="Gкл = "></asp:Label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                         <asp:TextBox ID="fprTextBox1" runat="server" step="0.01" Enabled="False" type="number"
                                             required="required" TextMode="Number"></asp:TextBox>
                                         <asp:DropDownList ID="fprDropDownList1" runat="server" AutoPostBack="True"
@@ -361,7 +359,7 @@
                                         &nbsp;<asp:RangeValidator ID="RangeValidator10" runat="server" ControlToValidate="fprTextBox2" Display="Dynamic" ErrorMessage="Неверно указано значение температуры" ForeColor="Red" MaximumValue="150" MinimumValue="0,00000001" SetFocusOnError="True" CultureInvariantValues="True"></asp:RangeValidator>
                                         <br />
                                         <asp:Label ID="Label29" runat="server" Text="Температура обратного теплоносителя T2 = ">
-                                        </asp:Label>
+                                        </asp:Label>&nbsp;
                                         <asp:TextBox ID="fprTextBox3" runat="server" Enabled="False" step="0.01" required="required" TextMode="Number"></asp:TextBox>
                                         <asp:Label ID="Label30" runat="server" Text="&#8451;"></asp:Label>
                                         
@@ -372,7 +370,7 @@
                                         <br />
                                         
                                         <asp:Label ID="Label45" runat="server" Text="Тепловая мощность Q = ">
-                                        </asp:Label>
+                                        </asp:Label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                         <asp:TextBox ID="fprTextBox4" runat="server" Enabled="False" step="0.01" required="required" TextMode="Number"></asp:TextBox>
                                         <asp:DropDownList ID="fprDropDownList2" runat="server" AutoPostBack="True"
                                             Enabled="False" OnSelectedIndexChanged="fprDropDownList2_SelectedIndexChanged">
@@ -390,7 +388,7 @@
                                         <br />
 
                                         <asp:Label ID="Label46" runat="server" Text="Максимальный расход Gкл = ">
-                                        </asp:Label>
+                                        </asp:Label>&nbsp;&nbsp;&nbsp;
                                         <asp:TextBox ID="fprTextBox5" runat="server" step="0.01" Enabled="False" ReadOnly="True"  TextMode="Number"></asp:TextBox>
                                         <asp:Label ID="Label48" runat="server" Text=" кг/ч"></asp:Label>
                                     </div>

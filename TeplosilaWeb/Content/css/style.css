@@ -48,7 +48,7 @@ input[type=number] {
 
 select {
     width: auto;
-    padding: 2px;
+    padding: 0px;
     border: none;
     border-radius: 4px;
     border: 2px solid #808080;

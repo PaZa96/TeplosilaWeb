@@ -2502,6 +2502,20 @@ public partial class RDT : System.Web.UI.Page
 
     protected void ws1RadioButtonList1_SelectedIndexChanged(object sender, EventArgs e)
     {
+
+        if (ws1RadioButtonList1.SelectedIndex == 1 || ws1RadioButtonList1.SelectedIndex == 2)
+        {
+            ws1TextBox1.Enabled = true;
+            ws1TextBox2.Enabled = true;
+        }
+        else
+        {
+            ws1TextBox1.Enabled = false;
+            ws1TextBox2.Enabled = false;
+            ws1TextBox1.Text = "";
+            ws1TextBox2.Text = "";
+        }
+
         dropDownListEnable(calcrDropDownList1, true);
         textBoxEnabled(calcrTextBox2, true);
     }
