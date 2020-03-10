@@ -136,7 +136,7 @@ public partial class RDT : System.Web.UI.Page
         {
             if (this.ws1RadioButtonList1.SelectedIndex == 0)
             {
-                avg_T = double.Parse(this.calcrTextBox2.Text);
+                avg_T = customConverterToDouble(this.calcrTextBox2.Text);
             }
             else
             {
@@ -145,7 +145,7 @@ public partial class RDT : System.Web.UI.Page
         }
         else
         {
-            avg_T = 0.5 * (double.Parse(this.fprTextBox2.Text) + double.Parse(this.fprTextBox3.Text));
+            avg_T = 0.5 * (customConverterToDouble(this.fprTextBox2.Text) + customConverterToDouble(this.fprTextBox3.Text));
         }
 
 
@@ -163,7 +163,7 @@ public partial class RDT : System.Web.UI.Page
         }
         else if (ws1RadioButtonList1.SelectedIndex == 1)
         {
-            Etgl(GetAvgT(), double.Parse(this.ws1TextBox1.Text), ref rr, ref cp);
+            Etgl(GetAvgT(), customConverterToDouble(this.ws1TextBox1.Text), ref rr, ref cp);
 
             /*double p6 = Convert.ToDouble(ws1TextBox1.Text);
             double p7 = Math.Round(Convert.ToDouble(ws1TextBox2.Text) / 10) * 10;
@@ -187,7 +187,7 @@ public partial class RDT : System.Web.UI.Page
         }
         else if (ws1RadioButtonList1.SelectedIndex == 2)
         {
-            Prgl(GetAvgT(), double.Parse(this.ws1TextBox1.Text), ref rr, ref cp);
+            Prgl(GetAvgT(), customConverterToDouble(this.ws1TextBox1.Text), ref rr, ref cp);
         }
         return cp / 1000; // * rr / 1000000;
     }
