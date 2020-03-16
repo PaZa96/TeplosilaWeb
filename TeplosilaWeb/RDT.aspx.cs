@@ -2117,7 +2117,7 @@ public partial class RDT : System.Web.UI.Page
                 pos++;
 
             }
-            r_input_dict[5] = r_input_dict[42];
+            r_input_dict[5] = r_input_dict[41];
 
             SpreadsheetInfo.SetLicense("FREE-LIMITED-KEY");
 
@@ -2287,7 +2287,7 @@ public partial class RDT : System.Web.UI.Page
 
             }
 
-            r_input_dict[5] = r_input_dict[42];
+            r_input_dict[5] = r_input_dict[41];
 
             SpreadsheetInfo.SetLicense("FREE-LIMITED-KEY");
 

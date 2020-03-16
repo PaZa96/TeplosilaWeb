@@ -399,10 +399,9 @@
 
                     <asp:UpdatePanel ID="UpdatePanel9" runat="server">
                         <ContentTemplate>
-                            <br />
-                            <asp:Label ID="LabelError" runat="server" Font-Bold="True" Font-Size="Medium"
-                                Font-Strikeout="False" ForeColor="Red"></asp:Label>
-                            <br />
+                            <div class="col non-padding padding-top-bottom"><asp:Label ID="LabelError" runat="server" Font-Bold="True" Font-Size="Medium"
+                                Font-Strikeout="False" ForeColor="Red"></asp:Label></div>
+                            
                             <asp:Button ID="rButton" runat="server" type="submit" Text="Рассчитать"
                                  Width="100%" OnClick="rButton_Click" />
 
@@ -411,28 +410,24 @@
                             <asp:Label ID="Label52" runat="server" Enabled="False" Text="Результаты расчёта"
                                 Visible="False" Font-Bold="True" Font-Size="Medium"></asp:Label>
 
-                            <br />
-                            <asp:Label ID="ws1ResultLabel" runat="server" Visible="False"></asp:Label>
-                            <br />
-                            <asp:Label ID="maxt1ResultLabel" runat="server" Visible="False"></asp:Label>
-                            <br />
-                            <asp:Label ID="maxp1ResultLabel" runat="server" Visible="False"></asp:Label>
-                            <br />
-
+                            <div class="col non-padding padding-top-bottom"><asp:Label ID="ws1ResultLabel" runat="server" Visible="False"></asp:Label></div>
+                            <div class="col non-padding padding-top-bottom"><asp:Label ID="maxt1ResultLabel" runat="server" Visible="False"></asp:Label></div>
+                            <div class="col non-padding padding-top-bottom"><asp:Label ID="maxp1ResultLabel" runat="server" Visible="False"></asp:Label></div>
+                            
                             <div class="table-responsive-lg" onclick="ShowBTN()">
                                 <asp:GridView ID="GridView1" CssClass="table" runat="server"
                                     
                                     AutoGenerateSelectButton="True" Font-Size="X-Small" Visible="False" OnSelectedIndexChanged="GridView1_SelectedIndexChanged">
                                     <RowStyle Font-Size="Small" />
-                                    <SelectedRowStyle BackColor="#ff7d00" Font-Bold="True" ForeColor="White" />
+                                    <SelectedRowStyle BackColor="#ff7d00" Font-Bold="False" ForeColor="White" />
                                 </asp:GridView>
                             </div>
+                            <div class="col non-padding padding-top-bottom">
+                                <asp:Label ID="Label53" runat="server" CssClass="show-btn" Text="Объект:" Visible="False">
+                                </asp:Label>
 
-                            <asp:Label ID="Label53" runat="server" CssClass="show-btn" Text="Объект:" Visible="False">
-                            </asp:Label>
-
-                            <asp:TextBox ID="objTextBox1" runat="server" Enabled="False" Visible="False"></asp:TextBox>
-
+                                <asp:TextBox ID="objTextBox1" runat="server" Enabled="False" Visible="False"></asp:TextBox>
+                            </div>
                         </ContentTemplate>
                     </asp:UpdatePanel>
                         <script>
@@ -443,10 +438,12 @@
                                 btn3.classList.add("show-btn");
                         };
                     </script>
-                    <asp:Button ID="Button2" runat="server" Text="Сохранить в PDF" CssClass="btn btn-primary hide-btn" OnClick="Button2_Click"
-                         />
-                    <asp:Button ID="Button3" runat="server" Text="Сохранить в Excel" CssClass="btn btn-primary hide-btn"
-                        OnClick="Button3_Click"/>
+                        <div class="col non-padding padding-top-bottom">
+                            <asp:Button ID="Button2" runat="server" Text="Сохранить в PDF" CssClass="btn btn-primary hide-btn" OnClick="Button2_Click"
+                                 />
+                            <asp:Button ID="Button3" runat="server" Text="Сохранить в Excel" CssClass="btn btn-primary hide-btn"
+                                OnClick="Button3_Click"/>
+                       </div>
                 </div>
             </div>
             <div class="col-2">

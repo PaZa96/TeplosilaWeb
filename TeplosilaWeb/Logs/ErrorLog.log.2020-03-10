@@ -1,0 +1,6 @@
+2020-03-10 20:17:43,264  ERROR System.Threading.ThreadAbortException: Поток находился в процессе прерывания.
+   в System.Threading.Thread.AbortInternal()
+   в System.Threading.Thread.Abort(Object stateInfo)
+   в System.Web.HttpResponse.AbortCurrentThread()
+   в System.Web.HttpResponse.End()
+   в RDT.Button3_Click(Object sender, EventArgs e) в C:\Users\pge27\Desktop\TeplosilaWeb\TeplosilaWeb\RDT.aspx.cs:строка 2427

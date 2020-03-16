@@ -45,6 +45,15 @@ input[type=number] {
     border: 2px solid #808080;
 }
 
+input[type=text] {
+    width: auto;
+    padding: 0px;
+    margin: 3px 0;
+    box-sizing: border-box;
+    border-radius: 4px;
+    border: 2px solid #808080;
+}
+
 
 select {
     width: auto;
@@ -87,4 +96,19 @@ input[type=button], input[type=submit], input[type=reset] {
     border-color: #f37134;
     border-radius: 5px;
     white-space: normal;
+}
+
+
+.non-padding {
+    padding: 0 !important;
+}
+
+.padding-top-bottom {
+    padding-top: 3px !important;
+    padding-bottom: 7px !important;
+}
+
+
+.jumbotron {
+    padding: 2rem 1rem !important;
 }
