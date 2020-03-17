@@ -1006,16 +1006,16 @@ public partial class RDT : System.Web.UI.Page
         switch (index)
         {
             case 0:
-                rPictureBox.ImageUrl = @"./Content/images/RDT-RDT-P.jpg";
+                rPictureBox.ImageUrl = @"./Content/images/RDT-RDT-P.png";
                 break;
             case 1:
-                rPictureBox.ImageUrl = @"./Content/images/RDT-RDT-P.jpg";
+                rPictureBox.ImageUrl = @"./Content/images/RDT-RDT-P.png";
                 break;
             case 2:
-                rPictureBox.ImageUrl = @"./Content/images/RDT-S-RDT-B.jpg";
+                rPictureBox.ImageUrl = @"./Content/images/RDT-S-RDT-B.png";
                 break;
             case 3:
-                rPictureBox.ImageUrl = @"./Content/images/RDT-S-RDT-B.jpg";
+                rPictureBox.ImageUrl = @"./Content/images/RDT-S-RDT-B.png";
                 break;
 
             default:
@@ -2533,4 +2533,104 @@ public partial class RDT : System.Web.UI.Page
 
     //------------------------------------Event Function END--------------------------------------
 
+    protected void lp1TextBox4_TextChanged(object sender, EventArgs e)
+    {
+        if (!String.IsNullOrWhiteSpace(lp1TextBox1.Text) && !String.IsNullOrWhiteSpace(lp1TextBox2.Text) && !String.IsNullOrWhiteSpace(lp1TextBox3.Text) && !String.IsNullOrWhiteSpace(lp1TextBox4.Text))
+        {
+            CalculateMaximumDrop();
+        }
+    }
+
+    public void CalculateMaximumDrop()
+    {
+        Double p25 = 0;
+        double p17, p19, p21, p23;
+
+        try
+        {
+            p17 = customConverterToDouble(this.lp1TextBox1.Text) * arrConvert3[this.lp1DropDownList1.SelectedIndex - 1] / arrConvert3[2];
+        }
+        catch (Exception)
+        {
+            LabelError.Text = "Неверно указано значение давления";
+            return;
+        }
+
+        try
+        {
+            p19 = customConverterToDouble(this.lp1TextBox2.Text) * arrConvert3[this.lp1DropDownList2.SelectedIndex - 1] / arrConvert3[2];
+        }
+        catch (Exception)
+        {
+            LabelError.Text = "Неверно указано значение давления";
+            return;
+        }
+
+        try
+        {
+            p21 = customConverterToDouble(this.lp1TextBox3.Text) * arrConvert3[this.lp1DropDownList3.SelectedIndex - 1] / arrConvert3[2];
+        }
+        catch (Exception)
+        {
+            LabelError.Text = "Неверно указано значение давления";
+            return;
+        }
+
+        try
+        {
+            p23 = customConverterToDouble(this.lp1TextBox4.Text) * arrConvert3[this.lp1DropDownList4.SelectedIndex - 1] / arrConvert3[2];
+        }
+        catch (Exception)
+        {
+            LabelError.Text = "Неверно указано значение давления";
+            return;
+        }
+
+        if (!(p17 > 0))
+        {
+            LabelError.Text = "Введите числовое значение больше нуля";
+            return;
+        }
+        else if (!(p19 > 0))
+        {
+            LabelError.Text = "Введите числовое значение больше нуля";
+            return;
+        }
+        else if (!(p21 > 0))
+        {
+            LabelError.Text = "Введите числовое значение больше нуля";
+            return;
+        }
+        else if (!(p23 > 0))
+        {
+            LabelError.Text = "Введите числовое значение больше нуля";
+            return;
+        }
+
+        if (!(p21 <= 16))
+        {
+            LabelError.Text = "На давление свыше 16 бар вариантов нет";
+            return;
+        }
+        else if (!(p23 < p21))
+        {
+            LabelError.Text = "Неверно указано значение давления";
+            return;
+        }
+        else if (!((p17 + p19) <= (p21 - p23)))
+        {
+            lp1TextBox1.BackColor = Color.LightPink;
+            LabelError.Text = "Суммарные потери давления на регуляторе и регулируемом участке превышают допустимый перепад давлений на вводе";
+            return;
+        }
+        else
+        {
+
+            p25 = Math.Round(p21 - p23 - p19, 2);
+
+            this.lp1TextBox5.Text = p25.ToString();
+        }
+    }
+
+  
 }

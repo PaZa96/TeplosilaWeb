@@ -104,7 +104,7 @@
                                         <asp:Label ID="lpLabel1" runat="server" Text="Потери давления на регуляторе:"></asp:Label>
                                         <br />
                                         <asp:Label ID="Label54" runat="server" Text="ΔPрд ="></asp:Label>&nbsp;&nbsp;&nbsp;&nbsp;
-                                        &nbsp;<asp:TextBox ID="lp1TextBox1" runat="server" Enabled="False" step="0.01"  required="required" TextMode="Number"></asp:TextBox>
+                                        &nbsp;<asp:TextBox ID="lp1TextBox1" runat="server" Enabled="False" step="0.01"  required="required" TextMode="Number"  ></asp:TextBox>
                                         &nbsp;<asp:DropDownList ID="lp1DropDownList1" runat="server" Enabled="False" OnSelectedIndexChanged="lp1DropDownList1_SelectedIndexChanged" AutoPostBack="True">
                                            <asp:ListItem>выбрать</asp:ListItem>
                                             <asp:ListItem>МПа</asp:ListItem>
@@ -131,7 +131,7 @@
                                         <asp:Label ID="lpLabel3" runat="server" Text="Давление в подающем трубопроводе на вводе ТП:"></asp:Label>
                                         <br />
                                         <asp:Label ID="Label56" runat="server" Text="P1 = "></asp:Label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                        &nbsp;<asp:TextBox ID="lp1TextBox3" runat="server"  Enabled="False" step="0.01" required="required" TextMode="Number"></asp:TextBox>
+                                        &nbsp;<asp:TextBox ID="lp1TextBox3" runat="server"  Enabled="False" step="0.01" required="required" TextMode="Number" ></asp:TextBox>
                                         &nbsp;<asp:DropDownList ID="lp1DropDownList3" runat="server" Enabled="False" OnSelectedIndexChanged="lp1DropDownList3_SelectedIndexChanged" AutoPostBack="True">
                                                <asp:ListItem>выбрать</asp:ListItem>
                                         <asp:ListItem>МПа</asp:ListItem>
@@ -145,7 +145,7 @@
                                         <asp:Label ID="lpLabel4" runat="server" Text="Давление в обратном трубопроводе на вводе в ТП:"></asp:Label>
                                         <br />
                                         <asp:Label ID="Label57" runat="server" Text="P2 = "></asp:Label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                        &nbsp;<asp:TextBox ID="lp1TextBox4" step="0.01" runat="server" Enabled="False" TextMode="Number" required="required"></asp:TextBox>
+                                        &nbsp;<asp:TextBox ID="lp1TextBox4" step="0.01" runat="server" Enabled="False" TextMode="Number" required="required" AutoPostBack="True" OnTextChanged="lp1TextBox4_TextChanged"></asp:TextBox>
                                         &nbsp;<asp:DropDownList ID="lp1DropDownList4" runat="server" Enabled="False" OnSelectedIndexChanged="lp1DropDownList4_SelectedIndexChanged" AutoPostBack="True">
                                                <asp:ListItem>выбрать</asp:ListItem>
                                         <asp:ListItem>МПа</asp:ListItem>

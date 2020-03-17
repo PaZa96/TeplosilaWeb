@@ -1,0 +1,24 @@
+2020-03-16 18:33:05,128  ERROR System.Threading.ThreadAbortException: Поток находился в процессе прерывания.
+   в System.Threading.Thread.AbortInternal()
+   в System.Threading.Thread.Abort(Object stateInfo)
+   в System.Web.HttpResponse.AbortCurrentThread()
+   в System.Web.HttpResponse.End()
+   в RDT.Button2_Click(Object sender, EventArgs e) в C:\Users\pge27\Desktop\TeplosilaWeb\TeplosilaWeb\RDT.aspx.cs:строка 2258
+2020-03-16 18:34:47,543  ERROR System.Threading.ThreadAbortException: Поток находился в процессе прерывания.
+   в System.Threading.Thread.AbortInternal()
+   в System.Threading.Thread.Abort(Object stateInfo)
+   в System.Web.HttpResponse.AbortCurrentThread()
+   в System.Web.HttpResponse.End()
+   в RDT.Button2_Click(Object sender, EventArgs e) в C:\Users\pge27\Desktop\TeplosilaWeb\TeplosilaWeb\RDT.aspx.cs:строка 2258
+2020-03-16 18:57:30,462  ERROR System.Threading.ThreadAbortException: Поток находился в процессе прерывания.
+   в System.Threading.Thread.AbortInternal()
+   в System.Threading.Thread.Abort(Object stateInfo)
+   в System.Web.HttpResponse.AbortCurrentThread()
+   в System.Web.HttpResponse.End()
+   в RDT.Button2_Click(Object sender, EventArgs e) в C:\Users\pge27\Desktop\TeplosilaWeb\TeplosilaWeb\RDT.aspx.cs:строка 2258
+2020-03-16 19:03:28,740  ERROR System.Threading.ThreadAbortException: Поток находился в процессе прерывания.
+   в System.Threading.Thread.AbortInternal()
+   в System.Threading.Thread.Abort(Object stateInfo)
+   в System.Web.HttpResponse.AbortCurrentThread()
+   в System.Web.HttpResponse.End()
+   в RDT.Button3_Click(Object sender, EventArgs e) в C:\Users\pge27\Desktop\TeplosilaWeb\TeplosilaWeb\RDT.aspx.cs:строка 2427
