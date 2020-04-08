@@ -744,6 +744,8 @@ public partial class RDT : System.Web.UI.Page
                 if (V < g_dict["vmax"])
                     exit_t = true;
 
+                listF.Add(Math.Round(V, 2).ToString());
+
                 if (V > 3 && V <= 5 && this.sprRadioButtonList1.SelectedIndex == 0)
                     listE.Add("возможен шум");
                 else if (V > 5) listE.Add("возможен эрозийный износ клапана");
@@ -2215,7 +2217,7 @@ public partial class RDT : System.Web.UI.Page
 
             getDimsR(ref r_input_dict);
 
-            ws.Pictures.Add(HttpContext.Current.Server.MapPath("\\Content\\images\\" + ((r_input_dict[4] == this.eorRadioButtonList1.Items[0].Text) || (r_input_dict[4] == eorRadioButtonList1.Items[1].Text) ? "RDT-RDT-P.jpg" : "RDT-S-RDT-B.jpg")), "A44", "B53");
+            ws.Pictures.Add(HttpContext.Current.Server.MapPath("\\Content\\images\\" + ((r_input_dict[4] == this.eorRadioButtonList1.Items[0].Text) || (r_input_dict[4] == eorRadioButtonList1.Items[1].Text) ? "RDT-RDT-P.png" : "RDT-S-RDT-B.png")), "A44", "B53");
 
 
 
@@ -2385,7 +2387,7 @@ public partial class RDT : System.Web.UI.Page
 
             getDimsR(ref r_input_dict);
 
-            ws.Pictures.Add(HttpContext.Current.Server.MapPath("\\Content\\images\\" + ((r_input_dict[4] == this.eorRadioButtonList1.Items[0].Text) || (r_input_dict[4] == eorRadioButtonList1.Items[1].Text) ? "RDT-RDT-P.jpg" : "RDT-S-RDT-B.jpg")), "A44", "B53");
+            ws.Pictures.Add(HttpContext.Current.Server.MapPath("\\Content\\images\\" + ((r_input_dict[4] == this.eorRadioButtonList1.Items[0].Text) || (r_input_dict[4] == eorRadioButtonList1.Items[1].Text) ? "RDT-RDT-P.png" : "RDT-S-RDT-B.png")), "A44", "B53");
 
 
             ws.Cells["F44"].Value = r_input_dict[51];

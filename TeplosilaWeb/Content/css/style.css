@@ -46,7 +46,6 @@ input[type=number] {
 }
 
 input[type=text] {
-    width: auto;
     padding: 0px;
     margin: 3px 0;
     box-sizing: border-box;
@@ -64,7 +63,13 @@ select {
     box-sizing: border-box;
 }
 
-input[type=button], input[type=submit], input[type=reset] {
+    select:disabled {
+        
+        cursor: default;
+        background-color: rgb(235, 235, 228);
+    }
+        
+input [type=button], input[type=submit], input[type=reset] {
     background-color: #ff7d00;
     border: none;
     color: white;

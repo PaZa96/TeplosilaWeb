@@ -426,7 +426,7 @@
                                 <asp:Label ID="Label53" runat="server" CssClass="show-btn" Text="Объект:" Visible="False">
                                 </asp:Label>
 
-                                <asp:TextBox ID="objTextBox1" runat="server" Enabled="False" Visible="False"></asp:TextBox>
+                                <asp:TextBox ID="objTextBox1" runat="server" Enabled="False" Visible="False" Width="275px"></asp:TextBox>
                             </div>
                         </ContentTemplate>
                     </asp:UpdatePanel>
