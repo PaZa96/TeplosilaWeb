@@ -1171,7 +1171,7 @@ public partial class RDT : System.Web.UI.Page
 
                 if (jj > 0)
                 {
-                    tb.Text = (customConverterToDouble(tb.Text) * arr[(jj - 1), (ddl.SelectedIndex - 1)]).ToString();
+                    tb.Text = (customConverterToDouble((tb.Text).Replace(".", ",")) * arr[(jj - 1), (ddl.SelectedIndex - 1)]).ToString().Replace(",", ".");
                 }
             }
         }
@@ -1231,23 +1231,32 @@ public partial class RDT : System.Web.UI.Page
     public void lp1ControlEnable(bool flag)
     {
         dropDownListEnable(lp1DropDownList1, flag);
+        textBoxDisable(lp1TextBox1);
         dropDownListEnable(lp1DropDownList2, flag);
+        textBoxDisable(lp1TextBox2);
         dropDownListEnable(lp1DropDownList3, flag);
+        textBoxDisable(lp1TextBox3);
         dropDownListEnable(lp1DropDownList4, flag);
+        textBoxDisable(lp1TextBox4);
     }
     public void lp2ControlEnable(bool flag)
     {
         dropDownListEnable(lp2DropDownList1, flag);
+        textBoxDisable(lp2TextBox1);
         dropDownListEnable(lp2DropDownList2, flag);
+        textBoxDisable(lp2TextBox2);
     }
     public void lp3ControlEnable(bool flag)
     {
         dropDownListEnable(lp3DropDownList1, flag);
+        textBoxDisable(lp3TextBox1);
         dropDownListEnable(lp3DropDownList2, flag);
+        textBoxDisable(lp3TextBox2);
     }
     public void lp4ControlEnable(bool flag)
     {
         dropDownListEnable(lp4DropDownList2, flag);
+        textBoxDisable(lp4TextBox2);
     }
 
     public void dropDownListEnable(DropDownList dropDownList, bool flag)
@@ -1259,7 +1268,12 @@ public partial class RDT : System.Web.UI.Page
     public void textBoxEnabled(TextBox textBox, bool flag)
     {
         textBox.Enabled = flag;
-        textBox.Text = "";
+        textBox.Text = String.Empty;
+    }
+    public void textBoxDisable(TextBox textBox)
+    {
+        textBox.Enabled = false;
+        textBox.Text = String.Empty;
     }
 
     static void WaitDownload(int second)
@@ -2518,8 +2532,8 @@ public partial class RDT : System.Web.UI.Page
             ws1TextBox2.Text = "";
         }
 
-        dropDownListEnable(calcrDropDownList1, true);
-        textBoxEnabled(calcrTextBox2, true);
+        calcrDropDownList1.Enabled = true;
+        calcrTextBox2.Enabled = true;
     }
 
 
@@ -2534,105 +2548,5 @@ public partial class RDT : System.Web.UI.Page
     }
 
     //------------------------------------Event Function END--------------------------------------
-
-    protected void lp1TextBox4_TextChanged(object sender, EventArgs e)
-    {
-        if (!String.IsNullOrWhiteSpace(lp1TextBox1.Text) && !String.IsNullOrWhiteSpace(lp1TextBox2.Text) && !String.IsNullOrWhiteSpace(lp1TextBox3.Text) && !String.IsNullOrWhiteSpace(lp1TextBox4.Text))
-        {
-            CalculateMaximumDrop();
-        }
-    }
-
-    public void CalculateMaximumDrop()
-    {
-        Double p25 = 0;
-        double p17, p19, p21, p23;
-
-        try
-        {
-            p17 = customConverterToDouble(this.lp1TextBox1.Text) * arrConvert3[this.lp1DropDownList1.SelectedIndex - 1] / arrConvert3[2];
-        }
-        catch (Exception)
-        {
-            LabelError.Text = "Неверно указано значение давления";
-            return;
-        }
-
-        try
-        {
-            p19 = customConverterToDouble(this.lp1TextBox2.Text) * arrConvert3[this.lp1DropDownList2.SelectedIndex - 1] / arrConvert3[2];
-        }
-        catch (Exception)
-        {
-            LabelError.Text = "Неверно указано значение давления";
-            return;
-        }
-
-        try
-        {
-            p21 = customConverterToDouble(this.lp1TextBox3.Text) * arrConvert3[this.lp1DropDownList3.SelectedIndex - 1] / arrConvert3[2];
-        }
-        catch (Exception)
-        {
-            LabelError.Text = "Неверно указано значение давления";
-            return;
-        }
-
-        try
-        {
-            p23 = customConverterToDouble(this.lp1TextBox4.Text) * arrConvert3[this.lp1DropDownList4.SelectedIndex - 1] / arrConvert3[2];
-        }
-        catch (Exception)
-        {
-            LabelError.Text = "Неверно указано значение давления";
-            return;
-        }
-
-        if (!(p17 > 0))
-        {
-            LabelError.Text = "Введите числовое значение больше нуля";
-            return;
-        }
-        else if (!(p19 > 0))
-        {
-            LabelError.Text = "Введите числовое значение больше нуля";
-            return;
-        }
-        else if (!(p21 > 0))
-        {
-            LabelError.Text = "Введите числовое значение больше нуля";
-            return;
-        }
-        else if (!(p23 > 0))
-        {
-            LabelError.Text = "Введите числовое значение больше нуля";
-            return;
-        }
-
-        if (!(p21 <= 16))
-        {
-            LabelError.Text = "На давление свыше 16 бар вариантов нет";
-            return;
-        }
-        else if (!(p23 < p21))
-        {
-            LabelError.Text = "Неверно указано значение давления";
-            return;
-        }
-        else if (!((p17 + p19) <= (p21 - p23)))
-        {
-            lp1TextBox1.BackColor = Color.LightPink;
-            LabelError.Text = "Суммарные потери давления на регуляторе и регулируемом участке превышают допустимый перепад давлений на вводе";
-            return;
-        }
-        else
-        {
-
-            p25 = Math.Round(p21 - p23 - p19, 2);
-
-            this.lp1TextBox5.Text = p25.ToString();
-        }
-    }
-
   
 }

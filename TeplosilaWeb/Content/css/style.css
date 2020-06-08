@@ -117,3 +117,8 @@ input [type=button], input[type=submit], input[type=reset] {
 .jumbotron {
     padding: 2rem 1rem !important;
 }
+
+tr:nth-child(2) td:nth-child(2) {
+    min-width: max-content;
+    width: 100px;
+}
