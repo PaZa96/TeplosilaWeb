@@ -9,6 +9,7 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
+using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 using TeplosilaWeb.App_Code;
 
@@ -1602,6 +1603,7 @@ public partial class RDT : System.Web.UI.Page
                                     }
                                     else
                                     {
+                                        lp1TextBox1.BackColor = Color.White;
                                         g_dict.Add("p17", p17);
                                         g_dict.Add("p19", p19);
                                         g_dict.Add("p21", p21);
@@ -2460,29 +2462,52 @@ public partial class RDT : System.Web.UI.Page
                 lp2ControlEnable(false);
                 lp3ControlEnable(false);
                 lp4ControlEnable(false);
+
+                RemoveCssClass(lp1, "panel-hide");
+                AddCssClass(lp2, "panel-hide");
+                AddCssClass(lp3, "panel-hide");
+                AddCssClass(lp4, "panel-hide");
                 break;
             case 1:
                 lp1ControlEnable(false);
                 lp2ControlEnable(true);
                 lp3ControlEnable(false);
                 lp4ControlEnable(false);
+
+                AddCssClass(lp1, "panel-hide");
+                RemoveCssClass(lp2, "panel-hide");
+                AddCssClass(lp3, "panel-hide");
+                AddCssClass(lp4, "panel-hide");
                 break;
             case 2:
                 lp1ControlEnable(false);
                 lp2ControlEnable(false);
                 lp3ControlEnable(true);
                 lp4ControlEnable(false);
+
+                AddCssClass(lp1, "panel-hide");
+                AddCssClass(lp2, "panel-hide");
+                RemoveCssClass(lp3, "panel-hide");
+                AddCssClass(lp4, "panel-hide");
                 break;
             case 3:
                 lp1ControlEnable(false);
                 lp2ControlEnable(false);
                 lp3ControlEnable(false);
                 lp4ControlEnable(true);
+
+                AddCssClass(lp1, "panel-hide");
+                AddCssClass(lp2, "panel-hide");
+                AddCssClass(lp3, "panel-hide");
+                RemoveCssClass(lp4, "panel-hide");
                 break;
         }
-        
-    }
 
+        fprRadioButton1.Enabled = true;
+        fprRadioButton2.Enabled = true;
+        RemoveCssClass(fpr1, "panel-hide");
+        RemoveCssClass(fpr2, "panel-hide");
+    }
 
     protected void fprRadioButton1_CheckedChanged(object sender, EventArgs e)
     {
@@ -2496,6 +2521,8 @@ public partial class RDT : System.Web.UI.Page
             textBoxEnabled(fprTextBox5, false);
             dropDownListEnable(fprDropDownList1, true);
             dropDownListEnable(fprDropDownList2, false);
+            RemoveCssClass(fpr1_1, "panel-hide");
+            AddCssClass(fpr2_1, "panel-hide");
         }
     }
     
@@ -2512,6 +2539,8 @@ public partial class RDT : System.Web.UI.Page
             textBoxEnabled(fprTextBox5, false);
             dropDownListEnable(fprDropDownList2, true);
             dropDownListEnable(fprDropDownList1, false);
+            AddCssClass(fpr1_1, "panel-hide");
+            RemoveCssClass(fpr2_1, "panel-hide");
         }
     }
 
@@ -2534,6 +2563,8 @@ public partial class RDT : System.Web.UI.Page
 
         calcrDropDownList1.Enabled = true;
         calcrTextBox2.Enabled = true;
+        RemoveCssClass(calcr, "panel-hide");
+
     }
 
 
@@ -2548,5 +2579,18 @@ public partial class RDT : System.Web.UI.Page
     }
 
     //------------------------------------Event Function END--------------------------------------
-  
+
+    public void RemoveCssClass(HtmlGenericControl controlInstance, string css)
+    {
+        var strCssClass = controlInstance.Attributes["class"];
+        controlInstance.Attributes["class"] = string.Join(" ", strCssClass.Split(' ').Where(x => x != css).ToArray());
+    }
+
+    public void AddCssClass(HtmlGenericControl controlInstance, string css)
+    {
+        var strCssClass = controlInstance.Attributes["class"];
+        controlInstance.Attributes["class"] += (" " + css);
+    }
+
+
 }
