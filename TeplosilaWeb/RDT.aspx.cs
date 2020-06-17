@@ -26,6 +26,7 @@ public partial class RDT : System.Web.UI.Page
     double[,] arrConvert1;
     double[] arrConvert2;
     double[] arrConvert3;
+    double minVar = 0.000000001;
 
     public static Dictionary<string, int> keyValuePairs = new Dictionary<string, int>();
     public static Dictionary<int, string> r_input_dict = new Dictionary<int, string>();
@@ -722,7 +723,7 @@ public partial class RDT : System.Web.UI.Page
                 /*DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD*/
                 Pf = (Math.Pow(Gpg, 2) * 0.1) / (Math.Pow(double.Parse(listResult["B"].GetValue(i).ToString()), 2) * g);
                 Pf = Math.Round(Pf / 100, 2); /*Перевод с кПа в бар*/
-                                              //listResult["D"] = new string[] { Pf.ToString() };
+                //listResult["D"] = new string[] { Pf.ToString() };
 
                 listD.Add(Pf.ToString());
 
@@ -817,120 +818,120 @@ public partial class RDT : System.Web.UI.Page
             Logger.Log.Error(e);
             return null;
         }
-        
+
     }
 
     private void mapInputParametersR(ref Dictionary<int, string> r_in_dict)
     {
-        try { 
-        //
-        r_in_dict.Add(0, System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString());
-        r_in_dict.Add(1, DateTime.Now.ToShortDateString().ToString());
-        r_in_dict.Add(2, "-"); // Объект добавляется в диалоговом окне при сохранении
+        try {
+            //
+            r_in_dict.Add(0, System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString());
+            r_in_dict.Add(1, DateTime.Now.ToShortDateString().ToString());
+            r_in_dict.Add(2, "-"); // Объект добавляется в диалоговом окне при сохранении
 
-        IEnumerable<RadioButton> ie_rb = null;
+            IEnumerable<RadioButton> ie_rb = null;
 
-        r_in_dict.Add(3, sprRadioButtonList1.Items[sprRadioButtonList1.SelectedIndex].Text);
+            r_in_dict.Add(3, sprRadioButtonList1.Items[sprRadioButtonList1.SelectedIndex].Text);
 
-        r_in_dict.Add(4, eorRadioButtonList1.Items[eorRadioButtonList1.SelectedIndex].Text);
-
-
-        r_in_dict.Add(5, "Marka"); // Марка добавляется в диалоговом окне при сохранении
+            r_in_dict.Add(4, eorRadioButtonList1.Items[eorRadioButtonList1.SelectedIndex].Text);
 
 
-        r_in_dict.Add(6, ws1RadioButtonList1.Items[ws1RadioButtonList1.SelectedIndex].Text + " " + ((this.ws1TextBox1.Enabled) ? (this.ws1TextBox1.Text + " %, " + this.ws1TextBox2.Text + " °С") : ""));
-
-        r_in_dict.Add(7, (this.lp1TextBox1.Enabled) ? this.lp1TextBox1.Text : "-");
-        r_in_dict.Add(8, (this.lp1TextBox1.Enabled) ? this.lp1DropDownList1.Text : "-");
-
-        r_in_dict.Add(9, (this.lp1TextBox2.Enabled) ? this.lp1TextBox2.Text : "-");
-        r_in_dict.Add(10, (this.lp1TextBox2.Enabled) ? this.lp1DropDownList2.Text : "-");
-
-        r_in_dict.Add(11, (this.lp1TextBox3.Enabled) ? this.lp1TextBox3.Text : "-");
-        r_in_dict.Add(12, (this.lp1TextBox3.Enabled) ? this.lp1DropDownList3.Text : "-");
-
-        r_in_dict.Add(13, (this.lp1TextBox4.Enabled) ? this.lp1TextBox4.Text : "-");
-        r_in_dict.Add(14, (this.lp1TextBox4.Enabled) ? this.lp1DropDownList4.Text : "-");
-
-        r_in_dict.Add(15, (this.lp1TextBox5.Text != "") ? this.lp1TextBox5.Text : "-");
-
-        r_in_dict.Add(16, (this.lp2TextBox1.Enabled) ? this.lp2TextBox1.Text : "-");
-        r_in_dict.Add(17, (this.lp2TextBox1.Enabled) ? this.lp2DropDownList1.Text : "-");
-
-        r_in_dict.Add(18, (this.lp2TextBox2.Enabled) ? this.lp2TextBox2.Text : "-");
-        r_in_dict.Add(19, (this.lp2TextBox2.Enabled) ? this.lp2DropDownList2.Text : "-");
-
-        // для пара еще нет
-        r_in_dict.Add(20, "-");
-        r_in_dict.Add(21, "-");
-
-        r_in_dict.Add(22, "-");
-        r_in_dict.Add(23, "-");
-
-        r_in_dict.Add(24, "-");
-        // для пара еще нет
-
-        r_in_dict.Add(25, (this.lp3TextBox1.Enabled) ? this.lp3TextBox1.Text : "-");
-        r_in_dict.Add(26, (this.lp3TextBox1.Enabled) ? this.lp3DropDownList1.Text : "-");
-
-        r_in_dict.Add(27, (this.lp3TextBox2.Enabled) ? this.lp3TextBox2.Text : "-");
-        r_in_dict.Add(28, (this.lp3TextBox2.Enabled) ? this.lp3DropDownList2.Text : "-");
-
-        r_in_dict.Add(29, (this.lp4TextBox2.Enabled) ? this.lp4TextBox2.Text : "-");
-        r_in_dict.Add(30, (this.lp4TextBox2.Enabled) ? this.lp4DropDownList2.Text : "-");
+            r_in_dict.Add(5, "Marka"); // Марка добавляется в диалоговом окне при сохранении
 
 
-        r_in_dict.Add(31, (this.calcrTextBox1.Enabled) ? this.calcrTextBox1.Text : "-");
-        r_in_dict.Add(32, (this.calcrDropDownList1.Enabled) ? this.calcrDropDownList1.Text : "-");
+            r_in_dict.Add(6, ws1RadioButtonList1.Items[ws1RadioButtonList1.SelectedIndex].Text + " " + ((this.ws1TextBox1.Enabled) ? (this.ws1TextBox1.Text + " %, " + this.ws1TextBox2.Text + " °С") : ""));
 
-        r_in_dict.Add(33, (this.calcrTextBox2.Text != "") ? this.calcrTextBox2.Text : "-");
+            r_in_dict.Add(7, (this.lp1TextBox1.Enabled) ? this.lp1TextBox1.Text : "-");
+            r_in_dict.Add(8, (this.lp1TextBox1.Enabled) ? this.lp1DropDownList1.Text : "-");
+
+            r_in_dict.Add(9, (this.lp1TextBox2.Enabled) ? this.lp1TextBox2.Text : "-");
+            r_in_dict.Add(10, (this.lp1TextBox2.Enabled) ? this.lp1DropDownList2.Text : "-");
+
+            r_in_dict.Add(11, (this.lp1TextBox3.Enabled) ? this.lp1TextBox3.Text : "-");
+            r_in_dict.Add(12, (this.lp1TextBox3.Enabled) ? this.lp1DropDownList3.Text : "-");
+
+            r_in_dict.Add(13, (this.lp1TextBox4.Enabled) ? this.lp1TextBox4.Text : "-");
+            r_in_dict.Add(14, (this.lp1TextBox4.Enabled) ? this.lp1DropDownList4.Text : "-");
+
+            r_in_dict.Add(15, (this.lp1TextBox5.Text != "") ? this.lp1TextBox5.Text : "-");
+
+            r_in_dict.Add(16, (this.lp2TextBox1.Enabled) ? this.lp2TextBox1.Text : "-");
+            r_in_dict.Add(17, (this.lp2TextBox1.Enabled) ? this.lp2DropDownList1.Text : "-");
+
+            r_in_dict.Add(18, (this.lp2TextBox2.Enabled) ? this.lp2TextBox2.Text : "-");
+            r_in_dict.Add(19, (this.lp2TextBox2.Enabled) ? this.lp2DropDownList2.Text : "-");
+
+            // для пара еще нет
+            r_in_dict.Add(20, "-");
+            r_in_dict.Add(21, "-");
+
+            r_in_dict.Add(22, "-");
+            r_in_dict.Add(23, "-");
+
+            r_in_dict.Add(24, "-");
+            // для пара еще нет
+
+            r_in_dict.Add(25, (this.lp3TextBox1.Enabled) ? this.lp3TextBox1.Text : "-");
+            r_in_dict.Add(26, (this.lp3TextBox1.Enabled) ? this.lp3DropDownList1.Text : "-");
+
+            r_in_dict.Add(27, (this.lp3TextBox2.Enabled) ? this.lp3TextBox2.Text : "-");
+            r_in_dict.Add(28, (this.lp3TextBox2.Enabled) ? this.lp3DropDownList2.Text : "-");
+
+            r_in_dict.Add(29, (this.lp4TextBox2.Enabled) ? this.lp4TextBox2.Text : "-");
+            r_in_dict.Add(30, (this.lp4TextBox2.Enabled) ? this.lp4DropDownList2.Text : "-");
 
 
-        r_in_dict.Add(38, "-");
-        r_in_dict.Add(381, "-");
+            r_in_dict.Add(31, (this.calcrTextBox1.Enabled) ? this.calcrTextBox1.Text : "-");
+            r_in_dict.Add(32, (this.calcrDropDownList1.Enabled) ? this.calcrDropDownList1.Text : "-");
 
-        if (this.fprTextBox1.Enabled)
-        {
-            r_in_dict[38] = this.fprTextBox1.Text;
-            r_in_dict[381] = this.fprDropDownList1.Text;
-
-            //r_input_dict.Add(38, (this.fprTextBox1.Enabled) ? this.fprTextBox1.Text : "-");
-            //r_input_dict.Add(381, (this.fprTextBox1.Enabled) ? this.fprDropDownList1.Text : "-");
-        }
-
-        r_in_dict.Add(34, (this.fprTextBox2.Enabled) ? this.fprTextBox2.Text : "-");
-        r_in_dict.Add(35, (this.fprTextBox3.Enabled) ? this.fprTextBox3.Text : "-");
-
-        r_in_dict.Add(36, (this.fprTextBox4.Enabled) ? this.fprTextBox4.Text : "-");
-        r_in_dict.Add(37, (this.fprTextBox4.Enabled) ? this.fprDropDownList2.Text : "-");
-
-        if (this.fprTextBox4.Enabled)
-        {
-            r_in_dict[38] = this.fprTextBox5.Text;
-            r_in_dict[381] = "кг/ч";
-
-            //r_input_dict.Add(38, (this.fprTextBox4.Enabled) ? this.fprTextBox5.Text : "-");
-            //r_input_dict.Add(381, (this.fprTextBox4.Enabled) ? "кг/ч" : "-");
-        }
+            r_in_dict.Add(33, (this.calcrTextBox2.Text != "") ? this.calcrTextBox2.Text : "-");
 
 
-        r_in_dict.Add(39, "150 ˚С");
-        r_in_dict.Add(40, "16 бар");
+            r_in_dict.Add(38, "-");
+            r_in_dict.Add(381, "-");
 
-        r_in_dict.Add(41, "-");
-        r_in_dict.Add(42, "-");
-        r_in_dict.Add(43, "-");
-        r_in_dict.Add(44, "-");
-        r_in_dict.Add(45, "-");
-        r_in_dict.Add(46, "-");
-        r_in_dict.Add(47, "-");
-        r_in_dict.Add(48, "-");
-        r_in_dict.Add(49, "-");
+            if (this.fprTextBox1.Enabled)
+            {
+                r_in_dict[38] = this.fprTextBox1.Text;
+                r_in_dict[381] = this.fprDropDownList1.Text;
 
-        r_in_dict.Add(51, "-");
-        r_in_dict.Add(52, "-");
-        r_in_dict.Add(53, "-");
-        r_in_dict.Add(54, "-");
+                //r_input_dict.Add(38, (this.fprTextBox1.Enabled) ? this.fprTextBox1.Text : "-");
+                //r_input_dict.Add(381, (this.fprTextBox1.Enabled) ? this.fprDropDownList1.Text : "-");
+            }
+
+            r_in_dict.Add(34, (this.fprTextBox2.Enabled) ? this.fprTextBox2.Text : "-");
+            r_in_dict.Add(35, (this.fprTextBox3.Enabled) ? this.fprTextBox3.Text : "-");
+
+            r_in_dict.Add(36, (this.fprTextBox4.Enabled) ? this.fprTextBox4.Text : "-");
+            r_in_dict.Add(37, (this.fprTextBox4.Enabled) ? this.fprDropDownList2.Text : "-");
+
+            if (this.fprTextBox4.Enabled)
+            {
+                r_in_dict[38] = this.fprTextBox5.Text;
+                r_in_dict[381] = "кг/ч";
+
+                //r_input_dict.Add(38, (this.fprTextBox4.Enabled) ? this.fprTextBox5.Text : "-");
+                //r_input_dict.Add(381, (this.fprTextBox4.Enabled) ? "кг/ч" : "-");
+            }
+
+
+            r_in_dict.Add(39, "150 ˚С");
+            r_in_dict.Add(40, "16 бар");
+
+            r_in_dict.Add(41, "-");
+            r_in_dict.Add(42, "-");
+            r_in_dict.Add(43, "-");
+            r_in_dict.Add(44, "-");
+            r_in_dict.Add(45, "-");
+            r_in_dict.Add(46, "-");
+            r_in_dict.Add(47, "-");
+            r_in_dict.Add(48, "-");
+            r_in_dict.Add(49, "-");
+
+            r_in_dict.Add(51, "-");
+            r_in_dict.Add(52, "-");
+            r_in_dict.Add(53, "-");
+            r_in_dict.Add(54, "-");
 
         }
         catch (Exception e)
@@ -996,11 +997,11 @@ public partial class RDT : System.Web.UI.Page
                 dataFromFile = JsonConvert.DeserializeObject(jsonText);
             }
         }
-        
+
         catch (Exception e)
         {
             Logger.Log.Error(e);
-            
+
         }
     }
 
@@ -1034,84 +1035,184 @@ public partial class RDT : System.Web.UI.Page
 
     protected void CustomValidator1_ServerValidate(object source, ServerValidateEventArgs args)
     {
-        if (convertArrToBar(arrConvert3, lp1DropDownList3, lp1TextBox3) > PressureBeforeValve3x)
+        if (lp1DropDownList3.Enabled)
         {
-            CustomValidator1.ErrorMessage = "На давление свыше 16 бар вариантов нет";
-            args.IsValid = false;
+            if (lp1TextBox3.Enabled == false || checkTextBoxEmpty(lp1TextBox3) || customConverterToDouble(lp1TextBox3.Text) < minVar)
+            {
+                CustomValidator1.ErrorMessage = "Неверно указано значение давления";
+                args.IsValid = false;
+                return;
+            }
+            if (convertArrToBar(arrConvert3, lp1DropDownList3, lp1TextBox3) > PressureBeforeValve3x)
+            {
+                CustomValidator1.ErrorMessage = "На давление свыше 16 бар вариантов нет";
+                args.IsValid = false;
+            }
         }
     }
 
     protected void CustomValidator2_ServerValidate(object source, ServerValidateEventArgs args)
     {
-        if (convertArrToBar(arrConvert3, lp1DropDownList4, lp1TextBox4) >= convertArrToBar(arrConvert3, lp1DropDownList3, lp1TextBox3))
+        if (lp1DropDownList4.Enabled)
         {
-            CustomValidator2.ErrorMessage = "Неверно указано значение давления";
-            args.IsValid = false;
+            if (lp1TextBox4.Enabled == false || checkTextBoxEmpty(lp1TextBox4) || customConverterToDouble(lp1TextBox4.Text) < minVar)
+            {
+                CustomValidator2.ErrorMessage = "Неверно указано значение давления";
+                args.IsValid = false;
+                return;
+            }
+            if (convertArrToBar(arrConvert3, lp1DropDownList4, lp1TextBox4) >= convertArrToBar(arrConvert3, lp1DropDownList3, lp1TextBox3))
+            {
+                CustomValidator2.ErrorMessage = "Неверно указано значение давления";
+                args.IsValid = false;
 
+            }
         }
     }
     protected void CustomValidator3_ServerValidate(object source, ServerValidateEventArgs args)
     {
-        if (convertArrToBar(arrConvert3, lp2DropDownList1, lp2TextBox1) > PressureBeforeValve3x)
+        if (lp2DropDownList1.Enabled)
         {
-            CustomValidator3.ErrorMessage = "На давление свыше 16 бар вариантов нет";
-            args.IsValid = false;
+            if (lp2TextBox1.Enabled == false || checkTextBoxEmpty(lp2TextBox1) || customConverterToDouble(lp2TextBox1.Text) < minVar)
+            {
+                CustomValidator3.ErrorMessage = "Неверно указано значение давления";
+                args.IsValid = false;
+                return;
+            }
+            if (convertArrToBar(arrConvert3, lp2DropDownList1, lp2TextBox1) > PressureBeforeValve3x)
+            {
+                CustomValidator3.ErrorMessage = "На давление свыше 16 бар вариантов нет";
+                args.IsValid = false;
+            }
         }
     }
 
     protected void CustomValidator4_ServerValidate(object source, ServerValidateEventArgs args)
     {
-        if (convertArrToBar(arrConvert3, lp2DropDownList2, lp2TextBox2) >= convertArrToBar(arrConvert3, lp2DropDownList1, lp2TextBox1))
+        if (lp2DropDownList2.Enabled)
         {
-            CustomValidator4.ErrorMessage = "Неверно указано значение давления";
-            args.IsValid = false;
+            if (lp2TextBox2.Enabled == false || checkTextBoxEmpty(lp2TextBox2) || customConverterToDouble(lp2TextBox2.Text) < minVar)
+            {
+                CustomValidator4.ErrorMessage = "Неверно указано значение давления";
+                args.IsValid = false;
+                return;
+            }
+            if (convertArrToBar(arrConvert3, lp2DropDownList2, lp2TextBox2) >= convertArrToBar(arrConvert3, lp2DropDownList1, lp2TextBox1))
+            {
+                CustomValidator4.ErrorMessage = "Неверно указано значение давления";
+                args.IsValid = false;
+            }
         }
     }
 
     protected void CustomValidator5_ServerValidate(object source, ServerValidateEventArgs args)
     {
-        if (convertArrToBar(arrConvert3, lp3DropDownList1, lp3TextBox1) > PressureBeforeValve3x)
+        if (lp3DropDownList1.Enabled)
         {
-            CustomValidator5.ErrorMessage = "На давление свыше 16 бар вариантов нет";
-            args.IsValid = false;
+            if (lp3TextBox1.Enabled == false || checkTextBoxEmpty(lp3TextBox1) || customConverterToDouble(lp3TextBox1.Text) < minVar)
+            {
+                CustomValidator5.ErrorMessage = "Неверно указано значение давления";
+                args.IsValid = false;
+                return;
+            }
+            if (convertArrToBar(arrConvert3, lp3DropDownList1, lp3TextBox1) > PressureBeforeValve3x)
+            {
+                CustomValidator5.ErrorMessage = "На давление свыше 16 бар вариантов нет";
+                args.IsValid = false;
+            }
         }
     }
 
     protected void CustomValidator6_ServerValidate(object source, ServerValidateEventArgs args)
     {
-        if (convertArrToBar(arrConvert3, lp3DropDownList2, lp3TextBox2) >= convertArrToBar(arrConvert3, lp3DropDownList1, lp3TextBox1))
+        if (lp3DropDownList2.Enabled)
         {
-            CustomValidator6.ErrorMessage = "Неверно указано значение давления";
-            args.IsValid = false;
+            if (lp3TextBox2.Enabled == false || checkTextBoxEmpty(lp3TextBox2) || customConverterToDouble(lp3TextBox2.Text) < minVar)
+            {
+                CustomValidator6.ErrorMessage = "Неверно указано значение давления";
+                args.IsValid = false;
+                return;
+            }
+            if (convertArrToBar(arrConvert3, lp3DropDownList2, lp3TextBox2) >= convertArrToBar(arrConvert3, lp3DropDownList1, lp3TextBox1))
+            {
+                CustomValidator6.ErrorMessage = "Неверно указано значение давления";
+                args.IsValid = false;
+            }
         }
     }
 
     protected void CustomValidator7_ServerValidate(object source, ServerValidateEventArgs args)
     {
-        if (convertArrToBar(arrConvert3, lp4DropDownList2, lp4TextBox2) > PressureBeforeValve3x)
+        if (lp4DropDownList2.Enabled)
         {
-            CustomValidator7.ErrorMessage = "На давление свыше 16 бар вариантов нет";
-            args.IsValid = false;
+            if (lp4TextBox2.Enabled == false || checkTextBoxEmpty(lp4TextBox2) || customConverterToDouble(lp4TextBox2.Text) < minVar)
+            {
+                CustomValidator7.ErrorMessage = "Неверно указано значение давления";
+                args.IsValid = false;
+                return;
+            }
+            if (convertArrToBar(arrConvert3, lp4DropDownList2, lp4TextBox2) > PressureBeforeValve3x)
+            {
+                CustomValidator7.ErrorMessage = "На давление свыше 16 бар вариантов нет";
+                args.IsValid = false;
+            }
         }
     }
 
     protected void CustomValidator8_ServerValidate(object source, ServerValidateEventArgs args)
     {
-        double var1 = convertArrToBar(arrConvert3, lp1DropDownList1, lp1TextBox1) + convertArrToBar(arrConvert3, lp1DropDownList2, lp1TextBox2);
-        double var2 = convertArrToBar(arrConvert3, lp1DropDownList3, lp1TextBox3) - convertArrToBar(arrConvert3, lp1DropDownList4, lp1TextBox4);
-        if (var1 > var2)
+        if (lp1DropDownList2.Enabled)
         {
-            CustomValidator8.ErrorMessage = "Неверно указано значение давления";
-            args.IsValid = false;
+            if (lp1TextBox2.Enabled == false || checkTextBoxEmpty(lp1TextBox2) || customConverterToDouble(lp1TextBox2.Text) < minVar)
+            {
+                CustomValidator8.ErrorMessage = "Неверно указано значение давления";
+                args.IsValid = false;
+                return;
+            }
+
+            if (!checkTextBoxEmpty(lp1TextBox1) && !checkTextBoxEmpty(lp1TextBox2) && !checkTextBoxEmpty(lp1TextBox3) && !checkTextBoxEmpty(lp1TextBox4))
+            {
+                double var1 = convertArrToBar(arrConvert3, lp1DropDownList1, lp1TextBox1) + convertArrToBar(arrConvert3, lp1DropDownList2, lp1TextBox2);
+                double var2 = convertArrToBar(arrConvert3, lp1DropDownList3, lp1TextBox3) - convertArrToBar(arrConvert3, lp1DropDownList4, lp1TextBox4);
+
+                if (var1 > var2)
+                {
+                    CustomValidator8.ErrorMessage = "Неверно указано значение давления";
+                    args.IsValid = false;
+                    return;
+                }
+            }
         }
     }
 
     protected void CustomValidator9_ServerValidate(object source, ServerValidateEventArgs args)
     {
-        if (convertArrToBar(arrConvert3, calcrDropDownList1, calcrTextBox1) > PressureBeforeValve3x)
+        if (calcrDropDownList1.Enabled)
         {
-            CustomValidator9.ErrorMessage = "На давление свыше 16 бар вариантов нет";
-            args.IsValid = false;
+            if (calcrTextBox1.Enabled == false || checkTextBoxEmpty(calcrTextBox1) || customConverterToDouble(calcrTextBox1.Text) < minVar)
+            {
+                CustomValidator9.ErrorMessage = "Неверно указано значение давления";
+                args.IsValid = false;
+                return;
+            }
+            if (convertArrToBar(arrConvert3, calcrDropDownList1, calcrTextBox1) > PressureBeforeValve3x)
+            {
+                CustomValidator9.ErrorMessage = "На давление свыше 16 бар вариантов нет";
+                args.IsValid = false;
+            }
+        }
+    }
+
+    protected void CustomValidator10_ServerValidate(object source, ServerValidateEventArgs args)
+    {
+        if (lp1DropDownList1.Enabled)
+        {
+            if (lp1TextBox1.Enabled == false || checkTextBoxEmpty(lp1TextBox1) || customConverterToDouble(lp1TextBox1.Text) < minVar)
+            {
+                CustomValidator10.ErrorMessage = "Неверно указано значение давления";
+                args.IsValid = false;
+                return;
+            }
         }
     }
 
@@ -1502,11 +1603,13 @@ public partial class RDT : System.Web.UI.Page
                                 if (this.checkTextBoxEmpty(this.lp1TextBox1))
                                 {
                                     LabelError.Text = "Неверно указано значение давления";
+                                       
                                     return;
                                 }
                                 else if (this.checkTextBoxEmpty(this.lp1TextBox2))
                                 {
                                     LabelError.Text = "Неверно указано значение давления";
+                                    CustomValidator1.ErrorMessage = "Неверно указано значение давления";
                                     return;
                                 }
                                 else if (this.checkTextBoxEmpty(this.lp1TextBox3))
@@ -2591,6 +2694,4 @@ public partial class RDT : System.Web.UI.Page
         var strCssClass = controlInstance.Attributes["class"];
         controlInstance.Attributes["class"] += (" " + css);
     }
-
-
 }

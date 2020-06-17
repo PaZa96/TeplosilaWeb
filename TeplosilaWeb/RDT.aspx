@@ -112,7 +112,7 @@
                                             <asp:ListItem>бар</asp:ListItem>
                                             <asp:ListItem>м. в. ст.</asp:ListItem>
                                         </asp:DropDownList>
-                                        <asp:RangeValidator ID="RangeValidator1" runat="server" ControlToValidate="lp1TextBox1" Display="Dynamic" ErrorMessage="Неверно указано значение давления" ForeColor="Red" MaximumValue="9999999" MinimumValue="0,001" SetFocusOnError="True" CultureInvariantValues="True"></asp:RangeValidator>
+                                          <asp:CustomValidator ID="CustomValidator10" runat="server" ControlToValidate="lp1DropDownList1" ErrorMessage="CustomValidator" ForeColor="Red" OnServerValidate="CustomValidator10_ServerValidate" SetFocusOnError="True" ValidateEmptyText="True"></asp:CustomValidator>
                                         <br />
                                         <asp:Label ID="lpLabel2" runat="server" Text="Перепад давлений, поддерживаемый регулятором на регулируемом участке:"></asp:Label>
                                         <br />
@@ -125,8 +125,7 @@
                                         <asp:ListItem>бар</asp:ListItem>
                                         <asp:ListItem>м. в. ст.</asp:ListItem>
                                         </asp:DropDownList>
-                                        <asp:RangeValidator ID="RangeValidator2" runat="server" ControlToValidate="lp1TextBox2" Display="Dynamic" ErrorMessage="Неверно указано значение давления" ForeColor="Red" MaximumValue="9999999" MinimumValue="0,00000001" SetFocusOnError="True"></asp:RangeValidator>
-                                        <asp:CustomValidator ID="CustomValidator8" runat="server" ControlToValidate="lp1TextBox2" Display="Dynamic" ErrorMessage="CustomValidator" ForeColor="Red" OnServerValidate="CustomValidator8_ServerValidate" SetFocusOnError="True"></asp:CustomValidator>
+                                        <asp:CustomValidator ID="CustomValidator8" runat="server" ControlToValidate="lp1DropDownList2" ErrorMessage="CustomValidator" ForeColor="Red" OnServerValidate="CustomValidator8_ServerValidate" SetFocusOnError="True"></asp:CustomValidator>
                                         <br />
                                         <asp:Label ID="lpLabel3" runat="server" Text="Давление в подающем трубопроводе на вводе в ТП:"></asp:Label>
                                         <br />
@@ -139,8 +138,7 @@
                                         <asp:ListItem>бар</asp:ListItem>
                                         <asp:ListItem>м. в. ст.</asp:ListItem>
                                         </asp:DropDownList>
-                                        <asp:RangeValidator ID="RangeValidator3" runat="server" ControlToValidate="lp1TextBox3" Display="Dynamic" ErrorMessage="Неверно указано значение давления" ForeColor="Red" MaximumValue="9999999" MinimumValue="0,00000001" SetFocusOnError="True"></asp:RangeValidator>
-                                        <asp:CustomValidator ID="CustomValidator1" runat="server" ControlToValidate="lp1TextBox3" Display="Dynamic" ErrorMessage="CustomValidator" ForeColor="Red" OnServerValidate="CustomValidator1_ServerValidate" SetFocusOnError="True"></asp:CustomValidator>
+                                        <asp:CustomValidator ID="CustomValidator1" runat="server" ControlToValidate="lp1DropDownList3" ErrorMessage="CustomValidator" ForeColor="Red" OnServerValidate="CustomValidator1_ServerValidate" SetFocusOnError="True" ValidateEmptyText="True"></asp:CustomValidator>
                                         <br />
                                         <asp:Label ID="lpLabel4" runat="server" Text="Давление в обратном трубопроводе на вводе в ТП:"></asp:Label>
                                         <br />
@@ -153,8 +151,7 @@
                                         <asp:ListItem>бар</asp:ListItem>
                                         <asp:ListItem>м. в. ст.</asp:ListItem>
                                         </asp:DropDownList>
-                                        <asp:RangeValidator ID="RangeValidator4" runat="server" ControlToValidate="lp1TextBox4" Display="Dynamic" ErrorMessage="Неверно указано значение давления" ForeColor="Red" MaximumValue="9999999" MinimumValue="0,00000001" SetFocusOnError="True"></asp:RangeValidator>
-                                        <asp:CustomValidator ID="CustomValidator2" runat="server" ControlToValidate="lp1TextBox4" Display="Dynamic" ErrorMessage="CustomValidator" ForeColor="Red" OnServerValidate="CustomValidator2_ServerValidate" SetFocusOnError="True"></asp:CustomValidator>
+                                        <asp:CustomValidator ID="CustomValidator2" runat="server" ControlToValidate="lp1DropDownList4" ErrorMessage="CustomValidator" ForeColor="Red" OnServerValidate="CustomValidator2_ServerValidate" SetFocusOnError="True" ValidateEmptyText="True"></asp:CustomValidator>
                                         <br />
                                         <asp:Label ID="lpLabel5" runat="server" Text="Максимальный перепад на регуляторе:"></asp:Label>
                                         <br />
@@ -184,8 +181,7 @@
                                             <asp:ListItem>бар</asp:ListItem>
                                             <asp:ListItem>м. в. ст.</asp:ListItem>
                                         </asp:DropDownList>
-                                        <asp:RangeValidator ID="RangeValidator5" runat="server" ControlToValidate="lp2TextBox1" Display="Dynamic" ErrorMessage="Неверно указано значение давления" ForeColor="Red" MaximumValue="9999999" MinimumValue="0,00000001" SetFocusOnError="True" CultureInvariantValues="True"></asp:RangeValidator>
-                                        &nbsp;<asp:CustomValidator ID="CustomValidator3" runat="server" ControlToValidate="lp2TextBox1" Display="Dynamic" ErrorMessage="CustomValidator" ForeColor="Red" OnServerValidate="CustomValidator3_ServerValidate" SetFocusOnError="True"></asp:CustomValidator>
+                                        &nbsp;<asp:CustomValidator ID="CustomValidator3" runat="server" ControlToValidate="lp2DropDownList1" ErrorMessage="CustomValidator" ForeColor="Red" OnServerValidate="CustomValidator3_ServerValidate" SetFocusOnError="True"></asp:CustomValidator>
                                         <br />
                                         <asp:Label ID="Label4" runat="server" Text="Требуемое давление после регулятора:"></asp:Label>
                                         <br />
@@ -198,8 +194,7 @@
                                         <asp:ListItem>бар</asp:ListItem>
                                         <asp:ListItem>м. в. ст.</asp:ListItem>
                                         </asp:DropDownList>
-                                        <asp:RangeValidator ID="RangeValidator6" runat="server" ControlToValidate="lp2TextBox2" Display="Dynamic" ErrorMessage="Неверно указано значение давления" ForeColor="Red" MaximumValue="9999999" MinimumValue="0,00000001" SetFocusOnError="True"></asp:RangeValidator>
-                                        &nbsp;<asp:CustomValidator ID="CustomValidator4" runat="server" ControlToValidate="lp2TextBox2" Display="Dynamic" ErrorMessage="CustomValidator" ForeColor="Red" OnServerValidate="CustomValidator4_ServerValidate" SetFocusOnError="True"></asp:CustomValidator>
+                                        &nbsp;<asp:CustomValidator ID="CustomValidator4" runat="server" ControlToValidate="lp2DropDownList2" ErrorMessage="CustomValidator" ForeColor="Red" OnServerValidate="CustomValidator4_ServerValidate" SetFocusOnError="True"></asp:CustomValidator>
                                         <br />
                                         
                                     </div>
@@ -223,8 +218,7 @@
                                             <asp:ListItem>бар</asp:ListItem>
                                             <asp:ListItem>м. в. ст.</asp:ListItem>
                                         </asp:DropDownList>
-                                        <asp:RangeValidator ID="RangeValidator7" runat="server" ControlToValidate="lp3TextBox1" Display="Dynamic" ErrorMessage="Неверно указано значение давления" ForeColor="Red" MaximumValue="9999999" MinimumValue="0,00000001" SetFocusOnError="True" CultureInvariantValues="True"></asp:RangeValidator>
-                                        &nbsp;<asp:CustomValidator ID="CustomValidator5" runat="server" ControlToValidate="lp3TextBox1" Display="Dynamic" ErrorMessage="CustomValidator" ForeColor="Red" OnServerValidate="CustomValidator5_ServerValidate" SetFocusOnError="True"></asp:CustomValidator>
+                                        &nbsp;<asp:CustomValidator ID="CustomValidator5" runat="server" ControlToValidate="lp3DropDownList1" ErrorMessage="CustomValidator" ForeColor="Red" OnServerValidate="CustomValidator5_ServerValidate" SetFocusOnError="True"></asp:CustomValidator>
                                         <br />
                                         <asp:Label ID="Label13" runat="server" Text="Давление после регулятора:"></asp:Label>
                                         <br />
@@ -237,9 +231,8 @@
                                         <asp:ListItem>бар</asp:ListItem>
                                         <asp:ListItem>м. в. ст.</asp:ListItem>
                                         </asp:DropDownList>
-                                        <asp:RangeValidator ID="RangeValidator8" runat="server" ControlToValidate="lp3TextBox2" Display="Dynamic" ErrorMessage="Неверно указано значение давления" ForeColor="Red" MaximumValue="9999999" MinimumValue="0,00000001" SetFocusOnError="True"></asp:RangeValidator>
                                         
-                                        &nbsp;<asp:CustomValidator ID="CustomValidator6" runat="server" ControlToValidate="lp3TextBox2" Display="Dynamic" ErrorMessage="CustomValidator" ForeColor="Red" OnServerValidate="CustomValidator6_ServerValidate" SetFocusOnError="True"></asp:CustomValidator>
+                                        &nbsp;<asp:CustomValidator ID="CustomValidator6" runat="server" ControlToValidate="lp3DropDownList2" Display="Dynamic" ErrorMessage="CustomValidator" ForeColor="Red" OnServerValidate="CustomValidator6_ServerValidate" SetFocusOnError="True"></asp:CustomValidator>
                                         
                                     </div>
                                 </ContentTemplate>
@@ -262,8 +255,7 @@
                                             <asp:ListItem>бар</asp:ListItem>
                                             <asp:ListItem>м. в. ст.</asp:ListItem>
                                         </asp:DropDownList>
-                                        &nbsp;<asp:RangeValidator ID="RangeValidator9" runat="server" ControlToValidate="lp4TextBox2" Display="Dynamic" ErrorMessage="Неверно указано значение давления" ForeColor="Red" MaximumValue="9999999" MinimumValue="0,00000001" SetFocusOnError="True"></asp:RangeValidator>
-                                        &nbsp;<asp:CustomValidator ID="CustomValidator7" runat="server" ControlToValidate="lp4TextBox2" Display="Dynamic" ErrorMessage="CustomValidator" ForeColor="Red" OnServerValidate="CustomValidator7_ServerValidate" SetFocusOnError="True"></asp:CustomValidator>
+                                        &nbsp;&nbsp;<asp:CustomValidator ID="CustomValidator7" runat="server" ControlToValidate="lp4DropDownList2" ErrorMessage="CustomValidator" ForeColor="Red" OnServerValidate="CustomValidator7_ServerValidate" SetFocusOnError="True"></asp:CustomValidator>
                                         <br />
                                     </div>
                                 </ContentTemplate>
@@ -289,13 +281,7 @@
                                             <asp:ListItem>кПа</asp:ListItem>
                                             <asp:ListItem>бар</asp:ListItem>
                                             <asp:ListItem>м. в. ст.</asp:ListItem>
-                                        </asp:DropDownList>&nbsp;<asp:RangeValidator ID="calcrRangeValidator1" runat="server"
-                                            ControlToValidate="calcrTextBox1" Display="Dynamic"
-                                            ErrorMessage="Неверно указано значение давления" ForeColor="Red"
-                                            MaximumValue="99999999" MinimumValue="0,0000001" SetFocusOnError="True">Неверно указано
-                                            значение давления</asp:RangeValidator>
-
-                                        <asp:CustomValidator ID="CustomValidator9" runat="server" ControlToValidate="calcrTextBox1" Display="Dynamic" ErrorMessage="CustomValidator" ForeColor="Red" OnServerValidate="CustomValidator9_ServerValidate" SetFocusOnError="True"></asp:CustomValidator>
+                                        </asp:DropDownList>&nbsp;<asp:CustomValidator ID="CustomValidator9" runat="server" ControlToValidate="calcrDropDownList1" ErrorMessage="CustomValidator" ForeColor="Red" OnServerValidate="CustomValidator9_ServerValidate" SetFocusOnError="True"></asp:CustomValidator>
 
                                         <br />
                                         <asp:Label ID="Label22" runat="server"
