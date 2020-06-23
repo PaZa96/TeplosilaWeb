@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Diagnostics;
+using System.Diagnostics.Tracing;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -34,24 +35,24 @@ public partial class RDT : System.Web.UI.Page
 
     protected void Page_Load(object sender, EventArgs e)
     {
-
+        
         convertTable = new double[2, 7] { { 1000, 3600, 60, 1, 3600, 1, 1000 }, { 1, 3.6, 0.06, 0.001, 3.6, 0.001, 1 } };
 
         arrConvert1 =
             new double[7, 7] {
-                {1, 0.278, 16.67, 1000, 0.278, 1000, 1},
-                {3.6, 1, 60, 3600, 1, 3600, 3.6},
-                {0.06, 0.0167, 1, 60, 0.0167, 60, 0.06},
-                {0.001, 0.000278, 0.0167, 1, 0.000278, 1, 0.001},
-                {3.6, 1, 60, 3600, 1, 3600, 3.6},
-                {0.001, 0.000278, 0.0167, 1, 0.000278, 1, 0.001},
-                {1, 0.278, 16.67, 1000, 0.278, 1000, 1}
+            {1, 0.278, 16.67, 1000, 0.278, 1000, 1},
+            {3.6, 1, 60, 3600, 1, 3600, 3.6},
+            {0.06, 0.0167, 1, 60, 0.0167, 60, 0.06},
+            {0.001, 0.000278, 0.0167, 1, 0.000278, 1, 0.001},
+            {3.6, 1, 60, 3600, 1, 3600, 3.6},
+            {0.001, 0.000278, 0.0167, 1, 0.000278, 1, 0.001},
+            {1, 0.278, 16.67, 1000, 0.278, 1000, 1}
             };
         arrConvert2 = new double[5] { 1000, 1000000, 1, 1163000, 1.163 };
         arrConvert3 = new double[4] { 1000, 1, 100, 10 };
 
         Logger.InitLogger();//инициализация - требуется один раз в начале
-
+        LabelError.Text = "";
     }
 
 
@@ -1035,45 +1036,80 @@ public partial class RDT : System.Web.UI.Page
 
     protected void CustomValidator1_ServerValidate(object source, ServerValidateEventArgs args)
     {
-        if (lp1DropDownList3.Enabled)
+        if (CustomValidator8.IsValid)
         {
-            if (lp1TextBox3.Enabled == false || checkTextBoxEmpty(lp1TextBox3) || customConverterToDouble(lp1TextBox3.Text) < minVar)
-            {
-                CustomValidator1.ErrorMessage = "Неверно указано значение давления";
-                args.IsValid = false;
-                return;
+            if (lp1DropDownList3.Enabled)
+            { 
+                if (lp1TextBox3.Enabled == false || checkTextBoxEmpty(lp1TextBox3))
+                {
+                    CustomValidator1.ErrorMessage = "Необходимо заполнить поле";
+                    args.IsValid = false;
+                    return;
+                }
+                if (customConverterToDouble(lp1TextBox3.Text) < minVar)
+                {
+                    CustomValidator1.ErrorMessage = "Неверно указано значение давления";
+                    args.IsValid = false;
+                    return;
+                }
+                if (convertArrToBar(arrConvert3, lp1DropDownList3, lp1TextBox3) > PressureBeforeValve3x)
+                {
+                    CustomValidator1.ErrorMessage = "На давление свыше 16 бар вариантов нет";
+                    args.IsValid = false;
+                }
             }
-            if (convertArrToBar(arrConvert3, lp1DropDownList3, lp1TextBox3) > PressureBeforeValve3x)
-            {
-                CustomValidator1.ErrorMessage = "На давление свыше 16 бар вариантов нет";
-                args.IsValid = false;
-            }
+        }
+        else
+        {
+            args.IsValid = false;
+            CustomValidator1.ErrorMessage = "";
         }
     }
 
     protected void CustomValidator2_ServerValidate(object source, ServerValidateEventArgs args)
     {
-        if (lp1DropDownList4.Enabled)
+        if (CustomValidator1.IsValid) 
         {
-            if (lp1TextBox4.Enabled == false || checkTextBoxEmpty(lp1TextBox4) || customConverterToDouble(lp1TextBox4.Text) < minVar)
+            if (lp1DropDownList4.Enabled)
             {
-                CustomValidator2.ErrorMessage = "Неверно указано значение давления";
-                args.IsValid = false;
-                return;
-            }
-            if (convertArrToBar(arrConvert3, lp1DropDownList4, lp1TextBox4) >= convertArrToBar(arrConvert3, lp1DropDownList3, lp1TextBox3))
-            {
-                CustomValidator2.ErrorMessage = "Неверно указано значение давления";
-                args.IsValid = false;
+                
+                if (lp1TextBox4.Enabled == false || checkTextBoxEmpty(lp1TextBox4))
+                {
+                    CustomValidator2.ErrorMessage = "Необходимо заполнить поле";
+                    args.IsValid = false;
+                    return;
+                }
+                if (customConverterToDouble(lp1TextBox4.Text) < minVar)
+                {
+                    CustomValidator2.ErrorMessage = "Неверно указано значение давления";
+                    args.IsValid = false;
+                    return;
+                }
+                if (convertArrToBar(arrConvert3, lp1DropDownList4, lp1TextBox4) >= convertArrToBar(arrConvert3, lp1DropDownList3, lp1TextBox3))
+                {
+                    CustomValidator2.ErrorMessage = "Неверно указано значение давления";
+                    args.IsValid = false;
 
+                }
             }
+        }
+        else
+        {
+            args.IsValid = false;
+            CustomValidator2.ErrorMessage = "";
         }
     }
     protected void CustomValidator3_ServerValidate(object source, ServerValidateEventArgs args)
     {
         if (lp2DropDownList1.Enabled)
         {
-            if (lp2TextBox1.Enabled == false || checkTextBoxEmpty(lp2TextBox1) || customConverterToDouble(lp2TextBox1.Text) < minVar)
+            if (lp2TextBox1.Enabled == false || checkTextBoxEmpty(lp2TextBox1))
+            {
+                CustomValidator3.ErrorMessage = "Необходимо заполнить поле";
+                args.IsValid = false;
+                return;
+            }
+            if (customConverterToDouble(lp2TextBox1.Text) < minVar)
             {
                 CustomValidator3.ErrorMessage = "Неверно указано значение давления";
                 args.IsValid = false;
@@ -1089,19 +1125,33 @@ public partial class RDT : System.Web.UI.Page
 
     protected void CustomValidator4_ServerValidate(object source, ServerValidateEventArgs args)
     {
-        if (lp2DropDownList2.Enabled)
+        if (CustomValidator3.IsValid) 
+        { 
+            if (lp2DropDownList2.Enabled)
+            {
+                if (lp2TextBox2.Enabled == false || checkTextBoxEmpty(lp2TextBox2))
+                {
+                    CustomValidator4.ErrorMessage = "Необходимо заполнить поле";
+                    args.IsValid = false;
+                    return;
+                }
+                if (customConverterToDouble(lp2TextBox2.Text) < minVar)
+                {
+                    CustomValidator4.ErrorMessage = "Неверно указано значение давления";
+                    args.IsValid = false;
+                    return;
+                }
+                if (convertArrToBar(arrConvert3, lp2DropDownList2, lp2TextBox2) >= convertArrToBar(arrConvert3, lp2DropDownList1, lp2TextBox1))
+                {
+                    CustomValidator4.ErrorMessage = "Неверно указано значение давления";
+                    args.IsValid = false;
+                }
+            }
+        }
+        else
         {
-            if (lp2TextBox2.Enabled == false || checkTextBoxEmpty(lp2TextBox2) || customConverterToDouble(lp2TextBox2.Text) < minVar)
-            {
-                CustomValidator4.ErrorMessage = "Неверно указано значение давления";
-                args.IsValid = false;
-                return;
-            }
-            if (convertArrToBar(arrConvert3, lp2DropDownList2, lp2TextBox2) >= convertArrToBar(arrConvert3, lp2DropDownList1, lp2TextBox1))
-            {
-                CustomValidator4.ErrorMessage = "Неверно указано значение давления";
-                args.IsValid = false;
-            }
+            args.IsValid = false;
+            CustomValidator4.ErrorMessage = "";
         }
     }
 
@@ -1109,7 +1159,13 @@ public partial class RDT : System.Web.UI.Page
     {
         if (lp3DropDownList1.Enabled)
         {
-            if (lp3TextBox1.Enabled == false || checkTextBoxEmpty(lp3TextBox1) || customConverterToDouble(lp3TextBox1.Text) < minVar)
+            if (lp3TextBox1.Enabled == false || checkTextBoxEmpty(lp3TextBox1))
+            {
+                CustomValidator5.ErrorMessage = "Необходимо заполнить поле";
+                args.IsValid = false;
+                return;
+            }
+            if (customConverterToDouble(lp3TextBox1.Text) < minVar)
             {
                 CustomValidator5.ErrorMessage = "Неверно указано значение давления";
                 args.IsValid = false;
@@ -1125,19 +1181,33 @@ public partial class RDT : System.Web.UI.Page
 
     protected void CustomValidator6_ServerValidate(object source, ServerValidateEventArgs args)
     {
-        if (lp3DropDownList2.Enabled)
+        if (CustomValidator5.IsValid) 
+        { 
+            if (lp3DropDownList2.Enabled)
+            {
+                if (lp3TextBox2.Enabled == false || checkTextBoxEmpty(lp3TextBox2))
+                {
+                    CustomValidator6.ErrorMessage = "Необходимо заполнить поле";
+                    args.IsValid = false;
+                    return;
+                }
+                if (customConverterToDouble(lp3TextBox2.Text) < minVar)
+                {
+                    CustomValidator6.ErrorMessage = "Неверно указано значение давления";
+                    args.IsValid = false;
+                    return;
+                }
+                if (convertArrToBar(arrConvert3, lp3DropDownList2, lp3TextBox2) >= convertArrToBar(arrConvert3, lp3DropDownList1, lp3TextBox1))
+                {
+                    CustomValidator6.ErrorMessage = "Неверно указано значение давления";
+                    args.IsValid = false;
+                }
+            }
+        }
+        else
         {
-            if (lp3TextBox2.Enabled == false || checkTextBoxEmpty(lp3TextBox2) || customConverterToDouble(lp3TextBox2.Text) < minVar)
-            {
-                CustomValidator6.ErrorMessage = "Неверно указано значение давления";
-                args.IsValid = false;
-                return;
-            }
-            if (convertArrToBar(arrConvert3, lp3DropDownList2, lp3TextBox2) >= convertArrToBar(arrConvert3, lp3DropDownList1, lp3TextBox1))
-            {
-                CustomValidator6.ErrorMessage = "Неверно указано значение давления";
-                args.IsValid = false;
-            }
+            args.IsValid = false;
+            CustomValidator6.ErrorMessage = "";
         }
     }
 
@@ -1145,7 +1215,13 @@ public partial class RDT : System.Web.UI.Page
     {
         if (lp4DropDownList2.Enabled)
         {
-            if (lp4TextBox2.Enabled == false || checkTextBoxEmpty(lp4TextBox2) || customConverterToDouble(lp4TextBox2.Text) < minVar)
+            if (lp4TextBox2.Enabled == false || checkTextBoxEmpty(lp4TextBox2))
+            {
+                CustomValidator7.ErrorMessage = "Необходимо заполнить поле";
+                args.IsValid = false;
+                return;
+            }
+            if (customConverterToDouble(lp4TextBox2.Text) < minVar)
             {
                 CustomValidator7.ErrorMessage = "Неверно указано значение давления";
                 args.IsValid = false;
@@ -1157,15 +1233,84 @@ public partial class RDT : System.Web.UI.Page
                 args.IsValid = false;
             }
         }
+        return;
     }
 
     protected void CustomValidator8_ServerValidate(object source, ServerValidateEventArgs args)
     {
-        if (lp1DropDownList2.Enabled)
+        if (CustomValidator10.IsValid)
         {
-            if (lp1TextBox2.Enabled == false || checkTextBoxEmpty(lp1TextBox2) || customConverterToDouble(lp1TextBox2.Text) < minVar)
+            if (lp1DropDownList2.Enabled)
             {
-                CustomValidator8.ErrorMessage = "Неверно указано значение давления";
+                if (lp1TextBox2.Enabled == false || checkTextBoxEmpty(lp1TextBox2))
+                {
+                    CustomValidator8.ErrorMessage = "Необходимо заполнить поле";
+                    args.IsValid = false;
+                    return;
+                }
+                if (customConverterToDouble(lp1TextBox2.Text) < minVar)
+                {
+                    CustomValidator8.ErrorMessage = "Неверно указано значение давления";
+                    args.IsValid = false;
+                    return;
+                }
+            }
+        }
+        else
+        {
+            args.IsValid = false;
+            CustomValidator8.ErrorMessage = "";
+        }
+        return;
+    }
+
+    protected void CustomValidator9_ServerValidate(object source, ServerValidateEventArgs args)
+    {
+        if (CustomValidator2.IsValid && CustomValidator4.IsValid && CustomValidator6.IsValid && CustomValidator7.IsValid)
+        {
+            if (calcrDropDownList1.Enabled)
+            {
+                if (calcrTextBox1.Enabled == false || checkTextBoxEmpty(calcrTextBox1))
+                {
+                    CustomValidator9.ErrorMessage = "Необходимо заполнить поле";
+                    args.IsValid = false;
+                    return;
+                }
+                if (customConverterToDouble(calcrTextBox1.Text) < minVar)
+                {
+                    CustomValidator9.ErrorMessage = "Неверно указано значение давления";
+                    args.IsValid = false;
+                    return;
+                }
+                if (convertArrToBar(arrConvert3, calcrDropDownList1, calcrTextBox1) > PressureBeforeValve3x)
+                {
+                    CustomValidator9.ErrorMessage = "На давление свыше 16 бар вариантов нет";
+                    args.IsValid = false;
+                }
+            }
+        }
+        else
+        {
+            args.IsValid = false;
+            CustomValidator9.ErrorMessage = "";
+        }
+        return;
+    }
+
+    protected void CustomValidator10_ServerValidate(object source, ServerValidateEventArgs args)
+    {
+        if (lp1DropDownList1.Enabled)
+        {
+            if (lp1TextBox1.Enabled == false || checkTextBoxEmpty(lp1TextBox1))
+            {
+                CustomValidator10.ErrorMessage = "Необходимо заполнить поле";
+                args.IsValid = false;
+                return;
+            } 
+            
+            if (customConverterToDouble(lp1TextBox1.Text) < minVar)
+            {
+                CustomValidator10.ErrorMessage = "Неверно указано значение давления";
                 args.IsValid = false;
                 return;
             }
@@ -1177,42 +1322,159 @@ public partial class RDT : System.Web.UI.Page
 
                 if (var1 > var2)
                 {
-                    CustomValidator8.ErrorMessage = "Неверно указано значение давления";
+                    CustomValidator10.ErrorMessage = "Суммарные потери давления на регуляторе и регулируемом участке превышают допустимый перепад давлений на вводе";
                     args.IsValid = false;
                     return;
                 }
             }
         }
+        return;
     }
-
-    protected void CustomValidator9_ServerValidate(object source, ServerValidateEventArgs args)
+    protected void CustomValidator11_ServerValidate(object source, ServerValidateEventArgs args)
     {
-        if (calcrDropDownList1.Enabled)
+        if (CustomValidator9.IsValid)
         {
-            if (calcrTextBox1.Enabled == false || checkTextBoxEmpty(calcrTextBox1) || customConverterToDouble(calcrTextBox1.Text) < minVar)
+            if (calcrTextBox2.Enabled == false || checkTextBoxEmpty(calcrTextBox2))
             {
-                CustomValidator9.ErrorMessage = "Неверно указано значение давления";
+                CustomValidator11.ErrorMessage = "Необходимо заполнить поле";
                 args.IsValid = false;
                 return;
             }
-            if (convertArrToBar(arrConvert3, calcrDropDownList1, calcrTextBox1) > PressureBeforeValve3x)
+            if (customConverterToDouble(calcrTextBox2.Text) < minVar)
             {
-                CustomValidator9.ErrorMessage = "На давление свыше 16 бар вариантов нет";
+                CustomValidator11.ErrorMessage = "Неверно указано значение температуры";
                 args.IsValid = false;
+                return;
+            }
+            if (customConverterToDouble(calcrTextBox2.Text) > MaxT3x)
+            {
+                CustomValidator11.ErrorMessage = "На температуру свыше 150&#8451; вариантов нет";
+                args.IsValid = false;
+                return;
+            }
+            if (((customConverterToDouble(this.calcrTextBox1.Text) * arrConvert3[this.calcrDropDownList1.SelectedIndex - 1] / arrConvert3[2]) - getPSbyT(customConverterToDouble(this.calcrTextBox2.Text))) <= 0)
+            {
+                CustomValidator11.ErrorMessage = "Указанная температура выше температуры парообразования. При указанной температуре в трубопроводе движется пар";
+                args.IsValid = false;
+                return;
             }
         }
     }
 
-    protected void CustomValidator10_ServerValidate(object source, ServerValidateEventArgs args)
+    protected void CustomValidator12_ServerValidate(object source, ServerValidateEventArgs args)
     {
-        if (lp1DropDownList1.Enabled)
+        if (CustomValidator12.IsValid)
         {
-            if (lp1TextBox1.Enabled == false || checkTextBoxEmpty(lp1TextBox1) || customConverterToDouble(lp1TextBox1.Text) < minVar)
+            if (fprDropDownList1.Enabled)
             {
-                CustomValidator10.ErrorMessage = "Неверно указано значение давления";
-                args.IsValid = false;
-                return;
+                if (fprTextBox1.Enabled == false || checkTextBoxEmpty(fprTextBox1))
+                {
+                    CustomValidator12.ErrorMessage = "Необходимо заполнить поле";
+                    args.IsValid = false;
+                    return;
+                }
+                if (customConverterToDouble(fprTextBox1.Text) < minVar)
+                {
+                    CustomValidator12.ErrorMessage = "Неверно указано значение расхода";
+                    args.IsValid = false;
+                    
+                }
             }
+        }
+        else
+        {
+            args.IsValid = false;
+            CustomValidator11.ErrorMessage = "";
+        }
+    }
+    protected void CustomValidator13_ServerValidate(object source, ServerValidateEventArgs args)
+    {
+        if (fprRadioButton2.Checked)
+        {
+            if (CustomValidator9.IsValid)
+            {
+                if (fprTextBox2.Enabled == false || checkTextBoxEmpty(fprTextBox2))
+                {
+                    CustomValidator13.ErrorMessage = "Необходимо заполнить поле";
+                    args.IsValid = false;
+                    return;
+                }
+                if (customConverterToDouble(fprTextBox2.Text) < minVar)
+                {
+                    CustomValidator13.ErrorMessage = "Неверно указано значение температуры";
+                    args.IsValid = false;
+                    return;
+                }
+                if (customConverterToDouble(fprTextBox2.Text) > MaxT3x)
+                {
+                    CustomValidator13.ErrorMessage = "На температуру свыше 150&#8451; вариантов нет";
+                    args.IsValid = false;
+                    return;
+                }
+            }
+            else
+            {
+                args.IsValid = false;
+                CustomValidator13.ErrorMessage = "";
+            }
+        }
+    }
+    protected void CustomValidator14_ServerValidate(object source, ServerValidateEventArgs args)
+    {
+        if (fprRadioButton2.Checked)
+        {
+            if (CustomValidator13.IsValid)
+            {
+                if (fprTextBox3.Enabled == false || checkTextBoxEmpty(fprTextBox3))
+                {
+                    CustomValidator14.ErrorMessage = "Необходимо заполнить поле";
+                    args.IsValid = false;
+                    return;
+                }
+                if (customConverterToDouble(fprTextBox3.Text) < minVar)
+                {
+                    CustomValidator14.ErrorMessage = "Неверно указано значение температуры";
+                    args.IsValid = false;
+                    return;
+                }
+                if (customConverterToDouble(fprTextBox3.Text) > MaxT3x)
+                {
+                    CustomValidator14.ErrorMessage = "На температуру свыше 150&#8451; вариантов нет";
+                    args.IsValid = false;
+                    return;
+                }
+            }
+            else
+            {
+                args.IsValid = false;
+                CustomValidator14.ErrorMessage = "";
+            }
+        }
+    }
+    protected void CustomValidator15_ServerValidate(object source, ServerValidateEventArgs args)
+    {
+        if (CustomValidator14.IsValid)
+        {
+            if (fprDropDownList2.Enabled)
+            {
+                if (fprTextBox4.Enabled == false || checkTextBoxEmpty(fprTextBox4))
+                {
+                    CustomValidator15.ErrorMessage = "Необходимо заполнить поле";
+                    args.IsValid = false;
+                    return;
+                }
+                if (customConverterToDouble(fprTextBox4.Text) < minVar)
+                {
+                    CustomValidator15.ErrorMessage = "Неверно указано значение тепловой мощности";
+                    args.IsValid = false;
+
+                }
+            }
+        }
+        else
+        {
+            args.IsValid = false;
+            CustomValidator15.ErrorMessage = "";
         }
     }
 

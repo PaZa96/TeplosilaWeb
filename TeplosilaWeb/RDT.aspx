@@ -14,7 +14,7 @@
 
 <body>
     <div class="container">
-        <form id="form1" runat="server">
+        <form id="form1" runat="server" novalidate="novalidate">
             <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
             <div class="row jumbotron">
                 <div class="col-10">
@@ -23,7 +23,7 @@
                         <asp:UpdatePanel ID="UpdatePanel1" runat="server" UpdateMode="Conditional">
                             <ContentTemplate>
                                 <asp:RadioButtonList ID="sprRadioButtonList1" runat="server" style="margin-left: 0px"
-                                    AutoPostBack="True" required="required">
+                                    AutoPostBack="True" >
                                     <asp:ListItem>ЦТП</asp:ListItem>
                                     <asp:ListItem>ИТП</asp:ListItem>
                                 </asp:RadioButtonList>
@@ -37,7 +37,7 @@
                     <div class="col border">
                         <asp:UpdatePanel ID="UpdatePanel2" runat="server" UpdateMode="Conditional">
                             <ContentTemplate>
-                                Исполнение регулятора:<asp:RadioButtonList ID="eorRadioButtonList1" required="required"
+                                Исполнение регулятора:<asp:RadioButtonList ID="eorRadioButtonList1" 
                                     runat="server" AutoPostBack="True" OnSelectedIndexChanged="eorRadioButtonList1_SelectedIndexChanged">
                                     <asp:ListItem>Регулятор перепада давления</asp:ListItem>
                                     <asp:ListItem>Регулятор давления &quot;после себя&quot;</asp:ListItem>
@@ -57,7 +57,7 @@
                                 <div class="row">
                                     <div class="col-3">
                                         <asp:RadioButtonList ID="ws1RadioButtonList1" runat="server" AutoPostBack="True"
-                                            required="required" OnSelectedIndexChanged="ws1RadioButtonList1_SelectedIndexChanged">
+                                             OnSelectedIndexChanged="ws1RadioButtonList1_SelectedIndexChanged">
                                     
                                             <asp:ListItem>Вода</asp:ListItem>
                                             <asp:ListItem>Этиленгликоль</asp:ListItem>
@@ -68,8 +68,8 @@
                                     </div>
                                     <div class="col-9">
                                         <br />
-                                        <asp:TextBox ID="ws1TextBox1" runat="server" step="0.01" Enabled="False" type="number"
-                                            required="required" TextMode="Number"></asp:TextBox>
+                                        <asp:TextBox ID="ws1TextBox1" runat="server" step="0.00000000001" Enabled="False" type="number"
+                                             TextMode="Number"></asp:TextBox>
                                         <asp:Label ID="Label6" runat="server" Text="% (от 5% до 65%)"></asp:Label>
                                         &nbsp;&nbsp;&nbsp;
                                         <asp:RangeValidator ID="wsRangeValidator1" runat="server" Display="Dynamic"
@@ -77,8 +77,8 @@
                                             ErrorMessage="Значение должно находится в диапазоне от 5% до 65%" ForeColor="Red"
                                             MaximumValue="65" MinimumValue="5" SetFocusOnError="True" Type="Double"></asp:RangeValidator>
                                         <br />
-                                        <asp:TextBox ID="ws1TextBox2" runat="server" step="0.01" Enabled="False" type="number"
-                                            required="required" TextMode="Number"></asp:TextBox>
+                                        <asp:TextBox ID="ws1TextBox2" runat="server" step="0.00000000001" Enabled="False" type="number"
+                                             TextMode="Number"></asp:TextBox>
                                         <asp:Label ID="Label7" runat="server" Text="&#8451; (от 0&#8451; до 150&#8451;)">
                                         </asp:Label>&nbsp;&nbsp;&nbsp;
                                         <asp:RangeValidator ID="wsRangeValidator2" runat="server"
@@ -93,8 +93,7 @@
                         </asp:UpdatePanel>
                     </div>
                     <div class="col border">
-                        <asp:Label ID="Label20" runat="server" Text="Потери давления на клапане регулятора:">
-                        </asp:Label>
+                        <asp:Label ID="Label20" runat="server" Text="Потери давления на клапане регулятора:"> </asp:Label>
                         <div class="col border">
                             <asp:UpdatePanel ID="UpdatePanel12" runat="server">
                                 <ContentTemplate>
@@ -104,7 +103,7 @@
                                         <asp:Label ID="lpLabel1" runat="server" Text="Потери давления на регуляторе:"></asp:Label>
                                         <br />
                                         <asp:Label ID="Label54" runat="server" Text="ΔPрд ="></asp:Label>&nbsp;&nbsp;&nbsp;&nbsp;
-                                        &nbsp;<asp:TextBox ID="lp1TextBox1" runat="server" Enabled="False" step="0.01"  required="required" TextMode="Number"  ></asp:TextBox>
+                                        &nbsp;<asp:TextBox ID="lp1TextBox1" runat="server" Enabled="False" step="0.00000000001"   TextMode="Number"  ></asp:TextBox>
                                         &nbsp;<asp:DropDownList ID="lp1DropDownList1" runat="server" Enabled="False" OnSelectedIndexChanged="lp1DropDownList1_SelectedIndexChanged" AutoPostBack="True">
                                            <asp:ListItem>выбрать</asp:ListItem>
                                             <asp:ListItem>МПа</asp:ListItem>
@@ -112,12 +111,12 @@
                                             <asp:ListItem>бар</asp:ListItem>
                                             <asp:ListItem>м. в. ст.</asp:ListItem>
                                         </asp:DropDownList>
-                                          <asp:CustomValidator ID="CustomValidator10" runat="server" ControlToValidate="lp1DropDownList1" ErrorMessage="CustomValidator" ForeColor="Red" OnServerValidate="CustomValidator10_ServerValidate" SetFocusOnError="True" ValidateEmptyText="True"></asp:CustomValidator>
+                                          <asp:CustomValidator ID="CustomValidator10" runat="server" ControlToValidate="lp1DropDownList1" ErrorMessage="CustomValidator" ForeColor="Red" OnServerValidate="CustomValidator10_ServerValidate" SetFocusOnError="True" ValidateEmptyText="True" Display="Dynamic"></asp:CustomValidator>
                                         <br />
                                         <asp:Label ID="lpLabel2" runat="server" Text="Перепад давлений, поддерживаемый регулятором на регулируемом участке:"></asp:Label>
                                         <br />
                                         <asp:Label ID="Label55" runat="server" Text="ΔPру ="></asp:Label>&nbsp;&nbsp;&nbsp;&nbsp;
-                                        &nbsp;<asp:TextBox ID="lp1TextBox2" runat="server" Enabled="False" step="0.01" required="required" TextMode="Number"></asp:TextBox>
+                                        &nbsp;<asp:TextBox ID="lp1TextBox2" runat="server" Enabled="False" step="0.00000000001"  TextMode="Number"></asp:TextBox>
                                         &nbsp;<asp:DropDownList ID="lp1DropDownList2" runat="server" Enabled="False" OnSelectedIndexChanged="lp1DropDownList2_SelectedIndexChanged" AutoPostBack="True">
                                                <asp:ListItem>выбрать</asp:ListItem>
                                         <asp:ListItem>МПа</asp:ListItem>
@@ -125,12 +124,12 @@
                                         <asp:ListItem>бар</asp:ListItem>
                                         <asp:ListItem>м. в. ст.</asp:ListItem>
                                         </asp:DropDownList>
-                                        <asp:CustomValidator ID="CustomValidator8" runat="server" ControlToValidate="lp1DropDownList2" ErrorMessage="CustomValidator" ForeColor="Red" OnServerValidate="CustomValidator8_ServerValidate" SetFocusOnError="True"></asp:CustomValidator>
+                                        <asp:CustomValidator ID="CustomValidator8" runat="server" ControlToValidate="lp1DropDownList2" ErrorMessage="CustomValidator" ForeColor="Red" OnServerValidate="CustomValidator8_ServerValidate" SetFocusOnError="True" EnableTheming="True"></asp:CustomValidator>
                                         <br />
                                         <asp:Label ID="lpLabel3" runat="server" Text="Давление в подающем трубопроводе на вводе в ТП:"></asp:Label>
                                         <br />
                                         <asp:Label ID="Label56" runat="server" Text="P1 = "></asp:Label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                        &nbsp;<asp:TextBox ID="lp1TextBox3" runat="server"  Enabled="False" step="0.01" required="required" TextMode="Number" ></asp:TextBox>
+                                        &nbsp;<asp:TextBox ID="lp1TextBox3" runat="server"  Enabled="False" step="0.00000000001"  TextMode="Number" ></asp:TextBox>
                                         &nbsp;<asp:DropDownList ID="lp1DropDownList3" runat="server" Enabled="False" OnSelectedIndexChanged="lp1DropDownList3_SelectedIndexChanged" AutoPostBack="True">
                                                <asp:ListItem>выбрать</asp:ListItem>
                                         <asp:ListItem>МПа</asp:ListItem>
@@ -143,7 +142,7 @@
                                         <asp:Label ID="lpLabel4" runat="server" Text="Давление в обратном трубопроводе на вводе в ТП:"></asp:Label>
                                         <br />
                                         <asp:Label ID="Label57" runat="server" Text="P2 = "></asp:Label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                        &nbsp;<asp:TextBox ID="lp1TextBox4" step="0.01" runat="server" Enabled="False" TextMode="Number" required="required" AutoPostBack="True" ></asp:TextBox>
+                                        &nbsp;<asp:TextBox ID="lp1TextBox4" step="0.00000000001" runat="server" Enabled="False" TextMode="Number"  AutoPostBack="True" ></asp:TextBox>
                                         &nbsp;<asp:DropDownList ID="lp1DropDownList4" runat="server" Enabled="False" OnSelectedIndexChanged="lp1DropDownList4_SelectedIndexChanged" AutoPostBack="True">
                                                <asp:ListItem>выбрать</asp:ListItem>
                                         <asp:ListItem>МПа</asp:ListItem>
@@ -173,7 +172,7 @@
                                         <asp:Label ID="Label9" runat="server" Text="Давление перед регулятором:"></asp:Label>
                                         <br />
                                        <asp:Label ID="Label3" runat="server" Text="P'1 = "></asp:Label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                        &nbsp;<asp:TextBox ID="lp2TextBox1" runat="server" step="0.01" Enabled="False" TextMode="Number" required="required"></asp:TextBox>
+                                        &nbsp;<asp:TextBox ID="lp2TextBox1" runat="server" step="0.00000000001" Enabled="False" TextMode="Number" ></asp:TextBox>
                                         &nbsp;<asp:DropDownList ID="lp2DropDownList1" runat="server" Enabled="False" OnSelectedIndexChanged="lp2DropDownList1_SelectedIndexChanged" AutoPostBack="True">
                                            <asp:ListItem>выбрать</asp:ListItem>
                                             <asp:ListItem>МПа</asp:ListItem>
@@ -186,7 +185,7 @@
                                         <asp:Label ID="Label4" runat="server" Text="Требуемое давление после регулятора:"></asp:Label>
                                         <br />
                                         <asp:Label ID="Label8" runat="server" Text="Р(треб) ="></asp:Label>
-                                        &nbsp;<asp:TextBox ID="lp2TextBox2" runat="server" step="0.01" Enabled="False" TextMode="Number" required="required"></asp:TextBox>
+                                        &nbsp;<asp:TextBox ID="lp2TextBox2" runat="server" step="0.00000000001" Enabled="False" TextMode="Number" ></asp:TextBox>
                                         &nbsp;<asp:DropDownList ID="lp2DropDownList2" runat="server" Enabled="False" OnSelectedIndexChanged="lp2DropDownList2_SelectedIndexChanged" AutoPostBack="True">
                                                <asp:ListItem>выбрать</asp:ListItem>
                                         <asp:ListItem>МПа</asp:ListItem>
@@ -210,7 +209,7 @@
                                         <asp:Label ID="Label11" runat="server" Text="Требуемое давление перед регулятором:"></asp:Label>
                                         <br />
                                        <asp:Label ID="Label12" runat="server" Text="Р(треб) ="></asp:Label>
-                                        &nbsp;<asp:TextBox ID="lp3TextBox1" runat="server" step="0.01" Enabled="False" TextMode="Number" required="required"></asp:TextBox>
+                                        &nbsp;<asp:TextBox ID="lp3TextBox1" runat="server" step="0.00000000001" Enabled="False" TextMode="Number" ></asp:TextBox>
                                         &nbsp;<asp:DropDownList ID="lp3DropDownList1" runat="server" Enabled="False" OnSelectedIndexChanged="lp3DropDownList1_SelectedIndexChanged" AutoPostBack="True">
                                            <asp:ListItem>выбрать</asp:ListItem>
                                             <asp:ListItem>МПа</asp:ListItem>
@@ -223,7 +222,7 @@
                                         <asp:Label ID="Label13" runat="server" Text="Давление после регулятора:"></asp:Label>
                                         <br />
                                         <asp:Label ID="Label14" runat="server" Text="Р'2 = "></asp:Label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                        &nbsp;<asp:TextBox ID="lp3TextBox2" runat="server" step="0.01" Enabled="False" TextMode="Number" required="required"></asp:TextBox>
+                                        &nbsp;<asp:TextBox ID="lp3TextBox2" runat="server" step="0.00000000001" Enabled="False" TextMode="Number" ></asp:TextBox>
                                         &nbsp;<asp:DropDownList ID="lp3DropDownList2" runat="server" Enabled="False" OnSelectedIndexChanged="lp3DropDownList2_SelectedIndexChanged" AutoPostBack="True">
                                                <asp:ListItem>выбрать</asp:ListItem>
                                         <asp:ListItem>МПа</asp:ListItem>
@@ -247,7 +246,7 @@
                                         <asp:Label ID="Label16" runat="server" Text="Перепад давлений, поддерживаемый регулятором на регулируемом участке:"></asp:Label>
                                         <br />
                                        <asp:Label ID="Label17" runat="server" Text="ΔPру = "></asp:Label>&nbsp;&nbsp;&nbsp;
-                                        &nbsp;<asp:TextBox ID="lp4TextBox2" runat="server" Enabled="False" step="0.01" TextMode="Number" required="required"></asp:TextBox>
+                                        &nbsp;<asp:TextBox ID="lp4TextBox2" runat="server" Enabled="False" step="0.00000000001" TextMode="Number" ></asp:TextBox>
                                         &nbsp;<asp:DropDownList ID="lp4DropDownList2" runat="server" Enabled="False" OnSelectedIndexChanged="lp4DropDownList2_SelectedIndexChanged" AutoPostBack="True">
                                            <asp:ListItem>выбрать</asp:ListItem>
                                             <asp:ListItem>МПа</asp:ListItem>
@@ -272,8 +271,8 @@
                                         <asp:Label ID="Label19" runat="server" Text="Давление перед регулятором:"></asp:Label>
                                         <br />
                                         <asp:Label ID="Label21" runat="server" Text="P' = "></asp:Label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                        <asp:TextBox ID="calcrTextBox1" runat="server" step="0.01" Enabled="False" type="number"
-                                            required="required" TextMode="Number"></asp:TextBox>
+                                        <asp:TextBox ID="calcrTextBox1" runat="server" step="0.00000000001" Enabled="False" type="number"
+                                             TextMode="Number" CausesValidation="True"></asp:TextBox>
                                         <asp:DropDownList ID="calcrDropDownList1" runat="server" AutoPostBack="True"
                                             Enabled="False" OnSelectedIndexChanged="calcrDropDownList1_SelectedIndexChanged">
                                             <asp:ListItem>выбрать</asp:ListItem>
@@ -287,10 +286,10 @@
                                         <asp:Label ID="Label22" runat="server"
                                             Text="Температура теплоносителя через регулятор (максимальная):"></asp:Label><br />
                                         <asp:Label ID="Label23" runat="server" Text="T1 = "></asp:Label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                        <asp:TextBox ID="calcrTextBox2" runat="server" step="0.01" Enabled="False" type="number"
-                                            required="required" TextMode="Number"></asp:TextBox>
+                                        <asp:TextBox ID="calcrTextBox2" runat="server" step="0.00000000001" Enabled="False" type="number"
+                                             TextMode="Number" CausesValidation="True"></asp:TextBox>
                                         <asp:Label ID="Label24" runat="server" Text=" &#8451;"></asp:Label>
-                                        &nbsp;<asp:RangeValidator ID="calcrRangeValidator2" runat="server" ControlToValidate="calcrTextBox2" Display="Dynamic" ErrorMessage="Неверно указано значение температуры" ForeColor="Red" MaximumValue="150" MinimumValue="0,00000001" SetFocusOnError="True" Type="Double"></asp:RangeValidator>
+                                        &nbsp;<asp:CustomValidator ID="CustomValidator11" runat="server" ControlToValidate="calcrTextBox2" ErrorMessage="CustomValidator" ForeColor="Red" OnServerValidate="CustomValidator11_ServerValidate" SetFocusOnError="True" Display="Dynamic" EnableClientScript="False" ValidateEmptyText="True"></asp:CustomValidator>
                                     </div>  
                                 </div>
                             </ContentTemplate>
@@ -308,8 +307,8 @@
                                              /><br />
                                         <div class="col panel-hide" id="fpr1_1" runat="server">
                                             <asp:Label ID="Label28" runat="server" Text="Gрд = "></asp:Label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                            <asp:TextBox ID="fprTextBox1" runat="server" step="0.01" Enabled="False" type="number"
-                                                required="required" TextMode="Number"></asp:TextBox>
+                                            <asp:TextBox ID="fprTextBox1" runat="server" step="0.00000000001" Enabled="False" type="number"
+                                                 TextMode="Number"></asp:TextBox>
                                             <asp:DropDownList ID="fprDropDownList1" runat="server" AutoPostBack="True"
                                                 Enabled="False" OnSelectedIndexChanged="fprDropDownList1_SelectedIndexChanged">
                                                 <asp:ListItem>выбрать</asp:ListItem>
@@ -321,12 +320,8 @@
                                                 <asp:ListItem>кг/ч</asp:ListItem>
                                                 <asp:ListItem>т/ч</asp:ListItem>
                                             </asp:DropDownList>
+                                            <asp:CustomValidator ID="CustomValidator12" runat="server" ControlToValidate="lp1DropDownList1" ErrorMessage="CustomValidator" ForeColor="Red" OnServerValidate="CustomValidator12_ServerValidate" SetFocusOnError="True"></asp:CustomValidator>
                                             <br />
-                                            <asp:RangeValidator ID="fprRangeValidator9" runat="server"
-                                                ControlToValidate="fprTextBox1" Display="Dynamic"
-                                                ErrorMessage="Неверно указано значение давления" ForeColor="Red"
-                                                MaximumValue="99999999" MinimumValue="0,0000001" SetFocusOnError="True">Неверно
-                                                указано значение давления</asp:RangeValidator>
                                         </div>
                                     </div>
                                 </ContentTemplate>
@@ -341,24 +336,22 @@
                                         <div class="col panel-hide" id="fpr2_1" runat="server">
                                             <asp:Label ID="Label25" runat="server" Text="Температура теплоносителя в подающем трубопроводе Т1 = ">
                                             </asp:Label>
-                                            <asp:TextBox ID="fprTextBox2" runat="server" Enabled="False" required="required" TextMode="Number"></asp:TextBox>
+                                            <asp:TextBox ID="fprTextBox2" runat="server" Enabled="False"  TextMode="Number" CausesValidation="True"></asp:TextBox>
                                             <asp:Label ID="Label27" runat="server" Text="&#8451;"></asp:Label>
-                                            &nbsp;<asp:RangeValidator ID="RangeValidator10" runat="server" ControlToValidate="fprTextBox2" Display="Dynamic" ErrorMessage="Неверно указано значение температуры" ForeColor="Red" MaximumValue="150" MinimumValue="0,00000001" SetFocusOnError="True" CultureInvariantValues="True"></asp:RangeValidator>
+                                            &nbsp;<asp:CustomValidator ID="CustomValidator13" runat="server" ControlToValidate="fprTextBox2" Display="Dynamic" EnableClientScript="False" ErrorMessage="CustomValidator" ForeColor="Red" OnServerValidate="CustomValidator13_ServerValidate" SetFocusOnError="True" ValidateEmptyText="True"></asp:CustomValidator>
                                             <br />
                                             <asp:Label ID="Label29" runat="server" Text="Температура теплоносителя в обратном трубопроводе T2 = ">
                                             </asp:Label>&nbsp;
-                                            <asp:TextBox ID="fprTextBox3" runat="server" Enabled="False" step="0.01" required="required" TextMode="Number"></asp:TextBox>
+                                            <asp:TextBox ID="fprTextBox3" runat="server" Enabled="False" step="0.00000000001"  TextMode="Number"></asp:TextBox>
                                             <asp:Label ID="Label30" runat="server" Text="&#8451;"></asp:Label>
                                         
-                                            &nbsp;<asp:RangeValidator ID="RangeValidator11" runat="server" ControlToValidate="fprTextBox3" Display="Dynamic" ErrorMessage="Неверно указано значение температуры" ForeColor="Red" MaximumValue="9999999" MinimumValue="0,00000001" SetFocusOnError="True"></asp:RangeValidator>
-                                        
-                                            <asp:CompareValidator ID="CompareValidator1" runat="server" ControlToCompare="fprTextBox2" ControlToValidate="fprTextBox3" Display="Dynamic" ErrorMessage="Неверно указано значение температуры" ForeColor="Red" Operator="LessThan" SetFocusOnError="True" Type="Integer"></asp:CompareValidator>
+                                            &nbsp;<asp:CustomValidator ID="CustomValidator14" runat="server" ControlToValidate="fprTextBox3" Display="Dynamic" EnableClientScript="False" ErrorMessage="CustomValidator" ForeColor="Red" OnServerValidate="CustomValidator14_ServerValidate" SetFocusOnError="True" ValidateEmptyText="True"></asp:CustomValidator>
                                         
                                             <br />
                                         
                                             <asp:Label ID="Label45" runat="server" Text="Тепловая мощность Q = ">
                                             </asp:Label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                            <asp:TextBox ID="fprTextBox4" runat="server" Enabled="False" step="0.01" required="required" TextMode="Number"></asp:TextBox>
+                                            <asp:TextBox ID="fprTextBox4" runat="server" Enabled="False" step="0.00000000001"  TextMode="Number"></asp:TextBox>
                                             <asp:DropDownList ID="fprDropDownList2" runat="server" AutoPostBack="True"
                                                 Enabled="False" OnSelectedIndexChanged="fprDropDownList2_SelectedIndexChanged">
                                                 <asp:ListItem class="dropdown-item">выбрать</asp:ListItem>
@@ -367,11 +360,7 @@
                                                 <asp:ListItem class="dropdown-item">Вт</asp:ListItem>
                                                 <asp:ListItem class="dropdown-item">Гкал/ч</asp:ListItem>
                                                 <asp:ListItem class="dropdown-item">ккал/ч</asp:ListItem>
-                                            </asp:DropDownList>&nbsp;<asp:RangeValidator ID="fprRangeValidator2" runat="server"
-                                                ControlToValidate="fprTextBox4" Display="Dynamic"
-                                                ErrorMessage="Неверно указано значение давления" ForeColor="Red"
-                                                MaximumValue="99999999" MinimumValue="0,0000001">Неверно указано значение давления
-                                            </asp:RangeValidator>
+                                            </asp:DropDownList>&nbsp;<asp:CustomValidator ID="CustomValidator15" runat="server" ControlToValidate="lp1DropDownList1" ErrorMessage="CustomValidator" ForeColor="Red" OnServerValidate="CustomValidator15_ServerValidate" SetFocusOnError="True"></asp:CustomValidator>
                                             <br />
 
                                             <asp:Label ID="Label46" runat="server" Text="Максимальный расход через регулятор Gрд = ">
@@ -388,7 +377,8 @@
                     <asp:UpdatePanel ID="UpdatePanel9" runat="server">
                         <ContentTemplate>
                             <div class="col non-padding padding-top-bottom"><asp:Label ID="LabelError" runat="server" Font-Bold="True" Font-Size="Medium"
-                                Font-Strikeout="False" ForeColor="Red"></asp:Label></div>
+                                Font-Strikeout="False" ForeColor="Red"></asp:Label>
+                            </div>
                             
                             <asp:Button ID="rButton" runat="server" type="submit" Text="Рассчитать"
                                  Width="100%" OnClick="rButton_Click" />
