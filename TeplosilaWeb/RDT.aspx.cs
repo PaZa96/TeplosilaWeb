@@ -1089,7 +1089,7 @@ public partial class RDT : System.Web.UI.Page
                 {
                     CustomValidator2.ErrorMessage = "Неверно указано значение давления";
                     args.IsValid = false;
-
+                    return;
                 }
             }
         }
@@ -1097,7 +1097,12 @@ public partial class RDT : System.Web.UI.Page
         {
             args.IsValid = false;
             CustomValidator2.ErrorMessage = "";
+            CustomValidator10.Enabled = false;
+            return;
         }
+
+        CustomValidator10.Enabled = true;
+      
     }
     protected void CustomValidator3_ServerValidate(object source, ServerValidateEventArgs args)
     {
@@ -1238,7 +1243,7 @@ public partial class RDT : System.Web.UI.Page
 
     protected void CustomValidator8_ServerValidate(object source, ServerValidateEventArgs args)
     {
-        if (CustomValidator10.IsValid)
+        if (CustomValidator17.IsValid)
         {
             if (lp1DropDownList2.Enabled)
             {
@@ -1266,7 +1271,7 @@ public partial class RDT : System.Web.UI.Page
 
     protected void CustomValidator9_ServerValidate(object source, ServerValidateEventArgs args)
     {
-        if (CustomValidator2.IsValid && CustomValidator4.IsValid && CustomValidator6.IsValid && CustomValidator7.IsValid)
+        if (CustomValidator10.IsValid && CustomValidator4.IsValid && CustomValidator6.IsValid && CustomValidator7.IsValid)
         {
             if (calcrDropDownList1.Enabled)
             {
@@ -1299,36 +1304,44 @@ public partial class RDT : System.Web.UI.Page
 
     protected void CustomValidator10_ServerValidate(object source, ServerValidateEventArgs args)
     {
-        if (lp1DropDownList1.Enabled)
+        
+        if (CustomValidator2.IsValid)
         {
-            if (lp1TextBox1.Enabled == false || checkTextBoxEmpty(lp1TextBox1))
+            if (lp1DropDownList1.Enabled)
             {
-                CustomValidator10.ErrorMessage = "Необходимо заполнить поле";
-                args.IsValid = false;
-                return;
-            } 
-            
-            if (customConverterToDouble(lp1TextBox1.Text) < minVar)
-            {
-                CustomValidator10.ErrorMessage = "Неверно указано значение давления";
-                args.IsValid = false;
-                return;
-            }
-
-            if (!checkTextBoxEmpty(lp1TextBox1) && !checkTextBoxEmpty(lp1TextBox2) && !checkTextBoxEmpty(lp1TextBox3) && !checkTextBoxEmpty(lp1TextBox4))
-            {
-                double var1 = convertArrToBar(arrConvert3, lp1DropDownList1, lp1TextBox1) + convertArrToBar(arrConvert3, lp1DropDownList2, lp1TextBox2);
-                double var2 = convertArrToBar(arrConvert3, lp1DropDownList3, lp1TextBox3) - convertArrToBar(arrConvert3, lp1DropDownList4, lp1TextBox4);
-
-                if (var1 > var2)
+                if (lp1TextBox1.Enabled == false || checkTextBoxEmpty(lp1TextBox1))
                 {
-                    CustomValidator10.ErrorMessage = "Суммарные потери давления на регуляторе и регулируемом участке превышают допустимый перепад давлений на вводе";
+                    CustomValidator10.ErrorMessage = "Необходимо заполнить поле";
+                    args.IsValid = false;
+                    return;
+                } 
+            
+                if (customConverterToDouble(lp1TextBox1.Text) < minVar)
+                {
+                    CustomValidator10.ErrorMessage = "Неверно указано значение давления";
                     args.IsValid = false;
                     return;
                 }
+
+                if (!checkTextBoxEmpty(lp1TextBox1) && !checkTextBoxEmpty(lp1TextBox2) && !checkTextBoxEmpty(lp1TextBox3) && !checkTextBoxEmpty(lp1TextBox4))
+                {
+                    double var1 = convertArrToBar(arrConvert3, lp1DropDownList1, lp1TextBox1) + convertArrToBar(arrConvert3, lp1DropDownList2, lp1TextBox2);
+                    double var2 = convertArrToBar(arrConvert3, lp1DropDownList3, lp1TextBox3) - convertArrToBar(arrConvert3, lp1DropDownList4, lp1TextBox4);
+
+                    if (var1 > var2)
+                    {
+                        CustomValidator10.ErrorMessage = "Суммарные потери давления на регуляторе и регулируемом участке превышают допустимый перепад давлений на вводе";
+                        args.IsValid = false;
+                        return;
+                    }
+                }
             }
         }
-        return;
+        else
+        {
+            args.IsValid = false;
+            CustomValidator10.ErrorMessage = "";
+        }
     }
     protected void CustomValidator11_ServerValidate(object source, ServerValidateEventArgs args)
     {
@@ -1443,6 +1456,12 @@ public partial class RDT : System.Web.UI.Page
                     args.IsValid = false;
                     return;
                 }
+                if (customConverterToDouble(fprTextBox3.Text) >= customConverterToDouble(fprTextBox2.Text))
+                {
+                    CustomValidator14.ErrorMessage = "Неверно указано значение температуры";
+                    args.IsValid = false;
+                    return;
+                }
             }
             else
             {
@@ -1475,6 +1494,53 @@ public partial class RDT : System.Web.UI.Page
         {
             args.IsValid = false;
             CustomValidator15.ErrorMessage = "";
+        }
+    }
+
+    protected void CustomValidator16_ServerValidate(object source, ServerValidateEventArgs args)
+    {
+        if (ws1RadioButtonList1.SelectedIndex == 1 || ws1RadioButtonList1.SelectedIndex == 2)
+        {        
+            if (ws1TextBox1.Enabled == false || checkTextBoxEmpty(ws1TextBox1))
+            {
+                CustomValidator16.ErrorMessage = "Необходимо заполнить поле";
+                args.IsValid = false;
+                return;
+            }
+            if (customConverterToDouble(ws1TextBox1.Text) < 5 || customConverterToDouble(ws1TextBox1.Text) > 65)
+            {
+                CustomValidator16.ErrorMessage = "Значение должно находится в диапазоне от 5% до 65%";
+                args.IsValid = false;
+                return;
+            } 
+        }
+    }
+
+    protected void CustomValidator17_ServerValidate(object source, ServerValidateEventArgs args)
+    {
+        if (ws1RadioButtonList1.SelectedIndex == 1 || ws1RadioButtonList1.SelectedIndex == 2)
+        {
+            if (CustomValidator16.IsValid)
+            {
+                if (ws1TextBox2.Enabled == false || checkTextBoxEmpty(ws1TextBox2))
+                {
+                    CustomValidator17.ErrorMessage = "Необходимо заполнить поле";
+                    args.IsValid = false;
+                    return;
+                }
+                if (customConverterToDouble(ws1TextBox2.Text) < 0 || customConverterToDouble(ws1TextBox2.Text) > MaxT3x)
+                {
+                    CustomValidator17.ErrorMessage = "Значение должно находится в диапазоне от 0&#8451 до 150&#8451";
+                    args.IsValid = false;
+                    return;
+                }
+
+            }
+            else
+            {
+                args.IsValid = false;
+                CustomValidator17.ErrorMessage = "";
+            }
         }
     }
 

@@ -13,6 +13,7 @@ using System.Net;
 using System.Threading;
 using System.Diagnostics;
 using TeplosilaWeb.App_Code;
+using System.Web.UI.HtmlControls;
 
 public partial class TRV : System.Web.UI.Page
 {
@@ -79,6 +80,8 @@ public partial class TRV : System.Web.UI.Page
         {
             EnableTemperatureTable();
         }
+        AddCssClass(lpv1, "panel-hide");
+        AddCssClass(lpv2, "panel-hide");
     }
 
     protected void aaRadioButton2_CheckedChanged(object sender, EventArgs e)
@@ -97,6 +100,8 @@ public partial class TRV : System.Web.UI.Page
         {
             EnableTemperatureTable();
         }
+        AddCssClass(lpv1, "panel-hide");
+        AddCssClass(lpv2, "panel-hide");
     }
 
     protected void aaRadioButton3_CheckedChanged(object sender, EventArgs e)
@@ -114,6 +119,8 @@ public partial class TRV : System.Web.UI.Page
         {
             EnableTemperatureTable();
         }
+        AddCssClass(lpv1, "panel-hide");
+        AddCssClass(lpv2, "panel-hide");
     }
 
     private void changeImage(int index)
@@ -291,14 +298,14 @@ public partial class TRV : System.Web.UI.Page
         }
         if (ws2RadioButtonList1.SelectedIndex != -1)
         {
-            
             EnablePanel(1);
         }
         else
         {
             DisablePanel(1);
-            
         }
+        RemoveCssClass(lpv3, "panel-hide");
+        RemoveCssClass(calcv, "panel-hide");
     }
 
     
@@ -306,9 +313,20 @@ public partial class TRV : System.Web.UI.Page
     protected void aa1RadioButtonList1_SelectedIndexChanged(object sender, EventArgs e)
     {
         ResetPressureLoss(aa1RadioButtonList1);
+        
         if (tvRadioButtonList1.SelectedIndex >= 0 && fvRadioButton2.Checked)
         {
             EnableTemperatureTable();
+        }
+        if(aa1RadioButtonList1.SelectedIndex == 0)
+        {
+            RemoveCssClass(lpv1, "panel-hide");
+            AddCssClass(lpv2, "panel-hide");
+        } 
+        else
+        {
+            RemoveCssClass(lpv2, "panel-hide");
+            AddCssClass(lpv1, "panel-hide");
         }
     }
 
@@ -319,6 +337,16 @@ public partial class TRV : System.Web.UI.Page
         {
             EnableTemperatureTable();
         }
+        if (aa2RadioButtonList1.SelectedIndex == 0)
+        {
+            RemoveCssClass(lpv1, "panel-hide");
+            AddCssClass(lpv2, "panel-hide");
+        }
+        else
+        {
+            RemoveCssClass(lpv2, "panel-hide");
+            AddCssClass(lpv1, "panel-hide");
+        }
     }
 
     protected void aa3RadioButtonList1_SelectedIndexChanged(object sender, EventArgs e)
@@ -327,6 +355,16 @@ public partial class TRV : System.Web.UI.Page
         if (tvRadioButtonList1.SelectedIndex >= 0 && fvRadioButton2.Checked)
         {
             EnableTemperatureTable();
+        }
+        if (aa3RadioButtonList1.SelectedIndex == 0)
+        {
+            RemoveCssClass(lpv1, "panel-hide");
+            AddCssClass(lpv2, "panel-hide");
+        }
+        else
+        {
+            RemoveCssClass(lpv2, "panel-hide");
+            AddCssClass(lpv1, "panel-hide");
         }
     }
 
@@ -3783,5 +3821,85 @@ public partial class TRV : System.Web.UI.Page
 
     }
 
+    public void RemoveCssClass(HtmlGenericControl controlInstance, string css)
+    {
+        var strCssClass = controlInstance.Attributes["class"];
+        controlInstance.Attributes["class"] = string.Join(" ", strCssClass.Split(' ').Where(x => x != css).ToArray());
+    }
 
+    public void AddCssClass(HtmlGenericControl controlInstance, string css)
+    {
+        var strCssClass = controlInstance.Attributes["class"];
+        controlInstance.Attributes["class"] += (" " + css);
+    }
+
+    protected void spvRadioButtonList1_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        tdRadioButtonList1.Enabled = true;
+        tdRadioButtonList2.Enabled = true;
+        tdRadioButtonList3.Enabled = true;
+        tdRadioButtonList4.Enabled = true;
+
+        RemoveCssClass(tdRBL, "panel-hide");
+    }
+
+    protected void spvCustomValidator1_ServerValidate(object source, ServerValidateEventArgs args)
+    {
+        if (spvRadioButtonList1.SelectedIndex == -1)
+        {
+            spvCustomValidator1.ErrorMessage = "Выберите необходимое значение";
+            args.IsValid = false;
+        }
+    }
+
+    protected void rpvCustomValidator1_ServerValidate(object source, ServerValidateEventArgs args)
+    {
+        if (spvCustomValidator1.IsValid)
+        {
+            if (rpvRadioButtonList1.SelectedIndex == -1)
+            {
+                rpvCustomValidator1.ErrorMessage = "Выберите необходимое значение";
+                args.IsValid = false;
+            }
+        }
+        else
+        {
+            args.IsValid = false;
+            rpvCustomValidator1.ErrorMessage = "";
+        }
+    }
+
+    protected void tv1CustomValidator1_ServerValidate(object source, ServerValidateEventArgs args)
+    {
+        if (rpvCustomValidator1.IsValid)
+        {
+            if (tvRadioButtonList1.SelectedIndex == -1)
+            {
+                tv1CustomValidator1.ErrorMessage = "Выберите необходимое значение";
+                args.IsValid = false;
+            }
+        }
+        else
+        {
+            args.IsValid = false;
+            tv1CustomValidator1.ErrorMessage = "";
+        }
+    }
+
+    protected void ws2CustomValidator1_ServerValidate(object source, ServerValidateEventArgs args)
+    {
+        if (tv1CustomValidator1.IsValid)
+        {
+            if (ws2RadioButtonList1.SelectedIndex == -1)
+            {
+                ws2CustomValidator1.ErrorMessage = "Выберите необходимое значение";
+                args.IsValid = false;
+            }
+        }
+        else
+        {
+            args.IsValid = false;
+            ws2CustomValidator1.ErrorMessage = "";
+        }
+    }
 }

@@ -51,7 +51,7 @@
                         </asp:UpdatePanel>
                     </div>
                     <div class="col border">
-                        <asp:UpdatePanel ID="UpdatePanel5" runat="server" UpdateMode="Conditional">
+                        <asp:UpdatePanel ID="UpdatePanel5" runat="server">
                             <ContentTemplate>
                                 <asp:Label ID="Label5" runat="server" Text="Рабочая среда:"></asp:Label>
                                 <div class="row">
@@ -69,23 +69,14 @@
                                     <div class="col-9">
                                         <br />
                                         <asp:TextBox ID="ws1TextBox1" runat="server" step="0.00000000001" Enabled="False" type="number"
-                                             TextMode="Number"></asp:TextBox>
+                                             TextMode="Number" CausesValidation="True"></asp:TextBox>
                                         <asp:Label ID="Label6" runat="server" Text="% (от 5% до 65%)"></asp:Label>
-                                        &nbsp;&nbsp;&nbsp;
-                                        <asp:RangeValidator ID="wsRangeValidator1" runat="server" Display="Dynamic"
-                                            ControlToValidate="ws1TextBox1"
-                                            ErrorMessage="Значение должно находится в диапазоне от 5% до 65%" ForeColor="Red"
-                                            MaximumValue="65" MinimumValue="5" SetFocusOnError="True" Type="Double"></asp:RangeValidator>
+                                        &nbsp;&nbsp;<asp:CustomValidator ID="CustomValidator16" runat="server" ControlToValidate="ws1TextBox1" Display="Dynamic" ErrorMessage="CustomValidator" ForeColor="Red" OnServerValidate="CustomValidator16_ServerValidate" SetFocusOnError="True" ValidateEmptyText="True"></asp:CustomValidator>
                                         <br />
                                         <asp:TextBox ID="ws1TextBox2" runat="server" step="0.00000000001" Enabled="False" type="number"
-                                             TextMode="Number"></asp:TextBox>
+                                             TextMode="Number" CausesValidation="True"></asp:TextBox>
                                         <asp:Label ID="Label7" runat="server" Text="&#8451; (от 0&#8451; до 150&#8451;)">
-                                        </asp:Label>&nbsp;&nbsp;&nbsp;
-                                        <asp:RangeValidator ID="wsRangeValidator2" runat="server"
-                                            ControlToValidate="ws1TextBox2" Display="Dynamic"
-                                            ErrorMessage="Значение должно находится в диапазоне от 0&amp;#8451 до 150&amp;#8451"
-                                            ForeColor="Red" MaximumValue="150" MinimumValue="0" SetFocusOnError="True"
-                                            Type="Double"></asp:RangeValidator>
+                                        </asp:Label>&nbsp;&nbsp;<asp:CustomValidator ID="CustomValidator17" runat="server" ControlToValidate="ws1TextBox2" Display="Dynamic" ErrorMessage="CustomValidator" ForeColor="Red" OnServerValidate="CustomValidator17_ServerValidate" SetFocusOnError="True" ValidateEmptyText="True"></asp:CustomValidator>
                                         <br />
                                     </div>
                                 </div>
@@ -111,7 +102,7 @@
                                             <asp:ListItem>бар</asp:ListItem>
                                             <asp:ListItem>м. в. ст.</asp:ListItem>
                                         </asp:DropDownList>
-                                          <asp:CustomValidator ID="CustomValidator10" runat="server" ControlToValidate="lp1DropDownList1" ErrorMessage="CustomValidator" ForeColor="Red" OnServerValidate="CustomValidator10_ServerValidate" SetFocusOnError="True" ValidateEmptyText="True" Display="Dynamic"></asp:CustomValidator>
+                                          <asp:CustomValidator ID="CustomValidator10" runat="server" ControlToValidate="lp1DropDownList4" ErrorMessage="CustomValidator" ForeColor="Red" OnServerValidate="CustomValidator10_ServerValidate" SetFocusOnError="True" ValidateEmptyText="True" Display="Dynamic" Enabled="False"></asp:CustomValidator>
                                         <br />
                                         <asp:Label ID="lpLabel2" runat="server" Text="Перепад давлений, поддерживаемый регулятором на регулируемом участке:"></asp:Label>
                                         <br />
