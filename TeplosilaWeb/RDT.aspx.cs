@@ -53,6 +53,7 @@ public partial class RDT : System.Web.UI.Page
 
         Logger.InitLogger();//инициализация - требуется один раз в начале
         LabelError.Text = "";
+        fprLabelError.Text = "";
     }
 
 
@@ -1056,6 +1057,7 @@ public partial class RDT : System.Web.UI.Page
                 {
                     CustomValidator1.ErrorMessage = "На давление свыше 16 бар вариантов нет";
                     args.IsValid = false;
+                    return;
                 }
             }
         }
@@ -1091,17 +1093,35 @@ public partial class RDT : System.Web.UI.Page
                     args.IsValid = false;
                     return;
                 }
+
+                double p17, p19, p21, p23;
+
+                p17 = customConverterToDouble(this.lp1TextBox1.Text) * arrConvert3[this.lp1DropDownList1.SelectedIndex - 1] / arrConvert3[2];
+                p19 = customConverterToDouble(this.lp1TextBox2.Text) * arrConvert3[this.lp1DropDownList2.SelectedIndex - 1] / arrConvert3[2];
+                p21 = customConverterToDouble(this.lp1TextBox3.Text) * arrConvert3[this.lp1DropDownList3.SelectedIndex - 1] / arrConvert3[2];
+                p23 = customConverterToDouble(this.lp1TextBox4.Text) * arrConvert3[this.lp1DropDownList4.SelectedIndex - 1] / arrConvert3[2];
+
+                if (!((p17 + p19) <= (p21 - p23)))
+                {
+                    CustomValidator2.ErrorMessage = "";
+                    LabelCustomValid.Visible = true;
+                    args.IsValid = false;
+                    return;
+                }
+                else
+                {
+                    LabelCustomValid.Visible = false;
+                }
             }
         }
         else
         {
             args.IsValid = false;
             CustomValidator2.ErrorMessage = "";
-            CustomValidator10.Enabled = false;
             return;
         }
 
-        CustomValidator10.Enabled = true;
+     
       
     }
     protected void CustomValidator3_ServerValidate(object source, ServerValidateEventArgs args)
@@ -1243,7 +1263,7 @@ public partial class RDT : System.Web.UI.Page
 
     protected void CustomValidator8_ServerValidate(object source, ServerValidateEventArgs args)
     {
-        if (CustomValidator17.IsValid)
+        if (CustomValidator10.IsValid)
         {
             if (lp1DropDownList2.Enabled)
             {
@@ -1271,7 +1291,7 @@ public partial class RDT : System.Web.UI.Page
 
     protected void CustomValidator9_ServerValidate(object source, ServerValidateEventArgs args)
     {
-        if (CustomValidator10.IsValid && CustomValidator4.IsValid && CustomValidator6.IsValid && CustomValidator7.IsValid)
+        if (CustomValidator2.IsValid && CustomValidator4.IsValid && CustomValidator6.IsValid && CustomValidator7.IsValid)
         {
             if (calcrDropDownList1.Enabled)
             {
@@ -1304,8 +1324,7 @@ public partial class RDT : System.Web.UI.Page
 
     protected void CustomValidator10_ServerValidate(object source, ServerValidateEventArgs args)
     {
-        
-        if (CustomValidator2.IsValid)
+        if (CustomValidator17.IsValid)
         {
             if (lp1DropDownList1.Enabled)
             {
@@ -1321,19 +1340,6 @@ public partial class RDT : System.Web.UI.Page
                     CustomValidator10.ErrorMessage = "Неверно указано значение давления";
                     args.IsValid = false;
                     return;
-                }
-
-                if (!checkTextBoxEmpty(lp1TextBox1) && !checkTextBoxEmpty(lp1TextBox2) && !checkTextBoxEmpty(lp1TextBox3) && !checkTextBoxEmpty(lp1TextBox4))
-                {
-                    double var1 = convertArrToBar(arrConvert3, lp1DropDownList1, lp1TextBox1) + convertArrToBar(arrConvert3, lp1DropDownList2, lp1TextBox2);
-                    double var2 = convertArrToBar(arrConvert3, lp1DropDownList3, lp1TextBox3) - convertArrToBar(arrConvert3, lp1DropDownList4, lp1TextBox4);
-
-                    if (var1 > var2)
-                    {
-                        CustomValidator10.ErrorMessage = "Суммарные потери давления на регуляторе и регулируемом участке превышают допустимый перепад давлений на вводе";
-                        args.IsValid = false;
-                        return;
-                    }
                 }
             }
         }
@@ -2028,8 +2034,7 @@ public partial class RDT : System.Web.UI.Page
                                     }
                                     else if (!((p17 + p19) <= (p21 - p23)))
                                     {
-                                        lp1TextBox1.BackColor = Color.LightPink;
-                                        LabelError.Text = "Суммарные потери давления на регуляторе и регулируемом участке превышают допустимый перепад давлений на вводе";
+                                        LabelError.Text = "Суммарные потери давления на регуляторе и регулируемом участке превышают допустимый перепад давлений на вводе";                                      
                                         return;
                                     }
                                     else
@@ -2391,7 +2396,7 @@ public partial class RDT : System.Web.UI.Page
                     }
                     else
                     {
-                        LabelError.Text = "Не выбран расход через регулятор давления";
+                        fprLabelError.Text = "Не выбран расход через регулятор давления";
                         return;
                     }
                 }
