@@ -93,6 +93,9 @@ input [type=button], input[type=submit], input[type=reset] {
     padding: .2rem;
     vertical-align: top;
     border-top: 1px solid #dee2e6;
+}
+
+.table tr{
     background-color: white;
 }
 
