@@ -884,20 +884,20 @@ public partial class TRV : System.Web.UI.Page
     {
         switch (privMark)
         {
-            case "101": return "TSL-1600-25-1-230-IP67";
-            case "101R": return "TSL-1600-25-1R-230-IP67";
-            case "34": return "TW500-XD220-S.12";
-            case "31": return "TW500-XD24-S.12";
-            case "110": return "TSL-2200-40-1-230-IP67";
-            case "110R": return "TSL-2200-40-1R-230-IP67";
-            case "120": return "TSL-3000-60-1-230-IP67";
-            case "120R": return "TSL-3000-60-1R-230-IP67";
-            case "35": return "TW1001-XD220-S.14";
-            case "32": return "TW1001-XD24-S.14";
-            case "9": return "ST 0.1 498.1-OIIAF/00";
-            case "13": return "ST 1 491.1-O7KAE/00";
-            case "36": return "TW3000-XD220-S.14";
-            case "33": return "TW3000-XD24-S.14";
+            case "101": return "TSL-1600-25- 1-230-IP67";
+            case "101R": return "TSL-1600-25- 1R-230-IP67";
+            case "34": return "TW500- XD220-S.12";
+            case "31": return "TW500- XD24-S.12";
+            case "110": return "TSL-2200-40- 1-230-IP67";
+            case "110R": return "TSL-2200-40- 1R-230-IP67";
+            case "120": return "TSL-3000-60- 1-230-IP67";
+            case "120R": return "TSL-3000-60- 1R-230-IP67";
+            case "35": return "TW1001- XD220-S.14";
+            case "32": return "TW1001- XD24-S.14";
+            case "9": return "ST 0.1 498.1- OIIAF/00";
+            case "13": return "ST 1 491.1- O7KAE/00";
+            case "36": return "TW3000- XD220-S.14";
+            case "33": return "TW3000- XD24-S.14";
             case "-": return "вариантов нет";
             default: return null;
         }
@@ -1047,7 +1047,7 @@ public partial class TRV : System.Web.UI.Page
             tablev = dataFromFile.table5v;
             tableDN = dataFromFile.table10;
             if (double.Parse(g_dict["p35"].ToString()) <= 150) tablev_7 = dataFromFile.tablev_71;
-            else tablev_7 = dataFromFile.tablev_71p;
+            else tablev_7 = dataFromFile.tablev_71t;
         }
         else
         {
