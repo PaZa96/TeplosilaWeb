@@ -54,6 +54,7 @@ public partial class RDT : System.Web.UI.Page
         Logger.InitLogger();//инициализация - требуется один раз в начале
         LabelError.Text = "";
         fprLabelError.Text = "";
+        LabelCustomValid.Visible = false;
     }
 
 

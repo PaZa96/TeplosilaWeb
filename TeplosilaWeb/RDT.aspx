@@ -585,15 +585,14 @@
                         </div>
                     </div>
                 </div>
+                <div class="col-2">
+                    <asp:UpdatePanel ID="UpdatePanel16" runat="server">
+                        <ContentTemplate>
+                            <asp:Image ID="rPictureBox" runat="server" class="valve-image" />
+                        </ContentTemplate>
+                    </asp:UpdatePanel>
+                </div>
             </div>
-            <div class="col-2">
-                <asp:UpdatePanel ID="UpdatePanel16" runat="server">
-                    <ContentTemplate>
-                        <asp:Image ID="rPictureBox" runat="server" class="valve-image" />
-                    </ContentTemplate>
-                </asp:UpdatePanel>
-            </div>
-
         </form>
     </div>
 
