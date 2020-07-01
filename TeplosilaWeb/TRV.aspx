@@ -567,9 +567,9 @@
                                 function ShowBTN() {
                                     var element = document.getElementById('Label53');
                                     var btn2 = document.getElementById('Button2');
-                                    var btn3 = document.getElementById('Button3');
+                                    //var btn3 = document.getElementById('Button3');
                                     btn2.classList.add("show-btn");
-                                    btn3.classList.add("show-btn");
+                                    //btn3.classList.add("show-btn");
                                 };
                             </script>
 
@@ -577,8 +577,8 @@
                     </asp:UpdatePanel>
                     <asp:Button ID="Button2" runat="server" Text="Сохранить в PDF" CssClass="btn btn-primary hide-btn"
                         OnClick="Button2_Click" />
-                    <asp:Button ID="Button3" runat="server" Text="Сохранить в Excel" CssClass="btn btn-primary hide-btn"
-                        OnClick="Button3_Click" />
+                   <%-- <asp:Button ID="Button3" runat="server" Text="Сохранить в Excel" CssClass="btn btn-primary hide-btn"
+                        OnClick="Button3_Click" />--%>
                 </div>
             </div>
             <div class="col-xs-12 col-sm-2">

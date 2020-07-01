@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="RDT.aspx.cs" Inherits="RDT" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="RDT.aspx.cs" Inherits="RDT"  Culture="ru-RU"%>
 <% @Import Namespace="System.Globalization" %>
 <!DOCTYPE html>
 
@@ -203,7 +203,7 @@
                                         <br />
                                         <asp:Label ID="Label58" runat="server" Text="ΔPрд(max) = Р1 - Р2 - ΔРру =">
                                         </asp:Label>&nbsp;&nbsp;&nbsp;&nbsp;
-                                        &nbsp;<asp:TextBox ID="lp1TextBox5" TextMode="Number" runat="server"
+                                        &nbsp;<asp:TextBox ID="lp1TextBox5" runat="server"
                                             Enabled="False" ReadOnly="True"></asp:TextBox>
                                         &nbsp;
                                         <asp:Label ID="Label59" runat="server" Text="бар"></asp:Label>
@@ -225,7 +225,7 @@
                                         <asp:Label ID="Label3" runat="server" Text="P'1 = "></asp:Label>
                                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                         &nbsp;<asp:TextBox ID="lp2TextBox1" runat="server" step="0.00000000001"
-                                            Enabled="False" TextMode="Number"></asp:TextBox>
+                                            Enabled="False"></asp:TextBox>
                                         &nbsp;<asp:DropDownList ID="lp2DropDownList1" runat="server" Enabled="False"
                                             OnSelectedIndexChanged="lp2DropDownList1_SelectedIndexChanged"
                                             AutoPostBack="True">
@@ -534,9 +534,10 @@
                                     </div>
 
                                     <div class="table-responsive-lg" onclick="ShowBTN()">
-                                        <asp:GridView ID="GridView1" CssClass="table" runat="server"
-                                            AutoGenerateSelectButton="True" Font-Size="X-Small" Visible="False"
-                                            OnSelectedIndexChanged="GridView1_SelectedIndexChanged">
+                                        <asp:GridView ID="GridView1" CssClass="table" runat="server" Font-Size="X-Small" Visible="False"
+                                            OnSelectedIndexChanged="GridView1_SelectedIndexChanged" AutoGenerateSelectButton="True">
+    
+                    
                                             <RowStyle Font-Size="Small" />
                                             <SelectedRowStyle BackColor="#ff7d00" Font-Bold="False" ForeColor="White" />
                                         </asp:GridView>
@@ -547,7 +548,7 @@
                                         </asp:Label>
 
                                         <asp:TextBox ID="objTextBox1" runat="server" Enabled="False" Visible="False"
-                                            Width="275px"></asp:TextBox>
+                                            Width="862px"></asp:TextBox>
                                     </div>
                             </ContentTemplate>
                         </asp:UpdatePanel>
@@ -571,17 +572,17 @@
 
                             function ShowBTN() {
                                 var btn2 = document.getElementById('Button2');
-                                var btn3 = document.getElementById('Button3');
+                                //var btn3 = document.getElementById('Button3');
                                 btn2.classList.add("show-btn");
-                                btn3.classList.add("show-btn");
+                                //btn3.classList.add("show-btn");
                             };
                         </script>
 
                         <div class="col non-padding padding-top-bottom">
                             <asp:Button ID="Button2" runat="server" Text="Сохранить в PDF"
                                 CssClass="btn btn-primary hide-btn" OnClick="Button2_Click" />
-                            <asp:Button ID="Button3" runat="server" Text="Сохранить в Excel"
-                                CssClass="btn btn-primary hide-btn" OnClick="Button3_Click" />
+<%--                            <asp:Button ID="Button3" runat="server" Text="Сохранить в Excel"
+                                CssClass="btn btn-primary hide-btn" Display="None" OnClick="Button3_Click" />--%>
                         </div>
                     </div>
                 </div>

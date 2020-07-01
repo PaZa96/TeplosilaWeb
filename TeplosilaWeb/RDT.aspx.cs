@@ -55,6 +55,7 @@ public partial class RDT : System.Web.UI.Page
         LabelError.Text = "";
         fprLabelError.Text = "";
         LabelCustomValid.Visible = false;
+        
     }
 
 
@@ -751,7 +752,7 @@ public partial class RDT : System.Web.UI.Page
 
                 listF.Add(Math.Round(V, 2).ToString());
 
-                if (V > 3 && V <= 5 && this.sprRadioButtonList1.SelectedIndex == 0)
+                if (V > 3 && V <= 5 && this.sprRadioButtonList1.SelectedIndex == 1)
                     listE.Add("возможен шум");
                 else if (V > 5) listE.Add("возможен эрозийный износ клапана");
                 else if (V < 1.5)
@@ -1036,6 +1037,27 @@ public partial class RDT : System.Web.UI.Page
 
     //------------------------------------Validation Function START--------------------------------------
 
+    public void ValidFields()
+    {
+        ws1TextBox1.Text = ConvertPointToComma(ws1TextBox1.Text);
+        ws1TextBox2.Text = ConvertPointToComma(ws1TextBox2.Text);
+        lp1TextBox1.Text = ConvertPointToComma(lp1TextBox1.Text);
+        lp1TextBox2.Text = ConvertPointToComma(lp1TextBox2.Text);
+        lp1TextBox3.Text = ConvertPointToComma(lp1TextBox3.Text);
+        lp1TextBox4.Text = ConvertPointToComma(lp1TextBox4.Text);
+        lp2TextBox1.Text = ConvertPointToComma(lp2TextBox1.Text);
+        lp2TextBox2.Text = ConvertPointToComma(lp2TextBox2.Text);
+        lp3TextBox1.Text = ConvertPointToComma(lp3TextBox1.Text);
+        lp3TextBox2.Text = ConvertPointToComma(lp3TextBox2.Text);
+        lp4TextBox2.Text = ConvertPointToComma(lp4TextBox2.Text);
+        calcrTextBox1.Text = ConvertPointToComma(calcrTextBox1.Text);
+        calcrTextBox2.Text = ConvertPointToComma(calcrTextBox2.Text);
+        fprTextBox1.Text = ConvertPointToComma(fprTextBox1.Text);
+        fprTextBox2.Text = ConvertPointToComma(fprTextBox2.Text);
+        fprTextBox3.Text = ConvertPointToComma(fprTextBox3.Text);
+        fprTextBox4.Text = ConvertPointToComma(fprTextBox4.Text);
+        fprTextBox5.Text = ConvertPointToComma(fprTextBox5.Text);
+    }
     protected void CustomValidator1_ServerValidate(object source, ServerValidateEventArgs args)
     {
         if (CustomValidator8.IsValid)
@@ -1745,7 +1767,8 @@ public partial class RDT : System.Web.UI.Page
     {
         
         if (!Page.IsValid) { return; }
-        try { 
+        try {
+        ValidFields();
         objTextBox1.Enabled = false;
         GridView1.Columns.Clear();
         GridView1.DataSource = null;
@@ -2048,7 +2071,7 @@ public partial class RDT : System.Web.UI.Page
 
                                         p25 = Math.Round(p21 - p23 - p19, 2);
                                         g_dict.Add("p25", p25);
-                                        this.lp1TextBox5.Text = p25.ToString();
+                                        lp1TextBox5.Text = p25.ToString();
                                     }
                                 }
                             }
@@ -2428,8 +2451,8 @@ public partial class RDT : System.Web.UI.Page
         GridView1.Height = 250;
         this.Button2.Visible = true;
         this.Button2.Enabled = true;
-        this.Button3.Visible = true;
-        this.Button3.Enabled = true;
+        //this.Button3.Visible = true;
+        //this.Button3.Enabled = true;
 
         }
         catch (Exception er)
@@ -2558,10 +2581,16 @@ public partial class RDT : System.Web.UI.Page
         try
         {
             this.readFile(0);
-            r_input_dict[2] = objTextBox1.Text;
-            //r_input_dict.Add(2, (this.textBox2.Text != "")? this.textBox2.Text : "-");
 
-            
+            if (!String.IsNullOrWhiteSpace(objTextBox1.Text))
+            {
+                r_input_dict[2] = objTextBox1.Text;
+            }
+            else
+            {
+                r_input_dict[2] = "-";
+            }
+
             //r_input_dict.Add(5, (this.textBox5.Text != "") ? this.textBox5.Text : "-");
 
             int pos = 41;
@@ -2573,6 +2602,7 @@ public partial class RDT : System.Web.UI.Page
 
             }
             r_input_dict[5] = r_input_dict[41];
+            string fileName = r_input_dict[41];
 
             SpreadsheetInfo.SetLicense("FREE-LIMITED-KEY");
 
@@ -2670,7 +2700,7 @@ public partial class RDT : System.Web.UI.Page
 
             getDimsR(ref r_input_dict);
 
-            ws.Pictures.Add(HttpContext.Current.Server.MapPath("\\Content\\images\\" + ((r_input_dict[4] == this.eorRadioButtonList1.Items[0].Text) || (r_input_dict[4] == eorRadioButtonList1.Items[1].Text) ? "RDT-RDT-P.png" : "RDT-S-RDT-B.png")), "A44", "B53");
+            ws.Pictures.Add(HttpContext.Current.Server.MapPath("\\Content\\images\\rdt\\" + ((r_input_dict[4] == this.eorRadioButtonList1.Items[0].Text) || (r_input_dict[4] == eorRadioButtonList1.Items[1].Text) ? "Габаритный RDT и RDT-P.jpg" : "Габаритный RDT-S и RDT-B.jpg")), "A44", "B53");
 
 
 
@@ -2687,16 +2717,7 @@ public partial class RDT : System.Web.UI.Page
                 dirInfo.Create();
             }
 
-            string fileName = "";
-
-            if (!String.IsNullOrWhiteSpace(objTextBox1.Text))
-            {
-                fileName = objTextBox1.Text;
-            }
-            else
-            {
-                fileName += DateTime.Now.ToString("dd-MM-yyyy");
-            }
+            
 
             string filePath = path + "\\" + fileName + ".pdf";
 
@@ -2727,7 +2748,15 @@ public partial class RDT : System.Web.UI.Page
         try
         {
             this.readFile(0);
-            r_input_dict[2] = objTextBox1.Text;
+            if (!String.IsNullOrWhiteSpace(objTextBox1.Text))
+            {
+                r_input_dict[2] = objTextBox1.Text;
+            }
+            else
+            {
+                r_input_dict[2] = "-";
+            }
+            
             //r_input_dict.Add(2, (this.textBox2.Text != "")? this.textBox2.Text : "-");
 
             
@@ -3027,5 +3056,20 @@ public partial class RDT : System.Web.UI.Page
     {
         var strCssClass = controlInstance.Attributes["class"];
         controlInstance.Attributes["class"] += (" " + css);
+    }
+
+    public string ConvertPointToComma(string tb)
+    {
+        string afterConvert = "";
+
+        if (tb.IndexOf(".") != -1)
+        {
+            afterConvert = tb.Replace(".", ",");
+        }
+        else {
+            afterConvert = tb;
+        }
+
+        return afterConvert;
     }
 }

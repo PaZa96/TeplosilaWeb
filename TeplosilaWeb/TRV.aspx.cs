@@ -3191,8 +3191,8 @@ public partial class TRV : System.Web.UI.Page
         this.GridView2.Height = 250;
         this.Button2.Visible = true;
         this.Button2.Enabled = true;
-        this.Button3.Visible = true;
-        this.Button3.Enabled = true;
+        //this.Button3.Visible = true;
+        //this.Button3.Enabled = true;
 
         }
         catch (Exception er)
@@ -3585,7 +3585,7 @@ public partial class TRV : System.Web.UI.Page
         ws.Cells["G40"].Value = v_input_dict[68];
 
 
-        ws.Pictures.Add(HttpContext.Current.Server.MapPath("\\Content\\images\\" + ((v_input_dict[7] == this.tvRadioButtonList1.Items[tvRadioButtonList1.SelectedIndex].Text) ? "TRV-2.png" : "TRV-3.png")), "A37", "B46");
+        ws.Pictures.Add(HttpContext.Current.Server.MapPath("\\Content\\images\\trv" + ((v_input_dict[7] == this.tvRadioButtonList1.Items[tvRadioButtonList1.SelectedIndex].Text) ? "Габаритный TRV и TRV-P.png" : "Габаритный TRV-3.png")), "A37", "B46");
        
 
         string path = HttpContext.Current.Server.MapPath("\\Files\\TRV\\PDF\\" + DateTime.Now.ToString("dd-MM-yyyy"));
@@ -3779,7 +3779,7 @@ public partial class TRV : System.Web.UI.Page
         ws.Cells["G39"].Value = v_input_dict[67];
         ws.Cells["G40"].Value = v_input_dict[68];
 
-        ws.Pictures.Add(HttpContext.Current.Server.MapPath("\\Content\\images\\" + ((v_input_dict[7] == this.tvRadioButtonList1.Items[tvRadioButtonList1.SelectedIndex].Text) ? "TRV-2.png" : "TRV-3.png")), "A37", "B46");
+        ws.Pictures.Add(HttpContext.Current.Server.MapPath("\\Content\\images\\trv\\" + ((v_input_dict[7] == this.tvRadioButtonList1.Items[tvRadioButtonList1.SelectedIndex].Text) ? "TRV-2.png" : "TRV-3.png")), "A37", "B46");
 
 
 
