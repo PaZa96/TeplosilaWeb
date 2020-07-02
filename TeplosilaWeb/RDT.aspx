@@ -576,6 +576,13 @@
                                 btn2.classList.add("show-btn");
                                 //btn3.classList.add("show-btn");
                             };
+                            function HideBTN() {
+                                var btn2 = document.getElementById('Button2');
+                                //var btn3 = document.getElementById('Button3');
+                                btn2.classList.remove("show-btn");
+                              
+                                //btn3.classList.add("show-btn");
+                            };
                         </script>
 
                         <div class="col non-padding padding-top-bottom">

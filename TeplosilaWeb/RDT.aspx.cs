@@ -55,7 +55,10 @@ public partial class RDT : System.Web.UI.Page
         LabelError.Text = "";
         fprLabelError.Text = "";
         LabelCustomValid.Visible = false;
-        
+        if(!Page.IsPostBack)
+        {
+            ValidFields();
+        }
     }
 
 
@@ -1768,11 +1771,15 @@ public partial class RDT : System.Web.UI.Page
         
         if (!Page.IsValid) { return; }
         try {
-        ValidFields();
+       
         objTextBox1.Enabled = false;
+        objTextBox1.Visible = false;
+        Label53.Visible = false;
+        ScriptManager.RegisterStartupScript(this.Page, Page.GetType(), "MyClientScript", "javascript:HideBTN()", true);
         GridView1.Columns.Clear();
         GridView1.DataSource = null;
         GridView1.DataBind();
+        GridView1.SelectedIndex = -1;
 
         this.readFile(0);
         Dictionary<string, double> g_dict = new Dictionary<string, double>();

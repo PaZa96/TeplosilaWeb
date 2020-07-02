@@ -89,6 +89,19 @@ input [type=button], input[type=submit], input[type=reset] {
     display:inline-block;
 }
 
+.table {
+    counter-reset: rowNumber -1;
+}
+
+    .table tbody tr {
+        counter-increment: rowNumber;
+    }
+
+    .table tr td:first-child::before {
+        content: counter(rowNumber);
+
+    }
+
 .table td, .table th {
     padding: .2rem;
     vertical-align: top;
@@ -98,6 +111,13 @@ input [type=button], input[type=submit], input[type=reset] {
 .table tr{
     background-color: white;
 }
+
+    .table tr td a {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        color: transparent !important;
+    }
 
 .btn-index {
     border: 1px solid #f37134;
