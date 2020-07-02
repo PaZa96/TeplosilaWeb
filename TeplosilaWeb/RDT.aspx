@@ -548,7 +548,7 @@
                                         </asp:Label>
 
                                         <asp:TextBox ID="objTextBox1" runat="server" Enabled="False" Visible="False"
-                                            Width="862px"></asp:TextBox>
+                                            Width="819px"></asp:TextBox>
                                     </div>
                             </ContentTemplate>
                         </asp:UpdatePanel>
