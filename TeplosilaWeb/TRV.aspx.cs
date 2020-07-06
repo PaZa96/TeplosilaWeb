@@ -3203,87 +3203,347 @@ public partial class TRV : System.Web.UI.Page
 
     }
 
-    
+
 
     //-----------------------------Validators--------------------------------------------------
-    
+
+
+    protected void spvCustomValidator1_ServerValidate(object source, ServerValidateEventArgs args)
+    {
+        if (spvRadioButtonList1.SelectedIndex == -1)
+        {
+            spvCustomValidator1.ErrorMessage = "Выберите необходимое значение";
+            args.IsValid = false;
+        }
+    }
+
+    protected void rpvCustomValidator1_ServerValidate(object source, ServerValidateEventArgs args)
+    {
+        if (spvCustomValidator1.IsValid)
+        {
+            if (rpvRadioButtonList1.SelectedIndex == -1)
+            {
+                rpvCustomValidator1.ErrorMessage = "Выберите необходимое значение";
+                args.IsValid = false;
+            }
+        }
+        else
+        {
+            args.IsValid = false;
+            rpvCustomValidator1.ErrorMessage = "";
+        }
+    }
+
+    protected void aaCustomValidator8_ServerValidate(object source, ServerValidateEventArgs args)
+    {
+        if (rpvCustomValidator1.IsValid)
+        {
+            if (aaRadioButton1.Checked || aaRadioButton2.Checked || aaRadioButton3.Checked)
+            {
+                if (aa1RadioButtonList1.SelectedIndex > -1 || aa2RadioButtonList1.SelectedIndex > -1 || aa3RadioButtonList1.SelectedIndex > -1)
+                {
+                    args.IsValid = true;
+                    return;
+                }
+                else
+                {
+                    aaCustomValidator8.ErrorMessage = "Выберите необходимое значение";
+                    args.IsValid = false;
+                    return;
+                }
+            }
+            else
+            {
+                aaCustomValidator8.ErrorMessage = "Выберите необходимое значение";
+                args.IsValid = false;
+                return;
+            }
+        }
+        else
+        {
+            aaCustomValidator8.ErrorMessage = "";
+            args.IsValid = false;
+            return;
+        }
+    }
+
+    protected void tv1CustomValidator1_ServerValidate(object source, ServerValidateEventArgs args)
+    {
+        if (aaCustomValidator8.IsValid)
+        {
+            if (tvRadioButtonList1.SelectedIndex == -1)
+            {
+                tv1CustomValidator1.ErrorMessage = "Выберите необходимое значение";
+                args.IsValid = false;
+            }
+        }
+        else
+        {
+            args.IsValid = false;
+            tv1CustomValidator1.ErrorMessage = "";
+        }
+    }
+
+    protected void ws2CustomValidator1_ServerValidate(object source, ServerValidateEventArgs args)
+    {
+        if (tv1CustomValidator1.IsValid)
+        {
+            if (ws2RadioButtonList1.SelectedIndex == -1)
+            {
+                ws2CustomValidator1.ErrorMessage = "Выберите необходимое значение";
+                args.IsValid = false;
+            }
+        }
+        else
+        {
+            args.IsValid = false;
+            ws2CustomValidator1.ErrorMessage = "";
+        }
+    }
+
+    protected void CustomValidator16_ServerValidate(object source, ServerValidateEventArgs args)
+    {
+        if (ws2RadioButtonList1.SelectedIndex == 1 || ws2RadioButtonList1.SelectedIndex == 2)
+        {
+            if (ws2TextBox1.Enabled == false || checkTextBoxEmpty(ws2TextBox1))
+            {
+                CustomValidator16.ErrorMessage = "Необходимо заполнить поле";
+                args.IsValid = false;
+                return;
+            }
+            if (customConverterToDouble(ws2TextBox1.Text) < 5 || customConverterToDouble(ws2TextBox1.Text) > 65)
+            {
+                CustomValidator16.ErrorMessage = "Значение должно находится в диапазоне от 5% до 65%";
+                args.IsValid = false;
+                return;
+            }
+        }
+    }
+
+    protected void CustomValidator17_ServerValidate(object source, ServerValidateEventArgs args)
+    {
+        if (ws2RadioButtonList1.SelectedIndex == 1 || ws2RadioButtonList1.SelectedIndex == 2)
+        {
+            if (CustomValidator16.IsValid)
+            {
+                if (ws2TextBox2.Enabled == false || checkTextBoxEmpty(ws2TextBox2))
+                {
+                    CustomValidator17.ErrorMessage = "Необходимо заполнить поле";
+                    args.IsValid = false;
+                    return;
+                }
+                if (customConverterToDouble(ws2TextBox2.Text) < 0 || customConverterToDouble(ws2TextBox2.Text) > MaxT3x)
+                {
+                    CustomValidator17.ErrorMessage = "Значение должно находится в диапазоне от 0&#8451 до 150&#8451";
+                    args.IsValid = false;
+                    return;
+                }
+            }
+            else
+            {
+                args.IsValid = false;
+                CustomValidator17.ErrorMessage = "";
+            }
+        }
+    }
+
+    protected void CustomValidator18_ServerValidate(object source, ServerValidateEventArgs args)
+    {
+        if (CustomValidator17.IsValid)
+        {
+            if (lpvDropDownList2.Enabled)
+            {
+                if (lpvTextBox2.Enabled == false || checkTextBoxEmpty(lpvTextBox2))
+                {
+                    CustomValidator18.ErrorMessage = "Необходимо заполнить поле";
+                    args.IsValid = false;
+                    return;
+                }
+                if (customConverterToDouble(lpvTextBox2.Text) <= 0)
+                {
+                    CustomValidator18.ErrorMessage = "Неверно указано значение давления";
+                    args.IsValid = false;
+                    return;
+                }
+            }
+        }
+        else
+        {
+            args.IsValid = false;
+            CustomValidator18.ErrorMessage = "";
+        }
+        return;
+    }
+
+    protected void CustomValidator19_ServerValidate(object source, ServerValidateEventArgs args)
+    {
+        if (CustomValidator17.IsValid)
+        {
+            if (lpvDropDownList21.Enabled)
+            {
+                if (lpvTextBox21.Enabled == false || checkTextBoxEmpty(lpvTextBox21))
+                {
+                    CustomValidator19.ErrorMessage = "Необходимо заполнить поле";
+                    args.IsValid = false;
+                    return;
+                }
+                if (customConverterToDouble(lpvTextBox21.Text) <= 0)
+                {
+                    CustomValidator19.ErrorMessage = "Неверно указано значение давления";
+                    args.IsValid = false;
+                    return;
+                }
+            }
+        }
+        else
+        {
+            args.IsValid = false;
+            CustomValidator19.ErrorMessage = "";
+        }
+        return;
+    }
+
     protected void lpvCustomValidator1_ServerValidate(object source, ServerValidateEventArgs args)
     {
-        if (convertArrToBar(arrConvert3, lpvDropDownList1, lpvTextBox1) >= convertArrToBar(arrConvert3, calcvDropDownList1, calcvTextBox1))
+        if(CustomValidator18.IsValid && CustomValidator19.IsValid)
         {
-            lpvCustomValidator1.ErrorMessage = "Неверно указано значение давления";
-            args.IsValid = false;
-            
+            if (lpvDropDownList2.Enabled)
+            {
+                if (lpvTextBox1.Enabled == false || checkTextBoxEmpty(lpvTextBox1))
+                {
+                    lpvCustomValidator1.ErrorMessage = "Необходимо заполнить поле";
+                    args.IsValid = false;
+                    return;
+                }
+                if (customConverterToDouble(lpvTextBox1.Text) <= 0)
+                {
+                    lpvCustomValidator1.ErrorMessage = "Неверно указано значение давления";
+                    args.IsValid = false;
+                    return;
+                }
+            }
         }
+        else
+        {
+            lpvCustomValidator1.ErrorMessage = "";
+            args.IsValid = false;
+            return;
+        }
+
     }
 
     protected void calcvCustomValidator1_ServerValidate(object source, ServerValidateEventArgs args)
     {
-        if (tvRadioButtonList1.SelectedIndex == 0)
+        if (lpvCustomValidator1.IsValid)
         {
-            if (convertArrToBar(arrConvert3, calcvDropDownList1, calcvTextBox1) > PressureBeforeValve2x)
+            if (calcvDropDownList1.Enabled)
             {
-                calcvCustomValidator2.ErrorMessage = "На давление свыше 25 бар вариантов нет";
-                args.IsValid = false;
-                
+
+
+                if (calcvTextBox1.Enabled == false || checkTextBoxEmpty(calcvTextBox1))
+                {
+                    calcvCustomValidator1.ErrorMessage = "Необходимо заполнить поле";
+                    args.IsValid = false;
+                    return;
+                }
+                if (customConverterToDouble(lpvTextBox1.Text) <= 0)
+                {
+                    calcvCustomValidator1.ErrorMessage = "Неверно указано значение давления";
+                    args.IsValid = false;
+                    return;
+                }
+
+                double p62, p63;
+                p62 = customConverterToDouble(lpvTextBox1.Text) * arrConvert3[lpvDropDownList1.SelectedIndex - 1];
+                p63 = customConverterToDouble(calcvTextBox1.Text) * arrConvert3[calcvDropDownList1.SelectedIndex - 1];
+
+                if (!(p63 > p62))
+                {
+                    Label55.Visible = true;
+                    args.IsValid = false;
+                    return;
+                }
+                else
+                {
+                    Label55.Visible = false;
+                }
+
+                if (tvRadioButtonList1.SelectedIndex == 0)
+                {
+                    if (convertArrToBar(arrConvert3, calcvDropDownList1, calcvTextBox1) > PressureBeforeValve2x)
+                    {
+                        calcvCustomValidator2.ErrorMessage = "На давление свыше 25 бар вариантов нет";
+                        args.IsValid = false;
+
+                    }
+                    else if (convertArrToBar(arrConvert3, calcvDropDownList1, calcvTextBox1) <= PressureBeforeValve3x)
+                    {
+                        calcvTextBox1.Text = PressureBeforeValve3x.ToString();
+                    }
+                    else
+                    {
+                        calcvTextBox1.Text = PressureBeforeValve2x.ToString();
+                    }
+                    args.IsValid = true;
+
+                }
+                else
+                {
+                    if (convertArrToBar(arrConvert3, calcvDropDownList1, calcvTextBox1) > PressureBeforeValve3x)
+                    {
+                        calcvCustomValidator2.ErrorMessage = "На давление свыше 16 бар вариантов нет";
+                        args.IsValid = false;
+                        return;
+                    }
+                    else if (convertArrToBar(arrConvert3, calcvDropDownList1, calcvTextBox1) <= PressureBeforeValve3x)
+                    {
+                        calcvTextBox1.Text = PressureBeforeValve3x.ToString();
+                        args.IsValid = true;
+
+                    }
+                }
             }
-            else if (convertArrToBar(arrConvert3, calcvDropDownList1, calcvTextBox1) <= PressureBeforeValve3x)
-            {
-                calcvTextBox1.Text = PressureBeforeValve3x.ToString();
-            }
-            else
-            {
-                calcvTextBox1.Text = PressureBeforeValve2x.ToString();
-            }
-            args.IsValid = true;
-            
         }
         else
         {
-            if (convertArrToBar(arrConvert3, calcvDropDownList1, calcvTextBox1) > PressureBeforeValve3x)
-            {
-                calcvCustomValidator2.ErrorMessage = "На давление свыше 16 бар вариантов нет";
-                args.IsValid = false;
-                
-            }
-            else if (convertArrToBar(arrConvert3, calcvDropDownList1, calcvTextBox1) <= PressureBeforeValve3x)
-            {
-                calcvTextBox1.Text = PressureBeforeValve3x.ToString();
-                args.IsValid = true;
-                
-            }
+            calcvCustomValidator1.ErrorMessage = "";
+            args.IsValid = false;
+            return;
         }
     }
 
     protected void calcvCustomValidator2_ServerValidate(object source, ServerValidateEventArgs args)
     {
-        ValidateTemperature(tvRadioButtonList1, calcvTextBox2, args, calcvCustomValidator2);
+        if (calcvCustomValidator1.IsValid)
+        {
+            if (calcvTextBox2.Enabled == false || checkTextBoxEmpty(calcvTextBox2))
+            {
+                calcvCustomValidator2.ErrorMessage = "Необходимо заполнить поле";
+                args.IsValid = false;
+                return;
+            }
+            if (customConverterToDouble(calcvTextBox2.Text) <= 0)
+            {
+                calcvCustomValidator2.ErrorMessage = "Неверно указано значение температуры";
+                args.IsValid = false;
+                return;
+            }
+            ValidateTemperature(tvRadioButtonList1, calcvTextBox2, args, calcvCustomValidator2);
+        }
+        else
+        {
+            calcvCustomValidator2.ErrorMessage = "";
+            args.IsValid = false;
+            return;
+        }
+
     }
     
     protected void tvCustomValidator1_ServerValidate(object source, ServerValidateEventArgs args)
     {
         if (!ValidateTemperatureTable(args)) { args.IsValid = false; };
     }
-    protected void aaCustomValidator8_ServerValidate(object source, ServerValidateEventArgs args)
-    {
-        if (aaRadioButton1.Checked || aaRadioButton2.Checked || aaRadioButton3.Checked)
-        {
-            if (aa1RadioButtonList1.SelectedIndex > 0 || aa2RadioButtonList1.SelectedIndex > 0 || aa3RadioButtonList1.SelectedIndex > 0)
-            {
-                args.IsValid = true;
-            }
-            else
-            {
-                aaCustomValidator8.ErrorMessage = "Выберите необходимое значение";
-                args.IsValid = false;
-                
-            }
-        }
-        else
-        {
-            args.IsValid = true;
-        }
-    }
+    
     //----------------------------Support Functions---------------------------------
 
     public void ValidateTemperature(RadioButtonList radioButtonList, TextBox textBox, ServerValidateEventArgs args, CustomValidator customValidator)
@@ -3842,64 +4102,14 @@ public partial class TRV : System.Web.UI.Page
 
         RemoveCssClass(tdRBL, "panel-hide");
     }
-
-    protected void spvCustomValidator1_ServerValidate(object source, ServerValidateEventArgs args)
+    private bool checkTextBoxEmpty(TextBox tb)
     {
-        if (spvRadioButtonList1.SelectedIndex == -1)
-        {
-            spvCustomValidator1.ErrorMessage = "Выберите необходимое значение";
-            args.IsValid = false;
-        }
+        return tb.Text == "";
     }
 
-    protected void rpvCustomValidator1_ServerValidate(object source, ServerValidateEventArgs args)
-    {
-        if (spvCustomValidator1.IsValid)
-        {
-            if (rpvRadioButtonList1.SelectedIndex == -1)
-            {
-                rpvCustomValidator1.ErrorMessage = "Выберите необходимое значение";
-                args.IsValid = false;
-            }
-        }
-        else
-        {
-            args.IsValid = false;
-            rpvCustomValidator1.ErrorMessage = "";
-        }
-    }
 
-    protected void tv1CustomValidator1_ServerValidate(object source, ServerValidateEventArgs args)
-    {
-        if (rpvCustomValidator1.IsValid)
-        {
-            if (tvRadioButtonList1.SelectedIndex == -1)
-            {
-                tv1CustomValidator1.ErrorMessage = "Выберите необходимое значение";
-                args.IsValid = false;
-            }
-        }
-        else
-        {
-            args.IsValid = false;
-            tv1CustomValidator1.ErrorMessage = "";
-        }
-    }
+  
 
-    protected void ws2CustomValidator1_ServerValidate(object source, ServerValidateEventArgs args)
-    {
-        if (tv1CustomValidator1.IsValid)
-        {
-            if (ws2RadioButtonList1.SelectedIndex == -1)
-            {
-                ws2CustomValidator1.ErrorMessage = "Выберите необходимое значение";
-                args.IsValid = false;
-            }
-        }
-        else
-        {
-            args.IsValid = false;
-            ws2CustomValidator1.ErrorMessage = "";
-        }
-    }
+
+   
 }

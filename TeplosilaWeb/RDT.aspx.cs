@@ -1040,28 +1040,6 @@ public partial class RDT : System.Web.UI.Page
 
     //------------------------------------Validation Function START--------------------------------------
 
-    public void ValidFields()
-    {
-       
-        ws1TextBox1.Text = ConvertPointToComma(ws1TextBox1.Text);
-        ws1TextBox2.Text = ConvertPointToComma(ws1TextBox2.Text);
-        lp1TextBox1.Text = ConvertPointToComma(lp1TextBox1.Text);
-        lp1TextBox2.Text = ConvertPointToComma(lp1TextBox2.Text);
-        lp1TextBox3.Text = ConvertPointToComma(lp1TextBox3.Text);
-        lp1TextBox4.Text = ConvertPointToComma(lp1TextBox4.Text);
-        lp2TextBox1.Text = ConvertPointToComma(lp2TextBox1.Text);
-        lp2TextBox2.Text = ConvertPointToComma(lp2TextBox2.Text);
-        lp3TextBox1.Text = ConvertPointToComma(lp3TextBox1.Text);
-        lp3TextBox2.Text = ConvertPointToComma(lp3TextBox2.Text);
-        lp4TextBox2.Text = ConvertPointToComma(lp4TextBox2.Text);
-        calcrTextBox1.Text = ConvertPointToComma(calcrTextBox1.Text);
-        calcrTextBox2.Text = ConvertPointToComma(calcrTextBox2.Text);
-        fprTextBox1.Text = ConvertPointToComma(fprTextBox1.Text);
-        fprTextBox2.Text = ConvertPointToComma(fprTextBox2.Text);
-        fprTextBox3.Text = ConvertPointToComma(fprTextBox3.Text);
-        fprTextBox4.Text = ConvertPointToComma(fprTextBox4.Text);
-        fprTextBox5.Text = ConvertPointToComma(fprTextBox5.Text);
-    }
     protected void CustomValidator1_ServerValidate(object source, ServerValidateEventArgs args)
     {
         if (CustomValidator8.IsValid)
@@ -1412,7 +1390,7 @@ public partial class RDT : System.Web.UI.Page
 
     protected void CustomValidator12_ServerValidate(object source, ServerValidateEventArgs args)
     {
-        if (CustomValidator12.IsValid)
+        if (CustomValidator11.IsValid)
         {
             if (fprDropDownList1.Enabled)
             {
