@@ -6,6 +6,7 @@ using System.Data;
 using System.Diagnostics;
 using System.Diagnostics.Tracing;
 using System.Drawing;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Web;
@@ -55,11 +56,10 @@ public partial class RDT : System.Web.UI.Page
         LabelError.Text = "";
         fprLabelError.Text = "";
         LabelCustomValid.Visible = false;
-        if(!Page.IsPostBack)
-        {
-            ValidFields();
-        }
+
     }
+
+ 
 
 
     //------------------------------------Math Function START--------------------------------------
@@ -1042,6 +1042,7 @@ public partial class RDT : System.Web.UI.Page
 
     public void ValidFields()
     {
+       
         ws1TextBox1.Text = ConvertPointToComma(ws1TextBox1.Text);
         ws1TextBox2.Text = ConvertPointToComma(ws1TextBox2.Text);
         lp1TextBox1.Text = ConvertPointToComma(lp1TextBox1.Text);
@@ -1283,7 +1284,10 @@ public partial class RDT : System.Web.UI.Page
                 CustomValidator7.ErrorMessage = "На давление свыше 16 бар вариантов нет";
                 args.IsValid = false;
             }
+
+            lp1TextBox4.Text = ConvertPointToComma(lp1TextBox4.Text);
         }
+
         return;
     }
 
@@ -1673,8 +1677,6 @@ public partial class RDT : System.Web.UI.Page
 
     public double customConverterToDouble(string tb)
     {
-
-
         double afterConvert;
 
         if (tb.IndexOf(".") != -1)
@@ -1771,8 +1773,8 @@ public partial class RDT : System.Web.UI.Page
         
         if (!Page.IsValid) { return; }
         try {
-       
-        objTextBox1.Enabled = false;
+
+            objTextBox1.Enabled = false;
         objTextBox1.Visible = false;
         Label53.Visible = false;
         ScriptManager.RegisterStartupScript(this.Page, Page.GetType(), "MyClientScript", "javascript:HideBTN()", true);
@@ -2608,7 +2610,11 @@ public partial class RDT : System.Web.UI.Page
                 pos++;
 
             }
+
+            
+
             r_input_dict[5] = r_input_dict[41];
+            r_input_dict[41] = ConvertCommaToPoint(r_input_dict[41]);
             string fileName = r_input_dict[41];
 
             SpreadsheetInfo.SetLicense("FREE-LIMITED-KEY");
@@ -2627,6 +2633,11 @@ public partial class RDT : System.Web.UI.Page
             ws.PrintOptions.BottomMargin = 0.2 / 2.54;
             ws.PrintOptions.LeftMargin = 1 / 2.54;
             ws.PrintOptions.RightMargin = 1 / 2.54;
+
+            for (int i = 6; i < 40; i++)
+            {
+                r_input_dict[i] = ConvertPointToComma(r_input_dict[i]);
+            }
 
             ws.Cells["K53"].Value = r_input_dict[0];
 
@@ -2778,7 +2789,7 @@ public partial class RDT : System.Web.UI.Page
 
             }
 
-            r_input_dict[5] = r_input_dict[41];
+            r_input_dict[5] = ConvertCommaToPoint(r_input_dict[41]);
 
             SpreadsheetInfo.SetLicense("FREE-LIMITED-KEY");
 
@@ -3079,4 +3090,21 @@ public partial class RDT : System.Web.UI.Page
 
         return afterConvert;
     }
+
+    public string ConvertCommaToPoint(string tb)
+    {
+        string afterConvert = "";
+
+        if (tb.IndexOf(",") != -1)
+        {
+            afterConvert = tb.Replace(",", ".");
+        }
+        else
+        {
+            afterConvert = tb;
+        }
+
+        return afterConvert;
+    }
+
 }

@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="RDT.aspx.cs" Inherits="RDT"  Culture="ru-RU"%>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="RDT.aspx.cs" Inherits="RDT" Culture="ru-RU"%>
 <% @Import Namespace="System.Globalization" %>
 <!DOCTYPE html>
 
