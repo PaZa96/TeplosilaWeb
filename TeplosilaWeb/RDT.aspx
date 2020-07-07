@@ -244,7 +244,7 @@
                                             Text="Требуемое давление после регулятора:"></asp:Label>
                                         <br />
                                         <asp:Label ID="Label8" runat="server" Text="Р(треб) ="></asp:Label>
-                                        &nbsp;<asp:TextBox ID="lp2TextBox2" runat="server" step="0.00000000001"
+                                        &nbsp;&nbsp;<asp:TextBox ID="lp2TextBox2" runat="server" step="0.00000000001"
                                             Enabled="False" TextMode="Number"></asp:TextBox>
                                         &nbsp;<asp:DropDownList ID="lp2DropDownList2" runat="server" Enabled="False"
                                             OnSelectedIndexChanged="lp2DropDownList2_SelectedIndexChanged"
@@ -276,7 +276,7 @@
                                             Text="Требуемое давление перед регулятором:"></asp:Label>
                                         <br />
                                         <asp:Label ID="Label12" runat="server" Text="Р(треб) ="></asp:Label>
-                                        &nbsp;<asp:TextBox ID="lp3TextBox1" runat="server" step="0.00000000001"
+                                        &nbsp;&nbsp;<asp:TextBox ID="lp3TextBox1" runat="server" step="0.00000000001"
                                             Enabled="False" TextMode="Number"></asp:TextBox>
                                         &nbsp;<asp:DropDownList ID="lp3DropDownList1" runat="server" Enabled="False"
                                             OnSelectedIndexChanged="lp3DropDownList1_SelectedIndexChanged"
@@ -431,7 +431,7 @@
                                             <asp:ListItem>т/ч</asp:ListItem>
                                         </asp:DropDownList>
                                         <asp:CustomValidator ID="CustomValidator12" runat="server"
-                                            ControlToValidate="lp1DropDownList1" ErrorMessage="CustomValidator"
+                                            ControlToValidate="fprDropDownList1" ErrorMessage="CustomValidator"
                                             ForeColor="Red" OnServerValidate="CustomValidator12_ServerValidate"
                                             SetFocusOnError="True"></asp:CustomValidator>
                                         <br />

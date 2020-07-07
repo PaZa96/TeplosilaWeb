@@ -14,6 +14,7 @@ using System.Threading;
 using System.Diagnostics;
 using TeplosilaWeb.App_Code;
 using System.Web.UI.HtmlControls;
+using System.Reflection.Emit;
 
 public partial class TRV : System.Web.UI.Page
 {
@@ -51,6 +52,8 @@ public partial class TRV : System.Web.UI.Page
         arrConvert3 = new double[4] { 1000, 1, 100, 10 };
 
         Logger.InitLogger();//инициализация - требуется один раз в начале
+        Label8.Text = "";
+        Label55.Visible = false;
     }
 
     protected void tvRadioButtonList1_SelectedIndexChanged(object sender, EventArgs e)
@@ -2269,16 +2272,12 @@ public partial class TRV : System.Web.UI.Page
     {
         if (!Page.IsValid) { return; }
         try { 
-        ResetColorToAllControls();
+        //ResetColorToAllControls();
         DisableTextBox(objTextBox1);
         objTextBox1.Enabled = false;
         GridView2.Columns.Clear();
         GridView2.DataSource = null;
         GridView2.DataBind();
-
-        
-
-
 
         readFile(0);
         Dictionary<string, double> g_dict = new Dictionary<string, double>();
@@ -3130,7 +3129,7 @@ public partial class TRV : System.Web.UI.Page
                                 }
                                 else
                                 {
-                                    LabelError.Text += "Не задан расход через клапан";
+                                    Label8.Text += "Не задан расход через клапан";
                                     return;
                                 }
                             }
@@ -3275,12 +3274,14 @@ public partial class TRV : System.Web.UI.Page
             {
                 tv1CustomValidator1.ErrorMessage = "Выберите необходимое значение";
                 args.IsValid = false;
+                return;
             }
         }
         else
         {
             args.IsValid = false;
             tv1CustomValidator1.ErrorMessage = "";
+            return;
         }
     }
 
@@ -3292,6 +3293,7 @@ public partial class TRV : System.Web.UI.Page
             {
                 ws2CustomValidator1.ErrorMessage = "Выберите необходимое значение";
                 args.IsValid = false;
+                return;
             }
         }
         else
@@ -3303,28 +3305,37 @@ public partial class TRV : System.Web.UI.Page
 
     protected void CustomValidator16_ServerValidate(object source, ServerValidateEventArgs args)
     {
-        if (ws2RadioButtonList1.SelectedIndex == 1 || ws2RadioButtonList1.SelectedIndex == 2)
+        if (ws2CustomValidator1.IsValid)
         {
-            if (ws2TextBox1.Enabled == false || checkTextBoxEmpty(ws2TextBox1))
+            if (ws2RadioButtonList1.SelectedIndex == 1 || ws2RadioButtonList1.SelectedIndex == 2)
             {
-                CustomValidator16.ErrorMessage = "Необходимо заполнить поле";
-                args.IsValid = false;
-                return;
+                if (ws2TextBox1.Enabled == false || checkTextBoxEmpty(ws2TextBox1))
+                {
+                    CustomValidator16.ErrorMessage = "Необходимо заполнить поле";
+                    args.IsValid = false;
+                    return;
+                }
+                if (customConverterToDouble(ws2TextBox1.Text) < 5 || customConverterToDouble(ws2TextBox1.Text) > 65)
+                {
+                    CustomValidator16.ErrorMessage = "Значение должно находится в диапазоне от 5% до 65%";
+                    args.IsValid = false;
+                    return;
+                }
             }
-            if (customConverterToDouble(ws2TextBox1.Text) < 5 || customConverterToDouble(ws2TextBox1.Text) > 65)
-            {
-                CustomValidator16.ErrorMessage = "Значение должно находится в диапазоне от 5% до 65%";
-                args.IsValid = false;
-                return;
-            }
+        }
+        else
+        {
+            args.IsValid = false;
+            CustomValidator16.ErrorMessage = "";
         }
     }
 
     protected void CustomValidator17_ServerValidate(object source, ServerValidateEventArgs args)
     {
-        if (ws2RadioButtonList1.SelectedIndex == 1 || ws2RadioButtonList1.SelectedIndex == 2)
+        
+        if (CustomValidator16.IsValid)
         {
-            if (CustomValidator16.IsValid)
+            if (ws2RadioButtonList1.SelectedIndex == 1 || ws2RadioButtonList1.SelectedIndex == 2)
             {
                 if (ws2TextBox2.Enabled == false || checkTextBoxEmpty(ws2TextBox2))
                 {
@@ -3339,17 +3350,18 @@ public partial class TRV : System.Web.UI.Page
                     return;
                 }
             }
-            else
-            {
-                args.IsValid = false;
-                CustomValidator17.ErrorMessage = "";
-            }
+            
+        }
+        else
+        {
+            args.IsValid = false;
+            CustomValidator17.ErrorMessage = "";
         }
     }
 
     protected void CustomValidator18_ServerValidate(object source, ServerValidateEventArgs args)
     {
-        if (CustomValidator17.IsValid)
+        if (CustomValidator17.IsValid && ws2CustomValidator1.IsValid)
         {
             if (lpvDropDownList2.Enabled)
             {
@@ -3438,8 +3450,6 @@ public partial class TRV : System.Web.UI.Page
         {
             if (calcvDropDownList1.Enabled)
             {
-
-
                 if (calcvTextBox1.Enabled == false || checkTextBoxEmpty(calcvTextBox1))
                 {
                     calcvCustomValidator1.ErrorMessage = "Необходимо заполнить поле";
@@ -3452,6 +3462,8 @@ public partial class TRV : System.Web.UI.Page
                     args.IsValid = false;
                     return;
                 }
+
+                double p61 = 0;
 
                 double p62, p63;
                 p62 = customConverterToDouble(lpvTextBox1.Text) * arrConvert3[lpvDropDownList1.SelectedIndex - 1];
@@ -3474,18 +3486,8 @@ public partial class TRV : System.Web.UI.Page
                     {
                         calcvCustomValidator2.ErrorMessage = "На давление свыше 25 бар вариантов нет";
                         args.IsValid = false;
-
+                        return;
                     }
-                    else if (convertArrToBar(arrConvert3, calcvDropDownList1, calcvTextBox1) <= PressureBeforeValve3x)
-                    {
-                        calcvTextBox1.Text = PressureBeforeValve3x.ToString();
-                    }
-                    else
-                    {
-                        calcvTextBox1.Text = PressureBeforeValve2x.ToString();
-                    }
-                    args.IsValid = true;
-
                 }
                 else
                 {
@@ -3495,12 +3497,7 @@ public partial class TRV : System.Web.UI.Page
                         args.IsValid = false;
                         return;
                     }
-                    else if (convertArrToBar(arrConvert3, calcvDropDownList1, calcvTextBox1) <= PressureBeforeValve3x)
-                    {
-                        calcvTextBox1.Text = PressureBeforeValve3x.ToString();
-                        args.IsValid = true;
 
-                    }
                 }
             }
         }
@@ -3516,7 +3513,7 @@ public partial class TRV : System.Web.UI.Page
     {
         if (calcvCustomValidator1.IsValid)
         {
-            if (calcvTextBox2.Enabled == false || checkTextBoxEmpty(calcvTextBox2))
+            if (checkTextBoxEmpty(calcvTextBox2))
             {
                 calcvCustomValidator2.ErrorMessage = "Необходимо заполнить поле";
                 args.IsValid = false;
@@ -3528,7 +3525,24 @@ public partial class TRV : System.Web.UI.Page
                 args.IsValid = false;
                 return;
             }
-            ValidateTemperature(tvRadioButtonList1, calcvTextBox2, args, calcvCustomValidator2);
+            if (tvRadioButtonList1.SelectedIndex == 0)
+            {
+                if (customConverterToDouble(calcvTextBox2.Text) > MaxT2x)
+                {
+                    calcvCustomValidator2.ErrorMessage = "На температуру свыше 220&#8451; вариантов нет";
+                    args.IsValid = false;
+                    return;
+                }
+            }
+            else
+            {
+                if (customConverterToDouble(calcvTextBox2.Text) > MaxT3x)
+                {
+                    calcvCustomValidator2.ErrorMessage = "На температуру свыше 150&#8451; вариантов нет";
+                    args.IsValid = false;
+                    return;
+                }
+            }
         }
         else
         {
@@ -3538,7 +3552,61 @@ public partial class TRV : System.Web.UI.Page
         }
 
     }
-    
+
+    protected void CustomValidator12_ServerValidate(object source, ServerValidateEventArgs args)
+    {
+        if (calcvCustomValidator2.IsValid)
+        {
+            if (fvDropDownList1.Enabled)
+            {
+                if (fvTextBox1.Enabled == false || checkTextBoxEmpty(fvTextBox1))
+                {
+                    CustomValidator12.ErrorMessage = "Необходимо заполнить поле";
+                    args.IsValid = false;
+                    return;
+                }
+                if (customConverterToDouble(fvTextBox1.Text) <= 0)
+                {
+                    CustomValidator12.ErrorMessage = "Неверно указано значение расхода";
+                    args.IsValid = false;
+
+                }
+            }
+        }
+        else
+        {
+            args.IsValid = false;
+            CustomValidator12.ErrorMessage = "";
+        }
+    }
+
+    protected void CustomValidator20_ServerValidate(object source, ServerValidateEventArgs args)
+    {
+        if (tvCustomValidator1.IsValid)
+        {
+            if (fvDropDownList2.Enabled)
+            {
+                if (fvTextBox10.Enabled == false || checkTextBoxEmpty(fvTextBox10))
+                {
+                    CustomValidator20.ErrorMessage = "Необходимо заполнить поле";
+                    args.IsValid = false;
+                    return;
+                }
+                if (customConverterToDouble(fvTextBox10.Text) <= 0)
+                {
+                    CustomValidator20.ErrorMessage = "Неверно указано значение тепловой мощности";
+                    args.IsValid = false;
+                    return;
+                }
+            }
+        }
+        else
+        {
+            args.IsValid = false;
+            CustomValidator20.ErrorMessage = "";
+        }
+    }
+
     protected void tvCustomValidator1_ServerValidate(object source, ServerValidateEventArgs args)
     {
         if (!ValidateTemperatureTable(args)) { args.IsValid = false; };
@@ -3556,14 +3624,6 @@ public partial class TRV : System.Web.UI.Page
                 args.IsValid = false;
 
             }
-            else if (customConverterToDouble(textBox.Text) <= MaxT3x)
-            {
-                textBox.Text = MaxT3x.ToString();
-            }
-            else
-            {
-                textBox.Text = MaxT2x.ToString();
-            }
         }
         else
         {
@@ -3571,10 +3631,6 @@ public partial class TRV : System.Web.UI.Page
             {
                 customValidator.ErrorMessage = "На температуру свыше 150&#8451; вариантов нет";
                 args.IsValid = false;
-            }
-            else if (customConverterToDouble(textBox.Text) <= MaxT3x)
-            {
-                textBox.Text = MaxT3x.ToString();
             }
         }
     }
@@ -3740,7 +3796,11 @@ public partial class TRV : System.Web.UI.Page
             pos++;
                 
         }
+
         v_input_dict[8] = v_input_dict[42];
+        v_input_dict[42] = ConvertCommaToPoint(v_input_dict[42]);
+        string fileName = v_input_dict[42];
+
 
         SpreadsheetInfo.SetLicense("FREE-LIMITED-KEY");
 
@@ -3758,6 +3818,11 @@ public partial class TRV : System.Web.UI.Page
         ws.PrintOptions.BottomMargin = 0.1 / 2.54;
         ws.PrintOptions.LeftMargin = 1 / 2.54;
         ws.PrintOptions.RightMargin = 0.78 / 2.54;
+
+        for (int i = 9; i < 38; i++)
+        {
+            v_input_dict[i] = ConvertPointToComma(v_input_dict[i]);
+        }
 
         ws.Cells["K46"].Value = v_input_dict[0];
 
@@ -3845,7 +3910,7 @@ public partial class TRV : System.Web.UI.Page
         ws.Cells["G40"].Value = v_input_dict[68];
 
 
-        ws.Pictures.Add(HttpContext.Current.Server.MapPath("\\Content\\images\\trv" + ((v_input_dict[7] == this.tvRadioButtonList1.Items[tvRadioButtonList1.SelectedIndex].Text) ? "Габаритный TRV и TRV-P.png" : "Габаритный TRV-3.png")), "A37", "B46");
+        ws.Pictures.Add(HttpContext.Current.Server.MapPath("\\Content\\images\\trv\\" + ((v_input_dict[7] == this.tvRadioButtonList1.Items[tvRadioButtonList1.SelectedIndex].Text) ? "Габаритный TRV и TRV-P.png" : "Габаритный TRV-3.png")), "A37", "B46");
        
 
         string path = HttpContext.Current.Server.MapPath("\\Files\\TRV\\PDF\\" + DateTime.Now.ToString("dd-MM-yyyy"));
@@ -3856,7 +3921,7 @@ public partial class TRV : System.Web.UI.Page
             
         }
 
-        string fileName = "";
+        
 
         if (!String.IsNullOrWhiteSpace(objTextBox1.Text)) {
             fileName = objTextBox1.Text;
@@ -4108,8 +4173,42 @@ public partial class TRV : System.Web.UI.Page
     }
 
 
-  
+    public string ConvertPointToComma(string tb)
+    {
+        string afterConvert = "";
+
+        if (tb.IndexOf(".") != -1)
+        {
+            afterConvert = tb.Replace(".", ",");
+        }
+        else
+        {
+            afterConvert = tb;
+        }
+
+        return afterConvert;
+    }
+
+    public string ConvertCommaToPoint(string tb)
+    {
+        string afterConvert = "";
+
+        if (tb.IndexOf(",") != -1)
+        {
+            afterConvert = tb.Replace(",", ".");
+        }
+        else
+        {
+            afterConvert = tb;
+        }
+
+        return afterConvert;
+    }
 
 
-   
+
+
+
+
+
 }
