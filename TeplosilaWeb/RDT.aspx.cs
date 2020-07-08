@@ -2616,8 +2616,17 @@ public partial class RDT : System.Web.UI.Page
 
             for (int i = 6; i < 37; i++)
             {
-                i++;
-                r_input_dict[i] = ConvertPointToComma(r_input_dict[i]);
+                if (i == 16 || i == 18)
+                {
+                    r_input_dict[i] = ConvertPointToComma(r_input_dict[i]);
+                    i++;
+                }
+                else
+                {
+                    i++;
+                    r_input_dict[i] = ConvertPointToComma(r_input_dict[i]);
+                }
+                
             }
 
             ws.Cells["K53"].Value = r_input_dict[0];
