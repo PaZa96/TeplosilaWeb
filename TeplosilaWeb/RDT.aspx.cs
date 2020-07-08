@@ -1411,7 +1411,7 @@ public partial class RDT : System.Web.UI.Page
         else
         {
             args.IsValid = false;
-            CustomValidator11.ErrorMessage = "";
+            CustomValidator12.ErrorMessage = "";
         }
     }
     protected void CustomValidator13_ServerValidate(object source, ServerValidateEventArgs args)
@@ -1680,6 +1680,7 @@ public partial class RDT : System.Web.UI.Page
         textBoxDisable(lp1TextBox3);
         dropDownListEnable(lp1DropDownList4, flag);
         textBoxDisable(lp1TextBox4);
+        textBoxDisable(lp1TextBox5);
     }
     public void lp2ControlEnable(bool flag)
     {
@@ -1716,6 +1717,7 @@ public partial class RDT : System.Web.UI.Page
     {
         textBox.Enabled = false;
         textBox.Text = String.Empty;
+        
     }
 
     static void WaitDownload(int second)
@@ -2050,7 +2052,7 @@ public partial class RDT : System.Web.UI.Page
                                     }
                                     else
                                     {
-                                        lp1TextBox1.BackColor = Color.White;
+                                        
                                         g_dict.Add("p17", p17);
                                         g_dict.Add("p19", p19);
                                         g_dict.Add("p21", p21);
@@ -2612,8 +2614,9 @@ public partial class RDT : System.Web.UI.Page
             ws.PrintOptions.LeftMargin = 1 / 2.54;
             ws.PrintOptions.RightMargin = 1 / 2.54;
 
-            for (int i = 6; i < 40; i++)
+            for (int i = 6; i < 37; i++)
             {
+                i++;
                 r_input_dict[i] = ConvertPointToComma(r_input_dict[i]);
             }
 
