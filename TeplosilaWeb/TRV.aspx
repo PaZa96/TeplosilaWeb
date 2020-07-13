@@ -181,7 +181,7 @@
                                     <div class="col">
                                         <asp:Label ID="Label9" runat="server" Text="&#916;Pсист = "></asp:Label>
                                         <asp:TextBox ID="lpvTextBox2" runat="server" Enabled="False" step="0.01"
-                                            type="number" TextMode="Number" required="required"></asp:TextBox>
+                                            type="number" TextMode="Number" required="required" CausesValidation="True"></asp:TextBox>
                                         <asp:DropDownList ID="lpvDropDownList2" runat="server" AutoPostBack="True"
                                             Enabled="False"
                                             OnSelectedIndexChanged="lpvDropDownList2_SelectedIndexChanged">
@@ -247,7 +247,7 @@
                                     <div class="col">
                                         <asp:Label ID="Label13" runat="server" Text="&#916;Pкл = "></asp:Label>
                                         &nbsp;&nbsp;&nbsp;<asp:TextBox ID="lpvTextBox1" runat="server" Enabled="False" step="0.01"
-                                            type="number" required="required" TextMode="Number"></asp:TextBox>
+                                            type="number" required="required" TextMode="Number" CausesValidation="True"></asp:TextBox>
                                         <asp:DropDownList ID="lpvDropDownList1" runat="server" AutoPostBack="True"
                                             Enabled="False"
                                             OnSelectedIndexChanged="lpvDropDownList1_SelectedIndexChanged">
@@ -260,7 +260,7 @@
                                         &nbsp;<asp:CustomValidator ID="lpvCustomValidator1" runat="server"
                                             ControlToValidate="lpvDropDownList1" Display="Dynamic"
                                             ErrorMessage="CustomValidator" ForeColor="Red" SetFocusOnError="True"
-                                            OnServerValidate="lpvCustomValidator1_ServerValidate"></asp:CustomValidator>
+                                            OnServerValidate="lpvCustomValidator1_ServerValidate" ValidateEmptyText="True"></asp:CustomValidator>
                                         <asp:Label ID="Label55" runat="server" ForeColor="Red"
                                             Text="Неверно указано значение давления" Visible="False"></asp:Label>
                                         <br />
@@ -300,8 +300,7 @@
                                         &nbsp;<asp:CustomValidator ID="calcvCustomValidator1" runat="server"
                                             ErrorMessage="CustomValidator" ControlToValidate="calcvDropDownList1"
                                             Display="Dynamic" ForeColor="Red" SetFocusOnError="True"
-                                            OnServerValidate="calcvCustomValidator1_ServerValidate">
-                                        </asp:CustomValidator>
+                                            OnServerValidate="calcvCustomValidator1_ServerValidate" ValidateEmptyText="True"></asp:CustomValidator>
                                         <br />
                                         <asp:Label ID="Label22" runat="server"
                                             Text="Максимальная температура теплоносителя через клапан:">
@@ -349,7 +348,7 @@
                                         &nbsp;<asp:CustomValidator ID="CustomValidator12" runat="server"
                                             ControlToValidate="fvDropDownList1" ErrorMessage="CustomValidator"
                                             ForeColor="Red" OnServerValidate="CustomValidator12_ServerValidate"
-                                            SetFocusOnError="True"></asp:CustomValidator>
+                                            SetFocusOnError="True" ValidateEmptyText="True"></asp:CustomValidator>
                                         <br />
                                     </div>
                                 </ContentTemplate>

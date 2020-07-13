@@ -3454,10 +3454,12 @@ public partial class TRV : System.Web.UI.Page
 
     protected void calcvCustomValidator1_ServerValidate(object source, ServerValidateEventArgs args)
     {
+        calcvCustomValidator1.Visible = true;
         if (lpvCustomValidator1.IsValid)
         {
             if (calcvDropDownList1.Enabled)
             {
+
                 if (calcvTextBox1.Enabled == false || checkTextBoxEmpty(calcvTextBox1))
                 {
                     calcvCustomValidator1.ErrorMessage = "Необходимо заполнить поле";
@@ -3481,6 +3483,7 @@ public partial class TRV : System.Web.UI.Page
                 {
                     Label55.Visible = true;
                     args.IsValid = false;
+                    calcvCustomValidator1.Visible = false;
                     return;
                 }
                 else
@@ -3492,7 +3495,7 @@ public partial class TRV : System.Web.UI.Page
                 {
                     if (convertArrToBar(arrConvert3, calcvDropDownList1, calcvTextBox1) > PressureBeforeValve2x)
                     {
-                        calcvCustomValidator2.ErrorMessage = "На давление свыше 25 бар вариантов нет";
+                        calcvCustomValidator1.ErrorMessage = "На давление свыше 25 бар вариантов нет";
                         args.IsValid = false;
                         return;
                     }
@@ -3501,7 +3504,7 @@ public partial class TRV : System.Web.UI.Page
                 {
                     if (convertArrToBar(arrConvert3, calcvDropDownList1, calcvTextBox1) > PressureBeforeValve3x)
                     {
-                        calcvCustomValidator2.ErrorMessage = "На давление свыше 16 бар вариантов нет";
+                        calcvCustomValidator1.ErrorMessage = "На давление свыше 16 бар вариантов нет";
                         args.IsValid = false;
                         return;
                     }
@@ -3806,9 +3809,11 @@ public partial class TRV : System.Web.UI.Page
         }
 
         v_input_dict[8] = v_input_dict[42];
-        v_input_dict[42] = ConvertCommaToPoint(v_input_dict[42]);
         string fileName = v_input_dict[42];
-
+        if (fileName == "&nbsp;")
+        {
+            fileName = "Регуляторов не найдено";
+        }
 
         SpreadsheetInfo.SetLicense("FREE-LIMITED-KEY");
 
@@ -3827,9 +3832,18 @@ public partial class TRV : System.Web.UI.Page
         ws.PrintOptions.LeftMargin = 1 / 2.54;
         ws.PrintOptions.RightMargin = 0.78 / 2.54;
 
-        for (int i = 9; i < 38; i++)
+        for (int i = 1; i < 50; i++)
         {
-            v_input_dict[i] = ConvertPointToComma(v_input_dict[i]);
+
+            if (i == 10 || i == 12 || i == 14 || i == 16 || i == 18 || i == 20 || i == 22 || i == 23 || i == 24 || i == 25 || i == 26 || i == 27 || i == 28 || i == 29 || i == 30 || i == 31 || i == 32 || i == 34 || i == 43 || i == 44 || i == 45 || i == 46 || i == 48 || i == 50 || i == 52 || i == 54 || i == 57 || i == 63 || i == 64 || i == 65 || i == 66 || i == 67 || i == 68)
+            {
+                v_input_dict[i] = ConvertPointToComma(v_input_dict[i]);
+            }
+
+            if (v_input_dict[i] == "&nbsp;")
+            {
+                v_input_dict[i] = "-";
+            }
         }
 
         ws.Cells["K46"].Value = v_input_dict[0];
