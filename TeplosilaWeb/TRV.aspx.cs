@@ -1535,10 +1535,15 @@ public partial class TRV : System.Web.UI.Page
                 listI2.Add("плохое");
             }
 
-            if (V > g_dict["vmax"])
+            if (V > 3 && V <= g_dict["vmax"])
             {
                 listI3.Add("возможен шум");
             }
+            else if (V > g_dict["vmax"])
+            {
+                listI3.Add("возможен эрозийный износ клапана");
+            }
+
             else if (V < 1.5)
             {
                 listI3.Add("возможен колебательный режим регулирования");
@@ -1884,9 +1889,9 @@ public partial class TRV : System.Web.UI.Page
                         case "100":
                             tmpMarkPriv = "110"; break;
                         case "125":
-                            tmpMarkPriv = "9"; break;
+                            tmpMarkPriv = "120"; break;
                         case "150":
-                            tmpMarkPriv = "9"; break;
+                            tmpMarkPriv = "120"; break;
                         default:
                             tmpMarkPriv = null; break;
                     }
@@ -1915,9 +1920,9 @@ public partial class TRV : System.Web.UI.Page
                         case "100":
                             tmpMarkPriv = "110R"; break;
                         case "125":
-                            tmpMarkPriv = "-"; break;
+                            tmpMarkPriv = "120R"; break;
                         case "150":
-                            tmpMarkPriv = "-"; break;
+                            tmpMarkPriv = "120R"; break;
                         default:
                             tmpMarkPriv = null; break;
                     }
@@ -2077,7 +2082,10 @@ public partial class TRV : System.Web.UI.Page
 
                 System.Text.RegularExpressions.Regex regex = null;
 
-                if (tvRadioButtonList1.SelectedIndex == 0) regex = new System.Text.RegularExpressions.Regex(@"(TRV-[0-9]+-[0-9,.]+-)");
+              
+                if (tvRadioButtonList1.SelectedIndex == 0 && (customConverterToDouble(g_dict["p35"].ToString()) <= 150)) regex = new System.Text.RegularExpressions.Regex(@"(TRV-[0-9]+-[0-9,.]+-)");
+                else if (tvRadioButtonList1.SelectedIndex == 0 && (customConverterToDouble(g_dict["p35"].ToString()) > 150)) regex = new System.Text.RegularExpressions.Regex(@"(TRV-T-[0-9]+-[0-9,.]+-)");
+
                 else regex = new System.Text.RegularExpressions.Regex(@"(TRV-3-[0-9]+-[0-9,.]+-)");
 
                 System.Text.RegularExpressions.Match match = regex.Match(listResult["A"].ElementAt(i));
