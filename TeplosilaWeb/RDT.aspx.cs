@@ -2594,7 +2594,6 @@ public partial class RDT : System.Web.UI.Page
             
 
             r_input_dict[5] = r_input_dict[41];
-            r_input_dict[41] = ConvertCommaToPoint(r_input_dict[41]);
             string fileName = r_input_dict[41];
             if (fileName == "&nbsp;")
             {
@@ -2621,7 +2620,7 @@ public partial class RDT : System.Web.UI.Page
             for (int i = 1; i < 50; i++)
             {
 
-                if (i == 2 || i == 7 || i == 9 || i == 11 || i == 13 || i == 16 || i == 18 || i == 20 || i == 22 || i == 23 || i == 25 || i == 27 || i == 29 || i == 31 || i == 33 || i == 34 || i == 36 ||i==38 || i==43 || i==44 || i==45 || i==47 || i==49)
+                if (i == 2 || i == 6 || i == 7 || i == 9 || i == 11 || i == 13 || i == 16 || i == 18 || i == 20 || i == 22 || i == 23 || i == 25 || i == 27 || i == 29 || i == 31 || i == 33 || i == 34 || i == 35 || i == 36 || i == 37 || i==38 || i == 42 || i ==43 || i==44 || i==46 || i==48)
                 {
                     r_input_dict[i] = ConvertPointToComma(r_input_dict[i]);
                     
