@@ -3809,7 +3809,7 @@ public partial class TRV : System.Web.UI.Page
         }
 
         v_input_dict[8] = v_input_dict[42];
-        string fileName = v_input_dict[42];
+        string fileName = ConvertCommaToPoint(v_input_dict[42]);
         if (fileName == "&nbsp;")
         {
             fileName = "Регуляторов не найдено";

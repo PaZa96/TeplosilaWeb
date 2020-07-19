@@ -2594,7 +2594,7 @@ public partial class RDT : System.Web.UI.Page
             
 
             r_input_dict[5] = r_input_dict[41];
-            string fileName = r_input_dict[41];
+            string fileName = ConvertCommaToPoint(r_input_dict[41]);
             if (fileName == "&nbsp;")
             {
                 fileName = "Регуляторов не найдено";
