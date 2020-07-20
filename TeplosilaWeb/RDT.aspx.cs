@@ -365,7 +365,7 @@ public partial class RDT : System.Web.UI.Page
                 I = customConverterToDouble(this.lp4TextBox2.Text) * arrConvert3[this.lp4DropDownList2.SelectedIndex - 1] / arrConvert3[2];
             }
 
-            if (I < (((eorRadioButtonList1.SelectedIndex == 2 || eorRadioButtonList1.SelectedIndex == 3)) ? 0.16 : 0.08) || I > 15.8)
+            if (I < (((eorRadioButtonList1.SelectedIndex == 2 || eorRadioButtonList1.SelectedIndex == 3)) ? 0.08 : 0.08) || I > 15.8)
             {
                 var _List = new List<string>();
                 if (listResult.ContainsKey("I"))
