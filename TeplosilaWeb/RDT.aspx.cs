@@ -658,7 +658,7 @@ public partial class RDT : System.Web.UI.Page
                         List<string> listA = new List<string>(),
                             listB = new List<string>();
 
-                        Kv_start = 1.2 * (Gpg * 0.01) / (Math.Sqrt(dPg * 0.001 * g));
+                        Kv_start = 1.2 * (Gpg * 0.01) / (Math.Sqrt(dPg * 0.001 * g/1000));
                         tmpKv = 300;
                         tmpA = "";
                         foreach (Newtonsoft.Json.Linq.JObject ob in table)
