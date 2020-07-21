@@ -49,7 +49,7 @@ public partial class TRV : System.Web.UI.Page
                 {1, 0.278, 16.67, 1000, 0.278, 1000, 1}
             };
         arrConvert2 = new double[5] { 1000, 1000000, 1, 1163000, 1.163 };
-        arrConvert3 = new double[4] { 1000, 1, 100, 10 };
+        arrConvert3 = new double[4] { 1000, 1, 100, 9.8067};
 
         Logger.InitLogger();//инициализация - требуется один раз в начале
         Label8.Text = "";
@@ -1033,11 +1033,11 @@ public partial class TRV : System.Web.UI.Page
 
         if (dPkl > dPto)
         {
-            Kv_start = Kv = g_dict["vKv"] * (Gkl * 0.01) / (Math.Sqrt(dPkl * 0.001 * g));
+            Kv_start = Kv = g_dict["vKv"] * (Gkl * 0.01) / (Math.Sqrt(dPkl * 0.001 * (1000 /g)));
         }
         else
         {
-            Kv_start = Kv = g_dict["vKv"] * (Gkl * 0.01) / (Math.Sqrt(dPto * 0.001 * g));
+            Kv_start = Kv = g_dict["vKv"] * (Gkl * 0.01) / (Math.Sqrt(dPto * 0.001 * (1000 / g)));
         }
 
 
@@ -1504,7 +1504,7 @@ public partial class TRV : System.Web.UI.Page
         {
 
             /*DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD*/
-            Pf = (Math.Pow(Gkl, 2) * 0.1) / (Math.Pow(double.Parse(listResult["B"].GetValue(i).ToString()), 2) * g);
+            Pf = g / 1000 * (Math.Pow(Gkl, 2) * 0.1) / (Math.Pow(double.Parse(listResult["B"].GetValue(i).ToString()), 2) * g);
             double dPf = Pf / 100;
             Pf = Math.Round(dPf, 2); /*Перевод с кПа в бар*/
 

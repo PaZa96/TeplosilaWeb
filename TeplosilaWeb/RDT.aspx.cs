@@ -50,7 +50,7 @@ public partial class RDT : System.Web.UI.Page
             {1, 0.278, 16.67, 1000, 0.278, 1000, 1}
             };
         arrConvert2 = new double[5] { 1000, 1000000, 1, 1163000, 1.163 };
-        arrConvert3 = new double[4] { 1000, 1, 100, 10 };
+        arrConvert3 = new double[4] { 1000, 1, 100, 9.8067 };
 
         Logger.InitLogger();//инициализация - требуется один раз в начале
         LabelError.Text = "";
@@ -728,7 +728,7 @@ public partial class RDT : System.Web.UI.Page
             for (int i = 0; i < listResult["C"].Count(); i++)
             {
                 /*DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD*/
-                Pf = (Math.Pow(Gpg, 2) * 0.1) / (Math.Pow(double.Parse(listResult["B"].GetValue(i).ToString()), 2) * g);
+                Pf = g / 1000 * (Math.Pow(Gpg, 2) * 0.1) / (Math.Pow(double.Parse(listResult["B"].GetValue(i).ToString()), 2) * g);
                 Pf = Math.Round(Pf / 100, 2); /*Перевод с кПа в бар*/
                 //listResult["D"] = new string[] { Pf.ToString() };
 
