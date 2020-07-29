@@ -2286,7 +2286,7 @@ public partial class TRV : System.Web.UI.Page
         GridView2.Columns.Clear();
         GridView2.DataSource = null;
         GridView2.DataBind();
-
+        GridView2.SelectedIndex = -1;
         readFile(0);
         Dictionary<string, double> g_dict = new Dictionary<string, double>();
         v_input_dict.Clear();
@@ -3110,9 +3110,12 @@ public partial class TRV : System.Web.UI.Page
                                                             }
                                                         }
                                                     }
-                                                    GridView2.DataSource = dt;
-                                                    GridView2.DataBind();
-                                                }
+                                                        GridView2.DataSource = dt;
+                                                        GridView2.DataBind();
+
+                                                       
+                                                        
+                                                    }
 
                                             }
                                             else

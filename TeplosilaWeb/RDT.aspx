@@ -508,11 +508,20 @@
                                 </div>
                             </ContentTemplate>
                         </asp:UpdatePanel>
-                    </div><br/>
-                    <div class="col non-padding">
-                        <asp:UpdatePanel ID="UpdatePanel9" runat="server">
+                   
+                    </div>
+                 </div>
+                 <div class="col-2">
+                    <asp:UpdatePanel ID="UpdatePanel16" runat="server">
+                        <ContentTemplate>
+                            <asp:Image ID="rPictureBox" runat="server" class="valve-image" />
+                        </ContentTemplate>
+                    </asp:UpdatePanel>
+                </div>
+                <div class="col-10">
+                     <asp:UpdatePanel ID="UpdatePanel8" runat="server">
                             <ContentTemplate>
-                                <div class="col non-padding">
+                                   <div class="col non-padding">
                                     <asp:Label ID="LabelError" runat="server" Font-Bold="True" Font-Size="Medium"
                                         Font-Strikeout="False" ForeColor="Red"></asp:Label>
                                 </div>
@@ -520,6 +529,15 @@
                                 <asp:Button ID="rButton" runat="server" type="submit" Text="Рассчитать" Width="100%"
                                     OnClick="rButton_Click" />
                                 
+                                   </ContentTemplate>
+                        </asp:UpdatePanel>
+                </div>
+                <br/>
+                <div class="col-12">
+                    <div class="col non-padding">
+                        <asp:UpdatePanel ID="UpdatePanel9" runat="server">
+                            <ContentTemplate>
+                            
                                     <asp:Label ID="Label52" runat="server" Enabled="False" Text="Результаты расчёта"
                                         Visible="False" Font-Bold="True" Font-Size="Medium"></asp:Label>
 
@@ -548,7 +566,7 @@
                                         </asp:Label>
 
                                         <asp:TextBox ID="objTextBox1" runat="server" Enabled="False" Visible="False"
-                                            Width="819px"></asp:TextBox>
+                                            Width="1020px"></asp:TextBox>
                                     </div>
                             </ContentTemplate>
                         </asp:UpdatePanel>
@@ -593,14 +611,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-2">
-                    <asp:UpdatePanel ID="UpdatePanel16" runat="server">
-                        <ContentTemplate>
-                            <asp:Image ID="rPictureBox" runat="server" class="valve-image" />
-                        </ContentTemplate>
-                    </asp:UpdatePanel>
-                </div>
-            </div>
+             </div>
         </form>
     </div>
 
