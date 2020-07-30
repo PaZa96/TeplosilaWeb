@@ -1535,11 +1535,11 @@ public partial class TRV : System.Web.UI.Page
                 listI2.Add("плохое");
             }
 
-            if (V > 3 && V <= g_dict["vmax"])
+            if (V > 3 && V <= 5 && spvRadioButtonList1.SelectedIndex == 1 ) //g_dict["vmax"])
             {
                 listI3.Add("возможен шум");
             }
-            else if (V > g_dict["vmax"])
+            else if (V > 5) // g_dict["vmax"])
             {
                 listI3.Add("возможен эрозийный износ клапана");
             }
@@ -1630,7 +1630,7 @@ public partial class TRV : System.Web.UI.Page
         ExcelFile efHtrv = ExcelFile.Load(HttpContext.Current.Server.MapPath(((tvRadioButtonList1.SelectedIndex == 0) ? "Content\\properties\\htrv.xlsx" : "\\Content\\properties\\htrv3.xlsx")));
         ExcelWorksheet wsHtrv = efHtrv.Worksheets[0];
 
-        ExcelFile efGtrv = ExcelFile.Load(HttpContext.Current.Server.MapPath(((tvRadioButtonList1.SelectedIndex == 0) ? "Content\\properties\\gtrv.xlsx" : "Content\\properties\\gtrv3.xlsx")));
+        ExcelFile efGtrv = ExcelFile.Load(HttpContext.Current.Server.MapPath(((tvRadioButtonList1.SelectedIndex == 0) ? ((customConverterToDouble(g_dict["p35"].ToString()) > 150) ? "Content\\properties\\gtrvt.xlsx" : "Content\\properties\\gtrv.xlsx") : "Content\\properties\\gtrv3.xlsx")));
         ExcelWorksheet wsGtrv = efGtrv.Worksheets[0];
 
         //ws.Cells["C4"].Value = r_input_dict[3];
@@ -1730,9 +1730,9 @@ public partial class TRV : System.Web.UI.Page
                         case "100":
                             tmpMarkPriv = "110R"; break;
                         case "125":
-                            tmpMarkPriv = "120R"; break;
+                            tmpMarkPriv = "-"; break;
                         case "150":
-                            tmpMarkPriv = "120R"; break;
+                            tmpMarkPriv = "-"; break;
                         default:
                             tmpMarkPriv = null; break;
                     }
@@ -1920,9 +1920,9 @@ public partial class TRV : System.Web.UI.Page
                         case "100":
                             tmpMarkPriv = "110R"; break;
                         case "125":
-                            tmpMarkPriv = "120R"; break;
+                            tmpMarkPriv = "-"; break;
                         case "150":
-                            tmpMarkPriv = "120R"; break;
+                            tmpMarkPriv = "-"; break;
                         default:
                             tmpMarkPriv = null; break;
                     }
