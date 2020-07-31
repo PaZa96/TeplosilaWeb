@@ -14,6 +14,7 @@
         .auto-style1 {
             width: 300px;
         }
+
         .auto-style7 {
             text-align: center;
             width: 300px;
@@ -181,7 +182,8 @@
                                     <div class="col">
                                         <asp:Label ID="Label9" runat="server" Text="&#916;Pсист = "></asp:Label>
                                         <asp:TextBox ID="lpvTextBox2" runat="server" Enabled="False" step="0.01"
-                                            type="number" TextMode="Number" required="required" CausesValidation="True"></asp:TextBox>
+                                            type="number" TextMode="Number" required="required" CausesValidation="True">
+                                        </asp:TextBox>
                                         <asp:DropDownList ID="lpvDropDownList2" runat="server" AutoPostBack="True"
                                             Enabled="False"
                                             OnSelectedIndexChanged="lpvDropDownList2_SelectedIndexChanged">
@@ -246,8 +248,9 @@
                                     </asp:Label>
                                     <div class="col">
                                         <asp:Label ID="Label13" runat="server" Text="&#916;Pкл = "></asp:Label>
-                                        &nbsp;&nbsp;&nbsp;<asp:TextBox ID="lpvTextBox1" runat="server" Enabled="False" step="0.01"
-                                            type="number" required="required" TextMode="Number" CausesValidation="True"></asp:TextBox>
+                                        &nbsp;&nbsp;&nbsp;<asp:TextBox ID="lpvTextBox1" runat="server" Enabled="False"
+                                            step="0.01" type="number" required="required" TextMode="Number"
+                                            CausesValidation="True"></asp:TextBox>
                                         <asp:DropDownList ID="lpvDropDownList1" runat="server" AutoPostBack="True"
                                             Enabled="False"
                                             OnSelectedIndexChanged="lpvDropDownList1_SelectedIndexChanged">
@@ -260,12 +263,14 @@
                                         &nbsp;<asp:CustomValidator ID="lpvCustomValidator1" runat="server"
                                             ControlToValidate="lpvDropDownList1" Display="Dynamic"
                                             ErrorMessage="CustomValidator" ForeColor="Red" SetFocusOnError="True"
-                                            OnServerValidate="lpvCustomValidator1_ServerValidate" ValidateEmptyText="True"></asp:CustomValidator>
+                                            OnServerValidate="lpvCustomValidator1_ServerValidate"
+                                            ValidateEmptyText="True"></asp:CustomValidator>
                                         <asp:Label ID="Label55" runat="server" ForeColor="Red"
                                             Text="Неверно указано значение давления" Visible="False"></asp:Label>
                                         <br />
                                         <asp:Label ID="Label54" runat="server"
-                                            Text="(для корректной работы клапана потери давления <br/> на нем должны быть не менее, чем потери <br/> давления на регулируемом участке, т.е. <br/> в теплообменнике при независимой схеме присоединения <br/> или в системе при зависимой схеме присоединения)"></asp:Label>
+                                            Text="(для корректной работы клапана потери давления <br/> на нем должны быть не менее, чем потери <br/> давления на регулируемом участке, т.е. <br/> в теплообменнике при независимой схеме присоединения <br/> или в системе при зависимой схеме присоединения)">
+                                        </asp:Label>
                                         <br />
 
                                     </div>
@@ -285,8 +290,9 @@
                                         </asp:Label>
                                         <br />
                                         <asp:Label ID="Label21" runat="server" Text="P' = "></asp:Label>
-                                        &nbsp;&nbsp;&nbsp;<asp:TextBox ID="calcvTextBox1" runat="server" Enabled="False" step="0.01"
-                                            type="number" required="required" TextMode="Number"></asp:TextBox>
+                                        &nbsp;&nbsp;&nbsp;<asp:TextBox ID="calcvTextBox1" runat="server" Enabled="False"
+                                            step="0.01" type="number" required="required" TextMode="Number">
+                                        </asp:TextBox>
                                         <asp:DropDownList ID="calcvDropDownList1" runat="server" AutoPostBack="True"
                                             Enabled="False"
                                             OnSelectedIndexChanged="calcvDropDownList1_SelectedIndexChanged">
@@ -300,14 +306,16 @@
                                         &nbsp;<asp:CustomValidator ID="calcvCustomValidator1" runat="server"
                                             ErrorMessage="CustomValidator" ControlToValidate="calcvDropDownList1"
                                             Display="Dynamic" ForeColor="Red" SetFocusOnError="True"
-                                            OnServerValidate="calcvCustomValidator1_ServerValidate" ValidateEmptyText="True"></asp:CustomValidator>
+                                            OnServerValidate="calcvCustomValidator1_ServerValidate"
+                                            ValidateEmptyText="True"></asp:CustomValidator>
                                         <br />
                                         <asp:Label ID="Label22" runat="server"
                                             Text="Максимальная температура теплоносителя через клапан:">
                                         </asp:Label><br />
                                         <asp:Label ID="Label23" runat="server" Text="T1 = "></asp:Label>
-                                        &nbsp;&nbsp;<asp:TextBox ID="calcvTextBox2" runat="server" step="0.01" Enabled="False"
-                                            type="number" required="required" TextMode="Number" CausesValidation="True">
+                                        &nbsp;&nbsp;<asp:TextBox ID="calcvTextBox2" runat="server" step="0.01"
+                                            Enabled="False" type="number" required="required" TextMode="Number"
+                                            CausesValidation="True">
                                         </asp:TextBox>
                                         <asp:Label ID="Label24" runat="server" Text=" &#8451;"></asp:Label>
                                         &nbsp;<asp:CustomValidator ID="calcvCustomValidator2" runat="server"
@@ -366,7 +374,8 @@
                                                 <tr>
                                                     <th scope="col"></th>
                                                     <th scope="col"></th>
-                                                    <th scope="col" class="auto-style1">Температура подающего теплоносителя</th>
+                                                    <th scope="col" class="auto-style1">Температура подающего
+                                                        теплоносителя</th>
                                                     <th scope="col">Температура обратного теплоносителя</th>
                                                 </tr>
                                             </thead>
@@ -378,8 +387,8 @@
                                                     <td class="auto-style7">
                                                         <asp:Label ID="Label27" runat="server" Text="T1 = "></asp:Label>
                                                         <asp:TextBox ID="fvTextBox2" runat="server" step="0.01"
-                                                            Enabled="False"  Width="60px"
-                                                            required="required" TextMode="Number"></asp:TextBox>
+                                                            Enabled="False" Width="60px" required="required"
+                                                            TextMode="Number"></asp:TextBox>
                                                         <asp:Label ID="Label29" runat="server" Text=" &#8451;">
                                                         </asp:Label>
                                                     </td>
@@ -484,7 +493,10 @@
                                             <asp:ListItem class="dropdown-item">Гкал/ч</asp:ListItem>
                                             <asp:ListItem class="dropdown-item">ккал/ч</asp:ListItem>
                                         </asp:DropDownList>
-                                        <asp:CustomValidator ID="CustomValidator20" runat="server" ControlToValidate="fvDropDownList2" Display="Dynamic" ErrorMessage="CustomValidator" ForeColor="Red" OnServerValidate="CustomValidator20_ServerValidate"></asp:CustomValidator>
+                                        <asp:CustomValidator ID="CustomValidator20" runat="server"
+                                            ControlToValidate="fvDropDownList2" Display="Dynamic"
+                                            ErrorMessage="CustomValidator" ForeColor="Red"
+                                            OnServerValidate="CustomValidator20_ServerValidate"></asp:CustomValidator>
                                         <br />
 
                                         <asp:Label ID="Label46" runat="server" Text="Максимальный расход Gкл = ">
@@ -539,9 +551,9 @@
                                 </div>
                             </ContentTemplate>
                         </asp:UpdatePanel>
-                    </div><br />
-                 </div>
-                  <div class="col-xs-12 col-sm-2">
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-2">
                     <asp:UpdatePanel ID="UpdatePanel16" runat="server">
                         <ContentTemplate>
                             <asp:Image ID="vPictureBox" runat="server" class="valve-image" />
@@ -549,72 +561,74 @@
                     </asp:UpdatePanel>
                 </div>
                 <div class="col-10">
-                       <asp:UpdatePanel ID="UpdatePanel10" runat="server">
-                            <ContentTemplate>
-                                <asp:Label ID="LabelError" runat="server" Font-Bold="True" Font-Size="Medium"
-                                    Font-Strikeout="False" ForeColor="Red"></asp:Label>
-                                <br />
-                                <asp:Button ID="vButton" runat="server" type="submit" Text="Рассчитать"
-                                    OnClick="vButton_Click" Width="100%" />
-                            </ContentTemplate>
-                        </asp:UpdatePanel>
-                    </div>
-                    <div class="col-12">
-                       <asp:UpdatePanel ID="UpdatePanel9" runat="server">
-                            <ContentTemplate>
-                                <asp:Label ID="Label52" runat="server" Enabled="False" Text="Результаты расчёта"
-                                    Visible="False" Font-Size="Medium" Font-Bold="True"></asp:Label>
+                    <asp:UpdatePanel ID="UpdatePanel10" runat="server">
+                        <ContentTemplate>
+                            <asp:Label ID="LabelError" runat="server" Font-Bold="True" Font-Size="Medium"
+                                Font-Strikeout="False" ForeColor="Red"></asp:Label>
 
-                                <br />
+                            <asp:Button ID="vButton" runat="server" type="submit" Text="Рассчитать"
+                                OnClick="vButton_Click" Width="100%" />
+                        </ContentTemplate>
+                    </asp:UpdatePanel>
+                </div>
+                <div class="col-12">
+                    <asp:UpdatePanel ID="UpdatePanel9" runat="server">
+                        <ContentTemplate>
+                            <asp:Label ID="Label52" runat="server" Enabled="False" Text="Результаты расчёта"
+                                Visible="False" Font-Size="Medium" Font-Bold="True"></asp:Label>
+
+                            <div class="col non-padding">
                                 <asp:Label ID="ws2ResultLabel" runat="server" Text="Label" Visible="False"></asp:Label>
-                                <br />
+                            </div>
+
+                            <div class="col non-padding">
                                 <asp:Label ID="maxt2ResultLabel" runat="server" Text="maxt2ResultLabel" Visible="False">
                                 </asp:Label>
-                                <br />
+                            </div>
+                            <div class="col non-padding">
                                 <asp:Label ID="maxp2ResultLabel" runat="server" Text="Label" Visible="False">
                                 </asp:Label>
+                            </div>
 
-                                <div class="table-responsive-lg" onclick="ShowBTN()">
-                                    <asp:GridView ID="GridView2" CssClass="table table-result" runat="server"
-                                        Font-Size="X-Small" Visible="False"
-                                        OnSelectedIndexChanged="GridView2_SelectedIndexChanged"
-                                        AutoGenerateSelectButton="True">
+                            <div class="table-responsive-lg" onclick="ShowBTN()">
+                                <asp:GridView ID="GridView2" CssClass="table table-result" runat="server"
+                                    Font-Size="X-Small" Visible="False"
+                                    OnSelectedIndexChanged="GridView2_SelectedIndexChanged"
+                                    AutoGenerateSelectButton="True">
 
 
-                                        <RowStyle Font-Size="Small" />
-                                        <SelectedRowStyle BackColor="#ff7d00" Font-Bold="False" ForeColor="White" />
-                                    </asp:GridView>
-                                </div>
-                                <div class="col non-padding">
-                                    <asp:Label ID="Label53" runat="server" CssClass="show-btn" Text="Объект:"
-                                        Visible="False">
-                                    </asp:Label>
+                                    <RowStyle Font-Size="Small" />
+                                    <SelectedRowStyle BackColor="#ff7d00" Font-Bold="False" ForeColor="White" />
+                                </asp:GridView>
+                            </div>
+                            <div class="col non-padding">
+                                <asp:Label ID="Label53" runat="server" CssClass="show-btn" Text="Объект:"
+                                    Visible="False">
+                                </asp:Label>
 
-                                    <asp:TextBox ID="objTextBox1" runat="server" Enabled="False" Visible="False"  Width="1020px"> 
-                                    </asp:TextBox>
-                                </div>
-                                <script>
-                                    function ShowBTN() {
-                                        var element = document.getElementById('Label53');
-                                        var btn2 = document.getElementById('Button2');
-                                        //var btn3 = document.getElementById('Button3');
-                                        btn2.classList.add("show-btn");
-                                        //btn3.classList.add("show-btn");
-                                    };
-                                </script>
+                                <asp:TextBox ID="objTextBox1" runat="server" Enabled="False" Visible="False"
+                                    Width="1020px">
+                                </asp:TextBox>
+                            </div>
+                            <script>
+                                function ShowBTN() {
+                                    var element = document.getElementById('Label53');
+                                    var btn2 = document.getElementById('Button2');
+                                    //var btn3 = document.getElementById('Button3');
+                                    btn2.classList.add("show-btn");
+                                    //btn3.classList.add("show-btn");
+                                };
+                            </script>
 
-                            </ContentTemplate>
-                        </asp:UpdatePanel>
-                        <div class="col non-padding padding-top-bottom">
-                            <asp:Button ID="Button2" runat="server" Text="Сохранить в PDF"
-                                CssClass="btn btn-primary hide-btn" OnClick="Button2_Click" />
-                            <%--<asp:Button ID="Button3" runat="server" Text="Сохранить в Excel"
+                        </ContentTemplate>
+                    </asp:UpdatePanel>
+                    <div class="col non-padding padding-top-bottom">
+                        <asp:Button ID="Button2" runat="server" Text="Сохранить в PDF"
+                            CssClass="btn btn-primary hide-btn" OnClick="Button2_Click" />
+                        <%--<asp:Button ID="Button3" runat="server" Text="Сохранить в Excel"
                                 CssClass="btn btn-primary hide-btn" Display="None" OnClick="Button3_Click" />--%>
-                        </div>
                     </div>
                 </div>
-
-              
             </div>
         </form>
     </div>

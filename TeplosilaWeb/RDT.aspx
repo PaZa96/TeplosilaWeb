@@ -537,7 +537,6 @@
                     <div class="col non-padding">
                         <asp:UpdatePanel ID="UpdatePanel9" runat="server">
                             <ContentTemplate>
-                            
                                     <asp:Label ID="Label52" runat="server" Enabled="False" Text="Результаты расчёта"
                                         Visible="False" Font-Bold="True" Font-Size="Medium"></asp:Label>
 
@@ -550,7 +549,6 @@
                                     <div class="col non-padding">
                                         <asp:Label ID="maxp1ResultLabel" runat="server" Visible="False"></asp:Label>
                                     </div>
-
                                     <div class="table-responsive-lg" onclick="ShowBTN()">
                                         <asp:GridView ID="GridView1" CssClass="table table-result" runat="server" Font-Size="X-Small" Visible="False"
                                             OnSelectedIndexChanged="GridView1_SelectedIndexChanged" AutoGenerateSelectButton="True">

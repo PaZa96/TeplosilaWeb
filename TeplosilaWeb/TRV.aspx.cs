@@ -3814,6 +3814,8 @@ public partial class TRV : System.Web.UI.Page
 
         v_input_dict[8] = v_input_dict[42];
         string fileName = ConvertCommaToPoint(v_input_dict[42]);
+
+
         if (fileName == "&nbsp;")
         {
             fileName = "Регуляторов не найдено";
@@ -3947,14 +3949,6 @@ public partial class TRV : System.Web.UI.Page
             
         }
 
-        
-
-        if (!String.IsNullOrWhiteSpace(objTextBox1.Text)) {
-            fileName = objTextBox1.Text;
-                }
-        else {
-            fileName += DateTime.Now.ToString("dd-MM-yyyy");
-        }
 
         string filePath = path + "\\" + fileName + ".pdf";
 
