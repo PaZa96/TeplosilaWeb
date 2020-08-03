@@ -3963,7 +3963,7 @@ public partial class TRV : System.Web.UI.Page
             Response.ContentType = "application/pdf";
             Response.AppendHeader("Content-Disposition", "attachment; filename="+ file.Name);
             Response.TransmitFile(file.FullName);
-            Response.End();
+           
         }
         LabelError.Text += "End";
     }
@@ -4160,7 +4160,7 @@ public partial class TRV : System.Web.UI.Page
             Response.ContentType = "application/x-msexcel";
             Response.AppendHeader("Content-Disposition", "attachment; filename=" + file.Name);
             Response.TransmitFile(file.FullName);
-            Response.End();
+         
         }
 
 
