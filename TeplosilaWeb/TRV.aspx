@@ -283,8 +283,7 @@
                             <ContentTemplate>
                                 <div class="panel-hide" id="calcv" runat="server">
                                     <asp:Label ID="Label12" runat="server"
-                                        Text="Расчёт регулирующего клапана на кавариацию:">
-                                    </asp:Label>
+                                        Text="Расчёт регулирующего клапана на кавитацию:"></asp:Label>
                                     <div class="col">
                                         <asp:Label ID="Label26" runat="server" Text="Давление перед клапаном:">
                                         </asp:Label>

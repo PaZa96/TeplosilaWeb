@@ -2744,7 +2744,8 @@ public partial class RDT : System.Web.UI.Page
                 Response.ContentType = "application/pdf";
                 Response.AppendHeader("Content-Disposition", "attachment; filename=" + file.Name);
                 Response.TransmitFile(file.FullName);
-                Response.End();
+
+                //Response.Close();
             }
         }
 
