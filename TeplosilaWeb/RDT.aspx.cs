@@ -1701,6 +1701,16 @@ public partial class RDT : System.Web.UI.Page
         dropDownListEnable(lp4DropDownList2, flag);
         textBoxDisable(lp4TextBox2);
     }
+    public void lp5ControlEnable(bool flag)
+    {
+        dropDownListEnable(lp5DropDownList1, flag);
+        textBoxDisable(lp5TextBox1);
+        dropDownListEnable(lp5DropDownList2, flag);
+        textBoxDisable(lp5TextBox2);
+        textBoxDisable(lp5TextBox3);
+        lp5RadioButtonList1.Enabled = flag;
+        lp5RadioButtonList1.SelectedIndex = -1;
+    }
 
     public void dropDownListEnable(DropDownList dropDownList, bool flag)
     {
@@ -2941,44 +2951,65 @@ public partial class RDT : System.Web.UI.Page
                 lp2ControlEnable(false);
                 lp3ControlEnable(false);
                 lp4ControlEnable(false);
+                lp5ControlEnable(false);
 
                 RemoveCssClass(lp1, "panel-hide");
                 AddCssClass(lp2, "panel-hide");
                 AddCssClass(lp3, "panel-hide");
                 AddCssClass(lp4, "panel-hide");
+                AddCssClass(lp5, "panel-hide");
+
+                ws1RadioButton1.Enabled = false;
+                ws1RadioButton1.Checked = false;
                 break;
             case 1:
+
+                ws1RadioButton1.Enabled = true;
+
                 lp1ControlEnable(false);
-                lp2ControlEnable(true);
+                lp2ControlEnable(false);
                 lp3ControlEnable(false);
                 lp4ControlEnable(false);
+                lp5ControlEnable(false);
 
                 AddCssClass(lp1, "panel-hide");
-                RemoveCssClass(lp2, "panel-hide");
+                AddCssClass(lp2, "panel-hide");
                 AddCssClass(lp3, "panel-hide");
                 AddCssClass(lp4, "panel-hide");
+                AddCssClass(lp5, "panel-hide");
+
                 break;
             case 2:
                 lp1ControlEnable(false);
                 lp2ControlEnable(false);
                 lp3ControlEnable(true);
                 lp4ControlEnable(false);
+                lp5ControlEnable(false);
 
                 AddCssClass(lp1, "panel-hide");
                 AddCssClass(lp2, "panel-hide");
                 RemoveCssClass(lp3, "panel-hide");
                 AddCssClass(lp4, "panel-hide");
+                AddCssClass(lp5, "panel-hide");
+
+                ws1RadioButton1.Enabled = false;
+                ws1RadioButton1.Checked = false;
                 break;
             case 3:
                 lp1ControlEnable(false);
                 lp2ControlEnable(false);
                 lp3ControlEnable(false);
                 lp4ControlEnable(true);
+                lp5ControlEnable(false);
 
                 AddCssClass(lp1, "panel-hide");
                 AddCssClass(lp2, "panel-hide");
                 AddCssClass(lp3, "panel-hide");
                 RemoveCssClass(lp4, "panel-hide");
+                AddCssClass(lp5, "panel-hide");
+
+                ws1RadioButton1.Enabled = false;
+                ws1RadioButton1.Checked = false;
                 break;
         }
 
@@ -3044,6 +3075,20 @@ public partial class RDT : System.Web.UI.Page
         calcrTextBox2.Enabled = true;
         RemoveCssClass(calcr, "panel-hide");
 
+        ws1RadioButton1.Checked = false;
+
+        lp1ControlEnable(false);
+        lp2ControlEnable(true);
+        lp3ControlEnable(false);
+        lp4ControlEnable(false);
+        lp5ControlEnable(false);
+
+        AddCssClass(lp1, "panel-hide");
+        RemoveCssClass(lp2, "panel-hide");
+        AddCssClass(lp3, "panel-hide");
+        AddCssClass(lp4, "panel-hide");
+        AddCssClass(lp5, "panel-hide");
+
     }
 
 
@@ -3102,4 +3147,21 @@ public partial class RDT : System.Web.UI.Page
         return afterConvert;
     }
 
+
+    protected void ws1RadioButton1_CheckedChanged(object sender, EventArgs e)
+    {
+        ws1RadioButtonList1.SelectedIndex = -1;
+
+        lp1ControlEnable(false);
+        lp2ControlEnable(false);
+        lp3ControlEnable(false);
+        lp4ControlEnable(false);
+        lp5ControlEnable(true);
+
+        AddCssClass(lp1, "panel-hide");
+        AddCssClass(lp2, "panel-hide");
+        AddCssClass(lp3, "panel-hide");
+        AddCssClass(lp4, "panel-hide");
+        RemoveCssClass(lp5, "panel-hide");
+    }
 }
