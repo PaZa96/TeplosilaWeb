@@ -857,7 +857,7 @@ public partial class TRV : System.Web.UI.Page
                     hRowMark = "10"; gRowMarkH = "11"; gRowMarkM = "21"; break;
                 case "110R":
                     hRowMark = "11"; gRowMarkH = "12"; gRowMarkM = "22"; break;
-                case "9":
+                case "120":
                     hRowMark = "12"; gRowMarkH = "13"; gRowMarkM = "23"; break;
                 case "36":
                     hRowMark = "13"; gRowMarkH = "14"; gRowMarkM = "24"; break;
