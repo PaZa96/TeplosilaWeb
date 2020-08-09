@@ -3745,55 +3745,18 @@ public partial class TRV : System.Web.UI.Page
 
     protected void Button2_Click(object sender, EventArgs e)
     {
-        //экспорт файла из папки на сервере на компьютер клиента
-        //string MyPath = HttpContext.Current.Server.MapPath("");
-        //int Путь = MyPath.Length + 1;
-        //Response.ClearContent();
-        //Response.AddHeader("Content-Disposition", "attachment; filename=" + this.fvTextBox1.Text.Substring(Путь) + "");
-        //Response.ContentType = "application/octet-strean";
-        //string importAddress = "http://www.xn--c1abmbzbn.xn--p1ai/NetMyCar/" + this.fvTextBox1.Text.Substring(Путь);
-        //using (var web = new WebClient())
-        //using (var importStream = web.OpenRead(importAddress))
-        //{ importStream.CopyTo(Response.OutputStream); }
-        //Response.End();
 
-
-
-        //SaveForm saveForm = new SaveForm();
-        //this.textBox4.Text = "";
-        //this.textBox3.Text = "";
-        //saveForm.ShowDialog(this);
-        //this.textBox4.Text = saveForm.textBox1.Text;
-        //this.textBox3.Text = saveForm.textBox2.Text;
-
-        //SaveFileDialog saveFileDialog1 = new SaveFileDialog();
-
-        //saveFileDialog1.Filter = "pdf files (*.pdf)|*.pdf";
-        //saveFileDialog1.FilterIndex = 2;
-        //saveFileDialog1.RestoreDirectory = true;
-
-        //if (saveFileDialog1.ShowDialog() == DialogResult.OK)
-        //{
-        //    if (File.Exists(saveFileDialog1.FileName))
-        //    {
-        //        try
-        //        {
-        //            File.Delete(saveFileDialog1.FileName);
-        //        }
-        //        catch (Exception)
-        //        {
-        //            LabelError.Text += "Пожалуйста, закройте выбранный вами pdf файл!\nИ повторите попытку.";
-        //            (sender as Button).Enabled = true;
-        //            return;
-        //        }
-        //    }
-
+        this.readFile(0);
+        if (!String.IsNullOrWhiteSpace(objTextBox1.Text))
+        {
             v_input_dict[2] = objTextBox1.Text;
+        }
+        else
+        {
+            v_input_dict[2] = "-";
+        }
             
-
-            int pos = 42;
-
-
+        int pos = 42;
 
         for (int i = 1; i < GridView2.SelectedRow.Cells.Count; i++)
         {
@@ -3806,7 +3769,6 @@ public partial class TRV : System.Web.UI.Page
             }
             else if (pos >= 64) v_input_dict[pos + 1] = GridView2.SelectedRow.Cells[i].Text;
             else v_input_dict[pos] = GridView2.SelectedRow.Cells[i].Text;
-
 
             pos++;
                 
