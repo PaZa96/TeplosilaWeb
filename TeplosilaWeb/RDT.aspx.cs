@@ -1299,7 +1299,7 @@ public partial class RDT : System.Web.UI.Page
 
     protected void CustomValidator9_ServerValidate(object source, ServerValidateEventArgs args)
     {
-        if (CustomValidator2.IsValid && CustomValidator4.IsValid && CustomValidator6.IsValid && CustomValidator7.IsValid)
+        if (CustomValidator2.IsValid && CustomValidator4.IsValid && CustomValidator6.IsValid && CustomValidator7.IsValid && CustomValidator21.IsValid)
         {
             if (calcrDropDownList1.Enabled)
             {
@@ -1558,6 +1558,112 @@ public partial class RDT : System.Web.UI.Page
         }
     }
 
+    protected void CustomValidator18_ServerValidate(object source, ServerValidateEventArgs args)
+    {
+ 
+        if (lp5DropDownList1.Enabled)
+        {
+            if (lp5TextBox1.Enabled == false || checkTextBoxEmpty(lp5TextBox1))
+            {
+                CustomValidator18.ErrorMessage = "Необходимо заполнить поле";
+                args.IsValid = false;
+                return;
+            }
+            if (customConverterToDouble(lp5TextBox1.Text) < minVar)
+            {
+                CustomValidator18.ErrorMessage = "Неверно указано значение давления";
+                args.IsValid = false;
+                return;
+            }
+            if (convertArrToBar(arrConvert3, lp5DropDownList1, lp5TextBox1) > PressureBeforeValve3x)
+            {
+                CustomValidator18.ErrorMessage = "На давление свыше 16 бар вариантов нет";
+                args.IsValid = false;
+            }
+        }
+    }
+
+    protected void CustomValidator19_ServerValidate(object source, ServerValidateEventArgs args)
+    {
+        if (CustomValidator18.IsValid)
+        {
+            if (lp5DropDownList2.Enabled)
+            {
+                if (lp5TextBox2.Enabled == false || checkTextBoxEmpty(lp5TextBox2))
+                {
+                    CustomValidator19.ErrorMessage = "Необходимо заполнить поле";
+                    args.IsValid = false;
+                    return;
+                }
+                if (customConverterToDouble(lp5TextBox2.Text) < minVar)
+                {
+                    CustomValidator19.ErrorMessage = "Неверно указано значение давления";
+                    args.IsValid = false;
+                    return;
+                }
+                if (convertArrToBar(arrConvert3, lp5DropDownList2, lp5TextBox2) >= convertArrToBar(arrConvert3, lp5DropDownList1, lp5TextBox1))
+                {
+                    CustomValidator19.ErrorMessage = "Неверно указано значение давления";
+                    args.IsValid = false;
+                }
+            }
+        }
+        else
+        {
+            args.IsValid = false;
+            CustomValidator19.ErrorMessage = "";
+        }
+    }
+
+    protected void CustomValidator20_ServerValidate(object source, ServerValidateEventArgs args)
+    {
+        if (CustomValidator19.IsValid)
+        {
+            if (lp5TextBox3.Enabled == false || checkTextBoxEmpty(lp5TextBox3))
+            {
+                CustomValidator20.ErrorMessage = "Необходимо заполнить поле";
+                args.IsValid = false;
+                return;
+            }
+            if (customConverterToDouble(lp5TextBox3.Text) < minVar)
+            {
+                CustomValidator20.ErrorMessage = "Неверно указано значение температуры";
+                args.IsValid = false;
+                return;
+            }
+            //if (customConverterToDouble(calcrTextBox2.Text) > MaxT3x)
+            //{
+            //    CustomValidator11.ErrorMessage = "На температуру свыше 150&#8451; вариантов нет";
+            //    args.IsValid = false;
+            //    return;
+            //}
+            //if (((customConverterToDouble(this.calcrTextBox1.Text) * arrConvert3[this.calcrDropDownList1.SelectedIndex - 1] / arrConvert3[2]) - getPSbyT(customConverterToDouble(lp5TextBox3.Text))) <= 0)
+            //{
+            //    CustomValidator11.ErrorMessage = "Указанная температура ниже температуры парообразования. При указанной температуре в трубопроводе движется пар";
+            //    args.IsValid = false;
+            //    return;
+            //}
+        }
+    }
+
+    protected void CustomValidator21_ServerValidate(object source, ServerValidateEventArgs args)
+    {
+        if (CustomValidator20.IsValid)
+        {
+            if (lp5RadioButtonList1.SelectedIndex == -1)
+            {
+                CustomValidator21.ErrorMessage = "Необходимо выбрать тип пара";
+                args.IsValid = false;
+            }
+        }
+        else
+        {
+            args.IsValid = false;
+            CustomValidator21.ErrorMessage = "";
+        }
+    }
+
+
     //------------------------------------Validation Function END--------------------------------------
 
 
@@ -1707,7 +1813,7 @@ public partial class RDT : System.Web.UI.Page
         textBoxDisable(lp5TextBox1);
         dropDownListEnable(lp5DropDownList2, flag);
         textBoxDisable(lp5TextBox2);
-        textBoxDisable(lp5TextBox3);
+        textBoxEnabled(lp5TextBox3, flag);
         lp5RadioButtonList1.Enabled = flag;
         lp5RadioButtonList1.SelectedIndex = -1;
     }
@@ -2548,6 +2654,24 @@ public partial class RDT : System.Web.UI.Page
         SavePrevSelectedIndexDDL(lp4DropDownList2.ID, lp4DropDownList2.SelectedIndex);
     }
 
+    protected void lp5DropDownList1_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        if (SetEnableTextBox(lp5DropDownList1, lp5TextBox1))
+        {
+            convertArr(arrConvert3, (sender as DropDownList), ref lp5TextBox1);
+        }
+        SavePrevSelectedIndexDDL(lp5DropDownList1.ID, lp5DropDownList1.SelectedIndex);
+    }
+
+    protected void lp5DropDownList2_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        if (SetEnableTextBox(lp5DropDownList2, lp5TextBox2))
+        {
+            convertArr(arrConvert3, (sender as DropDownList), ref lp5TextBox2);
+        }
+        SavePrevSelectedIndexDDL(lp5DropDownList2.ID, lp5DropDownList2.SelectedIndex);
+    }
+
     protected void calcrDropDownList1_SelectedIndexChanged(object sender, EventArgs e)
     {
         if (SetEnableTextBox(calcrDropDownList1, calcrTextBox1))
@@ -2959,13 +3083,11 @@ public partial class RDT : System.Web.UI.Page
                 AddCssClass(lp4, "panel-hide");
                 AddCssClass(lp5, "panel-hide");
 
-                ws1RadioButton1.Enabled = false;
-                ws1RadioButton1.Checked = false;
+                ws1RadioButtonList1.Items[3].Enabled = false;
+                ws1RadioButtonList1.SelectedIndex = -1;
+
                 break;
             case 1:
-
-                ws1RadioButton1.Enabled = true;
-
                 lp1ControlEnable(false);
                 lp2ControlEnable(false);
                 lp3ControlEnable(false);
@@ -2977,6 +3099,11 @@ public partial class RDT : System.Web.UI.Page
                 AddCssClass(lp3, "panel-hide");
                 AddCssClass(lp4, "panel-hide");
                 AddCssClass(lp5, "panel-hide");
+
+                if (eorRadioButtonList1.SelectedIndex == 1)
+                {
+                    ws1RadioButtonList1.Items[3].Enabled = true;
+                }
 
                 break;
             case 2:
@@ -2991,9 +3118,6 @@ public partial class RDT : System.Web.UI.Page
                 RemoveCssClass(lp3, "panel-hide");
                 AddCssClass(lp4, "panel-hide");
                 AddCssClass(lp5, "panel-hide");
-
-                ws1RadioButton1.Enabled = false;
-                ws1RadioButton1.Checked = false;
                 break;
             case 3:
                 lp1ControlEnable(false);
@@ -3008,8 +3132,28 @@ public partial class RDT : System.Web.UI.Page
                 RemoveCssClass(lp4, "panel-hide");
                 AddCssClass(lp5, "panel-hide");
 
-                ws1RadioButton1.Enabled = false;
-                ws1RadioButton1.Checked = false;
+                ws1RadioButtonList1.Items[3].Enabled = false;
+                ws1RadioButtonList1.SelectedIndex = -1;
+
+                break;
+
+            case 4:
+
+                lp1ControlEnable(false);
+                lp2ControlEnable(false);
+                lp3ControlEnable(false);
+                lp4ControlEnable(false);
+                lp5ControlEnable(true);
+
+                AddCssClass(lp1, "panel-hide");
+                AddCssClass(lp2, "panel-hide");
+                AddCssClass(lp3, "panel-hide");
+                AddCssClass(lp4, "panel-hide");
+                RemoveCssClass(lp5, "panel-hide");
+
+                ws1RadioButtonList1.Items[3].Enabled = false;
+                ws1RadioButtonList1.SelectedIndex = -1;
+
                 break;
         }
 
@@ -3071,23 +3215,42 @@ public partial class RDT : System.Web.UI.Page
             ws1TextBox2.Text = "";
         }
 
+      
+
+        if (ws1RadioButtonList1.SelectedIndex != 3)
+        {
+            lp1ControlEnable(false);
+            lp2ControlEnable(true);
+            lp3ControlEnable(false);
+            lp4ControlEnable(false);
+            lp5ControlEnable(false);
+
+            AddCssClass(lp1, "panel-hide");
+            RemoveCssClass(lp2, "panel-hide");
+            AddCssClass(lp3, "panel-hide");
+            AddCssClass(lp4, "panel-hide");
+            AddCssClass(lp5, "panel-hide");
+        }
+        else
+        {
+            lp1ControlEnable(false);
+            lp2ControlEnable(false);
+            lp3ControlEnable(false);
+            lp4ControlEnable(false);
+            lp5ControlEnable(true);
+
+            AddCssClass(lp1, "panel-hide");
+            AddCssClass(lp2, "panel-hide");
+            AddCssClass(lp3, "panel-hide");
+            AddCssClass(lp4, "panel-hide");
+            RemoveCssClass(lp5, "panel-hide");
+
+            
+        }
+
         calcrDropDownList1.Enabled = true;
         calcrTextBox2.Enabled = true;
         RemoveCssClass(calcr, "panel-hide");
-
-        ws1RadioButton1.Checked = false;
-
-        lp1ControlEnable(false);
-        lp2ControlEnable(true);
-        lp3ControlEnable(false);
-        lp4ControlEnable(false);
-        lp5ControlEnable(false);
-
-        AddCssClass(lp1, "panel-hide");
-        RemoveCssClass(lp2, "panel-hide");
-        AddCssClass(lp3, "panel-hide");
-        AddCssClass(lp4, "panel-hide");
-        AddCssClass(lp5, "panel-hide");
 
     }
 
@@ -3147,21 +3310,5 @@ public partial class RDT : System.Web.UI.Page
         return afterConvert;
     }
 
-
-    protected void ws1RadioButton1_CheckedChanged(object sender, EventArgs e)
-    {
-        ws1RadioButtonList1.SelectedIndex = -1;
-
-        lp1ControlEnable(false);
-        lp2ControlEnable(false);
-        lp3ControlEnable(false);
-        lp4ControlEnable(false);
-        lp5ControlEnable(true);
-
-        AddCssClass(lp1, "panel-hide");
-        AddCssClass(lp2, "panel-hide");
-        AddCssClass(lp3, "panel-hide");
-        AddCssClass(lp4, "panel-hide");
-        RemoveCssClass(lp5, "panel-hide");
-    }
+   
 }
