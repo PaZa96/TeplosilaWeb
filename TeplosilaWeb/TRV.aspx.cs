@@ -2290,6 +2290,7 @@ public partial class TRV : System.Web.UI.Page
         readFile(0);
         Dictionary<string, double> g_dict = new Dictionary<string, double>();
         v_input_dict.Clear();
+        LabelError.Text = "";
 
         if (spvRadioButtonList1.SelectedIndex != -1)
         {
@@ -2862,23 +2863,25 @@ public partial class TRV : System.Web.UI.Page
                                                 }
                                                 catch (Exception) { }
 
-                                                if (p61 / arrConvert3[2] > 16)
-                                                {
-                                                    if ((aaRadioButton1.Checked && aa1RadioButtonList1.SelectedIndex == 0)
-                                                        || (aaRadioButton2.Checked && aa2RadioButtonList1.SelectedIndex == 0)
-                                                        || (aaRadioButton3.Checked && aa3RadioButtonList1.SelectedIndex == 0))
-                                                        LabelError.Text += "На давление свыше 16 бар вариантов нет";
+                                                //if (p61 / arrConvert3[2] > 16)
+                                                //{
+                                                //    if ((aaRadioButton1.Checked && aa1RadioButtonList1.SelectedIndex == 0)
+                                                //        || (aaRadioButton2.Checked && aa2RadioButtonList1.SelectedIndex == 0)
+                                                //        || (aaRadioButton3.Checked && aa3RadioButtonList1.SelectedIndex == 0))
+                                                //        LabelError.Text += "На давление свыше 16 бар вариантов нет";
 
-                                                    else if ((aaRadioButton1.Checked && aa1RadioButtonList1.SelectedIndex == 1)
-                                                        || (aaRadioButton2.Checked && aa2RadioButtonList1.SelectedIndex == 1)
-                                                        || (aaRadioButton3.Checked && aa3RadioButtonList1.SelectedIndex == 1))
-                                                        LabelError.Text += "На давление свыше 16 бар вариантов нет";
+                                                //    else if ((aaRadioButton1.Checked && aa1RadioButtonList1.SelectedIndex == 1)
+                                                //        || (aaRadioButton2.Checked && aa2RadioButtonList1.SelectedIndex == 1)
+                                                //        || (aaRadioButton3.Checked && aa3RadioButtonList1.SelectedIndex == 1))
+                                                //        LabelError.Text += "На давление свыше 16 бар вариантов нет";
 
-                                                    return;
-                                                }
-                                                else g_dict.Add("p61", p61);
+                                                //    return;
+                                                //}
+                                                //else g_dict.Add("p61", p61);
+                                                g_dict.Add("p61", p61);
 
                                                 double p62 = 0;
+
                                                 try
                                                 {
                                                     if (lpvTextBox1.Enabled)
@@ -2886,13 +2889,14 @@ public partial class TRV : System.Web.UI.Page
                                                 }
                                                 catch (Exception) { }
 
-                                                if (p62 / arrConvert3[2] > 16)
-                                                {
-                                                    LabelError.Text += "На давление свыше 16 бар вариантов нет";
+                                                //if (p62 / arrConvert3[2] > 16)
+                                                //{
+                                                //    LabelError.Text += "На давление свыше 16 бар вариантов нет";
 
-                                                    return;
-                                                }
-                                                else g_dict.Add("p62", p62);
+                                                //    return;
+                                                //}
+                                                //else g_dict.Add("p62", p62);
+                                                g_dict.Add("p62", p62);
 
                                                 double p63 = 0;
                                                 try
@@ -2902,14 +2906,14 @@ public partial class TRV : System.Web.UI.Page
                                                 }
                                                 catch (Exception) { }
 
-                                                if (p63 / arrConvert3[2] > 16)
-                                                {
-                                                    LabelError.Text += "На давление свыше 16 бар вариантов нет";
+                                                //if (p63 / arrConvert3[2] > 16)
+                                                //{
+                                                //    LabelError.Text += "На давление свыше 16 бар вариантов нет";
 
-                                                    return;
-                                                }
-                                                else g_dict.Add("p63", p63);
-
+                                                //    return;
+                                                //}
+                                                //else g_dict.Add("p63", p63);
+                                                g_dict.Add("p63", p63);
 
                                                 if (!(p63 > p62))
                                                 {
@@ -3470,49 +3474,47 @@ public partial class TRV : System.Web.UI.Page
                     args.IsValid = false;
                     return;
                 }
-                if (customConverterToDouble(lpvTextBox1.Text) <= 0)
+                if (customConverterToDouble(calcvTextBox1.Text) <= 0)
                 {
                     calcvCustomValidator1.ErrorMessage = "Неверно указано значение давления";
                     args.IsValid = false;
                     return;
                 }
 
-                double p61 = 0;
+                if (convertArrToBar(arrConvert3, calcvDropDownList1, calcvTextBox1) > PressureBeforeValve3x)
+                {
+                    calcvCustomValidator1.ErrorMessage = "На давление свыше 16 бар вариантов нет";
+                    args.IsValid = false;
+                    return;
+                }
 
-                double p62, p63;
-                p62 = customConverterToDouble(lpvTextBox1.Text) * arrConvert3[lpvDropDownList1.SelectedIndex - 1];
-                p63 = customConverterToDouble(calcvTextBox1.Text) * arrConvert3[calcvDropDownList1.SelectedIndex - 1];
-
-                if (!(p63 > p62))
+                if (customConverterToDouble(lpvTextBox1.Text) * arrConvert3[lpvDropDownList1.SelectedIndex - 1] >= customConverterToDouble(calcvTextBox1.Text) * arrConvert3[calcvDropDownList1.SelectedIndex - 1])
                 {
                     Label55.Visible = true;
                     args.IsValid = false;
-                    calcvCustomValidator1.Visible = false;
+                    calcvCustomValidator1.ErrorMessage = "";
                     return;
                 }
                 else
                 {
                     Label55.Visible = false;
+                    calcvCustomValidator1.Visible = true;
                 }
-
-                if (tvRadioButtonList1.SelectedIndex == 0)
+                
+                if(lpvTextBox21.Text != "")
                 {
-                    if (convertArrToBar(arrConvert3, calcvDropDownList1, calcvTextBox1) > PressureBeforeValve2x)
+                    if ((customConverterToDouble(lpvTextBox21.Text) * arrConvert3[lpvDropDownList21.SelectedIndex - 1] + customConverterToDouble(lpvTextBox1.Text) * arrConvert3[lpvDropDownList1.SelectedIndex - 1]) >= customConverterToDouble(calcvTextBox1.Text) * arrConvert3[calcvDropDownList1.SelectedIndex - 1])
                     {
-                        calcvCustomValidator1.ErrorMessage = "На давление свыше 25 бар вариантов нет";
+                        Label56.Visible = true;
                         args.IsValid = false;
+                        calcvCustomValidator1.ErrorMessage = "";
                         return;
                     }
-                }
-                else
-                {
-                    if (convertArrToBar(arrConvert3, calcvDropDownList1, calcvTextBox1) > PressureBeforeValve3x)
+                    else
                     {
-                        calcvCustomValidator1.ErrorMessage = "На давление свыше 16 бар вариантов нет";
-                        args.IsValid = false;
-                        return;
+                        Label56.Visible = false;
+                        calcvCustomValidator1.Visible = true;
                     }
-
                 }
             }
         }
@@ -3557,6 +3559,12 @@ public partial class TRV : System.Web.UI.Page
                     args.IsValid = false;
                     return;
                 }
+            }
+
+            if (((customConverterToDouble(calcvTextBox1.Text) * arrConvert3[calcvDropDownList1.SelectedIndex - 1] / arrConvert3[2]) - getPSbyT(customConverterToDouble(calcvTextBox2.Text))) <= 0)
+            {
+                LabelError.Text += "Указанная температура выше температуры парообразования. При указанной температуре в трубопроводе движется пар";
+                return;
             }
         }
         else
@@ -3624,7 +3632,23 @@ public partial class TRV : System.Web.UI.Page
 
     protected void tvCustomValidator1_ServerValidate(object source, ServerValidateEventArgs args)
     {
-        if (!ValidateTemperatureTable(args)) { args.IsValid = false; };
+        if (calcvCustomValidator2.IsValid)
+        {
+            if (fvRadioButton2.Checked)
+            {
+                if (!ValidateTemperatureTable(args))
+                {
+                    args.IsValid = false;
+                    return;
+                }
+            }
+        }
+        else
+        {
+            args.IsValid = false;
+            CustomValidator12.ErrorMessage = "";
+        }
+        
     }
     
     //----------------------------Support Functions---------------------------------
@@ -3652,16 +3676,12 @@ public partial class TRV : System.Web.UI.Page
 
     public bool CheckValidTextBox(TextBox textBox, CustomValidator customValidator, ServerValidateEventArgs args)
     {
-        if (tvRadioButtonList1.SelectedIndex == 0)
+        if (textBox.Enabled)
         {
-            if (textBox.Enabled)
+            if (!String.IsNullOrWhiteSpace(textBox.Text))
             {
-                if (String.IsNullOrWhiteSpace(textBox.Text))
-                {
-                    args.IsValid = false;
-                    return false;
-                }
-                else
+
+                if (tvRadioButtonList1.SelectedIndex == 0)
                 {
                     if (customConverterToDouble(fvTextBox2.Text) > MaxT2x)
                     {
@@ -3670,38 +3690,46 @@ public partial class TRV : System.Web.UI.Page
                         return false;
                     }
                 }
-            }
-        }
-        else
-        {
-            if (textBox.Enabled)
-            {
-                if (String.IsNullOrWhiteSpace(textBox.Text))
-                {
-                    args.IsValid = false;
-                    return false;
-                }
                 else
                 {
                     if (customConverterToDouble(textBox.Text) > MaxT3x)
                     {
-                        tvCustomValidator1.ErrorMessage = "На температуру свыше 220&#8451; вариантов нет";
+                        tvCustomValidator1.ErrorMessage = "На температуру свыше 150&#8451; вариантов нет";
                         args.IsValid = false;
                         return false;
                     }
                 }
             }
+            else
+            {
+                tvCustomValidator1.ErrorMessage = "Необходимо заполнить поле";
+                args.IsValid = false;
+                return false;
+            }
+
         }
+
+        return true;
+    }
+
+    public bool CompareValidTextBox(TextBox textBox1, TextBox textBox2, ServerValidateEventArgs args)
+    {
+        if (textBox1.Enabled && textBox2.Enabled)
+        {
+            if (customConverterToDouble(textBox2.Text) > customConverterToDouble(textBox1.Text)) 
+            {
+                tvCustomValidator1.ErrorMessage = "Неверно указано значение температуры";
+                args.IsValid = false;
+                return false;
+            }
+        }
+
         return true;
     }
 
     public bool ValidateTemperatureTable(ServerValidateEventArgs args)
     {
-        if (!CheckValidTextBox(fvTextBox2, tvCustomValidator1, args)) 
-        { 
-            args.IsValid = false; 
-            return false; 
-        };
+        if (!CheckValidTextBox(fvTextBox2, tvCustomValidator1, args)) { args.IsValid = false; return false; };
         if (!CheckValidTextBox(fvTextBox3, tvCustomValidator1, args)) { args.IsValid = false; return false; };
         if (!CheckValidTextBox(fvTextBox4, tvCustomValidator1, args)) { args.IsValid = false; return false; };
         if (!CheckValidTextBox(fvTextBox5, tvCustomValidator1, args)) { args.IsValid = false; return false; };
@@ -3709,6 +3737,13 @@ public partial class TRV : System.Web.UI.Page
         if (!CheckValidTextBox(fvTextBox7, tvCustomValidator1, args)) { args.IsValid = false; return false; };
         if (!CheckValidTextBox(fvTextBox8, tvCustomValidator1, args)) { args.IsValid = false; return false; };
         if (!CheckValidTextBox(fvTextBox9, tvCustomValidator1, args)) { args.IsValid = false; return false; };
+
+        if (!CompareValidTextBox(fvTextBox2, fvTextBox3, args)) { args.IsValid = false; return false; };
+        if (!CompareValidTextBox(fvTextBox4, fvTextBox5, args)) { args.IsValid = false; return false; };
+        if (!CompareValidTextBox(fvTextBox6, fvTextBox7, args)) { args.IsValid = false; return false; };
+        if (!CompareValidTextBox(fvTextBox8, fvTextBox9, args)) { args.IsValid = false; return false; };
+
+
 
         return true;
     }

@@ -142,7 +142,7 @@
                                         <br />
                                         <asp:TextBox ID="ws2TextBox1" runat="server" step="0.01" Enabled="False"
                                             type="number" required="required" TextMode="Number"></asp:TextBox>
-                                        <asp:Label ID="Label6" runat="server" Text="%(от 5% до 65%)"></asp:Label>
+                                        <asp:Label ID="Label6" runat="server" Text="% (от 5% до 65%)"></asp:Label>
                                         &nbsp;&nbsp;&nbsp;
                                         <asp:CustomValidator ID="CustomValidator16" runat="server"
                                             ControlToValidate="ws2TextBox1" Display="Dynamic"
@@ -264,9 +264,10 @@
                                             ControlToValidate="lpvDropDownList1" Display="Dynamic"
                                             ErrorMessage="CustomValidator" ForeColor="Red" SetFocusOnError="True"
                                             OnServerValidate="lpvCustomValidator1_ServerValidate"
-                                            ValidateEmptyText="True"></asp:CustomValidator>
+                                            ValidateEmptyText="True" EnableClientScript="False"></asp:CustomValidator>
                                         <asp:Label ID="Label55" runat="server" ForeColor="Red"
                                             Text="Неверно указано значение давления" Visible="False"></asp:Label>
+                                        <asp:Label ID="Label56" runat="server" ForeColor="Red" Text="Суммарные потери давления в теплообменнике и на клапане превышают давление перед клапаном" Visible="False"></asp:Label>
                                         <br />
                                        
 
@@ -293,8 +294,7 @@
                                         <br />
                                         <asp:Label ID="Label21" runat="server" Text="P' = "></asp:Label>
                                         &nbsp;&nbsp;&nbsp;<asp:TextBox ID="calcvTextBox1" runat="server" Enabled="False"
-                                            step="0.01" type="number" required="required" TextMode="Number">
-                                        </asp:TextBox>
+                                            step="0.01" type="number" required="required" TextMode="Number"></asp:TextBox>
                                         <asp:DropDownList ID="calcvDropDownList1" runat="server" AutoPostBack="True"
                                             Enabled="False"
                                             OnSelectedIndexChanged="calcvDropDownList1_SelectedIndexChanged">
@@ -337,7 +337,7 @@
                             <asp:UpdatePanel ID="UpdatePanel13" runat="server">
                                 <ContentTemplate>
                                     <asp:RadioButton ID="fvRadioButton1" runat="server"
-                                        Text="Задать max величину расхода через клапан:" AutoPostBack="True"
+                                        Text="Задать максимальную величину расхода через клапан:" AutoPostBack="True"
                                         OnCheckedChanged="fvRadioButton1_CheckedChanged" /><br />
                                     <div class="col">
                                         <asp:Label ID="Label28" runat="server" Text="Gкл = "></asp:Label>
@@ -368,7 +368,7 @@
                             <asp:UpdatePanel ID="UpdatePanel14" runat="server">
                                 <ContentTemplate>
                                     <asp:RadioButton ID="fvRadioButton2" runat="server"
-                                        Text="Вычислить max величину расхода через клапан:" AutoPostBack="True"
+                                        Text="Вычислить максимальную величину расхода через клапан:" AutoPostBack="True"
                                         OnCheckedChanged="fvRadioButton2_CheckedChanged" />
                                     <div class="col table-responsive-md">
                                         <table class="table table-bordered col">
@@ -526,7 +526,7 @@
                                         <asp:ListItem Selected="True">230 VAC</asp:ListItem>
                                         <asp:ListItem>24 VAC / VDC</asp:ListItem>
                                     </asp:RadioButtonList>
-                                    <asp:Label ID="Label49" runat="server" Text="Напряжение питания:"></asp:Label>
+                                    <asp:Label ID="Label49" runat="server" Text="Управление:"></asp:Label>
                                     <asp:RadioButtonList ID="tdRadioButtonList2" runat="server" AutoPostBack="True"
                                         OnSelectedIndexChanged="tdRadioButtonList2_SelectedIndexChanged"
                                         Enabled="False">
