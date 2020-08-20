@@ -658,7 +658,7 @@ public partial class RDT : System.Web.UI.Page
                         List<string> listA = new List<string>(),
                             listB = new List<string>();
 
-                        Kv_start = 1.2 * (Gpg * 0.01) / (Math.Sqrt(dPg * 0.001 * g/1000));
+                        Kv_start = 1.2 * (Gpg * 0.01) / (Math.Sqrt(dPg * 0.001 * g));
                         tmpKv = 300;
                         tmpA = "";
                         foreach (Newtonsoft.Json.Linq.JObject ob in table)
@@ -728,7 +728,7 @@ public partial class RDT : System.Web.UI.Page
             for (int i = 0; i < listResult["C"].Count(); i++)
             {
                 /*DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD*/
-                Pf = g / 1000 * (Math.Pow(Gpg, 2) * 0.1) / (Math.Pow(double.Parse(listResult["B"].GetValue(i).ToString()), 2) * g);
+                Pf = (Math.Pow(Gpg, 2) * 0.1) / (Math.Pow(double.Parse(listResult["B"].GetValue(i).ToString()), 2) * g);
                 Pf = Math.Round(Pf / 100, 2); /*Перевод с кПа в бар*/
                 //listResult["D"] = new string[] { Pf.ToString() };
 
