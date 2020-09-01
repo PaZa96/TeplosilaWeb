@@ -3493,6 +3493,7 @@ public partial class TRV : System.Web.UI.Page
                     Label55.Visible = true;
                     args.IsValid = false;
                     calcvCustomValidator1.ErrorMessage = "";
+                    Label56.Visible = false;
                     return;
                 }
                 else
@@ -3563,7 +3564,8 @@ public partial class TRV : System.Web.UI.Page
 
             if (((customConverterToDouble(calcvTextBox1.Text) * arrConvert3[calcvDropDownList1.SelectedIndex - 1] / arrConvert3[2]) - getPSbyT(customConverterToDouble(calcvTextBox2.Text))) <= 0)
             {
-                LabelError.Text += "Указанная температура выше температуры парообразования. При указанной температуре в трубопроводе движется пар";
+                calcvCustomValidator2.ErrorMessage = "Указанная температура выше температуры парообразования. При указанной температуре в трубопроводе движется пар";
+                args.IsValid = false;
                 return;
             }
         }
@@ -3636,17 +3638,25 @@ public partial class TRV : System.Web.UI.Page
         {
             if (fvRadioButton2.Checked)
             {
-                if (!ValidateTemperatureTable(args))
-                {
-                    args.IsValid = false;
-                    return;
-                }
+                if (!CheckValidTextBox(fvTextBox2, tvCustomValidator1, args)) { args.IsValid = false; return; };
+                if (!CheckValidTextBox(fvTextBox3, tvCustomValidator1, args)) { args.IsValid = false; return; };
+                if (!CheckValidTextBox(fvTextBox4, tvCustomValidator1, args)) { args.IsValid = false; return; };
+                if (!CheckValidTextBox(fvTextBox5, tvCustomValidator1, args)) { args.IsValid = false; return; };
+                if (!CheckValidTextBox(fvTextBox6, tvCustomValidator1, args)) { args.IsValid = false; return; };
+                if (!CheckValidTextBox(fvTextBox7, tvCustomValidator1, args)) { args.IsValid = false; return; };
+                if (!CheckValidTextBox(fvTextBox8, tvCustomValidator1, args)) { args.IsValid = false; return; };
+                if (!CheckValidTextBox(fvTextBox9, tvCustomValidator1, args)) { args.IsValid = false; return; };
+
+                if (!CompareValidTextBox(fvTextBox2, fvTextBox3, args)) { args.IsValid = false; return; };
+                if (!CompareValidTextBox(fvTextBox4, fvTextBox5, args)) { args.IsValid = false; return; };
+                if (!CompareValidTextBox(fvTextBox6, fvTextBox7, args)) { args.IsValid = false; return; };
+                if (!CompareValidTextBox(fvTextBox8, fvTextBox9, args)) { args.IsValid = false; return; };
             }
         }
         else
         {
             args.IsValid = false;
-            CustomValidator12.ErrorMessage = "";
+            tvCustomValidator1.ErrorMessage = "";
         }
         
     }
@@ -3726,32 +3736,6 @@ public partial class TRV : System.Web.UI.Page
 
         return true;
     }
-
-    public bool ValidateTemperatureTable(ServerValidateEventArgs args)
-    {
-        if (!CheckValidTextBox(fvTextBox2, tvCustomValidator1, args)) { args.IsValid = false; return false; };
-        if (!CheckValidTextBox(fvTextBox3, tvCustomValidator1, args)) { args.IsValid = false; return false; };
-        if (!CheckValidTextBox(fvTextBox4, tvCustomValidator1, args)) { args.IsValid = false; return false; };
-        if (!CheckValidTextBox(fvTextBox5, tvCustomValidator1, args)) { args.IsValid = false; return false; };
-        if (!CheckValidTextBox(fvTextBox6, tvCustomValidator1, args)) { args.IsValid = false; return false; };
-        if (!CheckValidTextBox(fvTextBox7, tvCustomValidator1, args)) { args.IsValid = false; return false; };
-        if (!CheckValidTextBox(fvTextBox8, tvCustomValidator1, args)) { args.IsValid = false; return false; };
-        if (!CheckValidTextBox(fvTextBox9, tvCustomValidator1, args)) { args.IsValid = false; return false; };
-
-        if (!CompareValidTextBox(fvTextBox2, fvTextBox3, args)) { args.IsValid = false; return false; };
-        if (!CompareValidTextBox(fvTextBox4, fvTextBox5, args)) { args.IsValid = false; return false; };
-        if (!CompareValidTextBox(fvTextBox6, fvTextBox7, args)) { args.IsValid = false; return false; };
-        if (!CompareValidTextBox(fvTextBox8, fvTextBox9, args)) { args.IsValid = false; return false; };
-
-
-
-        return true;
-    }
-
-
-
-
-
 
     protected void fvTextBox10_TextChanged(object sender, EventArgs e)
     {

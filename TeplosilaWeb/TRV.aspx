@@ -249,8 +249,7 @@
                                     <div class="col">
                                         <asp:Label ID="Label13" runat="server" Text="&#916;Pкл = "></asp:Label>
                                         &nbsp;&nbsp;&nbsp;<asp:TextBox ID="lpvTextBox1" runat="server" Enabled="False"
-                                            step="0.01" type="number" required="required" TextMode="Number"
-                                            CausesValidation="True"></asp:TextBox>
+                                            step="0.01" type="number" required="required" TextMode="Number"></asp:TextBox>
                                         <asp:DropDownList ID="lpvDropDownList1" runat="server" AutoPostBack="True"
                                             Enabled="False"
                                             OnSelectedIndexChanged="lpvDropDownList1_SelectedIndexChanged">
