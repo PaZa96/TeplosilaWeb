@@ -245,8 +245,16 @@ public partial class RDT : System.Web.UI.Page
             }
             else if (eorRadioButtonList1.SelectedIndex == 1)
             {
-                dPg = customConverterToDouble(this.lp2TextBox1.Text) * arrConvert3[this.lp2DropDownList1.SelectedIndex - 1] - customConverterToDouble(this.lp2TextBox2.Text) * arrConvert3[this.lp2DropDownList2.SelectedIndex - 1];
+                if(ws1RadioButtonList1.SelectedIndex == 3)
+                {
+                    dPg = customConverterToDouble(this.lp5TextBox1.Text) * arrConvert3[this.lp5DropDownList1.SelectedIndex - 1] - customConverterToDouble(this.lp5TextBox2.Text) * arrConvert3[this.lp5DropDownList2.SelectedIndex - 1];
+                }
+                else
+                {
+                    dPg = customConverterToDouble(this.lp2TextBox1.Text) * arrConvert3[this.lp2DropDownList1.SelectedIndex - 1] - customConverterToDouble(this.lp2TextBox2.Text) * arrConvert3[this.lp2DropDownList2.SelectedIndex - 1];
+                }
             }
+                
             else if (eorRadioButtonList1.SelectedIndex == 2)
             {
                 dPg = customConverterToDouble(this.lp3TextBox1.Text) * arrConvert3[this.lp3DropDownList1.SelectedIndex - 1] - customConverterToDouble(this.lp3TextBox2.Text) * arrConvert3[this.lp3DropDownList2.SelectedIndex - 1];
@@ -291,6 +299,14 @@ public partial class RDT : System.Web.UI.Page
                 double cp = 0;
                 Etgl(p7, p6, ref g, ref cp);
             }
+            else if (ws1RadioButtonList1.SelectedIndex == 2)
+            {
+                double p6 = customConverterToDouble(this.ws1TextBox1.Text);
+                double p7 = Math.Round(GetAvgT() / 10) * 10;
+                double cp = 0;
+                Prgl(p7, p6, ref g, ref cp);
+            }
+
             else if (ws1RadioButtonList1.SelectedIndex == 2)
             {
                 double p6 = customConverterToDouble(this.ws1TextBox1.Text);
@@ -1619,30 +1635,38 @@ public partial class RDT : System.Web.UI.Page
     {
         if (CustomValidator19.IsValid)
         {
-            if (lp5TextBox3.Enabled == false || checkTextBoxEmpty(lp5TextBox3))
+            if (ws1RadioButtonList1.SelectedIndex == 3)
             {
-                CustomValidator20.ErrorMessage = "Необходимо заполнить поле";
-                args.IsValid = false;
-                return;
+                if (lp5TextBox3.Enabled == false || checkTextBoxEmpty(lp5TextBox3))
+                {
+                    CustomValidator20.ErrorMessage = "Необходимо заполнить поле";
+                    args.IsValid = false;
+                    return;
+                }
+                if (customConverterToDouble(lp5TextBox3.Text) < minVar)
+                {
+                    CustomValidator20.ErrorMessage = "Неверно указано значение температуры";
+                    args.IsValid = false;
+                    return;
+                }
+                //if (customConverterToDouble(calcrTextBox2.Text) > MaxT3x)
+                //{
+                //    CustomValidator11.ErrorMessage = "На температуру свыше 150&#8451; вариантов нет";
+                //    args.IsValid = false;
+                //    return;
+                //}
+                //if (((customConverterToDouble(this.calcrTextBox1.Text) * arrConvert3[this.calcrDropDownList1.SelectedIndex - 1] / arrConvert3[2]) - getPSbyT(customConverterToDouble(lp5TextBox3.Text))) <= 0)
+                //{
+                //    CustomValidator11.ErrorMessage = "Указанная температура ниже температуры парообразования. При указанной температуре в трубопроводе движется пар";
+                //    args.IsValid = false;
+                //    return;
+                //}
             }
-            if (customConverterToDouble(lp5TextBox3.Text) < minVar)
-            {
-                CustomValidator20.ErrorMessage = "Неверно указано значение температуры";
-                args.IsValid = false;
-                return;
-            }
-            //if (customConverterToDouble(calcrTextBox2.Text) > MaxT3x)
-            //{
-            //    CustomValidator11.ErrorMessage = "На температуру свыше 150&#8451; вариантов нет";
-            //    args.IsValid = false;
-            //    return;
-            //}
-            //if (((customConverterToDouble(this.calcrTextBox1.Text) * arrConvert3[this.calcrDropDownList1.SelectedIndex - 1] / arrConvert3[2]) - getPSbyT(customConverterToDouble(lp5TextBox3.Text))) <= 0)
-            //{
-            //    CustomValidator11.ErrorMessage = "Указанная температура ниже температуры парообразования. При указанной температуре в трубопроводе движется пар";
-            //    args.IsValid = false;
-            //    return;
-            //}
+        }
+        else
+        {
+            args.IsValid = false;
+            CustomValidator20.ErrorMessage = "";
         }
     }
 
@@ -1650,10 +1674,13 @@ public partial class RDT : System.Web.UI.Page
     {
         if (CustomValidator20.IsValid)
         {
-            if (lp5RadioButtonList1.SelectedIndex == -1)
+            if (ws1RadioButtonList1.SelectedIndex == 3)
             {
-                CustomValidator21.ErrorMessage = "Необходимо выбрать тип пара";
-                args.IsValid = false;
+                if (lp5RadioButtonList1.SelectedIndex == -1)
+                {
+                    CustomValidator21.ErrorMessage = "Необходимо выбрать тип пара";
+                    args.IsValid = false;
+                }
             }
         }
         else
@@ -3104,7 +3131,7 @@ public partial class RDT : System.Web.UI.Page
                 {
                     ws1RadioButtonList1.Items[3].Enabled = true;
                 }
-
+                ws1RadioButtonList1.SelectedIndex = -1;
                 break;
             case 2:
                 lp1ControlEnable(false);
@@ -3215,9 +3242,7 @@ public partial class RDT : System.Web.UI.Page
             ws1TextBox2.Text = "";
         }
 
-      
-
-        if (ws1RadioButtonList1.SelectedIndex != 3)
+        if (eorRadioButtonList1.SelectedIndex == 1 && ws1RadioButtonList1.SelectedIndex == 0)
         {
             lp1ControlEnable(false);
             lp2ControlEnable(true);
@@ -3231,7 +3256,7 @@ public partial class RDT : System.Web.UI.Page
             AddCssClass(lp4, "panel-hide");
             AddCssClass(lp5, "panel-hide");
         }
-        else
+        else if (eorRadioButtonList1.SelectedIndex == 1 && ws1RadioButtonList1.SelectedIndex == 3)
         {
             lp1ControlEnable(false);
             lp2ControlEnable(false);
