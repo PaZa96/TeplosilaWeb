@@ -1031,14 +1031,7 @@ public partial class TRV : System.Web.UI.Page
             Etgl(p7, p6, ref g);
         }*/
 
-        if (dPkl > dPto)
-        {
-            Kv_start = Kv = g_dict["vKv"] * (Gkl * 0.01) / (Math.Sqrt(dPkl * 0.001 * g ));
-        }
-        else
-        {
-            Kv_start = Kv = g_dict["vKv"] * (Gkl * 0.01) / (Math.Sqrt(dPto * 0.001 * g ));
-        }
+        Kv_start = Kv = g_dict["vKv"] * (Gkl * 0.01) / (Math.Sqrt(dPkl * 0.001 * g));
 
 
         Newtonsoft.Json.Linq.JArray tablev = null;
@@ -1057,15 +1050,15 @@ public partial class TRV : System.Web.UI.Page
             tableDN = dataFromFile.table11;
             tablev_7 = dataFromFile.tablev_713;
         }
-        double col_B = (rpvRadioButtonList1.SelectedIndex == 0) ? Convert.ToDouble(tablev[0]) : Convert.ToDouble(tablev[tablev.Count - 1]);
-        int col_C = Convert.ToInt32(tableDN[tableDN.Count - 1]);
+        double col_B = (rpvRadioButtonList1.SelectedIndex == 0) ? Convert.ToDouble(tablev[0]) : Convert.ToDouble(tablev[tablev.Count - 1]); //выбор начальной пропускной способности
+        int col_C = Convert.ToInt32(tableDN[tableDN.Count - 1]); //выбор начального максимального диаметра
 
         bool exit_t = false;
 
 
         if (rpvRadioButtonList1.SelectedIndex == 0)
         {
-            if (col_B == Convert.ToDouble(tablev[0]))
+            if (col_B == Convert.ToDouble(tablev[0])) //выбор пропускной способности
             {
                 foreach (double el in tablev)
                 {
@@ -1281,7 +1274,7 @@ public partial class TRV : System.Web.UI.Page
                 break;
             else
             {
-                // DN ближайший больший из table10
+                // DN ближайший больший из table10 выбор диаметра DN
 
                 if (col_C == Convert.ToDouble(tableDN[tableDN.Count - 1]))
                 {
@@ -3217,8 +3210,6 @@ public partial class TRV : System.Web.UI.Page
         }
 
     }
-
-
 
     //-----------------------------Validators--------------------------------------------------
 
