@@ -1031,8 +1031,14 @@ public partial class TRV : System.Web.UI.Page
             Etgl(p7, p6, ref g);
         }*/
 
-        Kv_start = Kv = g_dict["vKv"] * (Gkl * 0.01) / (Math.Sqrt(dPkl * 0.001 * g));
-
+        if (dPkl > dPto)
+        {
+            Kv_start = Kv = g_dict["vKv"] * (Gkl * 0.01) / (Math.Sqrt(dPkl * 0.001 * g));
+        }
+        else
+        {
+            Kv_start = Kv = g_dict["vKv"] * (Gkl * 0.01) / (Math.Sqrt(dPto * 0.001 * g));
+        }
 
         Newtonsoft.Json.Linq.JArray tablev = null;
         Newtonsoft.Json.Linq.JArray tableDN = null;
