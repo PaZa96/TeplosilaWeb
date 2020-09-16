@@ -3432,7 +3432,7 @@ public partial class TRV : System.Web.UI.Page
     {
         if(CustomValidator18.IsValid && CustomValidator19.IsValid)
         {
-            if (lpvDropDownList2.Enabled)
+            if (lpvDropDownList1.Enabled)
             {
                 if (lpvTextBox1.Enabled == false || checkTextBoxEmpty(lpvTextBox1))
                 {
@@ -3687,10 +3687,16 @@ public partial class TRV : System.Web.UI.Page
         {
             if (!String.IsNullOrWhiteSpace(textBox.Text))
             {
+                if (customConverterToDouble(textBox.Text) <= 0)
+                {
+                    tvCustomValidator1.ErrorMessage = "Неверно указано значение температуры";
+                    args.IsValid = false;
+                    return false;
+                }
 
                 if (tvRadioButtonList1.SelectedIndex == 0)
                 {
-                    if (customConverterToDouble(fvTextBox2.Text) > MaxT2x)
+                    if (customConverterToDouble(textBox.Text) > MaxT2x)
                     {
                         tvCustomValidator1.ErrorMessage = "На температуру свыше 220&#8451; вариантов нет";
                         args.IsValid = false;
@@ -3723,7 +3729,7 @@ public partial class TRV : System.Web.UI.Page
     {
         if (textBox1.Enabled && textBox2.Enabled)
         {
-            if (customConverterToDouble(textBox2.Text) > customConverterToDouble(textBox1.Text)) 
+            if (customConverterToDouble(textBox2.Text) > customConverterToDouble(textBox1.Text) || customConverterToDouble(textBox2.Text) == customConverterToDouble(textBox1.Text)) 
             {
                 tvCustomValidator1.ErrorMessage = "Неверно указано значение температуры";
                 args.IsValid = false;

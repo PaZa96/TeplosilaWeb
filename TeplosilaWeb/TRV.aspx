@@ -263,7 +263,7 @@
                                             ControlToValidate="lpvDropDownList1" Display="Dynamic"
                                             ErrorMessage="CustomValidator" ForeColor="Red" SetFocusOnError="True"
                                             OnServerValidate="lpvCustomValidator1_ServerValidate"
-                                            ValidateEmptyText="True" EnableClientScript="False"></asp:CustomValidator>
+                                            ValidateEmptyText="True"></asp:CustomValidator>
                                         <asp:Label ID="Label55" runat="server" ForeColor="Red"
                                             Text="Неверно указано значение давления" Visible="False"></asp:Label>
                                         <asp:Label ID="Label56" runat="server" ForeColor="Red" Text="Суммарные потери давления в теплообменнике и на клапане превышают давление перед клапаном" Visible="False"></asp:Label>
@@ -503,7 +503,7 @@
                                         <asp:Label ID="Label46" runat="server" Text="Максимальный расход Gкл = ">
                                         </asp:Label>
                                         <asp:TextBox ID="fvTextBox11" runat="server" Enabled="False" step="0.01"
-                                            ReadOnly="True" TextMode="Number"></asp:TextBox>
+                                            ReadOnly="True"></asp:TextBox>
                                         <asp:Label ID="Label48" runat="server" Text=" кг/ч"></asp:Label>
                                         <br />
                                         <asp:Label ID="Label8" runat="server" ForeColor="Red" Text=""></asp:Label>
