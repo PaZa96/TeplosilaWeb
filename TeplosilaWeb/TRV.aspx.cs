@@ -1582,8 +1582,8 @@ public partial class TRV : System.Web.UI.Page
                 string G_str = "Нет";
                 if (F < Pf)
                     G_str = "Угрожает опасность кавитации";
-                if (F < (customConverterToDouble(this.lpvTextBox1.Text) * arrConvert3[this.calcvDropDownList1.SelectedIndex - 1] / arrConvert3[2]))
-                    G_str = "Угрожает опасность кавитации";
+                //if (F < (customConverterToDouble(this.lpvTextBox1.Text) * arrConvert3[this.calcvDropDownList1.SelectedIndex - 1] / arrConvert3[2]))
+                //    G_str = "Угрожает опасность кавитации";
 
                 listG.Add(G_str);
             }
