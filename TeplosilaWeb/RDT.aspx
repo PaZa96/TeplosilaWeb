@@ -307,6 +307,17 @@
                                         </asp:DropDownList>
                                          <asp:CustomValidator ID="CustomValidator19" runat="server" ControlToValidate="lp5DropDownList1" ErrorMessage="CustomValidator" ForeColor="Red" OnServerValidate="CustomValidator19_ServerValidate" SetFocusOnError="True"></asp:CustomValidator>
                                          <br />
+                                         <asp:Label ID="Label36" runat="server"
+                                            Text="Тип пара:">
+                                        </asp:Label>
+                                         <asp:RadioButtonList ID="lp5RadioButtonList1" runat="server" AutoPostBack="True" CausesValidation="True" OnSelectedIndexChanged="lp5RadioButtonList1_SelectedIndexChanged">
+                                             <asp:ListItem>Перегретый</asp:ListItem>
+                                             <asp:ListItem>Насыщеный</asp:ListItem>
+                                         </asp:RadioButtonList>
+                                         
+                                         <asp:CustomValidator ID="CustomValidator21" runat="server" ControlToValidate="lp5RadioButtonList1" Display="Dynamic" EnableClientScript="False" ErrorMessage="CustomValidator" ForeColor="Red" OnServerValidate="CustomValidator21_ServerValidate" SetFocusOnError="True" ValidateEmptyText="True"></asp:CustomValidator>
+                                         
+                                         
                                               <asp:Label ID="Label39" runat="server"
                                             Text="Температура пара через регулятор:">
                                         </asp:Label>
@@ -318,17 +329,8 @@
                                         </asp:TextBox>
                                         <asp:Label ID="Label38" runat="server" Text=" &#8451;"></asp:Label>
                                          <asp:CustomValidator ID="CustomValidator20" runat="server" ControlToValidate="lp5TextBox3" Display="Dynamic" EnableClientScript="False" ErrorMessage="CustomValidator" ForeColor="Red" OnServerValidate="CustomValidator20_ServerValidate" SetFocusOnError="True" ValidateEmptyText="True"></asp:CustomValidator>
-                                       <br />
-                                        <asp:Label ID="Label36" runat="server"
-                                            Text="Тип пара:">
-                                        </asp:Label>
-                                         <asp:RadioButtonList ID="lp5RadioButtonList1" runat="server" AutoPostBack="True" CausesValidation="True">
-                                             <asp:ListItem>Перегретый</asp:ListItem>
-                                             <asp:ListItem>Насыщеный</asp:ListItem>
-                                         </asp:RadioButtonList>
-                                         
-                                         <asp:CustomValidator ID="CustomValidator21" runat="server" ControlToValidate="lp5RadioButtonList1" Display="Dynamic" EnableClientScript="False" ErrorMessage="CustomValidator" ForeColor="Red" OnServerValidate="CustomValidator21_ServerValidate" SetFocusOnError="True" ValidateEmptyText="True"></asp:CustomValidator>
-                                         &nbsp;</div>
+                                       
+                                        </div>
                                         
                                 </ContentTemplate>
                             </asp:UpdatePanel>

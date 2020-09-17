@@ -1840,7 +1840,7 @@ public partial class RDT : System.Web.UI.Page
         textBoxDisable(lp5TextBox1);
         dropDownListEnable(lp5DropDownList2, flag);
         textBoxDisable(lp5TextBox2);
-        textBoxEnabled(lp5TextBox3, flag);
+        //textBoxEnabled(lp5TextBox3, flag);
         lp5RadioButtonList1.Enabled = flag;
         lp5RadioButtonList1.SelectedIndex = -1;
     }
@@ -3335,5 +3335,17 @@ public partial class RDT : System.Web.UI.Page
         return afterConvert;
     }
 
-   
+
+
+    protected void lp5RadioButtonList1_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        if(lp5RadioButtonList1.SelectedIndex == 0)
+        {
+            lp5TextBox3.Enabled = false;
+        }
+        else
+        {
+            lp5TextBox3.Enabled = true;
+        }
+    }
 }
