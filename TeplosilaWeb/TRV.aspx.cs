@@ -68,8 +68,13 @@ public partial class TRV : System.Web.UI.Page
 
     protected void aaRadioButton1_CheckedChanged(object sender, EventArgs e)
     {
+        lpvTextBox21.Enabled = false;
+        lpvTextBox21.Text = "";
+        lpvTextBox2.Enabled = false;
+        lpvTextBox2.Text = "";
         aaRadioButton2.Checked = false;
         aaRadioButton3.Checked = false;
+        
         aa1RadioButtonList1.Enabled = true;
         aa2RadioButtonList1.Enabled = false;
         aa3RadioButtonList1.Enabled = false;
@@ -89,6 +94,10 @@ public partial class TRV : System.Web.UI.Page
 
     protected void aaRadioButton2_CheckedChanged(object sender, EventArgs e)
     {
+        lpvTextBox21.Enabled = false;
+        lpvTextBox21.Text = "";
+        lpvTextBox2.Enabled = false;
+        lpvTextBox2.Text = "";
         aaRadioButton1.Checked = false;
         aaRadioButton3.Checked = false;
         aa1RadioButtonList1.Enabled = false;
@@ -109,6 +118,10 @@ public partial class TRV : System.Web.UI.Page
 
     protected void aaRadioButton3_CheckedChanged(object sender, EventArgs e)
     {
+        lpvTextBox21.Enabled = false;
+        lpvTextBox21.Text = "";
+        lpvTextBox2.Enabled = false;
+        lpvTextBox2.Text = "";
         aaRadioButton2.Checked = false;
         aaRadioButton1.Checked = false;
         aa1RadioButtonList1.Enabled = false;
