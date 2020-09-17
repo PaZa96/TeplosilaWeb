@@ -1033,11 +1033,11 @@ public partial class TRV : System.Web.UI.Page
 
         if (dPkl > dPto)
         {
-            Kv_start = Kv = g_dict["vKv"] * (Gkl * 0.01) / (Math.Sqrt(dPkl * 0.001 * (1000 /g)));
+            Kv_start = Kv = g_dict["vKv"] * (Gkl * 0.01) / (Math.Sqrt(dPkl * 0.001 * g));
         }
         else
         {
-            Kv_start = Kv = g_dict["vKv"] * (Gkl * 0.01) / (Math.Sqrt(dPto * 0.001 * (1000 / g)));
+            Kv_start = Kv = g_dict["vKv"] * (Gkl * 0.01) / (Math.Sqrt(dPto * 0.001 * g));
         }
 
 

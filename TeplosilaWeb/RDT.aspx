@@ -310,12 +310,15 @@
                                          <asp:Label ID="Label36" runat="server"
                                             Text="Тип пара:">
                                         </asp:Label>
-                                         <asp:RadioButtonList ID="lp5RadioButtonList1" runat="server" AutoPostBack="True" CausesValidation="True" OnSelectedIndexChanged="lp5RadioButtonList1_SelectedIndexChanged">
+                                         <asp:RadioButtonList ID="lp5RadioButtonList1" runat="server" AutoPostBack="True" OnSelectedIndexChanged="lp5RadioButtonList1_SelectedIndexChanged">
                                              <asp:ListItem>Перегретый</asp:ListItem>
                                              <asp:ListItem>Насыщеный</asp:ListItem>
                                          </asp:RadioButtonList>
                                          
                                          <asp:CustomValidator ID="CustomValidator21" runat="server" ControlToValidate="lp5RadioButtonList1" Display="Dynamic" EnableClientScript="False" ErrorMessage="CustomValidator" ForeColor="Red" OnServerValidate="CustomValidator21_ServerValidate" SetFocusOnError="True" ValidateEmptyText="True"></asp:CustomValidator>
+                                         
+                                         
+                                              <br />
                                          
                                          
                                               <asp:Label ID="Label39" runat="server"

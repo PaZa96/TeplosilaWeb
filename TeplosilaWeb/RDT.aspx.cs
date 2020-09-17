@@ -351,8 +351,26 @@ public partial class RDT : System.Web.UI.Page
                 }* /
                 Etgl(p7, p6, ref g);
             }*/
+            
+            if(ws1RadioButtonList1.SelectedIndex != 3)
+            {
+                Kv = 1.2 * (Gpg * 0.01) / (Math.Sqrt(dPg * 0.001 * g));
+            }
+            else
+            {
+                double p1 = (customConverterToDouble(lp5TextBox1.Text) * arrConvert3[lp5DropDownList1.SelectedIndex - 1] / arrConvert3[2]);
+                double p2 = (customConverterToDouble(lp5TextBox2.Text) * arrConvert3[lp5DropDownList2.SelectedIndex - 1] / arrConvert3[2]);
+                if ((p1 - p2) <= (0.5 *(p1 + 1)))
+                {
+                    Kv = 1.3 * ((Gpg / 461) * Math.Sqrt(((100 * Math.Pow((customConverterToDouble(lp5TextBox1.Text) * arrConvert3[lp5DropDownList1.SelectedIndex - 1] / arrConvert3[2]) + 1, 0.25) + 273) / ((p1 - p2) * (p2 + 1)))));
+                } 
+                else
+                {
 
-            Kv = 1.2 * (Gpg * 0.01) / (Math.Sqrt(dPg * 0.001 * g));
+                }
+            }
+
+            
             Newtonsoft.Json.Linq.JArray table5 = dataFromFile.table5;
             Newtonsoft.Json.Linq.JArray table10 = dataFromFile.table10;
             double col_B = Convert.ToDouble(table5[table5.Count - 1]);
@@ -744,7 +762,7 @@ public partial class RDT : System.Web.UI.Page
             for (int i = 0; i < listResult["C"].Count(); i++)
             {
                 /*DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD*/
-                Pf = g / 1000 * (Math.Pow(Gpg, 2) * 0.1) / (Math.Pow(double.Parse(listResult["B"].GetValue(i).ToString()), 2) * g);
+                Pf = (Math.Pow(Gpg, 2) * 0.1) / (Math.Pow(double.Parse(listResult["B"].GetValue(i).ToString()), 2) * g);
                 Pf = Math.Round(Pf / 100, 2); /*Перевод с кПа в бар*/
                 //listResult["D"] = new string[] { Pf.ToString() };
 
@@ -1633,46 +1651,43 @@ public partial class RDT : System.Web.UI.Page
 
     protected void CustomValidator20_ServerValidate(object source, ServerValidateEventArgs args)
     {
-        if (CustomValidator19.IsValid)
+        if (lp5RadioButtonList1.SelectedIndex == 0)
         {
-            if (ws1RadioButtonList1.SelectedIndex == 3)
+            if (CustomValidator21.IsValid)
             {
-                if (lp5TextBox3.Enabled == false || checkTextBoxEmpty(lp5TextBox3))
+                if (ws1RadioButtonList1.SelectedIndex == 3)
                 {
-                    CustomValidator20.ErrorMessage = "Необходимо заполнить поле";
-                    args.IsValid = false;
-                    return;
+                    if (lp5TextBox3.Enabled == false || checkTextBoxEmpty(lp5TextBox3))
+                    {
+                        CustomValidator20.ErrorMessage = "Необходимо заполнить поле";
+                        args.IsValid = false;
+                        return;
+                    }
+                    if (customConverterToDouble(lp5TextBox3.Text) < minVar)
+                    {
+                        CustomValidator20.ErrorMessage = "Неверно указано значение температуры";
+                        args.IsValid = false;
+                        return;
+                    }
+                    if ((100 * Math.Pow((customConverterToDouble(lp5TextBox1.Text) * arrConvert3[lp5DropDownList1.SelectedIndex - 1] / arrConvert3[2]) + 1, 0.25)) < customConverterToDouble(lp5TextBox3.Text))
+                    {
+                        CustomValidator20.ErrorMessage = "Неверно указано значение температуры";
+                        args.IsValid = false;
+                        return;
+                    }
                 }
-                if (customConverterToDouble(lp5TextBox3.Text) < minVar)
-                {
-                    CustomValidator20.ErrorMessage = "Неверно указано значение температуры";
-                    args.IsValid = false;
-                    return;
-                }
-                //if (customConverterToDouble(calcrTextBox2.Text) > MaxT3x)
-                //{
-                //    CustomValidator11.ErrorMessage = "На температуру свыше 150&#8451; вариантов нет";
-                //    args.IsValid = false;
-                //    return;
-                //}
-                //if (((customConverterToDouble(this.calcrTextBox1.Text) * arrConvert3[this.calcrDropDownList1.SelectedIndex - 1] / arrConvert3[2]) - getPSbyT(customConverterToDouble(lp5TextBox3.Text))) <= 0)
-                //{
-                //    CustomValidator11.ErrorMessage = "Указанная температура ниже температуры парообразования. При указанной температуре в трубопроводе движется пар";
-                //    args.IsValid = false;
-                //    return;
-                //}
             }
-        }
-        else
-        {
-            args.IsValid = false;
-            CustomValidator20.ErrorMessage = "";
+            else
+            {
+                args.IsValid = false;
+                CustomValidator20.ErrorMessage = "";
+            }
         }
     }
 
     protected void CustomValidator21_ServerValidate(object source, ServerValidateEventArgs args)
     {
-        if (CustomValidator20.IsValid)
+        if (CustomValidator19.IsValid)
         {
             if (ws1RadioButtonList1.SelectedIndex == 3)
             {
@@ -3339,7 +3354,7 @@ public partial class RDT : System.Web.UI.Page
 
     protected void lp5RadioButtonList1_SelectedIndexChanged(object sender, EventArgs e)
     {
-        if(lp5RadioButtonList1.SelectedIndex == 0)
+        if(lp5RadioButtonList1.SelectedIndex == 1)
         {
             lp5TextBox3.Enabled = false;
         }
