@@ -71,12 +71,6 @@ input[type=text] {
     border: 2px solid #808080;
 }
 
-input:disabled{
-        cursor: default;
-        background-color: rgb(235, 235, 228) !important;
-    }
-
-
 
 select {
     width: auto;
