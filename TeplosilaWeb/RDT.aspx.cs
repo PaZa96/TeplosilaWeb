@@ -724,7 +724,6 @@ public partial class RDT : System.Web.UI.Page
             listE.AddRange(listResult["E"]);
             listK.AddRange(listResult["K"]);
 
-
             for (int i = 0; i < listResult["C"].Count(); i++)
             {
                 /*DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD*/
