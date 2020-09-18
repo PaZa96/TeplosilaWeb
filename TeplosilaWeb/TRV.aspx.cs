@@ -1485,7 +1485,6 @@ public partial class TRV : System.Web.UI.Page
                 }
                 /*/CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC*/
                 /*/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA*/
-
             }
 
             V = Gkl * convertTable[1, 5] * Math.Pow((18.8 / DN), 2);
