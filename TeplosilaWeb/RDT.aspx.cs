@@ -734,7 +734,6 @@ public partial class RDT : System.Web.UI.Page
 
                 listD.Add(Pf.ToString());
 
-
                 C = Convert.ToDouble(listResult["C"][i]);
                 V = Gpg * convertTable[1, 5] * Math.Pow((18.8 / Convert.ToDouble(listResult["C"][i])), 2);
 
