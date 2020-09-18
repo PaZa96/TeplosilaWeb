@@ -753,7 +753,6 @@ public partial class RDT : System.Web.UI.Page
                     listE.Add("нет");
                 }
 
-
                 if (!String.IsNullOrWhiteSpace(this.calcrTextBox1.Text) && !String.IsNullOrWhiteSpace(this.calcrTextBox2.Text))
                 {
                     double dn = 0.0;
