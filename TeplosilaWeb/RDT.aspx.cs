@@ -336,7 +336,7 @@ public partial class RDT : System.Web.UI.Page
                 Etgl(p7, p6, ref g);
             }*/
 
-            Kv = 1.2 * (Gpg * 0.01) / (Math.Sqrt(dPg * 0.001 * g));
+            Kv = 1.2 * (Gpg * 0.01) / (Math.Sqrt(dPg / (0.001 * g)));
             Newtonsoft.Json.Linq.JArray table5 = dataFromFile.table5;
             Newtonsoft.Json.Linq.JArray table10 = dataFromFile.table10;
             double col_B = Convert.ToDouble(table5[table5.Count - 1]);
@@ -658,7 +658,7 @@ public partial class RDT : System.Web.UI.Page
                         List<string> listA = new List<string>(),
                             listB = new List<string>();
 
-                        Kv_start = 1.2 * (Gpg * 0.01) / (Math.Sqrt(dPg * 0.001 * g));
+                        Kv_start = 1.2 * (Gpg * 0.01) / (Math.Sqrt(dPg / (0.001 * g)));
                         tmpKv = 300;
                         tmpA = "";
                         foreach (Newtonsoft.Json.Linq.JObject ob in table)
@@ -728,8 +728,8 @@ public partial class RDT : System.Web.UI.Page
             for (int i = 0; i < listResult["C"].Count(); i++)
             {
                 /*DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD*/
-                Pf = (Math.Pow(Gpg, 2) * 0.1) / (Math.Pow(double.Parse(listResult["B"].GetValue(i).ToString()), 2) * g);
-                Pf = Math.Round(Pf / 100, 2); /*Перевод с кПа в бар*/
+                Pf = (Math.Pow(Gpg, 2) * 0.1) / (Math.Pow(double.Parse(listResult["B"].GetValue(i).ToString()), 2) / g);
+                Pf = Math.Round(Pf / 100000000, 2); /*Перевод с кПа в бар*/
                 //listResult["D"] = new string[] { Pf.ToString() };
 
                 listD.Add(Pf.ToString());
