@@ -1046,11 +1046,11 @@ public partial class TRV : System.Web.UI.Page
 
         if (dPkl > dPto)
         {
-            Kv_start = Kv = g_dict["vKv"] * (Gkl * 0.01) / (Math.Sqrt(dPkl * 0.001 * g));
+            Kv_start = Kv = g_dict["vKv"] * (Gkl * 0.01) / (Math.Sqrt(dPkl / (0.001 * g)));
         }
         else
         {
-            Kv_start = Kv = g_dict["vKv"] * (Gkl * 0.01) / (Math.Sqrt(dPto * 0.001 * g));
+            Kv_start = Kv = g_dict["vKv"] * (Gkl * 0.01) / (Math.Sqrt(dPto / (0.001 * g)));
         }
 
         Newtonsoft.Json.Linq.JArray tablev = null;
@@ -1514,8 +1514,8 @@ public partial class TRV : System.Web.UI.Page
 
             /*DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD*/
             //Pf = g / 1000 * (Math.Pow(Gkl, 2) * 0.1) / (Math.Pow(double.Parse(listResult["B"].GetValue(i).ToString()), 2) * g);
-            Pf = (Math.Pow(Gkl, 2) * 0.1) / (Math.Pow(double.Parse(listResult["B"].GetValue(i).ToString()), 2) * g);
-            double dPf = Pf / 100;
+            Pf = (Math.Pow(Gkl, 2) * 0.1) / (Math.Pow(double.Parse(listResult["B"].GetValue(i).ToString()), 2) / g);
+            double dPf = Pf / 100000000;
             Pf = Math.Round(dPf, 2); /*Перевод с кПа в бар*/
 
             listD.Add(Pf.ToString());
