@@ -728,7 +728,7 @@ public partial class RDT : System.Web.UI.Page
             {
                 /*DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD*/
                 Pf = (Math.Pow(Gpg, 2) * 0.1) / (Math.Pow(double.Parse(listResult["B"].GetValue(i).ToString()), 2) * g);
-                Pf = Math.Round(Pf / 100, 2); /*Перевод с кПа в бар*/
+                Pf = Math.Round(Pf / 100, 2);  /*Перевод с кПа в бар*/
                 //listResult["D"] = new string[] { Pf.ToString() };
 
                 listD.Add(Pf.ToString());
