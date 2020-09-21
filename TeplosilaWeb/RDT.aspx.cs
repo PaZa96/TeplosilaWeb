@@ -1752,6 +1752,7 @@ public partial class RDT : System.Web.UI.Page
 
             this.readFile(0);
             Dictionary<string, double> g_dict = new Dictionary<string, double>();
+            double g = 0;
             r_input_dict.Clear();
 
             if (sprRadioButtonList1.SelectedIndex != -1)
@@ -1762,8 +1763,28 @@ public partial class RDT : System.Web.UI.Page
                 {
                     if (ws1RadioButtonList1.SelectedIndex != -1)
                     {
+                        if (ws1RadioButtonList1.SelectedIndex == 0)
+                        {
+                            Water(GetAvgT(), ref g);
+                        }
+                        else if (ws1RadioButtonList1.SelectedIndex == 1)
+                        {
+                            double pl6 = customConverterToDouble(this.ws1TextBox1.Text);
+                            double pl7 = Math.Round(GetAvgT() / 10) * 10;
+                            double cp = 0;
+                            Etgl(pl7, pl6, ref g, ref cp);
+                        }
+                        else if (ws1RadioButtonList1.SelectedIndex == 2)
+                        {
+                            double pl6 = customConverterToDouble(this.ws1TextBox1.Text);
+                            double pl7 = Math.Round(GetAvgT() / 10) * 10;
+                            double cp = 0;
+                            Prgl(pl7, pl6, ref g, ref cp);
+                        }
+
                         if (this.ws1RadioButtonList1.SelectedIndex == 1 || ws1RadioButtonList1.SelectedIndex == 2)
                         {
+                            
                             Double p6 = -1;
                             Double p7 = -1;
                             try
@@ -1927,7 +1948,16 @@ public partial class RDT : System.Web.UI.Page
                                 }
                                 else
                                 {
-                                    p16 = (customConverterToDouble(this.fprTextBox1.Text) * arrConvert1[(this.fprDropDownList1.SelectedIndex - 1), 5]);
+                                    
+                                    if(fprDropDownList1.SelectedIndex > 4)
+                                    {
+                                        p16 = (customConverterToDouble(this.fprTextBox1.Text) * arrConvert1[(this.fprDropDownList1.SelectedIndex - 1), 5]);
+
+                                    } 
+                                    else
+                                    {
+                                        p16 = (customConverterToDouble(this.fprTextBox1.Text) * arrConvert1[(this.fprDropDownList1.SelectedIndex - 1), 5] * (g / 1000));
+                                    }
                                 }
 
                                 g_dict.Add("p16", p16);

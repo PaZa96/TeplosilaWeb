@@ -2302,6 +2302,7 @@ public partial class TRV : System.Web.UI.Page
             Dictionary<string, double> g_dict = new Dictionary<string, double>();
             v_input_dict.Clear();
             LabelError.Text = "";
+            double g = 0;
 
             if (spvRadioButtonList1.SelectedIndex != -1)
             {
@@ -2310,6 +2311,25 @@ public partial class TRV : System.Web.UI.Page
                 if (rpvRadioButtonList1.SelectedIndex != -1)
                 {
                     if (rpvRadioButtonList1.SelectedIndex == 0) g_dict.Add("vKv", 1.0); else g_dict.Add("vKv", 1.2);
+
+                    if (this.ws2RadioButtonList1.SelectedIndex == 0)
+                    {
+                        Water(GetAvgT(), ref g);
+                    }
+                    else if (ws2RadioButtonList1.SelectedIndex == 1)
+                    {
+                        double p6 = customConverterToDouble(this.ws2TextBox1.Text);
+                        double p7 = Math.Round(GetAvgT() / 10) * 10;
+                        double cp = 0;
+                        Etgl(p7, p6, ref g, ref cp);
+                    }
+                    else if (ws2RadioButtonList1.SelectedIndex == 2)
+                    {
+                        double p6 = customConverterToDouble(this.ws2TextBox1.Text);
+                        double p7 = Math.Round(GetAvgT() / 10) * 10;
+                        double cp = 0;
+                        Prgl(p7, p6, ref g, ref cp);
+                    }
 
                     if (aaRadioButton1.Checked || aaRadioButton2.Checked || aaRadioButton3.Checked)
                     {
@@ -2815,7 +2835,16 @@ public partial class TRV : System.Web.UI.Page
 
                                             if (!String.IsNullOrWhiteSpace(fvTextBox1.Text))
                                             {
-                                                p30 = (customConverterToDouble(fvTextBox1.Text) * arrConvert1[(fvDropDownList1.SelectedIndex - 1), 5]);
+                                                if (fvDropDownList1.SelectedIndex > 4)
+                                                {
+                                                    p30 = (customConverterToDouble(fvTextBox1.Text) * arrConvert1[(fvDropDownList1.SelectedIndex - 1), 5]);
+
+                                                }
+                                                else
+                                                {
+                                                    p30 = (customConverterToDouble(fvTextBox1.Text) * arrConvert1[(fvDropDownList1.SelectedIndex - 1), 5] * (g / 1000));
+                                                }
+                                            
                                             }
                                             else
                                             {
