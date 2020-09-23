@@ -142,7 +142,7 @@
                                         <br />
                                         <asp:TextBox ID="ws2TextBox1" runat="server" step="0.01" Enabled="False"
                                             type="number" required="required" TextMode="Number"></asp:TextBox>
-                                        <asp:Label ID="Label6" runat="server" Text="%(от 5% до 65%)"></asp:Label>
+                                        <asp:Label ID="Label6" runat="server" Text="% (от 5% до 65%)"></asp:Label>
                                         &nbsp;&nbsp;&nbsp;
                                         <asp:CustomValidator ID="CustomValidator16" runat="server"
                                             ControlToValidate="ws2TextBox1" Display="Dynamic"
@@ -249,8 +249,7 @@
                                     <div class="col">
                                         <asp:Label ID="Label13" runat="server" Text="&#916;Pкл = "></asp:Label>
                                         &nbsp;&nbsp;&nbsp;<asp:TextBox ID="lpvTextBox1" runat="server" Enabled="False"
-                                            step="0.01" type="number" required="required" TextMode="Number"
-                                            CausesValidation="True"></asp:TextBox>
+                                            step="0.01" type="number" required="required" TextMode="Number"></asp:TextBox>
                                         <asp:DropDownList ID="lpvDropDownList1" runat="server" AutoPostBack="True"
                                             Enabled="False"
                                             OnSelectedIndexChanged="lpvDropDownList1_SelectedIndexChanged">
@@ -267,12 +266,16 @@
                                             ValidateEmptyText="True"></asp:CustomValidator>
                                         <asp:Label ID="Label55" runat="server" ForeColor="Red"
                                             Text="Неверно указано значение давления" Visible="False"></asp:Label>
+                                        <asp:Label ID="Label56" runat="server" ForeColor="Red" Text="Суммарные потери давления в теплообменнике и на клапане превышают давление перед клапаном" Visible="False"></asp:Label>
                                         <br />
-                                        <asp:Label ID="Label54" runat="server"
-                                            Text="(для корректной работы клапана потери давления <br/> на нем должны быть не менее, чем потери <br/> давления на регулируемом участке, т.е. <br/> в теплообменнике при независимой схеме присоединения <br/> или в системе при зависимой схеме присоединения)">
+                                       
+
+                                    </div>
+                                    <div class="col-12">
+                                         <asp:Label ID="Label54" runat="server"
+                                            Text="(для корректной работы клапана потери давления на нем должны быть не менее, чем потери давления на регулируемом участке, т.е. в теплообменнике при независимой схеме присоединения или в системе при зависимой схеме присоединения)">
                                         </asp:Label>
                                         <br />
-
                                     </div>
                                 </div>
                             </ContentTemplate>
@@ -290,8 +293,7 @@
                                         <br />
                                         <asp:Label ID="Label21" runat="server" Text="P' = "></asp:Label>
                                         &nbsp;&nbsp;&nbsp;<asp:TextBox ID="calcvTextBox1" runat="server" Enabled="False"
-                                            step="0.01" type="number" required="required" TextMode="Number">
-                                        </asp:TextBox>
+                                            step="0.01" type="number" required="required" TextMode="Number"></asp:TextBox>
                                         <asp:DropDownList ID="calcvDropDownList1" runat="server" AutoPostBack="True"
                                             Enabled="False"
                                             OnSelectedIndexChanged="calcvDropDownList1_SelectedIndexChanged">
@@ -334,7 +336,7 @@
                             <asp:UpdatePanel ID="UpdatePanel13" runat="server">
                                 <ContentTemplate>
                                     <asp:RadioButton ID="fvRadioButton1" runat="server"
-                                        Text="Задать max величину расхода через клапан:" AutoPostBack="True"
+                                        Text="Задать максимальную величину расхода через клапан:" AutoPostBack="True"
                                         OnCheckedChanged="fvRadioButton1_CheckedChanged" /><br />
                                     <div class="col">
                                         <asp:Label ID="Label28" runat="server" Text="Gкл = "></asp:Label>
@@ -365,7 +367,7 @@
                             <asp:UpdatePanel ID="UpdatePanel14" runat="server">
                                 <ContentTemplate>
                                     <asp:RadioButton ID="fvRadioButton2" runat="server"
-                                        Text="Вычислить max величину расхода через клапан:" AutoPostBack="True"
+                                        Text="Вычислить максимальную величину расхода через клапан:" AutoPostBack="True"
                                         OnCheckedChanged="fvRadioButton2_CheckedChanged" />
                                     <div class="col table-responsive-md">
                                         <table class="table table-bordered col">
@@ -373,9 +375,9 @@
                                                 <tr>
                                                     <th scope="col"></th>
                                                     <th scope="col"></th>
-                                                    <th scope="col" class="auto-style1">Температура подающего
-                                                        теплоносителя</th>
-                                                    <th scope="col">Температура обратного теплоносителя</th>
+                                                    <th scope="col" class="auto-style1">Температура
+                                                        теплоносителя в подающем трубопроводе</th>
+                                                    <th scope="col">Температура теплоносителя в обратном трубопроводе</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -501,7 +503,7 @@
                                         <asp:Label ID="Label46" runat="server" Text="Максимальный расход Gкл = ">
                                         </asp:Label>
                                         <asp:TextBox ID="fvTextBox11" runat="server" Enabled="False" step="0.01"
-                                            ReadOnly="True" TextMode="Number"></asp:TextBox>
+                                            ReadOnly="True"></asp:TextBox>
                                         <asp:Label ID="Label48" runat="server" Text=" кг/ч"></asp:Label>
                                         <br />
                                         <asp:Label ID="Label8" runat="server" ForeColor="Red" Text=""></asp:Label>
@@ -523,7 +525,7 @@
                                         <asp:ListItem Selected="True">230 VAC</asp:ListItem>
                                         <asp:ListItem>24 VAC / VDC</asp:ListItem>
                                     </asp:RadioButtonList>
-                                    <asp:Label ID="Label49" runat="server" Text="Напряжение питания:"></asp:Label>
+                                    <asp:Label ID="Label49" runat="server" Text="Управление:"></asp:Label>
                                     <asp:RadioButtonList ID="tdRadioButtonList2" runat="server" AutoPostBack="True"
                                         OnSelectedIndexChanged="tdRadioButtonList2_SelectedIndexChanged"
                                         Enabled="False">
