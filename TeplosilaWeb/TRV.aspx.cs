@@ -1512,11 +1512,6 @@ public partial class TRV : System.Web.UI.Page
         for (int i = 0; i < listResult["C"].Count(); i++)
         {
 
-            /*DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD*/
-<<<<<<< HEAD
-=======
-            //Pf = g / 1000 * (Math.Pow(Gkl, 2) * 0.1) / (Math.Pow(double.Parse(listResult["B"].GetValue(i).ToString()), 2) * g);
->>>>>>> master
             Pf = (Math.Pow(Gkl, 2) * 0.1) / (Math.Pow(double.Parse(listResult["B"].GetValue(i).ToString()), 2) * g);
             double dPf = Pf / 100;
             Pf = Math.Round(dPf, 2); /*Перевод с кПа в бар*/
