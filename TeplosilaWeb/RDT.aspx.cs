@@ -565,7 +565,7 @@ public partial class RDT : System.Web.UI.Page
             /*/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA*/
 
             double C = Convert.ToDouble(listResult["C"][listResult["C"].Count() - 1]),
-                    V = Gpg * convertTable[1, 5] * Math.Pow((18.8 / C), 2);
+                    V = Gpg /g * Math.Pow((18.8 / C), 2);
 
 
 
@@ -706,7 +706,7 @@ public partial class RDT : System.Web.UI.Page
 
                 }
 
-                V = Gpg * convertTable[1, 5] * Math.Pow((18.8 / DN), 2);
+                V = Gpg /g * Math.Pow((18.8 / DN), 2);
 
             }
 
@@ -734,7 +734,7 @@ public partial class RDT : System.Web.UI.Page
                 listD.Add(Pf.ToString());
 
                 C = Convert.ToDouble(listResult["C"][i]);
-                V = Gpg * convertTable[1, 5] * Math.Pow((18.8 / Convert.ToDouble(listResult["C"][i])), 2);
+                V = Gpg /g * Math.Pow((18.8 / Convert.ToDouble(listResult["C"][i])), 2);
 
                 if (V < g_dict["vmax"])
                     exit_t = true;

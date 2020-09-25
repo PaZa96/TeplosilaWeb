@@ -1282,7 +1282,7 @@ public partial class TRV : System.Web.UI.Page
         /*/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA*/
 
         double C = Convert.ToDouble(listResult["C"][listResult["C"].Count() - 1]),
-                V = Gkl * convertTable[1, 5] * Math.Pow((18.8 / C), 2);
+                V = Gkl / g * Math.Pow((18.8 / C), 2);
 
 
         double Pf = 1;
@@ -1486,7 +1486,7 @@ public partial class TRV : System.Web.UI.Page
                 /*/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA*/
             }
 
-            V = Gkl * convertTable[1, 5] * Math.Pow((18.8 / DN), 2);
+            V = Gkl / g * Math.Pow((18.8 / DN), 2);
         }
 
 
@@ -1523,7 +1523,7 @@ public partial class TRV : System.Web.UI.Page
 
 
             C = Convert.ToDouble(listResult["C"][i]);
-            V = Gkl * convertTable[1, 5] * Math.Pow((18.8 / C), 2);
+            V = Gkl / g * Math.Pow((18.8 / C), 2);
 
             if (V <= g_dict["vmax"] || V >= 7)
             {
