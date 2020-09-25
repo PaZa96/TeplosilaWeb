@@ -769,17 +769,33 @@ public partial class RDT : System.Web.UI.Page
 
                 listF.Add(Math.Round(V, 2).ToString());
 
-                if (V > 3 && V <= 5 && this.sprRadioButtonList1.SelectedIndex == 1)
-                    listE.Add("возможен шум");
-                else if (V > 5) listE.Add("возможен эрозийный износ клапана");
-                else if (V < 1.5)
+                if (ws1RadioButtonList1.SelectedIndex != 3)
                 {
-                    listE.Add("возможен колебательный режим регулирования");
+                    if (V > 3 && V <= 5 && this.sprRadioButtonList1.SelectedIndex == 1)
+                        listE.Add("возможен шум");
+                    else if (V > 5) listE.Add("возможен эрозийный износ клапана");
+                    else if (V < 1.5)
+                    {
+                        listE.Add("возможен колебательный режим регулирования");
+                    }
+                    else
+                    {
+                        listE.Add("нет");
+                    }
                 }
                 else
                 {
-                    listE.Add("нет");
+                    if (V > 40 && lp5RadioButtonList1.SelectedIndex == 1)
+                        listE.Add("возможен шум");
+                    else if (V > 60 && lp5RadioButtonList1.SelectedIndex == 0)
+                        listE.Add("возможен шум");
+                    else
+                    {
+                        listE.Add("нет");
+                    }
                 }
+
+
 
                 if (!String.IsNullOrWhiteSpace(this.calcrTextBox1.Text) && !String.IsNullOrWhiteSpace(this.calcrTextBox2.Text))
                 {
