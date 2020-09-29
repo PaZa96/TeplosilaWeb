@@ -159,7 +159,7 @@
                                         <asp:Label ID="lpLabel3" runat="server"
                                             Text="Давление в подающем трубопроводе "></asp:Label>
                                         <br />
-                                        <asp:Label ID="Label60" runat="server" Text="(перед регулятором, если он установлен на подающем трубопроводе, или в месте врезки импульсной трубки, если регулятор устанавливается на обратном трубопроводе):"></asp:Label>
+                                        <asp:Label ID="Label60" runat="server" Text="(перед регулятором, если он устанавливается на подающем трубопроводе, или в месте врезки импульсной трубки, если регулятор устанавливается на обратном трубопроводе):"></asp:Label>
                                         <br />
                                         <asp:Label ID="Label56" runat="server" Text="P1 = "></asp:Label>
                                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
