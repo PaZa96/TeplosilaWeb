@@ -38,8 +38,13 @@ public partial class RDT : System.Web.UI.Page
 
         convertTable = new double[2, 7] { { 1000, 3600, 60, 1, 3600, 1, 1000 }, { 1, 3.6, 0.06, 0.001, 3.6, 0.001, 1 } };
 
-        arrConvert1 =
-            new double[7, 7] { { 1, 0.278, 16.67, 1000, 0.278, 1000, 1 }, { 3.6, 1, 60, 3600, 1, 3600, 3.6 }, { 0.06, 0.0167, 1, 60, 0.0167, 60, 0.06 }, { 0.001, 0.000278, 0.0167, 1, 0.000278, 1, 0.001 }, { 3.6, 1, 60, 3600, 1, 3600, 3.6 }, { 0.001, 0.000278, 0.0167, 1, 0.000278, 1, 0.001 }, { 1, 0.278, 16.67, 1000, 0.278, 1000, 1 }
+        arrConvert1 = new double[7, 7] { { 1, 0.278, 16.67, 1000, 0.278, 1000, 1 }, 
+                                         { 3.6, 1, 60, 3600, 1, 3600, 3.6 }, 
+                                         { 0.06, 0.0167, 1, 60, 0.0167, 60, 0.06 }, 
+                                         { 0.001, 0.000278, 0.0167, 1, 0.000278, 1, 0.001 }, 
+                                         { 3.6, 1, 60, 3600, 1, 3600, 3.6 }, 
+                                         { 0.001, 0.000278, 0.0167, 1, 0.000278, 1, 0.001 }, 
+                                         { 1, 0.278, 16.67, 1000, 0.278, 1000, 1 }
             };
         arrConvert2 = new double[5] { 1000, 1000000, 1, 1163000, 1.163 };
         arrConvert3 = new double[4] { 1000, 1, 100, 9.8067 };
@@ -223,12 +228,14 @@ public partial class RDT : System.Web.UI.Page
             listResult.Add("F", new string[] { });
             listResult.Add("E", new string[] { });
             listResult.Add("G", new string[] { });
+
             if(ws1RadioButtonList1.SelectedIndex != 3)
             {
                 listResult.Add("K", new string[] { });
             }
             
             Gpg = g_dict["p16"];
+
             if (eorRadioButtonList1.SelectedIndex == 0)
             {
                 dPg = customConverterToDouble(this.lp1TextBox1.Text) * arrConvert3[this.lp1DropDownList1.SelectedIndex - 1];
@@ -348,16 +355,27 @@ public partial class RDT : System.Web.UI.Page
             {
                 p1 = (customConverterToDouble(lp5TextBox1.Text) * arrConvert3[lp5DropDownList1.SelectedIndex - 1] / arrConvert3[2]);
                 p2 = (customConverterToDouble(lp5TextBox2.Text) * arrConvert3[lp5DropDownList2.SelectedIndex - 1] / arrConvert3[2]);
-                T1 = 100 * Math.Pow((customConverterToDouble(lp5TextBox1.Text) * arrConvert3[lp5DropDownList1.SelectedIndex - 1] / arrConvert3[2]) + 1, 0.25);
-                if ((p1 - p2) <= (0.5 * (p1 + 1)))
+
+                if(lp5RadioButtonList1.SelectedIndex == 0)
                 {
-                    Kv = 1.3 * ((Gpg / 461) * Math.Sqrt(((T1 + 273) / ((p1 - p2) * (p2 + 1)))));
+                    T1 = customConverterToDouble(lp5TextBox3.Text);
                 }
                 else
                 {
-                    Kv = 1.3 * (Gpg / (230 * (p1 + 1))) * Math.Sqrt(((T1 + 273)));
+                    T1 = Math.Round(100 * Math.Pow((customConverterToDouble(lp5TextBox1.Text) * arrConvert3[lp5DropDownList1.SelectedIndex - 1] / arrConvert3[2]) + 1, 0.25));
+                }
+                
+                if ((p1 - p2) <= (0.5 * (p1 + 1)))
+                {
+                    Kv = 1.3 * ((Gpg / 461) * Math.Sqrt((T1 + 273) / ((p1 - p2) * (p2 + 1))));
+                }
+                else
+                {
+                    Kv = 1.3 * (Gpg / (230 * (p1 + 1))) * Math.Sqrt(T1 + 273);
                 }
             }
+
+            double Q = Math.Round((Gpg * (T1 + 273)) / ((p2 + 1) * 219));
 
             Newtonsoft.Json.Linq.JArray table5 = dataFromFile.table5;
             Newtonsoft.Json.Linq.JArray table10 = dataFromFile.table10;
@@ -600,6 +618,8 @@ public partial class RDT : System.Web.UI.Page
             {
                 V = Math.Pow((C / 18.8), 2) * ((219 * (p2 + 1)) / (Gpg * (T1 + 273)));
             }
+
+            double V1 = (Math.Pow((C / 18.8), 2) / Q);
 
             double Pf = 1;
 
