@@ -1763,24 +1763,7 @@ public partial class RDT : System.Web.UI.Page
                 {
                     if (ws1RadioButtonList1.SelectedIndex != -1)
                     {
-                        if (ws1RadioButtonList1.SelectedIndex == 0)
-                        {
-                            Water(GetAvgT(), ref g);
-                        }
-                        else if (ws1RadioButtonList1.SelectedIndex == 1)
-                        {
-                            double pl6 = customConverterToDouble(this.ws1TextBox1.Text);
-                            double pl7 = Math.Round(GetAvgT() / 10) * 10;
-                            double cp = 0;
-                            Etgl(pl7, pl6, ref g, ref cp);
-                        }
-                        else if (ws1RadioButtonList1.SelectedIndex == 2)
-                        {
-                            double pl6 = customConverterToDouble(this.ws1TextBox1.Text);
-                            double pl7 = Math.Round(GetAvgT() / 10) * 10;
-                            double cp = 0;
-                            Prgl(pl7, pl6, ref g, ref cp);
-                        }
+                        
 
                         if (this.ws1RadioButtonList1.SelectedIndex == 1 || ws1RadioButtonList1.SelectedIndex == 2)
                         {
@@ -1830,6 +1813,26 @@ public partial class RDT : System.Web.UI.Page
 
                         if (fprRadioButton1.Checked || fprRadioButton2.Checked)
                         {
+
+                            if (ws1RadioButtonList1.SelectedIndex == 0)
+                            {
+                                Water(GetAvgT(), ref g);
+                            }
+                            else if (ws1RadioButtonList1.SelectedIndex == 1)
+                            {
+                                double pl6 = customConverterToDouble(this.ws1TextBox1.Text);
+                                double pl7 = Math.Round(GetAvgT() / 10) * 10;
+                                double cp = 0;
+                                Etgl(pl7, pl6, ref g, ref cp);
+                            }
+                            else if (ws1RadioButtonList1.SelectedIndex == 2)
+                            {
+                                double pl6 = customConverterToDouble(this.ws1TextBox1.Text);
+                                double pl7 = Math.Round(GetAvgT() / 10) * 10;
+                                double cp = 0;
+                                Prgl(pl7, pl6, ref g, ref cp);
+                            }
+
                             double checkVal;
 
                             try

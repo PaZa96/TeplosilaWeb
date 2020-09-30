@@ -415,7 +415,7 @@
                             <ContentTemplate>
                                 <div class="panel-hide" id="fpr1" runat="server">
                                     <asp:RadioButton ID="fprRadioButton1" runat="server"
-                                        Text="Задать max величину расхода через регулятор давления:" AutoPostBack="True"
+                                        Text="Задать максимальную величину расхода через регулятор давления:" AutoPostBack="True"
                                         OnCheckedChanged="fprRadioButton1_CheckedChanged" Enabled="False" /><br />
                                     <div class="col panel-hide" id="fpr1_1" runat="server">
                                         <asp:Label ID="Label28" runat="server" Text="Gрд = "></asp:Label>
@@ -449,7 +449,7 @@
                             <ContentTemplate>
                                 <div class="panel-hide" id="fpr2" runat="server">
                                     <asp:RadioButton ID="fprRadioButton2" runat="server"
-                                        Text="Вычислить max величину расхода через регулятор давления:"
+                                        Text="Вычислить максимальную величину расхода через регулятор давления:"
                                         AutoPostBack="True" OnCheckedChanged="fprRadioButton2_CheckedChanged"
                                         Enabled="False" />
                                     <div class="col panel-hide" id="fpr2_1" runat="server">
