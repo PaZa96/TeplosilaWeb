@@ -227,10 +227,12 @@ public partial class RDT : System.Web.UI.Page
             listResult.Add("I", new string[] { });
             listResult.Add("F", new string[] { });
             listResult.Add("E", new string[] { });
-            listResult.Add("G", new string[] { });
+            
+            
 
             if(ws1RadioButtonList1.SelectedIndex != 3)
             {
+                listResult.Add("G", new string[] { });
                 listResult.Add("K", new string[] { });
             }
             
@@ -374,8 +376,6 @@ public partial class RDT : System.Web.UI.Page
                     Kv = 1.3 * (Gpg / (230 * (p1 + 1))) * Math.Sqrt(T1 + 273);
                 }
             }
-
-            double Q = Math.Round((Gpg * (T1 + 273)) / ((p2 + 1) * 219));
 
             Newtonsoft.Json.Linq.JArray table5 = dataFromFile.table5;
             Newtonsoft.Json.Linq.JArray table10 = dataFromFile.table10;
@@ -570,13 +570,11 @@ public partial class RDT : System.Web.UI.Page
                         (Convert.ToDouble(ob.GetValue("min")) == Convert.ToDouble(tmpI.GetValue("min")) &&
                             Convert.ToDouble(ob.GetValue("max")) == Convert.ToDouble(tmpI.GetValue("max"))))
                     {
-
                         listA.Add(ob.GetValue("name").ToString());
                         listB.Add(ob.GetValue("prop").ToString());
                         listC.Add(ob.GetValue("d").ToString());
                         DN = int.Parse(ob.GetValue("d").ToString());
                         tmpKv = Kv;
-
                     }
                 }
 
@@ -616,10 +614,9 @@ public partial class RDT : System.Web.UI.Page
             }
             else
             {
-                V = Math.Pow((C / 18.8), 2) * ((219 * (p2 + 1)) / (Gpg * (T1 + 273)));
+                V = (Gpg * (T1 + 273)) / Math.Pow((C / 18.8), 2) / (219 * (p2 + 1));
             }
 
-            double V1 = (Math.Pow((C / 18.8), 2) / Q);
 
             double Pf = 1;
 
@@ -709,8 +706,24 @@ public partial class RDT : System.Web.UI.Page
                         List<string> listA = new List<string>(),
                             listB = new List<string>();
 
-                        Kv_start = 1.2 * (Gpg * 0.01) / (Math.Sqrt(dPg * 0.001 * g));
-                        tmpKv = 300;
+
+                        if (ws1RadioButtonList1.SelectedIndex != 3)
+                        {
+                            Kv_start = 1.2 * (Gpg * 0.01) / (Math.Sqrt(dPg * 0.001 * g));
+                        }
+                        else //Расчетная максимальная пропускная способность пара
+                        {
+                            if ((p1 - p2) <= (0.5 * (p1 + 1)))
+                            {
+                                Kv_start = 1.3 * ((Gpg / 461) * Math.Sqrt((T1 + 273) / ((p1 - p2) * (p2 + 1))));
+                            }
+                            else
+                            {
+                                Kv_start = 1.3 * (Gpg / (230 * (p1 + 1))) * Math.Sqrt(T1 + 273);
+                            }
+                        }
+
+                            tmpKv = 300;
                         tmpA = "";
                         foreach (Newtonsoft.Json.Linq.JObject ob in table)
                         {
@@ -763,7 +776,7 @@ public partial class RDT : System.Web.UI.Page
                 }
                 else
                 {
-                    V = Math.Pow((DN / 18.8), 2) * ((219 * (p2 + 1)) / (Gpg * (T1 + 273)));
+                    V = (Gpg * (T1 + 273)) / Math.Pow(( DN / 18.8), 2) / ((219 * (p2 + 1)));
                 }
             }
 
@@ -777,10 +790,11 @@ public partial class RDT : System.Web.UI.Page
 
             listD.AddRange(listResult["D"]);
             listF.AddRange(listResult["F"]);
-            listG.AddRange(listResult["G"]);
             listE.AddRange(listResult["E"]);
-            if(ws1RadioButtonList1.SelectedIndex != 3)
+
+            if (ws1RadioButtonList1.SelectedIndex != 3)
             {
+                listG.AddRange(listResult["G"]);
                 listK.AddRange(listResult["K"]);
             }
             
@@ -813,7 +827,7 @@ public partial class RDT : System.Web.UI.Page
                 }
                 else
                 {
-                    V = Math.Pow((DN / 18.8), 2) * ((219 * (p2 + 1)) / (Gpg * (T1 + 273)));
+                    V = (Gpg * (T1 + 273)) / Math.Pow((C / 18.8), 2) / ((219 * (p2 + 1)));
                 }
 
                 if (V < g_dict["vmax"])
@@ -894,9 +908,10 @@ public partial class RDT : System.Web.UI.Page
             listResult["D"] = listD.ToArray();
             listResult["F"] = listF.ToArray();
             listResult["E"] = listE.ToArray();
-            listResult["G"] = listG.ToArray();
+            
             if (ws1RadioButtonList1.SelectedIndex != 3)
             {
+                listResult["G"] = listG.ToArray();
                 listResult["K"] = listK.ToArray();
             }
             /*/GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG*/
@@ -2654,8 +2669,7 @@ public partial class RDT : System.Web.UI.Page
                                         "Фактические потери давления на полностью открытом клапане при заданном расходе ∆Рф,\n бар\n",
                                         "Диапазон настройки,\n бар",
                                         "Скорость в выходном сечении регулятора V, м/с",
-                                        "Шум, некачественное регулирование",
-                                        "Предельно допустимый перепад давлений на регуляторе ∆Pпред, бар"
+                                        "Шум, некачественное регулирование"
                                     };
                                 }
                                
