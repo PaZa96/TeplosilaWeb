@@ -2677,59 +2677,49 @@ public partial class RDT : System.Web.UI.Page
 
             ws.Cells["I16"].Value = r_input_dict[15];
 
-            ws.Cells["D18"].Value = r_input_dict[16];
-            ws.Cells["E18"].Value = r_input_dict[17];
+            ws.Cells["J18"].Value = r_input_dict[16];
+            ws.Cells["K18"].Value = r_input_dict[17];
 
-            ws.Cells["D19"].Value = r_input_dict[18];
-            ws.Cells["E19"].Value = r_input_dict[19];
+            ws.Cells["J19"].Value = r_input_dict[18];
+            ws.Cells["K19"].Value = r_input_dict[19];
 
-            // пар
-            ws.Cells["J18"].Value = r_input_dict[20];
-            ws.Cells["K18"].Value = r_input_dict[21];
+            ws.Cells["J21"].Value = r_input_dict[25];
+            ws.Cells["K21"].Value = r_input_dict[26];
 
-            ws.Cells["J19"].Value = r_input_dict[22];
-            ws.Cells["K19"].Value = r_input_dict[23];
+            ws.Cells["I22"].Value = r_input_dict[27];
+            ws.Cells["K22"].Value = r_input_dict[28];
 
-            ws.Cells["J20"].Value = r_input_dict[24];
-            // пар
+            ws.Cells["I24"].Value = r_input_dict[29];
+            ws.Cells["K24"].Value = r_input_dict[30];
 
-            ws.Cells["I22"].Value = r_input_dict[25];
-            ws.Cells["K22"].Value = r_input_dict[26];
+            ws.Cells["I26"].Value = r_input_dict[31];
+            ws.Cells["K26"].Value = r_input_dict[32];
 
-            ws.Cells["I23"].Value = r_input_dict[27];
-            ws.Cells["K23"].Value = r_input_dict[28];
+            ws.Cells["I27"].Value = r_input_dict[33];
 
-            ws.Cells["I25"].Value = r_input_dict[29];
-            ws.Cells["K25"].Value = r_input_dict[30];
+            ws.Cells["I29"].Value = r_input_dict[34];
 
-            ws.Cells["I27"].Value = r_input_dict[31];
-            ws.Cells["K27"].Value = r_input_dict[32];
+            ws.Cells["I30"].Value = r_input_dict[35];
 
-            ws.Cells["I28"].Value = r_input_dict[33];
+            ws.Cells["I31"].Value = r_input_dict[36];
+            ws.Cells["K31"].Value = r_input_dict[37];
 
-            ws.Cells["I30"].Value = r_input_dict[34];
+            ws.Cells["I32"].Value = r_input_dict[38];
+            ws.Cells["K32"].Value = r_input_dict[381];
 
-            ws.Cells["I31"].Value = r_input_dict[35];
+            ws.Cells["E35"].Value = r_input_dict[39];
 
-            ws.Cells["I32"].Value = r_input_dict[36];
-            ws.Cells["K32"].Value = r_input_dict[37];
+            ws.Cells["E36"].Value = r_input_dict[40];
 
-            ws.Cells["I33"].Value = r_input_dict[38];
-            ws.Cells["K33"].Value = r_input_dict[381];
-
-            ws.Cells["E36"].Value = r_input_dict[39];
-
-            ws.Cells["E37"].Value = r_input_dict[40];
-
-            ws.Cells["A40"].Value = r_input_dict[41];
-            ws.Cells["B40"].Value = r_input_dict[42];
-            ws.Cells["C40"].Value = r_input_dict[43];
-            ws.Cells["D40"].Value = r_input_dict[44];
-            ws.Cells["F40"].Value = r_input_dict[45];
-            ws.Cells["G40"].Value = r_input_dict[46];
-            ws.Cells["H40"].Value = r_input_dict[47];
-            ws.Cells["I40"].Value = r_input_dict[48];
-            ws.Cells["K40"].Value = r_input_dict[49];
+            ws.Cells["A39"].Value = r_input_dict[41];
+            ws.Cells["B39"].Value = r_input_dict[42];
+            ws.Cells["C39"].Value = r_input_dict[43];
+            ws.Cells["D39"].Value = r_input_dict[44];
+            ws.Cells["F39"].Value = r_input_dict[45];
+            ws.Cells["G39"].Value = r_input_dict[46];
+            ws.Cells["H39"].Value = r_input_dict[47];
+            ws.Cells["I39"].Value = r_input_dict[48];
+            ws.Cells["K39"].Value = r_input_dict[49];
 
             getDimsR(ref r_input_dict);
 
@@ -2737,10 +2727,10 @@ public partial class RDT : System.Web.UI.Page
 
 
 
-            ws.Cells["F44"].Value = r_input_dict[51];
-            ws.Cells["F45"].Value = r_input_dict[52];
-            ws.Cells["F46"].Value = r_input_dict[53];
-            ws.Cells["F47"].Value = r_input_dict[54];
+            ws.Cells["F43"].Value = r_input_dict[51];
+            ws.Cells["F44"].Value = r_input_dict[52];
+            ws.Cells["F45"].Value = r_input_dict[53];
+            ws.Cells["F46"].Value = r_input_dict[54];
 
 
             string path = HttpContext.Current.Server.MapPath("\\Files\\RDT\\PDF\\" + DateTime.Now.ToString("dd-MM-yyyy"));

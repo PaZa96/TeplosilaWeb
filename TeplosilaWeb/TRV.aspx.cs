@@ -3898,19 +3898,11 @@ public partial class TRV : System.Web.UI.Page
         ws.Cells["J9"].Value = v_input_dict[12];
         ws.Cells["K9"].Value = v_input_dict[13];
 
-        ws.Cells["E10"].Value = v_input_dict[14];
-        ws.Cells["F10"].Value = v_input_dict[15];
-        ws.Cells["E11"].Value = v_input_dict[16];
-        ws.Cells["F11"].Value = v_input_dict[17];
-        ws.Cells["E12"].Value = v_input_dict[18];
-
-        // пар
-        ws.Cells["J10"].Value = "-";
-        ws.Cells["K10"].Value = "-";
-        ws.Cells["J11"].Value = "-";
-        ws.Cells["K11"].Value = "-";
-        ws.Cells["J12"].Value = "-";
-        // пар
+        ws.Cells["J10"].Value = v_input_dict[14];
+        ws.Cells["K10"].Value = v_input_dict[15];
+        ws.Cells["J11"].Value = v_input_dict[16];
+        ws.Cells["K11"].Value = v_input_dict[17];
+        ws.Cells["J12"].Value = v_input_dict[18];
 
         ws.Cells["E14"].Value = v_input_dict[24];
         ws.Cells["I14"].Value = v_input_dict[25];
