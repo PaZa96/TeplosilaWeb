@@ -634,7 +634,7 @@ public partial class TRV : System.Web.UI.Page
         }
         else if (ws2RadioButtonList1.SelectedIndex == 1)
         {
-            Etgl(GetAvgT(), double.Parse(this.ws2TextBox1.Text), ref rr, ref cp);
+            Etgl(GetAvgT(), customConverterToDouble(this.ws2TextBox1.Text), ref rr, ref cp);
 
             /*double p14 = Convert.ToDouble(ws2TextBox1.Text);
             double p15 = Math.Round(Convert.ToDouble(ws2TextBox2.Text) / 10) * 10;
@@ -658,7 +658,7 @@ public partial class TRV : System.Web.UI.Page
         }
         else if (ws2RadioButtonList1.SelectedIndex == 2)
         {
-            Prgl(GetAvgT(), double.Parse(this.ws2TextBox1.Text), ref rr, ref cp);
+            Prgl(GetAvgT(), customConverterToDouble(this.ws2TextBox1.Text), ref rr, ref cp);
         }
         return cp / 1000;
     }
@@ -706,7 +706,7 @@ public partial class TRV : System.Web.UI.Page
         {
             if (this.ws2RadioButtonList1.SelectedIndex == 0)
             {
-                avg_T = double.Parse(this.calcvTextBox2.Text);
+                avg_T = customConverterToDouble(this.calcvTextBox2.Text);
             }
             else
             {
@@ -718,16 +718,16 @@ public partial class TRV : System.Web.UI.Page
 
             if (this.aaRadioButton2.Checked && this.tvRadioButtonList1.SelectedIndex == 1 && this.aa2RadioButtonList1.SelectedIndex == 0)
             {
-                avg_T = 0.5 * (double.Parse(this.fvTextBox6.Text) + double.Parse(this.fvTextBox7.Text));
+                avg_T = 0.5 * (customConverterToDouble(this.fvTextBox6.Text) + customConverterToDouble(this.fvTextBox7.Text));
             }
             else if (this.aaRadioButton3.Checked && this.tvRadioButtonList1.SelectedIndex == 1 && this.aa3RadioButtonList1.SelectedIndex == 0)
             {
-                avg_T = 0.5 * (double.Parse(this.fvTextBox8.Text) + double.Parse(this.fvTextBox9.Text));
+                avg_T = 0.5 * (customConverterToDouble(this.fvTextBox8.Text) + customConverterToDouble(this.fvTextBox9.Text));
             }
             else
             //if (this.tvRadioButton1.Checked || this.aaRadioButton1.Checked)
             {
-                avg_T = 0.5 * (double.Parse(this.fvTextBox2.Text) + double.Parse(this.fvTextBox3.Text));
+                avg_T = 0.5 * (customConverterToDouble(this.fvTextBox2.Text) + customConverterToDouble(this.fvTextBox3.Text));
             }
 
         }
@@ -971,7 +971,7 @@ public partial class TRV : System.Web.UI.Page
         {
             if (this.ws2RadioButton1.Checked)
             {
-                middle_T = double.Parse(this.calcvTextBox2.Text);
+                middle_T = customConverterToDouble(this.calcvTextBox2.Text);
             }
             else
             {
@@ -982,15 +982,15 @@ public partial class TRV : System.Web.UI.Page
         {
             if (tvRadioButtonList1.SelectedIndex == 0 || this.aaRadioButton1.Checked)
             {
-                middle_T = 0.5 * (double.Parse(this.fvTextBox2.Text) + double.Parse(this.fvTextBox3.Text));
+                middle_T = 0.5 * (customConverterToDouble(this.fvTextBox2.Text) + customConverterToDouble(this.fvTextBox3.Text));
             }
             else if (this.aaRadioButton2.Checked)
             {
-                middle_T = 0.5 * (double.Parse(this.fvTextBox6.Text) + double.Parse(this.fvTextBox7.Text));
+                middle_T = 0.5 * (customConverterToDouble(this.fvTextBox6.Text) + customConverterToDouble(this.fvTextBox7.Text));
             }
             else if (this.aaRadioButton3.Checked)
             {
-                middle_T = 0.5 * (double.Parse(this.fvTextBox8.Text) + double.Parse(this.fvTextBox9.Text));
+                middle_T = 0.5 * (customConverterToDouble(this.fvTextBox8.Text) + customConverterToDouble(this.fvTextBox9.Text));
             }
         }
         */
@@ -1018,7 +1018,7 @@ public partial class TRV : System.Web.UI.Page
         if (this.ws2RadioButton1.Checked)
         {
             //g = 1000;
-            Water(double.Parse(this.calcvTextBox2.Text), ref g);
+            Water(customConverterToDouble(this.calcvTextBox2.Text), ref g);
         }
         else
         {
@@ -1060,7 +1060,7 @@ public partial class TRV : System.Web.UI.Page
         {
             tablev = dataFromFile.table5v;
             tableDN = dataFromFile.table10;
-            if (double.Parse(g_dict["p35"].ToString()) <= 150) tablev_7 = dataFromFile.tablev_71;
+            if (customConverterToDouble(g_dict["p35"].ToString()) <= 150) tablev_7 = dataFromFile.tablev_71;
             else tablev_7 = dataFromFile.tablev_71t;
         }
         else
@@ -1513,8 +1513,8 @@ public partial class TRV : System.Web.UI.Page
         {
 
             /*DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD*/
-            //Pf = g / 1000 * (Math.Pow(Gkl, 2) * 0.1) / (Math.Pow(double.Parse(listResult["B"].GetValue(i).ToString()), 2) * g);
-            Pf = (Math.Pow(Gkl, 2) * 0.1) / (Math.Pow(double.Parse(listResult["B"].GetValue(i).ToString()), 2) * g);
+            //Pf = g / 1000 * (Math.Pow(Gkl, 2) * 0.1) / (Math.Pow(customConverterToDouble(listResult["B"].GetValue(i).ToString()), 2) * g);
+            Pf = (Math.Pow(Gkl, 2) * 0.1) / (Math.Pow(customConverterToDouble(listResult["B"].GetValue(i).ToString()), 2) * g);
             double dPf = Pf / 100;
             Pf = Math.Round(dPf, 2); /*Перевод с кПа в бар*/
 
@@ -2252,7 +2252,7 @@ public partial class TRV : System.Web.UI.Page
 
 
 
-        if (Convert.ToDouble(v_in_dict[18]) > 150) v_in_dict[40] = "220 ˚С";
+        if (customConverterToDouble(v_in_dict[18]) > 150) v_in_dict[40] = "220 ˚С";
         else v_in_dict[40] = "150 ˚С";
         //if (this.tvRadioButton1.Checked) v_in_dict[40] = "220 ˚С";
         //else v_in_dict[40] = "150 ˚С";
@@ -2991,7 +2991,7 @@ public partial class TRV : System.Web.UI.Page
                                                     maxt2ResultLabel.Visible = true;
                                                     ws2ResultLabel.Text = "Рабочая среда - " + (ws2RadioButtonList1.SelectedIndex == 0 ? "вода" : ((ws2RadioButtonList1.SelectedIndex == 1 ? "этиленгликоль " : "пропиленгликоль ") + g_dict["p14"] + "%, " + g_dict["p15"] + " °С"));
                                                     //maxt2ResultLabel.Text = "Максимальная температура - " + g_dict["vTMax"].ToString() + " °С";
-                                                    this.maxt2ResultLabel.Text = "Максимальная температура - " + ((double.Parse(g_dict["p35"].ToString()) > 150) ? "220" : "150") + " °С";
+                                                    this.maxt2ResultLabel.Text = "Максимальная температура - " + ((customConverterToDouble(g_dict["p35"].ToString()) > 150) ? "220" : "150") + " °С";
                                                     maxp2ResultLabel.Text = "Максимальное рабочее давление - 16 бар";
 
 
