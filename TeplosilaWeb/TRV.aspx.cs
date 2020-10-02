@@ -144,10 +144,10 @@ public partial class TRV : System.Web.UI.Page
         switch (index)
         {
             case 0:
-                vPictureBox.ImageUrl = @"./Content/images/TRV-2.png";
+                vPictureBox.ImageUrl = "~/Content/images/TRV-2.png";
                 break;
             case 1:
-                vPictureBox.ImageUrl = @"./Content/images/TRV-3.png";
+                vPictureBox.ImageUrl = "~/Content/images/TRV-3.png";
                 break;
             default:
                 vPictureBox.ImageUrl = null;
@@ -1637,10 +1637,10 @@ public partial class TRV : System.Web.UI.Page
             return null;
         }
 
-        ExcelFile efHtrv = ExcelFile.Load(HttpContext.Current.Server.MapPath(((tvRadioButtonList1.SelectedIndex == 0) ? "Content\\properties\\htrv.xlsx" : "\\Content\\properties\\htrv3.xlsx")));
+        ExcelFile efHtrv = ExcelFile.Load(HttpContext.Current.Server.MapPath(((tvRadioButtonList1.SelectedIndex == 0) ? "~/Content/properties/htrv.xlsx" : "~/Content/properties/htrv3.xlsx")));
         ExcelWorksheet wsHtrv = efHtrv.Worksheets[0];
 
-        ExcelFile efGtrv = ExcelFile.Load(HttpContext.Current.Server.MapPath(((tvRadioButtonList1.SelectedIndex == 0) ? ((customConverterToDouble(g_dict["p35"].ToString()) > 150) ? "Content\\properties\\gtrvt.xlsx" : "Content\\properties\\gtrv.xlsx") : "Content\\properties\\gtrv3.xlsx")));
+        ExcelFile efGtrv = ExcelFile.Load(HttpContext.Current.Server.MapPath(((tvRadioButtonList1.SelectedIndex == 0) ? ((customConverterToDouble(g_dict["p35"].ToString()) > 150) ? "~/Content/properties/gtrvt.xlsx" : "Content\\properties\\gtrv.xlsx") : "Content\\properties\\gtrv3.xlsx")));
         ExcelWorksheet wsGtrv = efGtrv.Worksheets[0];
 
         //ws.Cells["C4"].Value = r_input_dict[3];
@@ -3850,13 +3850,13 @@ public partial class TRV : System.Web.UI.Page
 
         SpreadsheetInfo.SetLicense("FREE-LIMITED-KEY");
 
-        if (!File.Exists(HttpContext.Current.Server.MapPath(@"./Content/templates/templateTRV.xlsx")))
+        if (!File.Exists(HttpContext.Current.Server.MapPath("~/Content/templates/templateTRV.xlsx")))
         {
             LabelError.Text += "Не найден файл шаблона";
             return;
         }
 
-        ExcelFile ef = ExcelFile.Load(HttpContext.Current.Server.MapPath(@"./Content/templates/templateTRV.xlsx"));
+        ExcelFile ef = ExcelFile.Load(HttpContext.Current.Server.MapPath("~/Content/templates/templateTRV.xlsx"));
 
         ExcelWorksheet ws = ef.Worksheets[0];
 
@@ -3957,10 +3957,10 @@ public partial class TRV : System.Web.UI.Page
 
 
 
-        ws.Pictures.Add(HttpContext.Current.Server.MapPath("\\Content\\images\\trv\\" + ((v_input_dict[7] == this.tvRadioButtonList1.Items[0].Text) ? "Габаритный TRV и TRV-P.png" : "Габаритный TRV-3.png")), "A37", "B46");
+        ws.Pictures.Add(HttpContext.Current.Server.MapPath("~/Content/images/trv/" + ((v_input_dict[7] == this.tvRadioButtonList1.Items[0].Text) ? "Габаритный TRV и TRV-P.png" : "Габаритный TRV-3.png")), "A37", "B46");
 
 
-        string path = HttpContext.Current.Server.MapPath("\\Files\\TRV\\PDF\\" + DateTime.Now.ToString("dd-MM-yyyy"));
+        string path = HttpContext.Current.Server.MapPath("~/Files/TRV/PDF/" + DateTime.Now.ToString("dd-MM-yyyy"));
         DirectoryInfo dirInfo = new DirectoryInfo(path);
         if (!dirInfo.Exists)
         {
@@ -3969,7 +3969,7 @@ public partial class TRV : System.Web.UI.Page
         }
 
 
-        string filePath = path + "\\" + fileName + ".pdf";
+        string filePath = path + "/" + fileName + ".pdf";
 
         ef.Save(filePath);
 
@@ -4143,11 +4143,11 @@ public partial class TRV : System.Web.UI.Page
         ws.Cells["G39"].Value = v_input_dict[67];
         ws.Cells["G40"].Value = v_input_dict[68];
 
-        ws.Pictures.Add(HttpContext.Current.Server.MapPath("\\Content\\images\\trv\\" + ((v_input_dict[7] == this.tvRadioButtonList1.Items[tvRadioButtonList1.SelectedIndex].Text) ? "TRV-2.png" : "TRV-3.png")), "A37", "B46");
+        ws.Pictures.Add(HttpContext.Current.Server.MapPath("~/Content/images/trv/" + ((v_input_dict[7] == this.tvRadioButtonList1.Items[tvRadioButtonList1.SelectedIndex].Text) ? "TRV-2.png" : "TRV-3.png")), "A37", "B46");
 
 
 
-        string path = HttpContext.Current.Server.MapPath("\\Files\\TRV\\Excel\\" + DateTime.Now.ToString("dd-MM-yyyy"));
+        string path = HttpContext.Current.Server.MapPath("`/Files/TRV/Excel/" + DateTime.Now.ToString("dd-MM-yyyy"));
         DirectoryInfo dirInfo = new DirectoryInfo(path);
         if (!dirInfo.Exists)
         {

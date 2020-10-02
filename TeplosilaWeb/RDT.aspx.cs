@@ -1003,16 +1003,16 @@ public partial class RDT : System.Web.UI.Page
         switch (index)
         {
             case 0:
-                rPictureBox.ImageUrl = @"./Content/images/RDT-RDT-P.png";
+                rPictureBox.ImageUrl = "~/Content/images/RDT-RDT-P.png";
                 break;
             case 1:
-                rPictureBox.ImageUrl = @"./Content/images/RDT-RDT-P.png";
+                rPictureBox.ImageUrl = "~/Content/images/RDT-RDT-P.png";
                 break;
             case 2:
-                rPictureBox.ImageUrl = @"./Content/images/RDT-S-RDT-B.png";
+                rPictureBox.ImageUrl = "~/Content/images/RDT-S-RDT-B.png";
                 break;
             case 3:
-                rPictureBox.ImageUrl = @"./Content/images/RDT-S-RDT-B.png";
+                rPictureBox.ImageUrl = "~/Content/images/RDT-S-RDT-B.png";
                 break;
 
             default:
@@ -2622,13 +2622,13 @@ public partial class RDT : System.Web.UI.Page
 
             SpreadsheetInfo.SetLicense("FREE-LIMITED-KEY");
 
-            if (!File.Exists(HttpContext.Current.Server.MapPath("\\Content\\templates\\templateRDT.xlsx")))
+            if (!File.Exists(HttpContext.Current.Server.MapPath("~/Content/templates/templateRDT.xlsx")))
             {
                 LabelError.Text = "Не найден файл шаблона";
                 return;
             }
 
-            ExcelFile ef = ExcelFile.Load(HttpContext.Current.Server.MapPath("\\Content\\templates\\templateRDT.xlsx"));
+            ExcelFile ef = ExcelFile.Load(HttpContext.Current.Server.MapPath("~/Content/templates/templateRDT.xlsx"));
 
             ExcelWorksheet ws = ef.Worksheets[0];
 
@@ -2721,7 +2721,7 @@ public partial class RDT : System.Web.UI.Page
 
             getDimsR(ref r_input_dict);
 
-            ws.Pictures.Add(HttpContext.Current.Server.MapPath("\\Content\\images\\rdt\\" + ((r_input_dict[4] == this.eorRadioButtonList1.Items[0].Text) || (r_input_dict[4] == eorRadioButtonList1.Items[1].Text) ? "Габаритный RDT и RDT-P.jpg" : "Габаритный RDT-S и RDT-B.jpg")), "A44", "B53");
+            ws.Pictures.Add(HttpContext.Current.Server.MapPath("~/Content/images/rdt/" + ((r_input_dict[4] == this.eorRadioButtonList1.Items[0].Text) || (r_input_dict[4] == eorRadioButtonList1.Items[1].Text) ? "Габаритный RDT и RDT-P.jpg" : "Габаритный RDT-S и RDT-B.jpg")), "A44", "B53");
 
 
 
@@ -2731,7 +2731,7 @@ public partial class RDT : System.Web.UI.Page
             ws.Cells["F46"].Value = r_input_dict[54];
 
 
-            string path = HttpContext.Current.Server.MapPath("\\Files\\RDT\\PDF\\" + DateTime.Now.ToString("dd-MM-yyyy"));
+            string path = HttpContext.Current.Server.MapPath("~/Files/RDT/PDF/" + DateTime.Now.ToString("dd-MM-yyyy"));
             DirectoryInfo dirInfo = new DirectoryInfo(path);
             if (!dirInfo.Exists)
             {
@@ -2740,7 +2740,7 @@ public partial class RDT : System.Web.UI.Page
 
 
 
-            string filePath = path + "\\" + fileName + ".pdf";
+            string filePath = path + "/" + fileName + ".pdf";
 
             ef.Save(filePath);
 
@@ -2797,13 +2797,13 @@ public partial class RDT : System.Web.UI.Page
 
             SpreadsheetInfo.SetLicense("FREE-LIMITED-KEY");
 
-            if (!File.Exists(HttpContext.Current.Server.MapPath("\\Content\\templates\\templateRDT.xlsx")))
+            if (!File.Exists(HttpContext.Current.Server.MapPath("~Content/templates/templateRDT.xlsx")))
             {
                 LabelError.Text = "Не найден файл шаблона";
                 return;
             }
 
-            ExcelFile ef = ExcelFile.Load(HttpContext.Current.Server.MapPath("\\Content\\templates\\templateRDT.xlsx"));
+            ExcelFile ef = ExcelFile.Load(HttpContext.Current.Server.MapPath("~Content/templates/templateRDT.xlsx"));
 
             ExcelWorksheet ws = ef.Worksheets[0];
 
@@ -2891,7 +2891,7 @@ public partial class RDT : System.Web.UI.Page
 
             getDimsR(ref r_input_dict);
 
-            ws.Pictures.Add(HttpContext.Current.Server.MapPath("\\Content\\images\\" + ((r_input_dict[4] == this.eorRadioButtonList1.Items[0].Text) || (r_input_dict[4] == eorRadioButtonList1.Items[1].Text) ? "RDT-RDT-P.png" : "RDT-S-RDT-B.png")), "A44", "B53");
+            ws.Pictures.Add(HttpContext.Current.Server.MapPath("~/Content/images/" + ((r_input_dict[4] == this.eorRadioButtonList1.Items[0].Text) || (r_input_dict[4] == eorRadioButtonList1.Items[1].Text) ? "RDT-RDT-P.png" : "RDT-S-RDT-B.png")), "A44", "B53");
 
 
             ws.Cells["F44"].Value = r_input_dict[51];
@@ -2900,7 +2900,7 @@ public partial class RDT : System.Web.UI.Page
             ws.Cells["F47"].Value = r_input_dict[54];
 
 
-            string path = HttpContext.Current.Server.MapPath("\\Files\\RDT\\Excel\\" + DateTime.Now.ToString("dd-MM-yyyy"));
+            string path = HttpContext.Current.Server.MapPath("~/Files/RDT/Excel/" + DateTime.Now.ToString("dd-MM-yyyy"));
             DirectoryInfo dirInfo = new DirectoryInfo(path);
             if (!dirInfo.Exists)
             {
@@ -2918,7 +2918,7 @@ public partial class RDT : System.Web.UI.Page
                 fileName += DateTime.Now.ToString("dd-MM-yyyy");
             }
 
-            string filePath = path + "\\" + fileName + ".xlsx";
+            string filePath = path + "/" + fileName + ".xlsx";
 
             ef.Save(filePath);
 
