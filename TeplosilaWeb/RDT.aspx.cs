@@ -2654,8 +2654,6 @@ public partial class RDT : System.Web.UI.Page
 
             }
 
-            ws.Cells["K53"].Value = r_input_dict[0];
-
             ws.Cells["J2"].Value = r_input_dict[1];
             ws.Cells["C3"].Value = r_input_dict[2];
             ws.Cells["C4"].Value = r_input_dict[3];

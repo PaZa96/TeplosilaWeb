@@ -3879,8 +3879,6 @@ public partial class TRV : System.Web.UI.Page
             }
         }
 
-        ws.Cells["K46"].Value = v_input_dict[0];
-
         ws.Cells["J2"].Value = v_input_dict[1];
         ws.Cells["B3"].Value = v_input_dict[2];
 
