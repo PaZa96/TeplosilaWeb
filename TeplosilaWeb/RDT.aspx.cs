@@ -2721,8 +2721,7 @@ public partial class RDT : System.Web.UI.Page
 
             getDimsR(ref r_input_dict);
 
-            ws.Pictures.Add(HttpContext.Current.Server.MapPath("~/Content/images/rdt/" + ((r_input_dict[4] == this.eorRadioButtonList1.Items[0].Text) || (r_input_dict[4] == eorRadioButtonList1.Items[1].Text) ? "Габаритный RDT и RDT-P.jpg" : "Габаритный RDT-S и RDT-B.jpg")), "A44", "B53");
-
+            ws.Pictures.Add(HttpContext.Current.Server.MapPath("~/Content/images/rdt/" + ((r_input_dict[4] == this.eorRadioButtonList1.Items[0].Text) || (r_input_dict[4] == eorRadioButtonList1.Items[1].Text) ? "Габаритный RDT и RDT-P.jpg" : "Габаритный RDT-S и RDT-B.jpg")), "A43", "B54");
 
 
             ws.Cells["F43"].Value = r_input_dict[51];
