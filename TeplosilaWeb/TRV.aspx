@@ -140,7 +140,7 @@
                                     </div>
                                     <div class="col-9">
                                         <br />
-                                        <asp:TextBox ID="ws2TextBox1" runat="server" step="0.01" Enabled="False"
+                                        <asp:TextBox ID="ws2TextBox1" runat="server" Enabled="False"
                                             type="number" required="required" TextMode="Number"></asp:TextBox>
                                         <asp:Label ID="Label6" runat="server" Text="% (от 5% до 65%)"></asp:Label>
                                         &nbsp;&nbsp;&nbsp;
@@ -150,7 +150,7 @@
                                             OnServerValidate="CustomValidator16_ServerValidate" SetFocusOnError="True"
                                             ValidateEmptyText="True"></asp:CustomValidator>
                                         <br />
-                                        <asp:TextBox ID="ws2TextBox2" runat="server" Enabled="False" step="0.01"
+                                        <asp:TextBox ID="ws2TextBox2" runat="server" Enabled="False"
                                             type="number" required="required" TextMode="Number"></asp:TextBox>
                                         <asp:Label ID="Label7" runat="server"
                                             Text="&#8451; (от 0&#8451; до 150&#8451;)">
@@ -181,7 +181,7 @@
                                     </asp:Label>
                                     <div class="col">
                                         <asp:Label ID="Label9" runat="server" Text="&#916;Pсист = "></asp:Label>
-                                        <asp:TextBox ID="lpvTextBox2" runat="server" Enabled="False" step="0.01"
+                                        <asp:TextBox ID="lpvTextBox2" runat="server" Enabled="False"
                                             type="number" TextMode="Number" required="required" CausesValidation="True">
                                         </asp:TextBox>
                                         <asp:DropDownList ID="lpvDropDownList2" runat="server" AutoPostBack="True"
@@ -215,7 +215,7 @@
                                     <div class="col">
                                         <asp:Label ID="Label10" runat="server" Text="&#916;Pто = "></asp:Label>
                                         &nbsp;&nbsp;
-                                        <asp:TextBox ID="lpvTextBox21" runat="server" Enabled="False" step="0.01"
+                                        <asp:TextBox ID="lpvTextBox21" runat="server" Enabled="False"
                                             type="number" required="required" TextMode="Number"></asp:TextBox>
                                         <asp:DropDownList ID="lpvDropDownList21" runat="server" AutoPostBack="True"
                                             Enabled="False"
@@ -249,7 +249,7 @@
                                     <div class="col">
                                         <asp:Label ID="Label13" runat="server" Text="&#916;Pкл = "></asp:Label>
                                         &nbsp;&nbsp;&nbsp;<asp:TextBox ID="lpvTextBox1" runat="server" Enabled="False"
-                                            step="0.01" type="number" required="required" TextMode="Number"></asp:TextBox>
+                                            type="number" required="required" TextMode="Number"></asp:TextBox>
                                         <asp:DropDownList ID="lpvDropDownList1" runat="server" AutoPostBack="True"
                                             Enabled="False"
                                             OnSelectedIndexChanged="lpvDropDownList1_SelectedIndexChanged">
@@ -293,7 +293,7 @@
                                         <br />
                                         <asp:Label ID="Label21" runat="server" Text="P' = "></asp:Label>
                                         &nbsp;&nbsp;&nbsp;<asp:TextBox ID="calcvTextBox1" runat="server" Enabled="False"
-                                            step="0.01" type="number" required="required" TextMode="Number"></asp:TextBox>
+                                            type="number" required="required" TextMode="Number"></asp:TextBox>
                                         <asp:DropDownList ID="calcvDropDownList1" runat="server" AutoPostBack="True"
                                             Enabled="False"
                                             OnSelectedIndexChanged="calcvDropDownList1_SelectedIndexChanged">
@@ -314,7 +314,7 @@
                                             Text="Максимальная температура теплоносителя через клапан:">
                                         </asp:Label><br />
                                         <asp:Label ID="Label23" runat="server" Text="T1 = "></asp:Label>
-                                        &nbsp;&nbsp;<asp:TextBox ID="calcvTextBox2" runat="server" step="0.01"
+                                        &nbsp;&nbsp;<asp:TextBox ID="calcvTextBox2" runat="server"
                                             Enabled="False" type="number" required="required" TextMode="Number"
                                             CausesValidation="True">
                                         </asp:TextBox>
@@ -340,7 +340,7 @@
                                         OnCheckedChanged="fvRadioButton1_CheckedChanged" /><br />
                                     <div class="col">
                                         <asp:Label ID="Label28" runat="server" Text="Gкл = "></asp:Label>
-                                        <asp:TextBox ID="fvTextBox1" runat="server" step="0.00001" Enabled="False"
+                                        <asp:TextBox ID="fvTextBox1" runat="server" Enabled="False"
                                             TextMode="Number"></asp:TextBox>
                                         <asp:DropDownList ID="fvDropDownList1" runat="server" AutoPostBack="True"
                                             Enabled="False"
@@ -387,7 +387,7 @@
                                                     <td>Зима</td>
                                                     <td class="auto-style7">
                                                         <asp:Label ID="Label27" runat="server" Text="T1 = "></asp:Label>
-                                                        <asp:TextBox ID="fvTextBox2" runat="server" step="0.01"
+                                                        <asp:TextBox ID="fvTextBox2" runat="server"
                                                             Enabled="False" Width="60px" required="required"
                                                             TextMode="Number"></asp:TextBox>
                                                         <asp:Label ID="Label29" runat="server" Text=" &#8451;">
@@ -396,7 +396,7 @@
                                                     <td class="text-center">
                                                         <asp:Label ID="Label32" runat="server" Text="T2 = "></asp:Label>
                                                         <asp:TextBox ID="fvTextBox3" runat="server" Enabled="False"
-                                                            step="0.01" type="number" Width="60px" required="required"
+                                                            type="number" Width="60px" required="required"
                                                             TextMode="Number"></asp:TextBox>
                                                         <asp:Label ID="Label33" runat="server" Text=" &#8451;">
                                                         </asp:Label>
@@ -408,7 +408,7 @@
                                                         <asp:Label ID="Label30" runat="server" Text="T'1 = ">
                                                         </asp:Label>
                                                         <asp:TextBox ID="fvTextBox4" runat="server" Enabled="False"
-                                                            step="0.01" type="number" Width="60px" required="required"
+                                                            type="number" Width="60px" required="required"
                                                             TextMode="Number"></asp:TextBox>
                                                         <asp:Label ID="Label31" runat="server" Text=" &#8451;">
                                                         </asp:Label>
@@ -417,7 +417,7 @@
                                                         <asp:Label ID="Label34" runat="server" Text="T'2 = ">
                                                         </asp:Label>
                                                         <asp:TextBox ID="fvTextBox5" runat="server" Enabled="False"
-                                                            step="0.01" type="number" Width="60px" required="required"
+                                                            type="number" Width="60px" required="required"
                                                             TextMode="Number"></asp:TextBox>
                                                         <asp:Label ID="Label35" runat="server" Text=" &#8451;">
                                                         </asp:Label>
@@ -431,7 +431,7 @@
                                                         <asp:Label ID="Label36" runat="server" Text="T21 = ">
                                                         </asp:Label>
                                                         <asp:TextBox ID="fvTextBox6" runat="server" Enabled="False"
-                                                            step="0.01" type="number" Width="60px" required="required"
+                                                            type="number" Width="60px" required="required"
                                                             TextMode="Number"></asp:TextBox>
                                                         <asp:Label ID="Label37" runat="server" Text=" &#8451;">
                                                         </asp:Label>
@@ -439,7 +439,7 @@
                                                     <td class="text-center">
                                                         <asp:Label ID="Label38" runat="server" Text="T22= "></asp:Label>
                                                         <asp:TextBox ID="fvTextBox7" runat="server" Enabled="False"
-                                                            step="0.01" type="number" Width="60px" required="required"
+                                                            type="number" Width="60px" required="required"
                                                             TextMode="Number"></asp:TextBox>
                                                         <asp:Label ID="Label39" runat="server" Text=" &#8451;">
                                                         </asp:Label>
@@ -451,7 +451,7 @@
                                                         <asp:Label ID="Label40" runat="server" Text="T11 = ">
                                                         </asp:Label>
                                                         <asp:TextBox ID="fvTextBox8" runat="server" Enabled="False"
-                                                            step="0.01" type="number" Width="60px" required="required"
+                                                            type="number" Width="60px" required="required"
                                                             TextMode="Number"></asp:TextBox>
                                                         <asp:Label ID="Label41" runat="server" Text=" &#8451;">
                                                         </asp:Label>
@@ -459,7 +459,7 @@
                                                     <td class="text-center">
                                                         <asp:Label ID="Label42" runat="server" Text="T12= "></asp:Label>
                                                         <asp:TextBox ID="fvTextBox9" runat="server" Enabled="False"
-                                                            step="0.01" type="number" Width="60px" required="required"
+                                                            type="number" Width="60px" required="required"
                                                             TextMode="Number"></asp:TextBox>
                                                         <asp:Label ID="Label43" runat="server" Text=" &#8451;">
                                                         </asp:Label>
@@ -481,7 +481,7 @@
 
                                         <asp:Label ID="Label45" runat="server" Text="Тепловая мощность Q = ">
                                         </asp:Label>
-                                        <asp:TextBox ID="fvTextBox10" runat="server" Enabled="False" step="0.01"
+                                        <asp:TextBox ID="fvTextBox10" runat="server" Enabled="False"
                                             required="required" OnTextChanged="fvTextBox10_TextChanged"
                                             TextMode="Number"></asp:TextBox>
                                         <asp:DropDownList ID="fvDropDownList2" runat="server" AutoPostBack="True"
@@ -502,7 +502,7 @@
 
                                         <asp:Label ID="Label46" runat="server" Text="Максимальный расход Gкл = ">
                                         </asp:Label>
-                                        <asp:TextBox ID="fvTextBox11" runat="server" Enabled="False" step="0.01"
+                                        <asp:TextBox ID="fvTextBox11" runat="server" Enabled="False"
                                             ReadOnly="True"></asp:TextBox>
                                         <asp:Label ID="Label48" runat="server" Text=" кг/ч"></asp:Label>
                                         <br />
