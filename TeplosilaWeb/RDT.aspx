@@ -228,7 +228,7 @@
                                         <br />
                                         <asp:Label ID="Label3" runat="server" Text="P'1 = "></asp:Label>
                                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                        &nbsp;<asp:TextBox ID="lp2TextBox1" runat="server"
+                                        &nbsp;<asp:TextBox ID="lp2TextBox1" runat="server" TextMode="Number"
                                             Enabled="False"></asp:TextBox>
                                         &nbsp;<asp:DropDownList ID="lp2DropDownList1" runat="server" Enabled="False"
                                             OnSelectedIndexChanged="lp2DropDownList1_SelectedIndexChanged"
@@ -371,7 +371,7 @@
                                         <asp:Label ID="Label21" runat="server" Text="P' = "></asp:Label>
                                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                         <asp:TextBox ID="calcrTextBox1" runat="server" 
-                                            Enabled="False" type="number" TextMode="Number" CausesValidation="True">
+                                            Enabled="False" TextMode="Number" CausesValidation="True">
                                         </asp:TextBox>
                                         <asp:DropDownList ID="calcrDropDownList1" runat="server" AutoPostBack="True"
                                             Enabled="False"
