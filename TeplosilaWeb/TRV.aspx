@@ -346,7 +346,7 @@
                                             Enabled="False"
                                             OnSelectedIndexChanged="fvDropDownList1_SelectedIndexChanged">
                                             <asp:ListItem>выбрать</asp:ListItem>
-                                            <asp:ListItem>м3/ч</asp:ListItem>
+                                            <asp:ListItem>м³/ч</asp:ListItem>
                                             <asp:ListItem>л/с</asp:ListItem>
                                             <asp:ListItem>л/мин</asp:ListItem>
                                             <asp:ListItem>л/ч</asp:ListItem>
