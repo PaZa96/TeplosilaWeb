@@ -10,7 +10,7 @@
 <body>
     <form id="form1" runat="server">
         <div>
-            Server Error
+            Упс, что-то пошло не так.. Попробуйте обновить страницу.
         </div>
     </form>
 </body>
