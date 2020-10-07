@@ -223,7 +223,7 @@ public partial class RDT : System.Web.UI.Page
             listResult.Add("A", new string[] { });
             listResult.Add("B", new string[] { });
             listResult.Add("C", new string[] { });
-            listResult.Add("D", new string[] { });
+            
             listResult.Add("I", new string[] { });
             listResult.Add("F", new string[] { });
             listResult.Add("E", new string[] { });
@@ -232,6 +232,7 @@ public partial class RDT : System.Web.UI.Page
 
             if(ws1RadioButtonList1.SelectedIndex != 3)
             {
+                listResult.Add("D", new string[] { });
                 listResult.Add("G", new string[] { });
                 listResult.Add("K", new string[] { });
             }
@@ -619,6 +620,10 @@ public partial class RDT : System.Web.UI.Page
 
 
             double Pf = 1;
+            int flagC = 0;
+            int flagA = 0;
+            int countC = listResult["C"].Length -1;
+            int countA = listResult["A"].Length - 1;
 
             while (!exit_t && (V >= g_dict["vmax"]))
             {
@@ -684,17 +689,23 @@ public partial class RDT : System.Web.UI.Page
                     }
                     else
                     {
-                        DN = col_C;
-
-                        var _List = new List<string>();
-
-                        if (listResult.ContainsKey("C"))
+                        if(flagC != countC)
                         {
-                            _List.AddRange(listResult["C"]);
-                        }
+                            DN = col_C;
 
-                        _List.AddRange(new string[] { DN.ToString() });
-                        listResult["C"] = _List.ToArray();
+                            var _List = new List<string>();
+
+                            if (listResult.ContainsKey("C"))
+                            {
+                                _List.AddRange(listResult["C"]);
+                            }
+
+                            _List.AddRange(new string[] { DN.ToString() });
+                            listResult["C"] = _List.ToArray();
+
+                            flagC++;
+                        }
+                       
                     }
                     /*/CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC*/
 
@@ -731,10 +742,15 @@ public partial class RDT : System.Web.UI.Page
                                 (Convert.ToDouble(ob.GetValue("min")) == Convert.ToDouble(tmpI.GetValue("min")) &&
                                     Convert.ToDouble(ob.GetValue("max")) == Convert.ToDouble(tmpI.GetValue("max"))))
                             {
-                                if (Kv_start < Convert.ToDouble(ob.GetValue("prop")) && tmpKv > Convert.ToDouble(ob.GetValue("prop")))
+                                if (Kv_start < Convert.ToDouble(ob.GetValue("prop")) && tmpKv > Convert.ToDouble(ob.GetValue("prop")) && tmpA != "")
                                 {
-                                    tmpKv = Convert.ToDouble(ob.GetValue("prop"));
-                                    tmpA = ob.GetValue("name").ToString();
+                                    if (flagA != countA)
+                                    {
+                                        tmpKv = Convert.ToDouble(ob.GetValue("prop"));
+                                        tmpA = ob.GetValue("name").ToString();
+
+                                        flagA++;
+                                    }
                                 }
                                 //listA.Add(ob.GetValue("name").ToString());
                                 //listB.Add(ob.GetValue("prop").ToString());
@@ -743,27 +759,29 @@ public partial class RDT : System.Web.UI.Page
                             }
                         }
 
-                        listA.Add(tmpA.ToString());
-                        listB.Add(tmpKv.ToString());
-
-                        var a_List = new List<string>();
-                        if (listResult.ContainsKey("A"))
+                        if(tmpA != "")
                         {
-                            a_List.AddRange(listResult["A"]);
+                            listA.Add(tmpA.ToString());
+                            listB.Add(tmpKv.ToString());
+
+                            var a_List = new List<string>();
+                            if (listResult.ContainsKey("A"))
+                            {
+                                a_List.AddRange(listResult["A"]);
+                            }
+
+                            a_List.AddRange(listA);
+                            listResult["A"] = a_List.ToArray();
+
+                            var b_List = new List<string>();
+                            if (listResult.ContainsKey("B"))
+                            {
+                                b_List.AddRange(listResult["B"]);
+                            }
+
+                            b_List.AddRange(listB);
+                            listResult["B"] = b_List.ToArray();
                         }
-
-                        a_List.AddRange(listA);
-                        listResult["A"] = a_List.ToArray();
-
-                        var b_List = new List<string>();
-                        if (listResult.ContainsKey("B"))
-                        {
-                            b_List.AddRange(listResult["B"]);
-                        }
-
-                        b_List.AddRange(listB);
-                        listResult["B"] = b_List.ToArray();
-
                     }
                     /*/CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC*/
                     /*/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA*/
@@ -788,12 +806,13 @@ public partial class RDT : System.Web.UI.Page
                 listE = new List<string>(),
                 listK = new List<string>();
 
-            listD.AddRange(listResult["D"]);
+            
             listF.AddRange(listResult["F"]);
             listE.AddRange(listResult["E"]);
 
             if (ws1RadioButtonList1.SelectedIndex != 3)
             {
+                listD.AddRange(listResult["D"]);
                 listG.AddRange(listResult["G"]);
                 listK.AddRange(listResult["K"]);
             }
@@ -801,13 +820,15 @@ public partial class RDT : System.Web.UI.Page
 
             for (int i = 0; i < listResult["C"].Count(); i++)
             {
-                /*DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD*/
-                Pf = (Math.Pow(Gpg, 2) * 0.1) / (Math.Pow(double.Parse(listResult["B"].GetValue(i).ToString()), 2) * g);
-                Pf = Math.Round(Pf / 100, 2); /*Перевод с кПа в бар*/
-                //listResult["D"] = new string[] { Pf.ToString() };
+                if (ws1RadioButtonList1.SelectedIndex != 3)
+                {
+                    /*DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD*/
+                    Pf = (Math.Pow(Gpg, 2) * 0.1) / (Math.Pow(double.Parse(listResult["B"].GetValue(i).ToString()), 2) * g);
+                    Pf = Math.Round(Pf / 100, 2); /*Перевод с кПа в бар*/
+                    //listResult["D"] = new string[] { Pf.ToString() };
 
-                listD.Add(Pf.ToString());
-
+                    listD.Add(Pf.ToString());
+                }
                 /*
                 var d_List = new List<string>();
                 if (listResult.ContainsKey("D"))
@@ -905,12 +926,13 @@ public partial class RDT : System.Web.UI.Page
                     listK.Add(K);
                 }
             }
-            listResult["D"] = listD.ToArray();
+            
             listResult["F"] = listF.ToArray();
             listResult["E"] = listE.ToArray();
             
             if (ws1RadioButtonList1.SelectedIndex != 3)
             {
+                listResult["D"] = listD.ToArray();
                 listResult["G"] = listG.ToArray();
                 listResult["K"] = listK.ToArray();
             }
@@ -2666,7 +2688,6 @@ public partial class RDT : System.Web.UI.Page
                                         "Марка регулятора давления",
                                         "Номинальный диаметр DN, мм",
                                         "Пропускная способность Kvs, м3/ч",
-                                        "Фактические потери давления на полностью открытом клапане при заданном расходе ∆Рф,\n бар\n",
                                         "Диапазон настройки,\n бар",
                                         "Скорость в выходном сечении регулятора V, м/с",
                                         "Шум, некачественное регулирование"
@@ -2718,13 +2739,13 @@ public partial class RDT : System.Web.UI.Page
                                                 index = 3;
                                                 break;
                                             case "I":
-                                                index = 4;
+                                                if (ws1RadioButtonList1.SelectedIndex != 3) { index = 4; } else { index = 3; }
                                                 break;
                                             case "F":
-                                                index = 5;
+                                                if (ws1RadioButtonList1.SelectedIndex != 3) { index = 5; } else { index = 4; }
                                                 break;
                                             case "E":
-                                                index = 6;
+                                                if (ws1RadioButtonList1.SelectedIndex != 3) { index = 6; } else { index = 5; }
                                                 break;
                                             case "G":
                                                 index = 7;
