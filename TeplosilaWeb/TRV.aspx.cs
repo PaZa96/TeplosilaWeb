@@ -1054,7 +1054,7 @@ public partial class TRV : System.Web.UI.Page
     {
         LabelError.Text = "";
         /*BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB*/
-        double Kv = 0, Gkl = 0, dPkl = 0, dPto = 0, g = 0;
+        double Kv = 0, Gkl = 0, dPkl = 0, dPto = 0, g = 0, p1 = 0, p2 = 0, V = 0, T1 = 0;
         int DN = 0;
         double Kv_start = 0;
         double tmpKv = 0;
@@ -1063,13 +1063,18 @@ public partial class TRV : System.Web.UI.Page
         listResult.Add("A", new string[] { });
         listResult.Add("C", new string[] { });
         listResult.Add("B", new string[] { });
-        listResult.Add("D", new string[] { });
+       
         listResult.Add("I1", new string[] { });
         listResult.Add("I2", new string[] { });
         listResult.Add("I", new string[] { });
         listResult.Add("I3", new string[] { });
-        listResult.Add("F", new string[] { });
-        listResult.Add("G", new string[] { });
+        if(ws2RadioButtonList1.SelectedIndex != 3)
+        {
+            listResult.Add("D", new string[] { });
+            listResult.Add("F", new string[] { });
+            listResult.Add("G", new string[] { });
+        }
+
         listResult.Add("M", new string[] { });
 
 
@@ -1093,10 +1098,12 @@ public partial class TRV : System.Web.UI.Page
 
         Gkl = g_dict["p30"];
 
-        dPkl = g_dict["p62"]; //Convert.ToDouble(this.lpvTextBox1.Text) * arrConvert3[this.lpvComboBox1.SelectedIndex - 1];
+        if (ws2RadioButtonList1.SelectedIndex != 3)
+        {
+            dPkl = g_dict["p62"]; //Convert.ToDouble(this.lpvTextBox1.Text) * arrConvert3[this.lpvComboBox1.SelectedIndex - 1];
 
-        dPto = g_dict["p61"];//Convert.ToDouble(this.lpvTextBox2.Text) * arrConvert3[this.lpvComboBox2.SelectedIndex - 1];
-
+            dPto = g_dict["p61"];//Convert.ToDouble(this.lpvTextBox2.Text) * arrConvert3[this.lpvComboBox2.SelectedIndex - 1];
+        }
         /*
         double middle_T = 0;
 
@@ -1177,13 +1184,41 @@ public partial class TRV : System.Web.UI.Page
             Etgl(p7, p6, ref g);
         }*/
 
-        if (dPkl > dPto)
+        if (ws2RadioButtonList1.SelectedIndex != 3)
         {
-            Kv_start = Kv = g_dict["vKv"] * (Gkl * 0.01) / (Math.Sqrt(dPkl * 0.001 * g));
+            if (dPkl > dPto)
+            {
+                Kv_start = Kv = g_dict["vKv"] * (Gkl * 0.01) / (Math.Sqrt(dPkl * 0.001 * g));
+            }
+            else
+            {
+                Kv_start = Kv = g_dict["vKv"] * (Gkl * 0.01) / (Math.Sqrt(dPto * 0.001 * g));
+            }
         }
         else
         {
-            Kv_start = Kv = g_dict["vKv"] * (Gkl * 0.01) / (Math.Sqrt(dPto * 0.001 * g));
+           
+            p1 = (customConverterToDouble(lpv5TextBox1.Text) * arrConvert3[lpv5DropDownList1.SelectedIndex - 1] / arrConvert3[2]);
+            p2 = (customConverterToDouble(lpv5TextBox2.Text) * arrConvert3[lpv5DropDownList2.SelectedIndex - 1] / arrConvert3[2]);
+
+            if (lpv5RadioButtonList1.SelectedIndex == 0)
+            {
+                T1 = customConverterToDouble(lpv5TextBox3.Text);
+            }
+            else
+            {
+                T1 = Math.Round(100 * Math.Pow((customConverterToDouble(lpv5TextBox1.Text) * arrConvert3[lpv5DropDownList1.SelectedIndex - 1] / arrConvert3[2]) + 1, 0.25));
+            }
+
+            if ((p1 - p2) <= (0.5 * (p1 + 1)))
+            {
+                Kv = 1.3 * ((Gkl / 461) * Math.Sqrt((T1 + 273) / ((p1 - p2) * (p2 + 1))));
+            }
+            else
+            {
+                Kv = 1.3 * (Gkl / (230 * (p1 + 1))) * Math.Sqrt(T1 + 273);
+            }
+            
         }
 
         Newtonsoft.Json.Linq.JArray tablev = null;
@@ -1414,8 +1449,16 @@ public partial class TRV : System.Web.UI.Page
         /*/CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC*/
         /*/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA*/
 
-        double C = Convert.ToDouble(listResult["C"][listResult["C"].Count() - 1]),
-                V = Gkl * convertTable[1, 5] * Math.Pow((18.8 / C), 2);
+        double C = Convert.ToDouble(listResult["C"][listResult["C"].Count() - 1]);
+
+        if (ws2RadioButtonList1.SelectedIndex != 3)
+        {
+            V = Gkl / g * Math.Pow((18.8 / C), 2);
+        }
+        else
+        {
+            V = (Gkl * (T1 + 273)) / Math.Pow((C / 18.8), 2) / (219 * (p2 + 1));
+        }
 
 
         double Pf = 1;
@@ -1619,7 +1662,15 @@ public partial class TRV : System.Web.UI.Page
                 /*/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA*/
             }
 
-            V = Gkl * convertTable[1, 5] * Math.Pow((18.8 / DN), 2);
+       
+            if (ws2RadioButtonList1.SelectedIndex != 3)
+            {
+                V = Gkl / g * Math.Pow((18.8 /DN), 2);
+            }
+            else
+            {
+                V = (Gkl * (T1 + 273)) / Math.Pow((DN / 18.8), 2) / (219 * (p2 + 1));
+            }
         }
 
 
@@ -1638,9 +1689,14 @@ public partial class TRV : System.Web.UI.Page
         listI1.AddRange(listResult["I1"]);
         listI2.AddRange(listResult["I2"]);
         listI3.AddRange(listResult["I3"]);
-        listF.AddRange(listResult["F"]);
-        listG.AddRange(listResult["G"]);
-        listD.AddRange(listResult["D"]);
+        if(ws2RadioButtonList1.SelectedIndex != 3)
+        {
+            listF.AddRange(listResult["F"]);
+            listG.AddRange(listResult["G"]);
+            listD.AddRange(listResult["D"]);
+        }
+  
+        
 
         for (int i = 0; i < listResult["C"].Count(); i++)
         {
@@ -1654,7 +1710,17 @@ public partial class TRV : System.Web.UI.Page
 
 
             C = Convert.ToDouble(listResult["C"][i]);
-            V = Gkl * convertTable[1, 5] * Math.Pow((18.8 / C), 2);
+         
+            if (ws2RadioButtonList1.SelectedIndex != 3)
+            {
+                V = Gkl / g * Math.Pow((18.8 / C), 2);
+            }
+            else
+            {
+                V = (Gkl * (T1 + 273)) / Math.Pow((C / 18.8), 2) / (219 * (p2 + 1));
+            }
+
+         
 
             if (V <= g_dict["vmax"] || V >= 7)
             {
@@ -1694,49 +1760,57 @@ public partial class TRV : System.Web.UI.Page
                 listI3.Add("нет");
             }
 
-            if (!String.IsNullOrWhiteSpace(this.calcvTextBox1.Text) && !String.IsNullOrWhiteSpace(this.calcvTextBox2.Text))
-            {
-                double dn = 0.0;
-                double ps = 0.0;
-                foreach (Newtonsoft.Json.Linq.JObject ob in dataFromFile.table8)
+            if (ws2RadioButtonList1.SelectedIndex != 3) {
+
+                if (!String.IsNullOrWhiteSpace(this.calcvTextBox1.Text) && !String.IsNullOrWhiteSpace(this.calcvTextBox2.Text))
                 {
-                    if (C == Convert.ToDouble(ob.GetValue("dn")))
+                    double dn = 0.0;
+                    double ps = 0.0;
+                    foreach (Newtonsoft.Json.Linq.JObject ob in dataFromFile.table8)
                     {
-                        dn = Convert.ToDouble(ob.GetValue("z"));
-                        break;
+                        if (C == Convert.ToDouble(ob.GetValue("dn")))
+                        {
+                            dn = Convert.ToDouble(ob.GetValue("z"));
+                            break;
+                        }
                     }
-                }
 
-                double t1 = customConverterToDouble(this.calcvTextBox2.Text);
-                Newtonsoft.Json.Linq.JObject max = dataFromFile.table9v[dataFromFile.table9v.Count - 1];
-                foreach (Newtonsoft.Json.Linq.JObject ob in dataFromFile.table9v)
-                {
-                    if ((Convert.ToDouble(ob.GetValue("t1")) <= Convert.ToDouble(max.GetValue("t1"))) && (Convert.ToDouble(ob.GetValue("t1")) >= t1))
+                    double t1 = customConverterToDouble(this.calcvTextBox2.Text);
+                    Newtonsoft.Json.Linq.JObject max = dataFromFile.table9v[dataFromFile.table9v.Count - 1];
+                    foreach (Newtonsoft.Json.Linq.JObject ob in dataFromFile.table9v)
                     {
-                        max = ob;
+                        if ((Convert.ToDouble(ob.GetValue("t1")) <= Convert.ToDouble(max.GetValue("t1"))) && (Convert.ToDouble(ob.GetValue("t1")) >= t1))
+                        {
+                            max = ob;
+                        }
                     }
-                }
-                ps = Convert.ToDouble(max.GetValue("ps"));
+                    ps = Convert.ToDouble(max.GetValue("ps"));
 
-                double F = Math.Round((dn * ((customConverterToDouble(this.calcvTextBox1.Text) * arrConvert3[this.calcvDropDownList1.SelectedIndex - 1] / arrConvert3[2]) - ps)), 2);
-                listF.Add(F.ToString());
+                    double F = Math.Round((dn * ((customConverterToDouble(this.calcvTextBox1.Text) * arrConvert3[this.calcvDropDownList1.SelectedIndex - 1] / arrConvert3[2]) - ps)), 2);
+                    listF.Add(F.ToString());
 
-                string G_str = "Нет";
-                if (F < Pf)
-                    G_str = "Угрожает опасность кавитации";
-                //if (F < (customConverterToDouble(this.lpvTextBox1.Text) * arrConvert3[this.calcvDropDownList1.SelectedIndex - 1] / arrConvert3[2]))
-                //    G_str = "Угрожает опасность кавитации";
+                    string G_str = "Нет";
+                    if (F < Pf)
+                        G_str = "Угрожает опасность кавитации";
+                    //if (F < (customConverterToDouble(this.lpvTextBox1.Text) * arrConvert3[this.calcvDropDownList1.SelectedIndex - 1] / arrConvert3[2]))
+                    //    G_str = "Угрожает опасность кавитации";
 
-                listG.Add(G_str);
+                    listG.Add(G_str);
+                } 
             }
         }
         listResult["I"] = listI.ToArray();
         listResult["I1"] = listI1.ToArray();
         listResult["I2"] = listI2.ToArray();
         listResult["I3"] = listI3.ToArray();
-        listResult["F"] = listF.ToArray();
-        listResult["G"] = listG.ToArray();
-        listResult["D"] = listD.ToArray();
+        if(ws2RadioButtonList1.SelectedIndex != 3)
+        {
+            listResult["F"] = listF.ToArray();
+            listResult["G"] = listG.ToArray();
+            listResult["D"] = listD.ToArray();
+        }
+
+        
         /*/IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII*/
         /*/GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG*/
         /*/FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF*/
@@ -3062,6 +3136,46 @@ public partial class TRV : System.Web.UI.Page
                                                         {
                                                             g_dict.Add("p61", customConverterToDouble(this.lpv5TextBox3.Text));
                                                         }
+
+                                                        double p35 = 0;
+                                                        try
+                                                        {
+                                                            if(lpv5RadioButtonList1.SelectedIndex == 0)
+                                                            {
+                                                                p35 = customConverterToDouble(lpv5TextBox3.Text);
+                                                            }
+                                                            else
+                                                            {
+                                                                double p1 = (customConverterToDouble(lpv5TextBox1.Text) * arrConvert3[lpv5DropDownList1.SelectedIndex - 1] / arrConvert3[2]);
+                                                                double p2 = (customConverterToDouble(lpv5TextBox2.Text) * arrConvert3[lpv5DropDownList2.SelectedIndex - 1] / arrConvert3[2]);
+
+                                                                if (lpv5RadioButtonList1.SelectedIndex == 0)
+                                                                {
+                                                                    p35 = customConverterToDouble(lpv5TextBox3.Text);
+                                                                }
+                                                                else
+                                                                {
+                                                                    p35 = Math.Round(100 * Math.Pow((customConverterToDouble(lpv5TextBox1.Text) * arrConvert3[lpv5DropDownList1.SelectedIndex - 1] / arrConvert3[2]) + 1, 0.25));
+                                                                }
+                                                            }
+                                                           
+                                                        }
+                                                        catch (Exception) { }
+
+                                                        if (p35 <= 0)
+                                                        {
+
+                                                            LabelError.Text += "Неверно указано значение температуры";
+                                                            return;
+                                                        }
+                                                        else if (p35 > g_dict["vTMax"])
+                                                        {
+
+                                                            LabelError.Text += "На температуру свыше " + g_dict["vTMax"].ToString() + "°С вариантов нет";
+                                                            return;
+                                                        }
+                                                        else g_dict.Add("p35", p35);
+
                                                     }
                                                     else
                                                     {
@@ -3118,6 +3232,7 @@ public partial class TRV : System.Web.UI.Page
                                                         //    return;
                                                         //}
                                                         //else g_dict.Add("p61", p61);
+
                                                         g_dict.Add("p61", p61);
 
                                                         double p62 = 0;
@@ -3208,7 +3323,15 @@ public partial class TRV : System.Web.UI.Page
 
                                                     //maxt2ResultLabel.Text = "Максимальная температура - " + g_dict["vTMax"].ToString() + " °С";
                                                     this.maxt2ResultLabel.Text = "Максимальная температура - " + ((ws2RadioButtonList1.SelectedIndex == 3 || double.Parse(g_dict["p35"].ToString()) > 150) ? "220" : "150") + " °С";
-                                                    maxp2ResultLabel.Text = "Максимальное рабочее давление - 16 бар";
+                                                    
+                                                    if(tvRadioButtonList1.SelectedIndex == 0) 
+                                                    {
+                                                        maxp2ResultLabel.Text = "Максимальное рабочее давление - 25 бар";
+                                                    }
+                                                    else
+                                                    {
+                                                        maxp2ResultLabel.Text = "Максимальное рабочее давление - 16 бар";
+                                                    }
 
 
                                                     if (ws2RadioButtonList1.SelectedIndex != 3)
@@ -3350,40 +3473,82 @@ public partial class TRV : System.Web.UI.Page
                                                         for (int j = 0; j < gtr.Count(); j++)
                                                         {
                                                             int index = -1;
-                                                            switch (gtr.ElementAt(j).Key)
+                                                            if (ws2RadioButtonList1.SelectedIndex != 3)
                                                             {
-                                                                case "A": index = 0; break;
-                                                                case "B": index = 2; break;
-                                                                case "C": index = 1; break;
-                                                                case "D": index = 3; break;
 
-                                                                case "I1": index = 4; break;
-                                                                case "I2": index = 5; break;
 
-                                                                case "I": index = 6; break;
+                                                                switch (gtr.ElementAt(j).Key)
+                                                                {
+                                                                    case "A": index = 0; break;
+                                                                    case "B": index = 2; break;
+                                                                    case "C": index = 1; break;
+                                                                    case "D": index = 3; break;
 
-                                                                case "I3": index = 7; break;
+                                                                    case "I1": index = 4; break;
+                                                                    case "I2": index = 5; break;
 
-                                                                case "F": index = 8; break;
-                                                                case "G": index = 9; break;
-                                                                //case "K": index = 11; break;
-                                                                //case "L": index = 12; break;
-                                                                case "M": index = 10; break;
+                                                                    case "I": index = 6; break;
 
-                                                                case "PP54": index = 11; break;
-                                                                case "PP55": index = 12; break;
-                                                                case "PP56": index = 13; break;
-                                                                case "PP57": index = 14; break;
-                                                                case "PP58": index = 15; break;
-                                                                case "PP59": index = 16; break;
-                                                                case "PP60": index = 17; break;
-                                                                case "PP61": index = 18; break;
-                                                                case "PP62": index = 19; break;
-                                                                case "PP63": index = 20; break;
-                                                                case "PP65": index = 21; break;
-                                                                case "PP66": index = 22; break;
-                                                                case "PP67": index = 23; break;
-                                                                case "PP68": index = 24; break;
+                                                                    case "I3": index = 7; break;
+
+                                                                    case "F": index = 8; break;
+                                                                    case "G": index = 9; break;
+                                                                    //case "K": index = 11; break;
+                                                                    //case "L": index = 12; break;
+                                                                    case "M": index = 10; break;
+
+                                                                    case "PP54": index = 11; break;
+                                                                    case "PP55": index = 12; break;
+                                                                    case "PP56": index = 13; break;
+                                                                    case "PP57": index = 14; break;
+                                                                    case "PP58": index = 15; break;
+                                                                    case "PP59": index = 16; break;
+                                                                    case "PP60": index = 17; break;
+                                                                    case "PP61": index = 18; break;
+                                                                    case "PP62": index = 19; break;
+                                                                    case "PP63": index = 20; break;
+                                                                    case "PP65": index = 21; break;
+                                                                    case "PP66": index = 22; break;
+                                                                    case "PP67": index = 23; break;
+                                                                    case "PP68": index = 24; break;
+                                                                }
+                                                            }
+                                                            else
+                                                            {
+                                                                switch (gtr.ElementAt(j).Key)
+                                                                {
+                                                                    case "A": index = 0; break;
+                                                                    case "B": index = 2; break;
+                                                                    case "C": index = 1; break;
+
+
+                                                                    case "I1": index = 3; break;
+                                                                    case "I2": index = 4; break;
+
+                                                                    case "I": index = 5; break;
+
+                                                                    case "I3": index = 6; break;
+
+                                                                   
+                                                                    //case "K": index = 11; break;
+                                                                    //case "L": index = 12; break;
+                                                                    case "M": index = 7; break;
+
+                                                                    case "PP54": index = 8; break;
+                                                                    case "PP55": index = 9; break;
+                                                                    case "PP56": index = 10; break;
+                                                                    case "PP57": index = 11; break;
+                                                                    case "PP58": index = 12; break;
+                                                                    case "PP59": index = 13; break;
+                                                                    case "PP60": index = 14; break;
+                                                                    case "PP61": index = 15; break;
+                                                                    case "PP62": index = 16; break;
+                                                                    case "PP63": index = 17; break;
+                                                                    case "PP65": index = 18; break;
+                                                                    case "PP66": index = 19; break;
+                                                                    case "PP67": index = 20; break;
+                                                                    case "PP68": index = 21; break;
+                                                                }
                                                             }
                                                             index++;
                                                             if (gtr.ElementAt(j).Value.Count() > i)

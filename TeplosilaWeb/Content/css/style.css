@@ -171,10 +171,10 @@ tr:nth-child(2) td:nth-child(2) {
     width: 150px;
 }
 
-tr:nth-child(n) td:nth-child(12) ~ td {
+tr:nth-child(n) td:nth-child(9) ~ td {
     display: none;
 }
-tr:nth-child(n) th:nth-child(12) ~ th {
+tr:nth-child(n) th:nth-child(9) ~ th {
     display: none;
 }
 
