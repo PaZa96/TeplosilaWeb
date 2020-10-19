@@ -620,10 +620,6 @@ public partial class RDT : System.Web.UI.Page
 
 
             double Pf = 1;
-            int flagC = 0;
-            int flagA = 0;
-            int countC = listResult["C"].Length -1;
-            int countA = listResult["A"].Length - 1;
 
             while (!exit_t && (V >= g_dict["vmax"]))
             {
@@ -689,23 +685,17 @@ public partial class RDT : System.Web.UI.Page
                     }
                     else
                     {
-                        if(flagC != countC)
+                        DN = col_C;
+
+                        var _List = new List<string>();
+
+                        if (listResult.ContainsKey("C"))
                         {
-                            DN = col_C;
-
-                            var _List = new List<string>();
-
-                            if (listResult.ContainsKey("C"))
-                            {
-                                _List.AddRange(listResult["C"]);
-                            }
-
-                            _List.AddRange(new string[] { DN.ToString() });
-                            listResult["C"] = _List.ToArray();
-
-                            flagC++;
+                            _List.AddRange(listResult["C"]);
                         }
-                       
+
+                        _List.AddRange(new string[] { DN.ToString() });
+                        listResult["C"] = _List.ToArray();
                     }
                     /*/CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC*/
 
@@ -734,7 +724,7 @@ public partial class RDT : System.Web.UI.Page
                             }
                         }
 
-                            tmpKv = 300;
+                        tmpKv = 300;
                         tmpA = "";
                         foreach (Newtonsoft.Json.Linq.JObject ob in table)
                         {
@@ -742,15 +732,10 @@ public partial class RDT : System.Web.UI.Page
                                 (Convert.ToDouble(ob.GetValue("min")) == Convert.ToDouble(tmpI.GetValue("min")) &&
                                     Convert.ToDouble(ob.GetValue("max")) == Convert.ToDouble(tmpI.GetValue("max"))))
                             {
-                                if (Kv_start < Convert.ToDouble(ob.GetValue("prop")) && tmpKv > Convert.ToDouble(ob.GetValue("prop")) && tmpA != "")
+                                if (Kv_start < Convert.ToDouble(ob.GetValue("prop")) && tmpKv > Convert.ToDouble(ob.GetValue("prop")))
                                 {
-                                    if (flagA != countA)
-                                    {
-                                        tmpKv = Convert.ToDouble(ob.GetValue("prop"));
-                                        tmpA = ob.GetValue("name").ToString();
-
-                                        flagA++;
-                                    }
+                                    tmpKv = Convert.ToDouble(ob.GetValue("prop"));
+                                    tmpA = ob.GetValue("name").ToString();    
                                 }
                                 //listA.Add(ob.GetValue("name").ToString());
                                 //listB.Add(ob.GetValue("prop").ToString());
@@ -1519,7 +1504,7 @@ public partial class RDT : System.Web.UI.Page
         else
         {
             args.IsValid = false;
-            CustomValidator10.ErrorMessage = "";
+            CustomValidator11.ErrorMessage = "";
         }
     }
 
@@ -1770,7 +1755,14 @@ public partial class RDT : System.Web.UI.Page
                         args.IsValid = false;
                         return;
                     }
-                    
+
+                    if ((100 * Math.Pow((customConverterToDouble(lp5TextBox1.Text) * arrConvert3[lp5DropDownList1.SelectedIndex - 1] / arrConvert3[2]) + 1, 0.25)) > MaxT3x)
+                    {
+                        CustomValidator20.ErrorMessage = "На температуру свыше 150°С вариантов нет";
+                        args.IsValid = false;
+                        return;
+                    }
+
                     if (customConverterToDouble(lp5TextBox3.Text) < (100 * Math.Pow((customConverterToDouble(lp5TextBox1.Text) * arrConvert3[lp5DropDownList1.SelectedIndex - 1] / arrConvert3[2]) + 1, 0.25)))
                     {
                         CustomValidator20.ErrorMessage = "Неверно указано значение температуры";
@@ -1797,6 +1789,15 @@ public partial class RDT : System.Web.UI.Page
                 {
                     CustomValidator21.ErrorMessage = "Необходимо выбрать тип пара";
                     args.IsValid = false;
+                }
+                if (lp5RadioButtonList1.SelectedIndex == 1)
+                {
+                    if ((100 * Math.Pow((customConverterToDouble(lp5TextBox1.Text) * arrConvert3[lp5DropDownList1.SelectedIndex - 1] / arrConvert3[2]) + 1, 0.25)) > MaxT3x)
+                    {
+                        CustomValidator21.ErrorMessage = "При указанном давление температура пара превышает допустимое значение";
+                        args.IsValid = false;
+                        return;
+                    }
                 }
             }
         }

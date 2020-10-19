@@ -1212,11 +1212,11 @@ public partial class TRV : System.Web.UI.Page
 
             if ((p1 - p2) <= (0.5 * (p1 + 1)))
             {
-                Kv = 1.3 * ((Gkl / 461) * Math.Sqrt((T1 + 273) / ((p1 - p2) * (p2 + 1))));
+                Kv_start = Kv = 1.3 * ((Gkl / 461) * Math.Sqrt((T1 + 273) / ((p1 - p2) * (p2 + 1))));
             }
             else
             {
-                Kv = 1.3 * (Gkl / (230 * (p1 + 1))) * Math.Sqrt(T1 + 273);
+                Kv_start = Kv = 1.3 * (Gkl / (230 * (p1 + 1))) * Math.Sqrt(T1 + 273);
             }
             
         }
@@ -1742,22 +1742,37 @@ public partial class TRV : System.Web.UI.Page
                 listI2.Add("плохое");
             }
 
-            if (V > 3 && V <= 5 && spvRadioButtonList1.SelectedIndex == 1) //g_dict["vmax"])
+            if (ws2RadioButtonList1.SelectedIndex != 3)
             {
-                listI3.Add("возможен шум");
-            }
-            else if (V > 5) // g_dict["vmax"])
-            {
-                listI3.Add("возможен эрозийный износ клапана");
-            }
 
-            else if (V < 1.5)
-            {
-                listI3.Add("возможен колебательный режим регулирования");
+                if (V > 3 && V <= 5 && spvRadioButtonList1.SelectedIndex == 1) //g_dict["vmax"])
+                {
+                    listI3.Add("возможен шум");
+                }
+                else if (V > 5) // g_dict["vmax"])
+                {
+                    listI3.Add("возможен эрозийный износ клапана");
+                }
+
+                else if (V < 1.5)
+                {
+                    listI3.Add("возможен колебательный режим регулирования");
+                }
+                else
+                {
+                    listI3.Add("нет");
+                }
             }
             else
             {
-                listI3.Add("нет");
+                if (V > 40 && lpv5RadioButtonList1.SelectedIndex == 1)
+                    listI3.Add("возможен шум");
+                else if (V > 60 && lpv5RadioButtonList1.SelectedIndex == 0)
+                    listI3.Add("возможен шум");
+                else
+                {
+                    listI3.Add("нет");
+                }
             }
 
             if (ws2RadioButtonList1.SelectedIndex != 3) {
@@ -3475,8 +3490,6 @@ public partial class TRV : System.Web.UI.Page
                                                             int index = -1;
                                                             if (ws2RadioButtonList1.SelectedIndex != 3)
                                                             {
-
-
                                                                 switch (gtr.ElementAt(j).Key)
                                                                 {
                                                                     case "A": index = 0; break;
@@ -3521,7 +3534,6 @@ public partial class TRV : System.Web.UI.Page
                                                                     case "B": index = 2; break;
                                                                     case "C": index = 1; break;
 
-
                                                                     case "I1": index = 3; break;
                                                                     case "I2": index = 4; break;
 
@@ -3529,7 +3541,6 @@ public partial class TRV : System.Web.UI.Page
 
                                                                     case "I3": index = 6; break;
 
-                                                                   
                                                                     //case "K": index = 11; break;
                                                                     //case "L": index = 12; break;
                                                                     case "M": index = 7; break;
@@ -3577,25 +3588,19 @@ public partial class TRV : System.Web.UI.Page
 
                                                         GridView2.DataSource = dt;
                                                         GridView2.DataBind();
-
-
-
                                                     }
-
                                                 }
                                                 else
                                                 {
                                                     LabelError.Text += "Неверно указано значение давления";
                                                     return;
                                                 }
-
                                             }
                                             else
                                             {
                                                 LabelError.Text += "Неверно указано значение давления";
                                                 return;
                                             }
-
                                         }
                                         else
                                         {
@@ -3614,7 +3619,6 @@ public partial class TRV : System.Web.UI.Page
                                     LabelError.Text += "Не выбрана рабочая среда";
                                     return;
                                 }
-
                             }
                             else
                             {
@@ -3651,7 +3655,6 @@ public partial class TRV : System.Web.UI.Page
                     LabelError.Text += "Не указано наличие регулятора перепада давления";
                     return;
                 }
-
             }
             else
             {
@@ -3668,14 +3671,11 @@ public partial class TRV : System.Web.UI.Page
             this.Button2.Enabled = true;
             //this.Button3.Visible = true;
             //this.Button3.Enabled = true;
-
         }
         catch (Exception er)
         {
             Logger.Log.Error(er);
-
         }
-
     }
 
     //-----------------------------Validators--------------------------------------------------
@@ -3824,7 +3824,6 @@ public partial class TRV : System.Web.UI.Page
                     return;
                 }
             }
-
         }
         else
         {
