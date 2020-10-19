@@ -2176,7 +2176,7 @@ public partial class TRV : System.Web.UI.Page
         if (this.aa1RadioButtonList1.SelectedIndex == 0) v_in_dict.Add(6, aa1RadioButtonList1.Items[0].Text);
         else if (this.aa1RadioButtonList1.SelectedIndex == 1) v_in_dict.Add(6, aa1RadioButtonList1.Items[1].Text);
         else if (aa2RadioButtonList1.SelectedIndex == 0) v_in_dict.Add(6, aa2RadioButtonList1.Items[0].Text);
-        else if (aa2RadioButtonList1.SelectedIndex == 1) v_in_dict.Add(6, aa1RadioButtonList1.Items[1].Text);
+        else if (aa2RadioButtonList1.SelectedIndex == 1) v_in_dict.Add(6, aa2RadioButtonList1.Items[1].Text);
         else if (aa3RadioButtonList1.SelectedIndex == 0) v_in_dict.Add(6, aa3RadioButtonList1.Items[0].Text);
         else if (aa3RadioButtonList1.SelectedIndex == 1) v_in_dict.Add(6, aa3RadioButtonList1.Items[1].Text);
 
