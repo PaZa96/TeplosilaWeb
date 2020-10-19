@@ -483,6 +483,9 @@ public partial class RDT : System.Web.UI.Page
             /*/IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII*/
 
             bool exit_t = false;
+            List<string> listA = new List<string>(),
+                   listB = new List<string>(),
+                   listC = new List<string>();
 
             if (col_B == Convert.ToDouble(table5[table5.Count - 1]))
             {
@@ -562,9 +565,7 @@ public partial class RDT : System.Web.UI.Page
 
             if (tmpI != null)
             {
-                List<string> listA = new List<string>(),
-                    listB = new List<string>(),
-                    listC = new List<string>();
+               
                 foreach (Newtonsoft.Json.Linq.JObject ob in table)
                 {
                     if ((Convert.ToDouble(ob.GetValue("prop")) == Kv) &&
@@ -628,6 +629,7 @@ public partial class RDT : System.Web.UI.Page
                 else
                 {
                     // DN ближайший больший из table10
+                   
 
                     if (col_C == Convert.ToDouble(table10[table10.Count - 1]))
                     {
@@ -704,8 +706,8 @@ public partial class RDT : System.Web.UI.Page
 
                     if (tmpI != null)
                     {
-                        List<string> listA = new List<string>(),
-                            listB = new List<string>();
+                        //List<string> listA = new List<string>(),
+                        //    listB = new List<string>();
 
 
                         if (ws1RadioButtonList1.SelectedIndex != 3)
@@ -912,15 +914,33 @@ public partial class RDT : System.Web.UI.Page
                 }
             }
             
-            listResult["F"] = listF.ToArray();
-            listResult["E"] = listE.ToArray();
-            
             if (ws1RadioButtonList1.SelectedIndex != 3)
             {
                 listResult["D"] = listD.ToArray();
                 listResult["G"] = listG.ToArray();
                 listResult["K"] = listK.ToArray();
             }
+            else
+            {
+                int indexNo = listE.IndexOf("нет");
+
+                if (listB.Count-1 > indexNo+1)
+                {
+                    listA.RemoveRange(indexNo + 1, listB.Count - indexNo - 1);
+                    listB.RemoveRange(indexNo + 1, listB.Count - indexNo - 1);
+                    listE.RemoveRange(indexNo + 1, listE.Count - indexNo - 1);
+                    listF.RemoveRange(indexNo + 1, listF.Count - indexNo - 1);
+
+                    listResult["A"] = listA.ToArray();
+                    listResult["B"] = listB.ToArray();
+                    listResult["C"] = listB.ToArray();
+                }
+            }
+
+            
+            listResult["F"] = listF.ToArray();
+            listResult["E"] = listE.ToArray();
+
             /*/GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG*/
             /*/FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF*/
 
