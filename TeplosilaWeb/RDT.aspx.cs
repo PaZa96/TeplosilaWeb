@@ -378,6 +378,11 @@ public partial class RDT : System.Web.UI.Page
                 }
             }
 
+            calcCapacityLabel.Text = "Расчетная пропускная способность - " + Math.Round(Kv, 2).ToString();
+            calcCapacityLabel.Visible = true;
+
+
+
             Newtonsoft.Json.Linq.JArray table5 = dataFromFile.table5;
             Newtonsoft.Json.Linq.JArray table10 = dataFromFile.table10;
             double col_B = Convert.ToDouble(table5[table5.Count - 1]);
@@ -483,9 +488,7 @@ public partial class RDT : System.Web.UI.Page
             /*/IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII*/
 
             bool exit_t = false;
-            List<string> listA = new List<string>(),
-                   listB = new List<string>(),
-                   listC = new List<string>();
+           
 
             if (col_B == Convert.ToDouble(table5[table5.Count - 1]))
             {
@@ -565,7 +568,10 @@ public partial class RDT : System.Web.UI.Page
 
             if (tmpI != null)
             {
-               
+                List<string> listA = new List<string>(),
+                  listB = new List<string>(),
+                  listC = new List<string>();
+
                 foreach (Newtonsoft.Json.Linq.JObject ob in table)
                 {
                     if ((Convert.ToDouble(ob.GetValue("prop")) == Kv) &&
@@ -608,9 +614,10 @@ public partial class RDT : System.Web.UI.Page
             /*/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA*/
 
             double C = Convert.ToDouble(listResult["C"][listResult["C"].Count() - 1]);
-                
-                
-            if(ws1RadioButtonList1.SelectedIndex != 3)
+
+
+            
+            if (ws1RadioButtonList1.SelectedIndex != 3)
             {
                 V = Gpg / g * Math.Pow((18.8 / C), 2);
             }
@@ -618,6 +625,26 @@ public partial class RDT : System.Web.UI.Page
             {
                 V = (Gpg * (T1 + 273)) / Math.Pow((C / 18.8), 2) / (219 * (p2 + 1));
             }
+
+            double cDN = 0;
+            if (ws1RadioButtonList1.SelectedIndex != 3)
+            {
+
+            }
+            else
+            {
+                if(lp5RadioButtonList1.SelectedIndex == 0)
+                {
+                    cDN = 18.8 * Math.Sqrt((Gpg * (T1 + 273)) / (219 * (p2 + 1) * 60));
+                }
+                else
+                {
+                    cDN = 18.8 * Math.Sqrt((Gpg * (T1 + 273)) / (219 * (p2 + 1) * 40));
+                }
+            }
+
+            calcDNLabel.Text = "Расчетный диаметр - " + Math.Round(cDN, 2).ToString();
+            calcDNLabel.Visible = true;
 
 
             double Pf = 1;
@@ -706,8 +733,8 @@ public partial class RDT : System.Web.UI.Page
 
                     if (tmpI != null)
                     {
-                        //List<string> listA = new List<string>(),
-                        //    listB = new List<string>();
+                        List<string> listA = new List<string>(),
+                        listB = new List<string>();
 
 
                         if (ws1RadioButtonList1.SelectedIndex != 3)
@@ -923,17 +950,25 @@ public partial class RDT : System.Web.UI.Page
             else
             {
                 int indexNo = listE.IndexOf("нет");
+                List<string> listA = new List<string>(),
+                  listB = new List<string>(),
+                  listC = new List<string>();
+
+                listA.AddRange(listResult["A"]);
+                listB.AddRange(listResult["B"]);
+                listC.AddRange(listResult["C"]);
 
                 if (listB.Count-1 > indexNo+1)
                 {
-                    listA.RemoveRange(indexNo + 1, listB.Count - indexNo - 1);
+                    listA.RemoveRange(indexNo + 1, listA.Count - indexNo - 1);
                     listB.RemoveRange(indexNo + 1, listB.Count - indexNo - 1);
+                    listC.RemoveRange(indexNo + 1, listC.Count - indexNo - 1);
                     listE.RemoveRange(indexNo + 1, listE.Count - indexNo - 1);
                     listF.RemoveRange(indexNo + 1, listF.Count - indexNo - 1);
 
                     listResult["A"] = listA.ToArray();
                     listResult["B"] = listB.ToArray();
-                    listResult["C"] = listB.ToArray();
+                    listResult["C"] = listC.ToArray();
                 }
             }
 
