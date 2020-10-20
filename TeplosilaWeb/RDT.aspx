@@ -629,7 +629,7 @@
                                         <asp:Label ID="calcCapacityLabel" runat="server" Visible="False"></asp:Label>
                                     </div>
                                     <div class="table-responsive-lg" onclick="ShowBTN()">
-                                        <asp:GridView ID="GridView1" CssClass="table table-result" runat="server" Font-Size="X-Small" Visible="False"
+                                        <asp:GridView ID="GridView1" CssClass="table table-result rdt" runat="server" Font-Size="X-Small" Visible="False"
                                             OnSelectedIndexChanged="GridView1_SelectedIndexChanged" AutoGenerateSelectButton="True">
     
                     

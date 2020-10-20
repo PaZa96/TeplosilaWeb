@@ -629,7 +629,14 @@ public partial class RDT : System.Web.UI.Page
             double cDN = 0;
             if (ws1RadioButtonList1.SelectedIndex != 3)
             {
-
+                if(sprRadioButtonList1.SelectedIndex == 0)
+                {
+                    cDN = 18.8 / Math.Sqrt(((5 * g) / Gpg ));
+                }
+                else
+                {
+                    cDN = 18.8 / Math.Sqrt(((g  * 3) / Gpg));
+                }
             }
             else
             {
@@ -858,7 +865,7 @@ public partial class RDT : System.Web.UI.Page
 
                 if (ws1RadioButtonList1.SelectedIndex != 3)
                 {
-                    V = Gpg / g * Math.Pow((18.8 / DN), 2);
+                    V = Gpg / g * Math.Pow((18.8 / C), 2);
                 }
                 else
                 {
@@ -3549,6 +3556,8 @@ public partial class RDT : System.Web.UI.Page
 
             calcrDropDownList1.Enabled = false;
             calcrTextBox2.Enabled = false;
+            calcrTextBox1.Text = "";
+            calcrTextBox2.Text = "";
             AddCssClass(calcr, "panel-hide");
         }
 

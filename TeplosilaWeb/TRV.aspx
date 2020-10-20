@@ -684,7 +684,7 @@
                             </div>
 
                             <div class="table-responsive-lg" onclick="ShowBTN()">
-                                <asp:GridView ID="GridView2" CssClass="table table-result" runat="server"
+                                <asp:GridView ID="GridView2" CssClass="table table-result trv" runat="server"
                                     Font-Size="X-Small" Visible="False"
                                     OnSelectedIndexChanged="GridView2_SelectedIndexChanged"
                                     AutoGenerateSelectButton="True">
