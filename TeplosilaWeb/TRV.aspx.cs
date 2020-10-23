@@ -105,6 +105,7 @@ public partial class TRV : System.Web.UI.Page
         }
         AddCssClass(lpv1, "panel-hide");
         AddCssClass(lpv2, "panel-hide");
+        ws2RadioButtonList1.Items[3].Enabled = false;
     }
 
     protected void aaRadioButton2_CheckedChanged(object sender, EventArgs e)
@@ -129,6 +130,7 @@ public partial class TRV : System.Web.UI.Page
         }
         AddCssClass(lpv1, "panel-hide");
         AddCssClass(lpv2, "panel-hide");
+        ws2RadioButtonList1.Items[3].Enabled = false;
     }
 
     protected void aaRadioButton3_CheckedChanged(object sender, EventArgs e)
@@ -152,6 +154,7 @@ public partial class TRV : System.Web.UI.Page
         }
         AddCssClass(lpv1, "panel-hide");
         AddCssClass(lpv2, "panel-hide");
+        ws2RadioButtonList1.Items[3].Enabled = false;
     }
 
     private void changeImage(int index)
@@ -398,6 +401,7 @@ public partial class TRV : System.Web.UI.Page
         {
             RemoveCssClass(lpv1, "panel-hide");
             AddCssClass(lpv2, "panel-hide");
+            ws2RadioButtonList1.Items[3].Enabled = false;
         }
         else
         {
@@ -427,6 +431,7 @@ public partial class TRV : System.Web.UI.Page
     protected void aa2RadioButtonList1_SelectedIndexChanged(object sender, EventArgs e)
     {
         ResetPressureLoss(aa2RadioButtonList1);
+
         if (tvRadioButtonList1.SelectedIndex >= 0 && fvRadioButton2.Checked)
         {
             EnableTemperatureTable();
@@ -435,19 +440,28 @@ public partial class TRV : System.Web.UI.Page
         {
             RemoveCssClass(lpv1, "panel-hide");
             AddCssClass(lpv2, "panel-hide");
+            ws2RadioButtonList1.Items[3].Enabled = false;
         }
         else
         {
-            AddCssClass(lpv1, "panel-hide");
-            AddCssClass(lpv2, "panel-hide");
-
-            if (aa1RadioButtonList1.SelectedIndex == 1)
+            if (aa2RadioButtonList1.SelectedIndex == 1 && tvRadioButtonList1.SelectedIndex == 0)
             {
                 ws2RadioButtonList1.Items[3].Enabled = true;
             }
             else
             {
                 ws2RadioButtonList1.Items[3].Enabled = false;
+
+                if (tvRadioButtonList1.SelectedIndex == 1)
+                {
+                    RemoveCssClass(lpv2, "panel-hide");
+                    AddCssClass(lpv1, "panel-hide");
+                }
+                else
+                {
+                    AddCssClass(lpv2, "panel-hide");
+                    AddCssClass(lpv1, "panel-hide");
+                }
             }
         }
     }
@@ -455,6 +469,7 @@ public partial class TRV : System.Web.UI.Page
     protected void aa3RadioButtonList1_SelectedIndexChanged(object sender, EventArgs e)
     {
         ResetPressureLoss(aa3RadioButtonList1);
+
         if (tvRadioButtonList1.SelectedIndex >= 0 && fvRadioButton2.Checked)
         {
             EnableTemperatureTable();
@@ -463,19 +478,28 @@ public partial class TRV : System.Web.UI.Page
         {
             RemoveCssClass(lpv1, "panel-hide");
             AddCssClass(lpv2, "panel-hide");
+            ws2RadioButtonList1.Items[3].Enabled = false;
         }
         else
         {
-            AddCssClass(lpv1, "panel-hide");
-            AddCssClass(lpv2, "panel-hide");
-
-            if (aa1RadioButtonList1.SelectedIndex == 1)
+            if (aa3RadioButtonList1.SelectedIndex == 1 && tvRadioButtonList1.SelectedIndex == 0)
             {
                 ws2RadioButtonList1.Items[3].Enabled = true;
             }
             else
             {
                 ws2RadioButtonList1.Items[3].Enabled = false;
+
+                if (tvRadioButtonList1.SelectedIndex == 1)
+                {
+                    RemoveCssClass(lpv2, "panel-hide");
+                    AddCssClass(lpv1, "panel-hide");
+                }
+                else
+                {
+                    AddCssClass(lpv2, "panel-hide");
+                    AddCssClass(lpv1, "panel-hide");
+                }
             }
         }
     }
@@ -1221,6 +1245,9 @@ public partial class TRV : System.Web.UI.Page
             
         }
 
+        calcvCapacityLabel.Text = "Расчетная пропускная способность - " + Math.Round(Kv, 2).ToString();
+        calcvCapacityLabel.Visible = true;
+
         Newtonsoft.Json.Linq.JArray tablev = null;
         Newtonsoft.Json.Linq.JArray tableDN = null;
         Newtonsoft.Json.Linq.JArray tablev_7 = null;
@@ -1460,6 +1487,33 @@ public partial class TRV : System.Web.UI.Page
             V = (Gkl * (T1 + 273)) / Math.Pow((C / 18.8), 2) / (219 * (p2 + 1));
         }
 
+        double cDN = 0;
+        if (ws2RadioButtonList1.SelectedIndex != 3)
+        {
+            if (spvRadioButtonList1.SelectedIndex == 0)
+            {
+                cDN = 18.8 / Math.Sqrt(((5 * g) / Gkl));
+            }
+            else
+            {
+                cDN = 18.8 / Math.Sqrt(((g * 3) / Gkl));
+            }
+        }
+        else
+        {
+            if (lpv5RadioButtonList1.SelectedIndex == 0)
+            {
+                cDN = 18.8 * Math.Sqrt((Gkl * (T1 + 273)) / (219 * (p2 + 1) * 60));
+            }
+            else
+            {
+                cDN = 18.8 * Math.Sqrt((Gkl * (T1 + 273)) / (219 * (p2 + 1) * 40));
+            }
+        }
+
+        calcvDNLabel.Text = "Расчетный диаметр - " + Math.Round(cDN, 2).ToString();
+        calcvDNLabel.Visible = true;
+
 
         double Pf = 1;
 
@@ -1689,6 +1743,7 @@ public partial class TRV : System.Web.UI.Page
         listI1.AddRange(listResult["I1"]);
         listI2.AddRange(listResult["I2"]);
         listI3.AddRange(listResult["I3"]);
+
         if(ws2RadioButtonList1.SelectedIndex != 3)
         {
             listF.AddRange(listResult["F"]);
@@ -1814,18 +1869,9 @@ public partial class TRV : System.Web.UI.Page
                 } 
             }
         }
-        listResult["I"] = listI.ToArray();
-        listResult["I1"] = listI1.ToArray();
-        listResult["I2"] = listI2.ToArray();
-        listResult["I3"] = listI3.ToArray();
-        if(ws2RadioButtonList1.SelectedIndex != 3)
-        {
-            listResult["F"] = listF.ToArray();
-            listResult["G"] = listG.ToArray();
-            listResult["D"] = listD.ToArray();
-        }
-
         
+       
+
         /*/IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII*/
         /*/GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG*/
         /*/FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF*/
@@ -2325,6 +2371,51 @@ public partial class TRV : System.Web.UI.Page
                     listResult["M"].SetValue(tmpPriv, i);
                 }
             }
+
+
+            if (ws2RadioButtonList1.SelectedIndex != 3)
+            {
+                listResult["F"] = listF.ToArray();
+                listResult["G"] = listG.ToArray();
+                listResult["D"] = listD.ToArray();
+            }
+
+            else
+            {
+                int indexNo = listI3.IndexOf("нет");
+                List<string> listA = new List<string>(),
+                  listB = new List<string>(),
+                  listC = new List<string>(),
+                  listM = new List<string>();
+
+                listA.AddRange(listResult["A"]);
+                listB.AddRange(listResult["B"]);
+                listC.AddRange(listResult["C"]);
+                listM.AddRange(listResult["M"]);
+
+                if (listB.Count - 1 > indexNo + 1)
+                {
+                    listA.RemoveRange(indexNo + 1, listA.Count - indexNo - 1);
+                    listB.RemoveRange(indexNo + 1, listB.Count - indexNo - 1);
+                    listC.RemoveRange(indexNo + 1, listC.Count - indexNo - 1);
+                    listI.RemoveRange(indexNo + 1, listI.Count - indexNo - 1);
+                    listI1.RemoveRange(indexNo + 1, listI1.Count - indexNo - 1);
+                    listI2.RemoveRange(indexNo + 1, listI2.Count - indexNo - 1);
+                    listI3.RemoveRange(indexNo + 1, listI3.Count - indexNo - 1);
+                    listI3.RemoveRange(indexNo + 1, listI3.Count - indexNo - 1);
+                    listM.RemoveRange(indexNo + 1, listM.Count - indexNo - 1);
+
+                    listResult["A"] = listA.ToArray();
+                    listResult["B"] = listB.ToArray();
+                    listResult["C"] = listC.ToArray();
+                    listResult["M"] = listM.ToArray();
+                }
+            }
+
+            listResult["I"] = listI.ToArray();
+            listResult["I1"] = listI1.ToArray();
+            listResult["I2"] = listI2.ToArray();
+            listResult["I3"] = listI3.ToArray();
 
             //
             listPP54.Add(tmpPP54);
@@ -3337,7 +3428,7 @@ public partial class TRV : System.Web.UI.Page
                                                     }
 
                                                     //maxt2ResultLabel.Text = "Максимальная температура - " + g_dict["vTMax"].ToString() + " °С";
-                                                    this.maxt2ResultLabel.Text = "Максимальная температура - " + ((ws2RadioButtonList1.SelectedIndex == 3 || double.Parse(g_dict["p35"].ToString()) > 150) ? "220" : "150") + " °С";
+                                                    this.maxt2ResultLabel.Text = "Максимальная температура - " + ((double.Parse(g_dict["p35"].ToString()) > 150) ? "220" : "150") + " °С";
                                                     
                                                     if(tvRadioButtonList1.SelectedIndex == 0) 
                                                     {
@@ -4187,6 +4278,15 @@ public partial class TRV : System.Web.UI.Page
                 {
                     CustomValidator21.ErrorMessage = "Необходимо выбрать тип пара";
                     args.IsValid = false;
+                }
+            }
+            if (lpv5RadioButtonList1.SelectedIndex == 1)
+            {
+                if ((100 * Math.Pow((customConverterToDouble(lpv5TextBox1.Text) * arrConvert3[lpv5DropDownList1.SelectedIndex - 1] / arrConvert3[2]) + 1, 0.25)) > MaxT3x)
+                {
+                    CustomValidator21.ErrorMessage = "При указанном давление температура пара превышает допустимое значение";
+                    args.IsValid = false;
+                    return;
                 }
             }
         }

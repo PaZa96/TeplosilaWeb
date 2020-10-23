@@ -682,6 +682,12 @@
                                 <asp:Label ID="maxp2ResultLabel" runat="server" Text="Label" Visible="False">
                                 </asp:Label>
                             </div>
+                            <div class="col non-padding">
+                                <asp:Label ID="calcvDNLabel" runat="server" Visible="False"></asp:Label>
+                            </div>
+                            <div class="col non-padding">
+                                <asp:Label ID="calcvCapacityLabel" runat="server" Visible="False"></asp:Label>
+                            </div>
 
                             <div class="table-responsive-lg" onclick="ShowBTN()">
                                 <asp:GridView ID="GridView2" CssClass="table table-result trv" runat="server"
