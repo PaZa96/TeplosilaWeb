@@ -130,6 +130,30 @@ public partial class RDT : System.Web.UI.Page
         return cp;
     }
 
+    public double SteamCP()  //теплоёмкость пара
+    {
+        
+        double T1 = customConverterToDouble(fprTextBox2.Text);
+        double T2 = customConverterToDouble(fprTextBox3.Text);
+        double p1 = (customConverterToDouble(lp5TextBox1.Text) * arrConvert3[lp5DropDownList1.SelectedIndex - 1] / arrConvert3[2]);
+        double r = (T1 + 273.15) / 647.14;
+        double pp = p1 / 220.64;
+        double h2 = 4.186 * T2;
+        double h1;
+
+        if (lp5RadioButtonList1.SelectedIndex == 0)
+        {
+            h1 = (10258.8 - 20231.3 / r + 24702.8 / Math.Pow(r, 2) - 16307.3 / Math.Pow(r, 3) + 5579.31 / Math.Pow(r, 4) - 777.285 / Math.Pow(r, 5)) + pp * (-355.878 / r + 817.288 / Math.Pow(r, 2) - 845.841 / Math.Pow(r, 3)) - Math.Pow(pp, 2) * (160.276 / Math.Pow(r, 3)) + Math.Pow(pp, 3) * (-95607.5 / r + 443740 / Math.Pow(r, 2) - 767668 / Math.Pow(r, 3) + 587261 / Math.Pow(r, 4) - 167657 / Math.Pow(r, 5)) + Math.Pow(pp, 4) * (22542.8 / Math.Pow(r, 2) - 84140.2 / Math.Pow(r, 3) + 104198 / Math.Pow(r, 4) - 42886.7 / Math.Pow(r, 5));
+
+        } 
+        else 
+        { 
+            h1 = 2149.17 + 15049.8 * Math.Pow(r, 3) - 38597.1 * Math.Pow(r, 4) + 38206.2 * Math.Pow(r, 5) - 14351.7 * Math.Pow(r, 6);
+        }
+
+        return h1 - h2;
+    }
+
     public double GetAvgT()
     {
         double avg_T = 0;
@@ -2269,7 +2293,16 @@ public partial class RDT : System.Web.UI.Page
                                 {
                                     try
                                     {
-                                        p16 = Math.Round((customConverterToDouble(this.fprTextBox4.Text) * arrConvert2[this.fprDropDownList2.SelectedIndex - 1]) * 3.6 / (this.math_16_cp() * (customConverterToDouble(this.fprTextBox2.Text) - customConverterToDouble(this.fprTextBox3.Text))), 2);
+                                        if(ws1RadioButtonList1.SelectedIndex != 3)
+                                        {
+                                            p16 = Math.Round((customConverterToDouble(this.fprTextBox4.Text) * arrConvert2[this.fprDropDownList2.SelectedIndex - 1]) * 3.6 / (this.math_16_cp() * (customConverterToDouble(this.fprTextBox2.Text) - customConverterToDouble(this.fprTextBox3.Text))), 2);
+
+                                        }
+                                        else
+                                        {
+                                            p16 = Math.Round((customConverterToDouble(this.fprTextBox4.Text) * arrConvert2[this.fprDropDownList2.SelectedIndex - 1]) * 3.6 / SteamCP(), 2);
+
+                                        }
 
                                     }
                                     catch (Exception)

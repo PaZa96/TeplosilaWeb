@@ -19,6 +19,20 @@
             text-align: center;
             width: 300px;
         }
+        .auto-style8 {
+            position: relative;
+            width: 100%;
+            -ms-flex-preferred-size: 0;
+            flex-basis: 0;
+            -ms-flex-positive: 1;
+            flex-grow: 1;
+            min-width: 0;
+            max-width: 100%;
+            left: 0px;
+            top: 0px;
+            padding-left: 15px;
+            padding-right: 15px;
+        }
     </style>
 </head>
 
@@ -290,7 +304,7 @@
                                     </div>
                                     <asp:Label ID="Label25" runat="server" Text="Тип пара:">
                                     </asp:Label>
-                                        <div class="col">
+                                        <div class="auto-style8">
                                     <asp:RadioButtonList ID="lpv5RadioButtonList1" runat="server" AutoPostBack="True"
                                         OnSelectedIndexChanged="lpv5RadioButtonList1_SelectedIndexChanged">
                                         <asp:ListItem>Перегретый</asp:ListItem>
