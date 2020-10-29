@@ -4282,7 +4282,7 @@ public partial class TRV : System.Web.UI.Page
             }
             if (lpv5RadioButtonList1.SelectedIndex == 1)
             {
-                if ((100 * Math.Pow((customConverterToDouble(lpv5TextBox1.Text) * arrConvert3[lpv5DropDownList1.SelectedIndex - 1] / arrConvert3[2]) + 1, 0.25)) > MaxT3x)
+                if ((100 * Math.Pow((customConverterToDouble(lpv5TextBox1.Text) * arrConvert3[lpv5DropDownList1.SelectedIndex - 1] / arrConvert3[2]) + 1, 0.25)) > 220)
                 {
                     CustomValidator21.ErrorMessage = "При указанном давление температура пара превышает допустимое значение";
                     args.IsValid = false;
