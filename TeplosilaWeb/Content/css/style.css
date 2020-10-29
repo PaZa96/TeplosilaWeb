@@ -25,7 +25,7 @@ input[type=radio] {
 }
 
 label {
-    margin:0px
+    margin: 0px
 }
 
 .valve-image {
@@ -57,6 +57,7 @@ input[type="number"] {
     input[type="number"]:focus {
         -moz-appearance: number-input;
     }
+
     input[type="number"]::-webkit-outer-spin-button,
     input[type="number"]::-webkit-inner-spin-button {
         -webkit-appearance: none;
@@ -82,11 +83,10 @@ select {
 }
 
     select:disabled {
-        
         cursor: default;
         background-color: rgb(235, 235, 228);
     }
-        
+
 input [type=button], input[type=submit], input[type=reset] {
     background-color: #ff7d00;
     border: none;
@@ -103,7 +103,7 @@ input [type=button], input[type=submit], input[type=reset] {
 }
 
 .show-btn {
-    display:inline-block;
+    display: inline-block;
 }
 
 .table-result {
@@ -111,13 +111,14 @@ input [type=button], input[type=submit], input[type=reset] {
     margin-top: 7px;
     margin-bottom: 7px;
 }
+
     .table-result tbody {
         border: 2px solid;
     }
 
-    .table-result tbody tr {
-        counter-increment: rowNumber;
-    }
+        .table-result tbody tr {
+            counter-increment: rowNumber;
+        }
 
     .table-result tr td:first-child::before {
         content: counter(rowNumber);
@@ -125,11 +126,11 @@ input [type=button], input[type=submit], input[type=reset] {
 
 .table td, .table th {
     padding: .2rem;
-    vertical-align: middle;
+    vertical-align: top;
     border-top: 1px solid #dee2e6;
 }
 
-.table tr{
+.table tr {
     background-color: white;
 }
 
@@ -171,16 +172,25 @@ tr:nth-child(2) td:nth-child(2) {
     width: 150px;
 }
 
-tr:nth-child(n) td:nth-child(12) ~ td {
+.rdt tr:nth-child(n) td:nth-child(10) ~ td {
     display: none;
 }
-tr:nth-child(n) th:nth-child(12) ~ th {
+
+.rdt tr:nth-child(n) th:nth-child(10) ~ th {
+    display: none;
+}
+
+.trv tr:nth-child(n) td:nth-child(9) ~ td {
+    display: none;
+}
+
+.trv tr:nth-child(n) th:nth-child(9) ~ th {
     display: none;
 }
 
 
 .panel-hide {
-    opacity: 0.6 !important;
+    opacity: 0.3 !important;
     top: 0px;
     left: 0px;
 }
