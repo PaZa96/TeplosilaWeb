@@ -95,13 +95,6 @@
                                             ValidateEmptyText="True"></asp:CustomValidator>
                                         <br />
                                     </div>
-                                    <div class="col-12">
-                                         <asp:RequiredFieldValidator ID="ws1RequiredFieldValidator1" runat="server"
-                                            ControlToValidate="ws1RadioButtonList1" Display="Dynamic"
-                                            ErrorMessage="Выберите необходимое значение" ForeColor="Red"
-                                            SetFocusOnError="True">
-                                            Выберите необходимое значение</asp:RequiredFieldValidator>
-                                    </div>
                                     
                                 </div>
                             </ContentTemplate>
