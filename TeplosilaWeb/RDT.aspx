@@ -161,8 +161,10 @@
                                             ForeColor="Red" OnServerValidate="CustomValidator8_ServerValidate"
                                             SetFocusOnError="True" ValidateEmptyText="True"></asp:CustomValidator>
                                         <br />
-                                        <asp:Label ID="lpLabel3" runat="server"
-                                            Text="Давление в подающем трубопроводе на вводе в ТП:"></asp:Label>
+                                          <asp:Label ID="lpLabel3" runat="server"
+                                            Text="Давление в подающем трубопроводе "></asp:Label>
+                                        <br />
+                                        <asp:Label ID="Label60" runat="server" Text="(перед регулятором, если он устанавливается на подающем трубопроводе, или в месте врезки импульсной трубки, если регулятор устанавливается на обратном трубопроводе):"></asp:Label>
                                         <br />
                                         <asp:Label ID="Label56" runat="server" Text="P1 = "></asp:Label>
                                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -182,8 +184,10 @@
                                             ForeColor="Red" OnServerValidate="CustomValidator1_ServerValidate"
                                             SetFocusOnError="True" ValidateEmptyText="True"></asp:CustomValidator>
                                         <br />
-                                        <asp:Label ID="lpLabel4" runat="server"
-                                            Text="Давление в обратном трубопроводе на вводе в ТП:"></asp:Label>
+                                          <asp:Label ID="lpLabel4" runat="server"
+                                            Text="Давление в обратном трубопроводе"></asp:Label>
+                                        <br />
+                                        <asp:Label ID="Label61" runat="server" Text="(в месте врезки импульсной трубки, если регулятор устанавливается на подающем трубопроводе, или после регулятора, если он устанавливается на обратном трубопроводе):"></asp:Label>
                                         <br />
                                         <asp:Label ID="Label57" runat="server" Text="P2 = "></asp:Label>
                                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -491,22 +495,22 @@
                     <div class="col border">
                         <asp:Label ID="Label31" runat="server" Text="Расход через регулятор давления:"></asp:Label>
 
-                        <asp:UpdatePanel ID="UpdatePanel13" runat="server">
+                       <asp:UpdatePanel ID="UpdatePanel13" runat="server">
                             <ContentTemplate>
                                 <div class="panel-hide" id="fpr1" runat="server">
                                     <asp:RadioButton ID="fprRadioButton1" runat="server"
-                                        Text="Задать max величину расхода через регулятор давления:" AutoPostBack="True"
+                                        Text="Задать максимальную величину расхода через регулятор давления:" AutoPostBack="True"
                                         OnCheckedChanged="fprRadioButton1_CheckedChanged" Enabled="False" /><br />
                                     <div class="col panel-hide" id="fpr1_1" runat="server">
                                         <asp:Label ID="Label28" runat="server" Text="Gрд = "></asp:Label>
                                         &nbsp;&nbsp;&nbsp;&nbsp;
-                                        <asp:TextBox ID="fprTextBox1" runat="server" step="0.00000000001"
+                                        <asp:TextBox ID="fprTextBox1" runat="server"
                                             Enabled="False" type="number" TextMode="Number"></asp:TextBox>
                                         <asp:DropDownList ID="fprDropDownList1" runat="server" AutoPostBack="True"
                                             Enabled="False"
                                             OnSelectedIndexChanged="fprDropDownList1_SelectedIndexChanged">
                                             <asp:ListItem>выбрать</asp:ListItem>
-                                            <asp:ListItem>м3/ч</asp:ListItem>
+                                            <asp:ListItem>м³/ч</asp:ListItem>
                                             <asp:ListItem>л/с</asp:ListItem>
                                             <asp:ListItem>л/мин</asp:ListItem>
                                             <asp:ListItem>л/ч</asp:ListItem>
@@ -529,7 +533,7 @@
                             <ContentTemplate>
                                 <div class="panel-hide" id="fpr2" runat="server">
                                     <asp:RadioButton ID="fprRadioButton2" runat="server"
-                                        Text="Вычислить max величину расхода через регулятор давления:"
+                                        Text="Вычислить максимальную величину расхода через регулятор давления:"
                                         AutoPostBack="True" OnCheckedChanged="fprRadioButton2_CheckedChanged"
                                         Enabled="False" />
                                     <div class="col panel-hide" id="fpr2_1" runat="server">

@@ -803,7 +803,7 @@ public partial class RDT : System.Web.UI.Page
                 listG.AddRange(listResult["G"]);
                 listK.AddRange(listResult["K"]);
             }
-            
+
 
             for (int i = 0; i < listResult["C"].Count(); i++)
             {
@@ -814,9 +814,21 @@ public partial class RDT : System.Web.UI.Page
                     Pf = Math.Round(Pf / 100, 2); /*Перевод с кПа в бар*/
                     //listResult["D"] = new string[] { Pf.ToString() };
 
-                listD.Add(Pf.ToString());
+                    listD.Add(Pf.ToString());
+                }
+                /*
+                var d_List = new List<string>();
+                if (listResult.ContainsKey("D"))
+                {
+                    d_List.AddRange(listResult["D"]);
+                }
+
+                d_List.AddRange(new string[] { Pf.ToString() });
+                listResult["D"] = d_List.ToArray();*/
+                /*/DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD*/
 
                 C = Convert.ToDouble(listResult["C"][i]);
+
                 if (ws1RadioButtonList1.SelectedIndex != 3)
                 {
                     V = Gpg / g * Math.Pow((18.8 / C), 2);
@@ -825,6 +837,7 @@ public partial class RDT : System.Web.UI.Page
                 {
                     V = (Gpg * (T1 + 273)) / Math.Pow((C / 18.8), 2) / ((219 * (p2 + 1)));
                 }
+
                 if (V < g_dict["vmax"])
                     exit_t = true;
 
@@ -856,6 +869,8 @@ public partial class RDT : System.Web.UI.Page
                     }
                 }
 
+
+
                 if (!String.IsNullOrWhiteSpace(this.calcrTextBox1.Text) && !String.IsNullOrWhiteSpace(this.calcrTextBox2.Text))
                 {
                     double dn = 0.0;
@@ -883,7 +898,7 @@ public partial class RDT : System.Web.UI.Page
                     double G = Math.Round((dn * ((customConverterToDouble(this.calcrTextBox1.Text) * arrConvert3[this.calcrDropDownList1.SelectedIndex - 1] / arrConvert3[2]) - ps)), 2);
                     listG.Add(G.ToString());
 
-                   
+
                     string K = "Нет";
                     if (G < Pf) //double.Parse(listResult["D"].GetValue(i).ToString()) )//Pf)
                         K = "Угрожает опасность кавитации";
@@ -898,7 +913,7 @@ public partial class RDT : System.Web.UI.Page
                     listK.Add(K);
                 }
             }
-            
+
             if (ws1RadioButtonList1.SelectedIndex != 3)
             {
                 listResult["D"] = listD.ToArray();
@@ -2222,6 +2237,7 @@ public partial class RDT : System.Web.UI.Page
                             {
                                 try
                                 {
+                                        if (ws1RadioButtonList1.SelectedIndex != 3) { 
                                     p16 = Math.Round((customConverterToDouble(this.fprTextBox4.Text) * arrConvert2[this.fprDropDownList2.SelectedIndex - 1]) * 3.6 / (this.math_16_cp() * (customConverterToDouble(this.fprTextBox2.Text) - customConverterToDouble(this.fprTextBox3.Text))), 2);
 
                                         }
