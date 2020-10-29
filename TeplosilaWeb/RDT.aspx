@@ -65,8 +65,11 @@
                                             <asp:ListItem>Пропиленгликоль</asp:ListItem>
                                             <asp:ListItem Enabled="False">Водяной пар</asp:ListItem>
                                         </asp:RadioButtonList>
-
-
+                                        <asp:RequiredFieldValidator ID="ws1RequiredFieldValidator1" runat="server"
+                                            ControlToValidate="ws1RadioButtonList1" Display="Dynamic"
+                                            ErrorMessage="Выберите необходимое значение" ForeColor="Red"
+                                            SetFocusOnError="True">
+                                            Выберите необходимое значение</asp:RequiredFieldValidator>
                                     </div>
                                     <div class="col-5">
                                         <br />
@@ -93,13 +96,13 @@
                                         <br />
                                     </div>
                                     <div class="col-12">
-                                        <asp:RequiredFieldValidator ID="ws1RequiredFieldValidator1" runat="server"
+                                         <asp:RequiredFieldValidator ID="ws1RequiredFieldValidator1" runat="server"
                                             ControlToValidate="ws1RadioButtonList1" Display="Dynamic"
                                             ErrorMessage="Выберите необходимое значение" ForeColor="Red"
                                             SetFocusOnError="True">
                                             Выберите необходимое значение</asp:RequiredFieldValidator>
                                     </div>
-
+                                    
                                 </div>
                             </ContentTemplate>
                         </asp:UpdatePanel>
@@ -349,7 +352,6 @@
                                             ValidateEmptyText="True"></asp:CustomValidator>
 
                                     </div>
-
                                 </ContentTemplate>
                             </asp:UpdatePanel>
                         </div>

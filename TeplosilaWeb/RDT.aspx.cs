@@ -303,6 +303,13 @@ public partial class RDT : System.Web.UI.Page
                 double cp = 0;
                 Prgl(p7, p6, ref g, ref cp);
             }
+            else if (ws1RadioButtonList1.SelectedIndex == 2)
+            {
+                double p6 = customConverterToDouble(this.ws1TextBox1.Text);
+                double p7 = Math.Round(GetAvgT() / 10) * 10;
+                double cp = 0;
+                Prgl(p7, p6, ref g, ref cp);
+            }
 
             if (ws1RadioButtonList1.SelectedIndex != 3)
             {
@@ -332,8 +339,39 @@ public partial class RDT : System.Web.UI.Page
                 }
             }
 
+            if (ws1RadioButtonList1.SelectedIndex != 3)
+            {
+                Kv = 1.2 * (Gpg * 0.01) / (Math.Sqrt(dPg * 0.001 * g));
+            }
+            else //Расчетная максимальная пропускная способность пара
+            {
+                p1 = (customConverterToDouble(lp5TextBox1.Text) * arrConvert3[lp5DropDownList1.SelectedIndex - 1] / arrConvert3[2]);
+                p2 = (customConverterToDouble(lp5TextBox2.Text) * arrConvert3[lp5DropDownList2.SelectedIndex - 1] / arrConvert3[2]);
+
+                if(lp5RadioButtonList1.SelectedIndex == 0)
+                {
+                    T1 = customConverterToDouble(lp5TextBox3.Text);
+                }
+                else
+                {
+                    T1 = Math.Round(100 * Math.Pow((customConverterToDouble(lp5TextBox1.Text) * arrConvert3[lp5DropDownList1.SelectedIndex - 1] / arrConvert3[2]) + 1, 0.25));
+                }
+                
+                if ((p1 - p2) <= (0.5 * (p1 + 1)))
+                {
+                    Kv = 1.3 * ((Gpg / 461) * Math.Sqrt((T1 + 273) / ((p1 - p2) * (p2 + 1))));
+                }
+                else
+                {
+                    Kv = 1.3 * (Gpg / (230 * (p1 + 1))) * Math.Sqrt(T1 + 273);
+                }
+            }
+
             calcCapacityLabel.Text = "Расчетная пропускная способность - " + Math.Round(Kv, 2).ToString();
             calcCapacityLabel.Visible = true;
+
+
+
             Newtonsoft.Json.Linq.JArray table5 = dataFromFile.table5;
             Newtonsoft.Json.Linq.JArray table10 = dataFromFile.table10;
             double col_B = Convert.ToDouble(table5[table5.Count - 1]);
@@ -614,6 +652,7 @@ public partial class RDT : System.Web.UI.Page
                 else
                 {
                     // DN ближайший больший из table10
+                   
 
                     if (col_C == Convert.ToDouble(table10[table10.Count - 1]))
                     {
@@ -692,22 +731,6 @@ public partial class RDT : System.Web.UI.Page
                     {
                         List<string> listA = new List<string>(),
                         listB = new List<string>();
-
-                        if (ws1RadioButtonList1.SelectedIndex != 3)
-                        {
-                            Kv_start = 1.2 * (Gpg * 0.01) / (Math.Sqrt(dPg * 0.001 * g));
-                        }
-                        else //Расчетная максимальная пропускная способность пара
-                        {
-                            if ((p1 - p2) <= (0.5 * (p1 + 1)))
-                            {
-                                Kv_start = 1.3 * ((Gpg / 461) * Math.Sqrt((T1 + 273) / ((p1 - p2) * (p2 + 1))));
-                            }
-                            else
-                            {
-                                Kv_start = 1.3 * (Gpg / (230 * (p1 + 1))) * Math.Sqrt(T1 + 273);
-                            }
-                        }
 
 
                         if (ws1RadioButtonList1.SelectedIndex != 3)
@@ -803,7 +826,7 @@ public partial class RDT : System.Web.UI.Page
                 listG.AddRange(listResult["G"]);
                 listK.AddRange(listResult["K"]);
             }
-
+            
 
             for (int i = 0; i < listResult["C"].Count(); i++)
             {

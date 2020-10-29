@@ -64,6 +64,21 @@ public partial class TRV : System.Web.UI.Page
         {
             EnableTemperatureTable();
         }
+        if (tvRadioButtonList1.SelectedIndex == 0 && (aa1RadioButtonList1.SelectedIndex == 1 || aa2RadioButtonList1.SelectedIndex == 1 || aa3RadioButtonList1.SelectedIndex == 1))
+        {
+            ws2RadioButtonList1.Items[3].Enabled = true;
+        }
+        else
+        {
+            ws2RadioButtonList1.Items[3].Enabled = false;
+            lpvDropDownList2.Enabled = false;
+            lpvDropDownList2.ClearSelection();
+            lpvTextBox2.Enabled = false;
+            lpvTextBox2.Text = "";
+            lpvDropDownList21.Enabled = true;
+
+        }
+        ws2RadioButtonList1.SelectedIndex = -1;
     }
 
     protected void aaRadioButton1_CheckedChanged(object sender, EventArgs e)
@@ -90,6 +105,7 @@ public partial class TRV : System.Web.UI.Page
         }
         AddCssClass(lpv1, "panel-hide");
         AddCssClass(lpv2, "panel-hide");
+        ws2RadioButtonList1.Items[3].Enabled = false;
     }
 
     protected void aaRadioButton2_CheckedChanged(object sender, EventArgs e)
@@ -114,6 +130,7 @@ public partial class TRV : System.Web.UI.Page
         }
         AddCssClass(lpv1, "panel-hide");
         AddCssClass(lpv2, "panel-hide");
+        ws2RadioButtonList1.Items[3].Enabled = false;
     }
 
     protected void aaRadioButton3_CheckedChanged(object sender, EventArgs e)
@@ -137,6 +154,7 @@ public partial class TRV : System.Web.UI.Page
         }
         AddCssClass(lpv1, "panel-hide");
         AddCssClass(lpv2, "panel-hide");
+        ws2RadioButtonList1.Items[3].Enabled = false;
     }
 
     private void changeImage(int index)
@@ -164,8 +182,10 @@ public partial class TRV : System.Web.UI.Page
                 calcvDropDownList1.Enabled = true;
                 calcvTextBox2.Enabled = true;
                 break;
-
-
+            case 2:
+                lpv5DropDownList1.Enabled = true;
+                lpv5DropDownList2.Enabled = true;
+                break;
         }
 
     }
@@ -190,6 +210,15 @@ public partial class TRV : System.Web.UI.Page
                 DisableTextBox(fvTextBox7);
                 DisableTextBox(fvTextBox8);
                 DisableTextBox(fvTextBox9);
+                break;
+            case 3:
+                DisableTextBox(lpv5TextBox1);
+                DisableTextBox(lpv5TextBox2);
+                DisableTextBox(lpv5TextBox3);
+                DisableDropDownList(lpv5DropDownList1);
+                DisableDropDownList(lpv5DropDownList2);
+                lpv5RadioButtonList1.SelectedIndex = -1;
+                lpv5RadioButtonList1.Enabled = false;
                 break;
         }
     }
@@ -287,10 +316,14 @@ public partial class TRV : System.Web.UI.Page
         else
         {
             lpvDropDownList2.Enabled = false;
-            lpvDropDownList21.Enabled = true;
             lpvDropDownList2.ClearSelection();
             lpvTextBox2.Enabled = false;
             lpvTextBox2.Text = "";
+
+            if (ws2RadioButtonList1.SelectedIndex != 3 && ws2RadioButtonList1.SelectedIndex != -1)
+            {
+                lpvDropDownList21.Enabled = true;
+            }
         }
 
     }
@@ -305,6 +338,7 @@ public partial class TRV : System.Web.UI.Page
             ws2TextBox1.Enabled = true;
             ws2TextBox2.Enabled = true;
         }
+      
         else
         {
             ws2TextBox1.Enabled = false;
@@ -312,16 +346,45 @@ public partial class TRV : System.Web.UI.Page
             ws2TextBox1.Text = "";
             ws2TextBox2.Text = "";
         }
-        if (ws2RadioButtonList1.SelectedIndex != -1)
+        if (ws2RadioButtonList1.SelectedIndex != 3)
         {
             EnablePanel(1);
+            DisablePanel(3);
+            RemoveCssClass(lpv3, "panel-hide");
+            RemoveCssClass(calcv, "panel-hide");
+            AddCssClass(lpv5, "panel-hide");
+        }
+        else if (ws2RadioButtonList1.SelectedIndex == 3)
+        {
+            DisablePanel(1);
+            EnablePanel(2);
+            RemoveCssClass(lpv5, "panel-hide");
+            AddCssClass(lpv3, "panel-hide");
+            AddCssClass(calcv, "panel-hide");
         }
         else
         {
             DisablePanel(1);
         }
-        RemoveCssClass(lpv3, "panel-hide");
-        RemoveCssClass(calcv, "panel-hide");
+
+        if (ws2RadioButtonList1.SelectedIndex != 3)
+        {
+            fvDropDownList1.Items[1].Enabled = true;
+            fvDropDownList1.Items[2].Enabled = true;
+            fvDropDownList1.Items[3].Enabled = true;
+            fvDropDownList1.Items[4].Enabled = true;
+            fvDropDownList1.Items[5].Enabled = true;
+        }
+        else
+        {
+            fvDropDownList1.Items[1].Enabled = false;
+            fvDropDownList1.Items[2].Enabled = false;
+            fvDropDownList1.Items[3].Enabled = false;
+            fvDropDownList1.Items[4].Enabled = false;
+            fvDropDownList1.Items[5].Enabled = false;
+        }
+
+
     }
 
 
@@ -338,17 +401,37 @@ public partial class TRV : System.Web.UI.Page
         {
             RemoveCssClass(lpv1, "panel-hide");
             AddCssClass(lpv2, "panel-hide");
+            ws2RadioButtonList1.Items[3].Enabled = false;
         }
         else
         {
-            RemoveCssClass(lpv2, "panel-hide");
-            AddCssClass(lpv1, "panel-hide");
+            
+            if (aa1RadioButtonList1.SelectedIndex == 1 && tvRadioButtonList1.SelectedIndex == 0)
+            {
+                ws2RadioButtonList1.Items[3].Enabled = true;
+            }
+            else
+            {
+                ws2RadioButtonList1.Items[3].Enabled = false;
+
+                if(tvRadioButtonList1.SelectedIndex == 1)
+                {
+                    RemoveCssClass(lpv2, "panel-hide");
+                    AddCssClass(lpv1, "panel-hide");
+                }
+                else
+                {
+                    AddCssClass(lpv2, "panel-hide");
+                    AddCssClass(lpv1, "panel-hide");
+                }
+            }
         }
     }
 
     protected void aa2RadioButtonList1_SelectedIndexChanged(object sender, EventArgs e)
     {
         ResetPressureLoss(aa2RadioButtonList1);
+
         if (tvRadioButtonList1.SelectedIndex >= 0 && fvRadioButton2.Checked)
         {
             EnableTemperatureTable();
@@ -357,17 +440,36 @@ public partial class TRV : System.Web.UI.Page
         {
             RemoveCssClass(lpv1, "panel-hide");
             AddCssClass(lpv2, "panel-hide");
+            ws2RadioButtonList1.Items[3].Enabled = false;
         }
         else
         {
-            RemoveCssClass(lpv2, "panel-hide");
-            AddCssClass(lpv1, "panel-hide");
+            if (aa2RadioButtonList1.SelectedIndex == 1 && tvRadioButtonList1.SelectedIndex == 0)
+            {
+                ws2RadioButtonList1.Items[3].Enabled = true;
+            }
+            else
+            {
+                ws2RadioButtonList1.Items[3].Enabled = false;
+
+                if (tvRadioButtonList1.SelectedIndex == 1)
+                {
+                    RemoveCssClass(lpv2, "panel-hide");
+                    AddCssClass(lpv1, "panel-hide");
+                }
+                else
+                {
+                    AddCssClass(lpv2, "panel-hide");
+                    AddCssClass(lpv1, "panel-hide");
+                }
+            }
         }
     }
 
     protected void aa3RadioButtonList1_SelectedIndexChanged(object sender, EventArgs e)
     {
         ResetPressureLoss(aa3RadioButtonList1);
+
         if (tvRadioButtonList1.SelectedIndex >= 0 && fvRadioButton2.Checked)
         {
             EnableTemperatureTable();
@@ -376,11 +478,29 @@ public partial class TRV : System.Web.UI.Page
         {
             RemoveCssClass(lpv1, "panel-hide");
             AddCssClass(lpv2, "panel-hide");
+            ws2RadioButtonList1.Items[3].Enabled = false;
         }
         else
         {
-            RemoveCssClass(lpv2, "panel-hide");
-            AddCssClass(lpv1, "panel-hide");
+            if (aa3RadioButtonList1.SelectedIndex == 1 && tvRadioButtonList1.SelectedIndex == 0)
+            {
+                ws2RadioButtonList1.Items[3].Enabled = true;
+            }
+            else
+            {
+                ws2RadioButtonList1.Items[3].Enabled = false;
+
+                if (tvRadioButtonList1.SelectedIndex == 1)
+                {
+                    RemoveCssClass(lpv2, "panel-hide");
+                    AddCssClass(lpv1, "panel-hide");
+                }
+                else
+                {
+                    AddCssClass(lpv2, "panel-hide");
+                    AddCssClass(lpv1, "panel-hide");
+                }
+            }
         }
     }
 
@@ -958,7 +1078,7 @@ public partial class TRV : System.Web.UI.Page
     {
         LabelError.Text = "";
         /*BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB*/
-        double Kv = 0, Gkl = 0, dPkl = 0, dPto = 0, g = 0;
+        double Kv = 0, Gkl = 0, dPkl = 0, dPto = 0, g = 0, p1 = 0, p2 = 0, V = 0, T1 = 0;
         int DN = 0;
         double Kv_start = 0;
         double tmpKv = 0;
@@ -967,14 +1087,21 @@ public partial class TRV : System.Web.UI.Page
         listResult.Add("A", new string[] { });
         listResult.Add("C", new string[] { });
         listResult.Add("B", new string[] { });
-        listResult.Add("D", new string[] { });
+       
         listResult.Add("I1", new string[] { });
         listResult.Add("I2", new string[] { });
         listResult.Add("I", new string[] { });
         listResult.Add("I3", new string[] { });
-        listResult.Add("F", new string[] { });
-        listResult.Add("G", new string[] { });
+        if(ws2RadioButtonList1.SelectedIndex != 3)
+        {
+            listResult.Add("D", new string[] { });
+            listResult.Add("F", new string[] { });
+            listResult.Add("G", new string[] { });
+        }
+
         listResult.Add("M", new string[] { });
+
+
         //listResult.Add("K", new string[] { });
         //listResult.Add("L", new string[] { });
 
@@ -995,10 +1122,12 @@ public partial class TRV : System.Web.UI.Page
 
         Gkl = g_dict["p30"];
 
-        dPkl = g_dict["p62"]; //Convert.ToDouble(this.lpvTextBox1.Text) * arrConvert3[this.lpvComboBox1.SelectedIndex - 1];
+        if (ws2RadioButtonList1.SelectedIndex != 3)
+        {
+            dPkl = g_dict["p62"]; //Convert.ToDouble(this.lpvTextBox1.Text) * arrConvert3[this.lpvComboBox1.SelectedIndex - 1];
 
-        dPto = g_dict["p61"];//Convert.ToDouble(this.lpvTextBox2.Text) * arrConvert3[this.lpvComboBox2.SelectedIndex - 1];
-
+            dPto = g_dict["p61"];//Convert.ToDouble(this.lpvTextBox2.Text) * arrConvert3[this.lpvComboBox2.SelectedIndex - 1];
+        }
         /*
         double middle_T = 0;
 
@@ -1079,14 +1208,45 @@ public partial class TRV : System.Web.UI.Page
             Etgl(p7, p6, ref g);
         }*/
 
-        if (dPkl > dPto)
+        if (ws2RadioButtonList1.SelectedIndex != 3)
         {
-            Kv_start = Kv = g_dict["vKv"] * (Gkl * 0.01) / (Math.Sqrt(dPkl * 0.001 * g));
+            if (dPkl > dPto)
+            {
+                Kv_start = Kv = g_dict["vKv"] * (Gkl * 0.01) / (Math.Sqrt(dPkl * 0.001 * g));
+            }
+            else
+            {
+                Kv_start = Kv = g_dict["vKv"] * (Gkl * 0.01) / (Math.Sqrt(dPto * 0.001 * g));
+            }
         }
         else
         {
-            Kv_start = Kv = g_dict["vKv"] * (Gkl * 0.01) / (Math.Sqrt(dPto * 0.001 * g));
+           
+            p1 = (customConverterToDouble(lpv5TextBox1.Text) * arrConvert3[lpv5DropDownList1.SelectedIndex - 1] / arrConvert3[2]);
+            p2 = (customConverterToDouble(lpv5TextBox2.Text) * arrConvert3[lpv5DropDownList2.SelectedIndex - 1] / arrConvert3[2]);
+
+            if (lpv5RadioButtonList1.SelectedIndex == 0)
+            {
+                T1 = customConverterToDouble(lpv5TextBox3.Text);
+            }
+            else
+            {
+                T1 = Math.Round(100 * Math.Pow((customConverterToDouble(lpv5TextBox1.Text) * arrConvert3[lpv5DropDownList1.SelectedIndex - 1] / arrConvert3[2]) + 1, 0.25));
+            }
+
+            if ((p1 - p2) <= (0.5 * (p1 + 1)))
+            {
+                Kv_start = Kv = 1.3 * ((Gkl / 461) * Math.Sqrt((T1 + 273) / ((p1 - p2) * (p2 + 1))));
+            }
+            else
+            {
+                Kv_start = Kv = 1.3 * (Gkl / (230 * (p1 + 1))) * Math.Sqrt(T1 + 273);
+            }
+            
         }
+
+        calcvCapacityLabel.Text = "Расчетная пропускная способность - " + Math.Round(Kv, 2).ToString();
+        calcvCapacityLabel.Visible = true;
 
         Newtonsoft.Json.Linq.JArray tablev = null;
         Newtonsoft.Json.Linq.JArray tableDN = null;
@@ -1316,8 +1476,43 @@ public partial class TRV : System.Web.UI.Page
         /*/CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC*/
         /*/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA*/
 
-        double C = Convert.ToDouble(listResult["C"][listResult["C"].Count() - 1]),
-                V = Gkl / g * Math.Pow((18.8 / C), 2);
+        double C = Convert.ToDouble(listResult["C"][listResult["C"].Count() - 1]);
+
+        if (ws2RadioButtonList1.SelectedIndex != 3)
+        {
+            V = Gkl / g * Math.Pow((18.8 / C), 2);
+        }
+        else
+        {
+            V = (Gkl * (T1 + 273)) / Math.Pow((C / 18.8), 2) / (219 * (p2 + 1));
+        }
+
+        double cDN = 0;
+        if (ws2RadioButtonList1.SelectedIndex != 3)
+        {
+            if (spvRadioButtonList1.SelectedIndex == 0)
+            {
+                cDN = 18.8 / Math.Sqrt(((5 * g) / Gkl));
+            }
+            else
+            {
+                cDN = 18.8 / Math.Sqrt(((g * 3) / Gkl));
+            }
+        }
+        else
+        {
+            if (lpv5RadioButtonList1.SelectedIndex == 0)
+            {
+                cDN = 18.8 * Math.Sqrt((Gkl * (T1 + 273)) / (219 * (p2 + 1) * 60));
+            }
+            else
+            {
+                cDN = 18.8 * Math.Sqrt((Gkl * (T1 + 273)) / (219 * (p2 + 1) * 40));
+            }
+        }
+
+        calcvDNLabel.Text = "Расчетный диаметр - " + Math.Round(cDN, 2).ToString();
+        calcvDNLabel.Visible = true;
 
 
         double Pf = 1;
@@ -1521,7 +1716,15 @@ public partial class TRV : System.Web.UI.Page
                 /*/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA*/
             }
 
-            V = Gkl / g * Math.Pow((18.8 / DN), 2);
+       
+            if (ws2RadioButtonList1.SelectedIndex != 3)
+            {
+                V = Gkl / g * Math.Pow((18.8 /DN), 2);
+            }
+            else
+            {
+                V = (Gkl * (T1 + 273)) / Math.Pow((DN / 18.8), 2) / (219 * (p2 + 1));
+            }
         }
 
 
@@ -1540,16 +1743,20 @@ public partial class TRV : System.Web.UI.Page
         listI1.AddRange(listResult["I1"]);
         listI2.AddRange(listResult["I2"]);
         listI3.AddRange(listResult["I3"]);
-        listF.AddRange(listResult["F"]);
-        listG.AddRange(listResult["G"]);
-        listD.AddRange(listResult["D"]);
+
+        if(ws2RadioButtonList1.SelectedIndex != 3)
+        {
+            listF.AddRange(listResult["F"]);
+            listG.AddRange(listResult["G"]);
+            listD.AddRange(listResult["D"]);
+        }
+  
+        
 
         for (int i = 0; i < listResult["C"].Count(); i++)
         {
 
-            /*DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD*/
-            //Pf = g / 1000 * (Math.Pow(Gkl, 2) * 0.1) / (Math.Pow(customConverterToDouble(listResult["B"].GetValue(i).ToString()), 2) * g);
-            Pf = (Math.Pow(Gkl, 2) * 0.1) / (Math.Pow(customConverterToDouble(listResult["B"].GetValue(i).ToString()), 2) * g);
+            Pf = (Math.Pow(Gkl, 2) * 0.1) / (Math.Pow(double.Parse(listResult["B"].GetValue(i).ToString()), 2) * g);
             double dPf = Pf / 100;
             Pf = Math.Round(dPf, 2); /*Перевод с кПа в бар*/
 
@@ -1558,7 +1765,17 @@ public partial class TRV : System.Web.UI.Page
 
 
             C = Convert.ToDouble(listResult["C"][i]);
-            V = Gkl / g * Math.Pow((18.8 / C), 2);
+         
+            if (ws2RadioButtonList1.SelectedIndex != 3)
+            {
+                V = Gkl / g * Math.Pow((18.8 / C), 2);
+            }
+            else
+            {
+                V = (Gkl * (T1 + 273)) / Math.Pow((C / 18.8), 2) / (219 * (p2 + 1));
+            }
+
+         
 
             if (V <= g_dict["vmax"] || V >= 7)
             {
@@ -1580,67 +1797,81 @@ public partial class TRV : System.Web.UI.Page
                 listI2.Add("плохое");
             }
 
-            if (V > 3 && V <= 5 && spvRadioButtonList1.SelectedIndex == 1) //g_dict["vmax"])
+            if (ws2RadioButtonList1.SelectedIndex != 3)
             {
-                listI3.Add("возможен шум");
-            }
-            else if (V > 5) // g_dict["vmax"])
-            {
-                listI3.Add("возможен эрозийный износ клапана");
-            }
 
-            else if (V < 1.5)
-            {
-                listI3.Add("возможен колебательный режим регулирования");
+                if (V > 3 && V <= 5 && spvRadioButtonList1.SelectedIndex == 1) //g_dict["vmax"])
+                {
+                    listI3.Add("возможен шум");
+                }
+                else if (V > 5) // g_dict["vmax"])
+                {
+                    listI3.Add("возможен эрозийный износ клапана");
+                }
+
+                else if (V < 1.5)
+                {
+                    listI3.Add("возможен колебательный режим регулирования");
+                }
+                else
+                {
+                    listI3.Add("нет");
+                }
             }
             else
             {
-                listI3.Add("нет");
+                if (V > 40 && lpv5RadioButtonList1.SelectedIndex == 1)
+                    listI3.Add("возможен шум");
+                else if (V > 60 && lpv5RadioButtonList1.SelectedIndex == 0)
+                    listI3.Add("возможен шум");
+                else
+                {
+                    listI3.Add("нет");
+                }
             }
 
-            if (!String.IsNullOrWhiteSpace(this.calcvTextBox1.Text) && !String.IsNullOrWhiteSpace(this.calcvTextBox2.Text))
-            {
-                double dn = 0.0;
-                double ps = 0.0;
-                foreach (Newtonsoft.Json.Linq.JObject ob in dataFromFile.table8)
+            if (ws2RadioButtonList1.SelectedIndex != 3) {
+
+                if (!String.IsNullOrWhiteSpace(this.calcvTextBox1.Text) && !String.IsNullOrWhiteSpace(this.calcvTextBox2.Text))
                 {
-                    if (C == Convert.ToDouble(ob.GetValue("dn")))
+                    double dn = 0.0;
+                    double ps = 0.0;
+                    foreach (Newtonsoft.Json.Linq.JObject ob in dataFromFile.table8)
                     {
-                        dn = Convert.ToDouble(ob.GetValue("z"));
-                        break;
+                        if (C == Convert.ToDouble(ob.GetValue("dn")))
+                        {
+                            dn = Convert.ToDouble(ob.GetValue("z"));
+                            break;
+                        }
                     }
-                }
 
-                double t1 = customConverterToDouble(this.calcvTextBox2.Text);
-                Newtonsoft.Json.Linq.JObject max = dataFromFile.table9v[dataFromFile.table9v.Count - 1];
-                foreach (Newtonsoft.Json.Linq.JObject ob in dataFromFile.table9v)
-                {
-                    if ((Convert.ToDouble(ob.GetValue("t1")) <= Convert.ToDouble(max.GetValue("t1"))) && (Convert.ToDouble(ob.GetValue("t1")) >= t1))
+                    double t1 = customConverterToDouble(this.calcvTextBox2.Text);
+                    Newtonsoft.Json.Linq.JObject max = dataFromFile.table9v[dataFromFile.table9v.Count - 1];
+                    foreach (Newtonsoft.Json.Linq.JObject ob in dataFromFile.table9v)
                     {
-                        max = ob;
+                        if ((Convert.ToDouble(ob.GetValue("t1")) <= Convert.ToDouble(max.GetValue("t1"))) && (Convert.ToDouble(ob.GetValue("t1")) >= t1))
+                        {
+                            max = ob;
+                        }
                     }
-                }
-                ps = Convert.ToDouble(max.GetValue("ps"));
+                    ps = Convert.ToDouble(max.GetValue("ps"));
 
-                double F = Math.Round((dn * ((customConverterToDouble(this.calcvTextBox1.Text) * arrConvert3[this.calcvDropDownList1.SelectedIndex - 1] / arrConvert3[2]) - ps)), 2);
-                listF.Add(F.ToString());
+                    double F = Math.Round((dn * ((customConverterToDouble(this.calcvTextBox1.Text) * arrConvert3[this.calcvDropDownList1.SelectedIndex - 1] / arrConvert3[2]) - ps)), 2);
+                    listF.Add(F.ToString());
 
-                string G_str = "Нет";
-                if (F < Pf)
-                    G_str = "Угрожает опасность кавитации";
-                //if (F < (customConverterToDouble(this.lpvTextBox1.Text) * arrConvert3[this.calcvDropDownList1.SelectedIndex - 1] / arrConvert3[2]))
-                //    G_str = "Угрожает опасность кавитации";
+                    string G_str = "Нет";
+                    if (F < Pf)
+                        G_str = "Угрожает опасность кавитации";
+                    //if (F < (customConverterToDouble(this.lpvTextBox1.Text) * arrConvert3[this.calcvDropDownList1.SelectedIndex - 1] / arrConvert3[2]))
+                    //    G_str = "Угрожает опасность кавитации";
 
-                listG.Add(G_str);
+                    listG.Add(G_str);
+                } 
             }
         }
-        listResult["I"] = listI.ToArray();
-        listResult["I1"] = listI1.ToArray();
-        listResult["I2"] = listI2.ToArray();
-        listResult["I3"] = listI3.ToArray();
-        listResult["F"] = listF.ToArray();
-        listResult["G"] = listG.ToArray();
-        listResult["D"] = listD.ToArray();
+        
+       
+
         /*/IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII*/
         /*/GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG*/
         /*/FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF*/
@@ -2141,6 +2372,51 @@ public partial class TRV : System.Web.UI.Page
                 }
             }
 
+
+            if (ws2RadioButtonList1.SelectedIndex != 3)
+            {
+                listResult["F"] = listF.ToArray();
+                listResult["G"] = listG.ToArray();
+                listResult["D"] = listD.ToArray();
+            }
+
+            else
+            {
+                int indexNo = listI3.IndexOf("нет");
+                List<string> listA = new List<string>(),
+                  listB = new List<string>(),
+                  listC = new List<string>(),
+                  listM = new List<string>();
+
+                listA.AddRange(listResult["A"]);
+                listB.AddRange(listResult["B"]);
+                listC.AddRange(listResult["C"]);
+                listM.AddRange(listResult["M"]);
+
+                if (listB.Count - 1 > indexNo + 1)
+                {
+                    listA.RemoveRange(indexNo + 1, listA.Count - indexNo - 1);
+                    listB.RemoveRange(indexNo + 1, listB.Count - indexNo - 1);
+                    listC.RemoveRange(indexNo + 1, listC.Count - indexNo - 1);
+                    listI.RemoveRange(indexNo + 1, listI.Count - indexNo - 1);
+                    listI1.RemoveRange(indexNo + 1, listI1.Count - indexNo - 1);
+                    listI2.RemoveRange(indexNo + 1, listI2.Count - indexNo - 1);
+                    listI3.RemoveRange(indexNo + 1, listI3.Count - indexNo - 1);
+                    listI3.RemoveRange(indexNo + 1, listI3.Count - indexNo - 1);
+                    listM.RemoveRange(indexNo + 1, listM.Count - indexNo - 1);
+
+                    listResult["A"] = listA.ToArray();
+                    listResult["B"] = listB.ToArray();
+                    listResult["C"] = listC.ToArray();
+                    listResult["M"] = listM.ToArray();
+                }
+            }
+
+            listResult["I"] = listI.ToArray();
+            listResult["I1"] = listI1.ToArray();
+            listResult["I2"] = listI2.ToArray();
+            listResult["I3"] = listI3.ToArray();
+
             //
             listPP54.Add(tmpPP54);
             listPP55.Add(tmpPP55);
@@ -2286,12 +2562,13 @@ public partial class TRV : System.Web.UI.Page
         else v_in_dict[39] = tdRadioButtonList4.Items[1].Text;
 
 
-
-        if (customConverterToDouble(v_in_dict[18]) > 150) v_in_dict[40] = "220 ˚С";
-        else v_in_dict[40] = "150 ˚С";
-        //if (this.tvRadioButton1.Checked) v_in_dict[40] = "220 ˚С";
-        //else v_in_dict[40] = "150 ˚С";
-
+        if(ws2RadioButtonList1.SelectedIndex != 3)
+        {
+            if (Convert.ToDouble(v_in_dict[18]) > 150) v_in_dict[40] = "220 ˚С";
+            else v_in_dict[40] = "150 ˚С";
+            //if (this.tvRadioButton1.Checked) v_in_dict[40] = "220 ˚С";
+            //else v_in_dict[40] = "150 ˚С";
+        }
 
         v_in_dict.Add(41, "16 бар");
 
@@ -2306,6 +2583,21 @@ public partial class TRV : System.Web.UI.Page
         v_in_dict.Add(49, "-");
         v_in_dict.Add(51, "-");
         v_in_dict.Add(52, "-");
+        //пар
+
+        v_in_dict.Add(53, (this.lpv5TextBox1.Enabled) ? this.lpv5TextBox1.Text : "-");
+        v_in_dict.Add(54, (this.lpv5TextBox1.Enabled) ? this.lpv5DropDownList1.Text : "-");
+
+        v_in_dict.Add(55, (this.lpv5TextBox2.Enabled) ? this.lpv5TextBox2.Text : "-");
+        v_in_dict.Add(56, (this.lpv5TextBox2.Enabled) ? this.lpv5DropDownList2.Text : "-");
+
+        v_in_dict.Add(57, (lpv5RadioButtonList1.SelectedValue != "") ? lpv5RadioButtonList1.SelectedValue : "-");
+
+        v_in_dict.Add(58, (this.lpv5TextBox3.Enabled) ? this.lpv5TextBox3.Text : "-");
+        if (lpv5RadioButtonList1.SelectedIndex == 0)
+        {
+            v_in_dict.Add(59, (Label38.Text));
+        }
     }
 
     private void ResetColorToAllControls()
@@ -2717,6 +3009,16 @@ public partial class TRV : System.Web.UI.Page
                                                 if (!firstMoreSecondDouble(fvTextBox2.Text, fvTextBox3.Text))
                                                 {
                                                     //fvTextBox3.BackColor = Color.LightPink;
+                                                }
+                                            }
+                                            else if ((aaRadioButton2.Checked && tvRadioButtonList1.SelectedIndex == 0)
+                                                || (aaRadioButton2.Checked && tvRadioButtonList1.SelectedIndex == 1 && aa2RadioButtonList1.SelectedIndex == 1)
+                                                || (aaRadioButton3.Checked && tvRadioButtonList1.SelectedIndex == 0)
+                                                || (aaRadioButton3.Checked && tvRadioButtonList1.SelectedIndex == 1 && aa3RadioButtonList1.SelectedIndex == 1) && ws2RadioButtonList1.SelectedIndex != 3)
+                                            {
+                                                if (!firstMoreSecondDouble(fvTextBox2.Text, fvTextBox3.Text))
+                                                {
+                                                    //fvTextBox3.BackColor = Color.LightPink;
 
                                                     LabelError.Text += "Неверно указано значение температуры";
                                                     return;
@@ -2898,18 +3200,111 @@ public partial class TRV : System.Web.UI.Page
                                         g_dict.Add("p30", p30);
 
 
-                                        if (!String.IsNullOrWhiteSpace(lpvTextBox1.Text))
+                                        if (!String.IsNullOrWhiteSpace(lpvTextBox1.Text) || !String.IsNullOrWhiteSpace(lpv5TextBox1.Text))
                                         {
-                                            if (!String.IsNullOrWhiteSpace((lpvDropDownList2.Enabled) ? lpvTextBox2.Text : lpvTextBox21.Text))
+                                            string checkTextBox = "";
+                                            if (lpvDropDownList2.Enabled)
                                             {
-                                                if (!String.IsNullOrWhiteSpace(calcvTextBox1.Text))
+                                                checkTextBox = lpvTextBox2.Text;
+                                            } 
+                                            else if (lpv5DropDownList1.Enabled)
+                                            {
+                                                checkTextBox = lpv5TextBox1.Text;
+                                            } 
+                                            else
+                                            {
+                                                checkTextBox = lpvTextBox21.Text;
+                                            }
+                                               
+                                            if (!String.IsNullOrWhiteSpace(checkTextBox))
+                                            {
+                                                if (!String.IsNullOrWhiteSpace(calcvTextBox1.Text) || lpv5DropDownList1.Enabled)
                                                 {
-                                                    double p35 = 0;
-                                                    try
+
+
+                                                    if (ws2RadioButtonList1.SelectedIndex == 3)
                                                     {
-                                                        p35 = customConverterToDouble(calcvTextBox2.Text);
+
+                                                        double p56, p58;
+
+                                                        try
+                                                        {
+                                                            p56 = customConverterToDouble(this.lpv5TextBox1.Text) * arrConvert3[this.lpv5DropDownList1.SelectedIndex - 1] / arrConvert3[2];
+                                                        }
+                                                        catch (Exception)
+                                                        {
+                                                            LabelError.Text = "Неверно указано значение давления";
+                                                            return;
+                                                        }
+
+                                                        try
+                                                        {
+                                                            p58 = customConverterToDouble(this.lpv5TextBox2.Text) * arrConvert3[this.lpv5DropDownList2.SelectedIndex - 1] / arrConvert3[2];
+                                                        }
+                                                        catch (Exception)
+                                                        {
+                                                            LabelError.Text = "Неверно указано значение давления";
+                                                            return;
+                                                        }
+
+                                                        g_dict.Add("p56", p56);
+                                                        g_dict.Add("p58", p58);
+
+                                                        if (lpv5RadioButtonList1.SelectedIndex == 0)
+                                                        {
+                                                            g_dict.Add("p61", customConverterToDouble(this.lpv5TextBox3.Text));
+                                                        }
+
+                                                        double p35 = 0;
+                                                        try
+                                                        {
+                                                            if(lpv5RadioButtonList1.SelectedIndex == 0)
+                                                            {
+                                                                p35 = customConverterToDouble(lpv5TextBox3.Text);
+                                                            }
+                                                            else
+                                                            {
+                                                                double p1 = (customConverterToDouble(lpv5TextBox1.Text) * arrConvert3[lpv5DropDownList1.SelectedIndex - 1] / arrConvert3[2]);
+                                                                double p2 = (customConverterToDouble(lpv5TextBox2.Text) * arrConvert3[lpv5DropDownList2.SelectedIndex - 1] / arrConvert3[2]);
+
+                                                                if (lpv5RadioButtonList1.SelectedIndex == 0)
+                                                                {
+                                                                    p35 = customConverterToDouble(lpv5TextBox3.Text);
+                                                                }
+                                                                else
+                                                                {
+                                                                    p35 = Math.Round(100 * Math.Pow((customConverterToDouble(lpv5TextBox1.Text) * arrConvert3[lpv5DropDownList1.SelectedIndex - 1] / arrConvert3[2]) + 1, 0.25));
+                                                                }
+                                                            }
+                                                           
+                                                        }
+                                                        catch (Exception) { }
+
+                                                        if (p35 <= 0)
+                                                        {
+
+                                                            LabelError.Text += "Неверно указано значение температуры";
+                                                            return;
+                                                        }
+                                                        else if (p35 > g_dict["vTMax"])
+                                                        {
+
+                                                            LabelError.Text += "На температуру свыше " + g_dict["vTMax"].ToString() + "°С вариантов нет";
+                                                            return;
+                                                        }
+                                                        else g_dict.Add("p35", p35);
+
                                                     }
-                                                    catch (Exception) { }
+                                                    else
+                                                    {
+
+
+                                                        double p35 = 0;
+                                                        try
+                                                        {
+                                                            p35 = customConverterToDouble(calcvTextBox2.Text);
+                                                        }
+                                                        catch (Exception) { }
 
                                                     if (p35 <= 0)
                                                     {
@@ -2925,72 +3320,73 @@ public partial class TRV : System.Web.UI.Page
                                                     }
                                                     else g_dict.Add("p35", p35);
 
-                                                    double p61 = 0;
-                                                    try
-                                                    {
-                                                        if ((aaRadioButton1.Checked && aa1RadioButtonList1.SelectedIndex == 0)
-                                                            || (aaRadioButton2.Checked && aa2RadioButtonList1.SelectedIndex == 0)
-                                                            || (aaRadioButton3.Checked && aa3RadioButtonList1.SelectedIndex == 0))
-                                                            p61 = customConverterToDouble(lpvTextBox2.Text) * arrConvert3[lpvDropDownList2.SelectedIndex - 1];
+                                                        double p61 = 0;
+                                                        try
+                                                        {
+                                                            if ((aaRadioButton1.Checked && aa1RadioButtonList1.SelectedIndex == 0)
+                                                                || (aaRadioButton2.Checked && aa2RadioButtonList1.SelectedIndex == 0)
+                                                                || (aaRadioButton3.Checked && aa3RadioButtonList1.SelectedIndex == 0))
+                                                                p61 = customConverterToDouble(lpvTextBox2.Text) * arrConvert3[lpvDropDownList2.SelectedIndex - 1];
 
-                                                        else if ((aaRadioButton1.Checked && aa1RadioButtonList1.SelectedIndex == 1)
-                                                            || (aaRadioButton2.Checked && aa2RadioButtonList1.SelectedIndex == 1)
-                                                            || (aaRadioButton3.Checked && aa3RadioButtonList1.SelectedIndex == 1))
-                                                            p61 = customConverterToDouble(lpvTextBox21.Text) * arrConvert3[lpvDropDownList21.SelectedIndex - 1];
-                                                    }
-                                                    catch (Exception) { }
+                                                            else if ((aaRadioButton1.Checked && aa1RadioButtonList1.SelectedIndex == 1)
+                                                                || (aaRadioButton2.Checked && aa2RadioButtonList1.SelectedIndex == 1)
+                                                                || (aaRadioButton3.Checked && aa3RadioButtonList1.SelectedIndex == 1))
+                                                                p61 = customConverterToDouble(lpvTextBox21.Text) * arrConvert3[lpvDropDownList21.SelectedIndex - 1];
+                                                        }
+                                                        catch (Exception) { }
 
-                                                    //if (p61 / arrConvert3[2] > 16)
-                                                    //{
-                                                    //    if ((aaRadioButton1.Checked && aa1RadioButtonList1.SelectedIndex == 0)
-                                                    //        || (aaRadioButton2.Checked && aa2RadioButtonList1.SelectedIndex == 0)
-                                                    //        || (aaRadioButton3.Checked && aa3RadioButtonList1.SelectedIndex == 0))
-                                                    //        LabelError.Text += "На давление свыше 16 бар вариантов нет";
+                                                        //if (p61 / arrConvert3[2] > 16)
+                                                        //{
+                                                        //    if ((aaRadioButton1.Checked && aa1RadioButtonList1.SelectedIndex == 0)
+                                                        //        || (aaRadioButton2.Checked && aa2RadioButtonList1.SelectedIndex == 0)
+                                                        //        || (aaRadioButton3.Checked && aa3RadioButtonList1.SelectedIndex == 0))
+                                                        //        LabelError.Text += "На давление свыше 16 бар вариантов нет";
 
-                                                    //    else if ((aaRadioButton1.Checked && aa1RadioButtonList1.SelectedIndex == 1)
-                                                    //        || (aaRadioButton2.Checked && aa2RadioButtonList1.SelectedIndex == 1)
-                                                    //        || (aaRadioButton3.Checked && aa3RadioButtonList1.SelectedIndex == 1))
-                                                    //        LabelError.Text += "На давление свыше 16 бар вариантов нет";
+                                                        //    else if ((aaRadioButton1.Checked && aa1RadioButtonList1.SelectedIndex == 1)
+                                                        //        || (aaRadioButton2.Checked && aa2RadioButtonList1.SelectedIndex == 1)
+                                                        //        || (aaRadioButton3.Checked && aa3RadioButtonList1.SelectedIndex == 1))
+                                                        //        LabelError.Text += "На давление свыше 16 бар вариантов нет";
 
-                                                    //    return;
-                                                    //}
-                                                    //else g_dict.Add("p61", p61);
-                                                    g_dict.Add("p61", p61);
+                                                        //    return;
+                                                        //}
+                                                        //else g_dict.Add("p61", p61);
 
-                                                    double p62 = 0;
+                                                        g_dict.Add("p61", p61);
 
-                                                    try
-                                                    {
-                                                        if (lpvTextBox1.Enabled)
-                                                            p62 = customConverterToDouble(lpvTextBox1.Text) * arrConvert3[lpvDropDownList1.SelectedIndex - 1];
-                                                    }
-                                                    catch (Exception) { }
+                                                        double p62 = 0;
 
-                                                    //if (p62 / arrConvert3[2] > 16)
-                                                    //{
-                                                    //    LabelError.Text += "На давление свыше 16 бар вариантов нет";
+                                                        try
+                                                        {
+                                                            if (lpvTextBox1.Enabled)
+                                                                p62 = customConverterToDouble(lpvTextBox1.Text) * arrConvert3[lpvDropDownList1.SelectedIndex - 1];
+                                                        }
+                                                        catch (Exception) { }
 
-                                                    //    return;
-                                                    //}
-                                                    //else g_dict.Add("p62", p62);
-                                                    g_dict.Add("p62", p62);
+                                                        //if (p62 / arrConvert3[2] > 16)
+                                                        //{
+                                                        //    LabelError.Text += "На давление свыше 16 бар вариантов нет";
 
-                                                    double p63 = 0;
-                                                    try
-                                                    {
-                                                        if (calcvTextBox1.Enabled)
-                                                            p63 = customConverterToDouble(calcvTextBox1.Text) * arrConvert3[calcvDropDownList1.SelectedIndex - 1];
-                                                    }
-                                                    catch (Exception) { }
+                                                        //    return;
+                                                        //}
+                                                        //else g_dict.Add("p62", p62);
+                                                        g_dict.Add("p62", p62);
 
-                                                    //if (p63 / arrConvert3[2] > 16)
-                                                    //{
-                                                    //    LabelError.Text += "На давление свыше 16 бар вариантов нет";
+                                                        double p63 = 0;
+                                                        try
+                                                        {
+                                                            if (calcvTextBox1.Enabled)
+                                                                p63 = customConverterToDouble(calcvTextBox1.Text) * arrConvert3[calcvDropDownList1.SelectedIndex - 1];
+                                                        }
+                                                        catch (Exception) { }
 
-                                                    //    return;
-                                                    //}
-                                                    //else g_dict.Add("p63", p63);
-                                                    g_dict.Add("p63", p63);
+                                                        //if (p63 / arrConvert3[2] > 16)
+                                                        //{
+                                                        //    LabelError.Text += "На давление свыше 16 бар вариантов нет";
+
+                                                        //    return;
+                                                        //}
+                                                        //else g_dict.Add("p63", p63);
+                                                        g_dict.Add("p63", p63);
 
                                                     if (!(p63 > p62))
                                                     {
@@ -3020,31 +3416,60 @@ public partial class TRV : System.Web.UI.Page
                                                         maxt2ResultLabel.Text = "Максимальная температура - 150 °С";
                                                     }*/
 
+                                                    }
 
                                                     ws2ResultLabel.Visible = true;
                                                     maxp2ResultLabel.Visible = true;
                                                     maxt2ResultLabel.Visible = true;
-                                                    ws2ResultLabel.Text = "Рабочая среда - " + (ws2RadioButtonList1.SelectedIndex == 0 ? "вода" : ((ws2RadioButtonList1.SelectedIndex == 1 ? "этиленгликоль " : "пропиленгликоль ") + g_dict["p14"] + "%, " + g_dict["p15"] + " °С"));
-                                                    //maxt2ResultLabel.Text = "Максимальная температура - " + g_dict["vTMax"].ToString() + " °С";
-                                                    this.maxt2ResultLabel.Text = "Максимальная температура - " + ((customConverterToDouble(g_dict["p35"].ToString()) > 150) ? "220" : "150") + " °С";
-                                                    maxp2ResultLabel.Text = "Максимальное рабочее давление - 16 бар";
-
-
-                                                    double t1_check = customConverterToDouble(calcvTextBox2.Text);
-                                                    Newtonsoft.Json.Linq.JObject max_check = dataFromFile.table9v[dataFromFile.table9v.Count - 1];
-                                                    foreach (Newtonsoft.Json.Linq.JObject ob in dataFromFile.table9v)
+                                                    
+                                                    if (ws2RadioButtonList1.SelectedIndex == 0)
                                                     {
-                                                        if ((Convert.ToDouble(ob.GetValue("t1")) <= Convert.ToDouble(max_check.GetValue("t1"))) && (Convert.ToDouble(ob.GetValue("t1")) >= t1_check))
-                                                        {
-                                                            max_check = ob;
-                                                        }
+                                                        this.ws2ResultLabel.Text = "Рабочая среда - вода";
                                                     }
-                                                    //double ps_check = Convert.ToDouble(max_check.GetValue("ps"));
-
-                                                    if (((customConverterToDouble(calcvTextBox1.Text) * arrConvert3[calcvDropDownList1.SelectedIndex - 1] / arrConvert3[2]) - getPSbyT(t1_check)) <= 0)
+                                                    else if (ws2RadioButtonList1.SelectedIndex == 1)
                                                     {
-                                                        LabelError.Text += "Указанная температура выше температуры парообразования. При указанной температуре в трубопроводе движется пар";
-                                                        return;
+                                                        this.ws2ResultLabel.Text = "Рабочая среда - этиленгликоль " + g_dict["p14"] + "%, " + g_dict["p15"] + " °С";
+                                                    }
+                                                    else if (ws2RadioButtonList1.SelectedIndex == 2)
+                                                    {
+                                                        this.ws2ResultLabel.Text = "Рабочая среда - пропиленгликоль " + g_dict["p14"] + "%, " + g_dict["p15"] + " °С";
+                                                    }
+                                                    else
+                                                    {
+                                                        this.ws2ResultLabel.Text = "Рабочая среда - водяной пар";
+                                                    }
+
+                                                    //maxt2ResultLabel.Text = "Максимальная температура - " + g_dict["vTMax"].ToString() + " °С";
+                                                    this.maxt2ResultLabel.Text = "Максимальная температура - " + ((double.Parse(g_dict["p35"].ToString()) > 150) ? "220" : "150") + " °С";
+                                                    
+                                                    if(tvRadioButtonList1.SelectedIndex == 0) 
+                                                    {
+                                                        maxp2ResultLabel.Text = "Максимальное рабочее давление - 25 бар";
+                                                    }
+                                                    else
+                                                    {
+                                                        maxp2ResultLabel.Text = "Максимальное рабочее давление - 16 бар";
+                                                    }
+
+
+                                                    if (ws2RadioButtonList1.SelectedIndex != 3)
+                                                    {
+                                                        double t1_check = customConverterToDouble(calcvTextBox2.Text);
+                                                        Newtonsoft.Json.Linq.JObject max_check = dataFromFile.table9v[dataFromFile.table9v.Count - 1];
+                                                        foreach (Newtonsoft.Json.Linq.JObject ob in dataFromFile.table9v)
+                                                        {
+                                                            if ((Convert.ToDouble(ob.GetValue("t1")) <= Convert.ToDouble(max_check.GetValue("t1"))) && (Convert.ToDouble(ob.GetValue("t1")) >= t1_check))
+                                                            {
+                                                                max_check = ob;
+                                                            }
+                                                        }
+                                                        //double ps_check = Convert.ToDouble(max_check.GetValue("ps"));
+
+                                                        if (((customConverterToDouble(calcvTextBox1.Text) * arrConvert3[calcvDropDownList1.SelectedIndex - 1] / arrConvert3[2]) - getPSbyT(t1_check)) <= 0)
+                                                        {
+                                                            LabelError.Text += "Указанная температура выше температуры парообразования. При указанной температуре в трубопроводе движется пар";
+                                                            return;
+                                                        }
                                                     }
 
                                                     mapInputParametersV(ref v_input_dict);
@@ -3053,39 +3478,73 @@ public partial class TRV : System.Web.UI.Page
 
                                                     if (gtr is null) return;
 
-                                                    string[] titles = new string[] {
-                                            "Марка регулирующего клапана",
-                                            "Номинальный диаметр DN, мм",
-                                            "Пропускная cпособность Kvs, м³/ч",
-                                            "Фактические потери давления на полностью открытом клапане при заданном расходе ∆Рф,\n бар\n",
+                                                    string[] titles;
 
-                                            "Внешний авторитет клапана",
-                                            "Качество регулирования",
+                                                    if (ws2RadioButtonList1.SelectedIndex != 3)
+                                                    {
+                                                        titles = new string[] {
+                                                            "Марка регулирующего клапана",
+                                                            "Номинальный диаметр DN, мм",
+                                                            "Пропускная cпособность Kvs, м3/ч",
+                                                            "Фактические потери давления на полностью открытом клапане при заданном расходе ∆Рф,\n бар\n",
 
-                                            "Скорость в выходном сечении клапана V, м/с",
+                                                            "Внешний авторитет клапана",
+                                                            "Качество регулирования",
 
-                                            "Шум, некачественное регулирование",
+                                                            "Скорость в выходном сечении клапана V, м/с",
 
-                                            "Предельно допустимый перепад давлений ∆Pпред, бар",
-                                            "Кавитация",
-                                            //"Скорость перемещения штока сек/мм (мм/мин)",
-                                            //"Максимально допустимый перепад давления на клапане, преодолеваемый приводом, бар, не более",
-                                            "Обозначение привода"
-                                            ,"PP54"
-                                            ,"PP55"
-                                            ,"PP56"
-                                            ,"PP57"
-                                            ,"PP58"
-                                            ,"PP59"
-                                            ,"PP60"
-                                            ,"PP61"
-                                            ,"PP62"
-                                            ,"PP63"
-                                            ,"PP65"
-                                            ,"PP66"
-                                            ,"PP67"
-                                            ,"PP68"
-                                        };
+                                                            "Шум, некачественное регулирование",
+
+                                                            "Предельно допустимый перепад давлений ∆Pпред, бар",
+                                                            "Кавитация",
+                                                            //"Скорость перемещения штока сек/мм (мм/мин)",
+                                                            //"Максимально допустимый перепад давления на клапане, преодолеваемый приводом, бар, не более",
+                                                            "Обозначение привода"
+                                                            ,"PP54"
+                                                            ,"PP55"
+                                                            ,"PP56"
+                                                            ,"PP57"
+                                                            ,"PP58"
+                                                            ,"PP59"
+                                                            ,"PP60"
+                                                            ,"PP61"
+                                                            ,"PP62"
+                                                            ,"PP63"
+                                                            ,"PP65"
+                                                            ,"PP66"
+                                                            ,"PP67"
+                                                            ,"PP68"
+                                                        };
+                                                    }
+                                                    else
+                                                    {
+                                                        titles = new string[] {
+                                                            "Марка регулирующего клапана",
+                                                            "Номинальный диаметр DN, мм",
+                                                            "Пропускная cпособность Kvs, м3/ч",
+                                                            "Внешний авторитет клапана",
+                                                            "Качество регулирования",
+                                                            "Скорость в выходном сечении клапана V, м/с",
+                                                            "Шум, некачественное регулирование",
+                                                            //"Скорость перемещения штока сек/мм (мм/мин)",
+                                                            //"Максимально допустимый перепад давления на клапане, преодолеваемый приводом, бар, не более",
+                                                            "Обозначение привода"
+                                                            ,"PP54"
+                                                            ,"PP55"
+                                                            ,"PP56"
+                                                            ,"PP57"
+                                                            ,"PP58"
+                                                            ,"PP59"
+                                                            ,"PP60"
+                                                            ,"PP61"
+                                                            ,"PP62"
+                                                            ,"PP63"
+                                                            ,"PP65"
+                                                            ,"PP66"
+                                                            ,"PP67"
+                                                            ,"PP68"
+                                                        };
+                                                    }
                                                     //DataGridViewColumn column;
                                                     ///*column = new DataGridViewCheckBoxColumn();
                                                     //column.DataPropertyName = "Column0";
@@ -3132,40 +3591,78 @@ public partial class TRV : System.Web.UI.Page
                                                         for (int j = 0; j < gtr.Count(); j++)
                                                         {
                                                             int index = -1;
-                                                            switch (gtr.ElementAt(j).Key)
+                                                            if (ws2RadioButtonList1.SelectedIndex != 3)
                                                             {
-                                                                case "A": index = 0; break;
-                                                                case "B": index = 2; break;
-                                                                case "C": index = 1; break;
-                                                                case "D": index = 3; break;
+                                                                switch (gtr.ElementAt(j).Key)
+                                                                {
+                                                                    case "A": index = 0; break;
+                                                                    case "B": index = 2; break;
+                                                                    case "C": index = 1; break;
+                                                                    case "D": index = 3; break;
 
-                                                                case "I1": index = 4; break;
-                                                                case "I2": index = 5; break;
+                                                                    case "I1": index = 4; break;
+                                                                    case "I2": index = 5; break;
 
-                                                                case "I": index = 6; break;
+                                                                    case "I": index = 6; break;
 
-                                                                case "I3": index = 7; break;
+                                                                    case "I3": index = 7; break;
 
-                                                                case "F": index = 8; break;
-                                                                case "G": index = 9; break;
-                                                                //case "K": index = 11; break;
-                                                                //case "L": index = 12; break;
-                                                                case "M": index = 10; break;
+                                                                    case "F": index = 8; break;
+                                                                    case "G": index = 9; break;
+                                                                    //case "K": index = 11; break;
+                                                                    //case "L": index = 12; break;
+                                                                    case "M": index = 10; break;
 
-                                                                case "PP54": index = 11; break;
-                                                                case "PP55": index = 12; break;
-                                                                case "PP56": index = 13; break;
-                                                                case "PP57": index = 14; break;
-                                                                case "PP58": index = 15; break;
-                                                                case "PP59": index = 16; break;
-                                                                case "PP60": index = 17; break;
-                                                                case "PP61": index = 18; break;
-                                                                case "PP62": index = 19; break;
-                                                                case "PP63": index = 20; break;
-                                                                case "PP65": index = 21; break;
-                                                                case "PP66": index = 22; break;
-                                                                case "PP67": index = 23; break;
-                                                                case "PP68": index = 24; break;
+                                                                    case "PP54": index = 11; break;
+                                                                    case "PP55": index = 12; break;
+                                                                    case "PP56": index = 13; break;
+                                                                    case "PP57": index = 14; break;
+                                                                    case "PP58": index = 15; break;
+                                                                    case "PP59": index = 16; break;
+                                                                    case "PP60": index = 17; break;
+                                                                    case "PP61": index = 18; break;
+                                                                    case "PP62": index = 19; break;
+                                                                    case "PP63": index = 20; break;
+                                                                    case "PP65": index = 21; break;
+                                                                    case "PP66": index = 22; break;
+                                                                    case "PP67": index = 23; break;
+                                                                    case "PP68": index = 24; break;
+                                                                }
+                                                            }
+                                                            else
+                                                            {
+                                                                switch (gtr.ElementAt(j).Key)
+                                                                {
+                                                                    case "A": index = 0; break;
+                                                                    case "B": index = 2; break;
+                                                                    case "C": index = 1; break;
+
+                                                                    case "I1": index = 3; break;
+                                                                    case "I2": index = 4; break;
+
+                                                                    case "I": index = 5; break;
+
+                                                                    case "I3": index = 6; break;
+
+                                                                    //case "K": index = 11; break;
+                                                                    //case "L": index = 12; break;
+                                                                    case "M": index = 7; break;
+
+                                                                    case "PP54": index = 8; break;
+                                                                    case "PP55": index = 9; break;
+                                                                    case "PP56": index = 10; break;
+                                                                    case "PP57": index = 11; break;
+                                                                    case "PP58": index = 12; break;
+                                                                    case "PP59": index = 13; break;
+                                                                    case "PP60": index = 14; break;
+                                                                    case "PP61": index = 15; break;
+                                                                    case "PP62": index = 16; break;
+                                                                    case "PP63": index = 17; break;
+                                                                    case "PP65": index = 18; break;
+                                                                    case "PP66": index = 19; break;
+                                                                    case "PP67": index = 20; break;
+                                                                    case "PP68": index = 21; break;
+                                                                }
                                                             }
                                                             index++;
                                                             if (gtr.ElementAt(j).Value.Count() > i)
@@ -3194,25 +3691,19 @@ public partial class TRV : System.Web.UI.Page
 
                                                         GridView2.DataSource = dt;
                                                         GridView2.DataBind();
-
-
-
                                                     }
-
                                                 }
                                                 else
                                                 {
                                                     LabelError.Text += "Неверно указано значение давления";
                                                     return;
                                                 }
-
                                             }
                                             else
                                             {
                                                 LabelError.Text += "Неверно указано значение давления";
                                                 return;
                                             }
-
                                         }
                                         else
                                         {
@@ -3231,7 +3722,6 @@ public partial class TRV : System.Web.UI.Page
                                     LabelError.Text += "Не выбрана рабочая среда";
                                     return;
                                 }
-
                             }
                             else
                             {
@@ -3268,7 +3758,6 @@ public partial class TRV : System.Web.UI.Page
                     LabelError.Text += "Не указано наличие регулятора перепада давления";
                     return;
                 }
-
             }
             else
             {
@@ -3285,14 +3774,11 @@ public partial class TRV : System.Web.UI.Page
             this.Button2.Enabled = true;
             //this.Button3.Visible = true;
             //this.Button3.Enabled = true;
-
         }
         catch (Exception er)
         {
             Logger.Log.Error(er);
-
         }
-
     }
 
     //-----------------------------Validators--------------------------------------------------
@@ -4114,10 +4600,8 @@ public partial class TRV : System.Web.UI.Page
         ws.Cells["G40"].Value = v_input_dict[68];
 
 
-
-
-        ws.Pictures.Add(HttpContext.Current.Server.MapPath("~/Content/images/trv/" + ((v_input_dict[7] == this.tvRadioButtonList1.Items[0].Text) ? "Габаритный TRV и TRV-P.png" : "Габаритный TRV-3.png")), "A37", "B47");
-
+        ws.Pictures.Add(HttpContext.Current.Server.MapPath("\\Content\\images\\trv\\" + ((v_input_dict[7] == this.tvRadioButtonList1.Items[tvRadioButtonList1.SelectedIndex].Text) ? "Габаритный TRV и TRV-P.png" : "Габаритный TRV-3.png")), "A37", "B46");
+       
 
         string path = HttpContext.Current.Server.MapPath("~/Files/TRV/PDF/" + DateTime.Now.ToString("dd-MM-yyyy"));
         DirectoryInfo dirInfo = new DirectoryInfo(path);
@@ -4402,11 +4886,4 @@ public partial class TRV : System.Web.UI.Page
 
         return afterConvert;
     }
-
-
-
-
-
-
-
 }
