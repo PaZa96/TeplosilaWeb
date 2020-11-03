@@ -374,6 +374,10 @@ public partial class TRV : System.Web.UI.Page
             fvDropDownList1.Items[3].Enabled = true;
             fvDropDownList1.Items[4].Enabled = true;
             fvDropDownList1.Items[5].Enabled = true;
+            lpv5RadioButtonList1.Enabled = false;
+            lpv5RadioButtonList1.SelectedIndex = -1;
+            fvRadioButton2.Checked = false;
+            fvRadioButton2.Enabled = true;
         }
         else
         {
@@ -382,6 +386,19 @@ public partial class TRV : System.Web.UI.Page
             fvDropDownList1.Items[3].Enabled = false;
             fvDropDownList1.Items[4].Enabled = false;
             fvDropDownList1.Items[5].Enabled = false;
+            lpv5RadioButtonList1.Enabled = true;
+            fvRadioButton2.Checked = false;
+            fvRadioButton2.Enabled = false;
+            //fpRadioButton2.Checked = false;
+            //textBoxEnabled(fpTextBox1, false);
+            //textBoxEnabled(fpTextBox2, false);
+            //textBoxEnabled(fpTextBox3, false);
+            //textBoxEnabled(fpTextBox4, false);
+            //textBoxEnabled(fpTextBox5, false);
+            //dropDownListEnable(fpDropDownList1, true);
+            //dropDownListEnable(fpDropDownList2, false);
+            //RemoveCssClass(fpr1_1, "panel-hide");
+            //AddCssClass(fpr2_1, "panel-hide");
         }
 
 
@@ -2569,6 +2586,11 @@ public partial class TRV : System.Web.UI.Page
             //if (this.tvRadioButton1.Checked) v_in_dict[40] = "220 ˚С";
             //else v_in_dict[40] = "150 ˚С";
         }
+        else
+        {
+            if (Convert.ToDouble(lpv5TextBox3.Text) > 150) v_in_dict[40] = "220 ˚С";
+            else v_in_dict[40] = "150 ˚С";
+        }
 
         v_in_dict.Add(41, "16 бар");
 
@@ -2585,19 +2607,16 @@ public partial class TRV : System.Web.UI.Page
         v_in_dict.Add(52, "-");
         //пар
 
-        v_in_dict.Add(53, (this.lpv5TextBox1.Enabled) ? this.lpv5TextBox1.Text : "-");
-        v_in_dict.Add(54, (this.lpv5TextBox1.Enabled) ? this.lpv5DropDownList1.Text : "-");
+        v_in_dict.Add(66, (this.lpv5TextBox1.Enabled) ? this.lpv5TextBox1.Text : "-");
+        v_in_dict.Add(67, (this.lpv5TextBox1.Enabled) ? this.lpv5DropDownList1.Text : "-");
 
-        v_in_dict.Add(55, (this.lpv5TextBox2.Enabled) ? this.lpv5TextBox2.Text : "-");
-        v_in_dict.Add(56, (this.lpv5TextBox2.Enabled) ? this.lpv5DropDownList2.Text : "-");
+        v_in_dict.Add(68, (this.lpv5TextBox2.Enabled) ? this.lpv5TextBox2.Text : "-");
+        v_in_dict.Add(69, (this.lpv5TextBox2.Enabled) ? this.lpv5DropDownList2.Text : "-");
 
-        v_in_dict.Add(57, (lpv5RadioButtonList1.SelectedValue != "") ? lpv5RadioButtonList1.SelectedValue : "-");
+        v_in_dict.Add(70, (lpv5RadioButtonList1.SelectedValue != "") ? lpv5RadioButtonList1.SelectedValue : "-");
 
-        v_in_dict.Add(58, (this.lpv5TextBox3.Enabled) ? this.lpv5TextBox3.Text : "-");
-        if (lpv5RadioButtonList1.SelectedIndex == 0)
-        {
-            v_in_dict.Add(59, (Label38.Text));
-        }
+        v_in_dict.Add(71, this.lpv5TextBox3.Text);
+
     }
 
     private void ResetColorToAllControls()
@@ -3416,6 +3435,11 @@ public partial class TRV : System.Web.UI.Page
                                                         maxt2ResultLabel.Text = "Максимальная температура - 150 °С";
                                                     }*/
 
+                                                    }
+
+                                                    if(lpv5RadioButtonList1.SelectedIndex == 1)
+                                                    {
+                                                        lpv5TextBox3.Text = (Math.Round(100 * Math.Pow((customConverterToDouble(lpv5TextBox1.Text) * arrConvert3[lpv5DropDownList1.SelectedIndex - 1] / arrConvert3[2]) + 1, 0.25))).ToString();
                                                     }
 
                                                     ws2ResultLabel.Visible = true;
@@ -4447,187 +4471,366 @@ public partial class TRV : System.Web.UI.Page
     {
         int index = GridView2.SelectedIndex;
 
-
     }
 
+    public void GenerateSteamExel()
+    {
+        try
+        {
 
+            this.readFile(0);
+            if (!String.IsNullOrWhiteSpace(objTextBox1.Text))
+            {
+                v_input_dict[2] = objTextBox1.Text;
+            }
+            else
+            {
+                v_input_dict[2] = "-";
+            }
+
+            int pos = 42;
+
+            for (int i = 1; i < GridView2.SelectedRow.Cells.Count; i++)
+            {
+
+                if (pos == 52)
+                {
+                    v_input_dict[pos] = GridView2.SelectedRow.Cells[i].Text;
+                    v_input_dict[pos + 1] = GridView2.SelectedRow.Cells[i].Text;
+                    pos++;
+                }
+                else if (pos >= 64) v_input_dict[pos + 1] = GridView2.SelectedRow.Cells[i].Text;
+                else v_input_dict[pos] = GridView2.SelectedRow.Cells[i].Text;
+
+                pos++;
+
+            }
+
+            v_input_dict[8] = v_input_dict[42];
+            string fileName = ConvertCommaToPoint(v_input_dict[42]);
+
+
+            if (fileName == "&nbsp;")
+            {
+                fileName = "Регуляторов не найдено";
+            }
+
+            SpreadsheetInfo.SetLicense("FREE-LIMITED-KEY");
+
+            if (!File.Exists(HttpContext.Current.Server.MapPath("~/Content/templates/templateTRVSteam.xlsx")))
+            {
+                LabelError.Text += "Не найден файл шаблона";
+                return;
+            }
+
+            ExcelFile ef = ExcelFile.Load(HttpContext.Current.Server.MapPath("~/Content/templates/templateTRVSteam.xlsx"));
+
+            ExcelWorksheet ws = ef.Worksheets[0];
+
+            ws.PrintOptions.TopMargin = 0.1 / 2.54;
+            ws.PrintOptions.BottomMargin = 0.1 / 2.54;
+            ws.PrintOptions.LeftMargin = 1 / 2.54;
+            ws.PrintOptions.RightMargin = 0.78 / 2.54;
+
+            for (int i = 1; i < 50; i++)
+            {
+
+                if (i == 10 || i == 12 || i == 14 || i == 16 || i == 18 || i == 20 || i == 22 || i == 23 || i == 24 || i == 25 || i == 26 || i == 27 || i == 28 )
+                {
+                    v_input_dict[i] = ConvertPointToComma(v_input_dict[i]);
+                }
+
+                if (v_input_dict[i] == "&nbsp;")
+                {
+                    v_input_dict[i] = "-";
+                }
+            }
+
+            ws.Cells["J2"].Value = v_input_dict[1];
+            ws.Cells["B3"].Value = v_input_dict[2];
+
+            ws.Cells["C4"].Value = v_input_dict[7];
+            ws.Cells["I4"].Value = v_input_dict[8];
+            ws.Cells["C6"].Value = v_input_dict[9];
+
+
+            ws.Cells["I7"].Value = v_input_dict[66];
+            ws.Cells["K7"].Value = v_input_dict[67];
+            ws.Cells["I8"].Value = v_input_dict[68];
+            ws.Cells["K8"].Value = v_input_dict[69];
+            ws.Cells["I9"].Value = v_input_dict[71];
+
+
+            ws.Cells["I10"].Value = v_input_dict[34];
+            ws.Cells["K10"].Value = v_input_dict[35];
+
+            ws.Cells["C12"].Value = v_input_dict[36];
+            ws.Cells["C13"].Value = v_input_dict[37];
+
+            ws.Cells["J12"].Value = v_input_dict[38];
+            ws.Cells["J13"].Value = v_input_dict[39];
+
+            ws.Cells["E15"].Value = v_input_dict[40];
+            ws.Cells["E16"].Value = v_input_dict[41];
+
+            ws.Cells["A19"].Value = v_input_dict[42];
+            ws.Cells["C19"].Value = v_input_dict[43];
+            ws.Cells["E19"].Value = v_input_dict[44];
+            ws.Cells["G19"].Value = v_input_dict[48];
+            ws.Cells["I19"].Value = v_input_dict[49];
+            ws.Cells["J19"].Value = v_input_dict[52];
+
+            ws.Cells["A23"].Value = v_input_dict[53];
+            ws.Cells["B23"].Value = v_input_dict[54];
+            ws.Cells["C23"].Value = v_input_dict[55];
+            ws.Cells["D23"].Value = v_input_dict[56];
+            ws.Cells["E23"].Value = v_input_dict[57];
+            ws.Cells["F23"].Value = v_input_dict[58];
+            ws.Cells["G23"].Value = v_input_dict[59];
+            ws.Cells["H23"].Value = v_input_dict[60];
+            ws.Cells["I23"].Value = v_input_dict[61];
+            ws.Cells["J23"].Value = v_input_dict[62];
+            ws.Cells["K23"].Value = v_input_dict[63];
+
+            ws.Cells["G29"].Value = v_input_dict[65];
+            ws.Cells["G30"].Value = v_input_dict[66];
+            ws.Cells["G31"].Value = v_input_dict[67];
+            ws.Cells["G31"].Value = v_input_dict[68];
+
+
+            ws.Pictures.Add(HttpContext.Current.Server.MapPath("\\Content\\images\\trv\\" + ((v_input_dict[7] == this.tvRadioButtonList1.Items[tvRadioButtonList1.SelectedIndex].Text) ? "Габаритный TRV и TRV-P.png" : "Габаритный TRV-3.png")), "A29", "B38");
+
+
+            string path = HttpContext.Current.Server.MapPath("~/Files/TRV/PDF/" + DateTime.Now.ToString("dd-MM-yyyy"));
+            DirectoryInfo dirInfo = new DirectoryInfo(path);
+            if (!dirInfo.Exists)
+            {
+                dirInfo.Create();
+
+            }
+
+
+            string filePath = path + "/" + fileName + ".pdf";
+
+            ef.Save(filePath);
+
+            WaitDownload(50);
+
+            FileInfo file = new FileInfo(filePath);
+            if (file.Exists)
+            {
+
+                Response.ContentType = "application/pdf";
+                Response.AppendHeader("Content-Disposition", "attachment; filename=" + file.Name);
+                Response.TransmitFile(file.FullName);
+                Response.Flush();
+            }
+
+        }
+        catch (Exception er)
+        {
+            Logger.Log.Error(er);
+
+        }
+    }
+
+    public void GenerateOtherExel()
+    {
+        try
+        {
+
+            this.readFile(0);
+            if (!String.IsNullOrWhiteSpace(objTextBox1.Text))
+            {
+                v_input_dict[2] = objTextBox1.Text;
+            }
+            else
+            {
+                v_input_dict[2] = "-";
+            }
+
+            int pos = 42;
+
+            for (int i = 1; i < GridView2.SelectedRow.Cells.Count; i++)
+            {
+
+                if (pos == 52)
+                {
+                    v_input_dict[pos] = GridView2.SelectedRow.Cells[i].Text;
+                    v_input_dict[pos + 1] = GridView2.SelectedRow.Cells[i].Text;
+                    pos++;
+                }
+                else if (pos >= 64) v_input_dict[pos + 1] = GridView2.SelectedRow.Cells[i].Text;
+                else v_input_dict[pos] = GridView2.SelectedRow.Cells[i].Text;
+
+                pos++;
+
+            }
+
+            v_input_dict[8] = v_input_dict[42];
+            string fileName = ConvertCommaToPoint(v_input_dict[42]);
+
+
+            if (fileName == "&nbsp;")
+            {
+                fileName = "Регуляторов не найдено";
+            }
+
+            SpreadsheetInfo.SetLicense("FREE-LIMITED-KEY");
+
+            if (!File.Exists(HttpContext.Current.Server.MapPath("~/Content/templates/templateTRV.xlsx")))
+            {
+                LabelError.Text += "Не найден файл шаблона";
+                return;
+            }
+
+            ExcelFile ef = ExcelFile.Load(HttpContext.Current.Server.MapPath("~/Content/templates/templateTRV.xlsx"));
+
+            ExcelWorksheet ws = ef.Worksheets[0];
+
+            ws.PrintOptions.TopMargin = 0.1 / 2.54;
+            ws.PrintOptions.BottomMargin = 0.1 / 2.54;
+            ws.PrintOptions.LeftMargin = 1 / 2.54;
+            ws.PrintOptions.RightMargin = 0.78 / 2.54;
+
+            for (int i = 1; i < 50; i++)
+            {
+
+                if (i == 10 || i == 12 || i == 14 || i == 16 || i == 18 || i == 20 || i == 22 || i == 23 || i == 24 || i == 25 || i == 26 || i == 27 || i == 28 || i == 29 || i == 30 || i == 31 || i == 32 || i == 34 || i == 43 || i == 44 || i == 45 || i == 46 || i == 48 || i == 50 || i == 52 || i == 54 || i == 57 || i == 63 || i == 64 || i == 65 || i == 66 || i == 67 || i == 68)
+                {
+                    v_input_dict[i] = ConvertPointToComma(v_input_dict[i]);
+                }
+
+                if (v_input_dict[i] == "&nbsp;")
+                {
+                    v_input_dict[i] = "-";
+                }
+            }
+
+            ws.Cells["J2"].Value = v_input_dict[1];
+            ws.Cells["B3"].Value = v_input_dict[2];
+
+            ws.Cells["C4"].Value = v_input_dict[3];
+            ws.Cells["J4"].Value = v_input_dict[4];
+            ws.Cells["C5"].Value = v_input_dict[5];
+            ws.Cells["J5"].Value = v_input_dict[6].Replace("(через теплообменник)", "");
+            ws.Cells["C6"].Value = v_input_dict[7];
+            ws.Cells["J6"].Value = v_input_dict[8];
+
+            ws.Cells["C8"].Value = v_input_dict[9];
+
+            ws.Cells["E9"].Value = v_input_dict[10];
+            ws.Cells["F9"].Value = v_input_dict[11];
+            ws.Cells["J9"].Value = v_input_dict[12];
+            ws.Cells["K9"].Value = v_input_dict[13];
+
+            ws.Cells["J10"].Value = v_input_dict[14];
+            ws.Cells["K10"].Value = v_input_dict[15];
+            ws.Cells["J11"].Value = v_input_dict[16];
+            ws.Cells["K11"].Value = v_input_dict[17];
+            ws.Cells["J12"].Value = v_input_dict[18];
+
+            ws.Cells["E14"].Value = v_input_dict[24];
+            ws.Cells["I14"].Value = v_input_dict[25];
+            ws.Cells["E15"].Value = v_input_dict[26];
+            ws.Cells["I15"].Value = v_input_dict[27];
+            ws.Cells["E16"].Value = v_input_dict[28];
+            ws.Cells["I16"].Value = v_input_dict[29];
+            ws.Cells["E17"].Value = v_input_dict[30];
+            ws.Cells["I17"].Value = v_input_dict[31];
+
+            ws.Cells["I18"].Value = v_input_dict[32];
+            ws.Cells["K18"].Value = v_input_dict[33];
+            ws.Cells["I19"].Value = v_input_dict[34];
+            ws.Cells["K19"].Value = v_input_dict[35];
+
+            ws.Cells["C21"].Value = v_input_dict[36];
+            ws.Cells["C22"].Value = v_input_dict[37];
+
+            ws.Cells["J21"].Value = v_input_dict[38];
+            ws.Cells["J22"].Value = v_input_dict[39];
+
+            ws.Cells["E24"].Value = v_input_dict[40];
+            ws.Cells["E25"].Value = v_input_dict[41];
+
+            ws.Cells["A28"].Value = v_input_dict[42];
+            ws.Cells["B28"].Value = v_input_dict[43];
+            ws.Cells["C28"].Value = v_input_dict[44];
+            ws.Cells["D28"].Value = v_input_dict[45];
+            ws.Cells["E28"].Value = v_input_dict[46];
+            ws.Cells["F28"].Value = v_input_dict[47];
+            ws.Cells["G28"].Value = v_input_dict[48];
+            ws.Cells["H28"].Value = v_input_dict[49];
+            ws.Cells["I28"].Value = v_input_dict[50];
+            ws.Cells["J28"].Value = v_input_dict[51];
+            ws.Cells["K28"].Value = v_input_dict[52];
+
+            ws.Cells["A32"].Value = v_input_dict[53];
+            ws.Cells["B32"].Value = v_input_dict[54];
+            ws.Cells["C32"].Value = v_input_dict[55];
+            ws.Cells["D32"].Value = v_input_dict[56];
+            ws.Cells["E32"].Value = v_input_dict[57];
+            ws.Cells["F32"].Value = v_input_dict[58];
+            ws.Cells["G32"].Value = v_input_dict[59];
+            ws.Cells["H32"].Value = v_input_dict[60];
+            ws.Cells["I32"].Value = v_input_dict[61];
+            ws.Cells["J32"].Value = v_input_dict[62];
+            ws.Cells["K32"].Value = v_input_dict[63];
+
+            ws.Cells["G38"].Value = v_input_dict[65];
+            ws.Cells["G39"].Value = v_input_dict[66];
+            ws.Cells["G40"].Value = v_input_dict[67];
+            ws.Cells["G41"].Value = v_input_dict[68];
+
+
+            ws.Pictures.Add(HttpContext.Current.Server.MapPath("\\Content\\images\\trv\\" + ((v_input_dict[7] == this.tvRadioButtonList1.Items[tvRadioButtonList1.SelectedIndex].Text) ? "Габаритный TRV и TRV-P.png" : "Габаритный TRV-3.png")), "A38", "B47");
+
+
+            string path = HttpContext.Current.Server.MapPath("~/Files/TRV/PDF/" + DateTime.Now.ToString("dd-MM-yyyy"));
+            DirectoryInfo dirInfo = new DirectoryInfo(path);
+            if (!dirInfo.Exists)
+            {
+                dirInfo.Create();
+
+            }
+
+
+            string filePath = path + "/" + fileName + ".pdf";
+
+            ef.Save(filePath);
+
+            WaitDownload(50);
+
+            FileInfo file = new FileInfo(filePath);
+            if (file.Exists)
+            {
+
+                Response.ContentType = "application/pdf";
+                Response.AppendHeader("Content-Disposition", "attachment; filename=" + file.Name);
+                Response.TransmitFile(file.FullName);
+                Response.Flush();
+            }
+
+        }
+        catch (Exception er)
+        {
+            Logger.Log.Error(er);
+
+        }
+    }
 
 
     protected void Button2_Click(object sender, EventArgs e)
     {
-
-        this.readFile(0);
-        if (!String.IsNullOrWhiteSpace(objTextBox1.Text))
+        if (lpv5TextBox1.Enabled)
         {
-            v_input_dict[2] = objTextBox1.Text;
+            GenerateSteamExel();
         }
         else
         {
-            v_input_dict[2] = "-";
+            GenerateOtherExel();
         }
-
-        int pos = 42;
-
-        for (int i = 1; i < GridView2.SelectedRow.Cells.Count; i++)
-        {
-
-            if (pos == 52)
-            {
-                v_input_dict[pos] = GridView2.SelectedRow.Cells[i].Text;
-                v_input_dict[pos + 1] = GridView2.SelectedRow.Cells[i].Text;
-                pos++;
-            }
-            else if (pos >= 64) v_input_dict[pos + 1] = GridView2.SelectedRow.Cells[i].Text;
-            else v_input_dict[pos] = GridView2.SelectedRow.Cells[i].Text;
-
-            pos++;
-
-        }
-
-        v_input_dict[8] = v_input_dict[42];
-        string fileName = ConvertCommaToPoint(v_input_dict[42]);
-
-
-        if (fileName == "&nbsp;")
-        {
-            fileName = "Регуляторов не найдено";
-        }
-
-        SpreadsheetInfo.SetLicense("FREE-LIMITED-KEY");
-
-        if (!File.Exists(HttpContext.Current.Server.MapPath("~/Content/templates/templateTRV.xlsx")))
-        {
-            LabelError.Text += "Не найден файл шаблона";
-            return;
-        }
-
-        ExcelFile ef = ExcelFile.Load(HttpContext.Current.Server.MapPath("~/Content/templates/templateTRV.xlsx"));
-
-        ExcelWorksheet ws = ef.Worksheets[0];
-
-        ws.PrintOptions.TopMargin = 0.1 / 2.54;
-        ws.PrintOptions.BottomMargin = 0.1 / 2.54;
-        ws.PrintOptions.LeftMargin = 1 / 2.54;
-        ws.PrintOptions.RightMargin = 0.78 / 2.54;
-
-        for (int i = 1; i < 50; i++)
-        {
-
-            if (i == 10 || i == 12 || i == 14 || i == 16 || i == 18 || i == 20 || i == 22 || i == 23 || i == 24 || i == 25 || i == 26 || i == 27 || i == 28 || i == 29 || i == 30 || i == 31 || i == 32 || i == 34 || i == 43 || i == 44 || i == 45 || i == 46 || i == 48 || i == 50 || i == 52 || i == 54 || i == 57 || i == 63 || i == 64 || i == 65 || i == 66 || i == 67 || i == 68)
-            {
-                v_input_dict[i] = ConvertPointToComma(v_input_dict[i]);
-            }
-
-            if (v_input_dict[i] == "&nbsp;")
-            {
-                v_input_dict[i] = "-";
-            }
-        }
-
-        ws.Cells["J2"].Value = v_input_dict[1];
-        ws.Cells["B3"].Value = v_input_dict[2];
-
-        ws.Cells["C4"].Value = v_input_dict[3];
-        ws.Cells["J4"].Value = v_input_dict[4];
-        ws.Cells["C5"].Value = v_input_dict[5];
-        ws.Cells["J5"].Value = v_input_dict[6].Replace("(через теплообменник)", "");
-        ws.Cells["C6"].Value = v_input_dict[7];
-        ws.Cells["J6"].Value = v_input_dict[8];
-
-        ws.Cells["C8"].Value = v_input_dict[9];
-
-        ws.Cells["E9"].Value = v_input_dict[10];
-        ws.Cells["F9"].Value = v_input_dict[11];
-        ws.Cells["J9"].Value = v_input_dict[12];
-        ws.Cells["K9"].Value = v_input_dict[13];
-
-        ws.Cells["J10"].Value = v_input_dict[14];
-        ws.Cells["K10"].Value = v_input_dict[15];
-        ws.Cells["J11"].Value = v_input_dict[16];
-        ws.Cells["K11"].Value = v_input_dict[17];
-        ws.Cells["J12"].Value = v_input_dict[18];
-
-        ws.Cells["E14"].Value = v_input_dict[24];
-        ws.Cells["I14"].Value = v_input_dict[25];
-        ws.Cells["E15"].Value = v_input_dict[26];
-        ws.Cells["I15"].Value = v_input_dict[27];
-        ws.Cells["E16"].Value = v_input_dict[28];
-        ws.Cells["I16"].Value = v_input_dict[29];
-        ws.Cells["E17"].Value = v_input_dict[30];
-        ws.Cells["I17"].Value = v_input_dict[31];
-
-        ws.Cells["I18"].Value = v_input_dict[32];
-        ws.Cells["K18"].Value = v_input_dict[33];
-        ws.Cells["I19"].Value = v_input_dict[34];
-        ws.Cells["K19"].Value = v_input_dict[35];
-
-        ws.Cells["C21"].Value = v_input_dict[36];
-        ws.Cells["C22"].Value = v_input_dict[37];
-
-        ws.Cells["J21"].Value = v_input_dict[38];
-        ws.Cells["J22"].Value = v_input_dict[39];
-
-        ws.Cells["E24"].Value = v_input_dict[40];
-        ws.Cells["E25"].Value = v_input_dict[41];
-
-        ws.Cells["A28"].Value = v_input_dict[42];
-        ws.Cells["B28"].Value = v_input_dict[43];
-        ws.Cells["C28"].Value = v_input_dict[44];
-        ws.Cells["D28"].Value = v_input_dict[45];
-        ws.Cells["E28"].Value = v_input_dict[46];
-        ws.Cells["F28"].Value = v_input_dict[47];
-        ws.Cells["G28"].Value = v_input_dict[48];
-        ws.Cells["H28"].Value = v_input_dict[49];
-        ws.Cells["I28"].Value = v_input_dict[50];
-        ws.Cells["J28"].Value = v_input_dict[51];
-        ws.Cells["K28"].Value = v_input_dict[52];
-
-        ws.Cells["A32"].Value = v_input_dict[53];
-        ws.Cells["B32"].Value = v_input_dict[54];
-        ws.Cells["C32"].Value = v_input_dict[55];
-        ws.Cells["D32"].Value = v_input_dict[56];
-        ws.Cells["E32"].Value = v_input_dict[57];
-        ws.Cells["F32"].Value = v_input_dict[58];
-        ws.Cells["G32"].Value = v_input_dict[59];
-        ws.Cells["H32"].Value = v_input_dict[60];
-        ws.Cells["I32"].Value = v_input_dict[61];
-        ws.Cells["J32"].Value = v_input_dict[62];
-        ws.Cells["K32"].Value = v_input_dict[63];
-
-        ws.Cells["G37"].Value = v_input_dict[65];
-        ws.Cells["G38"].Value = v_input_dict[66];
-        ws.Cells["G39"].Value = v_input_dict[67];
-        ws.Cells["G40"].Value = v_input_dict[68];
-
-
-        ws.Pictures.Add(HttpContext.Current.Server.MapPath("\\Content\\images\\trv\\" + ((v_input_dict[7] == this.tvRadioButtonList1.Items[tvRadioButtonList1.SelectedIndex].Text) ? "Габаритный TRV и TRV-P.png" : "Габаритный TRV-3.png")), "A37", "B46");
-       
-
-        string path = HttpContext.Current.Server.MapPath("~/Files/TRV/PDF/" + DateTime.Now.ToString("dd-MM-yyyy"));
-        DirectoryInfo dirInfo = new DirectoryInfo(path);
-        if (!dirInfo.Exists)
-        {
-            dirInfo.Create();
-
-        }
-
-
-        string filePath = path + "/" + fileName + ".pdf";
-
-        ef.Save(filePath);
-
-        WaitDownload(50);
-        LabelError.Text += "dfs";
-        FileInfo file = new FileInfo(filePath);
-        if (file.Exists)
-        {
-            LabelError.Text += "ok";
-            Response.ContentType = "application/pdf";
-            Response.AppendHeader("Content-Disposition", "attachment; filename=" + file.Name);
-            Response.TransmitFile(file.FullName);
-
-        }
-        LabelError.Text += "End";
+        
     }
 
 

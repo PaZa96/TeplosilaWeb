@@ -1075,7 +1075,7 @@ public partial class RDT : System.Web.UI.Page
             }
            
 
-            if (Double.Parse(lp5TextBox3.Text) <= 150 || eorRadioButtonList1.SelectedIndex == 1)
+            if (eorRadioButtonList1.SelectedIndex != 1)
             {
                 r_in_dict.Add(39, "150 ˚С");
             }
@@ -1470,7 +1470,7 @@ public partial class RDT : System.Web.UI.Page
 
     protected void CustomValidator9_ServerValidate(object source, ServerValidateEventArgs args)
     {
-        if (CustomValidator2.IsValid && CustomValidator4.IsValid && CustomValidator6.IsValid && CustomValidator7.IsValid && CustomValidator21.IsValid)
+        if (CustomValidator2.IsValid && CustomValidator4.IsValid && CustomValidator6.IsValid && CustomValidator7.IsValid )
         {
             if (calcrDropDownList1.Enabled)
             {
@@ -1782,7 +1782,7 @@ public partial class RDT : System.Web.UI.Page
 
     protected void CustomValidator18_ServerValidate(object source, ServerValidateEventArgs args)
     {
-        if(CustomValidator21.IsValid) { 
+        
             if (lp5DropDownList1.Enabled)
             {
                 if (lp5TextBox1.Enabled == false || checkTextBoxEmpty(lp5TextBox1))
@@ -1803,12 +1803,7 @@ public partial class RDT : System.Web.UI.Page
                     args.IsValid = false;
                 }
             }
-        }
-        else
-        {
-            args.IsValid = false;
-            CustomValidator18.ErrorMessage = "";
-        }
+     
     }
 
     protected void CustomValidator19_ServerValidate(object source, ServerValidateEventArgs args)
@@ -1908,11 +1903,7 @@ public partial class RDT : System.Web.UI.Page
             }
             
         }
-        else
-        {
-            args.IsValid = false;
-            CustomValidator21.ErrorMessage = "";
-        }
+      
     }
 
     //------------------------------------Validation Function END--------------------------------------
@@ -2662,6 +2653,13 @@ public partial class RDT : System.Web.UI.Page
                                             g_dict.Add("p19", p19);
                                         }
                                     }
+
+                                    if (lp5RadioButtonList1.SelectedIndex == 1)
+                                    {
+                                        lp5TextBox3.Text = (Math.Round(100 * Math.Pow((customConverterToDouble(lp5TextBox1.Text) * arrConvert3[lp5DropDownList1.SelectedIndex - 1] / arrConvert3[2]) + 1, 0.25))).ToString();
+                                    }
+
+
                                 }
                                 if (ws1RadioButtonList1.SelectedIndex != 3)
                                 {

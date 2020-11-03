@@ -153,6 +153,13 @@
                                             <asp:ListItem>Пропиленгликоль</asp:ListItem>
                                             <asp:ListItem Enabled="False">Водяной пар</asp:ListItem>
                                         </asp:RadioButtonList>
+                                        <div class="col">
+                                            <asp:RadioButtonList ID="lpv5RadioButtonList1" runat="server" AutoPostBack="True" OnSelectedIndexChanged="lpv5RadioButtonList1_SelectedIndexChanged" Enabled="False">
+                                                <asp:ListItem>Перегретый</asp:ListItem>
+                                                <asp:ListItem>Насыщеный</asp:ListItem>
+                                            </asp:RadioButtonList>
+                                        </div>
+                                        <asp:CustomValidator ID="CustomValidator21" runat="server" ControlToValidate="lpv5RadioButtonList1" Display="Dynamic" EnableClientScript="False" ErrorMessage="CustomValidator" ForeColor="Red" OnServerValidate="CustomValidator21_ServerValidate" SetFocusOnError="True" ValidateEmptyText="True"></asp:CustomValidator>
                                     </div>
                                     <div class="col-9">
                                         <br />
@@ -302,22 +309,6 @@
                                             ForeColor="Red" OnServerValidate="CustomValidator2_ServerValidate"
                                             SetFocusOnError="True">
                                         </asp:CustomValidator>
-                                    </div>
-                                    <asp:Label ID="Label25" runat="server" Text="Тип пара:">
-                                    </asp:Label>
-                                    <div class="auto-style8">
-                                        <asp:RadioButtonList ID="lpv5RadioButtonList1" runat="server"
-                                            AutoPostBack="True"
-                                            OnSelectedIndexChanged="lpv5RadioButtonList1_SelectedIndexChanged">
-                                            <asp:ListItem>Перегретый</asp:ListItem>
-                                            <asp:ListItem>Насыщеный</asp:ListItem>
-                                        </asp:RadioButtonList>
-
-                                        <asp:CustomValidator ID="CustomValidator21" runat="server"
-                                            ControlToValidate="lpv5RadioButtonList1" Display="Dynamic"
-                                            EnableClientScript="False" ErrorMessage="CustomValidator" ForeColor="Red"
-                                            SetFocusOnError="True" ValidateEmptyText="True"
-                                            OnServerValidate="CustomValidator21_ServerValidate"></asp:CustomValidator>
                                     </div>
                                     <asp:Label ID="Label57" runat="server" Text="Температура пара через клапан:">
                                     </asp:Label>
