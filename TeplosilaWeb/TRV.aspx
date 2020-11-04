@@ -618,6 +618,13 @@
                                 <div class="col panel-hide" id="tdRBL" runat="server">
                                     <asp:Label ID="Label44" runat="server" Text="Характеристики электропривода:">
                                     </asp:Label><br />
+                                      <asp:Label ID="Label25" runat="server" Text="Наличие функции регулирования температуры (датчик температуры подключается непосредственно к терморегулирующему электроприводу):">
+                                    </asp:Label>
+                                    <asp:RadioButtonList ID="tdRadioButtonList5" runat="server" AutoPostBack="True"
+                                        Enabled="False" OnSelectedIndexChanged="tdRadioButtonList5_SelectedIndexChanged">
+                                        <asp:ListItem>Да</asp:ListItem>
+                                        <asp:ListItem Selected="True">Нет</asp:ListItem>
+                                    </asp:RadioButtonList>
                                     <asp:Label ID="Label47" runat="server" Text="Напряжение питания:"></asp:Label>
                                     <asp:RadioButtonList ID="tdRadioButtonList1" runat="server" AutoPostBack="True"
                                         OnSelectedIndexChanged="tdRadioButtonList1_SelectedIndexChanged"

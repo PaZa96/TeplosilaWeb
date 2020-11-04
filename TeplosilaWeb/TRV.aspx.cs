@@ -346,6 +346,8 @@ public partial class TRV : System.Web.UI.Page
             ws2TextBox1.Text = "";
             ws2TextBox2.Text = "";
         }
+       
+
         if (ws2RadioButtonList1.SelectedIndex != 3)
         {
             EnablePanel(1);
@@ -353,22 +355,7 @@ public partial class TRV : System.Web.UI.Page
             RemoveCssClass(lpv3, "panel-hide");
             RemoveCssClass(calcv, "panel-hide");
             AddCssClass(lpv5, "panel-hide");
-        }
-        else if (ws2RadioButtonList1.SelectedIndex == 3)
-        {
-            DisablePanel(1);
-            EnablePanel(2);
-            RemoveCssClass(lpv5, "panel-hide");
-            AddCssClass(lpv3, "panel-hide");
-            AddCssClass(calcv, "panel-hide");
-        }
-        else
-        {
-            DisablePanel(1);
-        }
 
-        if (ws2RadioButtonList1.SelectedIndex != 3)
-        {
             fvDropDownList1.Items[1].Enabled = true;
             fvDropDownList1.Items[2].Enabled = true;
             fvDropDownList1.Items[3].Enabled = true;
@@ -378,9 +365,49 @@ public partial class TRV : System.Web.UI.Page
             lpv5RadioButtonList1.SelectedIndex = -1;
             fvRadioButton2.Checked = false;
             fvRadioButton2.Enabled = true;
+
+            if (aa1RadioButtonList1.SelectedIndex == 0 || aa2RadioButtonList1.SelectedIndex == 0 || aa3RadioButtonList1.SelectedIndex == 0)
+            {
+                lpvDropDownList2.Enabled = true;
+                lpvDropDownList21.Enabled = false;
+                lpvDropDownList21.ClearSelection();
+                lpvTextBox21.Enabled = false;
+                lpvTextBox21.Text = "";
+
+                RemoveCssClass(lpv1, "panel-hide");
+                AddCssClass(lpv2, "panel-hide");
+            }
+            else
+            {
+                lpvDropDownList2.Enabled = false;
+                lpvDropDownList2.ClearSelection();
+                lpvTextBox2.Enabled = false;
+                lpvTextBox2.Text = "";
+
+                if (ws2RadioButtonList1.SelectedIndex != 3 && ws2RadioButtonList1.SelectedIndex != -1)
+                {
+                    lpvDropDownList21.Enabled = true;
+                }
+                AddCssClass(lpv1, "panel-hide");
+                RemoveCssClass(lpv2, "panel-hide");
+            }
+
         }
         else
         {
+            DisablePanel(1);
+            EnablePanel(2);
+            RemoveCssClass(lpv5, "panel-hide");
+            AddCssClass(lpv3, "panel-hide");
+            AddCssClass(calcv, "panel-hide");
+            AddCssClass(lpv2, "panel-hide");
+            AddCssClass(lpv1, "panel-hide");
+
+            lpvDropDownList21.Enabled = false;
+            lpvDropDownList21.ClearSelection();
+            lpvTextBox21.Enabled = false;
+            lpvTextBox21.Text = "";
+
             fvDropDownList1.Items[1].Enabled = false;
             fvDropDownList1.Items[2].Enabled = false;
             fvDropDownList1.Items[3].Enabled = false;
@@ -426,6 +453,8 @@ public partial class TRV : System.Web.UI.Page
             if (aa1RadioButtonList1.SelectedIndex == 1 && tvRadioButtonList1.SelectedIndex == 0)
             {
                 ws2RadioButtonList1.Items[3].Enabled = true;
+                AddCssClass(lpv2, "panel-hide");
+                AddCssClass(lpv1, "panel-hide");
             }
             else
             {
@@ -780,7 +809,36 @@ public partial class TRV : System.Web.UI.Page
         DisableRadioSecureFunc();
     }
 
+    protected void tdRadioButtonList5_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        if (tdRadioButtonList5.SelectedIndex == 0)
+        {
+            tdRadioButtonList1.ClearSelection();
+            tdRadioButtonList1.SelectedIndex = 0;
+            tdRadioButtonList1.Items[1].Enabled = false;
 
+            tdRadioButtonList2.ClearSelection();
+            tdRadioButtonList2.Enabled = false;
+
+            tdRadioButtonList3.ClearSelection();
+            tdRadioButtonList3.SelectedIndex = 1;
+            tdRadioButtonList3.Items[0].Enabled = false;
+        }
+        else
+        {
+            tdRadioButtonList1.ClearSelection();
+            tdRadioButtonList1.SelectedIndex = 0;
+            tdRadioButtonList1.Items[1].Enabled = true;
+
+            tdRadioButtonList2.ClearSelection();
+            tdRadioButtonList2.SelectedIndex = 0;
+            tdRadioButtonList2.Enabled = true;
+
+            tdRadioButtonList3.ClearSelection();
+            tdRadioButtonList3.SelectedIndex = 1;
+            tdRadioButtonList3.Items[0].Enabled = true;
+        }
+    }
 
 
     private bool firstMoreSecondDouble(string s1, string s2)
@@ -994,34 +1052,42 @@ public partial class TRV : System.Web.UI.Page
 
         if (hod2)
         {
-            //
+            //gRowMarkH- высота, gRowMarkM- масса
             switch (paramMarkPriv)
             {
-                //
+                // TRV, TRV-T
                 case "101":
-                    hRowMark = "6"; gRowMarkH = "7"; gRowMarkM = "20"; break;
+                    hRowMark = "6"; gRowMarkH = "7"; gRowMarkM = "24"; break;
                 case "101R":
-                    hRowMark = "7"; gRowMarkH = "8"; gRowMarkM = "21"; break;
+                    hRowMark = "7"; gRowMarkH = "8"; gRowMarkM = "25"; break;
                 case "34":
-                    hRowMark = "8"; gRowMarkH = "9"; gRowMarkM = "22"; break;
+                    hRowMark = "8"; gRowMarkH = "9"; gRowMarkM = "26"; break;
                 case "31":
-                    hRowMark = "9"; gRowMarkH = "10"; gRowMarkM = "23"; break;
+                    hRowMark = "9"; gRowMarkH = "10"; gRowMarkM = "27"; break;
                 case "110":
-                    hRowMark = "10"; gRowMarkH = "11"; gRowMarkM = "24"; break;
+                    hRowMark = "10"; gRowMarkH = "11"; gRowMarkM = "28"; break;
                 case "110R":
-                    hRowMark = "11"; gRowMarkH = "12"; gRowMarkM = "25"; break;
+                    hRowMark = "11"; gRowMarkH = "12"; gRowMarkM = "29"; break;
                 case "35":
-                    hRowMark = "12"; gRowMarkH = "13"; gRowMarkM = "26"; break;
+                    hRowMark = "12"; gRowMarkH = "13"; gRowMarkM = "30"; break;
                 case "32":
-                    hRowMark = "13"; gRowMarkH = "14"; gRowMarkM = "27"; break;
+                    hRowMark = "13"; gRowMarkH = "14"; gRowMarkM = "31"; break;
                 case "120":
-                    hRowMark = "14"; gRowMarkH = "15"; gRowMarkM = "28"; break;
-                case "120R":
-                    hRowMark = "15"; gRowMarkH = "16"; gRowMarkM = "29"; break;
+                    hRowMark = "14"; gRowMarkH = "15"; gRowMarkM = "32"; break;
+                case "120R": //не работает 
+                    hRowMark = "14"; gRowMarkH = "16"; gRowMarkM = "33"; break;
                 case "36":
-                    hRowMark = "16"; gRowMarkH = "17"; gRowMarkM = "30"; break;
+                    hRowMark = "15"; gRowMarkH = "17"; gRowMarkM = "34"; break;
                 case "33":
-                    hRowMark = "17"; gRowMarkH = "18"; gRowMarkM = "31"; break;
+                    hRowMark = "16"; gRowMarkH = "18"; gRowMarkM = "35"; break;
+                case "201":
+                    hRowMark = "17"; gRowMarkH = "19"; gRowMarkM = "36"; break;
+                case "201R":
+                    hRowMark = "18"; gRowMarkH = "20"; gRowMarkM = "37"; break;
+                case "210":
+                    hRowMark = "19"; gRowMarkH = "21"; gRowMarkM = "38"; break;
+                case "210R":
+                    hRowMark = "20"; gRowMarkH = "22"; gRowMarkM = "39"; break;
             }
         }
         else
@@ -1029,25 +1095,33 @@ public partial class TRV : System.Web.UI.Page
             //
             switch (paramMarkPriv)
             {
-                //
+                //TRV-3
                 case "101":
-                    hRowMark = "6"; gRowMarkH = "7"; gRowMarkM = "17"; break;
+                    hRowMark = "6"; gRowMarkH = "7"; gRowMarkM = "21"; break;
                 case "101R":
-                    hRowMark = "7"; gRowMarkH = "8"; gRowMarkM = "18"; break;
+                    hRowMark = "7"; gRowMarkH = "8"; gRowMarkM = "22"; break;
                 case "35":
-                    hRowMark = "8"; gRowMarkH = "9"; gRowMarkM = "19"; break;
+                    hRowMark = "8"; gRowMarkH = "9"; gRowMarkM = "23"; break;
                 case "32":
-                    hRowMark = "9"; gRowMarkH = "10"; gRowMarkM = "20"; break;
+                    hRowMark = "9"; gRowMarkH = "10"; gRowMarkM = "24"; break;
                 case "110":
-                    hRowMark = "10"; gRowMarkH = "11"; gRowMarkM = "21"; break;
+                    hRowMark = "10"; gRowMarkH = "11"; gRowMarkM = "25"; break;
                 case "110R":
-                    hRowMark = "11"; gRowMarkH = "12"; gRowMarkM = "22"; break;
+                    hRowMark = "11"; gRowMarkH = "12"; gRowMarkM = "26"; break;
                 case "120":
-                    hRowMark = "12"; gRowMarkH = "13"; gRowMarkM = "23"; break;
+                    hRowMark = "12"; gRowMarkH = "13"; gRowMarkM = "27"; break;
                 case "36":
-                    hRowMark = "13"; gRowMarkH = "14"; gRowMarkM = "24"; break;
+                    hRowMark = "13"; gRowMarkH = "14"; gRowMarkM = "28"; break;
                 case "33":
-                    hRowMark = "14"; gRowMarkH = "15"; gRowMarkM = "25"; break;
+                    hRowMark = "14"; gRowMarkH = "15"; gRowMarkM = "29"; break;
+                case "201":
+                    hRowMark = "15"; gRowMarkH = "16"; gRowMarkM = "30"; break;
+                case "201R":
+                    hRowMark = "16"; gRowMarkH = "17"; gRowMarkM = "31"; break;
+                case "210":
+                    hRowMark = "17"; gRowMarkH = "18"; gRowMarkM = "32"; break;
+                case "210R":
+                    hRowMark = "18"; gRowMarkH = "19"; gRowMarkM = "33"; break;
             }
         }
 
@@ -1086,6 +1160,10 @@ public partial class TRV : System.Web.UI.Page
             case "13": return "ST 1 491.1- O7KAE/00";
             case "36": return "TW3000- XD220-S.14";
             case "33": return "TW3000- XD24-S.14";
+            case "201": return "TSL-1600-25-1T-230-IP67";
+            case "201R": return "TSL-1600-25-1TR-230-IP67";
+            case "210": return "TSL-2200-40-1T-230-IP67";
+            case "210R": return "TSL-2200-40-1TR-230-IP67";
             case "-": return "вариантов нет";
             default: return null;
         }
@@ -1970,8 +2048,64 @@ public partial class TRV : System.Web.UI.Page
             // TRV
             if (tvRadioButtonList1.SelectedIndex == 0)
             {
-                // 230 VAC ; 3-pos ; no ; no
-                if (/*listResult["C"].ElementAt(i).Equals("15") && */tdRadioButtonList1.SelectedIndex == 0 && tdRadioButtonList2.SelectedIndex == 0 && tdRadioButtonList3.SelectedIndex == 1 && tdRadioButtonList4.SelectedIndex == 1)
+
+                if (tdRadioButtonList5.SelectedIndex == 0 && tdRadioButtonList1.SelectedIndex == 0 && tdRadioButtonList2.Enabled == false && tdRadioButtonList3.SelectedIndex == 1 && tdRadioButtonList4.SelectedIndex == 1)
+                {
+                    switch (listResult["C"].ElementAt(i))
+                    {
+                        case "15":
+                            tmpMarkPriv = "201"; break;
+                        case "20":
+                            tmpMarkPriv = "201"; break;
+                        case "25":
+                            tmpMarkPriv = "201"; break;
+                        case "32":
+                            tmpMarkPriv = "201"; break;
+                        case "40":
+                            tmpMarkPriv = "201"; break;
+                        case "50":
+                            tmpMarkPriv = "201"; break;
+                        case "65":
+                            tmpMarkPriv = "210"; break;
+                        case "80":
+                            tmpMarkPriv = "210"; break;
+                        case "100":
+                            tmpMarkPriv = "210"; break;
+                        case "125":
+                            tmpMarkPriv = "-"; break;
+                        case "150":
+                            tmpMarkPriv = "-"; break;
+                    }
+                }
+                else if (tdRadioButtonList5.SelectedIndex == 0 && tdRadioButtonList1.SelectedIndex == 0 && tdRadioButtonList2.Enabled == false && tdRadioButtonList3.SelectedIndex == 1 && tdRadioButtonList4.SelectedIndex == 0)
+                {
+                    switch (listResult["C"].ElementAt(i))
+                    {
+                        case "15":
+                            tmpMarkPriv = "201R"; break;
+                        case "20":
+                            tmpMarkPriv = "201R"; break;
+                        case "25":
+                            tmpMarkPriv = "201R"; break;
+                        case "32":
+                            tmpMarkPriv = "201R"; break;
+                        case "40":
+                            tmpMarkPriv = "201R"; break;
+                        case "50":
+                            tmpMarkPriv = "201R"; break;
+                        case "65":
+                            tmpMarkPriv = "210R"; break;
+                        case "80":
+                            tmpMarkPriv = "210R"; break;
+                        case "100":
+                            tmpMarkPriv = "210R"; break;
+                        case "125":
+                            tmpMarkPriv = "-"; break;
+                        case "150":
+                            tmpMarkPriv = "-"; break;
+                    }
+                }
+                else if (tdRadioButtonList5.SelectedIndex == 1 && tdRadioButtonList1.SelectedIndex == 0 && tdRadioButtonList2.SelectedIndex == 0 && tdRadioButtonList3.SelectedIndex == 1 && tdRadioButtonList4.SelectedIndex == 1)
                 {
                     switch (listResult["C"].ElementAt(i))
                     {
@@ -2000,7 +2134,7 @@ public partial class TRV : System.Web.UI.Page
                     }
                 }
                 // 230 VAC ; 3-pos ; no ; yes
-                else if (tdRadioButtonList1.SelectedIndex == 0 && tdRadioButtonList2.SelectedIndex == 0 && tdRadioButtonList3.SelectedIndex == 1 && tdRadioButtonList4.SelectedIndex == 0)
+                else if (tdRadioButtonList5.SelectedIndex == 1 && tdRadioButtonList1.SelectedIndex == 0 && tdRadioButtonList2.SelectedIndex == 0 && tdRadioButtonList3.SelectedIndex == 1 && tdRadioButtonList4.SelectedIndex == 0)
                 {
                     switch (listResult["C"].ElementAt(i))
                     {
@@ -2031,7 +2165,7 @@ public partial class TRV : System.Web.UI.Page
                     }
                 }
                 // 230 VAC ; 3-pos ; yes ; no
-                else if (tdRadioButtonList1.SelectedIndex == 0 && tdRadioButtonList2.SelectedIndex == 0 && tdRadioButtonList3.SelectedIndex == 0 && tdRadioButtonList4.SelectedIndex == 1)
+                else if (tdRadioButtonList5.SelectedIndex == 1 && tdRadioButtonList1.SelectedIndex == 0 && tdRadioButtonList2.SelectedIndex == 0 && tdRadioButtonList3.SelectedIndex == 0 && tdRadioButtonList4.SelectedIndex == 1)
                 {
                     switch (listResult["C"].ElementAt(i))
                     {
@@ -2062,7 +2196,7 @@ public partial class TRV : System.Web.UI.Page
                     }
                 }
                 // 230 VAC ; analog ; no ; no
-                else if (tdRadioButtonList1.SelectedIndex == 0 && tdRadioButtonList2.SelectedIndex == 1 && tdRadioButtonList3.SelectedIndex == 1 && tdRadioButtonList4.SelectedIndex == 1)
+                else if (tdRadioButtonList5.SelectedIndex == 1 && tdRadioButtonList1.SelectedIndex == 0 && tdRadioButtonList2.SelectedIndex == 1 && tdRadioButtonList3.SelectedIndex == 1 && tdRadioButtonList4.SelectedIndex == 1)
                 {
                     switch (listResult["C"].ElementAt(i))
                     {
@@ -2093,7 +2227,7 @@ public partial class TRV : System.Web.UI.Page
                     }
                 }
                 // 230 VAC ; analog ; yes ; no
-                else if (tdRadioButtonList1.SelectedIndex == 0 && tdRadioButtonList2.SelectedIndex == 1 && tdRadioButtonList3.SelectedIndex == 0 && tdRadioButtonList4.SelectedIndex == 1)
+                else if (tdRadioButtonList5.SelectedIndex == 1 && tdRadioButtonList1.SelectedIndex == 0 && tdRadioButtonList2.SelectedIndex == 1 && tdRadioButtonList3.SelectedIndex == 0 && tdRadioButtonList4.SelectedIndex == 1)
                 {
                     switch (listResult["C"].ElementAt(i))
                     {
@@ -2124,7 +2258,7 @@ public partial class TRV : System.Web.UI.Page
                     }
                 }
                 // 24 VAC/VDC 
-                else if (tdRadioButtonList1.SelectedIndex == 1)
+                else if (tdRadioButtonList5.SelectedIndex == 1 && tdRadioButtonList5.SelectedIndex == 1 && tdRadioButtonList1.SelectedIndex == 1)
                 {
                     switch (listResult["C"].ElementAt(i))
                     {
@@ -2158,8 +2292,65 @@ public partial class TRV : System.Web.UI.Page
             // TRV-3
             else if (tvRadioButtonList1.SelectedIndex == 1)
             {
+
+                if (tdRadioButtonList5.SelectedIndex == 0 && tdRadioButtonList1.SelectedIndex == 0 && tdRadioButtonList2.Enabled == false && tdRadioButtonList3.SelectedIndex == 1 && tdRadioButtonList4.SelectedIndex == 1)
+                {
+                    switch (listResult["C"].ElementAt(i))
+                    {
+                        case "15":
+                            tmpMarkPriv = "201"; break;
+                        case "20":
+                            tmpMarkPriv = "201"; break;
+                        case "25":
+                            tmpMarkPriv = "201"; break;
+                        case "32":
+                            tmpMarkPriv = "201"; break;
+                        case "40":
+                            tmpMarkPriv = "201"; break;
+                        case "50":
+                            tmpMarkPriv = "201"; break;
+                        case "65":
+                            tmpMarkPriv = "210"; break;
+                        case "80":
+                            tmpMarkPriv = "210"; break;
+                        case "100":
+                            tmpMarkPriv = "210"; break;
+                        case "125":
+                            tmpMarkPriv = "-"; break;
+                        case "150":
+                            tmpMarkPriv = "-"; break;
+                    }
+                }
+                else if (tdRadioButtonList5.SelectedIndex == 0 && tdRadioButtonList1.SelectedIndex == 0 && tdRadioButtonList2.Enabled == false && tdRadioButtonList3.SelectedIndex == 1 && tdRadioButtonList4.SelectedIndex == 0)
+                {
+                    switch (listResult["C"].ElementAt(i))
+                    {
+                        case "15":
+                            tmpMarkPriv = "201R"; break;
+                        case "20":
+                            tmpMarkPriv = "201R"; break;
+                        case "25":
+                            tmpMarkPriv = "201R"; break;
+                        case "32":
+                            tmpMarkPriv = "201R"; break;
+                        case "40":
+                            tmpMarkPriv = "201R"; break;
+                        case "50":
+                            tmpMarkPriv = "201R"; break;
+                        case "65":
+                            tmpMarkPriv = "210R"; break;
+                        case "80":
+                            tmpMarkPriv = "210R"; break;
+                        case "100":
+                            tmpMarkPriv = "210R"; break;
+                        case "125":
+                            tmpMarkPriv = "-"; break;
+                        case "150":
+                            tmpMarkPriv = "-"; break;
+                    }
+                }
                 // 230 VAC ; 3-pos ; no ; no
-                if (tdRadioButtonList1.SelectedIndex == 0 && tdRadioButtonList2.SelectedIndex == 0 && tdRadioButtonList3.SelectedIndex == 1 && tdRadioButtonList4.SelectedIndex == 1)
+                else if (tdRadioButtonList1.SelectedIndex == 0 && tdRadioButtonList2.SelectedIndex == 0 && tdRadioButtonList3.SelectedIndex == 1 && tdRadioButtonList4.SelectedIndex == 1)
                 {
                     switch (listResult["C"].ElementAt(i))
                     {
@@ -2190,7 +2381,7 @@ public partial class TRV : System.Web.UI.Page
                     }
                 }
                 // 230 VAC ; 3-pos ; no ; yes
-                else if (tdRadioButtonList1.SelectedIndex == 0 && tdRadioButtonList2.SelectedIndex == 0 && tdRadioButtonList3.SelectedIndex == 1 && tdRadioButtonList4.SelectedIndex == 0)
+                else if (tdRadioButtonList5.SelectedIndex == 1 && tdRadioButtonList1.SelectedIndex == 0 && tdRadioButtonList2.SelectedIndex == 0 && tdRadioButtonList3.SelectedIndex == 1 && tdRadioButtonList4.SelectedIndex == 0)
                 {
                     switch (listResult["C"].ElementAt(i))
                     {
@@ -2221,7 +2412,7 @@ public partial class TRV : System.Web.UI.Page
                     }
                 }
                 // 230 VAC ; 3-pos ; yes ; no
-                else if (tdRadioButtonList1.SelectedIndex == 0 && tdRadioButtonList2.SelectedIndex == 0 && tdRadioButtonList3.SelectedIndex == 0 && tdRadioButtonList4.SelectedIndex == 1)
+                else if (tdRadioButtonList5.SelectedIndex == 1 && tdRadioButtonList1.SelectedIndex == 0 && tdRadioButtonList2.SelectedIndex == 0 && tdRadioButtonList3.SelectedIndex == 0 && tdRadioButtonList4.SelectedIndex == 1)
                 {
                     switch (listResult["C"].ElementAt(i))
                     {
@@ -2252,7 +2443,7 @@ public partial class TRV : System.Web.UI.Page
                     }
                 }
                 // 230 VAC ; analog ; no ; no
-                else if (tdRadioButtonList1.SelectedIndex == 0 && tdRadioButtonList2.SelectedIndex == 1 && tdRadioButtonList3.SelectedIndex == 1 && tdRadioButtonList4.SelectedIndex == 1)
+                else if (tdRadioButtonList5.SelectedIndex == 1 && tdRadioButtonList1.SelectedIndex == 0 && tdRadioButtonList2.SelectedIndex == 1 && tdRadioButtonList3.SelectedIndex == 1 && tdRadioButtonList4.SelectedIndex == 1)
                 {
                     switch (listResult["C"].ElementAt(i))
                     {
@@ -2283,7 +2474,7 @@ public partial class TRV : System.Web.UI.Page
                     }
                 }
                 // 230 VAC ; analog ; yes ; no
-                else if (tdRadioButtonList1.SelectedIndex == 0 && tdRadioButtonList2.SelectedIndex == 1 && tdRadioButtonList3.SelectedIndex == 0 && tdRadioButtonList4.SelectedIndex == 1)
+                else if (tdRadioButtonList5.SelectedIndex == 1 && tdRadioButtonList1.SelectedIndex == 0 && tdRadioButtonList2.SelectedIndex == 1 && tdRadioButtonList3.SelectedIndex == 0 && tdRadioButtonList4.SelectedIndex == 1)
                 {
                     switch (listResult["C"].ElementAt(i))
                     {
@@ -2314,7 +2505,7 @@ public partial class TRV : System.Web.UI.Page
                     }
                 }
                 // 24 VAC/VDC 
-                else if (tdRadioButtonList1.SelectedIndex == 1)
+                else if (tdRadioButtonList5.SelectedIndex == 1 && tdRadioButtonList1.SelectedIndex == 1)
                 {
                     switch (listResult["C"].ElementAt(i))
                     {
@@ -2389,7 +2580,7 @@ public partial class TRV : System.Web.UI.Page
                 }
             }
 
-
+            //
             if (ws2RadioButtonList1.SelectedIndex != 3)
             {
                 listResult["F"] = listF.ToArray();
@@ -2616,6 +2807,9 @@ public partial class TRV : System.Web.UI.Page
         v_in_dict.Add(70, (lpv5RadioButtonList1.SelectedValue != "") ? lpv5RadioButtonList1.SelectedValue : "-");
 
         v_in_dict.Add(71, this.lpv5TextBox3.Text);
+
+        if (tdRadioButtonList5.SelectedIndex == 0) v_in_dict[72] = tdRadioButtonList5.Items[0].Text;
+        else v_in_dict[72] = tdRadioButtonList5.Items[1].Text;
 
     }
 
@@ -4744,46 +4938,48 @@ public partial class TRV : System.Web.UI.Page
             ws.Cells["I19"].Value = v_input_dict[34];
             ws.Cells["K19"].Value = v_input_dict[35];
 
-            ws.Cells["C21"].Value = v_input_dict[36];
-            ws.Cells["C22"].Value = v_input_dict[37];
+            ws.Cells["C22"].Value = v_input_dict[36];
+            ws.Cells["C23"].Value = v_input_dict[37];
 
-            ws.Cells["J21"].Value = v_input_dict[38];
-            ws.Cells["J22"].Value = v_input_dict[39];
+            ws.Cells["J22"].Value = v_input_dict[38];
+            ws.Cells["J23"].Value = v_input_dict[39];
 
-            ws.Cells["E24"].Value = v_input_dict[40];
-            ws.Cells["E25"].Value = v_input_dict[41];
+            ws.Cells["E25"].Value = v_input_dict[40];
+            ws.Cells["E26"].Value = v_input_dict[41];
 
-            ws.Cells["A28"].Value = v_input_dict[42];
-            ws.Cells["B28"].Value = v_input_dict[43];
-            ws.Cells["C28"].Value = v_input_dict[44];
-            ws.Cells["D28"].Value = v_input_dict[45];
-            ws.Cells["E28"].Value = v_input_dict[46];
-            ws.Cells["F28"].Value = v_input_dict[47];
-            ws.Cells["G28"].Value = v_input_dict[48];
-            ws.Cells["H28"].Value = v_input_dict[49];
-            ws.Cells["I28"].Value = v_input_dict[50];
-            ws.Cells["J28"].Value = v_input_dict[51];
-            ws.Cells["K28"].Value = v_input_dict[52];
+            ws.Cells["J21"].Value = v_input_dict[72];
 
-            ws.Cells["A32"].Value = v_input_dict[53];
-            ws.Cells["B32"].Value = v_input_dict[54];
-            ws.Cells["C32"].Value = v_input_dict[55];
-            ws.Cells["D32"].Value = v_input_dict[56];
-            ws.Cells["E32"].Value = v_input_dict[57];
-            ws.Cells["F32"].Value = v_input_dict[58];
-            ws.Cells["G32"].Value = v_input_dict[59];
-            ws.Cells["H32"].Value = v_input_dict[60];
-            ws.Cells["I32"].Value = v_input_dict[61];
-            ws.Cells["J32"].Value = v_input_dict[62];
-            ws.Cells["K32"].Value = v_input_dict[63];
+            ws.Cells["A29"].Value = v_input_dict[42];
+            ws.Cells["B29"].Value = v_input_dict[43];
+            ws.Cells["C29"].Value = v_input_dict[44];
+            ws.Cells["D29"].Value = v_input_dict[45];
+            ws.Cells["E29"].Value = v_input_dict[46];
+            ws.Cells["F29"].Value = v_input_dict[47];
+            ws.Cells["G29"].Value = v_input_dict[48];
+            ws.Cells["H29"].Value = v_input_dict[49];
+            ws.Cells["I29"].Value = v_input_dict[50];
+            ws.Cells["J29"].Value = v_input_dict[51];
+            ws.Cells["K29"].Value = v_input_dict[52];
 
-            ws.Cells["G38"].Value = v_input_dict[65];
-            ws.Cells["G39"].Value = v_input_dict[66];
-            ws.Cells["G40"].Value = v_input_dict[67];
-            ws.Cells["G41"].Value = v_input_dict[68];
+            ws.Cells["A33"].Value = v_input_dict[53];
+            ws.Cells["B33"].Value = v_input_dict[54];
+            ws.Cells["C33"].Value = v_input_dict[55];
+            ws.Cells["D33"].Value = v_input_dict[56];
+            ws.Cells["E33"].Value = v_input_dict[57];
+            ws.Cells["F33"].Value = v_input_dict[58];
+            ws.Cells["G33"].Value = v_input_dict[59];
+            ws.Cells["H33"].Value = v_input_dict[60];
+            ws.Cells["I33"].Value = v_input_dict[61];
+            ws.Cells["J33"].Value = v_input_dict[62];
+            ws.Cells["K33"].Value = v_input_dict[63];
+
+            ws.Cells["G39"].Value = v_input_dict[65];
+            ws.Cells["G40"].Value = v_input_dict[66];
+            ws.Cells["G41"].Value = v_input_dict[67];
+            ws.Cells["G42"].Value = v_input_dict[68];
 
 
-            ws.Pictures.Add(HttpContext.Current.Server.MapPath("\\Content\\images\\trv\\" + ((v_input_dict[7] == this.tvRadioButtonList1.Items[tvRadioButtonList1.SelectedIndex].Text) ? "Габаритный TRV и TRV-P.png" : "Габаритный TRV-3.png")), "A38", "B47");
+            ws.Pictures.Add(HttpContext.Current.Server.MapPath("\\Content\\images\\trv\\" + ((v_input_dict[7] == this.tvRadioButtonList1.Items[tvRadioButtonList1.SelectedIndex].Text) ? "Габаритный TRV и TRV-P.png" : "Габаритный TRV-3.png")), "A39", "B48");
 
 
             string path = HttpContext.Current.Server.MapPath("~/Files/TRV/PDF/" + DateTime.Now.ToString("dd-MM-yyyy"));
@@ -5049,6 +5245,7 @@ public partial class TRV : System.Web.UI.Page
         tdRadioButtonList2.Enabled = true;
         tdRadioButtonList3.Enabled = true;
         tdRadioButtonList4.Enabled = true;
+        tdRadioButtonList5.Enabled = true;
 
         RemoveCssClass(tdRBL, "panel-hide");
     }
