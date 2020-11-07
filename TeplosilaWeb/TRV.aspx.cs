@@ -2071,10 +2071,10 @@ public partial class TRV : System.Web.UI.Page
                             tmpMarkPriv = "210"; break;
                         case "100":
                             tmpMarkPriv = "210"; break;
-                        case "125":
-                            tmpMarkPriv = "-"; break;
-                        case "150":
-                            tmpMarkPriv = "-"; break;
+                        //case "125":
+                        //    tmpMarkPriv = "-"; break;
+                        //case "150":
+                        //    tmpMarkPriv = "-"; break;
                     }
                 }
                 else if (tdRadioButtonList5.SelectedIndex == 0 && tdRadioButtonList1.SelectedIndex == 0 && tdRadioButtonList2.Enabled == false && tdRadioButtonList3.SelectedIndex == 1 && tdRadioButtonList4.SelectedIndex == 0)
@@ -2099,10 +2099,10 @@ public partial class TRV : System.Web.UI.Page
                             tmpMarkPriv = "210R"; break;
                         case "100":
                             tmpMarkPriv = "210R"; break;
-                        case "125":
-                            tmpMarkPriv = "-"; break;
-                        case "150":
-                            tmpMarkPriv = "-"; break;
+                        //case "125":
+                        //    tmpMarkPriv = "-"; break;
+                        //case "150":
+                        //    tmpMarkPriv = "-"; break;
                     }
                 }
                 else if (tdRadioButtonList5.SelectedIndex == 1 && tdRadioButtonList1.SelectedIndex == 0 && tdRadioButtonList2.SelectedIndex == 0 && tdRadioButtonList3.SelectedIndex == 1 && tdRadioButtonList4.SelectedIndex == 1)
@@ -2760,8 +2760,15 @@ public partial class TRV : System.Web.UI.Page
         if (tdRadioButtonList1.SelectedIndex == 0) v_in_dict[36] = tdRadioButtonList1.Items[0].Text;
         else v_in_dict[36] = tdRadioButtonList1.Items[1].Text;
 
-        if (tdRadioButtonList2.SelectedIndex == 0) v_in_dict[37] = tdRadioButtonList2.Items[0].Text;
-        else v_in_dict[37] = tdRadioButtonList2.Items[1].Text;
+        if (tdRadioButtonList2.Enabled)
+        {
+            if (tdRadioButtonList2.SelectedIndex == 0) v_in_dict[37] = tdRadioButtonList2.Items[0].Text;
+            else v_in_dict[37] = tdRadioButtonList2.Items[1].Text;
+        }
+        else
+        {
+            v_in_dict[37] = "-";
+        }
 
         if (tdRadioButtonList3.SelectedIndex == 0) v_in_dict[38] = tdRadioButtonList3.Items[0].Text;
         else v_in_dict[38] = tdRadioButtonList3.Items[1].Text;
