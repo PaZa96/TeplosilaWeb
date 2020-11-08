@@ -1565,12 +1565,6 @@ public partial class RDT : System.Web.UI.Page
                     }
                 }
 
-                if (customConverterToDouble(calcrTextBox2.Text) > MaxT3x)
-                {
-                    CustomValidator11.ErrorMessage = "На температуру свыше 150&#8451; вариантов нет";
-                    args.IsValid = false;
-                    return;
-                }
                 if (((customConverterToDouble(this.calcrTextBox1.Text) * arrConvert3[this.calcrDropDownList1.SelectedIndex - 1] / arrConvert3[2]) - getPSbyT(customConverterToDouble(this.calcrTextBox2.Text))) <= 0)
                 {
                     CustomValidator11.ErrorMessage = "Указанная температура выше температуры парообразования. При указанной температуре в трубопроводе движется пар";
@@ -1643,7 +1637,7 @@ public partial class RDT : System.Web.UI.Page
                 {
                     if (customConverterToDouble(calcrTextBox2.Text) > MaxT2x)
                     {
-                        CustomValidator13.ErrorMessage = "На температуру свыше 150&#8451; вариантов нет";
+                        CustomValidator13.ErrorMessage = "На температуру свыше 220&#8451; вариантов нет";
                         args.IsValid = false;
                         return;
                     }
@@ -1687,7 +1681,7 @@ public partial class RDT : System.Web.UI.Page
                 {
                     if (customConverterToDouble(calcrTextBox2.Text) > MaxT2x)
                     {
-                        CustomValidator14.ErrorMessage = "На температуру свыше 150&#8451; вариантов нет";
+                        CustomValidator14.ErrorMessage = "На температуру свыше 220&#8451; вариантов нет";
                         args.IsValid = false;
                         return;
                     }
@@ -2541,11 +2535,12 @@ public partial class RDT : System.Web.UI.Page
                                         g_dict.Add("p56", p56);
                                         g_dict.Add("p58", p58);
 
-                                        if (lp5RadioButtonList1.SelectedIndex == 0)
+                                        if (lp5RadioButtonList1.SelectedIndex == 1)
                                         {
-                                            g_dict.Add("p61", customConverterToDouble(this.lp5TextBox3.Text));
+                                            lp5TextBox3.Text = (Math.Round(100 * Math.Pow((customConverterToDouble(lp5TextBox1.Text) * arrConvert3[lp5DropDownList1.SelectedIndex - 1] / arrConvert3[2]) + 1, 0.25))).ToString();
                                         }
 
+                                        g_dict.Add("p61", customConverterToDouble(this.lp5TextBox3.Text));
                                     }
                                 }
                                 else if (eorRadioButtonList1.SelectedIndex == 2)
@@ -2653,13 +2648,6 @@ public partial class RDT : System.Web.UI.Page
                                             g_dict.Add("p19", p19);
                                         }
                                     }
-
-                                    if (lp5RadioButtonList1.SelectedIndex == 1)
-                                    {
-                                        lp5TextBox3.Text = (Math.Round(100 * Math.Pow((customConverterToDouble(lp5TextBox1.Text) * arrConvert3[lp5DropDownList1.SelectedIndex - 1] / arrConvert3[2]) + 1, 0.25))).ToString();
-                                    }
-
-
                                 }
                                 if (ws1RadioButtonList1.SelectedIndex != 3)
                                 {
@@ -2710,6 +2698,9 @@ public partial class RDT : System.Web.UI.Page
                                         LabelError.Text = "На температуру свыше 150°С вариантов нет";
                                         return;
                                     }
+
+                                    g_dict.Add("p35", p35);
+
                                 }
 
                                 if (ws1RadioButtonList1.SelectedIndex == 0)
@@ -2729,11 +2720,28 @@ public partial class RDT : System.Web.UI.Page
                                     this.ws1ResultLabel.Text = "Рабочая среда - водяной пар";
                                 }
 
-                                
+                                if (ws1RadioButtonList1.SelectedIndex != 3)
+                                {
+                                    this.maxt1ResultLabel.Text = "Максимальная температура - 150 °С";
+                                    this.maxp1ResultLabel.Text = "Максимальное рабочее давление - 16 бар";
 
-                                //this.ws1ResultLabel.Text = "Рабочая среда - " + (this.ws1RadioButton1.Checked ? "вода" : "этиленгликоль " + g_dict["p6"] + "%, " + g_dict["p7"] + " °С");
-                                this.maxt1ResultLabel.Text = "Максимальная температура - " + (ws1RadioButtonList1.SelectedIndex == 0 ? "150 °С" : "150 °С");
-                                this.maxp1ResultLabel.Text = "Максимальное рабочее давление - 16 бар";
+                                    labelOptyV.Text = "Оптимальная скорость в выходном сечении регулятора: 2 - 3 м / с для ИТП; 2 - 5 м / с для ЦТП.";
+                                } 
+                                else
+                                {
+                                    if(g_dict["p61"] > 150)
+                                    {
+                                        this.maxt1ResultLabel.Text = "Максимальная температура - 220 °С";
+                                    }
+                                    else
+                                    {
+                                        this.maxt1ResultLabel.Text = "Максимальная температура - 150 °С";
+                                    }
+
+                                    this.maxp1ResultLabel.Text = "Максимальное рабочее давление - 16 бар";
+                                    labelOptyV.Text = "Оптимальная скорость в выходном сечении регулятора: 40 м/с для насыщенного пара; 60 м/с для перегретого пара.";
+                                }
+                                
 
                                 if (ws1RadioButtonList1.SelectedIndex != 3)
                                 {
@@ -2907,6 +2915,7 @@ public partial class RDT : System.Web.UI.Page
             maxp1ResultLabel.Visible = true;
             maxt1ResultLabel.Visible = true;
             ws1ResultLabel.Visible = true;
+            labelOptyV.Visible = true;
             GridView1.Enabled = true;
             GridView1.Visible = true;
             GridView1.Height = 250;
