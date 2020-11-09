@@ -1853,7 +1853,7 @@ public partial class RDT : System.Web.UI.Page
                         return;
                     }
 
-                    if ((100 * Math.Pow((customConverterToDouble(lp5TextBox1.Text) * arrConvert3[lp5DropDownList1.SelectedIndex - 1] / arrConvert3[2]) + 1, 0.25)) > MaxT2x)
+                    if (customConverterToDouble(lp5TextBox3.Text) > MaxT2x)
                     {
                         CustomValidator20.ErrorMessage = "На температуру свыше 220°С вариантов нет";
                         args.IsValid = false;
@@ -3609,6 +3609,9 @@ public partial class RDT : System.Web.UI.Page
                 RemoveCssClass(lp3, "panel-hide");
                 AddCssClass(lp4, "panel-hide");
                 AddCssClass(lp5, "panel-hide");
+
+                ws1RadioButtonList1.Items[3].Enabled = false;
+                ws1RadioButtonList1.SelectedIndex = -1;
                 break;
             case 3:
                 lp1ControlEnable(false);
@@ -3756,6 +3759,7 @@ public partial class RDT : System.Web.UI.Page
             lp5RadioButtonList1.SelectedIndex = -1;
             fprRadioButton2.Checked = false;
             fprRadioButton2.Enabled = true;
+            fprRadioButton1.Checked = false;
         }
         else
         {
@@ -3777,6 +3781,7 @@ public partial class RDT : System.Web.UI.Page
             dropDownListEnable(fprDropDownList2, false);
             RemoveCssClass(fpr1_1, "panel-hide");
             AddCssClass(fpr2_1, "panel-hide");
+            fprRadioButton1.Checked = true;
         }
 
     }
