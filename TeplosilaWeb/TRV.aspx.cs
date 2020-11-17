@@ -416,16 +416,8 @@ public partial class TRV : System.Web.UI.Page
             lpv5RadioButtonList1.Enabled = true;
             fvRadioButton2.Checked = false;
             fvRadioButton2.Enabled = false;
-            //fpRadioButton2.Checked = false;
-            //textBoxEnabled(fpTextBox1, false);
-            //textBoxEnabled(fpTextBox2, false);
-            //textBoxEnabled(fpTextBox3, false);
-            //textBoxEnabled(fpTextBox4, false);
-            //textBoxEnabled(fpTextBox5, false);
-            //dropDownListEnable(fpDropDownList1, true);
-            //dropDownListEnable(fpDropDownList2, false);
-            //RemoveCssClass(fpr1_1, "panel-hide");
-            //AddCssClass(fpr2_1, "panel-hide");
+            fvRadioButton1.Checked = true;
+            fvDropDownList1.Enabled = true;
         }
 
 
@@ -446,6 +438,18 @@ public partial class TRV : System.Web.UI.Page
             RemoveCssClass(lpv1, "panel-hide");
             AddCssClass(lpv2, "panel-hide");
             ws2RadioButtonList1.Items[3].Enabled = false;
+            ws2RadioButtonList1.ClearSelection();
+
+            lpv5RadioButtonList1.ClearSelection();
+            lpv5RadioButtonList1.Enabled = false;
+            DisableTextBox(lpv5TextBox1);
+            DisableTextBox(lpv5TextBox2);
+            DisableTextBox(lpv5TextBox3);
+            lpv5DropDownList1.ClearSelection();
+            lpv5DropDownList1.Enabled = false;
+            lpv5DropDownList2.ClearSelection();
+            lpv5DropDownList2.Enabled = false;
+            AddCssClass(lpv5, "panel-hide");
         }
         else
         {
@@ -487,6 +491,19 @@ public partial class TRV : System.Web.UI.Page
             RemoveCssClass(lpv1, "panel-hide");
             AddCssClass(lpv2, "panel-hide");
             ws2RadioButtonList1.Items[3].Enabled = false;
+            ws2RadioButtonList1.ClearSelection();
+
+            lpv5RadioButtonList1.ClearSelection();
+            lpv5RadioButtonList1.Enabled = false;
+            DisableTextBox(lpv5TextBox1);
+            DisableTextBox(lpv5TextBox2);
+            DisableTextBox(lpv5TextBox3);
+            lpv5DropDownList1.ClearSelection();
+            lpv5DropDownList1.Enabled = false;
+            lpv5DropDownList2.ClearSelection();
+            lpv5DropDownList2.Enabled = false;
+            AddCssClass(lpv5, "panel-hide");
+
         }
         else
         {
@@ -525,6 +542,18 @@ public partial class TRV : System.Web.UI.Page
             RemoveCssClass(lpv1, "panel-hide");
             AddCssClass(lpv2, "panel-hide");
             ws2RadioButtonList1.Items[3].Enabled = false;
+            ws2RadioButtonList1.ClearSelection();
+
+            lpv5RadioButtonList1.ClearSelection();
+            lpv5RadioButtonList1.Enabled = false;
+            DisableTextBox(lpv5TextBox1);
+            DisableTextBox(lpv5TextBox2);
+            DisableTextBox(lpv5TextBox3);
+            lpv5DropDownList1.ClearSelection();
+            lpv5DropDownList1.Enabled = false;
+            lpv5DropDownList2.ClearSelection();
+            lpv5DropDownList2.Enabled = false;
+            AddCssClass(lpv5, "panel-hide");
         }
         else
         {
@@ -2586,6 +2615,109 @@ public partial class TRV : System.Web.UI.Page
                 listResult["F"] = listF.ToArray();
                 listResult["G"] = listG.ToArray();
                 listResult["D"] = listD.ToArray();
+
+                if (listResult["A"].Count() > 1)
+                {
+
+                    List<string> listA = new List<string>(),
+                      listB = new List<string>(),
+                      listC = new List<string>(),
+                      listM = new List<string>();
+
+                    listA.AddRange(listResult["A"]);
+                    listB.AddRange(listResult["B"]);
+                    listC.AddRange(listResult["C"]);
+                    listM.AddRange(listResult["M"]);
+
+                    int indexNo = listA.IndexOf("-");
+                    if (indexNo != -1)
+                    {
+
+                        if (listI.Count > indexNo)
+                        {
+                            listA.RemoveRange(indexNo, listA.Count - indexNo);
+                            listB.RemoveRange(indexNo, listB.Count - indexNo);
+                            listC.RemoveRange(indexNo, listC.Count - indexNo);
+                            listI.RemoveRange(indexNo, listI.Count - indexNo);
+                            listF.RemoveRange(indexNo, listF.Count - indexNo);
+                            listG.RemoveRange(indexNo, listG.Count - indexNo);
+                            listD.RemoveRange(indexNo, listD.Count - indexNo);
+                            listI1.RemoveRange(indexNo, listI1.Count - indexNo);
+                            listI2.RemoveRange(indexNo, listI2.Count - indexNo);
+                            listI3.RemoveRange(indexNo, listI3.Count - indexNo);
+                            listM.RemoveRange(indexNo, listM.Count - indexNo);
+                            listPP54.RemoveRange(indexNo, listPP54.Count - indexNo);
+                            listPP55.RemoveRange(indexNo, listPP55.Count - indexNo);
+                            listPP56.RemoveRange(indexNo, listPP56.Count - indexNo);
+                            listPP57.RemoveRange(indexNo, listPP57.Count - indexNo);
+                            listPP58.RemoveRange(indexNo, listPP58.Count - indexNo);
+                            listPP59.RemoveRange(indexNo, listPP59.Count - indexNo);
+                            listPP60.RemoveRange(indexNo, listPP60.Count - indexNo);
+                            listPP61.RemoveRange(indexNo, listPP61.Count - indexNo);
+                            listPP62.RemoveRange(indexNo, listPP62.Count - indexNo);
+                            listPP63.RemoveRange(indexNo, listPP63.Count - indexNo);
+                            listPP65.RemoveRange(indexNo, listPP65.Count - indexNo);
+                            listPP66.RemoveRange(indexNo, listPP66.Count - indexNo);
+                            listPP67.RemoveRange(indexNo, listPP67.Count - indexNo);
+                            listPP68.RemoveRange(indexNo, listPP68.Count - indexNo);
+
+                            listResult["A"] = listA.ToArray();
+                            listResult["B"] = listB.ToArray();
+                            listResult["C"] = listC.ToArray();
+                            listResult["M"] = listM.ToArray();
+                            listResult["I"] = listI.ToArray();
+                            listResult["I1"] = listI1.ToArray();
+                            listResult["I2"] = listI2.ToArray();
+                            listResult["I3"] = listI3.ToArray();
+                            listResult["F"] = listF.ToArray();
+                            listResult["G"] = listG.ToArray();
+                            listResult["D"] = listD.ToArray();
+                        }
+                    }
+                }
+
+                if (listResult["A"].Count() == 0)
+                {
+                    List<string> listNull = new List<string>(),
+                                 listNonVar = new List<string>();
+
+                    listNull.Add("-");
+                    listNonVar.Add("вариантов нет");
+
+                    listResult["A"] = listNull.ToArray();
+                    listResult["B"] = listNull.ToArray();
+                    listResult["C"] = listNull.ToArray();
+                    listResult["D"] = listNull.ToArray();
+                    listResult["I"] = listNull.ToArray();
+                    listResult["I1"] = listNull.ToArray();
+                    listResult["I2"] = listNull.ToArray();
+                    listResult["I3"] = listNull.ToArray();
+                    listResult["F"] = listNull.ToArray();
+                    listResult["G"] = listNull.ToArray();
+                    listResult["M"] = listNonVar.ToArray();
+                }
+
+                if (listResult["A"].Count() == 1)
+                {
+                    string I = listResult["I"][0];
+                    if (I != "-")
+                    {
+                        if (customConverterToDouble(I) > 10)
+                        {
+                            listResult["A"].SetValue("-", 0);
+                            listResult["B"].SetValue("-", 0);
+                            listResult["C"].SetValue("-", 0);
+                            listResult["D"].SetValue("-", 0);
+                            listResult["I"].SetValue("вариантов нет", 0);
+                            listResult["I1"].SetValue("-", 0);
+                            listResult["I2"].SetValue("-", 0);
+                            listResult["I3"].SetValue("-", 0);
+                            listResult["F"].SetValue("-", 0);
+                            listResult["G"].SetValue("-", 0);
+                            listResult["M"].SetValue("-", 0);
+                        }
+                    }
+                }
             }
 
             else
@@ -3403,7 +3535,7 @@ public partial class TRV : System.Web.UI.Page
                                                 {
                                                     p30 = (customConverterToDouble(fvTextBox1.Text) * arrConvert1[(fvDropDownList1.SelectedIndex - 1), 5] * (g / 1000));
                                                 }
-                                            
+
                                             }
                                             else
                                             {
@@ -3426,16 +3558,16 @@ public partial class TRV : System.Web.UI.Page
                                             if (lpvDropDownList2.Enabled)
                                             {
                                                 checkTextBox = lpvTextBox2.Text;
-                                            } 
+                                            }
                                             else if (lpv5DropDownList1.Enabled)
                                             {
                                                 checkTextBox = lpv5TextBox1.Text;
-                                            } 
+                                            }
                                             else
                                             {
                                                 checkTextBox = lpvTextBox21.Text;
                                             }
-                                               
+
                                             if (!String.IsNullOrWhiteSpace(checkTextBox))
                                             {
                                                 if (!String.IsNullOrWhiteSpace(calcvTextBox1.Text) || lpv5DropDownList1.Enabled)
@@ -3478,7 +3610,7 @@ public partial class TRV : System.Web.UI.Page
                                                         double p35 = 0;
                                                         try
                                                         {
-                                                            if(lpv5RadioButtonList1.SelectedIndex == 0)
+                                                            if (lpv5RadioButtonList1.SelectedIndex == 0)
                                                             {
                                                                 p35 = customConverterToDouble(lpv5TextBox3.Text);
                                                             }
@@ -3496,7 +3628,7 @@ public partial class TRV : System.Web.UI.Page
                                                                     p35 = Math.Round(100 * Math.Pow((customConverterToDouble(lpv5TextBox1.Text) * arrConvert3[lpv5DropDownList1.SelectedIndex - 1] / arrConvert3[2]) + 1, 0.25));
                                                                 }
                                                             }
-                                                           
+
                                                         }
                                                         catch (Exception) { }
 
@@ -3526,19 +3658,19 @@ public partial class TRV : System.Web.UI.Page
                                                         }
                                                         catch (Exception) { }
 
-                                                    if (p35 <= 0)
-                                                    {
+                                                        if (p35 <= 0)
+                                                        {
 
-                                                        LabelError.Text += "Неверно указано значение температуры";
-                                                        return;
-                                                    }
-                                                    else if (p35 > g_dict["vTMax"])
-                                                    {
+                                                            LabelError.Text += "Неверно указано значение температуры";
+                                                            return;
+                                                        }
+                                                        else if (p35 > g_dict["vTMax"])
+                                                        {
 
-                                                        LabelError.Text += "На температуру свыше " + g_dict["vTMax"].ToString() + "°С вариантов нет";
-                                                        return;
-                                                    }
-                                                    else g_dict.Add("p35", p35);
+                                                            LabelError.Text += "На температуру свыше " + g_dict["vTMax"].ToString() + "°С вариантов нет";
+                                                            return;
+                                                        }
+                                                        else g_dict.Add("p35", p35);
 
                                                         double p61 = 0;
                                                         try
@@ -3608,37 +3740,37 @@ public partial class TRV : System.Web.UI.Page
                                                         //else g_dict.Add("p63", p63);
                                                         g_dict.Add("p63", p63);
 
-                                                    if (!(p63 > p62))
-                                                    {
-                                                        LabelError.Text += "Неверно указано значение давления";
+                                                        if (!(p63 > p62))
+                                                        {
+                                                            LabelError.Text += "Неверно указано значение давления";
 
-                                                        return;
+                                                            return;
+                                                        }
+
+                                                        /*if (p35 < 7 || p35 > 150)
+                                                        {
+                                                            LabelError.Text += "Не задана температура для расчета клапана на кавитацию";
+                                                            return;
+                                                        }
+                                                        if (ws2RadioButtonList1.SelectedIndex == 0)
+                                                        {
+                                                            ws2ResultLabel.Text = "Рабочая среда - вода";
+                                                            maxt2ResultLabel.Text = "Максимальная температура - 150 °С";
+                                                        }
+                                                        else if (ws2RadioButtonList1.SelectedIndex == 1)
+                                                        {
+                                                            ws2ResultLabel.Text = "Рабочая среда - этиленгликоль " + ws2TextBox1.Text + " %, " + ws2TextBox2.Text + " °С";
+                                                            maxt2ResultLabel.Text = "Максимальная температура - 150 °С";
+                                                        }
+                                                        else if (ws2RadioButtonList1.SelectedIndex == 2)
+                                                        {
+                                                            ws2ResultLabel.Text = "Рабочая среда - пропиленгликоль " + ws2TextBox1.Text + " %, " + ws2TextBox2.Text + " °С";
+                                                            maxt2ResultLabel.Text = "Максимальная температура - 150 °С";
+                                                        }*/
+
                                                     }
 
-                                                    /*if (p35 < 7 || p35 > 150)
-                                                    {
-                                                        LabelError.Text += "Не задана температура для расчета клапана на кавитацию";
-                                                        return;
-                                                    }
-                                                    if (ws2RadioButtonList1.SelectedIndex == 0)
-                                                    {
-                                                        ws2ResultLabel.Text = "Рабочая среда - вода";
-                                                        maxt2ResultLabel.Text = "Максимальная температура - 150 °С";
-                                                    }
-                                                    else if (ws2RadioButtonList1.SelectedIndex == 1)
-                                                    {
-                                                        ws2ResultLabel.Text = "Рабочая среда - этиленгликоль " + ws2TextBox1.Text + " %, " + ws2TextBox2.Text + " °С";
-                                                        maxt2ResultLabel.Text = "Максимальная температура - 150 °С";
-                                                    }
-                                                    else if (ws2RadioButtonList1.SelectedIndex == 2)
-                                                    {
-                                                        ws2ResultLabel.Text = "Рабочая среда - пропиленгликоль " + ws2TextBox1.Text + " %, " + ws2TextBox2.Text + " °С";
-                                                        maxt2ResultLabel.Text = "Максимальная температура - 150 °С";
-                                                    }*/
-
-                                                    }
-
-                                                    if(lpv5RadioButtonList1.SelectedIndex == 1)
+                                                    if (lpv5RadioButtonList1.SelectedIndex == 1)
                                                     {
                                                         lpv5TextBox3.Text = (Math.Round(100 * Math.Pow((customConverterToDouble(lpv5TextBox1.Text) * arrConvert3[lpv5DropDownList1.SelectedIndex - 1] / arrConvert3[2]) + 1, 0.25))).ToString();
                                                     }
@@ -3646,7 +3778,7 @@ public partial class TRV : System.Web.UI.Page
                                                     ws2ResultLabel.Visible = true;
                                                     maxp2ResultLabel.Visible = true;
                                                     maxt2ResultLabel.Visible = true;
-                                                    
+
                                                     if (ws2RadioButtonList1.SelectedIndex == 0)
                                                     {
                                                         this.ws2ResultLabel.Text = "Рабочая среда - вода";
@@ -3666,8 +3798,8 @@ public partial class TRV : System.Web.UI.Page
 
                                                     //maxt2ResultLabel.Text = "Максимальная температура - " + g_dict["vTMax"].ToString() + " °С";
                                                     this.maxt2ResultLabel.Text = "Максимальная температура - " + ((double.Parse(g_dict["p35"].ToString()) > 150) ? "220" : "150") + " °С";
-                                                    
-                                                    if(tvRadioButtonList1.SelectedIndex == 0) 
+
+                                                    if (tvRadioButtonList1.SelectedIndex == 0)
                                                     {
                                                         maxp2ResultLabel.Text = "Максимальное рабочее давление - 25 бар";
                                                     }
@@ -3997,6 +4129,14 @@ public partial class TRV : System.Web.UI.Page
             this.GridView2.Height = 250;
             this.Button2.Visible = true;
             this.Button2.Enabled = true;
+            if (ws2RadioButtonList1.SelectedIndex == 3)
+            {
+                GridView2.CssClass = "table table-result trv steam";
+            }
+            else
+            {
+                GridView2.CssClass = "table table-result trv";
+            }
             //this.Button3.Visible = true;
             //this.Button3.Enabled = true;
         }
@@ -4799,7 +4939,7 @@ public partial class TRV : System.Web.UI.Page
             ws.Cells["G31"].Value = v_input_dict[68];
 
 
-            ws.Pictures.Add(HttpContext.Current.Server.MapPath("\\Content\\images\\trv\\" + ((v_input_dict[7] == this.tvRadioButtonList1.Items[tvRadioButtonList1.SelectedIndex].Text) ? "Габаритный TRV и TRV-P.png" : "Габаритный TRV-3.png")), "A29", "B38");
+            ws.Pictures.Add(HttpContext.Current.Server.MapPath("\\Content\\images\\trv\\" + ((v_input_dict[7] == this.tvRadioButtonList1.Items[tvRadioButtonList1.SelectedIndex].Text) ? "Габаритный TRV и TRV-P.png" : "Габаритный TRV-3.png")), "A29");
 
 
             string path = HttpContext.Current.Server.MapPath("~/Files/TRV/PDF/" + DateTime.Now.ToString("dd-MM-yyyy"));
@@ -4891,8 +5031,8 @@ public partial class TRV : System.Web.UI.Page
 
             ws.PrintOptions.TopMargin = 0.1 / 2.54;
             ws.PrintOptions.BottomMargin = 0.1 / 2.54;
-            ws.PrintOptions.LeftMargin = 1 / 2.54;
-            ws.PrintOptions.RightMargin = 0.78 / 2.54;
+            ws.PrintOptions.LeftMargin = 0.5 / 2.54;
+            ws.PrintOptions.RightMargin = 0.5 / 2.54;
 
             for (int i = 1; i < 50; i++)
             {
@@ -4960,13 +5100,12 @@ public partial class TRV : System.Web.UI.Page
             ws.Cells["B29"].Value = v_input_dict[43];
             ws.Cells["C29"].Value = v_input_dict[44];
             ws.Cells["D29"].Value = v_input_dict[45];
-            ws.Cells["E29"].Value = v_input_dict[46];
-            ws.Cells["F29"].Value = v_input_dict[47];
-            ws.Cells["G29"].Value = v_input_dict[48];
-            ws.Cells["H29"].Value = v_input_dict[49];
-            ws.Cells["I29"].Value = v_input_dict[50];
-            ws.Cells["J29"].Value = v_input_dict[51];
-            ws.Cells["K29"].Value = v_input_dict[52];
+            ws.Cells["F29"].Value = v_input_dict[46];
+            ws.Cells["G29"].Value = v_input_dict[47];
+            ws.Cells["H29"].Value = v_input_dict[48];
+            ws.Cells["I29"].Value = v_input_dict[49];
+            ws.Cells["J29"].Value = v_input_dict[50];
+            ws.Cells["K29"].Value = v_input_dict[51];
 
             ws.Cells["A33"].Value = v_input_dict[53];
             ws.Cells["B33"].Value = v_input_dict[54];
@@ -4986,7 +5125,7 @@ public partial class TRV : System.Web.UI.Page
             ws.Cells["G42"].Value = v_input_dict[68];
 
 
-            ws.Pictures.Add(HttpContext.Current.Server.MapPath("\\Content\\images\\trv\\" + ((v_input_dict[7] == this.tvRadioButtonList1.Items[tvRadioButtonList1.SelectedIndex].Text) ? "Габаритный TRV и TRV-P.png" : "Габаритный TRV-3.png")), "A39", "B48");
+            ws.Pictures.Add(HttpContext.Current.Server.MapPath("\\Content\\images\\trv\\" + ((v_input_dict[7] == this.tvRadioButtonList1.Items[tvRadioButtonList1.SelectedIndex].Text) ? "Габаритный TRV и TRV-P.png" : "Габаритный TRV-3.png")), "A39");
 
 
             string path = HttpContext.Current.Server.MapPath("~/Files/TRV/PDF/" + DateTime.Now.ToString("dd-MM-yyyy"));

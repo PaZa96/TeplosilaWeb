@@ -654,7 +654,7 @@
                                         OnSelectedIndexChanged="tdRadioButtonList4_SelectedIndexChanged"
                                         Enabled="False">
                                         <asp:ListItem> Да</asp:ListItem>
-                                        <asp:ListItem Selected="True"> Нет</asp:ListItem>
+                                        <asp:ListItem Selected="True">Нет</asp:ListItem>
                                     </asp:RadioButtonList>
                                 </div>
                             </ContentTemplate>
