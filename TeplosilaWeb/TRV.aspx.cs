@@ -184,7 +184,6 @@ public partial class TRV : System.Web.UI.Page
                 break;
             case 2:
                 lpv5DropDownList1.Enabled = true;
-                lpv5DropDownList2.Enabled = true;
                 break;
         }
 
@@ -450,6 +449,11 @@ public partial class TRV : System.Web.UI.Page
             lpv5DropDownList2.ClearSelection();
             lpv5DropDownList2.Enabled = false;
             AddCssClass(lpv5, "panel-hide");
+            DisableTextBox(lpv5TextBox2);
+            lpv5RadioButton2.Checked = false;
+            lpv5RadioButton3.Checked = false;
+            lpv5RadioButton3.Enabled = false;
+            lpv5RadioButton2.Enabled = false;
         }
         else
         {
@@ -503,7 +507,11 @@ public partial class TRV : System.Web.UI.Page
             lpv5DropDownList2.ClearSelection();
             lpv5DropDownList2.Enabled = false;
             AddCssClass(lpv5, "panel-hide");
-
+            DisableTextBox(lpv5TextBox2);
+            lpv5RadioButton2.Checked = false;
+            lpv5RadioButton3.Checked = false;
+            lpv5RadioButton3.Enabled = false;
+            lpv5RadioButton2.Enabled = false;
         }
         else
         {
@@ -554,6 +562,11 @@ public partial class TRV : System.Web.UI.Page
             lpv5DropDownList2.ClearSelection();
             lpv5DropDownList2.Enabled = false;
             AddCssClass(lpv5, "panel-hide");
+            DisableTextBox(lpv5TextBox2);
+            lpv5RadioButton2.Checked = false;
+            lpv5RadioButton3.Checked = false;
+            lpv5RadioButton3.Enabled = false;
+            lpv5RadioButton2.Enabled = false;
         }
         else
         {
@@ -577,6 +590,21 @@ public partial class TRV : System.Web.UI.Page
                 }
             }
         }
+    }
+
+    protected void lpv5RadioButton2_CheckedChanged(object sender, EventArgs e)
+    {
+        lpv5RadioButton3.Checked = false;
+        DisableTextBox(lpv5TextBox4);
+        lpv5DropDownList2.Enabled = true;
+    }
+
+    protected void lpv5RadioButton3_CheckedChanged(object sender, EventArgs e)
+    {
+        lpv5RadioButton2.Checked = false;
+        DisableTextBox(lpv5TextBox2);
+        lpv5DropDownList2.ClearSelection();
+        lpv5DropDownList2.Enabled = false;
     }
 
     protected void lpvDropDownList2_SelectedIndexChanged(object sender, EventArgs e)
@@ -775,6 +803,7 @@ public partial class TRV : System.Web.UI.Page
         fvDropDownList2.Enabled = false;
         fvDropDownList2.ClearSelection();
         DisablePanel(2);
+
     }
 
     protected void fvRadioButton2_CheckedChanged(object sender, EventArgs e)
@@ -1347,7 +1376,16 @@ public partial class TRV : System.Web.UI.Page
         {
            
             p1 = (customConverterToDouble(lpv5TextBox1.Text) * arrConvert3[lpv5DropDownList1.SelectedIndex - 1] / arrConvert3[2]);
-            p2 = (customConverterToDouble(lpv5TextBox2.Text) * arrConvert3[lpv5DropDownList2.SelectedIndex - 1] / arrConvert3[2]);
+
+            if (lpv5RadioButton2.Checked)
+            {
+                p2 = (customConverterToDouble(lpv5TextBox2.Text) * arrConvert3[lpv5DropDownList2.SelectedIndex - 1] / arrConvert3[2]);
+            }
+            if(lpv5RadioButton3.Checked)
+            {
+                p2 = 0.6 * p1 - 0.4;
+            }
+            
 
             if (lpv5RadioButtonList1.SelectedIndex == 0)
             {
@@ -2940,8 +2978,16 @@ public partial class TRV : System.Web.UI.Page
         v_in_dict.Add(66, (this.lpv5TextBox1.Enabled) ? this.lpv5TextBox1.Text : "-");
         v_in_dict.Add(67, (this.lpv5TextBox1.Enabled) ? this.lpv5DropDownList1.Text : "-");
 
-        v_in_dict.Add(68, (this.lpv5TextBox2.Enabled) ? this.lpv5TextBox2.Text : "-");
-        v_in_dict.Add(69, (this.lpv5TextBox2.Enabled) ? this.lpv5DropDownList2.Text : "-");
+        if (lpv5RadioButton2.Checked)
+        {
+            v_in_dict.Add(68, (this.lpv5TextBox2.Enabled) ? this.lpv5TextBox2.Text : "-");
+            v_in_dict.Add(69, (this.lpv5TextBox2.Enabled) ? this.lpv5DropDownList2.Text : "-");
+        }
+        if (lpv5RadioButton3.Checked)
+        {
+            v_in_dict.Add(68, lpv5TextBox4.Text);
+            v_in_dict.Add(69, "бар");
+        }
 
         v_in_dict.Add(70, (lpv5RadioButtonList1.SelectedValue != "") ? lpv5RadioButtonList1.SelectedValue : "-");
 
@@ -3577,7 +3623,7 @@ public partial class TRV : System.Web.UI.Page
                                                     if (ws2RadioButtonList1.SelectedIndex == 3)
                                                     {
 
-                                                        double p56, p58;
+                                                        double p56, p58=0;
 
                                                         try
                                                         {
@@ -3591,7 +3637,14 @@ public partial class TRV : System.Web.UI.Page
 
                                                         try
                                                         {
-                                                            p58 = customConverterToDouble(this.lpv5TextBox2.Text) * arrConvert3[this.lpv5DropDownList2.SelectedIndex - 1] / arrConvert3[2];
+                                                            if (lpv5RadioButton2.Checked)
+                                                            {
+                                                                p58 = customConverterToDouble(this.lpv5TextBox2.Text) * arrConvert3[this.lpv5DropDownList2.SelectedIndex - 1] / arrConvert3[2];
+                                                            }
+                                                            if (lpv5RadioButton3.Checked)
+                                                            {
+                                                                p58 = 0.6 * p56 - 0.4;
+                                                            }
                                                         }
                                                         catch (Exception)
                                                         {
@@ -3617,7 +3670,17 @@ public partial class TRV : System.Web.UI.Page
                                                             else
                                                             {
                                                                 double p1 = (customConverterToDouble(lpv5TextBox1.Text) * arrConvert3[lpv5DropDownList1.SelectedIndex - 1] / arrConvert3[2]);
-                                                                double p2 = (customConverterToDouble(lpv5TextBox2.Text) * arrConvert3[lpv5DropDownList2.SelectedIndex - 1] / arrConvert3[2]);
+                                                                double p2 = 0;
+
+                                                                if (lpv5RadioButton2.Checked) 
+                                                                {
+                                                                    p2 = (customConverterToDouble(lpv5TextBox2.Text) * arrConvert3[lpv5DropDownList2.SelectedIndex - 1] / arrConvert3[2]);
+                                                                }
+                                                                if (lpv5RadioButton3.Checked)
+                                                                {
+                                                                    p2 = Math.Round(0.6 * p1 - 0.4, 2);
+                                                                    lpv5TextBox4.Text = p2.ToString();
+                                                                }
 
                                                                 if (lpv5RadioButtonList1.SelectedIndex == 0)
                                                                 {
@@ -4358,7 +4421,7 @@ public partial class TRV : System.Web.UI.Page
 
     protected void lpvCustomValidator1_ServerValidate(object source, ServerValidateEventArgs args)
     {
-        if (CustomValidator18.IsValid && CustomValidator19.IsValid)
+        if (CustomValidator18.IsValid && CustomValidator19.IsValid && CustomValidator2.IsValid && CustomValidator22.IsValid)
         {
             if (lpvDropDownList1.Enabled)
             {
@@ -4615,7 +4678,7 @@ public partial class TRV : System.Web.UI.Page
 
     protected void CustomValidator2_ServerValidate(object source, ServerValidateEventArgs args)
     {
-        if (CustomValidator1.IsValid)
+        if (CustomValidator23.IsValid)
         {
             if (lpv5DropDownList2.Enabled)
             {
@@ -4655,15 +4718,6 @@ public partial class TRV : System.Web.UI.Page
                 {
                     CustomValidator21.ErrorMessage = "Необходимо выбрать тип пара";
                     args.IsValid = false;
-                }
-            }
-            if (lpv5RadioButtonList1.SelectedIndex == 1)
-            {
-                if ((100 * Math.Pow((customConverterToDouble(lpv5TextBox1.Text) * arrConvert3[lpv5DropDownList1.SelectedIndex - 1] / arrConvert3[2]) + 1, 0.25)) > 220)
-                {
-                    CustomValidator21.ErrorMessage = "При указанном давление температура пара превышает допустимое значение";
-                    args.IsValid = false;
-                    return;
                 }
             }
         }
@@ -4708,6 +4762,55 @@ public partial class TRV : System.Web.UI.Page
                 args.IsValid = false;
                 CustomValidator3.ErrorMessage = "";
             }
+        }
+    }
+    protected void CustomValidator22_ServerValidate(object source, ServerValidateEventArgs args)
+    {
+        if (CustomValidator23.IsValid)
+        {
+            if (lpv5TextBox4.Enabled)
+            {
+                if (lpv5TextBox4.Enabled == false || checkTextBoxEmpty(lpv5TextBox4))
+                {
+                    CustomValidator22.ErrorMessage = "Необходимо заполнить поле";
+                    args.IsValid = false;
+                    return;
+                }
+                if (customConverterToDouble(lpv5TextBox4.Text) <= 0)
+                {
+                    CustomValidator22.ErrorMessage = "Неверно указано значение давления";
+                    args.IsValid = false;
+                    return;
+                }
+                if (customConverterToDouble(lpv5TextBox4.Text) >= convertArrToBar(arrConvert3, lpv5DropDownList1, lpv5TextBox1))
+                {
+                    CustomValidator22.ErrorMessage = "Неверно указано значение давления";
+                    args.IsValid = false;
+                }
+            }
+        }
+        else
+        {
+            args.IsValid = false;
+            CustomValidator22.ErrorMessage = "";
+        }
+    }
+
+    protected void CustomValidator23_ServerValidate(object source, ServerValidateEventArgs args)
+    {
+        if (CustomValidator1.IsValid)
+        {
+            if (lpv5RadioButton2.Checked == false && lpv5RadioButton3.Checked == false)
+            {
+                CustomValidator23.ErrorMessage = "Необходимо указать или рассчитать давление пара после клапана";
+                args.IsValid = false;
+                return;
+            }
+        }
+        else
+        {
+            args.IsValid = false;
+            CustomValidator23.ErrorMessage = "";
         }
     }
 
@@ -4917,9 +5020,9 @@ public partial class TRV : System.Web.UI.Page
             ws.Cells["A19"].Value = v_input_dict[42];
             ws.Cells["C19"].Value = v_input_dict[43];
             ws.Cells["E19"].Value = v_input_dict[44];
-            ws.Cells["G19"].Value = v_input_dict[48];
-            ws.Cells["I19"].Value = v_input_dict[49];
-            ws.Cells["J19"].Value = v_input_dict[52];
+            ws.Cells["G19"].Value = v_input_dict[46];
+            ws.Cells["I19"].Value = v_input_dict[48];
+            ws.Cells["J19"].Value = v_input_dict[49];
 
             ws.Cells["A23"].Value = v_input_dict[53];
             ws.Cells["B23"].Value = v_input_dict[54];
@@ -5431,5 +5534,10 @@ public partial class TRV : System.Web.UI.Page
         }
 
         return afterConvert;
+    }
+
+    protected void CustomValidator2_ServerValidate1(object source, ServerValidateEventArgs args)
+    {
+
     }
 }
