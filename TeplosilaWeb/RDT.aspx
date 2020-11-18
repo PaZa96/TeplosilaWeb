@@ -280,7 +280,7 @@
 
                                     </div>
                                     <div class="col panel-hide" id="lp5" runat="server">
-                                        <asp:Label ID="Label32" runat="server" Text="Давление пара перед регулятором:">
+                                        <asp:Label ID="Label32" runat="server" Text="Давление пара перед регулятором (изб.):">
                                         </asp:Label>
                                         <br />
                                         <asp:Label ID="Label33" runat="server" Text="P'1 = "></asp:Label>
@@ -302,7 +302,7 @@
                                             OnServerValidate="CustomValidator18_ServerValidate"></asp:CustomValidator>
                                         <br />
                                         <asp:Label ID="Label34" runat="server"
-                                            Text="Требуемое давление пара после регулятора:"></asp:Label>
+                                            Text="Требуемое давление пара после регулятора (изб.):"></asp:Label>
                                         <br />
                                         <asp:Label ID="Label35" runat="server" Text="Р(треб) ="></asp:Label>
                                         &nbsp;&nbsp;<asp:TextBox ID="lp5TextBox2" runat="server"
