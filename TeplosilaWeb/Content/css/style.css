@@ -186,11 +186,11 @@ tr:nth-child(2) td:nth-child(2) {
     display: none;
 }
 
-.trv steam tr:nth-child(n) td:nth-child(7) ~ td {
+.steam tr:nth-child(n) td:nth-child(7) ~ td {
     display: none;
 }
 
-.trv steam tr:nth-child(n) th:nth-child(7) ~ th {
+.steam tr:nth-child(n) th:nth-child(7) ~ th {
     display: none;
 }
 
