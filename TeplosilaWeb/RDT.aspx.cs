@@ -544,7 +544,7 @@ public partial class RDT : System.Web.UI.Page
             }
             else if (eorRadioButtonList1.SelectedIndex == 1)
             {
-                if (T1 > 150)
+                if (T1 >= 150)
                 {
                     table = dataFromFile.table75;
                 }
@@ -1089,7 +1089,14 @@ public partial class RDT : System.Web.UI.Page
             }
             else
             {
-                r_in_dict.Add(39, "220˚С");
+                if (customConverterToDouble(lp5TextBox3.Text) >= 150)
+                {
+                    r_in_dict.Add(39, "220˚С");
+                }
+                else
+                {
+                    r_in_dict.Add(39, "150˚С");
+                }
             }
             
             r_in_dict.Add(40, "16 бар");
@@ -1117,9 +1124,31 @@ public partial class RDT : System.Web.UI.Page
             r_in_dict.Add(57, (this.lp5TextBox2.Enabled) ? this.lp5TextBox2.Text : "-");
             r_in_dict.Add(58, (this.lp5TextBox2.Enabled) ? this.lp5DropDownList2.Text : "-");
 
-            r_in_dict.Add(59, (lp5RadioButtonList1.SelectedValue != "") ? lp5RadioButtonList1.SelectedValue : "-");
+            if (ws1RadioButtonList1.SelectedIndex == 3)
+            {
+                if (lp5RadioButtonList1.SelectedIndex == 0)
+                {
+                    r_in_dict.Add(59, "Водяной пар перегретый");
+                }
+                else
+                {
+                    r_in_dict.Add(59, "Водяной пар насыщенный");
+                }
+            }
+            else
+            {
+                r_in_dict.Add(59, "-");
+            }
 
-            r_in_dict.Add(60, (this.lp5TextBox3.Enabled) ? this.lp5TextBox3.Text : "-");
+            if (ws1RadioButtonList1.SelectedIndex == 3)
+            {
+                r_in_dict.Add(60, this.lp5TextBox3.Text);
+            }
+            else
+            {
+                r_in_dict.Add(60, "-");
+            }
+            
             if (lp5RadioButtonList1.SelectedIndex == 0)
             {
                 r_in_dict.Add(61, (Label38.Text));
@@ -3144,7 +3173,7 @@ public partial class RDT : System.Web.UI.Page
             for (int i = 1; i < 50; i++)
             {
 
-                if (i == 2 || i == 6 || i == 38 || i == 42 || i == 43 || i == 44 || i == 46 )
+                if (i == 2 || i == 6 || i == 38 || i == 42 || i == 43 || i == 46 )
                 {
                     r_input_dict[i] = ConvertPointToComma(r_input_dict[i]);
 
@@ -3170,6 +3199,8 @@ public partial class RDT : System.Web.UI.Page
             ws.Cells["I11"].Value = r_input_dict[57];
             ws.Cells["K11"].Value = r_input_dict[58];
 
+            ws.Cells["I12"].Value = r_input_dict[60];
+
             ws.Cells["I14"].Value = r_input_dict[38];
             ws.Cells["K14"].Value = r_input_dict[381];
 
@@ -3187,7 +3218,21 @@ public partial class RDT : System.Web.UI.Page
 
             getDimsR(ref r_input_dict);
 
-            ws.Pictures.Add(HttpContext.Current.Server.MapPath("~/Content/images/rdt/" + ((r_input_dict[4] == this.eorRadioButtonList1.Items[0].Text) || (r_input_dict[4] == eorRadioButtonList1.Items[1].Text) ? "Габаритный RDT и RDT-P.jpg" : "Габаритный RDT-S и RDT-B.jpg")), "A25");
+            if ((r_input_dict[4] == this.eorRadioButtonList1.Items[0].Text) || (r_input_dict[4] == eorRadioButtonList1.Items[1].Text))
+            {
+                if (r_input_dict[4] == eorRadioButtonList1.Items[1].Text && customConverterToDouble(lp5TextBox3.Text) >= 150)
+                {
+                    ws.Pictures.Add(HttpContext.Current.Server.MapPath("~/Content/images/rdt/Габаритный RDT-S и RDT-B.jpg"), "A25");
+                }
+                else
+                {
+                    ws.Pictures.Add(HttpContext.Current.Server.MapPath("~/Content/images/rdt/Габаритный RDT и RDT-P.jpg"), "A25");
+                }
+            }
+            else
+            {
+                ws.Pictures.Add(HttpContext.Current.Server.MapPath("~/Content/images/rdt/Габаритный RDT-S и RDT-B.jpg"), "A25");
+            }
 
 
             ws.Cells["F25"].Value = r_input_dict[51];

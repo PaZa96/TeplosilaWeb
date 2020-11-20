@@ -3860,7 +3860,7 @@ public partial class TRV : System.Web.UI.Page
                                                     }
                                                     else
                                                     {
-                                                        this.ws2ResultLabel.Text = "Рабочая среда - водяной пар";
+                                                        
                                                         if (lpv5RadioButtonList1.SelectedIndex == 0)
                                                         {
                                                             this.ws2ResultLabel.Text = "Рабочая среда - Водяной пар перегретый";
