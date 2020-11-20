@@ -64,7 +64,7 @@ public partial class TRV : System.Web.UI.Page
         {
             EnableTemperatureTable();
         }
-        if (tvRadioButtonList1.SelectedIndex == 0 && (aa1RadioButtonList1.SelectedIndex == 1 || aa2RadioButtonList1.SelectedIndex == 1 || aa3RadioButtonList1.SelectedIndex == 1))
+        if (tvRadioButtonList1.SelectedIndex == 0)
         {
             ws2RadioButtonList1.Items[3].Enabled = true;
         }
@@ -76,9 +76,19 @@ public partial class TRV : System.Web.UI.Page
             lpvTextBox2.Enabled = false;
             lpvTextBox2.Text = "";
             lpvDropDownList21.Enabled = true;
-
+            lpv5RadioButtonList1.ClearSelection();
+            lpv5RadioButtonList1.Enabled = false;
         }
         ws2RadioButtonList1.SelectedIndex = -1;
+
+        AddCssClass(lpv1, "panel-hide");
+        AddCssClass(lpv2, "panel-hide");
+        AddCssClass(lpv3, "panel-hide");
+        AddCssClass(lpv5, "panel-hide");
+        AddCssClass(calcv, "panel-hide");
+        DisableDropDownLists();
+        DisablePanel(1);
+        DisablePanel(3);
     }
 
     protected void aaRadioButton1_CheckedChanged(object sender, EventArgs e)
@@ -105,7 +115,7 @@ public partial class TRV : System.Web.UI.Page
         }
         AddCssClass(lpv1, "panel-hide");
         AddCssClass(lpv2, "panel-hide");
-        ws2RadioButtonList1.Items[3].Enabled = false;
+        
     }
 
     protected void aaRadioButton2_CheckedChanged(object sender, EventArgs e)
@@ -130,7 +140,7 @@ public partial class TRV : System.Web.UI.Page
         }
         AddCssClass(lpv1, "panel-hide");
         AddCssClass(lpv2, "panel-hide");
-        ws2RadioButtonList1.Items[3].Enabled = false;
+        
     }
 
     protected void aaRadioButton3_CheckedChanged(object sender, EventArgs e)
@@ -154,7 +164,6 @@ public partial class TRV : System.Web.UI.Page
         }
         AddCssClass(lpv1, "panel-hide");
         AddCssClass(lpv2, "panel-hide");
-        ws2RadioButtonList1.Items[3].Enabled = false;
     }
 
     private void changeImage(int index)
@@ -434,54 +443,30 @@ public partial class TRV : System.Web.UI.Page
         {
             EnableTemperatureTable();
         }
-        if (aa1RadioButtonList1.SelectedIndex == 0)
+        
+            
+        if (tvRadioButtonList1.SelectedIndex == 0)
         {
-            RemoveCssClass(lpv1, "panel-hide");
+            ws2RadioButtonList1.Items[3].Enabled = true;
             AddCssClass(lpv2, "panel-hide");
-            ws2RadioButtonList1.Items[3].Enabled = false;
-            ws2RadioButtonList1.ClearSelection();
-
-            lpv5RadioButtonList1.ClearSelection();
-            lpv5RadioButtonList1.Enabled = false;
-            DisableTextBox(lpv5TextBox1);
-            DisableTextBox(lpv5TextBox2);
-            DisableTextBox(lpv5TextBox3);
-            lpv5DropDownList1.ClearSelection();
-            lpv5DropDownList1.Enabled = false;
-            lpv5DropDownList2.ClearSelection();
-            lpv5DropDownList2.Enabled = false;
-            AddCssClass(lpv5, "panel-hide");
-            DisableTextBox(lpv5TextBox2);
-            lpv5RadioButton2.Checked = false;
-            lpv5RadioButton3.Checked = false;
-            lpv5RadioButton3.Enabled = false;
-            lpv5RadioButton2.Enabled = false;
+            AddCssClass(lpv1, "panel-hide");
         }
         else
         {
-            
-            if (aa1RadioButtonList1.SelectedIndex == 1 && tvRadioButtonList1.SelectedIndex == 0)
+            ws2RadioButtonList1.Items[3].Enabled = false;
+
+            if(tvRadioButtonList1.SelectedIndex == 1)
             {
-                ws2RadioButtonList1.Items[3].Enabled = true;
-                AddCssClass(lpv2, "panel-hide");
+                RemoveCssClass(lpv2, "panel-hide");
                 AddCssClass(lpv1, "panel-hide");
             }
             else
             {
-                ws2RadioButtonList1.Items[3].Enabled = false;
-
-                if(tvRadioButtonList1.SelectedIndex == 1)
-                {
-                    RemoveCssClass(lpv2, "panel-hide");
-                    AddCssClass(lpv1, "panel-hide");
-                }
-                else
-                {
-                    AddCssClass(lpv2, "panel-hide");
-                    AddCssClass(lpv1, "panel-hide");
-                }
+                AddCssClass(lpv2, "panel-hide");
+                AddCssClass(lpv1, "panel-hide");
             }
         }
+        
     }
 
     protected void aa2RadioButtonList1_SelectedIndexChanged(object sender, EventArgs e)
@@ -492,51 +477,27 @@ public partial class TRV : System.Web.UI.Page
         {
             EnableTemperatureTable();
         }
-        if (aa2RadioButtonList1.SelectedIndex == 0)
+      
+        if (tvRadioButtonList1.SelectedIndex == 0)
         {
-            RemoveCssClass(lpv1, "panel-hide");
-            AddCssClass(lpv2, "panel-hide");
-            ws2RadioButtonList1.Items[3].Enabled = false;
-            ws2RadioButtonList1.ClearSelection();
-
-            lpv5RadioButtonList1.ClearSelection();
-            lpv5RadioButtonList1.Enabled = false;
-            DisableTextBox(lpv5TextBox1);
-            DisableTextBox(lpv5TextBox2);
-            DisableTextBox(lpv5TextBox3);
-            lpv5DropDownList1.ClearSelection();
-            lpv5DropDownList1.Enabled = false;
-            lpv5DropDownList2.ClearSelection();
-            lpv5DropDownList2.Enabled = false;
-            AddCssClass(lpv5, "panel-hide");
-            DisableTextBox(lpv5TextBox2);
-            lpv5RadioButton2.Checked = false;
-            lpv5RadioButton3.Checked = false;
-            lpv5RadioButton3.Enabled = false;
-            lpv5RadioButton2.Enabled = false;
+            ws2RadioButtonList1.Items[3].Enabled = true;
         }
         else
         {
-            if (aa2RadioButtonList1.SelectedIndex == 1 && tvRadioButtonList1.SelectedIndex == 0)
+            ws2RadioButtonList1.Items[3].Enabled = false;
+
+            if (tvRadioButtonList1.SelectedIndex == 1)
             {
-                ws2RadioButtonList1.Items[3].Enabled = true;
+                RemoveCssClass(lpv2, "panel-hide");
+                AddCssClass(lpv1, "panel-hide");
             }
             else
             {
-                ws2RadioButtonList1.Items[3].Enabled = false;
-
-                if (tvRadioButtonList1.SelectedIndex == 1)
-                {
-                    RemoveCssClass(lpv2, "panel-hide");
-                    AddCssClass(lpv1, "panel-hide");
-                }
-                else
-                {
-                    AddCssClass(lpv2, "panel-hide");
-                    AddCssClass(lpv1, "panel-hide");
-                }
+                AddCssClass(lpv2, "panel-hide");
+                AddCssClass(lpv1, "panel-hide");
             }
         }
+        
     }
 
     protected void aa3RadioButtonList1_SelectedIndexChanged(object sender, EventArgs e)
@@ -547,51 +508,27 @@ public partial class TRV : System.Web.UI.Page
         {
             EnableTemperatureTable();
         }
-        if (aa3RadioButtonList1.SelectedIndex == 0)
+       
+        if (aa3RadioButtonList1.SelectedIndex == 1 && tvRadioButtonList1.SelectedIndex == 0)
         {
-            RemoveCssClass(lpv1, "panel-hide");
-            AddCssClass(lpv2, "panel-hide");
-            ws2RadioButtonList1.Items[3].Enabled = false;
-            ws2RadioButtonList1.ClearSelection();
-
-            lpv5RadioButtonList1.ClearSelection();
-            lpv5RadioButtonList1.Enabled = false;
-            DisableTextBox(lpv5TextBox1);
-            DisableTextBox(lpv5TextBox2);
-            DisableTextBox(lpv5TextBox3);
-            lpv5DropDownList1.ClearSelection();
-            lpv5DropDownList1.Enabled = false;
-            lpv5DropDownList2.ClearSelection();
-            lpv5DropDownList2.Enabled = false;
-            AddCssClass(lpv5, "panel-hide");
-            DisableTextBox(lpv5TextBox2);
-            lpv5RadioButton2.Checked = false;
-            lpv5RadioButton3.Checked = false;
-            lpv5RadioButton3.Enabled = false;
-            lpv5RadioButton2.Enabled = false;
+            ws2RadioButtonList1.Items[3].Enabled = true;
         }
         else
         {
-            if (aa3RadioButtonList1.SelectedIndex == 1 && tvRadioButtonList1.SelectedIndex == 0)
+            ws2RadioButtonList1.Items[3].Enabled = false;
+
+            if (tvRadioButtonList1.SelectedIndex == 1)
             {
-                ws2RadioButtonList1.Items[3].Enabled = true;
+                RemoveCssClass(lpv2, "panel-hide");
+                AddCssClass(lpv1, "panel-hide");
             }
             else
             {
-                ws2RadioButtonList1.Items[3].Enabled = false;
-
-                if (tvRadioButtonList1.SelectedIndex == 1)
-                {
-                    RemoveCssClass(lpv2, "panel-hide");
-                    AddCssClass(lpv1, "panel-hide");
-                }
-                else
-                {
-                    AddCssClass(lpv2, "panel-hide");
-                    AddCssClass(lpv1, "panel-hide");
-                }
+                AddCssClass(lpv2, "panel-hide");
+                AddCssClass(lpv1, "panel-hide");
             }
         }
+        
     }
 
     protected void lpv5RadioButton2_CheckedChanged(object sender, EventArgs e)
@@ -4430,7 +4367,7 @@ public partial class TRV : System.Web.UI.Page
 
     protected void lpvCustomValidator1_ServerValidate(object source, ServerValidateEventArgs args)
     {
-        if (CustomValidator18.IsValid && CustomValidator19.IsValid && CustomValidator2.IsValid && CustomValidator22.IsValid)
+        if (CustomValidator18.IsValid && CustomValidator19.IsValid)
         {
             if (lpvDropDownList1.Enabled)
             {
@@ -4580,7 +4517,7 @@ public partial class TRV : System.Web.UI.Page
 
     protected void CustomValidator12_ServerValidate(object source, ServerValidateEventArgs args)
     {
-        if (calcvCustomValidator2.IsValid)
+        if (calcvCustomValidator2.IsValid && CustomValidator3.IsValid && CustomValidator2.IsValid && CustomValidator22.IsValid)
         {
             if (fvDropDownList1.Enabled)
             {

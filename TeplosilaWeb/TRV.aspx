@@ -24,6 +24,9 @@
 </head>
 
 <body>
+    <p>
+        <br />
+    </p>
     <div class="container">
         <form id="form1" runat="server" novalidate="novalidate">
             <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
@@ -247,7 +250,52 @@
                         </asp:UpdatePanel>
 
                     </div>
+
                     <div class="col border">
+
+                        <asp:UpdatePanel ID="UpdatePanel8" runat="server">
+                            <ContentTemplate>
+                                <div class="panel-hide" id="lpv3" runat="server">
+                                    <asp:Label ID="Label14" runat="server" Text="Расчётные потери давления на клапане:">
+                                    </asp:Label>
+                                    <div class="col">
+                                        <asp:Label ID="Label13" runat="server" Text="&#916;Pкл = "></asp:Label>
+                                        &nbsp;&nbsp;&nbsp;<asp:TextBox ID="lpvTextBox1" runat="server" Enabled="False"
+                                            type="number" required="required" TextMode="Number">
+                                        </asp:TextBox>
+                                        <asp:DropDownList ID="lpvDropDownList1" runat="server" AutoPostBack="True"
+                                            Enabled="False"
+                                            OnSelectedIndexChanged="lpvDropDownList1_SelectedIndexChanged">
+                                            <asp:ListItem>выбрать</asp:ListItem>
+                                            <asp:ListItem>МПа</asp:ListItem>
+                                            <asp:ListItem>кПа</asp:ListItem>
+                                            <asp:ListItem>бар</asp:ListItem>
+                                            <asp:ListItem>м. в. ст.</asp:ListItem>
+                                        </asp:DropDownList>
+                                        &nbsp;<asp:CustomValidator ID="lpvCustomValidator1" runat="server"
+                                            ControlToValidate="lpvDropDownList1" Display="Dynamic"
+                                            ErrorMessage="CustomValidator" ForeColor="Red" SetFocusOnError="True"
+                                            OnServerValidate="lpvCustomValidator1_ServerValidate"
+                                            ValidateEmptyText="True">
+                                        </asp:CustomValidator>
+                                        <asp:Label ID="Label55" runat="server" ForeColor="Red"
+                                            Text="Неверно указано значение давления" Visible="False"></asp:Label>
+                                        <asp:Label ID="Label56" runat="server" ForeColor="Red"
+                                            Text="Суммарные потери давления в теплообменнике и на клапане превышают давление перед клапаном"
+                                            Visible="False"></asp:Label>
+                                        <br />
+
+
+                                    </div>
+                                    <div class="col-12">
+                                        <asp:Label ID="Label54" runat="server"
+                                            Text="(для корректной работы клапана потери давления на нем должны быть не менее, чем потери давления на регулируемом участке, т.е. в теплообменнике при независимой схеме присоединения или в системе при зависимой схеме присоединения)">
+                                        </asp:Label>
+                                        <br />
+                                    </div>
+                                </div>
+                            </ContentTemplate>
+                        </asp:UpdatePanel>
                         <asp:UpdatePanel ID="UpdatePanel11" runat="server">
                             <ContentTemplate>
                                 <div class="panel-hide" id="lpv5" runat="server">
@@ -324,53 +372,6 @@
                                             EnableClientScript="False" ErrorMessage="CustomValidator" ForeColor="Red"
                                             OnServerValidate="CustomValidator3_ServerValidate" SetFocusOnError="True"
                                             ValidateEmptyText="True"></asp:CustomValidator>
-                                    </div>
-                                </div>
-                            </ContentTemplate>
-                        </asp:UpdatePanel>
-                    </div>
-
-                    <div class="col border">
-
-                        <asp:UpdatePanel ID="UpdatePanel8" runat="server">
-                            <ContentTemplate>
-                                <div class="panel-hide" id="lpv3" runat="server">
-                                    <asp:Label ID="Label14" runat="server" Text="Расчётные потери давления на клапане:">
-                                    </asp:Label>
-                                    <div class="col">
-                                        <asp:Label ID="Label13" runat="server" Text="&#916;Pкл = "></asp:Label>
-                                        &nbsp;&nbsp;&nbsp;<asp:TextBox ID="lpvTextBox1" runat="server" Enabled="False"
-                                            type="number" required="required" TextMode="Number">
-                                        </asp:TextBox>
-                                        <asp:DropDownList ID="lpvDropDownList1" runat="server" AutoPostBack="True"
-                                            Enabled="False"
-                                            OnSelectedIndexChanged="lpvDropDownList1_SelectedIndexChanged">
-                                            <asp:ListItem>выбрать</asp:ListItem>
-                                            <asp:ListItem>МПа</asp:ListItem>
-                                            <asp:ListItem>кПа</asp:ListItem>
-                                            <asp:ListItem>бар</asp:ListItem>
-                                            <asp:ListItem>м. в. ст.</asp:ListItem>
-                                        </asp:DropDownList>
-                                        &nbsp;<asp:CustomValidator ID="lpvCustomValidator1" runat="server"
-                                            ControlToValidate="lpvDropDownList1" Display="Dynamic"
-                                            ErrorMessage="CustomValidator" ForeColor="Red" SetFocusOnError="True"
-                                            OnServerValidate="lpvCustomValidator1_ServerValidate"
-                                            ValidateEmptyText="True">
-                                        </asp:CustomValidator>
-                                        <asp:Label ID="Label55" runat="server" ForeColor="Red"
-                                            Text="Неверно указано значение давления" Visible="False"></asp:Label>
-                                        <asp:Label ID="Label56" runat="server" ForeColor="Red"
-                                            Text="Суммарные потери давления в теплообменнике и на клапане превышают давление перед клапаном"
-                                            Visible="False"></asp:Label>
-                                        <br />
-
-
-                                    </div>
-                                    <div class="col-12">
-                                        <asp:Label ID="Label54" runat="server"
-                                            Text="(для корректной работы клапана потери давления на нем должны быть не менее, чем потери давления на регулируемом участке, т.е. в теплообменнике при независимой схеме присоединения или в системе при зависимой схеме присоединения)">
-                                        </asp:Label>
-                                        <br />
                                     </div>
                                 </div>
                             </ContentTemplate>
