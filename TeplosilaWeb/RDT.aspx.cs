@@ -367,7 +367,7 @@ public partial class RDT : System.Web.UI.Page
                 }
             }
 
-            calcCapacityLabel.Text = "Расчетная пропускная способность - " + Math.Round(Kv, 2).ToString();
+            calcCapacityLabel.Text = "Расчетная пропускная способность - " + Math.Round(Kv, 2).ToString() + " м³/ч";
             calcCapacityLabel.Visible = true;
 
 
@@ -647,7 +647,7 @@ public partial class RDT : System.Web.UI.Page
                 }
             }
 
-            calcDNLabel.Text = "Расчетный диаметр - " + Math.Round(cDN, 2).ToString();
+            calcDNLabel.Text = "Расчетный диаметр - " + Math.Round(cDN, 2).ToString() + " мм";
             calcDNLabel.Visible = true;
 
 
@@ -962,21 +962,23 @@ public partial class RDT : System.Web.UI.Page
                 listB.AddRange(listResult["B"]);
                 listC.AddRange(listResult["C"]);
 
-                if (listB.Count-1 > indexNo+1)
+                if (indexNo != -1)
                 {
-                    listA.RemoveRange(indexNo + 1, listA.Count - indexNo - 1);
-                    listB.RemoveRange(indexNo + 1, listB.Count - indexNo - 1);
-                    listC.RemoveRange(indexNo + 1, listC.Count - indexNo - 1);
-                    listE.RemoveRange(indexNo + 1, listE.Count - indexNo - 1);
-                    listF.RemoveRange(indexNo + 1, listF.Count - indexNo - 1);
+                    if (listB.Count - 1 > indexNo + 1)
+                    {
+                        listA.RemoveRange(indexNo + 1, listA.Count - indexNo - 1);
+                        listB.RemoveRange(indexNo + 1, listB.Count - indexNo - 1);
+                        listC.RemoveRange(indexNo + 1, listC.Count - indexNo - 1);
+                        listE.RemoveRange(indexNo + 1, listE.Count - indexNo - 1);
+                        listF.RemoveRange(indexNo + 1, listF.Count - indexNo - 1);
 
-                    listResult["A"] = listA.ToArray();
-                    listResult["B"] = listB.ToArray();
-                    listResult["C"] = listC.ToArray();
+                        listResult["A"] = listA.ToArray();
+                        listResult["B"] = listB.ToArray();
+                        listResult["C"] = listC.ToArray();
+                    }
                 }
             }
 
-            
             listResult["F"] = listF.ToArray();
             listResult["E"] = listE.ToArray();
             /*/GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG*/
@@ -1009,7 +1011,23 @@ public partial class RDT : System.Web.UI.Page
 
             r_in_dict.Add(5, "Marka"); // Марка добавляется в диалоговом окне при сохранении
 
-            r_in_dict.Add(6, ws1RadioButtonList1.Items[ws1RadioButtonList1.SelectedIndex].Text + " " + ((this.ws1TextBox1.Enabled) ? (this.ws1TextBox1.Text + " %, " + this.ws1TextBox2.Text + " °С") : ""));
+            if (ws1RadioButtonList1.SelectedIndex == 3)
+            {
+                if (lp5RadioButtonList1.SelectedIndex == 0)
+                {
+                    r_in_dict.Add(6, "Водяной пар перегретый");
+                }
+                else
+                {
+                    r_in_dict.Add(6, "Водяной пар насыщенный");
+                }
+            }
+            else
+            {
+                r_in_dict.Add(6, ws1RadioButtonList1.Items[ws1RadioButtonList1.SelectedIndex].Text + " " + ((this.ws1TextBox1.Enabled) ? (this.ws1TextBox1.Text + " %, " + this.ws1TextBox2.Text + " °С") : ""));
+
+            }
+
 
             r_in_dict.Add(7, (this.lp1TextBox1.Enabled) ? this.lp1TextBox1.Text : "-");
             r_in_dict.Add(8, (this.lp1TextBox1.Enabled) ? this.lp1DropDownList1.Text : "-");
@@ -2731,12 +2749,23 @@ public partial class RDT : System.Web.UI.Page
                                         LabelError.Text = "Неверно указано значение температуры";
                                         return;
                                     }
-                                    else if (p35 > 150 || eorRadioButtonList1.SelectedIndex != 1)
+                                    if (eorRadioButtonList1.SelectedIndex != 1)
                                     {
-
-                                        LabelError.Text = "На температуру свыше 150°С вариантов нет";
-                                        return;
+                                        if (p35 > 150)
+                                        {
+                                            LabelError.Text = "На температуру свыше 150°С вариантов нет";
+                                            return;
+                                        }
                                     }
+                                    else
+                                    {
+                                        if (p35 > 220)
+                                        {
+                                            LabelError.Text = "На температуру свыше 150°С вариантов нет";
+                                            return;
+                                        }
+                                    }
+                                    
 
                                     g_dict.Add("p35", p35);
 
@@ -3170,20 +3199,21 @@ public partial class RDT : System.Web.UI.Page
             ws.PrintOptions.LeftMargin = 1 / 2.54;
             ws.PrintOptions.RightMargin = 1 / 2.54;
 
-            for (int i = 1; i < 50; i++)
+            for (int i = 1; i < 61; i++)
             {
-
-                if (i == 2 || i == 6 || i == 38 || i == 42 || i == 43 || i == 46 )
+                if (i != 50)
                 {
-                    r_input_dict[i] = ConvertPointToComma(r_input_dict[i]);
+                    if (i == 2 || i == 6 || i == 38 || i == 42 || i == 43 || i == 46 || i == 55 || i == 57 || i == 60)
+                    {
+                        r_input_dict[i] = ConvertPointToComma(r_input_dict[i]);
 
+                    }
+
+                    if (r_input_dict[i] == "&nbsp;")
+                    {
+                        r_input_dict[i] = "-";
+                    }
                 }
-
-                if (r_input_dict[i] == "&nbsp;")
-                {
-                    r_input_dict[i] = "-";
-                }
-
             }
 
             ws.Cells["J2"].Value = r_input_dict[1];
@@ -3761,6 +3791,23 @@ public partial class RDT : System.Web.UI.Page
         {
             ws1TextBox1.Enabled = true;
             ws1TextBox2.Enabled = true;
+            AddCssClass(lp5, "panel-hide");
+            lp5ControlEnable(false);
+
+            if(eorRadioButtonList1.SelectedIndex == 1)
+            {
+                lp1ControlEnable(false);
+                lp2ControlEnable(true);
+                lp3ControlEnable(false);
+                lp4ControlEnable(false);
+                lp5ControlEnable(false);
+
+                AddCssClass(lp1, "panel-hide");
+                RemoveCssClass(lp2, "panel-hide");
+                AddCssClass(lp3, "panel-hide");
+                AddCssClass(lp4, "panel-hide");
+                AddCssClass(lp5, "panel-hide");
+            }
         }
         else
         {
@@ -3773,6 +3820,7 @@ public partial class RDT : System.Web.UI.Page
         calcrDropDownList1.Enabled = true;
         calcrTextBox2.Enabled = true;
         RemoveCssClass(calcr, "panel-hide");
+        
 
         if (eorRadioButtonList1.SelectedIndex == 1 && ws1RadioButtonList1.SelectedIndex == 0)
         {
@@ -3823,6 +3871,8 @@ public partial class RDT : System.Web.UI.Page
             fprRadioButton2.Checked = false;
             fprRadioButton2.Enabled = true;
             fprRadioButton1.Checked = false;
+            fprDropDownList1.SelectedIndex = -1;
+            DisableTextBox(fprTextBox1);
         }
         else
         {

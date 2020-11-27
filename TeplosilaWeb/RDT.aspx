@@ -286,7 +286,7 @@
                                         <asp:Label ID="Label33" runat="server" Text="P'1 = "></asp:Label>
                                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                         &nbsp;<asp:TextBox ID="lp5TextBox1" runat="server"
-                                            Enabled="False"></asp:TextBox>&nbsp;
+                                            Enabled="False" TextMode="Number"></asp:TextBox>&nbsp;
                                         <asp:DropDownList ID="lp5DropDownList1" runat="server" Enabled="False"
                                             OnSelectedIndexChanged="lp5DropDownList1_SelectedIndexChanged"
                                             AutoPostBack="True">
