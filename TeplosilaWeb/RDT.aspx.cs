@@ -2069,33 +2069,33 @@ public partial class RDT : System.Web.UI.Page
     public void lp1ControlEnable(bool flag)
     {
         dropDownListEnable(lp1DropDownList1, flag);
-        textBoxDisable(lp1TextBox1);
+        textBoxEnabled(lp1TextBox1, flag);
         dropDownListEnable(lp1DropDownList2, flag);
-        textBoxDisable(lp1TextBox2);
+        textBoxEnabled(lp1TextBox2, flag);
         dropDownListEnable(lp1DropDownList3, flag);
-        textBoxDisable(lp1TextBox3);
+        textBoxEnabled(lp1TextBox3, flag);
         dropDownListEnable(lp1DropDownList4, flag);
-        textBoxDisable(lp1TextBox4);
-        textBoxDisable(lp1TextBox5);
+        textBoxEnabled(lp1TextBox4, flag);
+        textBoxEnabled(lp1TextBox5, flag);
     }
     public void lp2ControlEnable(bool flag)
     {
         dropDownListEnable(lp2DropDownList1, flag);
-        textBoxDisable(lp2TextBox1);
+        textBoxEnabled(lp2TextBox1, flag);
         dropDownListEnable(lp2DropDownList2, flag);
-        textBoxDisable(lp2TextBox2);
+        textBoxEnabled(lp2TextBox2, flag);
     }
     public void lp3ControlEnable(bool flag)
     {
         dropDownListEnable(lp3DropDownList1, flag);
-        textBoxDisable(lp3TextBox1);
+        textBoxEnabled(lp3TextBox1, flag);
         dropDownListEnable(lp3DropDownList2, flag);
-        textBoxDisable(lp3TextBox2);
+        textBoxEnabled(lp3TextBox2, flag);
     }
     public void lp4ControlEnable(bool flag)
     {
         dropDownListEnable(lp4DropDownList2, flag);
-        textBoxDisable(lp4TextBox2);
+        textBoxEnabled(lp4TextBox2, flag);
     }
     public void lp5ControlEnable(bool flag)
     {
@@ -2111,13 +2111,21 @@ public partial class RDT : System.Web.UI.Page
     public void dropDownListEnable(DropDownList dropDownList, bool flag)
     {
         dropDownList.Enabled = flag;
-        dropDownList.ClearSelection();
+        if (flag != true) 
+        {
+            dropDownList.ClearSelection();
+        };
+        
     }
 
     public void textBoxEnabled(TextBox textBox, bool flag)
     {
         textBox.Enabled = flag;
-        textBox.Text = String.Empty;
+        if (flag == false)
+        {
+            textBox.Text = String.Empty;
+        }
+       
     }
     public void textBoxDisable(TextBox textBox)
     {
