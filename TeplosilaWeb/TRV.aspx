@@ -328,7 +328,7 @@
                                     &nbsp;<asp:CustomValidator ID="CustomValidator23" runat="server" ControlToValidate="lpv5DropDownList1" ErrorMessage="CustomValidator" ForeColor="Red" OnServerValidate="CustomValidator23_ServerValidate" SetFocusOnError="True">
                                         </asp:CustomValidator>
                                     <br />
-                                    &nbsp; &nbsp;<asp:RadioButton ID="lpv5RadioButton2" runat="server"  Text="Указать" AutoPostBack="True" OnCheckedChanged="lpv5RadioButton2_CheckedChanged" />
+                                    &nbsp;&nbsp;<asp:RadioButton ID="lpv5RadioButton2" runat="server"  Text="Указать" AutoPostBack="True" OnCheckedChanged="lpv5RadioButton2_CheckedChanged" />
                                     <div class="col">
                                         <asp:Label ID="Label20" runat="server" Text="Р'2 ="></asp:Label>
                                         &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<asp:TextBox ID="lpv5TextBox2" runat="server"
@@ -349,7 +349,7 @@
                                         </asp:CustomValidator>
                                         <br />
                                     </div>
-                                    &nbsp&nbsp<asp:RadioButton ID="lpv5RadioButton3" runat="server" Text="Рассчитать" AutoPostBack="True" OnCheckedChanged="lpv5RadioButton3_CheckedChanged" />
+                                    &nbsp;&nbsp;<asp:RadioButton ID="lpv5RadioButton3" runat="server" Text="Рассчитать" AutoPostBack="True" OnCheckedChanged="lpv5RadioButton3_CheckedChanged" />
                                     <div class="col">
                                         <asp:Label ID="Label60" runat="server" Text="Р'2 ="></asp:Label>
                                         &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<asp:TextBox ID="lpv5TextBox4" runat="server" Enabled="False"></asp:TextBox>
