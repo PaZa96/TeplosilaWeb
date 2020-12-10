@@ -3876,11 +3876,10 @@ public partial class RDT : System.Web.UI.Page
             fprDropDownList1.Items[5].Enabled = true;
             lp5RadioButtonList1.Enabled = false;
             lp5RadioButtonList1.SelectedIndex = -1;
-            fprRadioButton2.Checked = false;
+            
             fprRadioButton2.Enabled = true;
-            fprRadioButton1.Checked = false;
-            fprDropDownList1.SelectedIndex = -1;
-            DisableTextBox(fprTextBox1);
+           
+            
         }
         else
         {
