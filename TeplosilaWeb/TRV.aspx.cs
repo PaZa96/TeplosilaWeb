@@ -1589,11 +1589,11 @@ public partial class TRV : System.Web.UI.Page
 
        
 
-        double C = 0;
+        double C = Convert.ToDouble(listResult["C"][listResult["C"].Count() - 1]);
 
 
         double cDN = 0;
-        bool emptyFlag = false;
+
 
         if (ws2RadioButtonList1.SelectedIndex != 3)
         {
@@ -1616,17 +1616,6 @@ public partial class TRV : System.Web.UI.Page
             {
                 cDN = 18.8 * Math.Sqrt((Gkl * (T1 + 273)) / (219 * (p2 + 1) * 40));
             }
-        }
-
-        if  (listResult["C"].Count() != 0)
-        {
-            emptyFlag = false;
-            C = Convert.ToDouble(listResult["C"][listResult["C"].Count() - 1]);
-        }
-        else
-        {
-            emptyFlag = true;
-            C = cDN;
         }
 
         if (ws2RadioButtonList1.SelectedIndex != 3)
