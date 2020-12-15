@@ -3897,11 +3897,15 @@ public partial class RDT : System.Web.UI.Page
             textBoxEnabled(fprTextBox3, false);
             textBoxEnabled(fprTextBox4, false);
             textBoxEnabled(fprTextBox5, false);
+            textBoxDisable(calcrTextBox1);
+            textBoxDisable(calcrTextBox2);
+            dropDownListEnable(calcrDropDownList1, false);
             dropDownListEnable(fprDropDownList1, true);
             dropDownListEnable(fprDropDownList2, false);
             RemoveCssClass(fpr1_1, "panel-hide");
             AddCssClass(fpr2_1, "panel-hide");
             fprRadioButton1.Checked = true;
+            
         }
 
     }
