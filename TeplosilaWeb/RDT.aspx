@@ -104,6 +104,7 @@
                                             ErrorMessage="CustomValidator" ForeColor="Red"
                                             OnServerValidate="CustomValidator17_ServerValidate" SetFocusOnError="True"
                                             ValidateEmptyText="True"></asp:CustomValidator>
+                                        <asp:Label ID="LabelSteam" runat="server" Text="N" Enabled="false" Visible="false"></asp:Label>
                                         <br />
                                     </div>
                                     

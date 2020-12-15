@@ -28,6 +28,7 @@ public partial class RDT : System.Web.UI.Page
     double[] arrConvert2;
     double[] arrConvert3;
     double minVar = 0.000000001;
+    
 
     public static Dictionary<string, int> keyValuePairs = new Dictionary<string, int>();
     public static Dictionary<int, string> r_input_dict = new Dictionary<int, string>();
@@ -2103,7 +2104,7 @@ public partial class RDT : System.Web.UI.Page
         textBoxDisable(lp5TextBox1);
         dropDownListEnable(lp5DropDownList2, flag);
         textBoxDisable(lp5TextBox2);
-        //textBoxEnabled(lp5TextBox3, flag);
+        lp5TextBox3.Text = "";
         lp5RadioButtonList1.Enabled = flag;
         lp5RadioButtonList1.SelectedIndex = -1;
     }
@@ -3865,8 +3866,6 @@ public partial class RDT : System.Web.UI.Page
             AddCssClass(calcr, "panel-hide");
         }
 
-        
-
         if (ws1RadioButtonList1.SelectedIndex != 3)
         {
             fprDropDownList1.Items[1].Enabled = true;
@@ -3878,7 +3877,14 @@ public partial class RDT : System.Web.UI.Page
             lp5RadioButtonList1.SelectedIndex = -1;
             
             fprRadioButton2.Enabled = true;
-           
+
+            if (LabelSteam.Text == "Y")
+            {
+                DisableTextBox(fprTextBox1);
+                fprRadioButton1.Checked = false;
+                fprDropDownList1.SelectedIndex = -1;
+                LabelSteam.Text = "N";
+            }
             
         }
         else
@@ -3905,7 +3911,7 @@ public partial class RDT : System.Web.UI.Page
             RemoveCssClass(fpr1_1, "panel-hide");
             AddCssClass(fpr2_1, "panel-hide");
             fprRadioButton1.Checked = true;
-            
+            LabelSteam.Text = "Y";
         }
 
     }
