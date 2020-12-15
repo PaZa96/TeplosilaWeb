@@ -2070,33 +2070,33 @@ public partial class RDT : System.Web.UI.Page
     public void lp1ControlEnable(bool flag)
     {
         dropDownListEnable(lp1DropDownList1, flag);
-        textBoxEnabled(lp1TextBox1, flag);
+        textBoxDisable(lp1TextBox1);
         dropDownListEnable(lp1DropDownList2, flag);
-        textBoxEnabled(lp1TextBox2, flag);
+        textBoxDisable(lp1TextBox2);
         dropDownListEnable(lp1DropDownList3, flag);
-        textBoxEnabled(lp1TextBox3, flag);
+        textBoxDisable(lp1TextBox3);
         dropDownListEnable(lp1DropDownList4, flag);
-        textBoxEnabled(lp1TextBox4, flag);
-        textBoxEnabled(lp1TextBox5, flag);
+        textBoxDisable(lp1TextBox4);
+        textBoxDisable(lp1TextBox5);
     }
     public void lp2ControlEnable(bool flag)
     {
         dropDownListEnable(lp2DropDownList1, flag);
-        textBoxEnabled(lp2TextBox1, flag);
+        textBoxDisable(lp2TextBox1);
         dropDownListEnable(lp2DropDownList2, flag);
-        textBoxEnabled(lp2TextBox2, flag);
+        textBoxDisable(lp2TextBox2);
     }
     public void lp3ControlEnable(bool flag)
     {
         dropDownListEnable(lp3DropDownList1, flag);
-        textBoxEnabled(lp3TextBox1, flag);
+        textBoxDisable(lp3TextBox1);
         dropDownListEnable(lp3DropDownList2, flag);
-        textBoxEnabled(lp3TextBox2, flag);
+        textBoxDisable(lp3TextBox2);
     }
     public void lp4ControlEnable(bool flag)
     {
         dropDownListEnable(lp4DropDownList2, flag);
-        textBoxEnabled(lp4TextBox2, flag);
+        textBoxDisable(lp4TextBox2);
     }
     public void lp5ControlEnable(bool flag)
     {
@@ -3875,6 +3875,7 @@ public partial class RDT : System.Web.UI.Page
             fprDropDownList1.Items[5].Enabled = true;
             lp5RadioButtonList1.Enabled = false;
             lp5RadioButtonList1.SelectedIndex = -1;
+            lp5TextBox3.Enabled = false;
             
             fprRadioButton2.Enabled = true;
 
@@ -3907,6 +3908,7 @@ public partial class RDT : System.Web.UI.Page
             textBoxDisable(calcrTextBox2);
             dropDownListEnable(calcrDropDownList1, false);
             dropDownListEnable(fprDropDownList1, true);
+            fprDropDownList1.SelectedIndex = -1;
             dropDownListEnable(fprDropDownList2, false);
             RemoveCssClass(fpr1_1, "panel-hide");
             AddCssClass(fpr2_1, "panel-hide");
