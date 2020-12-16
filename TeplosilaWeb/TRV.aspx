@@ -180,6 +180,7 @@
                                             OnServerValidate="ws2CustomValidator1_ServerValidate" SetFocusOnError="True"
                                             ValidateEmptyText="True"></asp:CustomValidator>
                                     </div>
+                                    <asp:Label ID="LabelSteam" runat="server" Text="N" Enabled="false" Visible="false"></asp:Label>
                                 </div>
                             </ContentTemplate>
                         </asp:UpdatePanel>
@@ -636,9 +637,9 @@
                                         OnSelectedIndexChanged="tdRadioButtonList2_SelectedIndexChanged"
                                         Enabled="False">
                                         <asp:ListItem Selected="True">Трёхпозиционное</asp:ListItem>
-                                        <asp:ListItem>Аналоговое 4-20 mA (2-10 V)</asp:ListItem>
+                                        <asp:ListItem>Аналоговое 0(4)-20 mA, 0(2)-10 V</asp:ListItem>
                                     </asp:RadioButtonList>
-                                    <asp:Label ID="Label50" runat="server" Text="Наличие датчика положения 4-20 mA:">
+                                    <asp:Label ID="Label50" runat="server" Text="Наличие датчика положения 0(4)-20 mA, 0(2)-10 V:">
                                     </asp:Label>
                                     <asp:RadioButtonList ID="tdRadioButtonList3" runat="server" AutoPostBack="True"
                                         OnSelectedIndexChanged="tdRadioButtonList3_SelectedIndexChanged"

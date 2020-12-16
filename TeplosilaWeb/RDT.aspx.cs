@@ -545,14 +545,29 @@ public partial class RDT : System.Web.UI.Page
             }
             else if (eorRadioButtonList1.SelectedIndex == 1)
             {
-                if (T1 >= 150)
+                if(ws1RadioButtonList1.SelectedIndex != 3)
                 {
-                    table = dataFromFile.table75;
+                    if (g_dict["p35"] > 150) 
+                    {
+                        table = dataFromFile.table75;
+                    }
+                    else
+                    {
+                        table = dataFromFile.table72;
+                    }
                 }
                 else
                 {
-                    table = dataFromFile.table72;
+                    if (T1 > 145)
+                    {
+                        table = dataFromFile.table75;
+                    }
+                    else
+                    {
+                        table = dataFromFile.table72;
+                    }
                 }
+             
                 
             }
             else if (eorRadioButtonList1.SelectedIndex == 2)
@@ -1693,7 +1708,7 @@ public partial class RDT : System.Web.UI.Page
                 }
                 if (eorRadioButtonList1.SelectedIndex != 1)
                 {
-                    if (customConverterToDouble(calcrTextBox2.Text) > MaxT3x)
+                    if (customConverterToDouble(fprTextBox2.Text) > MaxT3x)
                     {
                         CustomValidator13.ErrorMessage = "На температуру свыше 150&#8451; вариантов нет";
                         args.IsValid = false;
@@ -1702,7 +1717,7 @@ public partial class RDT : System.Web.UI.Page
                 }
                 else
                 {
-                    if (customConverterToDouble(calcrTextBox2.Text) > MaxT2x)
+                    if (customConverterToDouble(fprTextBox2.Text) > MaxT2x)
                     {
                         CustomValidator13.ErrorMessage = "На температуру свыше 220&#8451; вариантов нет";
                         args.IsValid = false;
@@ -1737,7 +1752,7 @@ public partial class RDT : System.Web.UI.Page
                 }
                 if (eorRadioButtonList1.SelectedIndex != 1)
                 {
-                    if (customConverterToDouble(calcrTextBox2.Text) > MaxT3x)
+                    if (customConverterToDouble(fprTextBox3.Text) > MaxT3x)
                     {
                         CustomValidator14.ErrorMessage = "На температуру свыше 150&#8451; вариантов нет";
                         args.IsValid = false;
@@ -1746,7 +1761,7 @@ public partial class RDT : System.Web.UI.Page
                 }
                 else
                 {
-                    if (customConverterToDouble(calcrTextBox2.Text) > MaxT2x)
+                    if (customConverterToDouble(fprTextBox3.Text) > MaxT2x)
                     {
                         CustomValidator14.ErrorMessage = "На температуру свыше 220&#8451; вариантов нет";
                         args.IsValid = false;
@@ -2130,8 +2145,12 @@ public partial class RDT : System.Web.UI.Page
     }
     public void textBoxDisable(TextBox textBox)
     {
-        textBox.Enabled = false;
-        textBox.Text = String.Empty;
+        if (LabelSteam.Text == "Y")
+        {
+            textBox.Enabled = false;
+            textBox.Text = String.Empty;
+        }
+        
 
     }
 
@@ -3890,6 +3909,11 @@ public partial class RDT : System.Web.UI.Page
         }
         else
         {
+            LabelSteam.Text = "Y";
+            lp1ControlEnable(false);
+            lp2ControlEnable(false);
+            lp3ControlEnable(false);
+            lp4ControlEnable(false);
             fprDropDownList1.Items[1].Enabled = false;
             fprDropDownList1.Items[2].Enabled = false;
             fprDropDownList1.Items[3].Enabled = false;
@@ -3913,7 +3937,7 @@ public partial class RDT : System.Web.UI.Page
             RemoveCssClass(fpr1_1, "panel-hide");
             AddCssClass(fpr2_1, "panel-hide");
             fprRadioButton1.Checked = true;
-            LabelSteam.Text = "Y";
+            
         }
 
     }
