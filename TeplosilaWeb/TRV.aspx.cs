@@ -364,6 +364,8 @@ public partial class TRV : System.Web.UI.Page
             fvRadioButton2.Enabled = true;
             lpv5RadioButton2.Checked = false;
             lpv5RadioButton3.Checked = false;
+            lpv5RadioButton2.Enabled = false;
+            lpv5RadioButton3.Enabled = false;
 
             if (aa1RadioButtonList1.SelectedIndex == 0 || aa2RadioButtonList1.SelectedIndex == 0 || aa3RadioButtonList1.SelectedIndex == 0)
             {
@@ -1474,8 +1476,18 @@ public partial class TRV : System.Web.UI.Page
             {
                 tablev = dataFromFile.table5v;
                 tableDN = dataFromFile.table10;
-                if (customConverterToDouble(g_dict["p35"].ToString()) < 150) tablev_7 = dataFromFile.tablev_71;
-                else tablev_7 = dataFromFile.tablev_71t;
+
+                if (ws2RadioButtonList1.SelectedIndex != 3)
+                {
+                    if (customConverterToDouble(g_dict["p35"].ToString()) <= 150) tablev_7 = dataFromFile.tablev_71;
+                    else tablev_7 = dataFromFile.tablev_71t;
+                }
+                else
+                {
+                    if (customConverterToDouble(g_dict["p35"].ToString()) <= 145) tablev_7 = dataFromFile.tablev_71;
+                    else tablev_7 = dataFromFile.tablev_71t;
+                }
+               
             }
             else
             {
@@ -2075,6 +2087,22 @@ public partial class TRV : System.Web.UI.Page
                 }
             }
 
+            if (ws2RadioButtonList1.SelectedIndex != 3)
+            {
+                listResult["I"] = listI.ToArray();
+                listResult["I1"] = listI1.ToArray();
+                listResult["I2"] = listI2.ToArray();
+                listResult["I3"] = listI3.ToArray();
+                listResult["F"] = listF.ToArray();
+                listResult["G"] = listG.ToArray();
+                listResult["D"] = listD.ToArray();
+            }
+            else
+            {
+                listResult["I"] = listI.ToArray();
+                listResult["I3"] = listI3.ToArray();
+            }
+
             /*/IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII*/
             /*/GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG*/
             /*/FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF*/
@@ -2178,10 +2206,12 @@ public partial class TRV : System.Web.UI.Page
                                 tmpMarkPriv = "210"; break;
                             case "100":
                                 tmpMarkPriv = "210"; break;
-                                //case "125":
-                                //    tmpMarkPriv = "-"; break;
-                                //case "150":
-                                //    tmpMarkPriv = "-"; break;
+                            case "125":
+                                tmpMarkPriv = "-"; break;
+                            case "150":
+                                tmpMarkPriv = "-"; break;
+                            default:
+                                tmpMarkPriv = null; break;
                         }
                     }
                     else if (tdRadioButtonList5.SelectedIndex == 0 && tdRadioButtonList1.SelectedIndex == 0 && tdRadioButtonList2.Enabled == false && tdRadioButtonList3.SelectedIndex == 1 && tdRadioButtonList4.SelectedIndex == 0)
@@ -2206,10 +2236,12 @@ public partial class TRV : System.Web.UI.Page
                                 tmpMarkPriv = "210R"; break;
                             case "100":
                                 tmpMarkPriv = "210R"; break;
-                                //case "125":
-                                //    tmpMarkPriv = "-"; break;
-                                //case "150":
-                                //    tmpMarkPriv = "-"; break;
+                            case "125":
+                                tmpMarkPriv = "-"; break;
+                            case "150":
+                                tmpMarkPriv = "-"; break;
+                            default:
+                                tmpMarkPriv = null; break;
                         }
                     }
                     else if (tdRadioButtonList5.SelectedIndex == 1 && tdRadioButtonList1.SelectedIndex == 0 && tdRadioButtonList2.SelectedIndex == 0 && tdRadioButtonList3.SelectedIndex == 1 && tdRadioButtonList4.SelectedIndex == 1)
@@ -2238,6 +2270,8 @@ public partial class TRV : System.Web.UI.Page
                                 tmpMarkPriv = "120"; break;
                             case "150":
                                 tmpMarkPriv = "120"; break;
+                            default:
+                                tmpMarkPriv = null; break;
                         }
                     }
                     // 230 VAC ; 3-pos ; no ; yes
@@ -2457,7 +2491,7 @@ public partial class TRV : System.Web.UI.Page
                         }
                     }
                     // 230 VAC ; 3-pos ; no ; no
-                    else if (tdRadioButtonList1.SelectedIndex == 0 && tdRadioButtonList2.SelectedIndex == 0 && tdRadioButtonList3.SelectedIndex == 1 && tdRadioButtonList4.SelectedIndex == 1)
+                    else if (tdRadioButtonList5.SelectedIndex == 1 && tdRadioButtonList1.SelectedIndex == 0 && tdRadioButtonList2.SelectedIndex == 0 && tdRadioButtonList3.SelectedIndex == 1 && tdRadioButtonList4.SelectedIndex == 1)
                     {
                         switch (listResult["C"].ElementAt(i))
                         {
@@ -2644,24 +2678,36 @@ public partial class TRV : System.Web.UI.Page
                     }
                 }
 
-                if (tmpMarkPriv is null) continue;
+                if (tmpMarkPriv is null) return null;
                 else tmpPriv = getPrivodName(tmpMarkPriv);
-                if (tmpPriv is null) continue;
+                if (tmpPriv is null) return null;
 
                 if (tmpMarkPriv == "-" )
                 {
-
-                    listResult["A"].SetValue("-", i);
-                    listResult["B"].SetValue("-", i);
-                    listResult["C"].SetValue("-", i);
-                    listResult["D"].SetValue("-", i);
-                    listResult["I"].SetValue("-", i);
-                    listResult["I1"].SetValue("-", i);
-                    listResult["I2"].SetValue("-", i);
-                    listResult["I3"].SetValue("-", i);
-                    listResult["F"].SetValue("-", i);
-                    listResult["G"].SetValue("-", i);
-                    listResult["M"].SetValue(tmpPriv, i);
+                    if (ws2RadioButtonList1.SelectedIndex != 3)
+                    {
+                        listResult["A"].SetValue("-", i);
+                        listResult["B"].SetValue("-", i);
+                        listResult["C"].SetValue("-", i);
+                        listResult["D"].SetValue("-", i);
+                        listResult["I"].SetValue("-", i);
+                        listResult["I1"].SetValue("-", i);
+                        listResult["I2"].SetValue("-", i);
+                        listResult["I3"].SetValue("-", i);
+                        listResult["F"].SetValue("-", i);
+                        listResult["G"].SetValue("-", i);
+                        listResult["M"].SetValue(tmpPriv, i);
+                    }
+                    else
+                    {
+                        listResult["A"].SetValue("-", i);
+                        listResult["B"].SetValue("-", i);
+                        listResult["C"].SetValue("-", i);
+                        listResult["I"].SetValue("-", i);
+                        listResult["I3"].SetValue("-", i);
+                        listResult["M"].SetValue(tmpPriv, i);
+                    }
+                   
 
                 }
                 else
@@ -2714,12 +2760,25 @@ public partial class TRV : System.Web.UI.Page
                     }
                 }
 
-                //
+                ////
+                listPP54.Add(tmpPP54);
+                listPP55.Add(tmpPP55);
+                listPP56.Add(tmpPP56);
+                listPP57.Add(tmpPP57);
+                listPP58.Add(tmpPP58);
+                listPP59.Add(tmpPP59);
+                listPP60.Add(tmpPP60);
+                listPP61.Add(tmpPP61);
+                listPP62.Add(tmpPP62);
+                listPP63.Add(tmpPP63);
+                listPP65.Add(tmpPP65);
+                listPP66.Add(tmpPP66);
+                listPP67.Add(tmpPP67);
+                listPP68.Add(tmpPP68);
+
                 if (ws2RadioButtonList1.SelectedIndex != 3)
                 {
-                    listResult["F"] = listF.ToArray();
-                    listResult["G"] = listG.ToArray();
-                    listResult["D"] = listD.ToArray();
+                   
 
                     if (listResult["A"].Count() > 1)
                     {
@@ -2828,6 +2887,8 @@ public partial class TRV : System.Web.UI.Page
                 }
                 else
                 {
+                    
+
                     int indexNo = listI3.IndexOf("нет");
                     List<string> listA = new List<string>(),
                         listB = new List<string>(),
@@ -2849,35 +2910,57 @@ public partial class TRV : System.Web.UI.Page
                             listC.RemoveRange(indexNo + 1, listC.Count - indexNo - 1);
                             listI.RemoveRange(indexNo + 1, listI.Count - indexNo - 1);
                             listI3.RemoveRange(indexNo + 1, listI3.Count - indexNo - 1);
-                            listI3.RemoveRange(indexNo + 1, listI3.Count - indexNo - 1);
                             listM.RemoveRange(indexNo + 1, listM.Count - indexNo - 1);
 
                             listResult["A"] = listA.ToArray();
                             listResult["B"] = listB.ToArray();
                             listResult["C"] = listC.ToArray();
+                            listResult["I"] = listI.ToArray();
+                            listResult["I3"] = listI3.ToArray();
                             listResult["M"] = listM.ToArray();
                         }
                     }
+
+                    int indexNoVar = listM.IndexOf("вариантов нет");
+
+                    if(indexNoVar > 0)
+                    {
+                        
+                        listA.RemoveRange(indexNoVar, listA.Count - indexNoVar);
+                        listB.RemoveRange(indexNoVar, listB.Count - indexNoVar);
+                        listC.RemoveRange(indexNoVar, listC.Count - indexNoVar);
+                        listI.RemoveRange(indexNoVar, listI.Count - indexNoVar);
+                        listI3.RemoveRange(indexNoVar, listI3.Count - indexNoVar);
+                        listM.RemoveRange(indexNoVar, listM.Count - indexNoVar);
+                        listPP54.RemoveRange(indexNoVar, listPP54.Count - indexNoVar);
+                        listPP55.RemoveRange(indexNoVar, listPP55.Count - indexNoVar);
+                        listPP56.RemoveRange(indexNoVar, listPP56.Count - indexNoVar);
+                        listPP57.RemoveRange(indexNoVar, listPP57.Count - indexNoVar);
+                        listPP58.RemoveRange(indexNoVar, listPP58.Count - indexNoVar);
+                        listPP59.RemoveRange(indexNoVar, listPP59.Count - indexNoVar);
+                        listPP60.RemoveRange(indexNoVar, listPP60.Count - indexNoVar);
+                        listPP61.RemoveRange(indexNoVar, listPP61.Count - indexNoVar);
+                        listPP62.RemoveRange(indexNoVar, listPP62.Count - indexNoVar);
+                        listPP63.RemoveRange(indexNoVar, listPP63.Count - indexNoVar);
+                        listPP65.RemoveRange(indexNoVar, listPP65.Count - indexNoVar);
+                        listPP66.RemoveRange(indexNoVar, listPP66.Count - indexNoVar);
+                        listPP67.RemoveRange(indexNoVar, listPP67.Count - indexNoVar);
+                        listPP68.RemoveRange(indexNoVar, listPP68.Count - indexNoVar);
+
+                        listResult["A"] = listA.ToArray();
+                        listResult["B"] = listB.ToArray();
+                        listResult["C"] = listC.ToArray();
+                        listResult["I"] = listI.ToArray();
+                        listResult["I3"] = listI3.ToArray();
+                        listResult["M"] = listM.ToArray();
+                    }
+
+                    
                 }
 
-                listResult["I"] = listI.ToArray();
-                listResult["I3"] = listI3.ToArray();
 
-                //
-                listPP54.Add(tmpPP54);
-                listPP55.Add(tmpPP55);
-                listPP56.Add(tmpPP56);
-                listPP57.Add(tmpPP57);
-                listPP58.Add(tmpPP58);
-                listPP59.Add(tmpPP59);
-                listPP60.Add(tmpPP60);
-                listPP61.Add(tmpPP61);
-                listPP62.Add(tmpPP62);
-                listPP63.Add(tmpPP63);
-                listPP65.Add(tmpPP65);
-                listPP66.Add(tmpPP66);
-                listPP67.Add(tmpPP67);
-                listPP68.Add(tmpPP68);
+
+                
 
             }
 
@@ -3033,14 +3116,14 @@ public partial class TRV : System.Web.UI.Page
 
         if (ws2RadioButtonList1.SelectedIndex != 3)
         {
-            if (Convert.ToDouble(v_in_dict[18]) >= 150) v_in_dict[40] = "220 ˚С";
+            if (Convert.ToDouble(v_in_dict[18]) > 150) v_in_dict[40] = "220 ˚С";
             else v_in_dict[40] = "150 ˚С";
             //if (this.tvRadioButton1.Checked) v_in_dict[40] = "220 ˚С";
             //else v_in_dict[40] = "150 ˚С";
         }
         else
         {
-            if (customConverterToDouble(lpv5TextBox3.Text) >= 150) v_in_dict[40] = "220 ˚С";
+            if (customConverterToDouble(lpv5TextBox3.Text) > 145) v_in_dict[40] = "220 ˚С";
             else v_in_dict[40] = "150 ˚С";
         }
 
@@ -3948,7 +4031,16 @@ public partial class TRV : System.Web.UI.Page
                                                     }
 
                                                     //maxt2ResultLabel.Text = "Максимальная температура - " + g_dict["vTMax"].ToString() + " °С";
-                                                    this.maxt2ResultLabel.Text = "Максимальная температура - " + ((double.Parse(g_dict["p35"].ToString()) < 150) ? "150" : "220") + " °С";
+
+                                                    if(ws2RadioButtonList1.SelectedIndex != 3)
+                                                    {
+                                                        this.maxt2ResultLabel.Text = "Максимальная температура - " + ((double.Parse(g_dict["p35"].ToString()) <= 150) ? "150" : "220") + " °С";
+                                                    }
+                                                    else
+                                                    {
+                                                        this.maxt2ResultLabel.Text = "Максимальная температура - " + ((double.Parse(g_dict["p35"].ToString()) <= 145) ? "150" : "220") + " °С";
+                                                    }
+                                                    
 
                                                     maxp2ResultLabel.Text = "Максимальное рабочее давление - 16 бар";
 
@@ -5143,6 +5235,10 @@ public partial class TRV : System.Web.UI.Page
                 fileName = "Регуляторов не найдено";
             }
 
+            DateTime aDate = DateTime.Now;
+
+            fileName += (aDate.ToString("_ddMMyyyyHHmmss"));
+
             SpreadsheetInfo.SetLicense("FREE-LIMITED-KEY");
 
             if (!File.Exists(HttpContext.Current.Server.MapPath("~/Content/templates/templateTRVSteam.xlsx")))
@@ -5299,6 +5395,10 @@ public partial class TRV : System.Web.UI.Page
             {
                 fileName = "Регуляторов не найдено";
             }
+
+            DateTime aDate = DateTime.Now;
+
+            fileName += (aDate.ToString("_ddMMyyyyHHmmss"));
 
             SpreadsheetInfo.SetLicense("FREE-LIMITED-KEY");
 

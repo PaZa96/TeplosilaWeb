@@ -3210,6 +3210,11 @@ public partial class RDT : System.Web.UI.Page
                 fileName = "Регуляторов не найдено";
             }
 
+            DateTime aDate = DateTime.Now;
+
+            fileName += (aDate.ToString("_ddMMyyyyHHmmss"));
+
+
             SpreadsheetInfo.SetLicense("FREE-LIMITED-KEY");
 
             if (!File.Exists(HttpContext.Current.Server.MapPath("~/Content/templates/templateRDTSteam.xlsx")))
@@ -3363,6 +3368,11 @@ public partial class RDT : System.Web.UI.Page
             {
                 fileName = "Регуляторов не найдено";
             }
+
+            DateTime aDate = DateTime.Now;
+
+            fileName += (aDate.ToString("_ddMMyyyyHHmmss"));
+
 
             SpreadsheetInfo.SetLicense("FREE-LIMITED-KEY");
 
