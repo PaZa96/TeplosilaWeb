@@ -1123,14 +1123,29 @@ public partial class RDT : System.Web.UI.Page
             }
             else
             {
-                if (customConverterToDouble(lp5TextBox3.Text) >= 150)
+                if (ws1RadioButtonList1.SelectedIndex != 3)
                 {
-                    r_in_dict.Add(39, "220˚С");
+                    if (customConverterToDouble(calcrTextBox2.Text) >= 150)
+                    {
+                        r_in_dict.Add(39, "220˚С");
+                    }
+                    else
+                    {
+                        r_in_dict.Add(39, "150˚С");
+                    }
                 }
                 else
                 {
-                    r_in_dict.Add(39, "150˚С");
+                    if (customConverterToDouble(lp5TextBox3.Text) >= 150)
+                    {
+                        r_in_dict.Add(39, "220˚С");
+                    }
+                    else
+                    {
+                        r_in_dict.Add(39, "150˚С");
+                    }
                 }
+               
             }
             
             r_in_dict.Add(40, "16 бар");
