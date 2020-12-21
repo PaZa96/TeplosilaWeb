@@ -178,11 +178,11 @@ tr:nth-child(2) td:nth-child(2) {
     display: none;
 }
 
-.trv tr:nth-child(n) td:nth-child(9) ~ td {
+.trv tr:nth-child(n) td:nth-child(12) ~ td {
     display: none;
 }
 
-.trv tr:nth-child(n) th:nth-child(9) ~ th {
+.trv tr:nth-child(n) th:nth-child(12) ~ th {
     display: none;
 }
 

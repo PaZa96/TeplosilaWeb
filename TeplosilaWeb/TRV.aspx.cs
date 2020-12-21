@@ -218,6 +218,7 @@ public partial class TRV : System.Web.UI.Page
                 DisableTextBox(lpv5TextBox1);
                 DisableTextBox(lpv5TextBox2);
                 DisableTextBox(lpv5TextBox3);
+                DisableTextBox(lpv5TextBox4);
                 DisableDropDownList(lpv5DropDownList1);
                 DisableDropDownList(lpv5DropDownList2);
                 lpv5RadioButtonList1.SelectedIndex = -1;
@@ -366,6 +367,7 @@ public partial class TRV : System.Web.UI.Page
             lpv5RadioButton3.Checked = false;
             lpv5RadioButton2.Enabled = false;
             lpv5RadioButton3.Enabled = false;
+            
 
             if (aa1RadioButtonList1.SelectedIndex == 0 || aa2RadioButtonList1.SelectedIndex == 0 || aa3RadioButtonList1.SelectedIndex == 0)
             {
@@ -432,6 +434,10 @@ public partial class TRV : System.Web.UI.Page
             fvRadioButton2.Enabled = false;
             fvRadioButton1.Checked = true;
             fvDropDownList1.Enabled = true;
+            DisableTextBox(fvTextBox10);
+            DisableTextBox(fvTextBox11);
+            DisableDropDownList(fvDropDownList2);
+
             LabelSteam.Text = "Y";
         }
 
@@ -3824,14 +3830,22 @@ public partial class TRV : System.Web.UI.Page
                                                         double p35 = 0;
                                                         try
                                                         {
+                                                            double p1 = (customConverterToDouble(lpv5TextBox1.Text) * arrConvert3[lpv5DropDownList1.SelectedIndex - 1] / arrConvert3[2]);
+                                                            double p2 = 0;
+
                                                             if (lpv5RadioButtonList1.SelectedIndex == 0)
                                                             {
                                                                 p35 = customConverterToDouble(lpv5TextBox3.Text);
+
+                                                                if (lpv5RadioButton3.Checked)
+                                                                {
+                                                                    p2 = Math.Round(0.6 * p1 - 0.4, 2);
+                                                                    lpv5TextBox4.Text = p2.ToString();
+                                                                }
                                                             }
                                                             else
                                                             {
-                                                                double p1 = (customConverterToDouble(lpv5TextBox1.Text) * arrConvert3[lpv5DropDownList1.SelectedIndex - 1] / arrConvert3[2]);
-                                                                double p2 = 0;
+                                                                
 
                                                                 if (lpv5RadioButton2.Checked)
                                                                 {
@@ -4455,9 +4469,10 @@ public partial class TRV : System.Web.UI.Page
             this.GridView2.Height = 250;
             this.Button2.Visible = true;
             this.Button2.Enabled = true;
+
             if (ws2RadioButtonList1.SelectedIndex == 3)
             {
-                GridView2.CssClass = "table table-result trv steam";
+                GridView2.CssClass = "table table-result steam";
             }
             else
             {
@@ -5235,10 +5250,6 @@ public partial class TRV : System.Web.UI.Page
                 fileName = "Регуляторов не найдено";
             }
 
-            DateTime aDate = DateTime.Now;
-
-            fileName += (aDate.ToString("_ddMMyyyyHHmmss"));
-
             SpreadsheetInfo.SetLicense("FREE-LIMITED-KEY");
 
             if (!File.Exists(HttpContext.Current.Server.MapPath("~/Content/templates/templateTRVSteam.xlsx")))
@@ -5253,8 +5264,8 @@ public partial class TRV : System.Web.UI.Page
 
             ws.PrintOptions.TopMargin = 0.1 / 2.54;
             ws.PrintOptions.BottomMargin = 0.1 / 2.54;
-            ws.PrintOptions.LeftMargin = 0.6 / 2.54;
-            ws.PrintOptions.RightMargin = 0.6 / 2.54;
+            ws.PrintOptions.LeftMargin = 0.7 / 2.54;
+            ws.PrintOptions.RightMargin = 0.7 / 2.54;
 
             for (int i = 1; i < 72; i++)
             {
@@ -5331,6 +5342,19 @@ public partial class TRV : System.Web.UI.Page
 
             }
 
+            int j = 1;
+            string tempName = fileName;
+
+            link1:
+
+            if (File.Exists(path + "/" + tempName + ".pdf"))
+            {
+                tempName = fileName + "_" + j;
+                j++;
+                goto link1;
+            }
+
+            fileName = tempName;
             string filePath = path + "/" + fileName + ".pdf";
 
             ef.Save(filePath);
@@ -5396,10 +5420,6 @@ public partial class TRV : System.Web.UI.Page
                 fileName = "Регуляторов не найдено";
             }
 
-            DateTime aDate = DateTime.Now;
-
-            fileName += (aDate.ToString("_ddMMyyyyHHmmss"));
-
             SpreadsheetInfo.SetLicense("FREE-LIMITED-KEY");
 
             if (!File.Exists(HttpContext.Current.Server.MapPath("~/Content/templates/templateTRV.xlsx")))
@@ -5414,8 +5434,8 @@ public partial class TRV : System.Web.UI.Page
 
             ws.PrintOptions.TopMargin = 0.1 / 2.54;
             ws.PrintOptions.BottomMargin = 0.1 / 2.54;
-            ws.PrintOptions.LeftMargin = 0.6 / 2.54;
-            ws.PrintOptions.RightMargin = 0.6 / 2.54;
+            ws.PrintOptions.LeftMargin = 0.7 / 2.54;
+            ws.PrintOptions.RightMargin = 0.7 / 2.54;
 
             for (int i = 1; i < 50; i++)
             {
@@ -5517,7 +5537,21 @@ public partial class TRV : System.Web.UI.Page
 
             }
 
+            int j = 1;
+            string tempName = fileName;
+
+            link1:
+            
+            if (File.Exists(path + "/" + tempName + ".pdf"))
+            {
+                tempName = fileName + "_" + j;
+                j++;
+                goto link1;
+            }
+
+            fileName = tempName;
             string filePath = path + "/" + fileName + ".pdf";
+
 
             ef.Save(filePath);
 

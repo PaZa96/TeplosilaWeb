@@ -3225,11 +3225,6 @@ public partial class RDT : System.Web.UI.Page
                 fileName = "Регуляторов не найдено";
             }
 
-            DateTime aDate = DateTime.Now;
-
-            fileName += (aDate.ToString("_ddMMyyyyHHmmss"));
-
-
             SpreadsheetInfo.SetLicense("FREE-LIMITED-KEY");
 
             if (!File.Exists(HttpContext.Current.Server.MapPath("~/Content/templates/templateRDTSteam.xlsx")))
@@ -3328,6 +3323,19 @@ public partial class RDT : System.Web.UI.Page
 
 
 
+            int j = 1;
+            string tempName = fileName;
+
+            link1:
+
+            if (File.Exists(path + "/" + tempName + ".pdf"))
+            {
+                tempName = fileName + "_" + j;
+                j++;
+                goto link1;
+            }
+
+            fileName = tempName;
             string filePath = path + "/" + fileName + ".pdf";
 
             ef.Save(filePath);
@@ -3383,11 +3391,6 @@ public partial class RDT : System.Web.UI.Page
             {
                 fileName = "Регуляторов не найдено";
             }
-
-            DateTime aDate = DateTime.Now;
-
-            fileName += (aDate.ToString("_ddMMyyyyHHmmss"));
-
 
             SpreadsheetInfo.SetLicense("FREE-LIMITED-KEY");
 
@@ -3505,8 +3508,19 @@ public partial class RDT : System.Web.UI.Page
                 dirInfo.Create();
             }
 
+            int j = 1;
+            string tempName = fileName;
 
+            link1:
 
+            if (File.Exists(path + "/" + tempName + ".pdf"))
+            {
+                tempName = fileName + "_" + j;
+                j++;
+                goto link1;
+            }
+
+            fileName = tempName;
             string filePath = path + "/" + fileName + ".pdf";
 
             ef.Save(filePath);
