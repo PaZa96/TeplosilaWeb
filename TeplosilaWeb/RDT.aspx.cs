@@ -1125,24 +1125,24 @@ public partial class RDT : System.Web.UI.Page
             {
                 if (ws1RadioButtonList1.SelectedIndex != 3)
                 {
-                    if (customConverterToDouble(calcrTextBox2.Text) >= 150)
+                    if (customConverterToDouble(calcrTextBox2.Text) <= 150)
                     {
-                        r_in_dict.Add(39, "220˚С");
+                        r_in_dict.Add(39, "150˚С");
                     }
                     else
                     {
-                        r_in_dict.Add(39, "150˚С");
+                        r_in_dict.Add(39, "220˚С");
                     }
                 }
                 else
                 {
-                    if (customConverterToDouble(lp5TextBox3.Text) >= 150)
+                    if (customConverterToDouble(lp5TextBox3.Text) <= 145)
                     {
-                        r_in_dict.Add(39, "220˚С");
+                        r_in_dict.Add(39, "150˚С");
                     }
                     else
                     {
-                        r_in_dict.Add(39, "150˚С");
+                        r_in_dict.Add(39, "220˚С");
                     }
                 }
                
@@ -2839,7 +2839,7 @@ public partial class RDT : System.Web.UI.Page
                                     
                                 }
 
-                                if (ws1RadioButtonList1.SelectedIndex != 3)
+                                if (eorRadioButtonList1.SelectedIndex != 1)
                                 {
                                     this.maxt1ResultLabel.Text = "Максимальная температура - 150 °С";
                                     this.maxp1ResultLabel.Text = "Максимальное рабочее давление - 16 бар";
@@ -2848,14 +2848,29 @@ public partial class RDT : System.Web.UI.Page
                                 } 
                                 else
                                 {
-                                    if(g_dict["p61"] < 150)
+                                    if (ws1RadioButtonList1.SelectedIndex != 3)
                                     {
-                                        this.maxt1ResultLabel.Text = "Максимальная температура - 150 °С";
+                                        if (g_dict["p35"] <= 150)
+                                        {
+                                            this.maxt1ResultLabel.Text = "Максимальная температура - 150 °С";
+                                        }
+                                        else
+                                        {
+                                            this.maxt1ResultLabel.Text = "Максимальная температура - 220 °С";
+                                        }
                                     }
                                     else
                                     {
-                                        this.maxt1ResultLabel.Text = "Максимальная температура - 220 °С";
+                                        if (g_dict["p61"] <= 145)
+                                        {
+                                            this.maxt1ResultLabel.Text = "Максимальная температура - 150 °С";
+                                        }
+                                        else
+                                        {
+                                            this.maxt1ResultLabel.Text = "Максимальная температура - 220 °С";
+                                        }
                                     }
+                                   
 
                                     this.maxp1ResultLabel.Text = "Максимальное рабочее давление - 16 бар";
                                     labelOptyV.Text = "Оптимальная скорость в выходном сечении регулятора: 40 м/с для насыщенного пара; 60 м/с для перегретого пара.";
@@ -3291,21 +3306,17 @@ public partial class RDT : System.Web.UI.Page
 
             getDimsR(ref r_input_dict);
 
-            if ((r_input_dict[4] == this.eorRadioButtonList1.Items[0].Text) || (r_input_dict[4] == eorRadioButtonList1.Items[1].Text))
+           
+            if (customConverterToDouble(lp5TextBox3.Text) <= 145)
             {
-                if (r_input_dict[4] == eorRadioButtonList1.Items[1].Text && customConverterToDouble(lp5TextBox3.Text) >= 150)
-                {
-                    ws.Pictures.Add(HttpContext.Current.Server.MapPath("~/Content/images/rdt/Габаритный RDT-S и RDT-B.jpg"), "A25");
-                }
-                else
-                {
-                    ws.Pictures.Add(HttpContext.Current.Server.MapPath("~/Content/images/rdt/Габаритный RDT и RDT-P.jpg"), "A25");
-                }
+                ws.Pictures.Add(HttpContext.Current.Server.MapPath("~/Content/images/rdt/Габаритный RDT и RDT-P.jpg"), "A25");
+                
             }
             else
             {
                 ws.Pictures.Add(HttpContext.Current.Server.MapPath("~/Content/images/rdt/Габаритный RDT-S и RDT-B.jpg"), "A25");
             }
+            
 
 
             ws.Cells["F25"].Value = r_input_dict[51];
@@ -3492,8 +3503,22 @@ public partial class RDT : System.Web.UI.Page
 
             getDimsR(ref r_input_dict);
 
-            ws.Pictures.Add(HttpContext.Current.Server.MapPath("~/Content/images/rdt/" + ((r_input_dict[4] == this.eorRadioButtonList1.Items[0].Text) || (r_input_dict[4] == eorRadioButtonList1.Items[1].Text) ? "Габаритный RDT и RDT-P.jpg" : "Габаритный RDT-S и RDT-B.jpg")), "A43");
 
+            if ((r_input_dict[4] == this.eorRadioButtonList1.Items[0].Text) || (r_input_dict[4] == eorRadioButtonList1.Items[1].Text))
+            {
+                if (r_input_dict[4] == eorRadioButtonList1.Items[1].Text && customConverterToDouble(calcrTextBox2.Text) > 150)
+                {
+                    ws.Pictures.Add(HttpContext.Current.Server.MapPath("~/Content/images/rdt/Габаритный RDT-S и RDT-B.jpg"), "A43");
+                }
+                else
+                {
+                    ws.Pictures.Add(HttpContext.Current.Server.MapPath("~/Content/images/rdt/Габаритный RDT и RDT-P.jpg"), "A43");
+                }
+            }
+            else
+            {
+                ws.Pictures.Add(HttpContext.Current.Server.MapPath("~/Content/images/rdt/Габаритный RDT-S и RDT-B.jpg"), "A43");
+            }
 
             ws.Cells["F43"].Value = r_input_dict[51];
             ws.Cells["F44"].Value = r_input_dict[52];
@@ -3719,6 +3744,7 @@ public partial class RDT : System.Web.UI.Page
     protected void eorRadioButtonList1_SelectedIndexChanged(object sender, EventArgs e)
     {
         changeImage(eorRadioButtonList1.SelectedIndex);
+        LabelSteam.Text = "Y";
         switch (eorRadioButtonList1.SelectedIndex)
         {
             case 0:
@@ -3811,6 +3837,7 @@ public partial class RDT : System.Web.UI.Page
                 break;
         }
 
+        LabelSteam.Text = "N";
         fprRadioButton1.Enabled = true;
         fprRadioButton2.Enabled = true;
         RemoveCssClass(fpr1, "panel-hide");
