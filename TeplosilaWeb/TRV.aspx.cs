@@ -3573,16 +3573,6 @@ public partial class TRV : System.Web.UI.Page
                                             else if ((aaRadioButton2.Checked && tvRadioButtonList1.SelectedIndex == 0) ||
                                               (aaRadioButton2.Checked && tvRadioButtonList1.SelectedIndex == 1 && aa2RadioButtonList1.SelectedIndex == 1) ||
                                               (aaRadioButton3.Checked && tvRadioButtonList1.SelectedIndex == 0) ||
-                                              (aaRadioButton3.Checked && tvRadioButtonList1.SelectedIndex == 1 && aa3RadioButtonList1.SelectedIndex == 1))
-                                            {
-                                                if (!firstMoreSecondDouble(fvTextBox2.Text, fvTextBox3.Text))
-                                                {
-                                                    //fvTextBox3.BackColor = Color.LightPink;
-                                                }
-                                            }
-                                            else if ((aaRadioButton2.Checked && tvRadioButtonList1.SelectedIndex == 0) ||
-                                              (aaRadioButton2.Checked && tvRadioButtonList1.SelectedIndex == 1 && aa2RadioButtonList1.SelectedIndex == 1) ||
-                                              (aaRadioButton3.Checked && tvRadioButtonList1.SelectedIndex == 0) ||
                                               (aaRadioButton3.Checked && tvRadioButtonList1.SelectedIndex == 1 && aa3RadioButtonList1.SelectedIndex == 1) && ws2RadioButtonList1.SelectedIndex != 3)
                                             {
                                                 if (!firstMoreSecondDouble(fvTextBox2.Text, fvTextBox3.Text))
