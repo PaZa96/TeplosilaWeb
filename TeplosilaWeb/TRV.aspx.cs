@@ -452,7 +452,32 @@ public partial class TRV : System.Web.UI.Page
             EnableTemperatureTable();
         }
 
-        if (tvRadioButtonList1.SelectedIndex == 0 && ws2RadioButtonList1.SelectedIndex != 3)
+        if (tvRadioButtonList1.SelectedIndex == 0)
+        {
+            if (tvRadioButtonList1.SelectedIndex == 0 && ws2RadioButtonList1.SelectedIndex != 3)
+            {
+                if (aa1RadioButtonList1.SelectedIndex == 0)
+                {
+                    RemoveCssClass(lpv1, "panel-hide");
+                    AddCssClass(lpv2, "panel-hide");
+                }
+                else
+                {
+
+                    RemoveCssClass(lpv2, "panel-hide");
+                    AddCssClass(lpv1, "panel-hide");
+
+                }
+            }
+            else
+            {
+                DisableDropDownList(lpvDropDownList2);
+                DisableTextBox(lpvTextBox2);
+                DisableDropDownList(lpvDropDownList21);
+                DisableTextBox(lpvTextBox21);
+            }
+        }
+        else
         {
             if (aa1RadioButtonList1.SelectedIndex == 0)
             {
@@ -461,18 +486,10 @@ public partial class TRV : System.Web.UI.Page
             }
             else
             {
-
                 RemoveCssClass(lpv2, "panel-hide");
                 AddCssClass(lpv1, "panel-hide");
-
             }
-        }
-        else
-        {
-            DisableDropDownList(lpvDropDownList2);
-            DisableTextBox(lpvTextBox2);
-            DisableDropDownList(lpvDropDownList21);
-            DisableTextBox(lpvTextBox21);
+
         }
 
     }
@@ -486,7 +503,32 @@ public partial class TRV : System.Web.UI.Page
             EnableTemperatureTable();
         }
 
-        if (tvRadioButtonList1.SelectedIndex == 0 && ws2RadioButtonList1.SelectedIndex != 3)
+        if (tvRadioButtonList1.SelectedIndex == 0)
+        {
+            if (tvRadioButtonList1.SelectedIndex == 0 && ws2RadioButtonList1.SelectedIndex != 3)
+            {
+                if (aa2RadioButtonList1.SelectedIndex == 0)
+                {
+                    RemoveCssClass(lpv1, "panel-hide");
+                    AddCssClass(lpv2, "panel-hide");
+                }
+                else
+                {
+
+                    RemoveCssClass(lpv2, "panel-hide");
+                    AddCssClass(lpv1, "panel-hide");
+
+                }
+            }
+            else
+            {
+                DisableDropDownList(lpvDropDownList2);
+                DisableTextBox(lpvTextBox2);
+                DisableDropDownList(lpvDropDownList21);
+                DisableTextBox(lpvTextBox21);
+            }
+        }
+        else
         {
             if (aa2RadioButtonList1.SelectedIndex == 0)
             {
@@ -495,18 +537,9 @@ public partial class TRV : System.Web.UI.Page
             }
             else
             {
-
                 RemoveCssClass(lpv2, "panel-hide");
                 AddCssClass(lpv1, "panel-hide");
-
             }
-        }
-        else
-        {
-            DisableDropDownList(lpvDropDownList2);
-            DisableTextBox(lpvTextBox2);
-            DisableDropDownList(lpvDropDownList21);
-            DisableTextBox(lpvTextBox21);
         }
 
     }
@@ -520,7 +553,30 @@ public partial class TRV : System.Web.UI.Page
             EnableTemperatureTable();
         }
 
-        if (tvRadioButtonList1.SelectedIndex == 0 && ws2RadioButtonList1.SelectedIndex != 3)
+        if (tvRadioButtonList1.SelectedIndex == 0)
+        {
+            if (tvRadioButtonList1.SelectedIndex == 0 && ws2RadioButtonList1.SelectedIndex != 3)
+            {
+                if (aa3RadioButtonList1.SelectedIndex == 0)
+                {
+                    RemoveCssClass(lpv1, "panel-hide");
+                    AddCssClass(lpv2, "panel-hide");
+                }
+                else
+                {
+                    RemoveCssClass(lpv2, "panel-hide");
+                    AddCssClass(lpv1, "panel-hide");
+                }
+            }
+            else
+            {
+                DisableDropDownList(lpvDropDownList2);
+                DisableTextBox(lpvTextBox2);
+                DisableDropDownList(lpvDropDownList21);
+                DisableTextBox(lpvTextBox21);
+            }
+        }
+        else
         {
             if (aa3RadioButtonList1.SelectedIndex == 0)
             {
@@ -529,20 +585,10 @@ public partial class TRV : System.Web.UI.Page
             }
             else
             {
-
                 RemoveCssClass(lpv2, "panel-hide");
                 AddCssClass(lpv1, "panel-hide");
-
             }
         }
-        else
-        {
-            DisableDropDownList(lpvDropDownList2);
-            DisableTextBox(lpvTextBox2);
-            DisableDropDownList(lpvDropDownList21);
-            DisableTextBox(lpvTextBox21);
-        }
-
     }
 
     protected void lpv5RadioButton2_CheckedChanged(object sender, EventArgs e)
@@ -5517,7 +5563,16 @@ public partial class TRV : System.Web.UI.Page
             ws.Cells["G41"].Value = v_input_dict[67];
             ws.Cells["G42"].Value = v_input_dict[68];
 
-            ws.Pictures.Add(HttpContext.Current.Server.MapPath("\\Content\\images\\trv\\" + ((v_input_dict[7] == this.tvRadioButtonList1.Items[tvRadioButtonList1.SelectedIndex].Text) ? "Габаритный TRV и TRV-P.png" : "Габаритный TRV-3.png")), "A39");
+            if (tvRadioButtonList1.SelectedIndex == 0)
+            {
+                ws.Pictures.Add(HttpContext.Current.Server.MapPath("\\Content\\images\\trv\\Габаритный TRV и TRV-P.png"), "A39");
+
+            }
+            else
+            {
+                ws.Pictures.Add(HttpContext.Current.Server.MapPath("\\Content\\images\\trv\\Габаритный TRV-3.png"), "A39");
+
+            }
 
             string path = HttpContext.Current.Server.MapPath("~/Files/TRV/PDF/" + DateTime.Now.ToString("dd-MM-yyyy"));
             DirectoryInfo dirInfo = new DirectoryInfo(path);
