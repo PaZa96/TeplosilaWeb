@@ -71,11 +71,16 @@
                                                 <asp:ListItem>Насыщеный</asp:ListItem>
                                             </asp:RadioButtonList>
                                         </div>
-                                        <asp:RequiredFieldValidator ID="ws1RequiredFieldValidator1" runat="server"
+                                        <%--<asp:RequiredFieldValidator ID="ws1RequiredFieldValidator1" runat="server"
                                             ControlToValidate="ws1RadioButtonList1" Display="Dynamic"
                                             ErrorMessage="Выберите необходимое значение" ForeColor="Red"
                                             SetFocusOnError="True">
-                                            Выберите необходимое значение</asp:RequiredFieldValidator>
+                                            Выберите необходимое значение</asp:RequiredFieldValidator>--%>
+                                        <asp:CustomValidator ID="CustomValidator22" runat="server"
+                                                ControlToValidate="ws1RadioButtonList1" Display="Dynamic"
+                                                EnableClientScript="False" ErrorMessage="CustomValidator" ForeColor="Red"
+                                                OnServerValidate="CustomValidator22_ServerValidate" SetFocusOnError="True"
+                                                ValidateEmptyText="True"></asp:CustomValidator>
                                            <asp:CustomValidator ID="CustomValidator21" runat="server"
                                                 ControlToValidate="lp5RadioButtonList1" Display="Dynamic"
                                                 EnableClientScript="False" ErrorMessage="CustomValidator" ForeColor="Red"

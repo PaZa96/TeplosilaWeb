@@ -1600,7 +1600,7 @@ public partial class RDT : System.Web.UI.Page
 
     protected void CustomValidator10_ServerValidate(object source, ServerValidateEventArgs args)
     {
-        if (CustomValidator17.IsValid)
+        if (CustomValidator17.IsValid && CustomValidator22.IsValid)
         {
             if (lp1DropDownList1.Enabled)
             {
@@ -1826,20 +1826,28 @@ public partial class RDT : System.Web.UI.Page
 
     protected void CustomValidator16_ServerValidate(object source, ServerValidateEventArgs args)
     {
-        if (ws1RadioButtonList1.SelectedIndex == 1 || ws1RadioButtonList1.SelectedIndex == 2)
+        if (CustomValidator22.IsValid)
         {
-            if (ws1TextBox1.Enabled == false || checkTextBoxEmpty(ws1TextBox1))
+            if (ws1RadioButtonList1.SelectedIndex == 1 || ws1RadioButtonList1.SelectedIndex == 2)
             {
-                CustomValidator16.ErrorMessage = "Необходимо заполнить поле";
-                args.IsValid = false;
-                return;
+                if (ws1TextBox1.Enabled == false || checkTextBoxEmpty(ws1TextBox1))
+                {
+                    CustomValidator16.ErrorMessage = "Необходимо заполнить поле";
+                    args.IsValid = false;
+                    return;
+                }
+                if (customConverterToDouble(ws1TextBox1.Text) < 5 || customConverterToDouble(ws1TextBox1.Text) > 65)
+                {
+                    CustomValidator16.ErrorMessage = "Значение должно находится в диапазоне от 5% до 65%";
+                    args.IsValid = false;
+                    return;
+                }
             }
-            if (customConverterToDouble(ws1TextBox1.Text) < 5 || customConverterToDouble(ws1TextBox1.Text) > 65)
-            {
-                CustomValidator16.ErrorMessage = "Значение должно находится в диапазоне от 5% до 65%";
-                args.IsValid = false;
-                return;
-            }
+        }
+        else
+        {
+            args.IsValid = false;
+            CustomValidator16.ErrorMessage = "";
         }
     }
 
@@ -1986,6 +1994,16 @@ public partial class RDT : System.Web.UI.Page
             }
         }
       
+    }
+
+    protected void CustomValidator22_ServerValidate(object source, ServerValidateEventArgs args)
+    {
+        if (ws1RadioButtonList1.SelectedIndex == -1)
+        {
+            CustomValidator22.ErrorMessage = "Выберите необходимое значение";
+            args.IsValid = false;
+            return;
+        }
     }
 
     //------------------------------------Validation Function END--------------------------------------
@@ -4074,4 +4092,6 @@ public partial class RDT : System.Web.UI.Page
             lp5TextBox3.Enabled = true;
         }
     }
+
+   
 }
