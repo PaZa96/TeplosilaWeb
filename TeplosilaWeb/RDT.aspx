@@ -328,9 +328,6 @@
                                             SetFocusOnError="True"></asp:CustomValidator>
                                         <br />
 
-                                        
-
-
                                         <asp:Label ID="Label39" runat="server" Text="Температура пара через регулятор:">
                                         </asp:Label>
                                         <br />
@@ -620,48 +617,50 @@
                 </div>
                 <br />
                 <div class="col-12">
-                    <div class="col non-padding">
+                    <div class="col non-padding" >
                         <asp:UpdatePanel ID="UpdatePanel9" runat="server">
                             <ContentTemplate>
-                                <asp:Label ID="Label52" runat="server" Enabled="False" Text="Результаты расчёта"
-                                    Visible="False" Font-Bold="True" Font-Size="Medium"></asp:Label>
+                                <div id="resultPanel" runat="server">
+                                    <asp:Label ID="Label52" runat="server" Enabled="False" Text="Результаты расчёта"
+                                        Visible="False" Font-Bold="True" Font-Size="Medium"></asp:Label>
 
-                                <div class="col non-padding">
-                                    <asp:Label ID="ws1ResultLabel" runat="server" Visible="False"></asp:Label>
-                                </div>
-                                <div class="col non-padding">
-                                    <asp:Label ID="maxt1ResultLabel" runat="server" Visible="False"></asp:Label>
-                                </div>
-                                <div class="col non-padding">
-                                    <asp:Label ID="maxp1ResultLabel" runat="server" Visible="False"></asp:Label>
-                                </div>
-                                <div class="col non-padding">
-                                    <asp:Label ID="calcDNLabel" runat="server" Visible="False"></asp:Label>
-                                </div>
-                                <div class="col non-padding">
-                                    <asp:Label ID="calcCapacityLabel" runat="server" Visible="False"></asp:Label>
-                                </div>
-                                <div class="col non-padding">
-                                    <asp:Label ID="labelOptyV" runat="server" Visible="False"></asp:Label>
-                                </div>
-                                <div class="table-responsive-lg" onclick="ShowBTN()">
-                                    <asp:GridView ID="GridView1" CssClass="table table-result rdt" runat="server"
-                                        Font-Size="X-Small" Visible="False"
-                                        OnSelectedIndexChanged="GridView1_SelectedIndexChanged"
-                                        AutoGenerateSelectButton="True">
+                                    <div class="col non-padding">
+                                        <asp:Label ID="ws1ResultLabel" runat="server" Visible="False"></asp:Label>
+                                    </div>
+                                    <div class="col non-padding">
+                                        <asp:Label ID="maxt1ResultLabel" runat="server" Visible="False"></asp:Label>
+                                    </div>
+                                    <div class="col non-padding">
+                                        <asp:Label ID="maxp1ResultLabel" runat="server" Visible="False"></asp:Label>
+                                    </div>
+                                    <div class="col non-padding">
+                                        <asp:Label ID="calcDNLabel" runat="server" Visible="False"></asp:Label>
+                                    </div>
+                                    <div class="col non-padding">
+                                        <asp:Label ID="calcCapacityLabel" runat="server" Visible="False"></asp:Label>
+                                    </div>
+                                    <div class="col non-padding">
+                                        <asp:Label ID="labelOptyV" runat="server" Visible="False"></asp:Label>
+                                    </div>
+                                    <div class="table-responsive-lg" onclick="ShowBTN()">
+                                        <asp:GridView ID="GridView1" CssClass="table table-result rdt" runat="server"
+                                            Font-Size="X-Small" Visible="False"
+                                            OnSelectedIndexChanged="GridView1_SelectedIndexChanged"
+                                            AutoGenerateSelectButton="True">
 
 
-                                        <RowStyle Font-Size="Small" />
-                                        <SelectedRowStyle BackColor="#ff7d00" Font-Bold="False" ForeColor="White" />
-                                    </asp:GridView>
-                                </div>
-                                <div class="col non-padding">
-                                    <asp:Label ID="Label53" runat="server" CssClass="show-btn" Text="Объект:"
-                                        Visible="False">
-                                    </asp:Label>
+                                            <RowStyle Font-Size="Small" />
+                                            <SelectedRowStyle BackColor="#ff7d00" Font-Bold="False" ForeColor="White" />
+                                        </asp:GridView>
+                                    </div>
+                                    <div class="col non-padding">
+                                        <asp:Label ID="Label53" runat="server" CssClass="show-btn" Text="Объект:"
+                                            Visible="False">
+                                        </asp:Label>
 
-                                    <asp:TextBox ID="objTextBox1" runat="server" Enabled="False" Visible="False"
-                                        Width="1020px"></asp:TextBox>
+                                        <asp:TextBox ID="objTextBox1" runat="server" Enabled="False" Visible="False"
+                                            Width="1020px"></asp:TextBox>
+                                    </div>
                                 </div>
                             </ContentTemplate>
                         </asp:UpdatePanel>
@@ -680,7 +679,10 @@
                             var fpr11 = document.getElementById('fpr1_1');
                             var fpr21 = document.getElementById('fpr2_1');
 
-
+                            function VisibleResult() {
+                                var resultPanel = document.getElementById('resultPanel');
+                                resultPanel.style.visibility = "hidden";
+                            }
 
                             function ShowBTN() {
                                 var btn2 = document.getElementById('Button2');

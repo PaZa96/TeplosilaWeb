@@ -55,6 +55,13 @@ public partial class RDT : System.Web.UI.Page
         fprLabelError.Text = "";
         LabelCustomValid.Visible = false;
 
+        
+
+        string ctrlname = Page.Request.Params["__EVENTTARGET"];
+        if (ctrlname != "GridView1")
+        {
+            resultPanel.Visible = false;
+        }
 
     }
 
@@ -2221,7 +2228,7 @@ public partial class RDT : System.Web.UI.Page
         if (!Page.IsValid) { return; }
         try
         {
-
+            resultPanel.Visible = true;
             objTextBox1.Enabled = false;
             objTextBox1.Visible = false;
             Label53.Visible = false;
@@ -2889,11 +2896,16 @@ public partial class RDT : System.Web.UI.Page
                                         }
                                     }
                                    
-
                                     this.maxp1ResultLabel.Text = "Максимальное рабочее давление - 16 бар";
-                                    labelOptyV.Text = "Оптимальная скорость в выходном сечении регулятора: 40 м/с для насыщенного пара; 60 м/с для перегретого пара.";
+                                    if (ws1RadioButtonList1.SelectedIndex != 3)
+                                    {
+                                        labelOptyV.Text = "Оптимальная скорость в выходном сечении регулятора: 2 - 3 м / с для ИТП; 2 - 5 м / с для ЦТП.";
+                                    }
+                                    else
+                                    {
+                                        labelOptyV.Text = "Оптимальная скорость в выходном сечении регулятора: 40 м/с для насыщенного пара; 60 м/с для перегретого пара.";
+                                    } 
                                 }
-                                
 
                                 if (ws1RadioButtonList1.SelectedIndex != 3)
                                 {
@@ -3075,7 +3087,7 @@ public partial class RDT : System.Web.UI.Page
             this.Button2.Enabled = true;
             //this.Button3.Visible = true;
             //this.Button3.Enabled = true;
-
+            
         }
         catch (Exception er)
         {
@@ -3860,6 +3872,8 @@ public partial class RDT : System.Web.UI.Page
         fprRadioButton2.Enabled = true;
         RemoveCssClass(fpr1, "panel-hide");
         RemoveCssClass(fpr2, "panel-hide");
+        DisableTextBox(ws1TextBox1);
+        DisableTextBox(ws1TextBox2);
     }
 
     protected void fprRadioButton1_CheckedChanged(object sender, EventArgs e)
@@ -3986,8 +4000,9 @@ public partial class RDT : System.Web.UI.Page
             {
                 DisableTextBox(fprTextBox1);
                 fprRadioButton1.Checked = false;
-                fprDropDownList1.SelectedIndex = -1;
+                dropDownListEnable(fprDropDownList1, false);
                 LabelSteam.Text = "N";
+                AddCssClass(fpr1_1, "panel-hide");
             }
             
         }
@@ -4092,6 +4107,4 @@ public partial class RDT : System.Web.UI.Page
             lp5TextBox3.Enabled = true;
         }
     }
-
-   
 }
