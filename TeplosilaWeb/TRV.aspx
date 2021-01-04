@@ -306,7 +306,7 @@
                                     <div class="col">
                                         <asp:Label ID="Label18" runat="server" Text="P'1 = "></asp:Label>
                                         &nbsp;&nbsp;&nbsp;&nbsp;
-                                        &nbsp;<asp:TextBox ID="lpv5TextBox1" runat="server"
+                                        &nbsp;<asp:TextBox ID="lpv5TextBox1" runat="server" TextMode="Number"
                                             Enabled="False"></asp:TextBox>&nbsp;
                                         <asp:DropDownList ID="lpv5DropDownList1" runat="server" Enabled="False"
                                             OnSelectedIndexChanged="lpv5DropDownList1_SelectedIndexChanged"
@@ -682,51 +682,53 @@
                 <div class="col-12">
                     <asp:UpdatePanel ID="UpdatePanel9" runat="server">
                         <ContentTemplate>
-                            <asp:Label ID="Label52" runat="server" Enabled="False" Text="Результаты расчёта"
-                                Visible="False" Font-Size="Medium" Font-Bold="True"></asp:Label>
+                            <div id="resultPanel" runat="server">
+                                <asp:Label ID="Label52" runat="server" Enabled="False" Text="Результаты расчёта"
+                                    Visible="False" Font-Size="Medium" Font-Bold="True"></asp:Label>
 
-                            <div class="col non-padding">
-                                <asp:Label ID="ws2ResultLabel" runat="server" Text="Label" Visible="False"></asp:Label>
-                            </div>
+                                <div class="col non-padding">
+                                    <asp:Label ID="ws2ResultLabel" runat="server" Text="Label" Visible="False"></asp:Label>
+                                </div>
 
-                            <div class="col non-padding">
-                                <asp:Label ID="maxt2ResultLabel" runat="server" Text="maxt2ResultLabel" Visible="False">
-                                </asp:Label>
-                            </div>
-                            <div class="col non-padding">
-                                <asp:Label ID="maxp2ResultLabel" runat="server" Text="Label" Visible="False">
-                                </asp:Label>
-                            </div>
-                            <div class="col non-padding">
-                                <asp:Label ID="calcvDNLabel" runat="server" Visible="False"></asp:Label>
-                            </div>
-                            <div class="col non-padding">
-                                <asp:Label ID="calcvCapacityLabel" runat="server" Visible="False"></asp:Label>
-                            </div>
-                             <div class="col non-padding">
-                                <asp:Label ID="labelOptyV" runat="server" Visible="False"></asp:Label>
-                            </div>
+                                <div class="col non-padding">
+                                    <asp:Label ID="maxt2ResultLabel" runat="server" Text="maxt2ResultLabel" Visible="False">
+                                    </asp:Label>
+                                </div>
+                                <div class="col non-padding">
+                                    <asp:Label ID="maxp2ResultLabel" runat="server" Text="Label" Visible="False">
+                                    </asp:Label>
+                                </div>
+                                <div class="col non-padding">
+                                    <asp:Label ID="calcvDNLabel" runat="server" Visible="False"></asp:Label>
+                                </div>
+                                <div class="col non-padding">
+                                    <asp:Label ID="calcvCapacityLabel" runat="server" Visible="False"></asp:Label>
+                                </div>
+                                 <div class="col non-padding">
+                                    <asp:Label ID="labelOptyV" runat="server" Visible="False"></asp:Label>
+                                </div>
                             
 
-                            <div class="table-responsive-lg" onclick="ShowBTN()">
-                                <asp:GridView ID="GridView2" CssClass="table table-result trv" runat="server"
-                                    Font-Size="X-Small" Visible="False"
-                                    OnSelectedIndexChanged="GridView2_SelectedIndexChanged"
-                                    AutoGenerateSelectButton="True">
+                                <div class="table-responsive-lg" onclick="ShowBTN()">
+                                    <asp:GridView ID="GridView2" CssClass="table table-result trv" runat="server"
+                                        Font-Size="X-Small" Visible="False"
+                                        OnSelectedIndexChanged="GridView2_SelectedIndexChanged"
+                                        AutoGenerateSelectButton="True">
 
 
-                                    <RowStyle Font-Size="Small" />
-                                    <SelectedRowStyle BackColor="#ff7d00" Font-Bold="False" ForeColor="White" />
-                                </asp:GridView>
-                            </div>
-                            <div class="col non-padding">
-                                <asp:Label ID="Label53" runat="server" CssClass="show-btn" Text="Объект:"
-                                    Visible="False">
-                                </asp:Label>
+                                        <RowStyle Font-Size="Small" />
+                                        <SelectedRowStyle BackColor="#ff7d00" Font-Bold="False" ForeColor="White" />
+                                    </asp:GridView>
+                                </div>
+                                <div class="col non-padding">
+                                    <asp:Label ID="Label53" runat="server" CssClass="show-btn" Text="Объект:"
+                                        Visible="False">
+                                    </asp:Label>
 
-                                <asp:TextBox ID="objTextBox1" runat="server" Enabled="False" Visible="False"
-                                    Width="1020px">
-                                </asp:TextBox>
+                                    <asp:TextBox ID="objTextBox1" runat="server" Enabled="False" Visible="False"
+                                        Width="1020px">
+                                    </asp:TextBox>
+                                </div>
                             </div>
                             <script>
                                 function ShowBTN() {
@@ -734,6 +736,14 @@
                                     var btn2 = document.getElementById('Button2');
                                     //var btn3 = document.getElementById('Button3');
                                     btn2.classList.add("show-btn");
+                                    //btn3.classList.add("show-btn");
+                                };
+
+                                function HideBTN() {
+                                    var btn2 = document.getElementById('Button2');
+                                    //var btn3 = document.getElementById('Button3');
+                                    btn2.classList.remove("show-btn");
+
                                     //btn3.classList.add("show-btn");
                                 };
                             </script>

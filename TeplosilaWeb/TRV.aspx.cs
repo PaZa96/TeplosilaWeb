@@ -47,6 +47,13 @@ public partial class TRV : System.Web.UI.Page
         Logger.InitLogger(); //инициализация - требуется один раз в начале
         Label8.Text = "";
         Label55.Visible = false;
+
+        string ctrlname = Page.Request.Params["__EVENTTARGET"];
+        if (ctrlname != "GridView2")
+        {
+            resultPanel.Visible = false;
+            ScriptManager.RegisterStartupScript(this.Page, Page.GetType(), "MyClientScript1", "javascript:HideBTN()", true);
+        }
     }
 
     protected void tvRadioButtonList1_SelectedIndexChanged(object sender, EventArgs e)
@@ -82,6 +89,8 @@ public partial class TRV : System.Web.UI.Page
         DisableDropDownLists();
         DisablePanel(1);
         DisablePanel(3);
+        DisableTextBox(ws2TextBox1);
+        DisableTextBox(ws2TextBox2);
     }
 
     protected void aaRadioButton1_CheckedChanged(object sender, EventArgs e)
@@ -3094,7 +3103,7 @@ public partial class TRV : System.Web.UI.Page
         }
         else
         {
-            v_in_dict.Add(9, ws2RadioButtonList1.Items[ws2RadioButtonList1.SelectedIndex].Text + " " + ((this.ws2TextBox1.Enabled) ? (this.ws2TextBox1.Text + " %, " + this.ws2TextBox2.Text + " °С") : ""));
+            v_in_dict.Add(9, ws2RadioButtonList1.Items[ws2RadioButtonList1.SelectedIndex].Text + " " + ((this.ws2TextBox1.Enabled) ? (customConverterToDouble(this.ws2TextBox1.Text) + " %, " + customConverterToDouble(this.ws2TextBox2.Text) + " °С") : ""));
 
         }
 
@@ -3168,7 +3177,7 @@ public partial class TRV : System.Web.UI.Page
 
         if (ws2RadioButtonList1.SelectedIndex != 3)
         {
-            if (Convert.ToDouble(v_in_dict[18]) > 150) v_in_dict[40] = "220 ˚С";
+            if (customConverterToDouble(v_in_dict[18]) > 150) v_in_dict[40] = "220 ˚С";
             else v_in_dict[40] = "150 ˚С";
             //if (this.tvRadioButton1.Checked) v_in_dict[40] = "220 ˚С";
             //else v_in_dict[40] = "150 ˚С";
@@ -3235,6 +3244,7 @@ public partial class TRV : System.Web.UI.Page
         try
         {
             //ResetColorToAllControls();
+            resultPanel.Visible = true;
             DisableTextBox(objTextBox1);
             objTextBox1.Enabled = false;
             GridView2.Columns.Clear();
@@ -5335,40 +5345,42 @@ public partial class TRV : System.Web.UI.Page
             ws.Cells["I10"].Value = v_input_dict[34];
             ws.Cells["K10"].Value = v_input_dict[35];
 
-            ws.Cells["C12"].Value = v_input_dict[36];
-            ws.Cells["C13"].Value = v_input_dict[37];
+            ws.Cells["J12"].Value = v_input_dict[72];
 
-            ws.Cells["J12"].Value = v_input_dict[38];
-            ws.Cells["J13"].Value = v_input_dict[39];
+            ws.Cells["C13"].Value = v_input_dict[36];
+            ws.Cells["C14"].Value = v_input_dict[37];
 
-            ws.Cells["E15"].Value = v_input_dict[40];
-            ws.Cells["E16"].Value = v_input_dict[41];
+            ws.Cells["J13"].Value = v_input_dict[38];
+            ws.Cells["J14"].Value = v_input_dict[39];
 
-            ws.Cells["A19"].Value = v_input_dict[42];
-            ws.Cells["C19"].Value = v_input_dict[43];
-            ws.Cells["E19"].Value = v_input_dict[44];
-            ws.Cells["G19"].Value = v_input_dict[45];
-            ws.Cells["I19"].Value = v_input_dict[46];
-            ws.Cells["J19"].Value = v_input_dict[47];
+            ws.Cells["E16"].Value = v_input_dict[40];
+            ws.Cells["E17"].Value = v_input_dict[41];
 
-            ws.Cells["A23"].Value = v_input_dict[47];
-            ws.Cells["B23"].Value = v_input_dict[48];
-            ws.Cells["C23"].Value = v_input_dict[49];
-            ws.Cells["D23"].Value = v_input_dict[50];
-            ws.Cells["E23"].Value = v_input_dict[51];
-            ws.Cells["F23"].Value = v_input_dict[52];
-            ws.Cells["G23"].Value = v_input_dict[54];
-            ws.Cells["H23"].Value = v_input_dict[55];
-            ws.Cells["I23"].Value = v_input_dict[56];
-            ws.Cells["J23"].Value = v_input_dict[57];
-            ws.Cells["K23"].Value = v_input_dict[58];
+            ws.Cells["A20"].Value = v_input_dict[42];
+            ws.Cells["C20"].Value = v_input_dict[43];
+            ws.Cells["E20"].Value = v_input_dict[44];
+            ws.Cells["G20"].Value = v_input_dict[45];
+            ws.Cells["I20"].Value = v_input_dict[46];
+            ws.Cells["J20"].Value = v_input_dict[47];
 
-            ws.Cells["G29"].Value = v_input_dict[59];
-            ws.Cells["G30"].Value = v_input_dict[60];
-            ws.Cells["G31"].Value = v_input_dict[61];
-            ws.Cells["G32"].Value = v_input_dict[62];
+            ws.Cells["A24"].Value = v_input_dict[47];
+            ws.Cells["B24"].Value = v_input_dict[48];
+            ws.Cells["C24"].Value = v_input_dict[49];
+            ws.Cells["D24"].Value = v_input_dict[50];
+            ws.Cells["E24"].Value = v_input_dict[51];
+            ws.Cells["F24"].Value = v_input_dict[52];
+            ws.Cells["G24"].Value = v_input_dict[54];
+            ws.Cells["H24"].Value = v_input_dict[55];
+            ws.Cells["I24"].Value = v_input_dict[56];
+            ws.Cells["J24"].Value = v_input_dict[57];
+            ws.Cells["K24"].Value = v_input_dict[58];
 
-            ws.Pictures.Add(HttpContext.Current.Server.MapPath("\\Content\\images\\trv\\" + ((v_input_dict[7] == this.tvRadioButtonList1.Items[tvRadioButtonList1.SelectedIndex].Text) ? "Габаритный TRV и TRV-P.png" : "Габаритный TRV-3.png")), "A29");
+            ws.Cells["G30"].Value = v_input_dict[59];
+            ws.Cells["G31"].Value = v_input_dict[60];
+            ws.Cells["G32"].Value = v_input_dict[61];
+            ws.Cells["G33"].Value = v_input_dict[62];
+
+            ws.Pictures.Add(HttpContext.Current.Server.MapPath("\\Content\\images\\trv\\" + ((v_input_dict[7] == this.tvRadioButtonList1.Items[tvRadioButtonList1.SelectedIndex].Text) ? "Габаритный TRV и TRV-P.png" : "Габаритный TRV-3.png")), "A30");
 
             string path = HttpContext.Current.Server.MapPath("~/Files/TRV/PDF/" + DateTime.Now.ToString("dd-MM-yyyy"));
             DirectoryInfo dirInfo = new DirectoryInfo(path);

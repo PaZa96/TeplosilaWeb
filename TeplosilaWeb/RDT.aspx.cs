@@ -61,6 +61,7 @@ public partial class RDT : System.Web.UI.Page
         if (ctrlname != "GridView1")
         {
             resultPanel.Visible = false;
+            ScriptManager.RegisterStartupScript(this.Page, Page.GetType(), "MyClientScript", "javascript:HideBTN()", true);
         }
 
     }
