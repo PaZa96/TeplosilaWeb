@@ -89,8 +89,10 @@ public partial class TRV : System.Web.UI.Page
         DisableDropDownLists();
         DisablePanel(1);
         DisablePanel(3);
+        DisablePanel(4);
         DisableTextBox(ws2TextBox1);
         DisableTextBox(ws2TextBox2);
+        
     }
 
     protected void aaRadioButton1_CheckedChanged(object sender, EventArgs e)
@@ -232,6 +234,12 @@ public partial class TRV : System.Web.UI.Page
                 DisableDropDownList(lpv5DropDownList2);
                 lpv5RadioButtonList1.SelectedIndex = -1;
                 lpv5RadioButtonList1.Enabled = false;
+                break;
+            case 4:
+                DisableTextBox(lpvTextBox2);
+                DisableTextBox(lpvTextBox21);
+                DisableDropDownList(lpvDropDownList2);
+                DisableDropDownList(lpvDropDownList21);
                 break;
         }
     }
