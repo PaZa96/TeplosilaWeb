@@ -29,9 +29,7 @@ public partial class TRV : System.Web.UI.Page
     double[] arrConvert2;
     double[] arrConvert3;
 
-    public static Dictionary<string, int> keyValuePairs = new Dictionary<string, int>();
-    public static Dictionary<int, string> r_input_dict = new Dictionary<int, string>();
-    public static Dictionary<int, string> v_input_dict = new Dictionary<int, string>();
+    public Dictionary<int, string> v_input_dict = new Dictionary<int, string>();
 
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -732,14 +730,7 @@ public partial class TRV : System.Web.UI.Page
 
     private void SavePrevSelectedIndexDDL(string id, int key)
     {
-        if (!keyValuePairs.ContainsKey(id))
-        {
-            keyValuePairs.Add(id, key);
-        }
-        else
-        {
-            keyValuePairs[id] = key;
-        }
+        Session[id] = key;
     }
 
     //--------------------------------------Math Function--------------------------------------
@@ -750,7 +741,7 @@ public partial class TRV : System.Web.UI.Page
         {
             if (!String.IsNullOrWhiteSpace(tb.Text))
             {
-                int jj = keyValuePairs[ddl.ID];
+                int jj = Convert.ToInt32(Session[ddl.ID]);
 
                 if (jj > 0)
                 {
@@ -766,7 +757,7 @@ public partial class TRV : System.Web.UI.Page
         {
             if (!String.IsNullOrWhiteSpace(tb.Text))
             {
-                int jj = keyValuePairs[ddl.ID];
+                int jj = Convert.ToInt32(Session[ddl.ID]);
                 tb.Text = (customConverterToDouble(tb.Text.Replace(".", ",")) * arr[jj - 1] / arr[ddl.SelectedIndex - 1]).ToString().Replace(",", ".");
             }
         }
@@ -781,7 +772,7 @@ public partial class TRV : System.Web.UI.Page
             if (!String.IsNullOrWhiteSpace(tb.Text))
             {
 
-                int jj = keyValuePairs[ddl.ID];
+                int jj = Convert.ToInt32(Session[ddl.ID]);
                 if (jj > 0)
                 {
                     result = (customConverterToDouble(tb.Text) * arr[jj - 1] / arr[2]);
@@ -3231,6 +3222,8 @@ public partial class TRV : System.Web.UI.Page
         if (tdRadioButtonList5.SelectedIndex == 0) v_in_dict[72] = tdRadioButtonList5.Items[0].Text;
         else v_in_dict[72] = tdRadioButtonList5.Items[1].Text;
 
+        Session["v_input_dict"] = v_in_dict;
+
     }
 
     private void ResetColorToAllControls()
@@ -5263,6 +5256,7 @@ public partial class TRV : System.Web.UI.Page
     {
         try
         {
+            v_input_dict = (Dictionary<int, string>)Session["v_input_dict"];
 
             this.readFile(0);
             if (!String.IsNullOrWhiteSpace(objTextBox1.Text))
@@ -5439,7 +5433,7 @@ public partial class TRV : System.Web.UI.Page
     {
         try
         {
-
+            v_input_dict = (Dictionary<int, string>)Session["v_input_dict"];
             this.readFile(0);
             if (!String.IsNullOrWhiteSpace(objTextBox1.Text))
             {

@@ -28,11 +28,8 @@ public partial class RDT : System.Web.UI.Page
     double[] arrConvert2;
     double[] arrConvert3;
     double minVar = 0.000000001;
-    
 
-    public static Dictionary<string, int> keyValuePairs = new Dictionary<string, int>();
-    public static Dictionary<int, string> r_input_dict = new Dictionary<int, string>();
-    public static Dictionary<int, string> v_input_dict = new Dictionary<int, string>();
+    public Dictionary<int, string> r_input_dict = new Dictionary<int, string>();
 
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -1211,6 +1208,8 @@ public partial class RDT : System.Web.UI.Page
                 r_in_dict.Add(61, (Label38.Text));
             }
 
+            Session["r_input_dict"] = r_in_dict;
+
         }
         catch (Exception e)
         {
@@ -2049,14 +2048,7 @@ public partial class RDT : System.Web.UI.Page
 
     private void SavePrevSelectedIndexDDL(string id, int key)
     {
-        if (!keyValuePairs.ContainsKey(id))
-        {
-            keyValuePairs.Add(id, key);
-        }
-        else
-        {
-            keyValuePairs[id] = key;
-        }
+        Session[id] = key;
     }
 
     private void convertArrDouble(double[,] arr, DropDownList ddl, ref TextBox tb)
@@ -2065,7 +2057,7 @@ public partial class RDT : System.Web.UI.Page
         {
             if (!String.IsNullOrWhiteSpace(tb.Text))
             {
-                int jj = keyValuePairs[ddl.ID];
+                int jj = Convert.ToInt32(Session[ddl.ID]);
 
                 if (jj > 0)
                 {
@@ -2081,7 +2073,7 @@ public partial class RDT : System.Web.UI.Page
         {
             if (!String.IsNullOrWhiteSpace(tb.Text))
             {
-                int jj = keyValuePairs[ddl.ID];
+                int jj = Convert.ToInt32(Session[ddl.ID]);
                 tb.Text = (customConverterToDouble((tb.Text).Replace(".", ",")) * arr[jj - 1] / arr[ddl.SelectedIndex - 1]).ToString().Replace(",", ".");
             }
         }
@@ -2096,7 +2088,7 @@ public partial class RDT : System.Web.UI.Page
             if (!String.IsNullOrWhiteSpace(tb.Text))
             {
 
-                int jj = keyValuePairs[ddl.ID];
+                int jj = Convert.ToInt32(Session[ddl.ID]);
                 if (jj > 0)
                 {
                     result = (customConverterToDouble(tb.Text) * arr[jj - 1] / arr[2]);
@@ -3242,6 +3234,8 @@ public partial class RDT : System.Web.UI.Page
     {
         try
         {
+            r_input_dict = (Dictionary<int, string>)Session["r_input_dict"];
+
             this.readFile(0);
 
             if (!String.IsNullOrWhiteSpace(objTextBox1.Text))
@@ -3405,6 +3399,8 @@ public partial class RDT : System.Web.UI.Page
     {
         try
         {
+            r_input_dict = (Dictionary<int, string>)Session["r_input_dict"];
+
             this.readFile(0);
 
             if (!String.IsNullOrWhiteSpace(objTextBox1.Text))
