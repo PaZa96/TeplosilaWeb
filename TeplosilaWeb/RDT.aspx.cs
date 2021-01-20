@@ -3768,6 +3768,17 @@ public partial class RDT : System.Web.UI.Page
         }
     }
 
+    public void switchPane(HtmlGenericControl paneId)
+    {
+        lpPane1.Visible = false;
+        lpPane2.Visible = false;
+        lpPane3.Visible = false;
+        lpPane4.Visible = false;
+
+        Label20.Visible = true;
+        paneId.Visible = true;
+    }
+
     protected void eorRadioButtonList1_SelectedIndexChanged(object sender, EventArgs e)
     {
         changeImage(eorRadioButtonList1.SelectedIndex);
@@ -3790,6 +3801,8 @@ public partial class RDT : System.Web.UI.Page
                 ws1RadioButtonList1.Items[3].Enabled = false;
                 ws1RadioButtonList1.SelectedIndex = -1;
 
+                switchPane(lpPane1);
+
                 break;
             case 1:
                 lp1ControlEnable(false);
@@ -3809,6 +3822,8 @@ public partial class RDT : System.Web.UI.Page
                     ws1RadioButtonList1.Items[3].Enabled = true;
                 }
                 ws1RadioButtonList1.SelectedIndex = -1;
+
+                switchPane(lpPane2);
                 break;
             case 2:
                 lp1ControlEnable(false);
@@ -3825,6 +3840,8 @@ public partial class RDT : System.Web.UI.Page
 
                 ws1RadioButtonList1.Items[3].Enabled = false;
                 ws1RadioButtonList1.SelectedIndex = -1;
+                switchPane(lpPane3);
+
                 break;
             case 3:
                 lp1ControlEnable(false);
@@ -3841,6 +3858,7 @@ public partial class RDT : System.Web.UI.Page
 
                 ws1RadioButtonList1.Items[3].Enabled = false;
                 ws1RadioButtonList1.SelectedIndex = -1;
+                switchPane(lpPane4);
 
                 break;
 
@@ -3860,7 +3878,7 @@ public partial class RDT : System.Web.UI.Page
 
                 ws1RadioButtonList1.Items[3].Enabled = false;
                 ws1RadioButtonList1.SelectedIndex = -1;
-
+                switchPane(lpPane2);
                 break;
         }
 
@@ -4001,7 +4019,10 @@ public partial class RDT : System.Web.UI.Page
                 LabelSteam.Text = "N";
                 AddCssClass(fpr1_1, "panel-hide");
             }
-            
+            calcr.Visible = true;
+            fpr1.Visible = true;
+            fpr2.Visible = true;
+            Label31.Visible = true;
         }
         else
         {
@@ -4033,7 +4054,10 @@ public partial class RDT : System.Web.UI.Page
             RemoveCssClass(fpr1_1, "panel-hide");
             AddCssClass(fpr2_1, "panel-hide");
             fprRadioButton1.Checked = true;
-            
+            calcr.Visible = false;
+            fpr1.Visible = true;
+            fpr2.Visible = false;
+            Label31.Visible = true;
         }
 
     }

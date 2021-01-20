@@ -90,7 +90,7 @@ public partial class TRV : System.Web.UI.Page
         DisablePanel(4);
         DisableTextBox(ws2TextBox1);
         DisableTextBox(ws2TextBox2);
-        
+        wsPane.Visible = true;
     }
 
     protected void aaRadioButton1_CheckedChanged(object sender, EventArgs e)
@@ -382,7 +382,11 @@ public partial class TRV : System.Web.UI.Page
             lpv5RadioButton3.Checked = false;
             lpv5RadioButton2.Enabled = false;
             lpv5RadioButton3.Enabled = false;
-            
+            fvPane1.Visible = true;
+            fvPane2.Visible = true;
+            calcv.Visible = true;
+            lpv3.Visible = true;
+            lpv5.Visible = false;
 
             if (aa1RadioButtonList1.SelectedIndex == 0 || aa2RadioButtonList1.SelectedIndex == 0 || aa3RadioButtonList1.SelectedIndex == 0)
             {
@@ -394,6 +398,8 @@ public partial class TRV : System.Web.UI.Page
 
                 RemoveCssClass(lpv1, "panel-hide");
                 AddCssClass(lpv2, "panel-hide");
+                lpv1.Visible = true;
+                lpv2.Visible = false;
             }
             else
             {
@@ -408,6 +414,8 @@ public partial class TRV : System.Web.UI.Page
                 }
                 AddCssClass(lpv1, "panel-hide");
                 RemoveCssClass(lpv2, "panel-hide");
+                lpv1.Visible = false;
+                lpv2.Visible = true;
             }
 
             if(LabelSteam.Text == "Y")
@@ -452,9 +460,15 @@ public partial class TRV : System.Web.UI.Page
             DisableTextBox(fvTextBox10);
             DisableTextBox(fvTextBox11);
             DisableDropDownList(fvDropDownList2);
-
+            fvPane1.Visible = true;
+            fvPane2.Visible = false;
+            calcv.Visible = false;
+            lpv5.Visible = true;
+            lpv3.Visible = false;
             LabelSteam.Text = "Y";
         }
+
+        tdRBL.Visible = true;
 
     }
 
