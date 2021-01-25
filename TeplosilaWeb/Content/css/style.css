@@ -24,6 +24,16 @@ input[type=radio] {
     background-color: white;
 }
 
+.border-non-top {
+    margin-top: 0px;
+    border-top: none !important;
+}
+
+.border-non-bottom {
+    margin-bottom: 0px;
+    border-bottom: none !important;
+}
+
 label {
     margin:0px
 }
@@ -31,7 +41,6 @@ label {
 .valve-image {
     height: 100%;
     width: 100%;
-    margin-top: 30vh;
 }
 
 .table-responsive-lg {
@@ -110,6 +119,7 @@ input [type=button], input[type=submit], input[type=reset] {
     counter-reset: rowNumber -1;
     margin-top: 7px;
     margin-bottom: 7px;
+    height: auto !important;
 }
     .table-result tbody {
         border: 2px solid;
@@ -117,6 +127,7 @@ input [type=button], input[type=submit], input[type=reset] {
 
     .table-result tbody tr {
         counter-increment: rowNumber;
+        height: max-content;
     }
 
     .table-result tr td:first-child::before {
@@ -127,6 +138,7 @@ input [type=button], input[type=submit], input[type=reset] {
     padding: .2rem;
     vertical-align: top;
     border-top: 1px solid #dee2e6;
+    height: max-content;
 }
 
 .table tr{
@@ -199,4 +211,17 @@ tr:nth-child(2) td:nth-child(2) {
     opacity: 0.3 !important;
     top: 0px;
     left: 0px;
+}
+
+.btn-link-pdf {
+    padding: 2px;
+    border: 2px solid #00000066;
+    /* display: block; */
+    text-align: center;
+    color: black;
+    line-height: 1.2;
+    border-radius: 3px;
+    width: 280px;
+    margin-top: -13px;
+    position: absolute;
 }

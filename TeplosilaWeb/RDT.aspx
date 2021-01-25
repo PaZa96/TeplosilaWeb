@@ -19,22 +19,6 @@
             <div class="row jumbotron">
                 <div class="col-10">
                     <div class="col border">
-                        <asp:Label ID="Label1" runat="server" Text="Место установки:"></asp:Label>
-                        <asp:UpdatePanel ID="UpdatePanel1" runat="server" UpdateMode="Conditional">
-                            <ContentTemplate>
-                                <asp:RadioButtonList ID="sprRadioButtonList1" runat="server" style="margin-left: 0px"
-                                    AutoPostBack="True">
-                                    <asp:ListItem>ЦТП</asp:ListItem>
-                                    <asp:ListItem>ИТП</asp:ListItem>
-                                </asp:RadioButtonList>
-                                <asp:RequiredFieldValidator ID="sprRequiredFieldValidator1" runat="server"
-                                    ControlToValidate="sprRadioButtonList1" Display="Dynamic"
-                                    ErrorMessage="Выберите необходимое значение" ForeColor="Red" SetFocusOnError="True">
-                                    Выберите необходимое значение</asp:RequiredFieldValidator>
-                            </ContentTemplate>
-                        </asp:UpdatePanel>
-                    </div>
-                    <div class="col border">
                         <asp:UpdatePanel ID="UpdatePanel2" runat="server" UpdateMode="Conditional">
                             <ContentTemplate>
                                 Исполнение регулятора:<asp:RadioButtonList ID="eorRadioButtonList1" runat="server"
@@ -147,6 +131,12 @@
                                             <asp:ListItem>бар</asp:ListItem>
                                             <asp:ListItem>м. в. ст.</asp:ListItem>
                                         </asp:DropDownList>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        
+                                        <asp:HyperLink ID="HyperLink2" runat="server" CssClass="btn-link-pdf" NavigateUrl="/Content/data/calcRDT.pdf" Target="_new">Определение
+                                                потерь давления на регуляторе перепада давления</asp:HyperLink>
+                                        <br/>
                                         <asp:CustomValidator ID="CustomValidator10" runat="server"
                                             ControlToValidate="lp1DropDownList1" ErrorMessage="CustomValidator"
                                             Display="Dynamic" ForeColor="Red"
@@ -154,8 +144,8 @@
                                             ValidateEmptyText="True"></asp:CustomValidator>
                                         <asp:Label ID="LabelCustomValid" runat="server" ForeColor="Red"
                                             Text="Суммарные потери давления на регуляторе и регулируемом участке превышают допустимый перепад давлений на вводе"
-                                            Visible="False"></asp:Label>
-                                        <br />
+                                            Visible="False"></asp:Label><br/>
+                                       
                                         <asp:Label ID="lpLabel2" runat="server"
                                             Text="Перепад давлений, поддерживаемый регулятором на регулируемом участке:">
                                         </asp:Label>
