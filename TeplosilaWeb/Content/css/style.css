@@ -139,6 +139,7 @@ input [type=button], input[type=submit], input[type=reset] {
     vertical-align: top;
     border-top: 1px solid #dee2e6;
     height: max-content;
+    width: 1%;
 }
 
 .table tr{

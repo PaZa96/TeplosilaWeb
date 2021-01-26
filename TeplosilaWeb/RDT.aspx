@@ -105,12 +105,14 @@
                             </ContentTemplate>
                         </asp:UpdatePanel>
                     </div>
-                    <div class="col border">
-                        <asp:Label ID="Label20" runat="server" Text="Потери давления на клапане регулятора:" Visible ="false">
-                        </asp:Label>
+                    <div>
                         <asp:UpdatePanel ID="UpdatePanel12" runat="server">
                             <ContentTemplate>
                                 <div id="lpPane1" runat="server" visible="false" class="col border">
+                                    
+                                    <asp:Label ID="Label20" runat="server" Text="Потери давления на клапане регулятора:" Visible ="false">
+                                    </asp:Label>
+                                    <div class="border">
                                     <asp:Label ID="Label26" runat="server" Text="Регулятор перепада давления:">
                                     </asp:Label>
                                     <br />
@@ -136,16 +138,17 @@
                                         
                                         <asp:HyperLink ID="HyperLink2" runat="server" CssClass="btn-link-pdf" NavigateUrl="/Content/data/calcRDT.pdf" Target="_new">Определение
                                                 потерь давления на регуляторе перепада давления</asp:HyperLink>
-                                        <br/>
+                                        <div>
                                         <asp:CustomValidator ID="CustomValidator10" runat="server"
                                             ControlToValidate="lp1DropDownList1" ErrorMessage="CustomValidator"
                                             Display="Dynamic" ForeColor="Red"
                                             OnServerValidate="CustomValidator10_ServerValidate" SetFocusOnError="True"
                                             ValidateEmptyText="True"></asp:CustomValidator>
-                                        <asp:Label ID="LabelCustomValid" runat="server" ForeColor="Red"
+                                        <asp:Label ID="LabelCustomValid" runat="server" ForeColor="Red" 
                                             Text="Суммарные потери давления на регуляторе и регулируемом участке превышают допустимый перепад давлений на вводе"
-                                            Visible="False"></asp:Label><br/>
-                                       
+                                            Visible="False"></asp:Label>
+                                       </div>
+                                        
                                         <asp:Label ID="lpLabel2" runat="server"
                                             Text="Перепад давлений, поддерживаемый регулятором на регулируемом участке:">
                                         </asp:Label>
@@ -230,6 +233,7 @@
                                         <br />
                                     </div>
                                 </div>
+                                  </div>   
                             </ContentTemplate>
                         </asp:UpdatePanel>
 
@@ -237,6 +241,9 @@
                         <asp:UpdatePanel ID="UpdatePanel3" runat="server">
                             <ContentTemplate>
                                 <div class="col border" runat="server" visible="false" id="lpPane2">
+                                    <asp:Label ID="Label1" runat="server" Text="Потери давления на клапане регулятора:">
+                                    </asp:Label>
+                                    <div class="border">
                                     <asp:Label ID="Label2" runat="server" Text="Регулятор давления <q>после себя</q>:">
                                     </asp:Label>
                                     <br />
@@ -346,6 +353,7 @@
                                             ValidateEmptyText="True"></asp:CustomValidator>
 
                                     </div>
+                                        </div>
                                 </div>
                             </ContentTemplate>
                         </asp:UpdatePanel>
@@ -353,6 +361,9 @@
                         <asp:UpdatePanel ID="UpdatePanel4" runat="server">
                             <ContentTemplate>
                                 <div class="col border" runat="server" visible="false" id="lpPane3">
+                                     <asp:Label ID="Label36" runat="server" Text="Потери давления на клапане регулятора:">
+                                    </asp:Label>
+                                    <div class="border">
                                     <asp:Label ID="Label10" runat="server" Text="Регулятор давления <q>до себя</q>:">
                                     </asp:Label>
                                     <br />
@@ -401,12 +412,16 @@
                                         </asp:CustomValidator>
 
                                     </div>
+                                        </div>
                                 </div>
                             </ContentTemplate>
                         </asp:UpdatePanel>
                         <asp:UpdatePanel ID="UpdatePanel6" runat="server">
                             <ContentTemplate>
                                 <div class="col border" runat="server" visible="false" id="lpPane4">
+                                     <asp:Label ID="Label40" runat="server" Text="Потери давления на клапане регулятора:">
+                                    </asp:Label>
+                                    <div class="border">
                                     <asp:Label ID="Label15" runat="server" Text="Регулятор <q>перепуска</q>:">
                                     </asp:Label>
                                     <br />
@@ -435,13 +450,14 @@
                                         <br />
                                     </div>
                                  </div>
+                                    </div>
                             </ContentTemplate>
                         </asp:UpdatePanel>
                     </div>
-                    <div class="col border">
+                    <div>
                         <asp:UpdatePanel ID="UpdatePanel7" runat="server">
                             <ContentTemplate>
-                                <div class="rte panel-hide" id="calcr" runat="server" visible ="false">
+                                <div class="rte col border" id="calcr" runat="server" visible ="false">
                                     <asp:Label ID="Label18" runat="server"
                                         Text="Расчет регулятора давления на кавитацию:">
                                     </asp:Label>
@@ -489,12 +505,12 @@
                         </asp:UpdatePanel>
                     </div>
 
-                    <div class="col border">
-                        <asp:Label ID="Label31" runat="server" Text="Расход через регулятор давления:" Visible="false"></asp:Label>
-
+                    <div>
                         <asp:UpdatePanel ID="UpdatePanel13" runat="server">
                             <ContentTemplate>
-                                <div class="panel-hide" id="fpr1" runat="server" Visible="false">
+                                <div class="col border border-non-bottom" id="fpr1" runat="server" Visible="false">
+                                    <asp:Label ID="Label31" runat="server" Text="Расход через регулятор давления:" Visible="false"></asp:Label>
+                                     <div>
                                     <asp:RadioButton ID="fprRadioButton1" runat="server"
                                         Text="Задать максимальную величину расхода через регулятор давления:"
                                         AutoPostBack="True" OnCheckedChanged="fprRadioButton1_CheckedChanged"
@@ -523,13 +539,15 @@
                                         <br />
                                     </div>
                                 </div>
+                                </div>
+
                             </ContentTemplate>
                         </asp:UpdatePanel>
 
 
                         <asp:UpdatePanel ID="UpdatePanel14" runat="server">
                             <ContentTemplate>
-                                <div class="panel-hide" id="fpr2" runat="server" Visible="false">
+                                <div class="col border border-non-top" id="fpr2" runat="server" Visible="false">
                                     <asp:RadioButton ID="fprRadioButton2" runat="server"
                                         Text="Вычислить максимальную величину расхода через регулятор давления:"
                                         AutoPostBack="True" OnCheckedChanged="fprRadioButton2_CheckedChanged"

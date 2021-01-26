@@ -1679,7 +1679,7 @@ public partial class RDT : System.Web.UI.Page
 
     protected void CustomValidator12_ServerValidate(object source, ServerValidateEventArgs args)
     {
-        if (CustomValidator11.IsValid)
+        if (CustomValidator11.IsValid && CustomValidator20.IsValid)
         {
             if (fprDropDownList1.Enabled)
             {
@@ -1881,7 +1881,8 @@ public partial class RDT : System.Web.UI.Page
 
     protected void CustomValidator18_ServerValidate(object source, ServerValidateEventArgs args)
     {
-        
+        if (CustomValidator21.IsValid)
+        {
             if (lp5DropDownList1.Enabled)
             {
                 if (lp5TextBox1.Enabled == false || checkTextBoxEmpty(lp5TextBox1))
@@ -1902,7 +1903,12 @@ public partial class RDT : System.Web.UI.Page
                     args.IsValid = false;
                 }
             }
-     
+        }
+        else
+        {
+            args.IsValid = false;
+            CustomValidator18.ErrorMessage = "";
+        }
     }
 
     protected void CustomValidator19_ServerValidate(object source, ServerValidateEventArgs args)
@@ -1939,10 +1945,11 @@ public partial class RDT : System.Web.UI.Page
 
     protected void CustomValidator20_ServerValidate(object source, ServerValidateEventArgs args)
     {
-        if (lp5RadioButtonList1.SelectedIndex == 0)
+        if (CustomValidator19.IsValid)
         {
-            if (CustomValidator20.IsValid)
+            if (lp5RadioButtonList1.SelectedIndex == 0)
             {
+            
                 if (ws1RadioButtonList1.SelectedIndex == 3)
                 {
                     if (lp5TextBox3.Enabled == false || checkTextBoxEmpty(lp5TextBox3))
@@ -1973,11 +1980,12 @@ public partial class RDT : System.Web.UI.Page
                     }
                 }
             }
-            else
-            {
-                args.IsValid = false;
-                CustomValidator20.ErrorMessage = "";
-            }
+            
+        }
+        else
+        {
+            args.IsValid = false;
+            CustomValidator20.ErrorMessage = "";
         }
     }
 
@@ -4348,6 +4356,9 @@ public partial class RDT : System.Web.UI.Page
         RemoveCssClass(fpr2, "panel-hide");
         DisableTextBox(ws1TextBox1);
         DisableTextBox(ws1TextBox2);
+        fpr1.Visible = false;
+        fpr2.Visible = false;
+        calcr.Visible = false;
     }
 
     protected void fprRadioButton1_CheckedChanged(object sender, EventArgs e)
