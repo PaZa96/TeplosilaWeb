@@ -133,9 +133,7 @@
                                             <asp:ListItem>бар</asp:ListItem>
                                             <asp:ListItem>м. в. ст.</asp:ListItem>
                                         </asp:DropDownList>
-                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                        
+                                      
                                         <asp:HyperLink ID="HyperLink2" runat="server" CssClass="btn-link-pdf" NavigateUrl="/Content/data/calcRDT.pdf" Target="_new">Определение
                                                 потерь давления на регуляторе перепада давления</asp:HyperLink>
                                         <div>

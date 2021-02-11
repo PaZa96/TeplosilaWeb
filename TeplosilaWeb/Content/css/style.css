@@ -139,7 +139,7 @@ input [type=button], input[type=submit], input[type=reset] {
     vertical-align: top;
     border-top: 1px solid #dee2e6;
     height: max-content;
-    width: 1%;
+    white-space: break-spaces;
 }
 
 .table tr{
@@ -217,7 +217,7 @@ tr:nth-child(2) td:nth-child(2) {
 .btn-link-pdf {
     padding: 2px;
     border: 2px solid #00000066;
-    /* display: block; */
+    margin-left: 10vw;
     text-align: center;
     color: black;
     line-height: 1.2;
