@@ -134,7 +134,7 @@
                                             <asp:ListItem>м. в. ст.</asp:ListItem>
                                         </asp:DropDownList>
                                       
-                                        <asp:HyperLink ID="HyperLink2" runat="server" CssClass="btn-link-pdf" NavigateUrl="/Content/data/calcRDT.pdf" Target="_new">Определение
+                                        <asp:HyperLink ID="HyperLink2" runat="server" CssClass="btn-link-pdf minus-margin" NavigateUrl="/Content/data/calcRDT.pdf" Target="_new">Определение
                                                 потерь давления на регуляторе перепада давления</asp:HyperLink>
                                         <div>
                                         <asp:CustomValidator ID="CustomValidator10" runat="server"
@@ -666,8 +666,6 @@
                                             Font-Size="X-Small" Visible="False"
                                             OnSelectedIndexChanged="GridView1_SelectedIndexChanged"
                                             AutoGenerateSelectButton="True">
-
-
                                             <RowStyle Font-Size="Small" />
                                             <SelectedRowStyle BackColor="#ff7d00" Font-Bold="False" ForeColor="White" />
                                         </asp:GridView>

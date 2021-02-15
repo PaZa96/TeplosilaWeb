@@ -195,15 +195,16 @@
                         <asp:UpdatePanel ID="UpdatePanel7" runat="server">
                             <ContentTemplate>
                                 <div id="lpv2" runat="server" visible="false">
-                                    <div class="col border">
-                                        <div class="col row">
+                                    <div class="border">
                                         <asp:Label ID="Label11" runat="server"
                                             Text="Потери давления на регулируемом участке (без учета регулирующего клапана):">
                                         </asp:Label>
-                                        <div class="col-8">
+                                        <div class="col row">
+                                        
+                                        <div class="col">
                                             <asp:Label ID="Label10" runat="server" Text="&#916;Pто = "></asp:Label>
                                             &nbsp;&nbsp;
-                                            <asp:TextBox ID="lpvTextBox21" runat="server" Enabled="False" type="number"
+                                            <asp:TextBox ID="lpvTextBox21" runat="server" Enabled="False" type="number" CssClass="margin-top-bottom"
                                                 required="required" TextMode="Number"></asp:TextBox>
                                             <asp:DropDownList ID="lpvDropDownList21" runat="server" AutoPostBack="True"
                                                 Enabled="False"
@@ -214,6 +215,10 @@
                                                 <asp:ListItem>бар</asp:ListItem>
                                                 <asp:ListItem>м. в. ст.</asp:ListItem>
                                             </asp:DropDownList>
+                                            
+                                            <asp:HyperLink ID="HyperLink1" CssClass="btn-link-pdf" Target="_new"
+                                                NavigateUrl="/Content/data/calcTRV.pdf" runat="server">Определение
+                                                потерь давления на регулируемом участке</asp:HyperLink>
                                             &nbsp;<asp:CustomValidator ID="CustomValidator19" runat="server"
                                                 ControlToValidate="ws2TextBox2" Display="Dynamic"
                                                 ErrorMessage="CustomValidator" ForeColor="Red"
@@ -221,11 +226,7 @@
                                                 SetFocusOnError="True" ValidateEmptyText="True"></asp:CustomValidator>
                                             <br />
                                         </div>
-                                        <div class="col-4">
-                                            <asp:HyperLink ID="HyperLink1" CssClass="btn-link-pdf" Target="_new"
-                                                NavigateUrl="/Content/data/calcTRV.pdf" runat="server">Определение
-                                                потерь давления на регулируемом участке</asp:HyperLink>
-                                        </div>
+                                       
                                         </div>
                                     </div>
                                 </div>
@@ -477,7 +478,7 @@
                                             Text="Вычислить максимальную величину расхода через клапан:"
                                             AutoPostBack="True" OnCheckedChanged="fvRadioButton2_CheckedChanged" />
                                         <div class="col table-responsive-md">
-                                            <table class="table table-bordered col">
+                                            <table class="table table-bordered col table-normal-style">
                                                 <thead>
                                                     <tr>
                                                         <th scope="col"></th>
@@ -738,11 +739,10 @@
                                         Font-Size="X-Small" Visible="False"
                                         OnSelectedIndexChanged="GridView2_SelectedIndexChanged"
                                         AutoGenerateSelectButton="True">
-
-
                                         <RowStyle Font-Size="Small" />
                                         <SelectedRowStyle BackColor="#ff7d00" Font-Bold="False" ForeColor="White" />
                                     </asp:GridView>
+
                                 </div>
                                 <div class="col non-padding">
                                     <asp:Label ID="Label53" runat="server" CssClass="show-btn" Text="Объект:"

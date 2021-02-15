@@ -85,8 +85,6 @@ public partial class TRV : System.Web.UI.Page
 
     protected void aaRadioButton1_CheckedChanged(object sender, EventArgs e)
     {
-        lpvTextBox21.Enabled = false;
-        lpvTextBox21.Text = "";
         aaRadioButton2.Checked = false;
         aaRadioButton3.Checked = false;
 
@@ -106,8 +104,6 @@ public partial class TRV : System.Web.UI.Page
 
     protected void aaRadioButton2_CheckedChanged(object sender, EventArgs e)
     {
-        lpvTextBox21.Enabled = false;
-        lpvTextBox21.Text = "";
         aaRadioButton1.Checked = false;
         aaRadioButton3.Checked = false;
         aa1RadioButtonList1.Enabled = false;
@@ -125,8 +121,6 @@ public partial class TRV : System.Web.UI.Page
 
     protected void aaRadioButton3_CheckedChanged(object sender, EventArgs e)
     {
-        lpvTextBox21.Enabled = false;
-        lpvTextBox21.Text = "";
         aaRadioButton2.Checked = false;
         aaRadioButton1.Checked = false;
         aa1RadioButtonList1.Enabled = false;
@@ -280,15 +274,7 @@ public partial class TRV : System.Web.UI.Page
         }
 
     }
-
-    public void ResetPressureLoss(RadioButtonList radioButtonList)
-    {
-        lpvDropDownList21.Enabled = false;
-        lpvDropDownList21.ClearSelection();
-        lpvTextBox21.Enabled = false;
-        lpvTextBox21.Text = "";
-        
-    }
+ 
 
     protected void ws2RadioButtonList1_SelectedIndexChanged(object sender, EventArgs e)
     {
@@ -332,8 +318,6 @@ public partial class TRV : System.Web.UI.Page
 
             if (aa1RadioButtonList1.SelectedIndex == 0 || aa2RadioButtonList1.SelectedIndex == 0 || aa3RadioButtonList1.SelectedIndex == 0)
             {
-                lpvDropDownList21.Enabled = false;
-                lpvDropDownList21.ClearSelection();
                 lpvTextBox21.Enabled = false;
                 lpvTextBox21.Text = "";
 
@@ -403,8 +387,6 @@ public partial class TRV : System.Web.UI.Page
 
     protected void aa1RadioButtonList1_SelectedIndexChanged(object sender, EventArgs e)
     {
-        ResetPressureLoss(aa1RadioButtonList1);
-
         if (tvRadioButtonList1.SelectedIndex >= 0 && fvRadioButton2.Checked)
         {
             EnableTemperatureTable();
@@ -414,8 +396,6 @@ public partial class TRV : System.Web.UI.Page
 
     protected void aa2RadioButtonList1_SelectedIndexChanged(object sender, EventArgs e)
     {
-        ResetPressureLoss(aa2RadioButtonList1);
-
         if (tvRadioButtonList1.SelectedIndex >= 0 && fvRadioButton2.Checked)
         {
             EnableTemperatureTable();
@@ -425,8 +405,6 @@ public partial class TRV : System.Web.UI.Page
 
     protected void aa3RadioButtonList1_SelectedIndexChanged(object sender, EventArgs e)
     {
-        ResetPressureLoss(aa3RadioButtonList1);
-
         if (tvRadioButtonList1.SelectedIndex >= 0 && fvRadioButton2.Checked)
         {
             EnableTemperatureTable();
@@ -1889,7 +1867,7 @@ public partial class TRV : System.Web.UI.Page
                 {
                     listI2.Add("хорошее");
                 }
-                if (Ia >= 0.4 && Ia < 0.5)
+                else if (Ia >= 0.4 && Ia < 0.5)
                 {
                     listI2.Add("удовлетворительное");
                 }
@@ -2905,6 +2883,12 @@ public partial class TRV : System.Web.UI.Page
             else if (aa2RadioButtonList1.SelectedIndex == 1) v_in_dict.Add(6, aa2RadioButtonList1.Items[1].Text);
             else if (aa3RadioButtonList1.SelectedIndex == 0) v_in_dict.Add(6, aa3RadioButtonList1.Items[0].Text);
             else if (aa3RadioButtonList1.SelectedIndex == 1) v_in_dict.Add(6, aa3RadioButtonList1.Items[1].Text);
+        }
+        else
+        {
+            v_in_dict.Add(4, "-");
+            v_in_dict.Add(5, "-");
+            v_in_dict.Add(6, "-");
         }
         v_in_dict.Add(7, tvRadioButtonList1.Items[tvRadioButtonList1.SelectedIndex].Text);
 
@@ -5008,7 +4992,7 @@ public partial class TRV : System.Web.UI.Page
             ws.PrintOptions.LeftMargin = 0.6 / 2.54;
             ws.PrintOptions.RightMargin = 0.6 / 2.54;
 
-            for (int i = 1; i < 72; i++)
+            for (int i = 1; i < v_input_dict.Count; i++)
             {
                 if (i != 63 || i != 64 || i != 65)
                 {
@@ -5205,8 +5189,7 @@ public partial class TRV : System.Web.UI.Page
 
             ws.Cells["C8"].Value = v_input_dict[9];
 
-            ws.Cells["E9"].Value = v_input_dict[10];
-            ws.Cells["F9"].Value = v_input_dict[11];
+
             ws.Cells["J9"].Value = v_input_dict[12];
             ws.Cells["K9"].Value = v_input_dict[13];
 
