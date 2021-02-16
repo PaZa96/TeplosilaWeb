@@ -180,6 +180,10 @@
                                             <asp:ListItem>Зависимая</asp:ListItem>
                                             <asp:ListItem>Независимая (через теплообменник)</asp:ListItem>
                                         </asp:RadioButtonList>
+
+                                        <asp:RadioButton ID="aaRadioButton4" runat="server" Text="Другое"
+                                            AutoPostBack="True" required="required" OnCheckedChanged="aaRadioButton4_CheckedChanged"/><br/>
+
                                         <asp:CustomValidator ID="aaCustomValidator8" runat="server"
                                             ControlToValidate="aa1RadioButtonList1" Display="Dynamic"
                                             ErrorMessage="CustomValidator" ForeColor="Red" SetFocusOnError="True"
@@ -431,17 +435,17 @@
 
                     </div>
                     <div>
-
                         <asp:UpdatePanel ID="UpdatePanel13" runat="server">
                             <ContentTemplate>
                                 <div runat="server" id="fvPane1" visible="false">
                                     <div class="col border border-non-bottom">
                                         <asp:Label ID="Label16" runat="server" Text="Расход через клапан:"></asp:Label>
+                                        
                                         </br>
                                         <asp:RadioButton ID="fvRadioButton1" runat="server"
                                             Text="Задать максимальную величину расхода через клапан:"
                                             AutoPostBack="True" OnCheckedChanged="fvRadioButton1_CheckedChanged" />
-                                        <br />
+                                        
                                         <div class="col">
                                             <asp:Label ID="Label28" runat="server" Text="Gкл = "></asp:Label>
                                             <asp:TextBox ID="fvTextBox1" runat="server" Enabled="False"

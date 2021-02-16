@@ -87,13 +87,14 @@ public partial class TRV : System.Web.UI.Page
     {
         aaRadioButton2.Checked = false;
         aaRadioButton3.Checked = false;
-
+        aaRadioButton4.Checked = false;
         aa1RadioButtonList1.Enabled = true;
         aa2RadioButtonList1.Enabled = false;
         aa3RadioButtonList1.Enabled = false;
         aa3RadioButtonList1.Enabled = false;
         aa2RadioButtonList1.ClearSelection();
         aa3RadioButtonList1.ClearSelection();
+        fvPane2.Visible = true;
 
         if (tvRadioButtonList1.SelectedIndex >= 0 && fvRadioButton2.Checked)
         {
@@ -106,11 +107,13 @@ public partial class TRV : System.Web.UI.Page
     {
         aaRadioButton1.Checked = false;
         aaRadioButton3.Checked = false;
+        aaRadioButton4.Checked = false;
         aa1RadioButtonList1.Enabled = false;
         aa2RadioButtonList1.Enabled = true;
         aa3RadioButtonList1.Enabled = false;
         aa1RadioButtonList1.ClearSelection();
         aa3RadioButtonList1.ClearSelection();
+        fvPane2.Visible = true;
 
         if (tvRadioButtonList1.SelectedIndex >= 0 && fvRadioButton2.Checked)
         {
@@ -123,11 +126,31 @@ public partial class TRV : System.Web.UI.Page
     {
         aaRadioButton2.Checked = false;
         aaRadioButton1.Checked = false;
+        aaRadioButton4.Checked = false;
         aa1RadioButtonList1.Enabled = false;
         aa2RadioButtonList1.Enabled = false;
         aa3RadioButtonList1.Enabled = true;
         aa2RadioButtonList1.ClearSelection();
         aa1RadioButtonList1.ClearSelection();
+        fvPane2.Visible = true;
+
+        if (tvRadioButtonList1.SelectedIndex >= 0 && fvRadioButton2.Checked)
+        {
+            EnableTemperatureTable();
+        }
+    }
+    protected void aaRadioButton4_CheckedChanged(object sender, EventArgs e)
+    {
+        aaRadioButton2.Checked = false;
+        aaRadioButton1.Checked = false;
+        aaRadioButton3.Checked = false;
+        aa1RadioButtonList1.Enabled = false;
+        aa2RadioButtonList1.Enabled = false;
+        aa3RadioButtonList1.Enabled = false;
+        aa2RadioButtonList1.ClearSelection();
+        aa1RadioButtonList1.ClearSelection();
+        aa3RadioButtonList1.ClearSelection();
+        fvPane2.Visible = false;
 
         if (tvRadioButtonList1.SelectedIndex >= 0 && fvRadioButton2.Checked)
         {
@@ -252,6 +275,7 @@ public partial class TRV : System.Web.UI.Page
         }
         else if (aaRadioButton3.Checked)
         {
+
             if (tvRadioButtonList1.SelectedIndex == 0)
             {
                 fvTextBox2.Enabled = true;
@@ -272,7 +296,6 @@ public partial class TRV : System.Web.UI.Page
 
             }
         }
-
     }
  
 
@@ -314,13 +337,13 @@ public partial class TRV : System.Web.UI.Page
             lpv5.Visible = false;
             calcv.Visible = true;
             fvPane1.Visible = true;
-            fvPane2.Visible = true;
+            
 
             if (aa1RadioButtonList1.SelectedIndex == 0 || aa2RadioButtonList1.SelectedIndex == 0 || aa3RadioButtonList1.SelectedIndex == 0)
             {
                 lpvTextBox21.Enabled = false;
                 lpvTextBox21.Text = "";
-
+                fvPane2.Visible = false;
                 lpv2.Visible = false;
             }
             else
@@ -1869,7 +1892,7 @@ public partial class TRV : System.Web.UI.Page
                 }
                 else if (Ia >= 0.4 && Ia < 0.5)
                 {
-                    listI2.Add("удовлетворительное");
+                    listI2.Add("удовлетво-рительное");
                 }
                 else
                 {
@@ -2874,7 +2897,10 @@ public partial class TRV : System.Web.UI.Page
             {
                 aaText = aaRadioButton3.Text;
             }
-
+            else
+            {
+                aaText = "-";
+            }
             v_in_dict.Add(5, aaText);
 
             if (this.aa1RadioButtonList1.SelectedIndex == 0) v_in_dict.Add(6, aa1RadioButtonList1.Items[0].Text);
@@ -2883,6 +2909,10 @@ public partial class TRV : System.Web.UI.Page
             else if (aa2RadioButtonList1.SelectedIndex == 1) v_in_dict.Add(6, aa2RadioButtonList1.Items[1].Text);
             else if (aa3RadioButtonList1.SelectedIndex == 0) v_in_dict.Add(6, aa3RadioButtonList1.Items[0].Text);
             else if (aa3RadioButtonList1.SelectedIndex == 1) v_in_dict.Add(6, aa3RadioButtonList1.Items[1].Text);
+            else
+            {
+                v_in_dict.Add(6, "-");
+            }
         }
         else
         {
@@ -3888,18 +3918,18 @@ public partial class TRV : System.Web.UI.Page
                                     {
                                         titles = new string[] {
                                         "Марка регулирующего клапана",
-                                        "Номинальный диаметр DN, мм",
-                                        "Пропускная cпособность Kvs, м3/ч",
-                                        "Фактические потери давления на полностью открытом клапане при заданном расходе ∆Рф,\n бар\n",
+                                        "Номинальный диаметр DN,\nмм",
+                                        "Пропускная cпособность Kvs,\nм³/ч",
+                                        "Фактические потери давления на полностью открытом клапане при заданном расходе ∆Рф,\nбар\n",
 
                                         "Внешний авторитет клапана",
                                         "Качество регулирования",
 
-                                        "Скорость в выходном сечении клапана V, м/с",
+                                        "Скорость в выходном сечении клапана V,\nм/с",
 
                                         "Шум, некачественное регулирование",
 
-                                        "Предельно допустимый перепад давлений ∆Pпред, бар",
+                                        "Предельно допустимый перепад давлений ∆Pпред,\nбар",
                                         "Кавитация",
                                         //"Скорость перемещения штока сек/мм (мм/мин)",
                                         //"Максимально допустимый перепад давления на клапане, преодолеваемый приводом, бар, не более",
@@ -3924,11 +3954,11 @@ public partial class TRV : System.Web.UI.Page
                                     {
                                         titles = new string[] {
                                             "Марка регулирующего клапана",
-                                            "Номинальный диаметр DN, мм",
-                                            "Пропускная cпособность Kvs, м3/ч",
+                                            "Номинальный диаметр DN,\nмм",
+                                            "Пропускная cпособность Kvs,\nм³/ч",
                                             //"Внешний авторитет клапана",
                                             //"Качество регулирования",
-                                            "Скорость в выходном сечении клапана V, м/с",
+                                            "Скорость в выходном сечении клапана V,\nм/с",
                                             "Шум, некачественное регулирование",
                                             //"Скорость перемещения штока сек/мм (мм/мин)",
                                             //"Максимально допустимый перепад давления на клапане, преодолеваемый приводом, бар, не более",
@@ -4278,9 +4308,9 @@ public partial class TRV : System.Web.UI.Page
     {
         if (rpvCustomValidator1.IsValid)
         {
-            if (aaRadioButton1.Checked || aaRadioButton2.Checked || aaRadioButton3.Checked)
+            if (aaRadioButton1.Checked || aaRadioButton2.Checked || aaRadioButton3.Checked || aaRadioButton4.Checked)
             {
-                if (aa1RadioButtonList1.SelectedIndex > -1 || aa2RadioButtonList1.SelectedIndex > -1 || aa3RadioButtonList1.SelectedIndex > -1)
+                if (aa1RadioButtonList1.SelectedIndex > -1 || aa2RadioButtonList1.SelectedIndex > -1 || aa3RadioButtonList1.SelectedIndex > -1 || aaRadioButton4.Checked)
                 {
                     args.IsValid = true;
                     return;
@@ -5572,4 +5602,6 @@ public partial class TRV : System.Web.UI.Page
     {
 
     }
+
+    
 }
