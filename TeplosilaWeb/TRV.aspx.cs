@@ -1892,7 +1892,7 @@ public partial class TRV : System.Web.UI.Page
                 }
                 else if (Ia >= 0.4 && Ia < 0.5)
                 {
-                    listI2.Add("удовлетво-рительное");
+                    listI2.Add("удовлетво-\nрительное");
                 }
                 else
                 {
