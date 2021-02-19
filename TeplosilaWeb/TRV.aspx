@@ -206,7 +206,7 @@
                                         <div class="col row">
                                         
                                         <div class="col">
-                                            <asp:Label ID="Label10" runat="server" Text="&#916;Pто = "></asp:Label>
+                                            <asp:Label ID="Label10" runat="server" Text="&#916;Ppy' = "></asp:Label>
                                             &nbsp;&nbsp;
                                             <asp:TextBox ID="lpvTextBox21" runat="server" Enabled="False" type="number" CssClass="margin-top-bottom"
                                                 required="required" TextMode="Number"></asp:TextBox>
@@ -271,7 +271,7 @@
                                             <asp:Label ID="Label55" runat="server" ForeColor="Red"
                                                 Text="Неверно указано значение давления" Visible="False"></asp:Label>
                                             <asp:Label ID="Label56" runat="server" ForeColor="Red"
-                                                Text="Суммарные потери давления в теплообменнике и на клапане превышают давление перед клапаном"
+                                                Text="Суммарные потери давления на регулируемом участке с учетом регулирующего клапана превышают давление перед клапаном"
                                                 Visible="False"></asp:Label>
                                             <br />
 
