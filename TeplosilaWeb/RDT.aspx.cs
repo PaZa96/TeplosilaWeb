@@ -33,34 +33,40 @@ public partial class RDT : System.Web.UI.Page
 
     protected void Page_Load(object sender, EventArgs e)
     {
+        try
+        {
+            convertTable = new double[2, 7] { { 1000, 3600, 60, 1, 3600, 1, 1000 }, { 1, 3.6, 0.06, 0.001, 3.6, 0.001, 1 } };
 
-        convertTable = new double[2, 7] { { 1000, 3600, 60, 1, 3600, 1, 1000 }, { 1, 3.6, 0.06, 0.001, 3.6, 0.001, 1 } };
+            arrConvert1 = new double[7, 7] { { 1, 0.278, 16.67, 1000, 0.278, 1000, 1 },
+                                             { 3.6, 1, 60, 3600, 1, 3600, 3.6 },
+                                             { 0.06, 0.0167, 1, 60, 0.0167, 60, 0.06 },
+                                             { 0.001, 0.000278, 0.0167, 1, 0.000278, 1, 0.001 },
+                                             { 3.6, 1, 60, 3600, 1, 3600, 3.6 },
+                                             { 0.001, 0.000278, 0.0167, 1, 0.000278, 1, 0.001 },
+                                             { 1, 0.278, 16.67, 1000, 0.278, 1000, 1 }
+                };
+            arrConvert2 = new double[5] { 1000, 1000000, 1, 1163000, 1.163 };
+            arrConvert3 = new double[4] { 1000, 1, 100, 9.8067 };
 
-        arrConvert1 = new double[7, 7] { { 1, 0.278, 16.67, 1000, 0.278, 1000, 1 },
-                                         { 3.6, 1, 60, 3600, 1, 3600, 3.6 },
-                                         { 0.06, 0.0167, 1, 60, 0.0167, 60, 0.06 },
-                                         { 0.001, 0.000278, 0.0167, 1, 0.000278, 1, 0.001 },
-                                         { 3.6, 1, 60, 3600, 1, 3600, 3.6 },
-                                         { 0.001, 0.000278, 0.0167, 1, 0.000278, 1, 0.001 },
-                                         { 1, 0.278, 16.67, 1000, 0.278, 1000, 1 }
-            };
-        arrConvert2 = new double[5] { 1000, 1000000, 1, 1163000, 1.163 };
-        arrConvert3 = new double[4] { 1000, 1, 100, 9.8067 };
-
-        Logger.InitLogger(); //инициализация - требуется один раз в начале
-        LabelError.Text = "";
-        fprLabelError.Text = "";
-        LabelCustomValid.Visible = false;
+            Logger.InitLogger(); //инициализация - требуется один раз в начале
+            LabelError.Text = "";
+            fprLabelError.Text = "";
+            LabelCustomValid.Visible = false;
 
         
 
-        string ctrlname = Page.Request.Params["__EVENTTARGET"];
-        if (ctrlname != "GridView1")
-        {
-            resultPanel.Visible = false;
-            ScriptManager.RegisterStartupScript(this.Page, Page.GetType(), "MyClientScript", "javascript:HideBTN()", true);
+            string ctrlname = Page.Request.Params["__EVENTTARGET"];
+            if (ctrlname != "GridView1")
+            {
+                resultPanel.Visible = false;
+                ScriptManager.RegisterStartupScript(this.Page, Page.GetType(), "MyClientScript", "javascript:HideBTN()", true);
+            }
         }
+        catch (Exception er)
+        {
+            Logger.Log.Error(er);
 
+        }
     }
 
     //------------------------------------Math Function START--------------------------------------
@@ -2032,24 +2038,40 @@ public partial class RDT : System.Web.UI.Page
     public bool SetEnableTextBox(DropDownList dropDownList, TextBox textBox)
     {
         bool flag = false;
+        try { 
 
-        if (dropDownList.SelectedIndex == 0)
-        {
-            DisableTextBox(textBox);
-            flag = false;
+            if (dropDownList.SelectedIndex == 0)
+            {
+                DisableTextBox(textBox);
+                flag = false;
+            }
+            else
+            {
+                textBox.Enabled = true;
+                flag = true;
+            }
         }
-        else
+        catch (Exception er)
         {
-            textBox.Enabled = true;
-            flag = true;
-        }
+            Logger.Log.Error(er);
 
+        }
         return flag;
+
     }
 
     private void SavePrevSelectedIndexDDL(string id, int key)
     {
-        Session[id] = key;
+        try
+        {
+            Session[id] = key;
+        }
+        catch (Exception er)
+        {
+            Logger.Log.Error(er);
+
+        }
+   
     }
 
     private void convertArrDouble(double[,] arr, DropDownList ddl, ref TextBox tb)
@@ -2070,13 +2092,21 @@ public partial class RDT : System.Web.UI.Page
 
     private void convertArr(double[] arr, DropDownList ddl, ref TextBox tb)
     {
-        if (ddl.SelectedIndex > 0)
+        try
         {
-            if (!String.IsNullOrWhiteSpace(tb.Text))
+            if (ddl.SelectedIndex > 0)
             {
-                int jj = Convert.ToInt32(Session[ddl.ID]);
-                tb.Text = (customConverterToDouble((tb.Text).Replace(".", ",")) * arr[jj - 1] / arr[ddl.SelectedIndex - 1]).ToString().Replace(",", ".");
+                if (!String.IsNullOrWhiteSpace(tb.Text))
+                {
+                    int jj = Convert.ToInt32(Session[ddl.ID]);
+                    tb.Text = (customConverterToDouble((tb.Text).Replace(".", ",")) * arr[jj - 1] / arr[ddl.SelectedIndex - 1]).ToString().Replace(",", ".");
+                }
             }
+        }
+        catch (Exception er)
+        {
+            Logger.Log.Error(er);
+
         }
     }
 
