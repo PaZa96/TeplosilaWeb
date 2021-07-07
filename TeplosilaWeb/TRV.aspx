@@ -441,6 +441,8 @@
                                     <div class="col border border-non-bottom">
                                         <asp:Label ID="Label16" runat="server" Text="Расход через клапан:"></asp:Label>
                                         
+                                        <br>
+                                        
                                         </br>
                                         <asp:RadioButton ID="fvRadioButton1" runat="server"
                                             Text="Задать максимальную величину расхода через клапан:"

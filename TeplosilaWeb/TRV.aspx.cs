@@ -936,6 +936,9 @@ public partial class TRV : System.Web.UI.Page
             case "150":
                 ColDN = "M";
                 break;
+            case "200":
+                ColDN = "N";
+                break;
         }
 
         if (hod2)
@@ -1101,15 +1104,15 @@ public partial class TRV : System.Web.UI.Page
         }
 
         paramPP54 = wsH.Cells[ColDN + hRowMark].Value.ToString();
-        paramPP55 = wsH.Cells["N" + hRowMark].Value.ToString();
-        paramPP56 = wsH.Cells["O" + hRowMark].Value.ToString();
-        paramPP57 = wsH.Cells["P" + hRowMark].Value.ToString();
-        paramPP58 = wsH.Cells["Q" + hRowMark].Value.ToString();
-        paramPP59 = wsH.Cells["R" + hRowMark].Value.ToString();
-        paramPP60 = wsH.Cells["S" + hRowMark].Value.ToString();
-        paramPP61 = wsH.Cells["T" + hRowMark].Value.ToString();
-        paramPP62 = wsH.Cells["U" + hRowMark].Value.ToString();
-        paramPP63 = wsH.Cells["V" + hRowMark].Value.ToString();
+        paramPP55 = wsH.Cells["O" + hRowMark].Value.ToString();
+        paramPP56 = wsH.Cells["P" + hRowMark].Value.ToString();
+        paramPP57 = wsH.Cells["Q" + hRowMark].Value.ToString();
+        paramPP58 = wsH.Cells["R" + hRowMark].Value.ToString();
+        paramPP59 = wsH.Cells["S" + hRowMark].Value.ToString();
+        paramPP60 = wsH.Cells["T" + hRowMark].Value.ToString();
+        paramPP61 = wsH.Cells["U" + hRowMark].Value.ToString();
+        paramPP62 = wsH.Cells["V" + hRowMark].Value.ToString();
+        paramPP63 = wsH.Cells["W" + hRowMark].Value.ToString();
 
         paramPP65 = wsG.Cells[ColDN + "4"].Value.ToString();
         paramPP66 = wsG.Cells[ColDN + "5"].Value.ToString();
@@ -2095,6 +2098,8 @@ public partial class TRV : System.Web.UI.Page
                                 tmpMarkPriv = "-"; break;
                             case "150":
                                 tmpMarkPriv = "-"; break;
+                            case "200":
+                                tmpMarkPriv = "-"; break;
                             default:
                                 tmpMarkPriv = null; break;
                         }
@@ -2125,6 +2130,8 @@ public partial class TRV : System.Web.UI.Page
                                 tmpMarkPriv = "-"; break;
                             case "150":
                                 tmpMarkPriv = "-"; break;
+                            case "200":
+                                tmpMarkPriv = "-"; break;
                             default:
                                 tmpMarkPriv = null; break;
                         }
@@ -2154,6 +2161,8 @@ public partial class TRV : System.Web.UI.Page
                             case "125":
                                 tmpMarkPriv = "120"; break;
                             case "150":
+                                tmpMarkPriv = "120"; break;
+                            case "200":
                                 tmpMarkPriv = "120"; break;
                             default:
                                 tmpMarkPriv = null; break;
@@ -2186,6 +2195,8 @@ public partial class TRV : System.Web.UI.Page
                                 tmpMarkPriv = "-"; break;
                             case "150":
                                 tmpMarkPriv = "-"; break;
+                            case "200":
+                                tmpMarkPriv = "-"; break;
                             default:
                                 tmpMarkPriv = null; break;
                         }
@@ -2216,6 +2227,8 @@ public partial class TRV : System.Web.UI.Page
                             case "125":
                                 tmpMarkPriv = "36"; break;
                             case "150":
+                                tmpMarkPriv = "36"; break;
+                            case "200":
                                 tmpMarkPriv = "36"; break;
                             default:
                                 tmpMarkPriv = null; break;
@@ -2248,6 +2261,8 @@ public partial class TRV : System.Web.UI.Page
                                 tmpMarkPriv = "36"; break;
                             case "150":
                                 tmpMarkPriv = "36"; break;
+                            case "200":
+                                tmpMarkPriv = "36"; break;
                             default:
                                 tmpMarkPriv = null; break;
                         }
@@ -2279,6 +2294,8 @@ public partial class TRV : System.Web.UI.Page
                                 tmpMarkPriv = "36"; break;
                             case "150":
                                 tmpMarkPriv = "36"; break;
+                            case "200":
+                                tmpMarkPriv = "36"; break;
                             default:
                                 tmpMarkPriv = null; break;
                         }
@@ -2309,6 +2326,8 @@ public partial class TRV : System.Web.UI.Page
                             case "125":
                                 tmpMarkPriv = "33"; break;
                             case "150":
+                                tmpMarkPriv = "33"; break;
+                            case "200":
                                 tmpMarkPriv = "33"; break;
                             default:
                                 tmpMarkPriv = null; break;
