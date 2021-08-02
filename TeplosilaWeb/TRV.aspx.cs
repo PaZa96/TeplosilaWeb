@@ -1103,17 +1103,32 @@ public partial class TRV : System.Web.UI.Page
             }
         }
 
-        paramPP54 = wsH.Cells[ColDN + hRowMark].Value.ToString();
-        paramPP55 = wsH.Cells["O" + hRowMark].Value.ToString();
-        paramPP56 = wsH.Cells["P" + hRowMark].Value.ToString();
-        paramPP57 = wsH.Cells["Q" + hRowMark].Value.ToString();
-        paramPP58 = wsH.Cells["R" + hRowMark].Value.ToString();
-        paramPP59 = wsH.Cells["S" + hRowMark].Value.ToString();
-        paramPP60 = wsH.Cells["T" + hRowMark].Value.ToString();
-        paramPP61 = wsH.Cells["U" + hRowMark].Value.ToString();
-        paramPP62 = wsH.Cells["V" + hRowMark].Value.ToString();
-        paramPP63 = wsH.Cells["W" + hRowMark].Value.ToString();
-
+        if (tvRadioButtonList1.SelectedIndex == 0)
+        {
+            paramPP54 = wsH.Cells[ColDN + hRowMark].Value.ToString();
+            paramPP55 = wsH.Cells["O" + hRowMark].Value.ToString();
+            paramPP56 = wsH.Cells["P" + hRowMark].Value.ToString();
+            paramPP57 = wsH.Cells["Q" + hRowMark].Value.ToString();
+            paramPP58 = wsH.Cells["R" + hRowMark].Value.ToString();
+            paramPP59 = wsH.Cells["S" + hRowMark].Value.ToString();
+            paramPP60 = wsH.Cells["T" + hRowMark].Value.ToString();
+            paramPP61 = wsH.Cells["U" + hRowMark].Value.ToString();
+            paramPP62 = wsH.Cells["V" + hRowMark].Value.ToString();
+            paramPP63 = wsH.Cells["W" + hRowMark].Value.ToString();
+        }
+        else
+        {
+            paramPP54 = wsH.Cells[ColDN + hRowMark].Value.ToString();
+            paramPP55 = wsH.Cells["N" + hRowMark].Value.ToString();
+            paramPP56 = wsH.Cells["O" + hRowMark].Value.ToString();
+            paramPP57 = wsH.Cells["P" + hRowMark].Value.ToString();
+            paramPP58 = wsH.Cells["Q" + hRowMark].Value.ToString();
+            paramPP59 = wsH.Cells["R" + hRowMark].Value.ToString();
+            paramPP60 = wsH.Cells["S" + hRowMark].Value.ToString();
+            paramPP61 = wsH.Cells["T" + hRowMark].Value.ToString();
+            paramPP62 = wsH.Cells["U" + hRowMark].Value.ToString();
+            paramPP63 = wsH.Cells["V" + hRowMark].Value.ToString();
+        }
         paramPP65 = wsG.Cells[ColDN + "4"].Value.ToString();
         paramPP66 = wsG.Cells[ColDN + "5"].Value.ToString();
         paramPP67 = wsG.Cells[ColDN + gRowMarkH].Value.ToString();
