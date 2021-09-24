@@ -2321,17 +2321,17 @@ public partial class TRV : System.Web.UI.Page
                         switch (listResult["C"].ElementAt(i))
                         {
                             case "15":
-                                tmpMarkPriv = "31"; break;
+                                tmpMarkPriv = "32"; break;
                             case "20":
-                                tmpMarkPriv = "31"; break;
+                                tmpMarkPriv = "32"; break;
                             case "25":
-                                tmpMarkPriv = "31"; break;
+                                tmpMarkPriv = "32"; break;
                             case "32":
-                                tmpMarkPriv = "31"; break;
+                                tmpMarkPriv = "32"; break;
                             case "40":
-                                tmpMarkPriv = "31"; break;
+                                tmpMarkPriv = "32"; break;
                             case "50":
-                                tmpMarkPriv = "31"; break;
+                                tmpMarkPriv = "32"; break;
                             case "65":
                                 tmpMarkPriv = "32"; break;
                             case "80":
