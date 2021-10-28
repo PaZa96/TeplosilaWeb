@@ -385,9 +385,9 @@ public partial class RDT : System.Web.UI.Page
 
 
             Newtonsoft.Json.Linq.JArray table5 = dataFromFile.table5;
-            Newtonsoft.Json.Linq.JArray table10 = dataFromFile.table10;
+            Newtonsoft.Json.Linq.JArray table11 = dataFromFile.table11;
             double col_B = Convert.ToDouble(table5[table5.Count - 1]);
-            int col_C = Convert.ToInt32(table10[table10.Count - 1]);
+            int col_C = Convert.ToInt32(table11[table11.Count - 1]);
 
             /*IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII*/
 
@@ -679,12 +679,12 @@ public partial class RDT : System.Web.UI.Page
                     break;
                 else
                 {
-                    // DN ближайший больший из table10
+                    // DN ближайший больший из table11
                    
 
-                    if (col_C == Convert.ToDouble(table10[table10.Count - 1]))
+                    if (col_C == Convert.ToDouble(table11[table11.Count - 1]))
                     {
-                        foreach (int el in table10)
+                        foreach (int el in table11)
                         {
                             if ((el <= col_C) && (el > DN))
                             {
@@ -694,8 +694,8 @@ public partial class RDT : System.Web.UI.Page
                     }
                     else
                     {
-                        int col_Ct = Convert.ToInt32(table10[table10.Count - 1]);
-                        foreach (int el in table10)
+                        int col_Ct = Convert.ToInt32(table11[table11.Count - 1]);
+                        foreach (int el in table11)
                         {
                             if ((el <= col_Ct) && (el >= DN) && (el > col_C))
                             {
@@ -707,14 +707,14 @@ public partial class RDT : System.Web.UI.Page
 
                     bool meetEnd = false;
 
-                    if (col_C == Convert.ToDouble(table10[table10.Count - 1]))
+                    if (col_C == Convert.ToDouble(table11[table11.Count - 1]))
                     {
 
                         exit_t = true;
 
                         foreach (string keyValue in listResult["C"])
                         {
-                            if (keyValue.Equals(table10[table10.Count - 1].ToString()))
+                            if (keyValue.Equals(table11[table11.Count - 1].ToString()))
                                 meetEnd = true;
                         }
 
