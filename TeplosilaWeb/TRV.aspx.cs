@@ -950,82 +950,62 @@ public partial class TRV : System.Web.UI.Page
                 case "101":
                     hRowMark = "6";
                     gRowMarkH = "7";
-                    gRowMarkM = "24";
+                    gRowMarkM = "20";
                     break;
                 case "101R":
                     hRowMark = "7";
                     gRowMarkH = "8";
-                    gRowMarkM = "25";
+                    gRowMarkM = "21";
                     break;
-                case "34":
+                case "301":
                     hRowMark = "8";
                     gRowMarkH = "9";
-                    gRowMarkM = "26";
-                    break;
-                case "31":
-                    hRowMark = "9";
-                    gRowMarkH = "10";
-                    gRowMarkM = "27";
+                    gRowMarkM = "22";
                     break;
                 case "110":
-                    hRowMark = "10";
-                    gRowMarkH = "11";
-                    gRowMarkM = "28";
+                    hRowMark = "9";
+                    gRowMarkH = "10";
+                    gRowMarkM = "23";
                     break;
                 case "110R":
+                    hRowMark = "10";
+                    gRowMarkH = "11";
+                    gRowMarkM = "24";
+                    break;
+                case "310":
                     hRowMark = "11";
                     gRowMarkH = "12";
-                    gRowMarkM = "29";
-                    break;
-                case "35":
-                    hRowMark = "12";
-                    gRowMarkH = "13";
-                    gRowMarkM = "30";
-                    break;
-                case "32":
-                    hRowMark = "13";
-                    gRowMarkH = "14";
-                    gRowMarkM = "31";
+                    gRowMarkM = "25";
                     break;
                 case "120":
-                    hRowMark = "14";
-                    gRowMarkH = "15";
-                    gRowMarkM = "32";
+                    hRowMark = "12";
+                    gRowMarkH = "13";
+                    gRowMarkM = "26";
                     break;
-                case "120R": //не работает 
-                    hRowMark = "14";
-                    gRowMarkH = "16";
-                    gRowMarkM = "33";
-                    break;
-                case "36":
-                    hRowMark = "15";
-                    gRowMarkH = "17";
-                    gRowMarkM = "34";
-                    break;
-                case "33":
-                    hRowMark = "16";
-                    gRowMarkH = "18";
-                    gRowMarkM = "35";
+                case "320":
+                    hRowMark = "13";
+                    gRowMarkH = "14";
+                    gRowMarkM = "27";
                     break;
                 case "201":
-                    hRowMark = "17";
-                    gRowMarkH = "19";
-                    gRowMarkM = "36";
+                    hRowMark = "14";
+                    gRowMarkH = "15";
+                    gRowMarkM = "28";
                     break;
-                case "201R":
-                    hRowMark = "18";
-                    gRowMarkH = "20";
-                    gRowMarkM = "37";
+                case "201R": //не работает 
+                    hRowMark = "14";
+                    gRowMarkH = "16";
+                    gRowMarkM = "29";
                     break;
                 case "210":
-                    hRowMark = "19";
-                    gRowMarkH = "21";
-                    gRowMarkM = "38";
+                    hRowMark = "15";
+                    gRowMarkH = "17";
+                    gRowMarkM = "30";
                     break;
                 case "210R":
-                    hRowMark = "20";
-                    gRowMarkH = "22";
-                    gRowMarkM = "39";
+                    hRowMark = "16";
+                    gRowMarkH = "18";
+                    gRowMarkM = "31";
                     break;
             }
         }
@@ -1045,22 +1025,22 @@ public partial class TRV : System.Web.UI.Page
                     gRowMarkH = "8";
                     gRowMarkM = "22";
                     break;
-                case "35":
+                case "301":
                     hRowMark = "8";
                     gRowMarkH = "9";
                     gRowMarkM = "23";
                     break;
-                case "32":
+                case "110":
                     hRowMark = "9";
                     gRowMarkH = "10";
                     gRowMarkM = "24";
                     break;
-                case "110":
+                case "110R":
                     hRowMark = "10";
                     gRowMarkH = "11";
                     gRowMarkM = "25";
                     break;
-                case "110R":
+                case "310":
                     hRowMark = "11";
                     gRowMarkH = "12";
                     gRowMarkM = "26";
@@ -1070,12 +1050,12 @@ public partial class TRV : System.Web.UI.Page
                     gRowMarkH = "13";
                     gRowMarkM = "27";
                     break;
-                case "36":
+                case "320":
                     hRowMark = "13";
                     gRowMarkH = "14";
                     gRowMarkM = "28";
                     break;
-                case "33":
+                case "130":
                     hRowMark = "14";
                     gRowMarkH = "15";
                     gRowMarkM = "29";
@@ -1103,7 +1083,7 @@ public partial class TRV : System.Web.UI.Page
             }
         }
 
-        if (tvRadioButtonList1.SelectedIndex == 0)
+        if (tvRadioButtonList1.SelectedIndex == 0) //trv
         {
             paramPP54 = wsH.Cells[ColDN + hRowMark].Value.ToString();
             paramPP55 = wsH.Cells["O" + hRowMark].Value.ToString();
@@ -1116,18 +1096,18 @@ public partial class TRV : System.Web.UI.Page
             paramPP62 = wsH.Cells["V" + hRowMark].Value.ToString();
             paramPP63 = wsH.Cells["W" + hRowMark].Value.ToString();
         }
-        else
+        else //trv-3
         {
             paramPP54 = wsH.Cells[ColDN + hRowMark].Value.ToString();
-            paramPP55 = wsH.Cells["N" + hRowMark].Value.ToString();
-            paramPP56 = wsH.Cells["O" + hRowMark].Value.ToString();
-            paramPP57 = wsH.Cells["P" + hRowMark].Value.ToString();
-            paramPP58 = wsH.Cells["Q" + hRowMark].Value.ToString();
-            paramPP59 = wsH.Cells["R" + hRowMark].Value.ToString();
-            paramPP60 = wsH.Cells["S" + hRowMark].Value.ToString();
-            paramPP61 = wsH.Cells["T" + hRowMark].Value.ToString();
-            paramPP62 = wsH.Cells["U" + hRowMark].Value.ToString();
-            paramPP63 = wsH.Cells["V" + hRowMark].Value.ToString();
+            paramPP55 = wsH.Cells["O" + hRowMark].Value.ToString();
+            paramPP56 = wsH.Cells["P" + hRowMark].Value.ToString();
+            paramPP57 = wsH.Cells["Q" + hRowMark].Value.ToString();
+            paramPP58 = wsH.Cells["R" + hRowMark].Value.ToString();
+            paramPP59 = wsH.Cells["S" + hRowMark].Value.ToString();
+            paramPP60 = wsH.Cells["T" + hRowMark].Value.ToString();
+            paramPP61 = wsH.Cells["U" + hRowMark].Value.ToString();
+            paramPP62 = wsH.Cells["V" + hRowMark].Value.ToString();
+            paramPP63 = wsH.Cells["W" + hRowMark].Value.ToString();
         }
         paramPP65 = wsG.Cells[ColDN + "4"].Value.ToString();
         paramPP66 = wsG.Cells[ColDN + "5"].Value.ToString();
@@ -1143,10 +1123,6 @@ public partial class TRV : System.Web.UI.Page
                 return "TSL-1600-25- 1-230-IP67";
             case "101R":
                 return "TSL-1600-25- 1R-230-IP67";
-            case "34":
-                return "TW500- XD220-S.12";
-            case "31":
-                return "TW500- XD24-S.12";
             case "110":
                 return "TSL-2200-40- 1-230-IP67";
             case "110R":
@@ -1155,18 +1131,14 @@ public partial class TRV : System.Web.UI.Page
                 return "TSL-3000-60- 1-230-IP67";
             case "120R":
                 return "TSL-3000-60- 1R-230-IP67";
-            case "35":
-                return "TW1001- XD220-S.14";
-            case "32":
-                return "TW1001- XD24-S.14";
-            case "9":
-                return "ST 0.1 498.1- OIIAF/00";
-            case "13":
-                return "ST 1 491.1- O7KAE/00";
-            case "36":
-                return "TW3000- XD220-S.14";
-            case "33":
-                return "TW3000- XD24-S.14";
+            case "130":
+                return "TSL-6000-60-1-230-IP67";
+            case "301":
+                return "TSL-1600-25-1A-24-IP67";
+            case "310":
+                return "TSL-2200-40-1A-24-IP67";
+            case "320":
+                return "TSL-3000-60-1A-24-IP67";
             case "201":
                 return "TSL-1600-25-1T-230-IP67";
             case "201R":
@@ -2086,7 +2058,7 @@ public partial class TRV : System.Web.UI.Page
                 // TRV
                 if (tvRadioButtonList1.SelectedIndex == 0)
                 {
-
+                    //регулирование температуры-Да/Напряжение-230/управления выключено/Датчик положения - нет/возвратный механизм- нет
                     if (tdRadioButtonList5.SelectedIndex == 0 && tdRadioButtonList1.SelectedIndex == 0 && tdRadioButtonList2.Enabled == false && tdRadioButtonList3.SelectedIndex == 1 && tdRadioButtonList4.SelectedIndex == 1)
                     {
                         switch (listResult["C"].ElementAt(i))
@@ -2118,7 +2090,7 @@ public partial class TRV : System.Web.UI.Page
                             default:
                                 tmpMarkPriv = null; break;
                         }
-                    }
+                    }//регулирование температуры-Да/Напряжение-230/управления выключено/Датчик положения - нет/возвратный механизм- да
                     else if (tdRadioButtonList5.SelectedIndex == 0 && tdRadioButtonList1.SelectedIndex == 0 && tdRadioButtonList2.Enabled == false && tdRadioButtonList3.SelectedIndex == 1 && tdRadioButtonList4.SelectedIndex == 0)
                     {
                         switch (listResult["C"].ElementAt(i))
@@ -2150,7 +2122,7 @@ public partial class TRV : System.Web.UI.Page
                             default:
                                 tmpMarkPriv = null; break;
                         }
-                    }
+                    }//регулирование температуры-Нет/Напряжение-230/управление-трехпозиционное/Датчик положения - нет/возвратный механизм- нет
                     else if (tdRadioButtonList5.SelectedIndex == 1 && tdRadioButtonList1.SelectedIndex == 0 && tdRadioButtonList2.SelectedIndex == 0 && tdRadioButtonList3.SelectedIndex == 1 && tdRadioButtonList4.SelectedIndex == 1)
                     {
                         switch (listResult["C"].ElementAt(i))
@@ -2216,138 +2188,238 @@ public partial class TRV : System.Web.UI.Page
                                 tmpMarkPriv = null; break;
                         }
                     }
-                    // 230 VAC ; 3-pos ; yes ; no
+                    // no ; 230 VAC ; 3-pos ; yes ; no
                     else if (tdRadioButtonList5.SelectedIndex == 1 && tdRadioButtonList1.SelectedIndex == 0 && tdRadioButtonList2.SelectedIndex == 0 && tdRadioButtonList3.SelectedIndex == 0 && tdRadioButtonList4.SelectedIndex == 1)
                     {
                         switch (listResult["C"].ElementAt(i))
                         {
                             case "15":
-                                tmpMarkPriv = "34"; break;
+                                tmpMarkPriv = "-"; break;
                             case "20":
-                                tmpMarkPriv = "34"; break;
+                                tmpMarkPriv = "-"; break;
                             case "25":
-                                tmpMarkPriv = "34"; break;
+                                tmpMarkPriv = "-"; break;
                             case "32":
-                                tmpMarkPriv = "34"; break;
+                                tmpMarkPriv = "-"; break;
                             case "40":
-                                tmpMarkPriv = "34"; break;
+                                tmpMarkPriv = "-"; break;
                             case "50":
-                                tmpMarkPriv = "34"; break;
+                                tmpMarkPriv = "-"; break;
                             case "65":
-                                tmpMarkPriv = "35"; break;
+                                tmpMarkPriv = "-"; break;
                             case "80":
-                                tmpMarkPriv = "35"; break;
+                                tmpMarkPriv = "-"; break;
                             case "100":
-                                tmpMarkPriv = "35"; break;
+                                tmpMarkPriv = "-"; break;
                             case "125":
-                                tmpMarkPriv = "36"; break;
+                                tmpMarkPriv = "-"; break;
                             case "150":
-                                tmpMarkPriv = "36"; break;
+                                tmpMarkPriv = "-"; break;
                             case "200":
-                                tmpMarkPriv = "36"; break;
+                                tmpMarkPriv = "-"; break;
                             default:
                                 tmpMarkPriv = null; break;
                         }
                     }
-                    // 230 VAC ; analog ; no ; no
+                    // no ; 230 VAC ; analog ; no ; no
                     else if (tdRadioButtonList5.SelectedIndex == 1 && tdRadioButtonList1.SelectedIndex == 0 && tdRadioButtonList2.SelectedIndex == 1 && tdRadioButtonList3.SelectedIndex == 1 && tdRadioButtonList4.SelectedIndex == 1)
                     {
                         switch (listResult["C"].ElementAt(i))
                         {
                             case "15":
-                                tmpMarkPriv = "34"; break;
+                                tmpMarkPriv = "-"; break;
                             case "20":
-                                tmpMarkPriv = "34"; break;
+                                tmpMarkPriv = "-"; break;
                             case "25":
-                                tmpMarkPriv = "34"; break;
+                                tmpMarkPriv = "-"; break;
                             case "32":
-                                tmpMarkPriv = "34"; break;
+                                tmpMarkPriv = "-"; break;
                             case "40":
-                                tmpMarkPriv = "34"; break;
+                                tmpMarkPriv = "-"; break;
                             case "50":
-                                tmpMarkPriv = "34"; break;
+                                tmpMarkPriv = "-"; break;
                             case "65":
-                                tmpMarkPriv = "35"; break;
+                                tmpMarkPriv = "-"; break;
                             case "80":
-                                tmpMarkPriv = "35"; break;
+                                tmpMarkPriv = "-"; break;
                             case "100":
-                                tmpMarkPriv = "35"; break;
+                                tmpMarkPriv = "-"; break;
                             case "125":
-                                tmpMarkPriv = "36"; break;
+                                tmpMarkPriv = "-"; break;
                             case "150":
-                                tmpMarkPriv = "36"; break;
+                                tmpMarkPriv = "-"; break;
                             case "200":
-                                tmpMarkPriv = "36"; break;
+                                tmpMarkPriv = "-"; break;
                             default:
                                 tmpMarkPriv = null; break;
                         }
                     }
-                    // 230 VAC ; analog ; yes ; no
+                    // no ; 230 VAC ; analog ; yes ; no
                     else if (tdRadioButtonList5.SelectedIndex == 1 && tdRadioButtonList1.SelectedIndex == 0 && tdRadioButtonList2.SelectedIndex == 1 && tdRadioButtonList3.SelectedIndex == 0 && tdRadioButtonList4.SelectedIndex == 1)
                     {
                         switch (listResult["C"].ElementAt(i))
                         {
                             case "15":
-                                tmpMarkPriv = "34"; break;
+                                tmpMarkPriv = "-"; break;
                             case "20":
-                                tmpMarkPriv = "34"; break;
+                                tmpMarkPriv = "-"; break;
                             case "25":
-                                tmpMarkPriv = "34"; break;
+                                tmpMarkPriv = "-"; break;
                             case "32":
-                                tmpMarkPriv = "34"; break;
+                                tmpMarkPriv = "-"; break;
                             case "40":
-                                tmpMarkPriv = "34"; break;
+                                tmpMarkPriv = "-"; break;
                             case "50":
-                                tmpMarkPriv = "34"; break;
+                                tmpMarkPriv = "-"; break;
                             case "65":
-                                tmpMarkPriv = "35"; break;
+                                tmpMarkPriv = "-"; break;
                             case "80":
-                                tmpMarkPriv = "35"; break;
+                                tmpMarkPriv = "-"; break;
                             case "100":
-                                tmpMarkPriv = "35"; break;
+                                tmpMarkPriv = "-"; break;
                             case "125":
-                                tmpMarkPriv = "36"; break;
+                                tmpMarkPriv = "-"; break;
                             case "150":
-                                tmpMarkPriv = "36"; break;
+                                tmpMarkPriv = "-"; break;
                             case "200":
-                                tmpMarkPriv = "36"; break;
+                                tmpMarkPriv = "-"; break;
                             default:
                                 tmpMarkPriv = null; break;
                         }
                     }
-                    // 24 VAC/VDC 
-                    else if (tdRadioButtonList5.SelectedIndex == 1 && tdRadioButtonList5.SelectedIndex == 1 && tdRadioButtonList1.SelectedIndex == 1)
+                    //no ; 24 VAC/VDC ; 3-pos ; no ; no
+                    else if (tdRadioButtonList5.SelectedIndex == 1 && tdRadioButtonList2.SelectedIndex == 0 && tdRadioButtonList1.SelectedIndex == 1 && tdRadioButtonList3.SelectedIndex == 1 && tdRadioButtonList4.SelectedIndex == 1)
                     {
                         switch (listResult["C"].ElementAt(i))
                         {
                             case "15":
-                                tmpMarkPriv = "32"; break;
+                                tmpMarkPriv = "301"; break;
                             case "20":
-                                tmpMarkPriv = "32"; break;
+                                tmpMarkPriv = "301"; break;
                             case "25":
-                                tmpMarkPriv = "32"; break;
+                                tmpMarkPriv = "301"; break;
                             case "32":
-                                tmpMarkPriv = "32"; break;
+                                tmpMarkPriv = "301"; break;
                             case "40":
-                                tmpMarkPriv = "32"; break;
+                                tmpMarkPriv = "301"; break;
                             case "50":
-                                tmpMarkPriv = "32"; break;
+                                tmpMarkPriv = "301"; break;
                             case "65":
-                                tmpMarkPriv = "32"; break;
+                                tmpMarkPriv = "310"; break;
                             case "80":
-                                tmpMarkPriv = "32"; break;
+                                tmpMarkPriv = "310"; break;
                             case "100":
-                                tmpMarkPriv = "32"; break;
+                                tmpMarkPriv = "310"; break;
                             case "125":
-                                tmpMarkPriv = "33"; break;
+                                tmpMarkPriv = "320"; break;
                             case "150":
-                                tmpMarkPriv = "33"; break;
+                                tmpMarkPriv = "320"; break;
                             case "200":
-                                tmpMarkPriv = "33"; break;
+                                tmpMarkPriv = "320"; break;
                             default:
                                 tmpMarkPriv = null; break;
                         }
                     }
+                    //no ; 24 VAC/VDC ; 3-pos ; yes ; no
+                    else if (tdRadioButtonList5.SelectedIndex == 1 && tdRadioButtonList2.SelectedIndex == 0 && tdRadioButtonList1.SelectedIndex == 1 && tdRadioButtonList3.SelectedIndex == 0 && tdRadioButtonList4.SelectedIndex == 1)
+                    {
+                        switch (listResult["C"].ElementAt(i))
+                        {
+                            case "15":
+                                tmpMarkPriv = "301"; break;
+                            case "20":
+                                tmpMarkPriv = "301"; break;
+                            case "25":
+                                tmpMarkPriv = "301"; break;
+                            case "32":
+                                tmpMarkPriv = "301"; break;
+                            case "40":
+                                tmpMarkPriv = "301"; break;
+                            case "50":
+                                tmpMarkPriv = "301"; break;
+                            case "65":
+                                tmpMarkPriv = "310"; break;
+                            case "80":
+                                tmpMarkPriv = "310"; break;
+                            case "100":
+                                tmpMarkPriv = "310"; break;
+                            case "125":
+                                tmpMarkPriv = "320"; break;
+                            case "150":
+                                tmpMarkPriv = "320"; break;
+                            case "200":
+                                tmpMarkPriv = "320"; break;
+                            default:
+                                tmpMarkPriv = null; break;
+                        }
+                    }
+                    //no ; 24 VAC/VDC ; analog ; no ; no
+                    else if (tdRadioButtonList5.SelectedIndex == 1 && tdRadioButtonList2.SelectedIndex == 1 && tdRadioButtonList1.SelectedIndex == 1 && tdRadioButtonList3.SelectedIndex == 1 && tdRadioButtonList4.SelectedIndex == 1)
+                    {
+                        switch (listResult["C"].ElementAt(i))
+                        {
+                            case "15":
+                                tmpMarkPriv = "301"; break;
+                            case "20":
+                                tmpMarkPriv = "301"; break;
+                            case "25":
+                                tmpMarkPriv = "301"; break;
+                            case "32":
+                                tmpMarkPriv = "301"; break;
+                            case "40":
+                                tmpMarkPriv = "301"; break;
+                            case "50":
+                                tmpMarkPriv = "301"; break;
+                            case "65":
+                                tmpMarkPriv = "310"; break;
+                            case "80":
+                                tmpMarkPriv = "310"; break;
+                            case "100":
+                                tmpMarkPriv = "310"; break;
+                            case "125":
+                                tmpMarkPriv = "320"; break;
+                            case "150":
+                                tmpMarkPriv = "320"; break;
+                            case "200":
+                                tmpMarkPriv = "320"; break;
+                            default:
+                                tmpMarkPriv = null; break;
+                        }
+                    }
+                    //no ; 24 VAC/VDC ; analog ; yes ; no
+                    else if (tdRadioButtonList5.SelectedIndex == 1 && tdRadioButtonList2.SelectedIndex == 1 && tdRadioButtonList1.SelectedIndex == 1 && tdRadioButtonList3.SelectedIndex == 0 && tdRadioButtonList4.SelectedIndex == 1)
+                    {
+                        switch (listResult["C"].ElementAt(i))
+                        {
+                            case "15":
+                                tmpMarkPriv = "301"; break;
+                            case "20":
+                                tmpMarkPriv = "301"; break;
+                            case "25":
+                                tmpMarkPriv = "301"; break;
+                            case "32":
+                                tmpMarkPriv = "301"; break;
+                            case "40":
+                                tmpMarkPriv = "301"; break;
+                            case "50":
+                                tmpMarkPriv = "301"; break;
+                            case "65":
+                                tmpMarkPriv = "310"; break;
+                            case "80":
+                                tmpMarkPriv = "310"; break;
+                            case "100":
+                                tmpMarkPriv = "310"; break;
+                            case "125":
+                                tmpMarkPriv = "320"; break;
+                            case "150":
+                                tmpMarkPriv = "320"; break;
+                            case "200":
+                                tmpMarkPriv = "320"; break;
+                            default:
+                                tmpMarkPriv = null; break;
+                        }
+                    }
+
                 }
                 // TRV-3
                 else if (tvRadioButtonList1.SelectedIndex == 1)
@@ -2379,6 +2451,8 @@ public partial class TRV : System.Web.UI.Page
                                 tmpMarkPriv = "-"; break;
                             case "150":
                                 tmpMarkPriv = "-"; break;
+                            case "200":
+                                tmpMarkPriv = "-"; break;
                         }
                     }
                     else if (tdRadioButtonList5.SelectedIndex == 0 && tdRadioButtonList1.SelectedIndex == 0 && tdRadioButtonList2.Enabled == false && tdRadioButtonList3.SelectedIndex == 1 && tdRadioButtonList4.SelectedIndex == 0)
@@ -2407,9 +2481,11 @@ public partial class TRV : System.Web.UI.Page
                                 tmpMarkPriv = "-"; break;
                             case "150":
                                 tmpMarkPriv = "-"; break;
+                            case "200":
+                                tmpMarkPriv = "-"; break;
                         }
                     }
-                    // 230 VAC ; 3-pos ; no ; no
+                    // no ; 230 VAC ; 3-pos ; no ; no
                     else if (tdRadioButtonList5.SelectedIndex == 1 && tdRadioButtonList1.SelectedIndex == 0 && tdRadioButtonList2.SelectedIndex == 0 && tdRadioButtonList3.SelectedIndex == 1 && tdRadioButtonList4.SelectedIndex == 1)
                     {
                         switch (listResult["C"].ElementAt(i))
@@ -2436,11 +2512,13 @@ public partial class TRV : System.Web.UI.Page
                                 tmpMarkPriv = "120"; break;
                             case "150":
                                 tmpMarkPriv = "120"; break;
+                            case "200":
+                                tmpMarkPriv = "130"; break;
                             default:
                                 tmpMarkPriv = null; break;
                         }
                     }
-                    // 230 VAC ; 3-pos ; no ; yes
+                    //no;  230 VAC ; 3-pos ; no ; yes
                     else if (tdRadioButtonList5.SelectedIndex == 1 && tdRadioButtonList1.SelectedIndex == 0 && tdRadioButtonList2.SelectedIndex == 0 && tdRadioButtonList3.SelectedIndex == 1 && tdRadioButtonList4.SelectedIndex == 0)
                     {
                         switch (listResult["C"].ElementAt(i))
@@ -2467,37 +2545,41 @@ public partial class TRV : System.Web.UI.Page
                                 tmpMarkPriv = "-"; break;
                             case "150":
                                 tmpMarkPriv = "-"; break;
+                            case "200":
+                                tmpMarkPriv = "-"; break;
                             default:
                                 tmpMarkPriv = null; break;
                         }
                     }
-                    // 230 VAC ; 3-pos ; yes ; no
+                    // no ; 230 VAC ; 3-pos ; yes ; no
                     else if (tdRadioButtonList5.SelectedIndex == 1 && tdRadioButtonList1.SelectedIndex == 0 && tdRadioButtonList2.SelectedIndex == 0 && tdRadioButtonList3.SelectedIndex == 0 && tdRadioButtonList4.SelectedIndex == 1)
                     {
                         switch (listResult["C"].ElementAt(i))
                         {
                             case "15":
-                                tmpMarkPriv = "35"; break;
+                                tmpMarkPriv = "-"; break;
                             case "20":
-                                tmpMarkPriv = "35"; break;
+                                tmpMarkPriv = "-"; break;
                             case "25":
-                                tmpMarkPriv = "35"; break;
+                                tmpMarkPriv = "-"; break;
                             case "32":
-                                tmpMarkPriv = "35"; break;
+                                tmpMarkPriv = "-"; break;
                             case "40":
-                                tmpMarkPriv = "35"; break;
+                                tmpMarkPriv = "-"; break;
                             case "50":
-                                tmpMarkPriv = "36"; break;
+                                tmpMarkPriv = "-"; break;
                             case "65":
-                                tmpMarkPriv = "36"; break;
+                                tmpMarkPriv = "-"; break;
                             case "80":
-                                tmpMarkPriv = "36"; break;
+                                tmpMarkPriv = "-"; break;
                             case "100":
-                                tmpMarkPriv = "36"; break;
+                                tmpMarkPriv = "-"; break;
                             case "125":
-                                tmpMarkPriv = "36"; break;
+                                tmpMarkPriv = "-"; break;
                             case "150":
-                                tmpMarkPriv = "36"; break;
+                                tmpMarkPriv = "-"; break;
+                            case "200":
+                                tmpMarkPriv = "-"; break;
                             default:
                                 tmpMarkPriv = null; break;
                         }
@@ -2508,89 +2590,194 @@ public partial class TRV : System.Web.UI.Page
                         switch (listResult["C"].ElementAt(i))
                         {
                             case "15":
-                                tmpMarkPriv = "35"; break;
+                                tmpMarkPriv = "-"; break;
                             case "20":
-                                tmpMarkPriv = "35"; break;
+                                tmpMarkPriv = "-"; break;
                             case "25":
-                                tmpMarkPriv = "35"; break;
+                                tmpMarkPriv = "-"; break;
                             case "32":
-                                tmpMarkPriv = "35"; break;
+                                tmpMarkPriv = "-"; break;
                             case "40":
-                                tmpMarkPriv = "35"; break;
+                                tmpMarkPriv = "-"; break;
                             case "50":
-                                tmpMarkPriv = "36"; break;
+                                tmpMarkPriv = "-"; break;
                             case "65":
-                                tmpMarkPriv = "36"; break;
+                                tmpMarkPriv = "-"; break;
                             case "80":
-                                tmpMarkPriv = "36"; break;
+                                tmpMarkPriv = "-"; break;
                             case "100":
-                                tmpMarkPriv = "36"; break;
+                                tmpMarkPriv = "-"; break;
                             case "125":
-                                tmpMarkPriv = "36"; break;
+                                tmpMarkPriv = "-"; break;
                             case "150":
-                                tmpMarkPriv = "36"; break;
+                                tmpMarkPriv = "-"; break;
+                            case "200":
+                                tmpMarkPriv = "-"; break;
                             default:
                                 tmpMarkPriv = null; break;
                         }
                     }
-                    // 230 VAC ; analog ; yes ; no
+                    // no; 230 VAC ; analog ; yes ; no
                     else if (tdRadioButtonList5.SelectedIndex == 1 && tdRadioButtonList1.SelectedIndex == 0 && tdRadioButtonList2.SelectedIndex == 1 && tdRadioButtonList3.SelectedIndex == 0 && tdRadioButtonList4.SelectedIndex == 1)
                     {
                         switch (listResult["C"].ElementAt(i))
                         {
                             case "15":
-                                tmpMarkPriv = "35"; break;
+                                tmpMarkPriv = "-"; break;
                             case "20":
-                                tmpMarkPriv = "35"; break;
+                                tmpMarkPriv = "-"; break;
                             case "25":
-                                tmpMarkPriv = "35"; break;
+                                tmpMarkPriv = "-"; break;
                             case "32":
-                                tmpMarkPriv = "35"; break;
+                                tmpMarkPriv = "-"; break;
                             case "40":
-                                tmpMarkPriv = "35"; break;
+                                tmpMarkPriv = "-"; break;
                             case "50":
-                                tmpMarkPriv = "36"; break;
+                                tmpMarkPriv = "-"; break;
                             case "65":
-                                tmpMarkPriv = "36"; break;
+                                tmpMarkPriv = "-"; break;
                             case "80":
-                                tmpMarkPriv = "36"; break;
+                                tmpMarkPriv = "-"; break;
                             case "100":
-                                tmpMarkPriv = "36"; break;
+                                tmpMarkPriv = "-"; break;
                             case "125":
-                                tmpMarkPriv = "36"; break;
+                                tmpMarkPriv = "-"; break;
                             case "150":
-                                tmpMarkPriv = "36"; break;
+                                tmpMarkPriv = "-"; break;
+                            case "200":
+                                tmpMarkPriv = "-"; break;
                             default:
                                 tmpMarkPriv = null; break;
                         }
                     }
-                    // 24 VAC/VDC 
-                    else if (tdRadioButtonList5.SelectedIndex == 1 && tdRadioButtonList1.SelectedIndex == 1)
+                    //no ; 24 VAC/VDC ; 3-pos ; no ; no
+                    else if (tdRadioButtonList5.SelectedIndex == 1 && tdRadioButtonList2.SelectedIndex == 0 && tdRadioButtonList1.SelectedIndex == 1 && tdRadioButtonList3.SelectedIndex == 1 && tdRadioButtonList4.SelectedIndex == 1)
                     {
                         switch (listResult["C"].ElementAt(i))
                         {
                             case "15":
-                                tmpMarkPriv = "32"; break;
+                                tmpMarkPriv = "301"; break;
                             case "20":
-                                tmpMarkPriv = "32"; break;
+                                tmpMarkPriv = "301"; break;
                             case "25":
-                                tmpMarkPriv = "32"; break;
+                                tmpMarkPriv = "301"; break;
                             case "32":
-                                tmpMarkPriv = "32"; break;
+                                tmpMarkPriv = "301"; break;
                             case "40":
-                                tmpMarkPriv = "32"; break;
+                                tmpMarkPriv = "301"; break;
                             case "50":
-                                tmpMarkPriv = "33"; break;
+                                tmpMarkPriv = "301"; break;
                             case "65":
-                                tmpMarkPriv = "33"; break;
+                                tmpMarkPriv = "310"; break;
                             case "80":
-                                tmpMarkPriv = "33"; break;
+                                tmpMarkPriv = "310"; break;
                             case "100":
-                                tmpMarkPriv = "33"; break;
+                                tmpMarkPriv = "310"; break;
                             case "125":
-                                tmpMarkPriv = "33"; break;
+                                tmpMarkPriv = "320"; break;
                             case "150":
-                                tmpMarkPriv = "33"; break;
+                                tmpMarkPriv = "320"; break;
+                            case "200":
+                                tmpMarkPriv = "-"; break;
+                            default:
+                                tmpMarkPriv = null; break;
+                        }
+                    }
+                    //no ; 24 VAC/VDC ; 3-pos ; yes ; no
+                    else if (tdRadioButtonList5.SelectedIndex == 1 && tdRadioButtonList2.SelectedIndex == 0 && tdRadioButtonList1.SelectedIndex == 1 && tdRadioButtonList3.SelectedIndex == 0 && tdRadioButtonList4.SelectedIndex == 1)
+                    {
+                        switch (listResult["C"].ElementAt(i))
+                        {
+                            case "15":
+                                tmpMarkPriv = "301"; break;
+                            case "20":
+                                tmpMarkPriv = "301"; break;
+                            case "25":
+                                tmpMarkPriv = "301"; break;
+                            case "32":
+                                tmpMarkPriv = "301"; break;
+                            case "40":
+                                tmpMarkPriv = "301"; break;
+                            case "50":
+                                tmpMarkPriv = "301"; break;
+                            case "65":
+                                tmpMarkPriv = "310"; break;
+                            case "80":
+                                tmpMarkPriv = "310"; break;
+                            case "100":
+                                tmpMarkPriv = "310"; break;
+                            case "125":
+                                tmpMarkPriv = "320"; break;
+                            case "150":
+                                tmpMarkPriv = "320"; break;
+                            case "200":
+                                tmpMarkPriv = "-"; break;
+                            default:
+                                tmpMarkPriv = null; break;
+                        }
+                    }
+                    //no ; 24 VAC/VDC ; analog ; no ; no
+                    else if (tdRadioButtonList5.SelectedIndex == 1 && tdRadioButtonList2.SelectedIndex == 1 && tdRadioButtonList1.SelectedIndex == 1 && tdRadioButtonList3.SelectedIndex == 1 && tdRadioButtonList4.SelectedIndex == 1)
+                    {
+                        switch (listResult["C"].ElementAt(i))
+                        {
+                            case "15":
+                                tmpMarkPriv = "301"; break;
+                            case "20":
+                                tmpMarkPriv = "301"; break;
+                            case "25":
+                                tmpMarkPriv = "301"; break;
+                            case "32":
+                                tmpMarkPriv = "301"; break;
+                            case "40":
+                                tmpMarkPriv = "301"; break;
+                            case "50":
+                                tmpMarkPriv = "301"; break;
+                            case "65":
+                                tmpMarkPriv = "310"; break;
+                            case "80":
+                                tmpMarkPriv = "310"; break;
+                            case "100":
+                                tmpMarkPriv = "310"; break;
+                            case "125":
+                                tmpMarkPriv = "320"; break;
+                            case "150":
+                                tmpMarkPriv = "320"; break;
+                            case "200":
+                                tmpMarkPriv = "-"; break;
+                            default:
+                                tmpMarkPriv = null; break;
+                        }
+                    }
+                    //no ; 24 VAC/VDC ; analog ; yes ; no
+                    else if (tdRadioButtonList5.SelectedIndex == 1 && tdRadioButtonList2.SelectedIndex == 1 && tdRadioButtonList1.SelectedIndex == 1 && tdRadioButtonList3.SelectedIndex == 0 && tdRadioButtonList4.SelectedIndex == 1)
+                    {
+                        switch (listResult["C"].ElementAt(i))
+                        {
+                            case "15":
+                                tmpMarkPriv = "301"; break;
+                            case "20":
+                                tmpMarkPriv = "301"; break;
+                            case "25":
+                                tmpMarkPriv = "301"; break;
+                            case "32":
+                                tmpMarkPriv = "301"; break;
+                            case "40":
+                                tmpMarkPriv = "301"; break;
+                            case "50":
+                                tmpMarkPriv = "301"; break;
+                            case "65":
+                                tmpMarkPriv = "310"; break;
+                            case "80":
+                                tmpMarkPriv = "310"; break;
+                            case "100":
+                                tmpMarkPriv = "310"; break;
+                            case "125":
+                                tmpMarkPriv = "320"; break;
+                            case "150":
+                                tmpMarkPriv = "320"; break;
+                            case "200":
+                                tmpMarkPriv = "-"; break;
                             default:
                                 tmpMarkPriv = null; break;
                         }
