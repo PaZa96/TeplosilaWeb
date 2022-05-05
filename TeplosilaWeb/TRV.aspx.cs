@@ -992,18 +992,18 @@ public partial class TRV : System.Web.UI.Page
                     gRowMarkH = "15";
                     gRowMarkM = "28";
                     break;
-                case "201R": //не работает 
-                    hRowMark = "14";
+                case "201R":
+                    hRowMark = "15";
                     gRowMarkH = "16";
                     gRowMarkM = "29";
                     break;
                 case "210":
-                    hRowMark = "15";
+                    hRowMark = "16";
                     gRowMarkH = "17";
                     gRowMarkM = "30";
                     break;
                 case "210R":
-                    hRowMark = "16";
+                    hRowMark = "17";
                     gRowMarkH = "18";
                     gRowMarkM = "31";
                     break;
