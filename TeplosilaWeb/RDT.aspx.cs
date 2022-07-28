@@ -1133,15 +1133,8 @@ public partial class RDT : System.Web.UI.Page
                     }
                 }
                 else
-                {
-                    if (customConverterToDouble(lp5TextBox3.Text) <= 145)
-                    {
-                        r_in_dict.Add(39, "150˚С");
-                    }
-                    else
-                    {
-                        r_in_dict.Add(39, "220˚С");
-                    }
+                {       
+                    r_in_dict.Add(39, "220˚С");
                 }
                
             }
@@ -2901,14 +2894,9 @@ public partial class RDT : System.Web.UI.Page
                                 }
                                 else
                                 {
-                                    if (g_dict["p61"] <= 145)
-                                    {
-                                        this.maxt1ResultLabel.Text = "Максимальная температура - 150 °С";
-                                    }
-                                    else
-                                    {
-                                        this.maxt1ResultLabel.Text = "Максимальная температура - 220 °С";
-                                    }
+                                  
+                                    this.maxt1ResultLabel.Text = "Максимальная температура - 220 °С";
+                                    
                                 }
                                    
                                 this.maxp1ResultLabel.Text = "Максимальное рабочее давление - 16 бар";
@@ -3365,19 +3353,8 @@ public partial class RDT : System.Web.UI.Page
 
 
             getDimsR(ref r_input_dict);
-
-           
-            if (customConverterToDouble(lp5TextBox3.Text) <= 145)
-            {
-                ws.Pictures.Add(HttpContext.Current.Server.MapPath("~/Content/images/rdt/Габаритный RDT и RDT-P.jpg"), "A25");
-                
-            }
-            else
-            {
-                ws.Pictures.Add(HttpContext.Current.Server.MapPath("~/Content/images/rdt/Габаритный RDT-S и RDT-B.jpg"), "A25");
-            }
             
-
+            ws.Pictures.Add(HttpContext.Current.Server.MapPath("~/Content/images/rdt/Габаритный RDT-S и RDT-B.jpg"), "A25");
 
             ws.Cells["F25"].Value = r_input_dict[51];
             ws.Cells["F26"].Value = r_input_dict[52];
@@ -4026,7 +4003,7 @@ public partial class RDT : System.Web.UI.Page
 
             if ((r_input_dict[4] == this.eorRadioButtonList1.Items[0].Text) || (r_input_dict[4] == eorRadioButtonList1.Items[1].Text))
             {
-                if (r_input_dict[4] == eorRadioButtonList1.Items[1].Text && customConverterToDouble(calcrTextBox2.Text) > 150)
+                if (r_input_dict[4] == eorRadioButtonList1.Items[1].Text && customConverterToDouble(calcrTextBox2.Text) > 150 && ws1RadioButtonList1.SelectedIndex != 3)
                 {
                     ws.Pictures.Add(HttpContext.Current.Server.MapPath("~/Content/images/rdt/Габаритный RDT-S и RDT-B.jpg"), "A33");
                 }

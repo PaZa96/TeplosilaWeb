@@ -2826,11 +2826,7 @@ public partial class TRV : System.Web.UI.Page
 
                     if(ws2RadioButtonList1.SelectedIndex == 3)
                     {
-                        if (tvRadioButtonList1.SelectedIndex == 0 && (customConverterToDouble(g_dict["p35"].ToString()) <= 145))
-                        {
-                            regex = new System.Text.RegularExpressions.Regex(@"(TRV-[0-9]+-[0-9,.]+-)");
-                        }
-                        else if (tvRadioButtonList1.SelectedIndex == 0 && (customConverterToDouble(g_dict["p35"].ToString()) >= 145))
+                        if (tvRadioButtonList1.SelectedIndex == 0)
                         {
                             regex = new System.Text.RegularExpressions.Regex(@"(TRV-T-[0-9]+-[0-9,.]+-)");
                         }
@@ -3238,8 +3234,8 @@ public partial class TRV : System.Web.UI.Page
         }
         else
         {
-            if (customConverterToDouble(lpv5TextBox3.Text) > 145) v_in_dict[40] = "220 ˚С";
-            else v_in_dict[40] = "150 ˚С";
+            v_in_dict[40] = "220 ˚С";
+            
         }
 
         v_in_dict.Add(41, "16 бар");
@@ -4100,7 +4096,7 @@ public partial class TRV : System.Web.UI.Page
                                     }
                                     else
                                     {
-                                        this.maxt2ResultLabel.Text = "Максимальная температура - " + ((double.Parse(g_dict["p35"].ToString()) <= 145) ? "150" : "220") + " °С";
+                                        this.maxt2ResultLabel.Text = "Максимальная температура - 220 °С";
                                     }
                                                     
 
