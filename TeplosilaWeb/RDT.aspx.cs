@@ -569,16 +569,10 @@ public partial class RDT : System.Web.UI.Page
                 }
                 else
                 {
-                    if (T1 > 145)
-                    {
-                        table = dataFromFile.table75;
-                    }
-                    else
-                    {
-                        table = dataFromFile.table72;
-                    }
+                    
+                    table = dataFromFile.table75;
+                    
                 }
-             
                 
             }
             else if (eorRadioButtonList1.SelectedIndex == 2)

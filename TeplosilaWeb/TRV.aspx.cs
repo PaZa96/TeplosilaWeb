@@ -1354,8 +1354,7 @@ public partial class TRV : System.Web.UI.Page
                 }
                 else
                 {
-                    if (customConverterToDouble(g_dict["p35"].ToString()) <= 145) tablev_7 = dataFromFile.tablev_71;
-                    else tablev_7 = dataFromFile.tablev_71t;
+                    tablev_7 = dataFromFile.tablev_71t;
                 }
                
             }
