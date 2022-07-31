@@ -2010,7 +2010,18 @@ public partial class TRV : System.Web.UI.Page
             ExcelFile efHtrv = ExcelFile.Load(HttpContext.Current.Server.MapPath(((tvRadioButtonList1.SelectedIndex == 0) ? "~/Content/properties/htrv.xlsx" : "~/Content/properties/htrv3.xlsx")));
             ExcelWorksheet wsHtrv = efHtrv.Worksheets[0];
 
-            ExcelFile efGtrv = ExcelFile.Load(HttpContext.Current.Server.MapPath(((tvRadioButtonList1.SelectedIndex == 0) ? ((customConverterToDouble(g_dict["p35"].ToString()) >= 150) ? "~/Content/properties/gtrvt.xlsx" : "Content\\properties\\gtrv.xlsx") : "Content\\properties\\gtrv3.xlsx")));
+            string excelPath = "";
+            if (ws2RadioButtonList1.SelectedIndex != 3)
+            {
+                excelPath = ((tvRadioButtonList1.SelectedIndex == 0) ? ((customConverterToDouble(g_dict["p35"].ToString()) >= 150) ? "~/Content/properties/gtrvt.xlsx" : "Content\\properties\\gtrv.xlsx") : "Content\\properties\\gtrv3.xlsx");
+
+            }
+            else
+            {
+                excelPath =  (tvRadioButtonList1.SelectedIndex == 0 ?  "~/Content/properties/gtrvt.xlsx" : excelPath = "Content\\properties\\gtrv3.xlsx");
+
+            }
+            ExcelFile efGtrv = ExcelFile.Load(HttpContext.Current.Server.MapPath(excelPath));
             ExcelWorksheet wsGtrv = efGtrv.Worksheets[0];
 
             //ws.Cells["C4"].Value = r_input_dict[3];
