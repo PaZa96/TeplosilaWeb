@@ -1361,7 +1361,7 @@ public partial class TRV : System.Web.UI.Page
             else
             {
                 tablev = dataFromFile.table6v;
-                tableDN = dataFromFile.table11;
+                tableDN = dataFromFile.table11t;
                 tablev_7 = dataFromFile.tablev_713;
             }
             double col_B = (rpvRadioButtonList1.SelectedIndex == 0) ? Convert.ToDouble(tablev[0]) : Convert.ToDouble(tablev[tablev.Count - 1]); //выбор начальной пропускной способности
