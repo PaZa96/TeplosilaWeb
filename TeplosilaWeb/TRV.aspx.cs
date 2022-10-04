@@ -337,25 +337,14 @@ public partial class TRV : System.Web.UI.Page
             lpv5.Visible = false;
             calcv.Visible = true;
             fvPane1.Visible = true;
+
+            if (ws2RadioButtonList1.SelectedIndex != 3 && ws2RadioButtonList1.SelectedIndex != -1)
+            {
+                lpvDropDownList21.Enabled = true;
+            }
+
+            lpv2.Visible = true;
             
-
-            if (aa1RadioButtonList1.SelectedIndex == 0 || aa2RadioButtonList1.SelectedIndex == 0 || aa3RadioButtonList1.SelectedIndex == 0)
-            {
-                lpvTextBox21.Enabled = false;
-                lpvTextBox21.Text = "";
-                fvPane2.Visible = false;
-                lpv2.Visible = false;
-            }
-            else
-            {
-
-                if (ws2RadioButtonList1.SelectedIndex != 3 && ws2RadioButtonList1.SelectedIndex != -1)
-                {
-                    lpvDropDownList21.Enabled = true;
-                }
-
-                lpv2.Visible = true;
-            }
 
             if(LabelSteam.Text == "Y")
             {
