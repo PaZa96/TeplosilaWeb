@@ -1559,8 +1559,7 @@ public partial class TRV : System.Web.UI.Page
             }
             /*/CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC*/
             /*/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA*/
-
-            double C = Convert.ToDouble(listResult["C"][listResult["C"].Count() - 1]);
+           
 
             double cDN = 0;
 
@@ -1588,6 +1587,31 @@ public partial class TRV : System.Web.UI.Page
                 }
             }
 
+            calcvDNLabel.Text = "Расчетный диаметр - " + Math.Round(cDN, 2).ToString() + " мм";
+            calcvDNLabel.Visible = true;
+
+
+            if (listResult["C"].Count() == 0)
+            {
+                var non_List = new List<string>() {"-"};
+                var not_Var_List = new List<string>() {"вариантов нет"};
+
+                listResult["A"] = non_List.ToArray();
+                listResult["B"] = non_List.ToArray();
+                listResult["C"] = non_List.ToArray();
+                listResult["D"] = non_List.ToArray();
+                listResult["I"] = not_Var_List.ToArray();
+                listResult["I1"] = non_List.ToArray();
+                listResult["I2"] = non_List.ToArray();
+                listResult["I3"] = non_List.ToArray();
+                listResult["F"] = non_List.ToArray();
+                listResult["G"] = non_List.ToArray();
+                listResult["M"] = non_List.ToArray();
+            }
+             
+
+            double C = Convert.ToDouble(listResult["C"][listResult["C"].Count() - 1]);
+
             if (ws2RadioButtonList1.SelectedIndex != 3)
             {
                 V = Gkl / g * Math.Pow((18.8 / C), 2);
@@ -1597,8 +1621,6 @@ public partial class TRV : System.Web.UI.Page
                 V = (Gkl * (T1 + 273)) / Math.Pow((C / 18.8), 2) / (219 * (p2 + 1));
             }
 
-            calcvDNLabel.Text = "Расчетный диаметр - " + Math.Round(cDN, 2).ToString() + " мм";
-            calcvDNLabel.Visible = true;
 
             double Pf = 1;
 
