@@ -1369,6 +1369,23 @@ public partial class TRV : System.Web.UI.Page
                             col_B = el;
                         }
                     }
+                    for (int i = 0; i <= tablev.Count(); i++) {
+                        if(col_B == Convert.ToDouble(tablev[i]))
+                        {
+                            if(Convert.ToInt32(tablev[i + 1]) <= Convert.ToInt32(tablev[tablev.Count() - 1]))
+                            {
+                                col_B = Convert.ToDouble(tablev[i + 1]);
+                                break;
+                            }
+                            else
+                            {
+                                col_B = Convert.ToDouble(tablev[tablev.Count()-1]);
+                                break;
+                            }
+                            
+                        }
+                    }
+
                 }
                 else
                 {
@@ -1387,7 +1404,7 @@ public partial class TRV : System.Web.UI.Page
                     Kv = col_B;
                 //exit_t = true;
 
-                if (Kv < col_B)
+                if ((Kv*1.2) < col_B)
                 {
                     exit_t = true;
                     var _List = new List<string>();
@@ -1596,21 +1613,45 @@ public partial class TRV : System.Web.UI.Page
                 var non_List = new List<string>() {"-"};
                 var not_Var_List = new List<string>() {"вариантов нет"};
 
+
                 listResult["A"] = non_List.ToArray();
                 listResult["B"] = non_List.ToArray();
                 listResult["C"] = non_List.ToArray();
-                listResult["D"] = non_List.ToArray();
-                listResult["I"] = not_Var_List.ToArray();
-                listResult["I1"] = non_List.ToArray();
-                listResult["I2"] = non_List.ToArray();
-                listResult["I3"] = non_List.ToArray();
-                listResult["F"] = non_List.ToArray();
-                listResult["G"] = non_List.ToArray();
-                listResult["M"] = non_List.ToArray();
-            }
-             
 
-            double C = Convert.ToDouble(listResult["C"][listResult["C"].Count() - 1]);
+                listResult["I"] = not_Var_List.ToArray();
+
+                if (ws2RadioButtonList1.SelectedIndex != 3) { 
+                    listResult["I1"] = non_List.ToArray();
+                    listResult["I2"] = non_List.ToArray();
+                    listResult["F"] = non_List.ToArray();
+                    listResult["G"] = non_List.ToArray();
+
+                }
+                listResult["I3"] = non_List.ToArray();
+
+                listResult["M"] = non_List.ToArray();
+                listResult["PP54"] = non_List.ToArray();
+                listResult["PP55"] = non_List.ToArray();
+                listResult["PP56"] = non_List.ToArray();
+                listResult["PP57"] = non_List.ToArray();
+                listResult["PP58"] = non_List.ToArray();
+                listResult["PP59"] = non_List.ToArray();
+                listResult["PP60"] = non_List.ToArray();
+                listResult["PP61"] = non_List.ToArray();
+                listResult["PP62"] = non_List.ToArray();
+                listResult["PP63"] = non_List.ToArray();
+                listResult["PP65"] = non_List.ToArray();
+                listResult["PP66"] = non_List.ToArray();
+                listResult["PP67"] = non_List.ToArray();
+                listResult["PP68"] = non_List.ToArray();
+                return listResult;
+            }
+            double C = 1;
+            if ((listResult["C"].Count() - 1) > 0)
+            {
+                 C = Convert.ToDouble(listResult["C"][listResult["C"].Count() - 1]);
+            } 
+            
 
             if (ws2RadioButtonList1.SelectedIndex != 3)
             {
