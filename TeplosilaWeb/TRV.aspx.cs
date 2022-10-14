@@ -5563,13 +5563,22 @@ public partial class TRV : System.Web.UI.Page
 
             if (tvRadioButtonList1.SelectedIndex == 0)
             {
-                ws.Pictures.Add(HttpContext.Current.Server.MapPath("\\Content\\images\\trv\\Габаритный TRV и TRV-P.png"), "A39");
-
+                if (Convert.ToInt32(v_input_dict[43]) < 65) {
+                    ws.Pictures.Add(HttpContext.Current.Server.MapPath("\\Content\\images\\trv\\Габаритный TRV и TRV-P.png"), "A39");
+                }
+                else {
+                    ws.Pictures.Add(HttpContext.Current.Server.MapPath("\\Content\\images\\trv\\Габаритный TRV Ду65-200 (до 150 градусов).png"), "A39");
+                }
             }
             else
             {
-                ws.Pictures.Add(HttpContext.Current.Server.MapPath("\\Content\\images\\trv\\Габаритный TRV-3.png"), "A39");
-
+                if (Convert.ToInt32(v_input_dict[43]) < 65) {
+                    ws.Pictures.Add(HttpContext.Current.Server.MapPath("\\Content\\images\\trv\\Габаритный TRV-3.png"), "A39");
+                }
+                else
+                {
+                    ws.Pictures.Add(HttpContext.Current.Server.MapPath("\\Content\\images\\trv\\Габаритный TRV-3 Ду65-200.png"), "A39");
+                }
             }
 
             string path = HttpContext.Current.Server.MapPath("~/Files/TRV/PDF/" + DateTime.Now.ToString("dd-MM-yyyy"));

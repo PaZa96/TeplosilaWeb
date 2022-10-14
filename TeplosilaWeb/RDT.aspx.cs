@@ -382,10 +382,18 @@ public partial class RDT : System.Web.UI.Page
             calcCapacityLabel.Text = "Расчетная пропускная способность - " + Math.Round(Kv, 2).ToString() + " м³/ч";
             calcCapacityLabel.Visible = true;
 
-
+            Newtonsoft.Json.Linq.JArray table11 = null;
 
             Newtonsoft.Json.Linq.JArray table5 = dataFromFile.table5;
-            Newtonsoft.Json.Linq.JArray table11 = dataFromFile.table11;
+            if (ws1RadioButtonList1.SelectedIndex != 3)
+            {
+                table11 = dataFromFile.table11;
+            }
+            else
+            {
+                table11 = dataFromFile.table12t;
+            }
+            
             double col_B = Convert.ToDouble(table5[table5.Count - 1]);
             int col_C = Convert.ToInt32(table11[table11.Count - 1]);
 
