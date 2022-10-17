@@ -1404,7 +1404,7 @@ public partial class TRV : System.Web.UI.Page
                     Kv = col_B;
                 //exit_t = true;
 
-                if ((Kv*1.2) < col_B)
+                if ((Kv) < col_B)
                 {
                     exit_t = true;
                     var _List = new List<string>();
@@ -1997,7 +1997,7 @@ public partial class TRV : System.Web.UI.Page
                                 max = ob;
                             }
                         }
-                        ps = getPSbyT(customConverterToDouble(calcvTextBox2.Text));
+                        ps = getPSbyT(t1);
 
                         double F = Math.Round((dn * ((customConverterToDouble(this.calcvTextBox1.Text) * arrConvert3[this.calcvDropDownList1.SelectedIndex - 1] / arrConvert3[2]) - ps)), 2);
                         listF.Add(F.ToString());
