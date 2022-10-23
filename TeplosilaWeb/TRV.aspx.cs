@@ -1369,22 +1369,6 @@ public partial class TRV : System.Web.UI.Page
                             col_B = el;
                         }
                     }
-                    for (int i = 0; i <= tablev.Count(); i++) {
-                        if(col_B == Convert.ToDouble(tablev[i]))
-                        {
-                            if(Convert.ToInt32(tablev[i + 1]) <= Convert.ToInt32(tablev[tablev.Count() - 1]))
-                            {
-                                col_B = Convert.ToDouble(tablev[i + 1]);
-                                break;
-                            }
-                            else
-                            {
-                                col_B = Convert.ToDouble(tablev[tablev.Count()-1]);
-                                break;
-                            }
-                            
-                        }
-                    }
 
                 }
                 else
