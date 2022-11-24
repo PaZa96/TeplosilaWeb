@@ -382,18 +382,10 @@ public partial class RDT : System.Web.UI.Page
             calcCapacityLabel.Text = "Расчетная пропускная способность - " + Math.Round(Kv, 2).ToString() + " м³/ч";
             calcCapacityLabel.Visible = true;
 
-            Newtonsoft.Json.Linq.JArray table11 = null;
+
 
             Newtonsoft.Json.Linq.JArray table5 = dataFromFile.table5;
-            if (ws1RadioButtonList1.SelectedIndex != 3)
-            {
-                table11 = dataFromFile.table11;
-            }
-            else
-            {
-                table11 = dataFromFile.table12t;
-            }
-            
+            Newtonsoft.Json.Linq.JArray table11 = dataFromFile.table11;
             double col_B = Convert.ToDouble(table5[table5.Count - 1]);
             int col_C = Convert.ToInt32(table11[table11.Count - 1]);
 
@@ -946,7 +938,7 @@ public partial class RDT : System.Web.UI.Page
                             max = ob;
                         }
                     }
-                    ps = getPSbyT(t1);
+                    ps = Convert.ToDouble(max.GetValue("ps"));
 
                     double G = Math.Round((dn * ((customConverterToDouble(this.calcrTextBox1.Text) * arrConvert3[this.calcrDropDownList1.SelectedIndex - 1] / arrConvert3[2]) - ps)), 2);
                     listG.Add(G.ToString());

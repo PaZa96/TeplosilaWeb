@@ -337,14 +337,25 @@ public partial class TRV : System.Web.UI.Page
             lpv5.Visible = false;
             calcv.Visible = true;
             fvPane1.Visible = true;
-
-            if (ws2RadioButtonList1.SelectedIndex != 3 && ws2RadioButtonList1.SelectedIndex != -1)
-            {
-                lpvDropDownList21.Enabled = true;
-            }
-
-            lpv2.Visible = true;
             
+
+            if (aa1RadioButtonList1.SelectedIndex == 0 || aa2RadioButtonList1.SelectedIndex == 0 || aa3RadioButtonList1.SelectedIndex == 0)
+            {
+                lpvTextBox21.Enabled = false;
+                lpvTextBox21.Text = "";
+                fvPane2.Visible = false;
+                lpv2.Visible = false;
+            }
+            else
+            {
+
+                if (ws2RadioButtonList1.SelectedIndex != 3 && ws2RadioButtonList1.SelectedIndex != -1)
+                {
+                    lpvDropDownList21.Enabled = true;
+                }
+
+                lpv2.Visible = true;
+            }
 
             if(LabelSteam.Text == "Y")
             {
@@ -1350,7 +1361,7 @@ public partial class TRV : System.Web.UI.Page
             else
             {
                 tablev = dataFromFile.table6v;
-                tableDN = dataFromFile.table11t;
+                tableDN = dataFromFile.table11;
                 tablev_7 = dataFromFile.tablev_713;
             }
             double col_B = (rpvRadioButtonList1.SelectedIndex == 0) ? Convert.ToDouble(tablev[0]) : Convert.ToDouble(tablev[tablev.Count - 1]); //выбор начальной пропускной способности
@@ -1369,7 +1380,6 @@ public partial class TRV : System.Web.UI.Page
                             col_B = el;
                         }
                     }
-
                 }
                 else
                 {
@@ -1388,7 +1398,7 @@ public partial class TRV : System.Web.UI.Page
                     Kv = col_B;
                 //exit_t = true;
 
-                if ((Kv) < col_B)
+                if (Kv < col_B)
                 {
                     exit_t = true;
                     var _List = new List<string>();
@@ -1560,7 +1570,8 @@ public partial class TRV : System.Web.UI.Page
             }
             /*/CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC*/
             /*/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA*/
-           
+
+            double C = Convert.ToDouble(listResult["C"][listResult["C"].Count() - 1]);
 
             double cDN = 0;
 
@@ -1588,55 +1599,6 @@ public partial class TRV : System.Web.UI.Page
                 }
             }
 
-            calcvDNLabel.Text = "Расчетный диаметр - " + Math.Round(cDN, 2).ToString() + " мм";
-            calcvDNLabel.Visible = true;
-
-
-            if (listResult["C"].Count() == 0)
-            {
-                var non_List = new List<string>() {"-"};
-                var not_Var_List = new List<string>() {"вариантов нет"};
-
-
-                listResult["A"] = non_List.ToArray();
-                listResult["B"] = non_List.ToArray();
-                listResult["C"] = non_List.ToArray();
-
-                listResult["I"] = not_Var_List.ToArray();
-
-                if (ws2RadioButtonList1.SelectedIndex != 3) { 
-                    listResult["I1"] = non_List.ToArray();
-                    listResult["I2"] = non_List.ToArray();
-                    listResult["F"] = non_List.ToArray();
-                    listResult["G"] = non_List.ToArray();
-
-                }
-                listResult["I3"] = non_List.ToArray();
-
-                listResult["M"] = non_List.ToArray();
-                listResult["PP54"] = non_List.ToArray();
-                listResult["PP55"] = non_List.ToArray();
-                listResult["PP56"] = non_List.ToArray();
-                listResult["PP57"] = non_List.ToArray();
-                listResult["PP58"] = non_List.ToArray();
-                listResult["PP59"] = non_List.ToArray();
-                listResult["PP60"] = non_List.ToArray();
-                listResult["PP61"] = non_List.ToArray();
-                listResult["PP62"] = non_List.ToArray();
-                listResult["PP63"] = non_List.ToArray();
-                listResult["PP65"] = non_List.ToArray();
-                listResult["PP66"] = non_List.ToArray();
-                listResult["PP67"] = non_List.ToArray();
-                listResult["PP68"] = non_List.ToArray();
-                return listResult;
-            }
-            double C = 1;
-            if ((listResult["C"].Count() - 1) > 0)
-            {
-                 C = Convert.ToDouble(listResult["C"][listResult["C"].Count() - 1]);
-            } 
-            
-
             if (ws2RadioButtonList1.SelectedIndex != 3)
             {
                 V = Gkl / g * Math.Pow((18.8 / C), 2);
@@ -1646,6 +1608,8 @@ public partial class TRV : System.Web.UI.Page
                 V = (Gkl * (T1 + 273)) / Math.Pow((C / 18.8), 2) / (219 * (p2 + 1));
             }
 
+            calcvDNLabel.Text = "Расчетный диаметр - " + Math.Round(cDN, 2).ToString() + " мм";
+            calcvDNLabel.Visible = true;
 
             double Pf = 1;
 
@@ -1981,7 +1945,7 @@ public partial class TRV : System.Web.UI.Page
                                 max = ob;
                             }
                         }
-                        ps = getPSbyT(t1);
+                        ps = Convert.ToDouble(max.GetValue("ps"));
 
                         double F = Math.Round((dn * ((customConverterToDouble(this.calcvTextBox1.Text) * arrConvert3[this.calcvDropDownList1.SelectedIndex - 1] / arrConvert3[2]) - ps)), 2);
                         listF.Add(F.ToString());
@@ -5547,22 +5511,13 @@ public partial class TRV : System.Web.UI.Page
 
             if (tvRadioButtonList1.SelectedIndex == 0)
             {
-                if (Convert.ToInt32(v_input_dict[43]) < 65) {
-                    ws.Pictures.Add(HttpContext.Current.Server.MapPath("\\Content\\images\\trv\\Габаритный TRV и TRV-P.png"), "A39");
-                }
-                else {
-                    ws.Pictures.Add(HttpContext.Current.Server.MapPath("\\Content\\images\\trv\\Габаритный TRV Ду65-200 (до 150 градусов).png"), "A39");
-                }
+                ws.Pictures.Add(HttpContext.Current.Server.MapPath("\\Content\\images\\trv\\Габаритный TRV и TRV-P.png"), "A39");
+
             }
             else
             {
-                if (Convert.ToInt32(v_input_dict[43]) < 65) {
-                    ws.Pictures.Add(HttpContext.Current.Server.MapPath("\\Content\\images\\trv\\Габаритный TRV-3.png"), "A39");
-                }
-                else
-                {
-                    ws.Pictures.Add(HttpContext.Current.Server.MapPath("\\Content\\images\\trv\\Габаритный TRV-3 Ду65-200.png"), "A39");
-                }
+                ws.Pictures.Add(HttpContext.Current.Server.MapPath("\\Content\\images\\trv\\Габаритный TRV-3.png"), "A39");
+
             }
 
             string path = HttpContext.Current.Server.MapPath("~/Files/TRV/PDF/" + DateTime.Now.ToString("dd-MM-yyyy"));
