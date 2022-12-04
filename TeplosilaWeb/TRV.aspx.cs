@@ -1080,6 +1080,16 @@ public partial class TRV : System.Web.UI.Page
                     gRowMarkH = "19";
                     gRowMarkM = "33";
                     break;
+                case "102":
+                    hRowMark = "19";
+                    gRowMarkH = "20";
+                    gRowMarkM = "34";
+                    break;
+                case "112":
+                    hRowMark = "20";
+                    gRowMarkH = "21";
+                    gRowMarkM = "35";
+                    break;
             }
         }
 
@@ -2303,23 +2313,23 @@ public partial class TRV : System.Web.UI.Page
                         switch (listResult["C"].ElementAt(i))
                         {
                             case "15":
-                                tmpMarkPriv = "301"; break;
+                                tmpMarkPriv = "102"; break;
                             case "20":
-                                tmpMarkPriv = "301"; break;
+                                tmpMarkPriv = "102"; break;
                             case "25":
-                                tmpMarkPriv = "301"; break;
+                                tmpMarkPriv = "102"; break;
                             case "32":
-                                tmpMarkPriv = "301"; break;
+                                tmpMarkPriv = "102"; break;
                             case "40":
-                                tmpMarkPriv = "301"; break;
+                                tmpMarkPriv = "102"; break;
                             case "50":
-                                tmpMarkPriv = "301"; break;
+                                tmpMarkPriv = "102"; break;
                             case "65":
-                                tmpMarkPriv = "310"; break;
+                                tmpMarkPriv = "112"; break;
                             case "80":
-                                tmpMarkPriv = "310"; break;
+                                tmpMarkPriv = "112"; break;
                             case "100":
-                                tmpMarkPriv = "310"; break;
+                                tmpMarkPriv = "112"; break;
                             case "125":
                                 tmpMarkPriv = "320"; break;
                             case "150":
@@ -2666,23 +2676,23 @@ public partial class TRV : System.Web.UI.Page
                         switch (listResult["C"].ElementAt(i))
                         {
                             case "15":
-                                tmpMarkPriv = "301"; break;
+                                tmpMarkPriv = "102"; break;
                             case "20":
-                                tmpMarkPriv = "301"; break;
+                                tmpMarkPriv = "102"; break;
                             case "25":
-                                tmpMarkPriv = "301"; break;
+                                tmpMarkPriv = "102"; break;
                             case "32":
-                                tmpMarkPriv = "301"; break;
+                                tmpMarkPriv = "102"; break;
                             case "40":
-                                tmpMarkPriv = "301"; break;
+                                tmpMarkPriv = "102"; break;
                             case "50":
-                                tmpMarkPriv = "301"; break;
+                                tmpMarkPriv = "102"; break;
                             case "65":
-                                tmpMarkPriv = "310"; break;
+                                tmpMarkPriv = "112"; break;
                             case "80":
-                                tmpMarkPriv = "310"; break;
+                                tmpMarkPriv = "112"; break;
                             case "100":
-                                tmpMarkPriv = "310"; break;
+                                tmpMarkPriv = "112"; break;
                             case "125":
                                 tmpMarkPriv = "320"; break;
                             case "150":
