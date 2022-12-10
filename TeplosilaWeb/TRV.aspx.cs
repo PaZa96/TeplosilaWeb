@@ -950,62 +950,72 @@ public partial class TRV : System.Web.UI.Page
                 case "101":
                     hRowMark = "6";
                     gRowMarkH = "7";
-                    gRowMarkM = "20";
+                    gRowMarkM = "22";
                     break;
                 case "101R":
                     hRowMark = "7";
                     gRowMarkH = "8";
-                    gRowMarkM = "21";
+                    gRowMarkM = "23";
                     break;
                 case "301":
                     hRowMark = "8";
                     gRowMarkH = "9";
-                    gRowMarkM = "22";
+                    gRowMarkM = "24";
                     break;
                 case "110":
                     hRowMark = "9";
                     gRowMarkH = "10";
-                    gRowMarkM = "23";
+                    gRowMarkM = "25";
                     break;
                 case "110R":
                     hRowMark = "10";
                     gRowMarkH = "11";
-                    gRowMarkM = "24";
+                    gRowMarkM = "26";
                     break;
                 case "310":
                     hRowMark = "11";
                     gRowMarkH = "12";
-                    gRowMarkM = "25";
+                    gRowMarkM = "27";
                     break;
                 case "120":
                     hRowMark = "12";
                     gRowMarkH = "13";
-                    gRowMarkM = "26";
+                    gRowMarkM = "28";
                     break;
                 case "320":
                     hRowMark = "13";
                     gRowMarkH = "14";
-                    gRowMarkM = "27";
+                    gRowMarkM = "29";
                     break;
                 case "201":
                     hRowMark = "14";
                     gRowMarkH = "15";
-                    gRowMarkM = "28";
+                    gRowMarkM = "30";
                     break;
                 case "201R":
                     hRowMark = "15";
                     gRowMarkH = "16";
-                    gRowMarkM = "29";
+                    gRowMarkM = "31";
                     break;
                 case "210":
                     hRowMark = "16";
                     gRowMarkH = "17";
-                    gRowMarkM = "30";
+                    gRowMarkM = "32";
                     break;
                 case "210R":
                     hRowMark = "17";
                     gRowMarkH = "18";
-                    gRowMarkM = "31";
+                    gRowMarkM = "33";
+                    break;
+                case "102":
+                    hRowMark = "18";
+                    gRowMarkH = "19";
+                    gRowMarkM = "34";
+                    break;
+                case "112":
+                    hRowMark = "19";
+                    gRowMarkH = "20";
+                    gRowMarkM = "35";
                     break;
             }
         }
@@ -1018,77 +1028,77 @@ public partial class TRV : System.Web.UI.Page
                 case "101":
                     hRowMark = "6";
                     gRowMarkH = "7";
-                    gRowMarkM = "21";
+                    gRowMarkM = "23";
                     break;
                 case "101R":
                     hRowMark = "7";
                     gRowMarkH = "8";
-                    gRowMarkM = "22";
+                    gRowMarkM = "24";
                     break;
                 case "301":
                     hRowMark = "8";
                     gRowMarkH = "9";
-                    gRowMarkM = "23";
+                    gRowMarkM = "25";
                     break;
                 case "110":
                     hRowMark = "9";
                     gRowMarkH = "10";
-                    gRowMarkM = "24";
+                    gRowMarkM = "26";
                     break;
                 case "110R":
                     hRowMark = "10";
                     gRowMarkH = "11";
-                    gRowMarkM = "25";
+                    gRowMarkM = "27";
                     break;
                 case "310":
                     hRowMark = "11";
                     gRowMarkH = "12";
-                    gRowMarkM = "26";
+                    gRowMarkM = "28";
                     break;
                 case "120":
                     hRowMark = "12";
                     gRowMarkH = "13";
-                    gRowMarkM = "27";
+                    gRowMarkM = "29";
                     break;
                 case "320":
                     hRowMark = "13";
                     gRowMarkH = "14";
-                    gRowMarkM = "28";
+                    gRowMarkM = "30";
                     break;
                 case "130":
                     hRowMark = "14";
                     gRowMarkH = "15";
-                    gRowMarkM = "29";
+                    gRowMarkM = "31";
                     break;
                 case "201":
                     hRowMark = "15";
                     gRowMarkH = "16";
-                    gRowMarkM = "30";
+                    gRowMarkM = "32";
                     break;
                 case "201R":
                     hRowMark = "16";
                     gRowMarkH = "17";
-                    gRowMarkM = "31";
+                    gRowMarkM = "33";
                     break;
                 case "210":
                     hRowMark = "17";
                     gRowMarkH = "18";
-                    gRowMarkM = "32";
+                    gRowMarkM = "34";
                     break;
                 case "210R":
                     hRowMark = "18";
                     gRowMarkH = "19";
-                    gRowMarkM = "33";
+                    gRowMarkM = "35";
                     break;
                 case "102":
                     hRowMark = "19";
                     gRowMarkH = "20";
-                    gRowMarkM = "34";
+                    gRowMarkM = "36";
                     break;
                 case "112":
                     hRowMark = "20";
                     gRowMarkH = "21";
-                    gRowMarkM = "35";
+                    gRowMarkM = "37";
                     break;
             }
         }
@@ -1130,17 +1140,21 @@ public partial class TRV : System.Web.UI.Page
         switch (privMark)
         {
             case "101":
-                return "TSL-1600-25- 1-230-IP67";
+                return "TSL-1600-25-1-230-IP67";
             case "101R":
-                return "TSL-1600-25- 1R-230-IP67";
+                return "TSL-1600-25-1R-230-IP67";
+            case "102":
+                return "TSL-1600-25-1-24-IP67";
             case "110":
-                return "TSL-2200-40- 1-230-IP67";
+                return "TSL-2200-40-1-230-IP67";
             case "110R":
-                return "TSL-2200-40- 1R-230-IP67";
+                return "TSL-2200-40-1R-230-IP67";
+            case "112":
+                return "TSL-2200-40-1-24-IP67";
             case "120":
-                return "TSL-3000-60- 1-230-IP67";
+                return "TSL-3000-60-1-230-IP67";
             case "120R":
-                return "TSL-3000-60- 1R-230-IP67";
+                return "TSL-3000-60-1R-230-IP67";
             case "130":
                 return "TSL-6000-60-1-230-IP67";
             case "301":
