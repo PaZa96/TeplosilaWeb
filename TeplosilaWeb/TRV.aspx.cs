@@ -1969,7 +1969,7 @@ public partial class TRV : System.Web.UI.Page
                                 max = ob;
                             }
                         }
-                        ps = Convert.ToDouble(max.GetValue("ps"));
+                        ps = getPSbyT(t1);
 
                         double F = Math.Round((dn * ((customConverterToDouble(this.calcvTextBox1.Text) * arrConvert3[this.calcvDropDownList1.SelectedIndex - 1] / arrConvert3[2]) - ps)), 2);
                         listF.Add(F.ToString());
