@@ -256,6 +256,9 @@ public partial class RDT : System.Web.UI.Page
             double tmpKv = 0;
             string tmpA = "";
 
+            Newtonsoft.Json.Linq.JArray table5 = null;
+            Newtonsoft.Json.Linq.JArray table11 = null;
+
             Dictionary<string, string[]> listResult = new Dictionary<string, string[]>();
             listResult.Add("A", new string[] { });
             listResult.Add("B", new string[] { });
@@ -382,13 +385,6 @@ public partial class RDT : System.Web.UI.Page
             calcCapacityLabel.Text = "Расчетная пропускная способность - " + Math.Round(Kv, 2).ToString() + " м³/ч";
             calcCapacityLabel.Visible = true;
 
-
-
-            Newtonsoft.Json.Linq.JArray table5 = dataFromFile.table5;
-            Newtonsoft.Json.Linq.JArray table11 = dataFromFile.table11;
-            double col_B = Convert.ToDouble(table5[table5.Count - 1]);
-            int col_C = Convert.ToInt32(table11[table11.Count - 1]);
-
             /*IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII*/
 
             double I = 0;
@@ -397,6 +393,8 @@ public partial class RDT : System.Web.UI.Page
             if (eorRadioButtonList1.SelectedIndex == 0)
             {
                 I = customConverterToDouble(this.lp1TextBox2.Text) * arrConvert3[this.lp1DropDownList2.SelectedIndex - 1] / arrConvert3[2];
+                table5 = dataFromFile.table5;
+                table11 = dataFromFile.table11;
             }
             else if (eorRadioButtonList1.SelectedIndex == 1)
             {
@@ -408,15 +406,35 @@ public partial class RDT : System.Web.UI.Page
                 {
                     I = customConverterToDouble(this.lp5TextBox2.Text) * arrConvert3[this.lp5DropDownList2.SelectedIndex - 1] / arrConvert3[2];
                 }
+
+                if (g_dict["p35"] > 150)
+                {
+                    table5 = dataFromFile.table5sbt;
+                    table11 = dataFromFile.table11sbt;
+                }
+                else
+                {
+                    table5 = dataFromFile.table5;
+                    table11 = dataFromFile.table11;
+                }
+
             }
             else if (eorRadioButtonList1.SelectedIndex == 2)
             {
                 I = customConverterToDouble(this.lp3TextBox1.Text) * arrConvert3[this.lp3DropDownList1.SelectedIndex - 1] / arrConvert3[2];
+                table5 = dataFromFile.table5sbt;
+                table11 = dataFromFile.table11sbt;
             }
             else if (eorRadioButtonList1.SelectedIndex == 3)
             {
                 I = customConverterToDouble(this.lp4TextBox2.Text) * arrConvert3[this.lp4DropDownList2.SelectedIndex - 1] / arrConvert3[2];
+                table5 = dataFromFile.table5sbt;
+                table11 = dataFromFile.table11sbt;
             }
+
+
+            double col_B = Convert.ToDouble(table5[table5.Count - 1]);
+            int col_C = Convert.ToInt32(table11[table11.Count - 1]);
 
             if (I < (((eorRadioButtonList1.SelectedIndex == 2 || eorRadioButtonList1.SelectedIndex == 3)) ? 0.08 : 0.08) || I > 15.8)
             {
