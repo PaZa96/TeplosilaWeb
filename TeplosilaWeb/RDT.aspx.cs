@@ -797,7 +797,7 @@ public partial class RDT : System.Web.UI.Page
                                 (Convert.ToDouble(ob.GetValue("min")) == Convert.ToDouble(tmpI.GetValue("min")) &&
                                     Convert.ToDouble(ob.GetValue("max")) == Convert.ToDouble(tmpI.GetValue("max"))))
                             {
-                                if (Kv_start < Convert.ToDouble(ob.GetValue("prop")) && tmpKv > Convert.ToDouble(ob.GetValue("prop")))
+                                if (Kv_start < Convert.ToDouble(ob.GetValue("prop")) && tmpKv >= Convert.ToDouble(ob.GetValue("prop")))
                                 {
                                     tmpKv = Convert.ToDouble(ob.GetValue("prop"));
                                     tmpA = ob.GetValue("name").ToString();    
@@ -2859,10 +2859,16 @@ public partial class RDT : System.Web.UI.Page
                                         return;
                                     }
                                 }
-                                    
+
 
                                 g_dict.Add("p35", p35);
 
+                            }
+                            else {
+                                double p35 = 0;
+                                p35 = customConverterToDouble(this.lp5TextBox3.Text);
+                                g_dict.Add("p35", p35);
+                                
                             }
 
                             if (ws1RadioButtonList1.SelectedIndex == 0)
