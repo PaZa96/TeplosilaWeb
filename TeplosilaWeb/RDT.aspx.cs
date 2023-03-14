@@ -649,7 +649,22 @@ public partial class RDT : System.Web.UI.Page
             /*/CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC*/
             /*/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA*/
 
-            double C = Convert.ToDouble(listResult["C"][listResult["C"].Count() - 1]);
+            double C;
+            if (listResult["C"].Count()-1 >0){
+                C = Convert.ToDouble(listResult["C"][listResult["C"].Count() - 1]);
+            }
+            else {
+
+                var _List = new List<string>();
+
+                if (listResult.ContainsKey("B"))
+                {
+                    _List.AddRange(listResult["B"]);
+                }
+                _List.AddRange(new string[] { "Решение не найдено" });
+                listResult["B"] = _List.ToArray();
+                return listResult;
+            }
 
 
             
