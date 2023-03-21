@@ -650,7 +650,7 @@ public partial class RDT : System.Web.UI.Page
             /*/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA*/
 
             double C;
-            if (listResult["C"].Count()-1 >0){
+            if (listResult["C"].Count() >0){
                 C = Convert.ToDouble(listResult["C"][listResult["C"].Count() - 1]);
             }
             else {
