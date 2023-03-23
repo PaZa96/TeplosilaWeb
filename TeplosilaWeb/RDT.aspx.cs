@@ -415,7 +415,7 @@ public partial class RDT : System.Web.UI.Page
                 else
                 {
                     table5 = dataFromFile.table5;
-                    table11 = dataFromFile.table11sbt;
+                    table11 = dataFromFile.table11;
                 }
 
             }
