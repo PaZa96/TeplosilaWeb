@@ -415,7 +415,15 @@ public partial class RDT : System.Web.UI.Page
                 else
                 {
                     table5 = dataFromFile.table5;
-                    table11 = dataFromFile.table11;
+                    
+                    if (ws1RadioButtonList1.SelectedIndex != 3)
+                    {
+                        table11 = dataFromFile.table11;
+                    }
+                    else
+                    {
+                        table11 = dataFromFile.table11sbt;
+                    }
                 }
 
             }
