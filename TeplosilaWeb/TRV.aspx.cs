@@ -1368,8 +1368,19 @@ public partial class TRV : System.Web.UI.Page
             Newtonsoft.Json.Linq.JArray tablev_7 = null;
             if (tvRadioButtonList1.SelectedIndex == 0)
             {
-                tablev = dataFromFile.table5v;
-                tableDN = dataFromFile.table10;
+
+                if (customConverterToDouble(g_dict["p35"].ToString()) > 150)
+                {
+                    tablev = dataFromFile.table5trvt;
+                    tableDN = dataFromFile.table10trvt;
+                }
+                else
+                {
+                    tablev = dataFromFile.table5v;
+                    tableDN = dataFromFile.table10; 
+                }
+
+                
 
                 if (ws2RadioButtonList1.SelectedIndex != 3)
                 {
