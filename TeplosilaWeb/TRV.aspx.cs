@@ -893,12 +893,13 @@ public partial class TRV : System.Web.UI.Page
 
     private void getDimsV(bool hod2, string paramDN, string paramMarkPriv, ref ExcelWorksheet wsH, ref ExcelWorksheet wsG,
         ref string paramPP54, ref string paramPP55, ref string paramPP56, ref string paramPP57, ref string paramPP58, ref string paramPP59, ref string paramPP60,
-        ref string paramPP61, ref string paramPP62, ref string paramPP63, ref string paramPP65, ref string paramPP66, ref string paramPP67, ref string paramPP68)
+        ref string paramPP61, ref string paramPP62, ref string paramPP63, ref string paramPP65, ref string paramPP66, ref string paramPP67, ref string paramPP68, string paramKv)
     {
         string ColDN = "";
         string hRowMark = "";
         string gRowMarkH = "";
         string gRowMarkM = "";
+        bool chinaFlag = false;
 
         //
         switch (paramDN)
@@ -939,6 +940,15 @@ public partial class TRV : System.Web.UI.Page
             case "200":
                 ColDN = "N";
                 break;
+        }
+
+        if((paramDN=="15" && paramKv == "4") || (paramDN == "25" && paramKv == "10") || (paramDN == "32" && paramKv == "16") || (paramDN == "40" && paramKv == "24") 
+            || (paramDN == "50" && paramKv == "40") || (Convert.ToInt32(paramDN) > 50))
+        {
+            chinaFlag = true;
+        } else
+        {
+            chinaFlag = false;
         }
 
         if (hod2)
@@ -1021,85 +1031,124 @@ public partial class TRV : System.Web.UI.Page
         }
         else
         {
-            //
-            switch (paramMarkPriv)
+            if (chinaFlag)
             {
-                //TRV-3
-                case "101":
-                    hRowMark = "6";
-                    gRowMarkH = "7";
-                    gRowMarkM = "23";
-                    break;
-                case "101R":
-                    hRowMark = "7";
-                    gRowMarkH = "8";
-                    gRowMarkM = "24";
-                    break;
-                case "301":
-                    hRowMark = "8";
-                    gRowMarkH = "9";
-                    gRowMarkM = "25";
-                    break;
-                case "110":
-                    hRowMark = "9";
-                    gRowMarkH = "10";
-                    gRowMarkM = "26";
-                    break;
-                case "110R":
-                    hRowMark = "10";
-                    gRowMarkH = "11";
-                    gRowMarkM = "27";
-                    break;
-                case "310":
-                    hRowMark = "11";
-                    gRowMarkH = "12";
-                    gRowMarkM = "28";
-                    break;
-                case "120":
-                    hRowMark = "12";
-                    gRowMarkH = "13";
-                    gRowMarkM = "29";
-                    break;
-                case "320":
-                    hRowMark = "13";
-                    gRowMarkH = "14";
-                    gRowMarkM = "30";
-                    break;
-                case "130":
-                    hRowMark = "14";
-                    gRowMarkH = "15";
-                    gRowMarkM = "31";
-                    break;
-                case "201":
-                    hRowMark = "15";
-                    gRowMarkH = "16";
-                    gRowMarkM = "32";
-                    break;
-                case "201R":
-                    hRowMark = "16";
-                    gRowMarkH = "17";
-                    gRowMarkM = "33";
-                    break;
-                case "210":
-                    hRowMark = "17";
-                    gRowMarkH = "18";
-                    gRowMarkM = "34";
-                    break;
-                case "210R":
-                    hRowMark = "18";
-                    gRowMarkH = "19";
-                    gRowMarkM = "35";
-                    break;
-                case "102":
-                    hRowMark = "19";
-                    gRowMarkH = "20";
-                    gRowMarkM = "36";
-                    break;
-                case "112":
-                    hRowMark = "20";
-                    gRowMarkH = "21";
-                    gRowMarkM = "37";
-                    break;
+                switch (paramMarkPriv)
+                {
+                    //TRV-3 (китай)
+                    case "101":
+                        hRowMark = "6";
+                        gRowMarkH = "7";
+                        gRowMarkM = "23";
+                        break;
+                    case "101R":
+                        hRowMark = "7";
+                        gRowMarkH = "8";
+                        gRowMarkM = "24";
+                        break;
+                    case "301":
+                        hRowMark = "8";
+                        gRowMarkH = "9";
+                        gRowMarkM = "25";
+                        break;
+                    case "110":
+                        hRowMark = "9";
+                        gRowMarkH = "10";
+                        gRowMarkM = "26";
+                        break;
+                    case "110R":
+                        hRowMark = "10";
+                        gRowMarkH = "11";
+                        gRowMarkM = "27";
+                        break;
+                    case "310":
+                        hRowMark = "11";
+                        gRowMarkH = "12";
+                        gRowMarkM = "28";
+                        break;
+                    case "120":
+                        hRowMark = "12";
+                        gRowMarkH = "13";
+                        gRowMarkM = "29";
+                        break;
+                    case "320":
+                        hRowMark = "13";
+                        gRowMarkH = "14";
+                        gRowMarkM = "30";
+                        break;
+                    case "130":
+                        hRowMark = "14";
+                        gRowMarkH = "15";
+                        gRowMarkM = "31";
+                        break;
+                    case "201":
+                        hRowMark = "15";
+                        gRowMarkH = "16";
+                        gRowMarkM = "32";
+                        break;
+                    case "201R":
+                        hRowMark = "16";
+                        gRowMarkH = "17";
+                        gRowMarkM = "33";
+                        break;
+                    case "210":
+                        hRowMark = "17";
+                        gRowMarkH = "18";
+                        gRowMarkM = "34";
+                        break;
+                    case "210R":
+                        hRowMark = "18";
+                        gRowMarkH = "19";
+                        gRowMarkM = "35";
+                        break;
+                    case "102":
+                        hRowMark = "19";
+                        gRowMarkH = "20";
+                        gRowMarkM = "36";
+                        break;
+                    case "112":
+                        hRowMark = "20";
+                        gRowMarkH = "21";
+                        gRowMarkM = "37";
+                        break;
+                }
+            } 
+            else
+            {
+                switch (paramMarkPriv)
+                {
+                    //TRV-3
+                    case "101":
+                        hRowMark = "6";
+                        gRowMarkH = "7";
+                        gRowMarkM = "14";
+                        break;
+                    case "101R":
+                        hRowMark = "7";
+                        gRowMarkH = "8";
+                        gRowMarkM = "15";
+                        break;
+                    case "102":
+                        hRowMark = "8";
+                        gRowMarkH = "9";
+                        gRowMarkM = "16";
+                        break;
+                    case "301":
+                        hRowMark = "9";
+                        gRowMarkH = "10";
+                        gRowMarkM = "17";
+                        break;
+                    case "201":
+                        hRowMark = "10";
+                        gRowMarkH = "11";
+                        gRowMarkM = "18";
+                        break;
+                    case "201R":
+                        hRowMark = "11";
+                        gRowMarkH = "12";
+                        gRowMarkM = "19";
+                        break;
+                }
             }
         }
 
@@ -2046,18 +2095,39 @@ public partial class TRV : System.Web.UI.Page
             ExcelWorksheet wsHtrv = efHtrv.Worksheets[0];
 
             string excelPath = "";
+            string excelPathChina = "";
+
             if (ws2RadioButtonList1.SelectedIndex != 3)
             {
-                excelPath = ((tvRadioButtonList1.SelectedIndex == 0) ? ((customConverterToDouble(g_dict["p35"].ToString()) >= 150) ? "~/Content/properties/gtrvt.xlsx" : "Content\\properties\\gtrv.xlsx") : "Content\\properties\\gtrv3.xlsx");
+                if(tvRadioButtonList1.SelectedIndex == 0)
+                {
+                    excelPath = ((customConverterToDouble(g_dict["p35"].ToString()) >= 150) ? "~/Content/properties/gtrvt.xlsx" : "Content\\properties\\gtrv.xlsx");
+                }
+                else
+                {
+                    excelPath = "Content\\properties\\gtrv3.xlsx";
+                    excelPathChina = "Content\\properties\\gtrv3china.xlsx";
+                }
 
             }
             else
             {
-                excelPath =  (tvRadioButtonList1.SelectedIndex == 0 ?  "~/Content/properties/gtrvt.xlsx" : excelPath = "Content\\properties\\gtrv3.xlsx");
+                if (tvRadioButtonList1.SelectedIndex == 0)
+                {
+                    excelPath = "~/Content/properties/gtrvt.xlsx";
+                }
+                else
+                {
+                    excelPath = "Content\\properties\\gtrv3.xlsx";
+                    excelPathChina = "Content\\properties\\gtrv3china.xlsx";
+                }
 
             }
             ExcelFile efGtrv = ExcelFile.Load(HttpContext.Current.Server.MapPath(excelPath));
             ExcelWorksheet wsGtrv = efGtrv.Worksheets[0];
+
+            ExcelFile efGtrvChina = ExcelFile.Load(HttpContext.Current.Server.MapPath(excelPathChina));
+            ExcelWorksheet wsGtrvChina = efGtrvChina.Worksheets[0];
 
             //ws.Cells["C4"].Value = r_input_dict[3];
 
@@ -2079,6 +2149,9 @@ public partial class TRV : System.Web.UI.Page
             string tmpPP67 = "";
             string tmpPP68 = "";
 
+            string paramDN = "";
+            string paramKv = "";
+
             List<string> listPP54 = new List<string>(),
                 listPP55 = new List<string>(),
                 listPP56 = new List<string>(),
@@ -2099,6 +2172,8 @@ public partial class TRV : System.Web.UI.Page
             {
 
                 tmpMarkPriv = tmpPriv = tmpPP54 = tmpPP55 = tmpPP56 = tmpPP57 = tmpPP58 = tmpPP59 = tmpPP60 = tmpPP61 = tmpPP62 = tmpPP63 = tmpPP65 = tmpPP66 = tmpPP67 = tmpPP68 = "";
+                paramDN = listResult["C"].ElementAt(i);
+                paramKv = listResult["B"].ElementAt(i);
 
                 // TRV
                 if (tvRadioButtonList1.SelectedIndex == 0)
@@ -2863,10 +2938,20 @@ public partial class TRV : System.Web.UI.Page
                 }
                 else
                 {
-                    //
-                    getDimsV(tvRadioButtonList1.SelectedIndex == 0, listResult["C"].ElementAt(i), tmpMarkPriv, ref wsHtrv, ref wsGtrv,
+                    if ((paramDN == "15" && paramKv == "4") || (paramDN == "25" && paramKv == "10") || (paramDN == "32" && paramKv == "16") || (paramDN == "40" && paramKv == "24")
+                        || (paramDN == "50" && paramKv == "40") || (Convert.ToInt32(paramDN) > 50))
+                    {
+                        getDimsV(tvRadioButtonList1.SelectedIndex == 0, listResult["C"].ElementAt(i), tmpMarkPriv, ref wsHtrv, ref wsGtrvChina,
                         ref tmpPP54, ref tmpPP55, ref tmpPP56, ref tmpPP57, ref tmpPP58, ref tmpPP59, ref tmpPP60,
-                        ref tmpPP61, ref tmpPP62, ref tmpPP63, ref tmpPP65, ref tmpPP66, ref tmpPP67, ref tmpPP68);
+                        ref tmpPP61, ref tmpPP62, ref tmpPP63, ref tmpPP65, ref tmpPP66, ref tmpPP67, ref tmpPP68, listResult["B"].ElementAt(i));
+                    }
+                    else
+                    {
+                        getDimsV(tvRadioButtonList1.SelectedIndex == 0, listResult["C"].ElementAt(i), tmpMarkPriv, ref wsHtrv, ref wsGtrv,
+                        ref tmpPP54, ref tmpPP55, ref tmpPP56, ref tmpPP57, ref tmpPP58, ref tmpPP59, ref tmpPP60,
+                        ref tmpPP61, ref tmpPP62, ref tmpPP63, ref tmpPP65, ref tmpPP66, ref tmpPP67, ref tmpPP68, listResult["B"].ElementAt(i));
+                    }
+                    
 
                     System.Text.RegularExpressions.Regex regex = null;
 
@@ -5546,12 +5631,31 @@ public partial class TRV : System.Web.UI.Page
 
             if (tvRadioButtonList1.SelectedIndex == 0)
             {
-                ws.Pictures.Add(HttpContext.Current.Server.MapPath("\\Content\\images\\trv\\Габаритный TRV и TRV-P.png"), "A39");
-
+                if (v_input_dict[40] == "150 ˚С" && Convert.ToInt32(v_input_dict[43]) <= 50)
+                {
+                    ws.Pictures.Add(HttpContext.Current.Server.MapPath("\\Content\\images\\trv\\габаритный TRV и TRV-T.png"), "A39");
+                }
+                else if (v_input_dict[40] == "150 ˚С" && Convert.ToInt32(v_input_dict[43]) > 50) {
+                    ws.Pictures.Add(HttpContext.Current.Server.MapPath("\\Content\\images\\trv\\габаритный TRV (китай).png"), "A39");
+                }
+                else
+                {
+                    ws.Pictures.Add(HttpContext.Current.Server.MapPath("\\Content\\images\\trv\\габаритный TRV и TRV-T.png"), "A39");
+                }
             }
             else
             {
-                ws.Pictures.Add(HttpContext.Current.Server.MapPath("\\Content\\images\\trv\\Габаритный TRV-3.png"), "A39");
+                if ((Convert.ToInt32(v_input_dict[43]) == 15 && v_input_dict[44] == "4") || (Convert.ToInt32(v_input_dict[43]) == 25 && v_input_dict[44] == "10") ||
+                    (Convert.ToInt32(v_input_dict[43]) == 32 && v_input_dict[44] == "16") || (Convert.ToInt32(v_input_dict[43]) == 40 && v_input_dict[44] == "25") ||
+                    (Convert.ToInt32(v_input_dict[43]) == 50 && v_input_dict[44] == "40") || (Convert.ToInt32(v_input_dict[43]) > 60 && Convert.ToInt32(v_input_dict[44]) >= 50))
+                {
+                    ws.Pictures.Add(HttpContext.Current.Server.MapPath("\\Content\\images\\trv\\габаритный TRV-3 (китай).png"), "A39");
+                } 
+                else
+                {
+                    ws.Pictures.Add(HttpContext.Current.Server.MapPath("\\Content\\images\\trv\\Габаритный TRV-3.png"), "A39");
+                }
+                
 
             }
 
