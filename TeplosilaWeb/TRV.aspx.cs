@@ -1152,6 +1152,16 @@ public partial class TRV : System.Web.UI.Page
             }
         }
 
+        if ((paramDN == "15" && paramKv == "4") || (paramDN == "25" && paramKv == "10") || (paramDN == "32" && paramKv == "16") || (paramDN == "40" && paramKv == "24")
+           || (paramDN == "50" && paramKv == "40") || (Convert.ToInt32(paramDN) > 50))
+        {
+            chinaFlag = true;
+        }
+        else
+        {
+            chinaFlag = false;
+        }
+
         if (tvRadioButtonList1.SelectedIndex == 0) //trv
         {
             paramPP54 = wsH.Cells[ColDN + hRowMark].Value.ToString();
@@ -2126,9 +2136,13 @@ public partial class TRV : System.Web.UI.Page
             ExcelFile efGtrv = ExcelFile.Load(HttpContext.Current.Server.MapPath(excelPath));
             ExcelWorksheet wsGtrv = efGtrv.Worksheets[0];
 
-            ExcelFile efGtrvChina = ExcelFile.Load(HttpContext.Current.Server.MapPath(excelPathChina));
-            ExcelWorksheet wsGtrvChina = efGtrvChina.Worksheets[0];
-
+            ExcelFile efGtrvChina = null;
+            ExcelWorksheet wsGtrvChina = null;
+            if (excelPathChina != "")
+            {
+                efGtrvChina = ExcelFile.Load(HttpContext.Current.Server.MapPath(excelPathChina));
+                wsGtrvChina = efGtrvChina.Worksheets[0];
+            }
             //ws.Cells["C4"].Value = r_input_dict[3];
 
             string tmpMarkPriv = "";
@@ -2938,8 +2952,8 @@ public partial class TRV : System.Web.UI.Page
                 }
                 else
                 {
-                    if ((paramDN == "15" && paramKv == "4") || (paramDN == "25" && paramKv == "10") || (paramDN == "32" && paramKv == "16") || (paramDN == "40" && paramKv == "24")
-                        || (paramDN == "50" && paramKv == "40") || (Convert.ToInt32(paramDN) > 50))
+                    if (((paramDN == "15" && paramKv == "4") || (paramDN == "25" && paramKv == "10") || (paramDN == "32" && paramKv == "16") || (paramDN == "40" && paramKv == "24")
+                        || (paramDN == "50" && paramKv == "40") || (Convert.ToInt32(paramDN) > 50)) && tvRadioButtonList1.SelectedIndex == 1)
                     {
                         getDimsV(tvRadioButtonList1.SelectedIndex == 0, listResult["C"].ElementAt(i), tmpMarkPriv, ref wsHtrv, ref wsGtrvChina,
                         ref tmpPP54, ref tmpPP55, ref tmpPP56, ref tmpPP57, ref tmpPP58, ref tmpPP59, ref tmpPP60,
