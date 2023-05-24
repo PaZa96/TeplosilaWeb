@@ -1129,22 +1129,22 @@ public partial class TRV : System.Web.UI.Page
                         gRowMarkM = "15";
                         break;
                     case "102":
-                        hRowMark = "8";
+                        hRowMark = "19";
                         gRowMarkH = "9";
                         gRowMarkM = "16";
                         break;
                     case "301":
-                        hRowMark = "9";
+                        hRowMark = "8";
                         gRowMarkH = "10";
                         gRowMarkM = "17";
                         break;
                     case "201":
-                        hRowMark = "10";
+                        hRowMark = "15";
                         gRowMarkH = "11";
                         gRowMarkM = "18";
                         break;
                     case "201R":
-                        hRowMark = "11";
+                        hRowMark = "16";
                         gRowMarkH = "12";
                         gRowMarkM = "19";
                         break;
@@ -1152,15 +1152,6 @@ public partial class TRV : System.Web.UI.Page
             }
         }
 
-        if ((paramDN == "15" && paramKv == "4") || (paramDN == "25" && paramKv == "10") || (paramDN == "32" && paramKv == "16") || (paramDN == "40" && paramKv == "24")
-           || (paramDN == "50" && paramKv == "40") || (Convert.ToInt32(paramDN) > 50))
-        {
-            chinaFlag = true;
-        }
-        else
-        {
-            chinaFlag = false;
-        }
 
         if (tvRadioButtonList1.SelectedIndex == 0) //trv
         {
@@ -2188,7 +2179,6 @@ public partial class TRV : System.Web.UI.Page
                 tmpMarkPriv = tmpPriv = tmpPP54 = tmpPP55 = tmpPP56 = tmpPP57 = tmpPP58 = tmpPP59 = tmpPP60 = tmpPP61 = tmpPP62 = tmpPP63 = tmpPP65 = tmpPP66 = tmpPP67 = tmpPP68 = "";
                 paramDN = listResult["C"].ElementAt(i);
                 paramKv = listResult["B"].ElementAt(i);
-
                 // TRV
                 if (tvRadioButtonList1.SelectedIndex == 0)
                 {
