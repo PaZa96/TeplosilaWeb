@@ -942,7 +942,7 @@ public partial class TRV : System.Web.UI.Page
                 break;
         }
 
-        if((paramDN=="15" && paramKv == "4") || (paramDN == "25" && paramKv == "10") || (paramDN == "32" && paramKv == "16") || (paramDN == "40" && paramKv == "24") 
+        if((paramDN=="15" && paramKv == "4") || (paramDN == "25" && paramKv == "10") || (paramDN == "32" && paramKv == "16") || (paramDN == "40" && paramKv == "25") 
             || (paramDN == "50" && paramKv == "40") || (Convert.ToInt32(paramDN) > 50))
         {
             chinaFlag = true;
@@ -2942,7 +2942,7 @@ public partial class TRV : System.Web.UI.Page
                 }
                 else
                 {
-                    if (((paramDN == "15" && paramKv == "4") || (paramDN == "25" && paramKv == "10") || (paramDN == "32" && paramKv == "16") || (paramDN == "40" && paramKv == "24")
+                    if (((paramDN == "15" && paramKv == "4") || (paramDN == "25" && paramKv == "10") || (paramDN == "32" && paramKv == "16") || (paramDN == "40" && paramKv == "25")
                         || (paramDN == "50" && paramKv == "40") || (Convert.ToInt32(paramDN) > 50)) && tvRadioButtonList1.SelectedIndex == 1)
                     {
                         getDimsV(tvRadioButtonList1.SelectedIndex == 0, listResult["C"].ElementAt(i), tmpMarkPriv, ref wsHtrv, ref wsGtrvChina,
