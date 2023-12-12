@@ -390,13 +390,13 @@ public partial class RDT : System.Web.UI.Page
             double I = 0;
             Newtonsoft.Json.Linq.JObject tmpI = null;
 
-            if (eorRadioButtonList1.SelectedIndex == 0)
+            if (eorRadioButtonList1.SelectedIndex == 0) //Регулятор перепада давления
             {
                 I = customConverterToDouble(this.lp1TextBox2.Text) * arrConvert3[this.lp1DropDownList2.SelectedIndex - 1] / arrConvert3[2];
                 table5 = dataFromFile.table5;
                 table11 = dataFromFile.table11;
             }
-            else if (eorRadioButtonList1.SelectedIndex == 1)
+            else if (eorRadioButtonList1.SelectedIndex == 1) //Регулятор давления после себя
             {
                 if(ws1RadioButtonList1.SelectedIndex != 3)
                 {
@@ -427,17 +427,17 @@ public partial class RDT : System.Web.UI.Page
                 }
 
             }
-            else if (eorRadioButtonList1.SelectedIndex == 2)
+            else if (eorRadioButtonList1.SelectedIndex == 2) //Регулятор давления до себя
             {
                 I = customConverterToDouble(this.lp3TextBox1.Text) * arrConvert3[this.lp3DropDownList1.SelectedIndex - 1] / arrConvert3[2];
-                table5 = dataFromFile.table5sbt;
-                table11 = dataFromFile.table11sbt;
+                table5 = dataFromFile.table5;
+                table11 = dataFromFile.table11;
             }
-            else if (eorRadioButtonList1.SelectedIndex == 3)
+            else if (eorRadioButtonList1.SelectedIndex == 3) //Регулятор перепуска
             {
                 I = customConverterToDouble(this.lp4TextBox2.Text) * arrConvert3[this.lp4DropDownList2.SelectedIndex - 1] / arrConvert3[2];
-                table5 = dataFromFile.table5sbt;
-                table11 = dataFromFile.table11sbt;
+                table5 = dataFromFile.table5;
+                table11 = dataFromFile.table11;
             }
 
 
