@@ -23,8 +23,6 @@ namespace TeplosilaWeb.App_Code
         {
             XmlConfigurator.Configure();
         }
-
-
     }
 }
 
