@@ -654,30 +654,26 @@
                                             <asp:ListItem Selected="True">Нет</asp:ListItem>
                                         </asp:RadioButtonList>
                                         <asp:Label ID="Label47" runat="server" Text="Напряжение питания:"></asp:Label>
-                                        <asp:RadioButtonList ID="tdRadioButtonList1" runat="server" AutoPostBack="True"
-                                            OnSelectedIndexChanged="tdRadioButtonList1_SelectedIndexChanged">
+                                        <asp:RadioButtonList ID="tdRadioButtonList1" runat="server" AutoPostBack="True">
                                             <asp:ListItem Selected="True">230 VAC</asp:ListItem>
                                             <asp:ListItem>24 VAC / VDC</asp:ListItem>
                                         </asp:RadioButtonList>
                                         <asp:Label ID="Label49" runat="server" Text="Управление:"></asp:Label>
-                                        <asp:RadioButtonList ID="tdRadioButtonList2" runat="server" AutoPostBack="True"
-                                            OnSelectedIndexChanged="tdRadioButtonList2_SelectedIndexChanged">
+                                        <asp:RadioButtonList ID="tdRadioButtonList2" runat="server" AutoPostBack="True">
                                             <asp:ListItem Selected="True">Трёхпозиционное</asp:ListItem>
                                             <asp:ListItem>Аналоговое 0(4)-20 mA, 0(2)-10 V</asp:ListItem>
                                         </asp:RadioButtonList>
                                         <asp:Label ID="Label50" runat="server"
                                             Text="Наличие датчика положения 0(4)-20 mA, 0(2)-10 V:">
                                         </asp:Label>
-                                        <asp:RadioButtonList ID="tdRadioButtonList3" runat="server" AutoPostBack="True"
-                                            OnSelectedIndexChanged="tdRadioButtonList3_SelectedIndexChanged">
+                                        <asp:RadioButtonList ID="tdRadioButtonList3" runat="server" AutoPostBack="True">
                                             <asp:ListItem>Да</asp:ListItem>
                                             <asp:ListItem Selected="True">Нет</asp:ListItem>
                                         </asp:RadioButtonList>
                                         <asp:Label ID="Label51" runat="server"
                                             Text="Наличие возвратного механизма (функция безопасности):">
                                         </asp:Label>
-                                        <asp:RadioButtonList ID="tdRadioButtonList4" runat="server" AutoPostBack="True"
-                                            OnSelectedIndexChanged="tdRadioButtonList4_SelectedIndexChanged">
+                                        <asp:RadioButtonList ID="tdRadioButtonList4" runat="server" AutoPostBack="True">
                                             <asp:ListItem> Да</asp:ListItem>
                                             <asp:ListItem Selected="True">Нет</asp:ListItem>
                                         </asp:RadioButtonList>

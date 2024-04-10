@@ -647,50 +647,6 @@ public partial class TRV : System.Web.UI.Page
         }
     }
 
-    public void DisableRadioSecureFunc()
-    {
-        if (tdRadioButtonList1.SelectedIndex == 1 || tdRadioButtonList2.SelectedIndex == 1 || tdRadioButtonList3.SelectedIndex == 0)
-        {
-            tdRadioButtonList4.ClearSelection();
-            tdRadioButtonList4.SelectedIndex = 1;
-            tdRadioButtonList4.Items[0].Enabled = false;
-        }
-        else
-        {
-            if (tdRadioButtonList4.SelectedIndex == 0)
-            {
-
-            }
-            else
-            {
-                tdRadioButtonList4.ClearSelection();
-                tdRadioButtonList4.SelectedIndex = 1;
-                tdRadioButtonList4.Items[0].Enabled = true;
-            }
-
-        }
-    }
-
-    protected void tdRadioButtonList1_SelectedIndexChanged(object sender, EventArgs e)
-    {
-        DisableRadioSecureFunc();
-    }
-
-    protected void tdRadioButtonList2_SelectedIndexChanged(object sender, EventArgs e)
-    {
-        DisableRadioSecureFunc();
-    }
-
-    protected void tdRadioButtonList3_SelectedIndexChanged(object sender, EventArgs e)
-    {
-        DisableRadioSecureFunc();
-    }
-
-    protected void tdRadioButtonList4_SelectedIndexChanged(object sender, EventArgs e)
-    {
-        DisableRadioSecureFunc();
-    }
-
     protected void tdRadioButtonList5_SelectedIndexChanged(object sender, EventArgs e)
     {
         if (tdRadioButtonList5.SelectedIndex == 0)
@@ -957,90 +913,110 @@ public partial class TRV : System.Web.UI.Page
             switch (paramMarkPriv)
             {
                 // TRV, TRV-T
-                case "101":
+                case "101": //TSL-1600-25-1-230-IP67
                     hRowMark = "6";
                     gRowMarkH = "7";
-                    gRowMarkM = "25";
-                    break;
-                case "101R":
-                    hRowMark = "7";
-                    gRowMarkH = "8";
-                    gRowMarkM = "26";
-                    break;
-                case "102":
-                    hRowMark = "18";
-                    gRowMarkH = "9";
-                    gRowMarkM = "27";
-                    break;
-                case "303":
-                    hRowMark = "8";
-                    gRowMarkH = "10";
-                    gRowMarkM = "28";
-                    break;
-                case "302":
-                    hRowMark = "20";
-                    gRowMarkH = "11";
                     gRowMarkM = "29";
                     break;
-                case "110":
-                    hRowMark = "9";
-                    gRowMarkH = "12";
+                case "101R": //TSL-1600-25-1R-230-IP67
+                    hRowMark = "7";
+                    gRowMarkH = "8";
                     gRowMarkM = "30";
                     break;
-                case "110R":
-                    hRowMark = "10";
-                    gRowMarkH = "13";
+                case "102": //TSL-1600-25-1-24-IP67
+                    hRowMark = "8";
+                    gRowMarkH = "9";
                     gRowMarkM = "31";
                     break;
-                case "112":
-                    hRowMark = "19";
-                    gRowMarkH = "14";
-                    gRowMarkM = "32";
-                    break;
-                case "313":
-                    hRowMark = "11";
-                    gRowMarkH = "15";
+                case "201": //TSL-1600-25-1T-230-IP67
+                    hRowMark = "9";
+                    gRowMarkH = "10";
                     gRowMarkM = "33";
                     break;
-                case "312":
-                    hRowMark = "21";
-                    gRowMarkH = "16";
+                case "201R": //TSL-1600-25-1TR-230-IP67
+                    hRowMark = "10";
+                    gRowMarkH = "11";
+                    gRowMarkM = "33";
+                    break;
+                case "302": //TSL-1600-25-2A-230-IP67
+                    hRowMark = "1";
+                    gRowMarkH = "12";
                     gRowMarkM = "34";
                     break;
-                case "120":
+                case "302R": //TSL-1600-25-2AR-230-IP67
                     hRowMark = "12";
-                    gRowMarkH = "17";
+                    gRowMarkH = "13";
                     gRowMarkM = "35";
                     break;
-                case "323":
+                case "303": //TSL-1600-25-2A-24-IP67
                     hRowMark = "13";
-                    gRowMarkH = "18";
+                    gRowMarkH = "14";
                     gRowMarkM = "36";
                     break;
-                case "322":
-                    hRowMark = "22";
-                    gRowMarkH = "19";
+                case "303R": //TSL-1600-25-2AR-24-IP67
+                    hRowMark = "14";
+                    gRowMarkH = "15";
                     gRowMarkM = "37";
                     break;
-                case "201":
-                    hRowMark = "14";
-                    gRowMarkH = "20";
+                case "110": //TSL-2200-40-1-230-IP67
+                    hRowMark = "15";
+                    gRowMarkH = "16";
                     gRowMarkM = "38";
                     break;
-                case "201R":
-                    hRowMark = "15";
-                    gRowMarkH = "21";
+                case "110R": //TSL-2200-40-1R-230-IP67
+                    hRowMark = "16";
+                    gRowMarkH = "17";
                     gRowMarkM = "39";
                     break;
-                case "210":
-                    hRowMark = "16";
-                    gRowMarkH = "22";
+                case "112": //TSL-2200-40-1-24-IP67
+                    hRowMark = "17";
+                    gRowMarkH = "18";
                     gRowMarkM = "40";
                     break;
-                case "210R":
-                    hRowMark = "17";
-                    gRowMarkH = "23";
+                case "210": //TSL-2200-40-1T-230-IP67
+                    hRowMark = "18";
+                    gRowMarkH = "19";
                     gRowMarkM = "41";
+                    break;
+                case "210R": //TSL-2200-40-1TR-230-IP67
+                    hRowMark = "19";
+                    gRowMarkH = "20";
+                    gRowMarkM = "42";
+                    break;
+                case "312": //TSL-2200-40-2A-230-IP67
+                    hRowMark = "20";
+                    gRowMarkH = "21";
+                    gRowMarkM = "43";
+                    break;
+                case "312R": //TSL-2200-40-2AR-230-IP67
+                    hRowMark = "21";
+                    gRowMarkH = "22";
+                    gRowMarkM = "44";
+                    break;
+                case "313": //TSL-2200-40-2A-24-IP67
+                    hRowMark = "22";
+                    gRowMarkH = "23";
+                    gRowMarkM = "45";
+                    break;
+                case "313R": //TSL-2200-40-2AR-24-IP67
+                    hRowMark = "23";
+                    gRowMarkH = "24";
+                    gRowMarkM = "46";
+                    break;
+                case "120": //TSL-3000-60-1-230-IP67
+                    hRowMark = "24";
+                    gRowMarkH = "25";
+                    gRowMarkM = "47";
+                    break;
+                case "322": //TSL-3000-60-2A-230-IP67
+                    hRowMark = "25";
+                    gRowMarkH = "26";
+                    gRowMarkM = "48";
+                    break;
+                case "323": //TSL-3000-60-2A-24-IP67
+                    hRowMark = "26";
+                    gRowMarkH = "27";
+                    gRowMarkM = "49";
                     break;
             }
         }
@@ -1051,100 +1027,120 @@ public partial class TRV : System.Web.UI.Page
                 switch (paramMarkPriv)
                 {
                     //TRV-3 (китай)
-                    case "101":
+                    case "101": //TSL-1600-25-1-230-IP67
                         hRowMark = "6";
                         gRowMarkH = "7";
-                        gRowMarkM = "27";
-                        break;
-                    case "101R":
-                        hRowMark = "7";
-                        gRowMarkH = "8";
-                        gRowMarkM = "28";
-                        break;
-                    case "102":
-                        hRowMark = "19";
-                        gRowMarkH = "9";
-                        gRowMarkM = "29";
-                        break;
-                    case "303":
-                        hRowMark = "8";
-                        gRowMarkH = "10";
-                        gRowMarkM = "30";
-                        break;
-                    case "302":
-                        hRowMark = "21";
-                        gRowMarkH = "11";
                         gRowMarkM = "31";
                         break;
-                    case "110":
-                        hRowMark = "9";
-                        gRowMarkH = "12";
+                    case "101R": //TSL-1600-25-1R-230-IP67
+                        hRowMark = "7";
+                        gRowMarkH = "8";
                         gRowMarkM = "32";
                         break;
-                    case "110R":
-                        hRowMark = "10";
-                        gRowMarkH = "13";
+                    case "102": //TSL-1600-25-1-24-IP67
+                        hRowMark = "8";
+                        gRowMarkH = "9";
                         gRowMarkM = "33";
                         break;
-                    case "112":
-                        hRowMark = "20";
-                        gRowMarkH = "14";
+                    case "201": //TSL-1600-25-1T-230-IP67
+                        hRowMark = "9";
+                        gRowMarkH = "10";
                         gRowMarkM = "34";
                         break;
-                    case "313":
-                        hRowMark = "11";
-                        gRowMarkH = "15";
+                    case "201R": //TSL-1600-25-1TR-230-IP67
+                        hRowMark = "10";
+                        gRowMarkH = "11";
                         gRowMarkM = "35";
                         break;
-                    case "312":
-                        hRowMark = "22";
-                        gRowMarkH = "16";
-                        gRowMarkM = "36";
+                    case "302": //TSL-1600-25-2A-230-IP67
+                        hRowMark = "11";
+                        gRowMarkH = "12";
+                        gRowMarkM = "35";
                         break;
-                    case "120":
+                    case "302R": //TSL-1600-25-2AR-230-IP67
                         hRowMark = "12";
-                        gRowMarkH = "17";
+                        gRowMarkH = "13";
                         gRowMarkM = "37";
                         break;
-                    case "323":
+                    case "303": //TSL-1600-25-2A-24-IP67
                         hRowMark = "13";
-                        gRowMarkH = "18";
+                        gRowMarkH = "14";
                         gRowMarkM = "38";
                         break;
-                    case "322":
-                        hRowMark = "23";
-                        gRowMarkH = "19";
+                    case "303R": //TSL-1600-25-2AR-24-IP67
+                        hRowMark = "14";
+                        gRowMarkH = "15";
                         gRowMarkM = "39";
                         break;
-                    case "130":
-                        hRowMark = "14";
-                        gRowMarkH = "20";
+                    case "110": //TSL-2200-40-1-230-IP67
+                        hRowMark = "15";
+                        gRowMarkH = "16";
                         gRowMarkM = "40";
                         break;
-                    case "37":
-                        hRowMark = "24";
-                        gRowMarkH = "21";
+                    case "110R": //TSL-2200-40-1R-230-IP67
+                        hRowMark = "16";
+                        gRowMarkH = "17";
                         gRowMarkM = "41";
                         break;
-                    case "201":
-                        hRowMark = "15";
-                        gRowMarkH = "22";
+                    case "112": //TSL-2200-40-1-24-IP67
+                        hRowMark = "17";
+                        gRowMarkH = "18";
                         gRowMarkM = "42";
                         break;
-                    case "201R":
-                        hRowMark = "16";
-                        gRowMarkH = "23";
+                    case "210": //TSL-2200-40-1T-230-IP67
+                        hRowMark = "18";
+                        gRowMarkH = "19";
                         gRowMarkM = "43";
                         break;
-                    case "210":
-                        hRowMark = "17";
-                        gRowMarkH = "24";
+                    case "210R": //TSL-2200-40-1TR-230-IP67
+                        hRowMark = "19";
+                        gRowMarkH = "20";
                         gRowMarkM = "44";
                         break;
-                    case "210R":
-                        hRowMark = "18";
-                        gRowMarkH = "25";
+                    case "312": //TSL-2200-40-2A-230-IP67
+                        hRowMark = "20";
+                        gRowMarkH = "21";
                         gRowMarkM = "45";
+                        break;
+                    case "312R": //TSL-2200-40-2AR-230-IP67
+                        hRowMark = "21";
+                        gRowMarkH = "22";
+                        gRowMarkM = "46";
+                        break;
+                    case "313": //TSL-2200-40-2A-24-IP67
+                        hRowMark = "22";
+                        gRowMarkH = "23";
+                        gRowMarkM = "47";
+                        break;
+                    case "313R": //TSL-2200-40-2AR-24-IP67
+                        hRowMark = "23";
+                        gRowMarkH = "24";
+                        gRowMarkM = "48";
+                        break;
+                    case "120": //TSL-3000-60-1-230-IP67
+                        hRowMark = "24";
+                        gRowMarkH = "25";
+                        gRowMarkM = "49";
+                        break;
+                    case "322": //TSL-3000-60-2A-230-IP67
+                        hRowMark = "25";
+                        gRowMarkH = "26";
+                        gRowMarkM = "50";
+                        break;
+                    case "323": //TSL-3000-60-2A-24-IP67
+                        hRowMark = "26";
+                        gRowMarkH = "27";
+                        gRowMarkM = "51";
+                        break;
+                    case "130": //TSL-6000-60-1-230-IP67
+                        hRowMark = "27";
+                        gRowMarkH = "28";
+                        gRowMarkM = "52";
+                        break;
+                    case "37": //TW5000-XD220-S.14
+                        hRowMark = "28";
+                        gRowMarkH = "29";
+                        gRowMarkM = "53";
                         break;
                 }
             } 
@@ -1153,41 +1149,52 @@ public partial class TRV : System.Web.UI.Page
                 switch (paramMarkPriv)
                 {
                     //TRV-3
-                    case "101":
+                    case "101": //TSL-1600-25-1-230-IP67
                         hRowMark = "6";
                         gRowMarkH = "7";
-                        gRowMarkM = "15";
-                        break;
-                    case "101R":
-                        hRowMark = "7";
-                        gRowMarkH = "8";
-                        gRowMarkM = "16";
-                        break;
-                    case "102":
-                        hRowMark = "19";
-                        gRowMarkH = "9";
                         gRowMarkM = "17";
                         break;
-                    case "303":
-                        hRowMark = "8";
-                        gRowMarkH = "10";
+                    case "101R": ////TSL-1600-25-1R-230-IP67
+                        hRowMark = "7";
+                        gRowMarkH = "8";
                         gRowMarkM = "18";
                         break;
-                    case "302":
-                        hRowMark = "21";
-                        gRowMarkH = "11";
+                    case "102": //TSL-1600-25-1-24-IP67
+                        hRowMark = "8";
+                        gRowMarkH = "9";
                         gRowMarkM = "19";
                         break;
-                    case "201":
-                        hRowMark = "15";
-                        gRowMarkH = "12";
+                    case "201": //TSL-1600-25-1T-230-IP67
+                        hRowMark = "9";
+                        gRowMarkH = "10";
                         gRowMarkM = "20";
                         break;
-                    case "201R":
-                        hRowMark = "16";
-                        gRowMarkH = "13";
+                    case "201R": //TSL-1600-25-1TR-230-IP67
+                        hRowMark = "10";
+                        gRowMarkH = "11";
                         gRowMarkM = "21";
                         break;
+                    case "302": //TSL-1600-25-2A-230-IP67
+                        hRowMark = "11";
+                        gRowMarkH = "12";
+                        gRowMarkM = "22";
+                        break;
+                    case "302R": //TSL-1600-25-2AR-230-IP67
+                        hRowMark = "12";
+                        gRowMarkH = "13";
+                        gRowMarkM = "23";
+                        break;
+                    case "303": //TSL-1600-25-2A-24-IP67
+                        hRowMark = "13";
+                        gRowMarkH = "14";
+                        gRowMarkM = "24";
+                        break;
+                    case "303R": //TSL-1600-25-2AR-24-IP67
+                        hRowMark = "14";
+                        gRowMarkH = "15";
+                        gRowMarkM = "25";
+                        break;
+
                 }
             }
         }
@@ -1245,8 +1252,6 @@ public partial class TRV : System.Web.UI.Page
                 return "TSL-2200-40-1-24-IP67";
             case "120":
                 return "TSL-3000-60-1-230-IP67";
-            case "120R":
-                return "TSL-3000-60-1R-230-IP67";
             case "130":
                 return "TSL-6000-60-1-230-IP67";
             case "201":
@@ -1261,16 +1266,22 @@ public partial class TRV : System.Web.UI.Page
                 return "TSL-1600-25-1A-24-IP67";
             case "302":
                 return "TSL-1600-25-2A-230-IP67";
+            case "302R":
+                return "TSL-1600-25-2AR-230-IP67";
             case "303":
                 return "TSL-1600-25-2A-24-IP67";
+            case "303R":
+                return "TSL-1600-25-2AR-24-IP67";
             case "310":
                 return "TSL-2200-40-1A-24-IP67";
             case "312":
                 return "TSL-2200-40-2A-230-IP67";
+            case "312R":
+                return "TSL-2200-40-2AR-230-IP67";
             case "313":
                 return "TSL-2200-40-2A-24-IP67";
-            case "320":
-                return "TSL-3000-60-1A-24-IP67";
+            case "313R":
+                return "TSL-2200-40-2AR-24-IP67";
             case "322":
                 return "TSL-3000-60-2A-230-IP67";
             case "323":
@@ -2333,7 +2344,7 @@ public partial class TRV : System.Web.UI.Page
                                 tmpMarkPriv = null; break;
                         }
                     }
-                    // 230 VAC ; 3-pos ; no ; yes
+                    // нет ; 230 VAC ; 3-pos ; no ; yes
                     else if (tdRadioButtonList5.SelectedIndex == 1 && tdRadioButtonList1.SelectedIndex == 0 && tdRadioButtonList2.SelectedIndex == 0 && tdRadioButtonList3.SelectedIndex == 1 && tdRadioButtonList4.SelectedIndex == 0)
                     {
                         switch (listResult["C"].ElementAt(i))
@@ -2399,6 +2410,39 @@ public partial class TRV : System.Web.UI.Page
                                 tmpMarkPriv = null; break;
                         }
                     }
+                    // no ; 230 VAC ; 3-pos ; yes ; yes
+                    else if (tdRadioButtonList5.SelectedIndex == 1 && tdRadioButtonList1.SelectedIndex == 0 && tdRadioButtonList2.SelectedIndex == 0 && tdRadioButtonList3.SelectedIndex == 0 && tdRadioButtonList4.SelectedIndex == 0)
+                    {
+                        switch (listResult["C"].ElementAt(i))
+                        {
+                            case "15":
+                                tmpMarkPriv = "302R"; break;
+                            case "20":
+                                tmpMarkPriv = "302R"; break;
+                            case "25":
+                                tmpMarkPriv = "302R"; break;
+                            case "32":
+                                tmpMarkPriv = "302R"; break;
+                            case "40":
+                                tmpMarkPriv = "302R"; break;
+                            case "50":
+                                tmpMarkPriv = "302R"; break;
+                            case "65":
+                                tmpMarkPriv = "312R"; break;
+                            case "80":
+                                tmpMarkPriv = "312R"; break;
+                            case "100":
+                                tmpMarkPriv = "312R"; break;
+                            case "125":
+                                tmpMarkPriv = "-"; break;
+                            case "150":
+                                tmpMarkPriv = "-"; break;
+                            case "200":
+                                tmpMarkPriv = "-"; break;
+                            default:
+                                tmpMarkPriv = null; break;
+                        }
+                    }
                     // no ; 230 VAC ; analog ; no ; no
                     else if (tdRadioButtonList5.SelectedIndex == 1 && tdRadioButtonList1.SelectedIndex == 0 && tdRadioButtonList2.SelectedIndex == 1 && tdRadioButtonList3.SelectedIndex == 1 && tdRadioButtonList4.SelectedIndex == 1)
                     {
@@ -2428,6 +2472,39 @@ public partial class TRV : System.Web.UI.Page
                                 tmpMarkPriv = "322"; break;
                             case "200":
                                 tmpMarkPriv = "322"; break;
+                            default:
+                                tmpMarkPriv = null; break;
+                        }
+                    }
+                    // no ; 230 VAC ; analog ; no ; yes
+                    else if (tdRadioButtonList5.SelectedIndex == 1 && tdRadioButtonList1.SelectedIndex == 0 && tdRadioButtonList2.SelectedIndex == 1 && tdRadioButtonList3.SelectedIndex == 1 && tdRadioButtonList4.SelectedIndex == 0)
+                    {
+                        switch (listResult["C"].ElementAt(i))
+                        {
+                            case "15":
+                                tmpMarkPriv = "302R"; break;
+                            case "20":
+                                tmpMarkPriv = "302R"; break;
+                            case "25":
+                                tmpMarkPriv = "302R"; break;
+                            case "32":
+                                tmpMarkPriv = "302R"; break;
+                            case "40":
+                                tmpMarkPriv = "302R"; break;
+                            case "50":
+                                tmpMarkPriv = "302R"; break;
+                            case "65":
+                                tmpMarkPriv = "312R"; break;
+                            case "80":
+                                tmpMarkPriv = "312R"; break;
+                            case "100":
+                                tmpMarkPriv = "312R"; break;
+                            case "125":
+                                tmpMarkPriv = "-"; break;
+                            case "150":
+                                tmpMarkPriv = "-"; break;
+                            case "200":
+                                tmpMarkPriv = "-"; break;
                             default:
                                 tmpMarkPriv = null; break;
                         }
@@ -2465,6 +2542,39 @@ public partial class TRV : System.Web.UI.Page
                                 tmpMarkPriv = null; break;
                         }
                     }
+                    // no ; 230 VAC ; analog ; yes ; yes
+                    else if (tdRadioButtonList5.SelectedIndex == 1 && tdRadioButtonList1.SelectedIndex == 0 && tdRadioButtonList2.SelectedIndex == 1 && tdRadioButtonList3.SelectedIndex == 0 && tdRadioButtonList4.SelectedIndex == 0)
+                    {
+                        switch (listResult["C"].ElementAt(i))
+                        {
+                            case "15":
+                                tmpMarkPriv = "302R"; break;
+                            case "20":
+                                tmpMarkPriv = "302R"; break;
+                            case "25":
+                                tmpMarkPriv = "302R"; break;
+                            case "32":
+                                tmpMarkPriv = "302R"; break;
+                            case "40":
+                                tmpMarkPriv = "302R"; break;
+                            case "50":
+                                tmpMarkPriv = "302R"; break;
+                            case "65":
+                                tmpMarkPriv = "312R"; break;
+                            case "80":
+                                tmpMarkPriv = "312R"; break;
+                            case "100":
+                                tmpMarkPriv = "312R"; break;
+                            case "125":
+                                tmpMarkPriv = "-"; break;
+                            case "150":
+                                tmpMarkPriv = "-"; break;
+                            case "200":
+                                tmpMarkPriv = "-"; break;
+                            default:
+                                tmpMarkPriv = null; break;
+                        }
+                    }
                     //no ; 24 VAC/VDC ; 3-pos ; no ; no
                     else if (tdRadioButtonList5.SelectedIndex == 1 && tdRadioButtonList2.SelectedIndex == 0 && tdRadioButtonList1.SelectedIndex == 1 && tdRadioButtonList3.SelectedIndex == 1 && tdRadioButtonList4.SelectedIndex == 1)
                     {
@@ -2494,6 +2604,39 @@ public partial class TRV : System.Web.UI.Page
                                 tmpMarkPriv = "323"; break;
                             case "200":
                                 tmpMarkPriv = "323"; break;
+                            default:
+                                tmpMarkPriv = null; break;
+                        }
+                    }
+                    //no ; 24 VAC/VDC ; 3-pos ; no ; yes
+                    else if (tdRadioButtonList5.SelectedIndex == 1 && tdRadioButtonList2.SelectedIndex == 0 && tdRadioButtonList1.SelectedIndex == 1 && tdRadioButtonList3.SelectedIndex == 1 && tdRadioButtonList4.SelectedIndex == 0)
+                    {
+                        switch (listResult["C"].ElementAt(i))
+                        {
+                            case "15":
+                                tmpMarkPriv = "303R"; break;
+                            case "20":
+                                tmpMarkPriv = "303R"; break;
+                            case "25":
+                                tmpMarkPriv = "303R"; break;
+                            case "32":
+                                tmpMarkPriv = "303R"; break;
+                            case "40":
+                                tmpMarkPriv = "303R"; break;
+                            case "50":
+                                tmpMarkPriv = "303R"; break;
+                            case "65":
+                                tmpMarkPriv = "313R"; break;
+                            case "80":
+                                tmpMarkPriv = "313R"; break;
+                            case "100":
+                                tmpMarkPriv = "313R"; break;
+                            case "125":
+                                tmpMarkPriv = "-"; break;
+                            case "150":
+                                tmpMarkPriv = "-"; break;
+                            case "200":
+                                tmpMarkPriv = "-"; break;
                             default:
                                 tmpMarkPriv = null; break;
                         }
@@ -2531,6 +2674,39 @@ public partial class TRV : System.Web.UI.Page
                                 tmpMarkPriv = null; break;
                         }
                     }
+                    //no ; 24 VAC/VDC ; 3-pos ; yes ; yes
+                    else if (tdRadioButtonList5.SelectedIndex == 1 && tdRadioButtonList2.SelectedIndex == 0 && tdRadioButtonList1.SelectedIndex == 1 && tdRadioButtonList3.SelectedIndex == 0 && tdRadioButtonList4.SelectedIndex == 0)
+                    {
+                        switch (listResult["C"].ElementAt(i))
+                        {
+                            case "15":
+                                tmpMarkPriv = "303R"; break;
+                            case "20":
+                                tmpMarkPriv = "303R"; break;
+                            case "25":
+                                tmpMarkPriv = "303R"; break;
+                            case "32":
+                                tmpMarkPriv = "303R"; break;
+                            case "40":
+                                tmpMarkPriv = "303R"; break;
+                            case "50":
+                                tmpMarkPriv = "303R"; break;
+                            case "65":
+                                tmpMarkPriv = "313R"; break;
+                            case "80":
+                                tmpMarkPriv = "313R"; break;
+                            case "100":
+                                tmpMarkPriv = "313R"; break;
+                            case "125":
+                                tmpMarkPriv = "-"; break;
+                            case "150":
+                                tmpMarkPriv = "-"; break;
+                            case "200":
+                                tmpMarkPriv = "-"; break;
+                            default:
+                                tmpMarkPriv = null; break;
+                        }
+                    }
                     //no ; 24 VAC/VDC ; analog ; no ; no
                     else if (tdRadioButtonList5.SelectedIndex == 1 && tdRadioButtonList2.SelectedIndex == 1 && tdRadioButtonList1.SelectedIndex == 1 && tdRadioButtonList3.SelectedIndex == 1 && tdRadioButtonList4.SelectedIndex == 1)
                     {
@@ -2560,6 +2736,39 @@ public partial class TRV : System.Web.UI.Page
                                 tmpMarkPriv = "323"; break;
                             case "200":
                                 tmpMarkPriv = "323"; break;
+                            default:
+                                tmpMarkPriv = null; break;
+                        }
+                    }
+                    //no ; 24 VAC/VDC ; analog ; no ; yes
+                    else if (tdRadioButtonList5.SelectedIndex == 1 && tdRadioButtonList2.SelectedIndex == 1 && tdRadioButtonList1.SelectedIndex == 1 && tdRadioButtonList3.SelectedIndex == 1 && tdRadioButtonList4.SelectedIndex == 0)
+                    {
+                        switch (listResult["C"].ElementAt(i))
+                        {
+                            case "15":
+                                tmpMarkPriv = "303R"; break;
+                            case "20":
+                                tmpMarkPriv = "303R"; break;
+                            case "25":
+                                tmpMarkPriv = "303R"; break;
+                            case "32":
+                                tmpMarkPriv = "303R"; break;
+                            case "40":
+                                tmpMarkPriv = "303R"; break;
+                            case "50":
+                                tmpMarkPriv = "303R"; break;
+                            case "65":
+                                tmpMarkPriv = "313R"; break;
+                            case "80":
+                                tmpMarkPriv = "313R"; break;
+                            case "100":
+                                tmpMarkPriv = "313R"; break;
+                            case "125":
+                                tmpMarkPriv = "-"; break;
+                            case "150":
+                                tmpMarkPriv = "-"; break;
+                            case "200":
+                                tmpMarkPriv = "-"; break;
                             default:
                                 tmpMarkPriv = null; break;
                         }
@@ -2597,12 +2806,45 @@ public partial class TRV : System.Web.UI.Page
                                 tmpMarkPriv = null; break;
                         }
                     }
+                    //no ; 24 VAC/VDC ; analog ; yes ; yes
+                    else if (tdRadioButtonList5.SelectedIndex == 1 && tdRadioButtonList2.SelectedIndex == 1 && tdRadioButtonList1.SelectedIndex == 1 && tdRadioButtonList3.SelectedIndex == 0 && tdRadioButtonList4.SelectedIndex == 0)
+                    {
+                        switch (listResult["C"].ElementAt(i))
+                        {
+                            case "15":
+                                tmpMarkPriv = "303R"; break;
+                            case "20":
+                                tmpMarkPriv = "303R"; break;
+                            case "25":
+                                tmpMarkPriv = "303R"; break;
+                            case "32":
+                                tmpMarkPriv = "303R"; break;
+                            case "40":
+                                tmpMarkPriv = "303R"; break;
+                            case "50":
+                                tmpMarkPriv = "303R"; break;
+                            case "65":
+                                tmpMarkPriv = "313R"; break;
+                            case "80":
+                                tmpMarkPriv = "313R"; break;
+                            case "100":
+                                tmpMarkPriv = "313R"; break;
+                            case "125":
+                                tmpMarkPriv = "-"; break;
+                            case "150":
+                                tmpMarkPriv = "-"; break;
+                            case "200":
+                                tmpMarkPriv = "-"; break;
+                            default:
+                                tmpMarkPriv = null; break;
+                        }
+                    }
 
                 }
                 // TRV-3
                 else if (tvRadioButtonList1.SelectedIndex == 1)
                 {
-
+                    //yes; 230; off; no; no
                     if (tdRadioButtonList5.SelectedIndex == 0 && tdRadioButtonList1.SelectedIndex == 0 && tdRadioButtonList2.Enabled == false && tdRadioButtonList3.SelectedIndex == 1 && tdRadioButtonList4.SelectedIndex == 1)
                     {
                         switch (listResult["C"].ElementAt(i))
@@ -2633,6 +2875,7 @@ public partial class TRV : System.Web.UI.Page
                                 tmpMarkPriv = "-"; break;
                         }
                     }
+                    //yes; 230; off; no; yes
                     else if (tdRadioButtonList5.SelectedIndex == 0 && tdRadioButtonList1.SelectedIndex == 0 && tdRadioButtonList2.Enabled == false && tdRadioButtonList3.SelectedIndex == 1 && tdRadioButtonList4.SelectedIndex == 0)
                     {
                         switch (listResult["C"].ElementAt(i))
@@ -2762,7 +3005,40 @@ public partial class TRV : System.Web.UI.Page
                                 tmpMarkPriv = null; break;
                         }
                     }
-                    // 230 VAC ; analog ; no ; no
+                    // no ; 230 VAC ; 3-pos ; yes ; yes
+                    else if (tdRadioButtonList5.SelectedIndex == 1 && tdRadioButtonList1.SelectedIndex == 0 && tdRadioButtonList2.SelectedIndex == 0 && tdRadioButtonList3.SelectedIndex == 0 && tdRadioButtonList4.SelectedIndex == 0)
+                    {
+                        switch (listResult["C"].ElementAt(i))
+                        {
+                            case "15":
+                                tmpMarkPriv = "302R"; break;
+                            case "20":
+                                tmpMarkPriv = "302R"; break;
+                            case "25":
+                                tmpMarkPriv = "302R"; break;
+                            case "32":
+                                tmpMarkPriv = "302R"; break;
+                            case "40":
+                                tmpMarkPriv = "302R"; break;
+                            case "50":
+                                tmpMarkPriv = "302R"; break;
+                            case "65":
+                                tmpMarkPriv = "312R"; break;
+                            case "80":
+                                tmpMarkPriv = "312R"; break;
+                            case "100":
+                                tmpMarkPriv = "312R"; break;
+                            case "125":
+                                tmpMarkPriv = "-"; break;
+                            case "150":
+                                tmpMarkPriv = "-"; break;
+                            case "200":
+                                tmpMarkPriv = "-"; break;
+                            default:
+                                tmpMarkPriv = null; break;
+                        }
+                    }
+                    //no; 230 VAC ; analog ; no ; no
                     else if (tdRadioButtonList5.SelectedIndex == 1 && tdRadioButtonList1.SelectedIndex == 0 && tdRadioButtonList2.SelectedIndex == 1 && tdRadioButtonList3.SelectedIndex == 1 && tdRadioButtonList4.SelectedIndex == 1)
                     {
                         switch (listResult["C"].ElementAt(i))
@@ -2791,6 +3067,39 @@ public partial class TRV : System.Web.UI.Page
                                 tmpMarkPriv = "322"; break;
                             case "200":
                                 tmpMarkPriv = "37"; break;
+                            default:
+                                tmpMarkPriv = null; break;
+                        }
+                    }
+                    //no; 230 VAC ; analog ; no ; yes
+                    else if (tdRadioButtonList5.SelectedIndex == 1 && tdRadioButtonList1.SelectedIndex == 0 && tdRadioButtonList2.SelectedIndex == 1 && tdRadioButtonList3.SelectedIndex == 1 && tdRadioButtonList4.SelectedIndex == 0)
+                    {
+                        switch (listResult["C"].ElementAt(i))
+                        {
+                            case "15":
+                                tmpMarkPriv = "302R"; break;
+                            case "20":
+                                tmpMarkPriv = "302R"; break;
+                            case "25":
+                                tmpMarkPriv = "302R"; break;
+                            case "32":
+                                tmpMarkPriv = "302R"; break;
+                            case "40":
+                                tmpMarkPriv = "302R"; break;
+                            case "50":
+                                tmpMarkPriv = "302R"; break;
+                            case "65":
+                                tmpMarkPriv = "312R"; break;
+                            case "80":
+                                tmpMarkPriv = "312R"; break;
+                            case "100":
+                                tmpMarkPriv = "312R"; break;
+                            case "125":
+                                tmpMarkPriv = "-"; break;
+                            case "150":
+                                tmpMarkPriv = "-"; break;
+                            case "200":
+                                tmpMarkPriv = "-"; break;
                             default:
                                 tmpMarkPriv = null; break;
                         }
@@ -2828,6 +3137,39 @@ public partial class TRV : System.Web.UI.Page
                                 tmpMarkPriv = null; break;
                         }
                     }
+                    //no; 230 VAC ; analog ; yes ; yes
+                    else if (tdRadioButtonList5.SelectedIndex == 1 && tdRadioButtonList1.SelectedIndex == 0 && tdRadioButtonList2.SelectedIndex == 1 && tdRadioButtonList3.SelectedIndex == 0 && tdRadioButtonList4.SelectedIndex == 0)
+                    {
+                        switch (listResult["C"].ElementAt(i))
+                        {
+                            case "15":
+                                tmpMarkPriv = "302R"; break;
+                            case "20":
+                                tmpMarkPriv = "302R"; break;
+                            case "25":
+                                tmpMarkPriv = "302R"; break;
+                            case "32":
+                                tmpMarkPriv = "302R"; break;
+                            case "40":
+                                tmpMarkPriv = "302R"; break;
+                            case "50":
+                                tmpMarkPriv = "302R"; break;
+                            case "65":
+                                tmpMarkPriv = "312R"; break;
+                            case "80":
+                                tmpMarkPriv = "312R"; break;
+                            case "100":
+                                tmpMarkPriv = "312R"; break;
+                            case "125":
+                                tmpMarkPriv = "-"; break;
+                            case "150":
+                                tmpMarkPriv = "-"; break;
+                            case "200":
+                                tmpMarkPriv = "-"; break;
+                            default:
+                                tmpMarkPriv = null; break;
+                        }
+                    }
                     //no ; 24 VAC/VDC ; 3-pos ; no ; no
                     else if (tdRadioButtonList5.SelectedIndex == 1 && tdRadioButtonList2.SelectedIndex == 0 && tdRadioButtonList1.SelectedIndex == 1 && tdRadioButtonList3.SelectedIndex == 1 && tdRadioButtonList4.SelectedIndex == 1)
                     {
@@ -2855,6 +3197,39 @@ public partial class TRV : System.Web.UI.Page
                                 tmpMarkPriv = "323"; break;
                             case "150":
                                 tmpMarkPriv = "323"; break;
+                            case "200":
+                                tmpMarkPriv = "-"; break;
+                            default:
+                                tmpMarkPriv = null; break;
+                        }
+                    }
+                    //no ; 24 VAC/VDC ; 3-pos ; no ; yes
+                    else if (tdRadioButtonList5.SelectedIndex == 1 && tdRadioButtonList2.SelectedIndex == 0 && tdRadioButtonList1.SelectedIndex == 1 && tdRadioButtonList3.SelectedIndex == 1 && tdRadioButtonList4.SelectedIndex == 0)
+                    {
+                        switch (listResult["C"].ElementAt(i))
+                        {
+                            case "15":
+                                tmpMarkPriv = "303R"; break;
+                            case "20":
+                                tmpMarkPriv = "303R"; break;
+                            case "25":
+                                tmpMarkPriv = "303R"; break;
+                            case "32":
+                                tmpMarkPriv = "303R"; break;
+                            case "40":
+                                tmpMarkPriv = "303R"; break;
+                            case "50":
+                                tmpMarkPriv = "303R"; break;
+                            case "65":
+                                tmpMarkPriv = "313R"; break;
+                            case "80":
+                                tmpMarkPriv = "313R"; break;
+                            case "100":
+                                tmpMarkPriv = "313R"; break;
+                            case "125":
+                                tmpMarkPriv = "-"; break;
+                            case "150":
+                                tmpMarkPriv = "-"; break;
                             case "200":
                                 tmpMarkPriv = "-"; break;
                             default:
@@ -2894,6 +3269,39 @@ public partial class TRV : System.Web.UI.Page
                                 tmpMarkPriv = null; break;
                         }
                     }
+                    //no ; 24 VAC/VDC ; 3-pos ; yes ; yes
+                    else if (tdRadioButtonList5.SelectedIndex == 1 && tdRadioButtonList2.SelectedIndex == 0 && tdRadioButtonList1.SelectedIndex == 1 && tdRadioButtonList3.SelectedIndex == 0 && tdRadioButtonList4.SelectedIndex == 0)
+                    {
+                        switch (listResult["C"].ElementAt(i))
+                        {
+                            case "15":
+                                tmpMarkPriv = "303R"; break;
+                            case "20":
+                                tmpMarkPriv = "303R"; break;
+                            case "25":
+                                tmpMarkPriv = "303R"; break;
+                            case "32":
+                                tmpMarkPriv = "303R"; break;
+                            case "40":
+                                tmpMarkPriv = "303R"; break;
+                            case "50":
+                                tmpMarkPriv = "303R"; break;
+                            case "65":
+                                tmpMarkPriv = "313R"; break;
+                            case "80":
+                                tmpMarkPriv = "313R"; break;
+                            case "100":
+                                tmpMarkPriv = "313R"; break;
+                            case "125":
+                                tmpMarkPriv = "-"; break;
+                            case "150":
+                                tmpMarkPriv = "-"; break;
+                            case "200":
+                                tmpMarkPriv = "-"; break;
+                            default:
+                                tmpMarkPriv = null; break;
+                        }
+                    }
                     //no ; 24 VAC/VDC ; analog ; no ; no
                     else if (tdRadioButtonList5.SelectedIndex == 1 && tdRadioButtonList2.SelectedIndex == 1 && tdRadioButtonList1.SelectedIndex == 1 && tdRadioButtonList3.SelectedIndex == 1 && tdRadioButtonList4.SelectedIndex == 1)
                     {
@@ -2927,6 +3335,39 @@ public partial class TRV : System.Web.UI.Page
                                 tmpMarkPriv = null; break;
                         }
                     }
+                    //no ; 24 VAC/VDC ; analog ; no ; yes
+                    else if (tdRadioButtonList5.SelectedIndex == 1 && tdRadioButtonList2.SelectedIndex == 1 && tdRadioButtonList1.SelectedIndex == 1 && tdRadioButtonList3.SelectedIndex == 1 && tdRadioButtonList4.SelectedIndex == 0)
+                    {
+                        switch (listResult["C"].ElementAt(i))
+                        {
+                            case "15":
+                                tmpMarkPriv = "303R"; break;
+                            case "20":
+                                tmpMarkPriv = "303R"; break;
+                            case "25":
+                                tmpMarkPriv = "303R"; break;
+                            case "32":
+                                tmpMarkPriv = "303R"; break;
+                            case "40":
+                                tmpMarkPriv = "303R"; break;
+                            case "50":
+                                tmpMarkPriv = "303R"; break;
+                            case "65":
+                                tmpMarkPriv = "313R"; break;
+                            case "80":
+                                tmpMarkPriv = "313R"; break;
+                            case "100":
+                                tmpMarkPriv = "313R"; break;
+                            case "125":
+                                tmpMarkPriv = "-"; break;
+                            case "150":
+                                tmpMarkPriv = "-"; break;
+                            case "200":
+                                tmpMarkPriv = "-"; break;
+                            default:
+                                tmpMarkPriv = null; break;
+                        }
+                    }
                     //no ; 24 VAC/VDC ; analog ; yes ; no
                     else if (tdRadioButtonList5.SelectedIndex == 1 && tdRadioButtonList2.SelectedIndex == 1 && tdRadioButtonList1.SelectedIndex == 1 && tdRadioButtonList3.SelectedIndex == 0 && tdRadioButtonList4.SelectedIndex == 1)
                     {
@@ -2954,6 +3395,39 @@ public partial class TRV : System.Web.UI.Page
                                 tmpMarkPriv = "323"; break;
                             case "150":
                                 tmpMarkPriv = "323"; break;
+                            case "200":
+                                tmpMarkPriv = "-"; break;
+                            default:
+                                tmpMarkPriv = null; break;
+                        }
+                    }
+                    //no ; 24 VAC/VDC ; analog ; yes ; yes
+                    else if (tdRadioButtonList5.SelectedIndex == 1 && tdRadioButtonList2.SelectedIndex == 1 && tdRadioButtonList1.SelectedIndex == 1 && tdRadioButtonList3.SelectedIndex == 0 && tdRadioButtonList4.SelectedIndex == 0)
+                    {
+                        switch (listResult["C"].ElementAt(i))
+                        {
+                            case "15":
+                                tmpMarkPriv = "303R"; break;
+                            case "20":
+                                tmpMarkPriv = "303R"; break;
+                            case "25":
+                                tmpMarkPriv = "303R"; break;
+                            case "32":
+                                tmpMarkPriv = "303R"; break;
+                            case "40":
+                                tmpMarkPriv = "303R"; break;
+                            case "50":
+                                tmpMarkPriv = "303R"; break;
+                            case "65":
+                                tmpMarkPriv = "313R"; break;
+                            case "80":
+                                tmpMarkPriv = "313R"; break;
+                            case "100":
+                                tmpMarkPriv = "313R"; break;
+                            case "125":
+                                tmpMarkPriv = "-"; break;
+                            case "150":
+                                tmpMarkPriv = "-"; break;
                             case "200":
                                 tmpMarkPriv = "-"; break;
                             default:
