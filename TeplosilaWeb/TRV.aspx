@@ -671,7 +671,7 @@
                                             <asp:ListItem Selected="True">Нет</asp:ListItem>
                                         </asp:RadioButtonList>
                                         <asp:Label ID="Label51" runat="server"
-                                            Text="Наличие возвратного механизма (функция безопасности):">
+                                            Text="Наличие функции безопасности (возврат):">
                                         </asp:Label>
                                         <asp:RadioButtonList ID="tdRadioButtonList4" runat="server" AutoPostBack="True">
                                             <asp:ListItem> Да</asp:ListItem>

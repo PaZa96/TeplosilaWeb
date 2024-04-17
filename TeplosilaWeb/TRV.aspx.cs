@@ -344,7 +344,6 @@ public partial class TRV : System.Web.UI.Page
                 lpvTextBox21.Enabled = false;
                 lpvTextBox21.Text = "";
                 fvPane2.Visible = false;
-                lpv2.Visible = false;
             }
             else
             {
