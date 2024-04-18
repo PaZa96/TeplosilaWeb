@@ -29,6 +29,7 @@ public partial class TRV : System.Web.UI.Page
     double[] arrConvert2;
     double[] arrConvert3;
 
+
     public Dictionary<int, string> v_input_dict = new Dictionary<int, string>();
 
     protected void Page_Load(object sender, EventArgs e)
@@ -301,6 +302,7 @@ public partial class TRV : System.Web.UI.Page
 
     protected void ws2RadioButtonList1_SelectedIndexChanged(object sender, EventArgs e)
     {
+        int lastSelectedIndex = Convert.ToInt32(Session[ws2RadioButtonList1.ID]);
         if (ws2RadioButtonList1.SelectedIndex == 1 || ws2RadioButtonList1.SelectedIndex == 2)
         {
             ws2TextBox1.Enabled = true;
@@ -333,6 +335,7 @@ public partial class TRV : System.Web.UI.Page
             lpv5RadioButton3.Enabled = false;
             rpvPane1.Visible = true;
             aaPane1.Visible = true;
+            lpv2.Visible = true;
             lpv3.Visible = true;
             lpv5.Visible = false;
             calcv.Visible = true;
@@ -341,9 +344,9 @@ public partial class TRV : System.Web.UI.Page
 
             if (aa1RadioButtonList1.SelectedIndex == 0 || aa2RadioButtonList1.SelectedIndex == 0 || aa3RadioButtonList1.SelectedIndex == 0)
             {
-                lpvTextBox21.Enabled = false;
-                lpvTextBox21.Text = "";
-                fvPane2.Visible = false;
+                //lpvTextBox21.Enabled = false;
+                //lpvTextBox21.Text = "";
+                //fvPane2.Visible = false;
             }
             else
             {
@@ -362,6 +365,16 @@ public partial class TRV : System.Web.UI.Page
                 DisableDropDownList(fvDropDownList1);
                 DisableTextBox(fvTextBox1);
                 LabelSteam.Text = "N";
+            }
+
+            if (lastSelectedIndex == 3) {
+                rpvRadioButtonList1.ClearSelection();
+                aaRadioButton1.Checked = false;
+                aa1RadioButtonList1.ClearSelection();
+                aaRadioButton2.Checked = false;
+                aa3RadioButtonList1.ClearSelection();
+                aaRadioButton3.Checked = false;
+                aa3RadioButtonList1.ClearSelection();
             }
 
         }
@@ -404,6 +417,7 @@ public partial class TRV : System.Web.UI.Page
         }
 
         tdRBL.Visible = true;
+        SavePrevSelectedIndexDDL(ws2RadioButtonList1.ID, ws2RadioButtonList1.SelectedIndex);
 
     }
 
@@ -4805,7 +4819,7 @@ public partial class TRV : System.Web.UI.Page
 
                                         "Скорость в выходном сечении клапана V,\nм/с",
 
-                                        "Шум, некачественное регулирование",
+                                        "Шум, колебательный режим",
 
                                         "Предельно допустимый перепад давлений ∆Pпред,\nбар",
                                         "Кавитация",
@@ -4837,7 +4851,7 @@ public partial class TRV : System.Web.UI.Page
                                             //"Внешний авторитет клапана",
                                             //"Качество регулирования",
                                             "Скорость в выходном сечении клапана V,\nм/с",
-                                            "Шум, некачественное регулирование",
+                                            "Шум, колебательный режим",
                                             //"Скорость перемещения штока сек/мм (мм/мин)",
                                             //"Максимально допустимый перепад давления на клапане, преодолеваемый приводом, бар, не более",
                                             "Обозначение привода",
