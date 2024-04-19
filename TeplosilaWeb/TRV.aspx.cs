@@ -371,10 +371,14 @@ public partial class TRV : System.Web.UI.Page
                 rpvRadioButtonList1.ClearSelection();
                 aaRadioButton1.Checked = false;
                 aa1RadioButtonList1.ClearSelection();
+                aa1RadioButtonList1.Enabled = false;
                 aaRadioButton2.Checked = false;
-                aa3RadioButtonList1.ClearSelection();
+                aa2RadioButtonList1.ClearSelection();
+                aa2RadioButtonList1.Enabled = false;
                 aaRadioButton3.Checked = false;
                 aa3RadioButtonList1.ClearSelection();
+                aa3RadioButtonList1.Enabled = false;
+                aaRadioButton4.Checked = false;
             }
 
         }
