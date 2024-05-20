@@ -956,7 +956,7 @@ public partial class TRV : System.Web.UI.Page
                     gRowMarkM = "33";
                     break;
                 case "302": //TSL-1600-25-2A-230-IP67
-                    hRowMark = "1";
+                    hRowMark = "11";
                     gRowMarkH = "12";
                     gRowMarkM = "34";
                     break;
