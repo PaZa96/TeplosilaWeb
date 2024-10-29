@@ -590,24 +590,15 @@ public partial class RDT : System.Web.UI.Page
             }
             else if (eorRadioButtonList1.SelectedIndex == 1)
             {
-                if(ws1RadioButtonList1.SelectedIndex != 3)
+                if (ws1RadioButtonList1.SelectedIndex != 3 && (g_dict["p35"] > MaxT3x || customConverterToDouble(fprTextBox2.Text) > MaxT3x))
                 {
-                    if (g_dict["p35"] > MaxT3x) 
-                    {
-                        table = dataFromFile.table75;
-                    }
-                    else
-                    {
-                        table = dataFromFile.table72;
-                    }
+                    table = dataFromFile.table75;
                 }
                 else
                 {
-                    
-                    table = dataFromFile.table75;
-                    
+                    table = dataFromFile.table72;
                 }
-                
+
             }
             else if (eorRadioButtonList1.SelectedIndex == 2)
             {
@@ -1172,7 +1163,7 @@ public partial class RDT : System.Web.UI.Page
             {
                 if (ws1RadioButtonList1.SelectedIndex != 3)
                 {
-                    if (customConverterToDouble(calcrTextBox2.Text) <= 150)
+                    if (customConverterToDouble(this.calcrTextBox2.Text) <= MaxT3x && customConverterToDouble(this.fprTextBox2.Text) <= MaxT3x)
                     {
                         r_in_dict.Add(39, "150˚С");
                     }
@@ -2940,7 +2931,7 @@ public partial class RDT : System.Web.UI.Page
                             {
                                 if (ws1RadioButtonList1.SelectedIndex != 3)
                                 {
-                                    if (g_dict["p35"] <= 150)
+                                    if (g_dict["p35"] <= MaxT3x && customConverterToDouble(this.fprTextBox2.Text) <= MaxT3x)
                                     {
                                         this.maxt1ResultLabel.Text = "Максимальная температура - 150 °С";
                                     }
@@ -3572,9 +3563,9 @@ public partial class RDT : System.Web.UI.Page
 
             if ((r_input_dict[4] == this.eorRadioButtonList1.Items[0].Text) || (r_input_dict[4] == eorRadioButtonList1.Items[1].Text))
             {
-                if (r_input_dict[4] == eorRadioButtonList1.Items[1].Text && customConverterToDouble(calcrTextBox2.Text) > 150)
+                if (r_input_dict[4] == eorRadioButtonList1.Items[1].Text && (customConverterToDouble(calcrTextBox2.Text) > MaxT3x || customConverterToDouble(this.fprTextBox2.Text) > MaxT3x))
                 {
-                    ws.Pictures.Add(HttpContext.Current.Server.MapPath("~/Content/images/rdt/Габаритный RDT-S и RDT-B.jpg"), "A30");
+                    ws.Pictures.Add(HttpContext.Current.Server.MapPath("~/Content/images/rdt/Габаритный RDT-H, RDT-PH.jpg"), "A30");
                 }
                 else
                 {
@@ -3585,6 +3576,7 @@ public partial class RDT : System.Web.UI.Page
             {
                 ws.Pictures.Add(HttpContext.Current.Server.MapPath("~/Content/images/rdt/Габаритный RDT-S и RDT-B.jpg"), "A30");
             }
+ 
 
             ws.Cells["F30"].Value = r_input_dict[51];
             ws.Cells["F31"].Value = r_input_dict[52];
@@ -3982,13 +3974,13 @@ public partial class RDT : System.Web.UI.Page
 
             SpreadsheetInfo.SetLicense("FREE-LIMITED-KEY");
 
-            if (!File.Exists(HttpContext.Current.Server.MapPath("~/Content/templates/templateRDT.xlsx")))
+            if (!File.Exists(HttpContext.Current.Server.MapPath("~/Content/templates/templateRDT,RDT-H.xlsx")))
             {
                 LabelError.Text = "Не найден файл шаблона";
                 return;
             }
 
-            ExcelFile ef = ExcelFile.Load(HttpContext.Current.Server.MapPath("~/Content/templates/templateRDT.xlsx"));
+            ExcelFile ef = ExcelFile.Load(HttpContext.Current.Server.MapPath("~/Content/templates/templateRDT,RDT-H.xlsx"));
 
             ExcelWorksheet ws = ef.Worksheets[0];
 
@@ -4070,7 +4062,7 @@ public partial class RDT : System.Web.UI.Page
                 }
             } else if (r_input_dict[4] == this.eorRadioButtonList1.Items[0].Text) 
             {
-                if (customConverterToDouble(calcrTextBox2.Text) > 150 && ws1RadioButtonList1.SelectedIndex != 3)
+                if ((customConverterToDouble(calcrTextBox2.Text) > 150 || customConverterToDouble(this.fprTextBox2.Text) > 150) && ws1RadioButtonList1.SelectedIndex != 3)
                 {
                     ws.Pictures.Add(HttpContext.Current.Server.MapPath("~/Content/images/rdt/Габаритный RDT-H, RDT-PH.jpg"), "A33");
                 }
