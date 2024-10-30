@@ -393,8 +393,24 @@ public partial class RDT : System.Web.UI.Page
             if (eorRadioButtonList1.SelectedIndex == 0) //Регулятор перепада давления
             {
                 I = customConverterToDouble(this.lp1TextBox2.Text) * arrConvert3[this.lp1DropDownList2.SelectedIndex - 1] / arrConvert3[2];
-                table5 = dataFromFile.table5;
-                table11 = dataFromFile.table11;
+                if (g_dict["p35"] > MaxT3x || customConverterToDouble(this.fprTextBox2.Text) > MaxT3x)
+                {
+                    table5 = dataFromFile.table5sbt;
+                    table11 = dataFromFile.table11sbt;
+                }
+                else
+                {
+                    table5 = dataFromFile.table5;
+
+                    if (ws1RadioButtonList1.SelectedIndex != 3)
+                    {
+                        table11 = dataFromFile.table11;
+                    }
+                    else
+                    {
+                        table11 = dataFromFile.table11sbt;
+                    }
+                }
             }
             else if (eorRadioButtonList1.SelectedIndex == 1) //Регулятор давления после себя
             {
@@ -407,7 +423,7 @@ public partial class RDT : System.Web.UI.Page
                     I = customConverterToDouble(this.lp5TextBox2.Text) * arrConvert3[this.lp5DropDownList2.SelectedIndex - 1] / arrConvert3[2];
                 }
 
-                if (g_dict["p35"] > 150)
+                if (g_dict["p35"] > MaxT3x || customConverterToDouble(this.fprTextBox2.Text) > MaxT3x)
                 {
                     table5 = dataFromFile.table5sbt;
                     table11 = dataFromFile.table11sbt;
@@ -590,13 +606,22 @@ public partial class RDT : System.Web.UI.Page
             }
             else if (eorRadioButtonList1.SelectedIndex == 1)
             {
-                if (ws1RadioButtonList1.SelectedIndex != 3 && (g_dict["p35"] > MaxT3x || customConverterToDouble(fprTextBox2.Text) > MaxT3x))
+                if (ws1RadioButtonList1.SelectedIndex != 3)
                 {
-                    table = dataFromFile.table75;
+                    if (g_dict["p35"] > MaxT3x || customConverterToDouble(fprTextBox2.Text) > MaxT3x)
+                    {
+                        table = dataFromFile.table75;
+                    }
+                    else
+                    {
+                        table = dataFromFile.table72;
+                    }
                 }
                 else
                 {
-                    table = dataFromFile.table72;
+
+                    table = dataFromFile.table75;
+
                 }
 
             }
@@ -1676,11 +1701,11 @@ public partial class RDT : System.Web.UI.Page
                     args.IsValid = false;
                     return;
                 }
-                if(eorRadioButtonList1.SelectedIndex != 1)
+                if(eorRadioButtonList1.SelectedIndex > 1)
                 {
-                    if (customConverterToDouble(calcrTextBox2.Text) > MaxT2x)
+                    if (customConverterToDouble(calcrTextBox2.Text) > MaxT3x)
                     {
-                        CustomValidator11.ErrorMessage = "На температуру свыше 220&#8451; вариантов нет";
+                        CustomValidator11.ErrorMessage = "На температуру свыше 150&#8451; вариантов нет";
                         args.IsValid = false;
                         return;
                     }
@@ -1754,11 +1779,11 @@ public partial class RDT : System.Web.UI.Page
                     args.IsValid = false;
                     return;
                 }
-                if (eorRadioButtonList1.SelectedIndex != 1)
+                if (eorRadioButtonList1.SelectedIndex > 1)
                 {
-                    if (customConverterToDouble(fprTextBox2.Text) > MaxT2x)
+                    if (customConverterToDouble(fprTextBox2.Text) > MaxT3x)
                     {
-                        CustomValidator13.ErrorMessage = "На температуру свыше 220&#8451; вариантов нет";
+                        CustomValidator13.ErrorMessage = "На температуру свыше 150&#8451; вариантов нет";
                         args.IsValid = false;
                         return;
                     }
@@ -1798,11 +1823,11 @@ public partial class RDT : System.Web.UI.Page
                     args.IsValid = false;
                     return;
                 }
-                if (eorRadioButtonList1.SelectedIndex != 1)
+                if (eorRadioButtonList1.SelectedIndex > 1)
                 {
-                    if (customConverterToDouble(fprTextBox3.Text) > MaxT2x)
+                    if (customConverterToDouble(fprTextBox3.Text) > MaxT3x)
                     {
-                        CustomValidator14.ErrorMessage = "На температуру свыше 220&#8451; вариантов нет";
+                        CustomValidator14.ErrorMessage = "На температуру свыше 150&#8451; вариантов нет";
                         args.IsValid = false;
                         return;
                     }
