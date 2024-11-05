@@ -1492,8 +1492,9 @@ public partial class TRV : System.Web.UI.Page
 
             }
 
-            calcvCapacityLabel.Text = "Расчетная пропускная способность - " + Math.Round(Kv, 2).ToString() + " м³/ч";
+            calcvCapacityLabelVal.Text = Math.Round(Kv, 2).ToString() + " м³/ч";
             calcvCapacityLabel.Visible = true;
+            calcvCapacityLabelVal.Visible = true;
 
             Newtonsoft.Json.Linq.JArray tablev = null;
             Newtonsoft.Json.Linq.JArray tableDN = null;
@@ -1775,8 +1776,9 @@ public partial class TRV : System.Web.UI.Page
                 V = (Gkl * (T1 + 273)) / Math.Pow((C / 18.8), 2) / (219 * (p2 + 1));
             }
 
-            calcvDNLabel.Text = "Расчетный диаметр - " + Math.Round(cDN, 2).ToString() + " мм";
+            calcvDNLabelVal.Text = Math.Round(cDN, 2).ToString() + " мм";
             calcvDNLabel.Visible = true;
+            calcvDNLabelVal.Visible = true;
 
             double Pf = 1;
 
@@ -5873,6 +5875,8 @@ public partial class TRV : System.Web.UI.Page
 
             int pos = 42;
 
+            v_input_dict[19] = this.calcvDNLabelVal.Text;
+            v_input_dict[20] = this.calcvCapacityLabelVal.Text;
             v_input_dict[63] = "-";
             v_input_dict[64] = "-";
             v_input_dict[65] = "-";
@@ -5959,7 +5963,9 @@ public partial class TRV : System.Web.UI.Page
             ws.Cells["J14"].Value = v_input_dict[39];
 
             ws.Cells["E16"].Value = v_input_dict[40];
+            ws.Cells["J16"].Value = v_input_dict[19];
             ws.Cells["E17"].Value = v_input_dict[41];
+            ws.Cells["J17"].Value = v_input_dict[20];
 
             ws.Cells["A20"].Value = v_input_dict[42];
             ws.Cells["C20"].Value = v_input_dict[43];
@@ -6046,6 +6052,9 @@ public partial class TRV : System.Web.UI.Page
             {
                 v_input_dict[2] = "-";
             }
+
+            v_input_dict[19] = this.calcvDNLabelVal.Text;
+            v_input_dict[20] = this.calcvCapacityLabelVal.Text;
 
             int pos = 42;
 
@@ -6146,7 +6155,9 @@ public partial class TRV : System.Web.UI.Page
             ws.Cells["J23"].Value = v_input_dict[39];
 
             ws.Cells["E25"].Value = v_input_dict[40];
+            ws.Cells["J25"].Value = v_input_dict[19];
             ws.Cells["E26"].Value = v_input_dict[41];
+            ws.Cells["J26"].Value = v_input_dict[20];
 
             ws.Cells["J21"].Value = v_input_dict[72];
 

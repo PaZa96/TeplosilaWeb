@@ -382,8 +382,10 @@ public partial class RDT : System.Web.UI.Page
                 }
             }
 
-            calcCapacityLabel.Text = "Расчетная пропускная способность - " + Math.Round(Kv, 2).ToString() + " м³/ч";
-            calcCapacityLabel.Visible = true;
+            this.calcCapacityLabelVal.Text = Math.Round(Kv, 2).ToString() + " м³/ч";
+            this.calcCapacityLabelVal.Visible = true;
+            this.calcCapacityLabel.Visible = true;
+            
 
             /*IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII*/
 
@@ -726,8 +728,9 @@ public partial class RDT : System.Web.UI.Page
                 }
             }
 
-            calcDNLabel.Text = "Расчетный диаметр - " + Math.Round(cDN, 2).ToString() + " мм";
+            calcDNLabelVal.Text = Math.Round(cDN, 2).ToString() + " мм";
             calcDNLabel.Visible = true;
+            calcDNLabelVal.Visible = true;
 
 
             double Pf = 1;
@@ -1128,7 +1131,7 @@ public partial class RDT : System.Web.UI.Page
             r_in_dict.Add(18, (this.lp2TextBox2.Enabled) ? this.lp2TextBox2.Text : "-");
             r_in_dict.Add(19, (this.lp2TextBox2.Enabled) ? this.lp2DropDownList2.Text : "-");
 
-            // для пара еще нет,  уже и не будет
+
             r_in_dict.Add(20, "-");
             r_in_dict.Add(21, "-");
 
@@ -1136,7 +1139,7 @@ public partial class RDT : System.Web.UI.Page
             r_in_dict.Add(23, "-");
 
             r_in_dict.Add(24, "-");
-            // для пара еще нет
+            
 
             r_in_dict.Add(25, (this.lp3TextBox1.Enabled) ? this.lp3TextBox1.Text : "-");
             r_in_dict.Add(26, (this.lp3TextBox1.Enabled) ? this.lp3DropDownList1.Text : "-");
@@ -1180,7 +1183,7 @@ public partial class RDT : System.Web.UI.Page
             }
            
 
-            if (eorRadioButtonList1.SelectedIndex >1)
+            if (eorRadioButtonList1.SelectedIndex > 1)
             {
                 r_in_dict.Add(39, "150 ˚С");
             }
@@ -1188,13 +1191,19 @@ public partial class RDT : System.Web.UI.Page
             {
                 if (ws1RadioButtonList1.SelectedIndex != 3)
                 {
-                    if (customConverterToDouble(this.calcrTextBox2.Text) <= MaxT3x && customConverterToDouble(this.fprTextBox2.Text) <= MaxT3x)
-                    {
-                        r_in_dict.Add(39, "150˚С");
+                    if (ws1RadioButtonList1.SelectedIndex == 0) {
+                        if (customConverterToDouble(this.calcrTextBox2.Text) <= MaxT3x && customConverterToDouble(this.fprTextBox2.Text) <= MaxT3x)
+                        {
+                            r_in_dict.Add(39, "150˚С");
+                        }
+                        else
+                        {
+                            r_in_dict.Add(39, "220˚С");
+                        }
                     }
                     else
                     {
-                        r_in_dict.Add(39, "220˚С");
+                        r_in_dict.Add(39, "150˚С");
                     }
                 }
                 else
@@ -1712,12 +1721,25 @@ public partial class RDT : System.Web.UI.Page
                 }
                 else
                 {
-                    if (customConverterToDouble(calcrTextBox2.Text) > MaxT2x)
+                    if (this.ws1RadioButtonList1.SelectedIndex == 0)
                     {
-                        CustomValidator11.ErrorMessage = "На температуру свыше 220&#8451; вариантов нет";
-                        args.IsValid = false;
-                        return;
+                        if (customConverterToDouble(calcrTextBox2.Text) > MaxT2x)
+                        {
+                            CustomValidator11.ErrorMessage = "На температуру свыше 220&#8451; вариантов нет";
+                            args.IsValid = false;
+                            return;
+                        }
+
                     }
+                    else {
+                        if (customConverterToDouble(calcrTextBox2.Text) > MaxT3x)
+                        {
+                            CustomValidator11.ErrorMessage = "На температуру свыше 150&#8451; вариантов нет";
+                            args.IsValid = false;
+                            return;
+                        }
+                    }
+                    
                 }
 
                 if (((customConverterToDouble(this.calcrTextBox1.Text) * arrConvert3[this.calcrDropDownList1.SelectedIndex - 1] / arrConvert3[2]) - getPSbyT(customConverterToDouble(this.calcrTextBox2.Text))) <= 0)
@@ -1790,11 +1812,23 @@ public partial class RDT : System.Web.UI.Page
                 }
                 else
                 {
-                    if (customConverterToDouble(fprTextBox2.Text) > MaxT2x)
+                    if (this.ws1RadioButtonList1.SelectedIndex == 0)
                     {
-                        CustomValidator13.ErrorMessage = "На температуру свыше 220&#8451; вариантов нет";
-                        args.IsValid = false;
-                        return;
+                        if (customConverterToDouble(fprTextBox2.Text) > MaxT2x)
+                        {
+                            CustomValidator13.ErrorMessage = "На температуру свыше 220&#8451; вариантов нет";
+                            args.IsValid = false;
+                            return;
+                        }
+                    }
+                    else
+                    {
+                        if (customConverterToDouble(fprTextBox2.Text) > MaxT3x)
+                        {
+                            CustomValidator13.ErrorMessage = "На температуру свыше 150&#8451; вариантов нет";
+                            args.IsValid = false;
+                            return;
+                        }
                     }
                 }
             }
@@ -1834,11 +1868,23 @@ public partial class RDT : System.Web.UI.Page
                 }
                 else
                 {
-                    if (customConverterToDouble(fprTextBox3.Text) > MaxT2x)
+                    if (this.ws1RadioButtonList1.SelectedIndex == 0)
                     {
-                        CustomValidator14.ErrorMessage = "На температуру свыше 220&#8451; вариантов нет";
-                        args.IsValid = false;
-                        return;
+                        if (customConverterToDouble(fprTextBox3.Text) > MaxT2x)
+                        {
+                            CustomValidator14.ErrorMessage = "На температуру свыше 220&#8451; вариантов нет";
+                            args.IsValid = false;
+                            return;
+                        }
+                    }
+                    else
+                    {
+                        if (customConverterToDouble(fprTextBox3.Text) > MaxT3x)
+                        {
+                            CustomValidator14.ErrorMessage = "На температуру свыше 150&#8451; вариантов нет";
+                            args.IsValid = false;
+                            return;
+                        }
                     }
                 }
                 if (customConverterToDouble(fprTextBox3.Text) >= customConverterToDouble(fprTextBox2.Text))
@@ -2956,13 +3002,19 @@ public partial class RDT : System.Web.UI.Page
                             {
                                 if (ws1RadioButtonList1.SelectedIndex != 3)
                                 {
-                                    if (g_dict["p35"] <= MaxT3x && customConverterToDouble(this.fprTextBox2.Text) <= MaxT3x)
-                                    {
-                                        this.maxt1ResultLabel.Text = "Максимальная температура - 150 °С";
+                                    if (this.ws1RadioButtonList1.SelectedIndex == 0) {
+                                        if (g_dict["p35"] <= MaxT3x && customConverterToDouble(this.fprTextBox2.Text) <= MaxT3x)
+                                        {
+                                            this.maxt1ResultLabel.Text = "Максимальная температура - 150 °С";
+                                        }
+                                        else
+                                        {
+                                            this.maxt1ResultLabel.Text = "Максимальная температура - 220 °С";
+                                        }
                                     }
                                     else
                                     {
-                                        this.maxt1ResultLabel.Text = "Максимальная температура - 220 °С";
+                                        this.maxt1ResultLabel.Text = "Максимальная температура - 150 °С";
                                     }
                                 }
                                 else
@@ -3343,6 +3395,8 @@ public partial class RDT : System.Web.UI.Page
                 r_input_dict[2] = "-";
             }
 
+            r_input_dict[20] = this.calcDNLabelVal.Text;
+            r_input_dict[21] = this.calcCapacityLabelVal.Text;
             //r_input_dict.Add(5, (this.textBox5.Text != "") ? this.textBox5.Text : "-");
 
             int pos = 41;
@@ -3414,7 +3468,9 @@ public partial class RDT : System.Web.UI.Page
             ws.Cells["K14"].Value = r_input_dict[381];
 
             ws.Cells["E17"].Value = r_input_dict[39];
+            ws.Cells["J17"].Value = r_input_dict[20];
             ws.Cells["E18"].Value = r_input_dict[40];
+            ws.Cells["J18"].Value = r_input_dict[21];
 
             ws.Cells["A21"].Value = r_input_dict[41];
             ws.Cells["C21"].Value = r_input_dict[42];
@@ -3498,6 +3554,8 @@ public partial class RDT : System.Web.UI.Page
                 r_input_dict[2] = "-";
             }
 
+            r_input_dict[20] = this.calcDNLabelVal.Text;
+            r_input_dict[21] = this.calcCapacityLabelVal.Text;
             //r_input_dict.Add(5, (this.textBox5.Text != "") ? this.textBox5.Text : "-");
 
             int pos = 41;
@@ -3572,7 +3630,9 @@ public partial class RDT : System.Web.UI.Page
             ws.Cells["K19"].Value = r_input_dict[381];
 
             ws.Cells["E22"].Value = r_input_dict[39];
+            ws.Cells["J22"].Value = r_input_dict[20];
             ws.Cells["E23"].Value = r_input_dict[40];
+            ws.Cells["J23"].Value = r_input_dict[21];
 
             ws.Cells["A26"].Value = r_input_dict[41];
             ws.Cells["B26"].Value = r_input_dict[42];
@@ -3669,6 +3729,8 @@ public partial class RDT : System.Web.UI.Page
                 r_input_dict[2] = "-";
             }
 
+            r_input_dict[20] = this.calcDNLabelVal.Text;
+            r_input_dict[21] = this.calcCapacityLabelVal.Text;
             //r_input_dict.Add(5, (this.textBox5.Text != "") ? this.textBox5.Text : "-");
 
             int pos = 41;
@@ -3743,7 +3805,9 @@ public partial class RDT : System.Web.UI.Page
             ws.Cells["K19"].Value = r_input_dict[381];
 
             ws.Cells["E22"].Value = r_input_dict[39];
+            ws.Cells["J22"].Value = r_input_dict[20];
             ws.Cells["E23"].Value = r_input_dict[40];
+            ws.Cells["J23"].Value = r_input_dict[21];
 
             ws.Cells["A26"].Value = r_input_dict[41];
             ws.Cells["B26"].Value = r_input_dict[42];
@@ -3825,6 +3889,8 @@ public partial class RDT : System.Web.UI.Page
                 r_input_dict[2] = "-";
             }
 
+            r_input_dict[20] = this.calcDNLabelVal.Text;
+            r_input_dict[21] = this.calcCapacityLabelVal.Text;
             //r_input_dict.Add(5, (this.textBox5.Text != "") ? this.textBox5.Text : "-");
 
             int pos = 41;
@@ -3897,7 +3963,9 @@ public partial class RDT : System.Web.UI.Page
             ws.Cells["K18"].Value = r_input_dict[381];
 
             ws.Cells["E21"].Value = r_input_dict[39];
+            ws.Cells["J21"].Value = r_input_dict[20];
             ws.Cells["E22"].Value = r_input_dict[40];
+            ws.Cells["J22"].Value = r_input_dict[21];
 
             ws.Cells["A25"].Value = r_input_dict[41];
             ws.Cells["B25"].Value = r_input_dict[42];
@@ -3979,6 +4047,8 @@ public partial class RDT : System.Web.UI.Page
                 r_input_dict[2] = "-";
             }
 
+            r_input_dict[20] = this.calcDNLabelVal.Text;
+            r_input_dict[21] = this.calcCapacityLabelVal.Text;
             //r_input_dict.Add(5, (this.textBox5.Text != "") ? this.textBox5.Text : "-");
 
             int pos = 41;
@@ -4049,6 +4119,7 @@ public partial class RDT : System.Web.UI.Page
 
             ws.Cells["I16"].Value = r_input_dict[31];
             ws.Cells["K16"].Value = r_input_dict[32];
+
             ws.Cells["I17"].Value = r_input_dict[33];
 
             ws.Cells["I19"].Value = r_input_dict[34];
@@ -4060,7 +4131,9 @@ public partial class RDT : System.Web.UI.Page
             ws.Cells["K22"].Value = r_input_dict[381];
 
             ws.Cells["E25"].Value = r_input_dict[39];
+            ws.Cells["J25"].Value = r_input_dict[20];
             ws.Cells["E26"].Value = r_input_dict[40];
+            ws.Cells["J26"].Value = r_input_dict[21];
 
             ws.Cells["A29"].Value = r_input_dict[41];
             ws.Cells["B29"].Value = r_input_dict[42];
@@ -4077,7 +4150,7 @@ public partial class RDT : System.Web.UI.Page
 
             if ((r_input_dict[4] == this.eorRadioButtonList1.Items[1].Text))
             {
-                if (r_input_dict[4] == eorRadioButtonList1.Items[1].Text && customConverterToDouble(calcrTextBox2.Text) > 150 && ws1RadioButtonList1.SelectedIndex != 3)
+                if (r_input_dict[4] == eorRadioButtonList1.Items[1].Text && customConverterToDouble(calcrTextBox2.Text) > 150 && ws1RadioButtonList1.SelectedIndex == 0)
                 {
                     ws.Pictures.Add(HttpContext.Current.Server.MapPath("~/Content/images/rdt/Габаритный RDT-S и RDT-B.jpg"), "A33");
                 }
@@ -4087,7 +4160,7 @@ public partial class RDT : System.Web.UI.Page
                 }
             } else if (r_input_dict[4] == this.eorRadioButtonList1.Items[0].Text) 
             {
-                if ((customConverterToDouble(calcrTextBox2.Text) > 150 || customConverterToDouble(this.fprTextBox2.Text) > 150) && ws1RadioButtonList1.SelectedIndex != 3)
+                if ((customConverterToDouble(calcrTextBox2.Text) > 150 || customConverterToDouble(this.fprTextBox2.Text) > 150) && ws1RadioButtonList1.SelectedIndex == 0)
                 {
                     ws.Pictures.Add(HttpContext.Current.Server.MapPath("~/Content/images/rdt/Габаритный RDT-H, RDT-PH.jpg"), "A33");
                 }
@@ -4141,178 +4214,6 @@ public partial class RDT : System.Web.UI.Page
                 Response.TransmitFile(file.FullName);
                 Response.Flush();
                 //Response.Close();
-            }
-        }
-        catch (Exception er)
-        {
-            Logger.Log.Error(er);
-
-        }
-    }
-
-    protected void Button3_Click(object sender, EventArgs e)
-    {
-        try
-        {
-            this.readFile(0);
-            if (!String.IsNullOrWhiteSpace(objTextBox1.Text))
-            {
-                r_input_dict[2] = objTextBox1.Text;
-            }
-            else
-            {
-                r_input_dict[2] = "-";
-            }
-
-            //r_input_dict.Add(2, (this.textBox2.Text != "")? this.textBox2.Text : "-");
-
-            //r_input_dict.Add(5, (this.textBox5.Text != "") ? this.textBox5.Text : "-");
-
-            int pos = 41;
-
-            for (int r = 1; r < GridView1.SelectedRow.Cells.Count; r++)
-            {
-                r_input_dict[pos] = GridView1.SelectedRow.Cells[r].Text;
-                pos++;
-
-            }
-
-            r_input_dict[5] = ConvertCommaToPoint(r_input_dict[41]);
-
-            SpreadsheetInfo.SetLicense("FREE-LIMITED-KEY");
-
-            if (!File.Exists(HttpContext.Current.Server.MapPath("~Content/templates/templateRDT.xlsx")))
-            {
-                LabelError.Text = "Не найден файл шаблона";
-                return;
-            }
-
-            ExcelFile ef = ExcelFile.Load(HttpContext.Current.Server.MapPath("~Content/templates/templateRDT.xlsx"));
-
-            ExcelWorksheet ws = ef.Worksheets[0];
-
-            ws.PrintOptions.TopMargin = 0.2 / 2.54;
-            ws.PrintOptions.BottomMargin = 0.2 / 2.54;
-            ws.PrintOptions.LeftMargin = 1 / 2.54;
-            ws.PrintOptions.RightMargin = 1 / 2.54;
-
-            ws.Cells["K53"].Value = r_input_dict[0];
-
-            ws.Cells["J2"].Value = r_input_dict[1];
-            ws.Cells["C3"].Value = r_input_dict[2];
-            ws.Cells["C4"].Value = r_input_dict[3];
-            ws.Cells["C5"].Value = r_input_dict[4];
-            ws.Cells["C6"].Value = r_input_dict[5];
-            ws.Cells["C9"].Value = r_input_dict[6];
-
-            ws.Cells["I12"].Value = r_input_dict[7];
-            ws.Cells["K12"].Value = r_input_dict[8];
-
-            ws.Cells["I13"].Value = r_input_dict[9];
-            ws.Cells["K13"].Value = r_input_dict[10];
-
-            ws.Cells["I14"].Value = r_input_dict[11];
-            ws.Cells["K14"].Value = r_input_dict[12];
-
-            ws.Cells["I15"].Value = r_input_dict[13];
-            ws.Cells["K15"].Value = r_input_dict[14];
-
-            ws.Cells["I16"].Value = r_input_dict[15];
-
-            ws.Cells["D18"].Value = r_input_dict[16];
-            ws.Cells["E18"].Value = r_input_dict[17];
-
-            ws.Cells["D19"].Value = r_input_dict[18];
-            ws.Cells["E19"].Value = r_input_dict[19];
-
-            // пар
-            ws.Cells["J18"].Value = r_input_dict[20];
-            ws.Cells["K18"].Value = r_input_dict[21];
-
-            ws.Cells["J19"].Value = r_input_dict[22];
-            ws.Cells["K19"].Value = r_input_dict[23];
-
-            ws.Cells["J20"].Value = r_input_dict[24];
-            // пар
-
-            ws.Cells["I22"].Value = r_input_dict[25];
-            ws.Cells["K22"].Value = r_input_dict[26];
-
-            ws.Cells["I23"].Value = r_input_dict[27];
-            ws.Cells["K23"].Value = r_input_dict[28];
-
-            ws.Cells["I25"].Value = r_input_dict[29];
-            ws.Cells["K25"].Value = r_input_dict[30];
-
-            ws.Cells["I27"].Value = r_input_dict[31];
-            ws.Cells["K27"].Value = r_input_dict[32];
-
-            ws.Cells["I28"].Value = r_input_dict[33];
-
-            ws.Cells["I30"].Value = r_input_dict[34];
-
-            ws.Cells["I31"].Value = r_input_dict[35];
-
-            ws.Cells["I32"].Value = r_input_dict[36];
-            ws.Cells["K32"].Value = r_input_dict[37];
-
-            ws.Cells["I33"].Value = r_input_dict[38];
-            ws.Cells["K33"].Value = r_input_dict[381];
-
-            ws.Cells["E36"].Value = r_input_dict[39];
-
-            ws.Cells["E37"].Value = r_input_dict[40];
-
-            ws.Cells["A40"].Value = r_input_dict[41];
-            ws.Cells["B40"].Value = r_input_dict[42];
-            ws.Cells["C40"].Value = r_input_dict[43];
-            ws.Cells["D40"].Value = r_input_dict[44];
-            ws.Cells["F40"].Value = r_input_dict[45];
-            ws.Cells["G40"].Value = r_input_dict[46];
-            ws.Cells["H40"].Value = r_input_dict[47];
-            ws.Cells["I40"].Value = r_input_dict[48];
-            ws.Cells["K40"].Value = r_input_dict[49];
-
-            getDimsR(ref r_input_dict);
-
-            ws.Pictures.Add(HttpContext.Current.Server.MapPath("~/Content/images/" + ((r_input_dict[4] == this.eorRadioButtonList1.Items[0].Text) || (r_input_dict[4] == eorRadioButtonList1.Items[1].Text) ? "RDT-RDT-P.png" : "RDT-S-RDT-B.png")), "A44");
-
-            ws.Cells["F44"].Value = r_input_dict[51];
-            ws.Cells["F45"].Value = r_input_dict[52];
-            ws.Cells["F46"].Value = r_input_dict[53];
-            ws.Cells["F47"].Value = r_input_dict[54];
-
-
-            string path = HttpContext.Current.Server.MapPath("~/Files/RDT/Excel/" + DateTime.Now.ToString("dd-MM-yyyy"));
-            DirectoryInfo dirInfo = new DirectoryInfo(path);
-            if (!dirInfo.Exists)
-            {
-                dirInfo.Create();
-            }
-
-            string fileName = "";
-
-            if (!String.IsNullOrWhiteSpace(objTextBox1.Text))
-            {
-                fileName = objTextBox1.Text;
-            }
-            else
-            {
-                fileName += DateTime.Now.ToString("dd-MM-yyyy");
-            }
-
-            string filePath = path + "/" + fileName + ".xlsx";
-
-            ef.Save(filePath);
-
-            WaitDownload(50);
-
-            FileInfo file = new FileInfo(filePath);
-            if (file.Exists)
-            {
-                Response.ContentType = "application/x-msexcel";
-                Response.AppendHeader("Content-Disposition", "attachment; filename=" + file.Name);
-                Response.TransmitFile(file.FullName);
             }
         }
         catch (Exception er)

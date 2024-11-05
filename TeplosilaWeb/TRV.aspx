@@ -723,10 +723,12 @@
                                     </asp:Label>
                                 </div>
                                 <div class="col non-padding">
-                                    <asp:Label ID="calcvDNLabel" runat="server" Visible="False"></asp:Label>
+                                    <asp:Label ID="calcvDNLabel" runat="server" Visible="False">Расчетный диаметр - </asp:Label>
+                                    <asp:Label ID="calcvDNLabelVal" runat="server" Visible="False"></asp:Label>
                                 </div>
                                 <div class="col non-padding">
-                                    <asp:Label ID="calcvCapacityLabel" runat="server" Visible="False"></asp:Label>
+                                    <asp:Label ID="calcvCapacityLabel" runat="server" Visible="False">Расчетная пропускная способность - </asp:Label>
+                                    <asp:Label ID="calcvCapacityLabelVal" runat="server" Visible="False"></asp:Label>
                                 </div>
                                 <div class="col non-padding">
                                     <asp:Label ID="labelOptyV" runat="server" Visible="False"></asp:Label>
