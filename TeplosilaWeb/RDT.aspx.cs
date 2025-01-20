@@ -4024,9 +4024,9 @@ public partial class RDT : System.Web.UI.Page
             ws.Cells["C5"].Value = r_input_dict[5];
             ws.Cells["C8"].Value = r_input_dict[6];
    
-
-            ws.Cells["I10"].Value = r_input_dict[7];
-            ws.Cells["K10"].Value = r_input_dict[8];
+            
+            //ws.Cells["I10"].Value = r_input_dict[7];
+            //ws.Cells["K10"].Value = r_input_dict[8];
             ws.Cells["I11"].Value = r_input_dict[9];
             ws.Cells["K11"].Value = r_input_dict[10];
             ws.Cells["I12"].Value = r_input_dict[11];
