@@ -1026,17 +1026,17 @@ public partial class TRV : System.Web.UI.Page
                     gRowMarkM = "48";
                     break;
                 case "125": //TSL-3000-60-2-24-IP67
-                    hRowMark = "24";
+                    hRowMark = "25";
                     gRowMarkH = "26";
                     gRowMarkM = "49";
                     break;
                 case "322": //TSL-3000-60-2A-230-IP67
-                    hRowMark = "25";
+                    hRowMark = "26";
                     gRowMarkH = "27";
                     gRowMarkM = "50";
                     break;
                 case "323": //TSL-3000-60-2A-24-IP67
-                    hRowMark = "26";
+                    hRowMark = "27";
                     gRowMarkH = "28";
                     gRowMarkM = "51";
                     break;
@@ -1145,27 +1145,27 @@ public partial class TRV : System.Web.UI.Page
                         gRowMarkM = "50";
                         break;
                     case "125": //TSL-3000-60-2-24-IP67
-                        hRowMark = "24";
+                        hRowMark = "25";
                         gRowMarkH = "26";
                         gRowMarkM = "51";
                         break;
                     case "322": //TSL-3000-60-2A-230-IP67
-                        hRowMark = "25";
+                        hRowMark = "26";
                         gRowMarkH = "27";
                         gRowMarkM = "52";
                         break;
                     case "323": //TSL-3000-60-2A-24-IP67
-                        hRowMark = "26";
+                        hRowMark = "27";
                         gRowMarkH = "28";
                         gRowMarkM = "53";
                         break;
                     case "130": //TSL-6000-60-1-230-IP67
-                        hRowMark = "27";
+                        hRowMark = "28";
                         gRowMarkH = "29";
                         gRowMarkM = "54";
                         break;
                     case "37": //TW5000-XD220-S.14
-                        hRowMark = "28";
+                        hRowMark = "29";
                         gRowMarkH = "30";
                         gRowMarkM = "55";
                         break;
@@ -1186,7 +1186,7 @@ public partial class TRV : System.Web.UI.Page
                         gRowMarkH = "8";
                         gRowMarkM = "18";
                         break;
-                    case "105": //TSL-1600-25-3-24-IP67
+                    case "105": //TSL-1600-25-2-24-IP67
                         hRowMark = "8";
                         gRowMarkH = "9";
                         gRowMarkM = "19";
