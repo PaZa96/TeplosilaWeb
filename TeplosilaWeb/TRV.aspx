@@ -38,8 +38,14 @@
                                     required="required"
                                     OnSelectedIndexChanged="tvRadioButtonList1_SelectedIndexChanged">
                                     <asp:ListItem>2-х ходовой седельный</asp:ListItem>
-                                    <asp:ListItem>3-х ходовой смесительный</asp:ListItem>
+                                    <asp:ListItem>3-х ходовой</asp:ListItem>
                                 </asp:RadioButtonList>
+                                <div class="col">
+                                    <asp:RadioButtonList ID="tv3RadioButtonList1" runat="server" OnSelectedIndexChanged="tv3RadioButtonList1_SelectedIndexChanged" Enabled="False">
+                                        <asp:ListItem>смесительный</asp:ListItem>
+                                        <asp:ListItem>разделительный</asp:ListItem>
+                                    </asp:RadioButtonList>
+                                </div>
                                 <asp:CustomValidator ID="tv1CustomValidator1" runat="server"
                                     ControlToValidate="tvRadioButtonList1" Display="Dynamic"
                                     ErrorMessage="CustomValidator" ForeColor="Red"
@@ -440,6 +446,7 @@
                                 <div runat="server" id="fvPane1" visible="false">
                                     <div class="col border border-non-bottom">
                                         <asp:Label ID="Label16" runat="server" Text="Расход через клапан:"></asp:Label>
+                                        <br>
                                         </br>
                                         <asp:RadioButton ID="fvRadioButton1" runat="server"
                                             Text="Задать максимальную величину расхода через клапан:"
