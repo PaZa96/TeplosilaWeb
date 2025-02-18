@@ -2275,7 +2275,7 @@ public partial class TRV : System.Web.UI.Page
             {
                 if(tvRadioButtonList1.SelectedIndex == 0)
                 {
-                    excelPath = ((customConverterToDouble(g_dict["p35"].ToString()) >= 150) ? "~/Content/properties/gtrvt.xlsx" : "Content\\properties\\gtrv.xlsx");
+                    excelPath = ((customConverterToDouble(g_dict["p35"].ToString()) > 150) ? "~/Content/properties/gtrvt.xlsx" : "Content\\properties\\gtrv.xlsx");
                 }
                 else
                 {
@@ -6867,7 +6867,7 @@ public partial class TRV : System.Web.UI.Page
 
             if (tvRadioButtonList1.SelectedIndex == 0)
             {
-                if (v_input_dict[40] == "150 ˚С" && Convert.ToInt32(v_input_dict[43]) <= 150)
+                if ((v_input_dict[40] == "150 ˚С" && Convert.ToInt32(v_input_dict[43]) <= 150) || v_input_dict[40] == "220 ˚С")
                 {
                     ws.Pictures.Add(HttpContext.Current.Server.MapPath("\\Content\\images\\trv\\габаритный TRV и TRV-T.png"), "A39");
                 }
