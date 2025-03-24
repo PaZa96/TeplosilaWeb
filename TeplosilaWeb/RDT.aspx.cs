@@ -229,7 +229,6 @@ public partial class RDT : System.Web.UI.Page
         }
         return cp / 1000; // * rr / 1000000;
     }
-
     private double getPSbyT(double t)
     {
         return Math.Pow(t / 103, 1 / 0.242) - 0.892;
