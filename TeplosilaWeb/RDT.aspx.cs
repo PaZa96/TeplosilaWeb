@@ -394,12 +394,29 @@ public partial class RDT : System.Web.UI.Page
             if (eorRadioButtonList1.SelectedIndex == 0) //Регулятор перепада давления
             {
                 I = customConverterToDouble(this.lp1TextBox2.Text) * arrConvert3[this.lp1DropDownList2.SelectedIndex - 1] / arrConvert3[2];
-                table5 = dataFromFile.table5;
-                table11 = dataFromFile.table11;
+                if (g_dict["p35"] > MaxT3x || customConverterToDouble(this.fprTextBox2.Text) > MaxT3x)
+                {
+                    table5 = dataFromFile.table5sbt;
+                    table11 = dataFromFile.table11sbt;
+                }
+                else
+                {
+                    table5 = dataFromFile.table5;
+
+                    if (ws1RadioButtonList1.SelectedIndex != 3)
+                    {
+                        table11 = dataFromFile.table11;
+                    }
+                    else
+                    {
+                        table11 = dataFromFile.table11sbt;
+                    }
+                }
             }
+
             else if (eorRadioButtonList1.SelectedIndex == 1) //Регулятор давления после себя
             {
-                if(ws1RadioButtonList1.SelectedIndex != 3)
+                if (ws1RadioButtonList1.SelectedIndex != 3)
                 {
                     I = customConverterToDouble(this.lp2TextBox2.Text) * arrConvert3[this.lp2DropDownList2.SelectedIndex - 1] / arrConvert3[2];
                 }
@@ -408,7 +425,7 @@ public partial class RDT : System.Web.UI.Page
                     I = customConverterToDouble(this.lp5TextBox2.Text) * arrConvert3[this.lp5DropDownList2.SelectedIndex - 1] / arrConvert3[2];
                 }
 
-                if (g_dict["p35"] > 150)
+                if (g_dict["p35"] > MaxT3x || customConverterToDouble(this.fprTextBox2.Text) > MaxT3x)
                 {
                     table5 = dataFromFile.table5sbt;
                     table11 = dataFromFile.table11sbt;
@@ -416,7 +433,7 @@ public partial class RDT : System.Web.UI.Page
                 else
                 {
                     table5 = dataFromFile.table5;
-                    
+
                     if (ws1RadioButtonList1.SelectedIndex != 3)
                     {
                         table11 = dataFromFile.table11;
@@ -579,13 +596,21 @@ public partial class RDT : System.Web.UI.Page
             Newtonsoft.Json.Linq.JArray table = null;
             if (eorRadioButtonList1.SelectedIndex == 0)
             {
-                table = dataFromFile.table71;
+                if (ws1RadioButtonList1.SelectedIndex != 3 && (g_dict["p35"] > MaxT3x || customConverterToDouble(fprTextBox2.Text) > MaxT3x))
+                {
+                    table = dataFromFile.table75H;
+                }
+                else
+                {
+                    table = dataFromFile.table71;
+                }
+
             }
             else if (eorRadioButtonList1.SelectedIndex == 1)
             {
-                if(ws1RadioButtonList1.SelectedIndex != 3)
+                if (ws1RadioButtonList1.SelectedIndex != 3)
                 {
-                    if (g_dict["p35"] > 150) 
+                    if (g_dict["p35"] > MaxT3x || customConverterToDouble(fprTextBox2.Text) > MaxT3x)
                     {
                         table = dataFromFile.table75;
                     }
@@ -1166,22 +1191,28 @@ public partial class RDT : System.Web.UI.Page
             {
                 if (ws1RadioButtonList1.SelectedIndex != 3)
                 {
-                    if (customConverterToDouble(calcrTextBox2.Text) <= 150)
+                    if (ws1RadioButtonList1.SelectedIndex == 0)
                     {
-                        r_in_dict.Add(39, "150˚С");
+                        if (customConverterToDouble(this.calcrTextBox2.Text) <= MaxT3x && customConverterToDouble(this.fprTextBox2.Text) <= MaxT3x)
+                        {
+                            r_in_dict.Add(39, "150˚С");
+                        }
+                        else
+                        {
+                            r_in_dict.Add(39, "220˚С");
+                        }
                     }
                     else
                     {
-                        r_in_dict.Add(39, "220˚С");
+                        r_in_dict.Add(39, "150˚С");
                     }
                 }
                 else
-                {       
+                {
                     r_in_dict.Add(39, "220˚С");
                 }
-               
             }
-            
+
             r_in_dict.Add(40, "16 бар");
 
             r_in_dict.Add(41, "-");
@@ -1679,7 +1710,7 @@ public partial class RDT : System.Web.UI.Page
                     args.IsValid = false;
                     return;
                 }
-                if(eorRadioButtonList1.SelectedIndex != 1)
+                if(eorRadioButtonList1.SelectedIndex > 1)
                 {
                     if (customConverterToDouble(calcrTextBox2.Text) > MaxT3x)
                     {
@@ -1690,12 +1721,26 @@ public partial class RDT : System.Web.UI.Page
                 }
                 else
                 {
-                    if (customConverterToDouble(calcrTextBox2.Text) > MaxT2x)
+                    if (this.ws1RadioButtonList1.SelectedIndex == 0)
                     {
-                        CustomValidator11.ErrorMessage = "На температуру свыше 220&#8451; вариантов нет";
-                        args.IsValid = false;
-                        return;
+                        if (customConverterToDouble(calcrTextBox2.Text) > MaxT2x)
+                        {
+                            CustomValidator11.ErrorMessage = "На температуру свыше 220&#8451; вариантов нет";
+                            args.IsValid = false;
+                            return;
+                        }
+
                     }
+                    else
+                    {
+                        if (customConverterToDouble(calcrTextBox2.Text) > MaxT3x)
+                        {
+                            CustomValidator11.ErrorMessage = "На температуру свыше 150&#8451; вариантов нет";
+                            args.IsValid = false;
+                            return;
+                        }
+                    }
+
                 }
 
                 if (((customConverterToDouble(this.calcrTextBox1.Text) * arrConvert3[this.calcrDropDownList1.SelectedIndex - 1] / arrConvert3[2]) - getPSbyT(customConverterToDouble(this.calcrTextBox2.Text))) <= 0)
@@ -1757,7 +1802,7 @@ public partial class RDT : System.Web.UI.Page
                     args.IsValid = false;
                     return;
                 }
-                if (eorRadioButtonList1.SelectedIndex != 1)
+                if (eorRadioButtonList1.SelectedIndex > 1)
                 {
                     if (customConverterToDouble(fprTextBox2.Text) > MaxT3x)
                     {
@@ -1768,11 +1813,23 @@ public partial class RDT : System.Web.UI.Page
                 }
                 else
                 {
-                    if (customConverterToDouble(fprTextBox2.Text) > MaxT2x)
+                    if (this.ws1RadioButtonList1.SelectedIndex == 0)
                     {
-                        CustomValidator13.ErrorMessage = "На температуру свыше 220&#8451; вариантов нет";
-                        args.IsValid = false;
-                        return;
+                        if (customConverterToDouble(fprTextBox2.Text) > MaxT2x)
+                        {
+                            CustomValidator13.ErrorMessage = "На температуру свыше 220&#8451; вариантов нет";
+                            args.IsValid = false;
+                            return;
+                        }
+                    }
+                    else
+                    {
+                        if (customConverterToDouble(fprTextBox2.Text) > MaxT3x)
+                        {
+                            CustomValidator13.ErrorMessage = "На температуру свыше 150&#8451; вариантов нет";
+                            args.IsValid = false;
+                            return;
+                        }
                     }
                 }
             }
@@ -1801,7 +1858,7 @@ public partial class RDT : System.Web.UI.Page
                     args.IsValid = false;
                     return;
                 }
-                if (eorRadioButtonList1.SelectedIndex != 1)
+                if (eorRadioButtonList1.SelectedIndex > 1)
                 {
                     if (customConverterToDouble(fprTextBox3.Text) > MaxT3x)
                     {
@@ -1812,11 +1869,23 @@ public partial class RDT : System.Web.UI.Page
                 }
                 else
                 {
-                    if (customConverterToDouble(fprTextBox3.Text) > MaxT2x)
+                    if (this.ws1RadioButtonList1.SelectedIndex == 0)
                     {
-                        CustomValidator14.ErrorMessage = "На температуру свыше 220&#8451; вариантов нет";
-                        args.IsValid = false;
-                        return;
+                        if (customConverterToDouble(fprTextBox3.Text) > MaxT2x)
+                        {
+                            CustomValidator14.ErrorMessage = "На температуру свыше 220&#8451; вариантов нет";
+                            args.IsValid = false;
+                            return;
+                        }
+                    }
+                    else
+                    {
+                        if (customConverterToDouble(fprTextBox3.Text) > MaxT3x)
+                        {
+                            CustomValidator14.ErrorMessage = "На температуру свыше 150&#8451; вариантов нет";
+                            args.IsValid = false;
+                            return;
+                        }
                     }
                 }
                 if (customConverterToDouble(fprTextBox3.Text) >= customConverterToDouble(fprTextBox2.Text))
@@ -2161,18 +2230,20 @@ public partial class RDT : System.Web.UI.Page
 
     public double customConverterToDouble(string tb)
     {
-        double afterConvert;
+        double afterConvert = 0;
 
-        if (tb.IndexOf(".") != -1)
+        if (tb != "" && tb != null)
         {
-            string beforeConvert = tb.Replace(".", ",");
-            afterConvert = Convert.ToDouble(beforeConvert);
+            if (tb.IndexOf(".") != -1)
+            {
+                string beforeConvert = tb.Replace(".", ",");
+                afterConvert = Convert.ToDouble(beforeConvert);
+            }
+            else
+            {
+                afterConvert = Convert.ToDouble(tb);
+            }
         }
-        else
-        {
-            afterConvert = Convert.ToDouble(tb);
-        }
-
         return afterConvert;
     }
 
@@ -2870,9 +2941,9 @@ public partial class RDT : System.Web.UI.Page
                                 }
                                 if (eorRadioButtonList1.SelectedIndex != 1)
                                 {
-                                    if (p35 > 150)
+                                    if (p35 > 220)
                                     {
-                                        LabelError.Text = "На температуру свыше 150°С вариантов нет";
+                                        LabelError.Text = "На температуру свыше 220°С вариантов нет";
                                         return;
                                     }
                                 }
@@ -2880,11 +2951,10 @@ public partial class RDT : System.Web.UI.Page
                                 {
                                     if (p35 > 220)
                                     {
-                                        LabelError.Text = "На температуру свыше 150°С вариантов нет";
+                                        LabelError.Text = "На температуру свыше 220°С вариантов нет";
                                         return;
                                     }
                                 }
-
 
                                 g_dict.Add("p35", p35);
 
@@ -2921,7 +2991,7 @@ public partial class RDT : System.Web.UI.Page
                                     
                             }
 
-                            if (eorRadioButtonList1.SelectedIndex != 1)
+                            if (eorRadioButtonList1.SelectedIndex > 1)
                             {
                                 this.maxt1ResultLabel.Text = "Максимальная температура - 150 °С";
                                 this.maxp1ResultLabel.Text = "Максимальное рабочее давление - 16 бар";
@@ -2932,22 +3002,29 @@ public partial class RDT : System.Web.UI.Page
                             {
                                 if (ws1RadioButtonList1.SelectedIndex != 3)
                                 {
-                                    if (g_dict["p35"] <= 150)
+                                    if (this.ws1RadioButtonList1.SelectedIndex == 0)
                                     {
-                                        this.maxt1ResultLabel.Text = "Максимальная температура - 150 °С";
+                                        if (g_dict["p35"] <= MaxT3x && customConverterToDouble(this.fprTextBox2.Text) <= MaxT3x)
+                                        {
+                                            this.maxt1ResultLabel.Text = "Максимальная температура - 150 °С";
+                                        }
+                                        else
+                                        {
+                                            this.maxt1ResultLabel.Text = "Максимальная температура - 220 °С";
+                                        }
                                     }
                                     else
                                     {
-                                        this.maxt1ResultLabel.Text = "Максимальная температура - 220 °С";
+                                        this.maxt1ResultLabel.Text = "Максимальная температура - 150 °С";
                                     }
                                 }
                                 else
                                 {
-                                  
+
                                     this.maxt1ResultLabel.Text = "Максимальная температура - 220 °С";
-                                    
+
                                 }
-                                   
+
                                 this.maxp1ResultLabel.Text = "Максимальное рабочее давление - 16 бар";
                                 if (ws1RadioButtonList1.SelectedIndex != 3)
                                 {
@@ -3498,13 +3575,13 @@ public partial class RDT : System.Web.UI.Page
 
             SpreadsheetInfo.SetLicense("FREE-LIMITED-KEY");
 
-            if (!File.Exists(HttpContext.Current.Server.MapPath("~/Content/templates/templateRDT-P,RDT-T.xlsx")))
+            if (!File.Exists(HttpContext.Current.Server.MapPath("~/Content/templates/templateRDT-P,RDT-PH.xlsx")))
             {
                 LabelError.Text = "Не найден файл шаблона";
                 return;
             }
 
-            ExcelFile ef = ExcelFile.Load(HttpContext.Current.Server.MapPath("~/Content/templates/templateRDT-P,RDT-T.xlsx"));
+            ExcelFile ef = ExcelFile.Load(HttpContext.Current.Server.MapPath("~/Content/templates/templateRDT-P,RDT-PH.xlsx"));
 
             ExcelWorksheet ws = ef.Worksheets[0];
 
@@ -3570,9 +3647,9 @@ public partial class RDT : System.Web.UI.Page
 
             if ((r_input_dict[4] == this.eorRadioButtonList1.Items[0].Text) || (r_input_dict[4] == eorRadioButtonList1.Items[1].Text))
             {
-                if (r_input_dict[4] == eorRadioButtonList1.Items[1].Text && customConverterToDouble(calcrTextBox2.Text) > 150)
+                if (r_input_dict[4] == eorRadioButtonList1.Items[1].Text && (customConverterToDouble(calcrTextBox2.Text) > MaxT3x || customConverterToDouble(this.fprTextBox2.Text) > MaxT3x))
                 {
-                    ws.Pictures.Add(HttpContext.Current.Server.MapPath("~/Content/images/rdt/Габаритный RDT-S и RDT-B.jpg"), "A30");
+                    ws.Pictures.Add(HttpContext.Current.Server.MapPath("~/Content/images/rdt/Габаритный RDT-H, RDT-PH.jpg"), "A30");
                 }
                 else
                 {
@@ -3987,13 +4064,13 @@ public partial class RDT : System.Web.UI.Page
 
             SpreadsheetInfo.SetLicense("FREE-LIMITED-KEY");
 
-            if (!File.Exists(HttpContext.Current.Server.MapPath("~/Content/templates/templateRDT.xlsx")))
+            if (!File.Exists(HttpContext.Current.Server.MapPath("~/Content/templates/templateRDT,RDT-H.xlsx")))
             {
                 LabelError.Text = "Не найден файл шаблона";
                 return;
             }
 
-            ExcelFile ef = ExcelFile.Load(HttpContext.Current.Server.MapPath("~/Content/templates/templateRDT.xlsx"));
+            ExcelFile ef = ExcelFile.Load(HttpContext.Current.Server.MapPath("~/Content/templates/templateRDT,RDT-H.xlsx"));
 
             ExcelWorksheet ws = ef.Worksheets[0];
 
@@ -4025,8 +4102,8 @@ public partial class RDT : System.Web.UI.Page
             ws.Cells["C8"].Value = r_input_dict[6];
    
             
-            //ws.Cells["I10"].Value = r_input_dict[7];
-            //ws.Cells["K10"].Value = r_input_dict[8];
+            ws.Cells["I10"].Value = r_input_dict[7];
+            ws.Cells["K10"].Value = r_input_dict[8];
             ws.Cells["I11"].Value = r_input_dict[9];
             ws.Cells["K11"].Value = r_input_dict[10];
             ws.Cells["I12"].Value = r_input_dict[11];
@@ -4065,11 +4142,22 @@ public partial class RDT : System.Web.UI.Page
             getDimsR(ref r_input_dict);
 
 
-            if ((r_input_dict[4] == this.eorRadioButtonList1.Items[0].Text) || (r_input_dict[4] == eorRadioButtonList1.Items[1].Text))
+            if ((r_input_dict[4] == this.eorRadioButtonList1.Items[1].Text))
             {
-                if (r_input_dict[4] == eorRadioButtonList1.Items[1].Text && customConverterToDouble(calcrTextBox2.Text) > 150 && ws1RadioButtonList1.SelectedIndex != 3)
+                if (r_input_dict[4] == eorRadioButtonList1.Items[1].Text && customConverterToDouble(calcrTextBox2.Text) > 150 && ws1RadioButtonList1.SelectedIndex == 0)
                 {
                     ws.Pictures.Add(HttpContext.Current.Server.MapPath("~/Content/images/rdt/Габаритный RDT-S и RDT-B.jpg"), "A33");
+                }
+                else
+                {
+                    ws.Pictures.Add(HttpContext.Current.Server.MapPath("~/Content/images/rdt/Габаритный RDT и RDT-P.jpg"), "A33");
+                }
+            }
+            else if (r_input_dict[4] == this.eorRadioButtonList1.Items[0].Text)
+            {
+                if ((customConverterToDouble(calcrTextBox2.Text) > 150 || customConverterToDouble(this.fprTextBox2.Text) > 150) && ws1RadioButtonList1.SelectedIndex == 0)
+                {
+                    ws.Pictures.Add(HttpContext.Current.Server.MapPath("~/Content/images/rdt/Габаритный RDT-H, RDT-PH.jpg"), "A33");
                 }
                 else
                 {
