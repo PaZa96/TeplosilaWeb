@@ -1502,36 +1502,6 @@ public partial class TRV : System.Web.UI.Page
                 Prgl(p7, p6, ref g, ref cp);
             }
 
-            /*
-            if (this.ws2RadioButton1.Checked)
-            {
-                //g = 1000;
-                Water(customConverterToDouble(this.calcvTextBox2.Text), ref g);
-            }
-            else
-            {
-                double p6 = Convert.ToDouble(this.ws2TextBox1.Text);
-                double p7 = Math.Round(Convert.ToDouble(this.ws2TextBox2.Text) / 10) * 10;
-                /*foreach (Newtonsoft.Json.Linq.JProperty el in dataFromFile.table4)
-                {
-                    string s = 0 + "";
-                    string[] mas = el.Name.Split('-');
-                    if ((Convert.ToDouble(mas[0]) <= p6) && (Convert.ToDouble(mas[1]) >= p6))
-                    {
-                        double tmp_t = 0.0;
-                        foreach (Newtonsoft.Json.Linq.JObject val in el.Value)
-                        {
-                            if (Convert.ToDouble(val.GetValue("t")) == p7)
-                            {
-                                tmp_t = Convert.ToDouble(val.GetValue("sr"));
-                            }
-                        }
-                        g = tmp_t;
-                    }
-                }* /
-                Etgl(p7, p6, ref g);
-            }*/
-
             if (ws2RadioButtonList1.SelectedIndex != 3)
             {
                 if (dPkl > dPto)
@@ -4400,7 +4370,7 @@ public partial class TRV : System.Web.UI.Page
                         listPP66.RemoveRange(indexNoVar, listPP66.Count - indexNoVar);
                         listPP67.RemoveRange(indexNoVar, listPP67.Count - indexNoVar);
                         listPP68.RemoveRange(indexNoVar, listPP68.Count - indexNoVar);
-                        listPP69.RemoveRange(indexNo, listPP69.Count - indexNo);
+                        listPP69.RemoveRange(indexNoVar, listPP69.Count - indexNoVar);
 
                         listResult["A"] = listA.ToArray();
                         listResult["B"] = listB.ToArray();
