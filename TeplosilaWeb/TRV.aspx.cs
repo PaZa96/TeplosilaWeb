@@ -1554,12 +1554,13 @@ public partial class TRV : System.Web.UI.Page
             Newtonsoft.Json.Linq.JArray tablev = null;
             Newtonsoft.Json.Linq.JArray tableDN = null;
             Newtonsoft.Json.Linq.JArray tablev_7 = null;
+
             if (tvRadioButtonList1.SelectedIndex == 0)
             {
 
                 if (customConverterToDouble(g_dict["p35"].ToString()) > 150)
                 {
-                    tablev = dataFromFile.table5trvt;
+                    
                     if (ws2RadioButtonList1.SelectedIndex != 3)
                     {
                         if (customConverterToDouble(calcvTextBox1.Text) > 16)
@@ -1571,6 +1572,7 @@ public partial class TRV : System.Web.UI.Page
                         {
                             tableDN = dataFromFile.table10trvt;
                             tablev_7 = (customConverterToDouble(g_dict["p35"].ToString()) <= 150) ? dataFromFile.tablev_71 : dataFromFile.tablev_71t;
+                            tablev = dataFromFile.table5trvt;
                         }
                     } else
                     {
@@ -1578,11 +1580,13 @@ public partial class TRV : System.Web.UI.Page
                         {
                             tableDN = dataFromFile.table10trvt25;
                             tablev_7 = dataFromFile.tablev_71t25;
+                            tablev = dataFromFile.table5trvt25;
                         }
                         else
                         {
                             tableDN = dataFromFile.table10trvt;
                             tablev_7 = dataFromFile.tablev_71t;
+                            tablev = dataFromFile.table5trvt;
                         }
 
                         
@@ -1591,7 +1595,6 @@ public partial class TRV : System.Web.UI.Page
                 }
                 else
                 {
-                    tablev = dataFromFile.table5v;
 
                     if (ws2RadioButtonList1.SelectedIndex != 3)
                     {
@@ -1599,11 +1602,13 @@ public partial class TRV : System.Web.UI.Page
                         {
                             tableDN = dataFromFile.table1025;
                             tablev_7 = (customConverterToDouble(g_dict["p35"].ToString()) <= 150) ? dataFromFile.tablev_7125 : dataFromFile.tablev_71t25;
+                            tablev = dataFromFile.table5v25;
                         }
                         else
                         {
                             tablev_7 = (customConverterToDouble(g_dict["p35"].ToString()) <= 150) ? dataFromFile.tablev_71 : dataFromFile.tablev_71t;
                             tableDN = dataFromFile.table10;
+                            tablev = dataFromFile.table5v;
                         }
                     }
                     else
@@ -1612,11 +1617,13 @@ public partial class TRV : System.Web.UI.Page
                         {
                             tableDN = dataFromFile.table1025;
                             tablev_7 = dataFromFile.tablev_71t25;
+                            tablev = dataFromFile.table5v25;
                         }
                         else
                         {
                             tableDN = dataFromFile.table10;
                             tablev_7 = dataFromFile.tablev_71t;
+                            tablev = dataFromFile.table5v;
                         }
 
                         
@@ -5333,8 +5340,9 @@ public partial class TRV : System.Web.UI.Page
                                         }
                                         else if (p35 > g_dict["vTMax"])
                                         {
-
-                                            LabelError.Text += "На температуру свыше " + g_dict["vTMax"].ToString() + "°С вариантов нет";
+                                            lpv5TextBox3.Text = p35.ToString();
+                                            CustomValidator3.ErrorMessage = "На температуру свыше " + g_dict["vTMax"].ToString() + "°С вариантов нет";
+;                                           CustomValidator3.IsValid = false;
                                             return;
                                         }
                                         else g_dict.Add("p35", p35);
