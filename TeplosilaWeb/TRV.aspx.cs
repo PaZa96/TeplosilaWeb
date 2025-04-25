@@ -1563,7 +1563,7 @@ public partial class TRV : System.Web.UI.Page
                     
                     if (ws2RadioButtonList1.SelectedIndex != 3)
                     {
-                        if (customConverterToDouble(calcvTextBox1.Text) > 16)
+                        if (convertArrToBar(arrConvert3, calcvDropDownList1, calcvTextBox1) > PressureBeforeValve3x)
                         {
                             tableDN = dataFromFile.table10trvt25;
                             tablev_7 = (customConverterToDouble(g_dict["p35"].ToString()) <= 150) ? dataFromFile.tablev_7125 : dataFromFile.tablev_71t25;
@@ -1576,7 +1576,7 @@ public partial class TRV : System.Web.UI.Page
                         }
                     } else
                     {
-                        if (customConverterToDouble(lpv5TextBox1.Text) > 16)
+                        if (convertArrToBar(arrConvert3, lpv5DropDownList1, lpv5TextBox1) > PressureBeforeValve3x)
                         {
                             tableDN = dataFromFile.table10trvt25;
                             tablev_7 = dataFromFile.tablev_71t25;
@@ -1598,7 +1598,7 @@ public partial class TRV : System.Web.UI.Page
 
                     if (ws2RadioButtonList1.SelectedIndex != 3)
                     {
-                        if (customConverterToDouble(calcvTextBox1.Text) > 16)
+                        if (convertArrToBar(arrConvert3, calcvDropDownList1, calcvTextBox1) > PressureBeforeValve3x)
                         {
                             tableDN = dataFromFile.table1025;
                             tablev_7 = (customConverterToDouble(g_dict["p35"].ToString()) <= 150) ? dataFromFile.tablev_7125 : dataFromFile.tablev_71t25;
@@ -1613,7 +1613,7 @@ public partial class TRV : System.Web.UI.Page
                     }
                     else
                     {
-                        if (customConverterToDouble(lpv5TextBox1.Text) > 16)
+                        if (convertArrToBar(arrConvert3, lpv5DropDownList1, lpv5TextBox1) > PressureBeforeValve3x)
                         {
                             tableDN = dataFromFile.table1025;
                             tablev_7 = dataFromFile.tablev_71t25;
@@ -4237,12 +4237,12 @@ public partial class TRV : System.Web.UI.Page
                         {
                             if (ws2RadioButtonList1.SelectedIndex < 3)
                             {
-                                trvName = customConverterToDouble(calcvTextBox1.Text) <= 16 ? match.Value : match.Value + "-25";
+                                trvName = convertArrToBar(arrConvert3, calcvDropDownList1, calcvTextBox1) <= PressureBeforeValve3x ? match.Value : match.Value + "-25";
 
                             } 
                             else
                             {
-                                trvName = customConverterToDouble(lpv5TextBox1.Text) <= 16 ? match.Value : match.Value + "-25";
+                                trvName = convertArrToBar(arrConvert3, lpv5DropDownList1, lpv5TextBox1) <= PressureBeforeValve3x ? match.Value : match.Value + "-25";
                             }
                         } else
                         {
@@ -4637,11 +4637,11 @@ public partial class TRV : System.Web.UI.Page
             if(ws2RadioButtonList1.SelectedIndex != 3)
             {
                 v_in_dict.Add(40, (customConverterToDouble(v_in_dict[18]) > 150 ? "220 ˚С" : "150 ˚С"));
-                v_in_dict.Add(41, (customConverterToDouble(calcvTextBox1.Text) <= 16 ? "16 бар" : "25 бар"));
+                v_in_dict.Add(41, (convertArrToBar(arrConvert3, calcvDropDownList1, calcvTextBox1) <= PressureBeforeValve3x ? "16 бар" : "25 бар"));
             } else
             {
                 v_in_dict[40] = "150 ˚С";
-                v_in_dict.Add(41, (customConverterToDouble(lpv5TextBox1.Text) <= 16 ? "16 бар" : "25 бар"));
+                v_in_dict.Add(41, (convertArrToBar(arrConvert3, lpv5DropDownList1, lpv5TextBox1) <= PressureBeforeValve3x ? "16 бар" : "25 бар"));
             }
             
         }
@@ -5507,11 +5507,11 @@ public partial class TRV : System.Web.UI.Page
                                         if (ws2RadioButtonList1.SelectedIndex != 3)
                                         {
                                             this.maxt2ResultLabel.Text = "Максимальная температура - " + ((double.Parse(g_dict["p35"].ToString()) <= 150) ? "150" : "220") + " °С";
-                                            maxp2ResultLabel.Text = "Максимальное рабочее давление - " + (customConverterToDouble(calcvTextBox1.Text) <= 16 ? "16 бар" : "25 бар");
+                                            maxp2ResultLabel.Text = "Максимальное рабочее давление - " + (convertArrToBar(arrConvert3, calcvDropDownList1, calcvTextBox1) <= PressureBeforeValve3x ? "16 бар" : "25 бар");
                                         } else
                                         {
                                             this.maxt2ResultLabel.Text = "Максимальная температура - 220 °С";
-                                            maxp2ResultLabel.Text = "Максимальное рабочее давление - " + (customConverterToDouble(lpv5TextBox1.Text) <= 16 ? "16 бар" : "25 бар");
+                                            maxp2ResultLabel.Text = "Максимальное рабочее давление - " + (convertArrToBar(arrConvert3, lpv5DropDownList1, lpv5TextBox1) <= PressureBeforeValve3x ? "16 бар" : "25 бар");
                                         }
                                     }
                                     else
@@ -6142,7 +6142,7 @@ public partial class TRV : System.Web.UI.Page
                     return;
                 }
 
-                if (tdRadioButtonList1.SelectedIndex == 0)
+                if (tvRadioButtonList1.SelectedIndex == 0)
                 {
                     if (convertArrToBar(arrConvert3, calcvDropDownList1, calcvTextBox1) > PressureBeforeValve2x)
                     {
