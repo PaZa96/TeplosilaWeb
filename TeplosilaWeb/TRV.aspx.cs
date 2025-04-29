@@ -1555,7 +1555,7 @@ public partial class TRV : System.Web.UI.Page
             Newtonsoft.Json.Linq.JArray tableDN = null;
             Newtonsoft.Json.Linq.JArray tablev_7 = null;
 
-            if (tvRadioButtonList1.SelectedIndex == 0)
+            /*if (tvRadioButtonList1.SelectedIndex == 0)
             {
 
                 if (customConverterToDouble(g_dict["p35"].ToString()) > 150)
@@ -1567,6 +1567,7 @@ public partial class TRV : System.Web.UI.Page
                         {
                             tableDN = dataFromFile.table10trvt25;
                             tablev_7 = (customConverterToDouble(g_dict["p35"].ToString()) <= 150) ? dataFromFile.tablev_7125 : dataFromFile.tablev_71t25;
+                            tablev = dataFromFile.table5trvt25;
                         }
                         else
                         {
@@ -1639,14 +1640,55 @@ public partial class TRV : System.Web.UI.Page
                 tablev = dataFromFile.table6v;
                 tableDN = dataFromFile.table11;
                 tablev_7 = dataFromFile.tablev_713;
+            }*/
+
+
+
+            if (tvRadioButtonList1.SelectedIndex == 0)
+            {
+
+                if (customConverterToDouble(g_dict["p35"].ToString()) > 150)
+                {
+                    tablev = dataFromFile.table5trvt;
+                    tableDN = dataFromFile.table10trvt;
+                }
+                else
+                {
+                    tablev = dataFromFile.table5v;
+                    tableDN = dataFromFile.table10;
+                }
+
+
+
+                if (ws2RadioButtonList1.SelectedIndex != 3)
+                {
+                    if (customConverterToDouble(g_dict["p35"].ToString()) <= 150) tablev_7 = dataFromFile.tablev_71;
+                    else tablev_7 = dataFromFile.tablev_71t;
+                }
+                else
+                {
+                    tablev_7 = dataFromFile.tablev_71t;
+                }
+
             }
-            double col_B = (rpvRadioButtonList1.SelectedIndex == 0) ? Convert.ToDouble(tablev[0]) : Convert.ToDouble(tablev[tablev.Count - 1]); //выбор начальной пропускной способности
+            else
+            {
+                tablev = dataFromFile.table6v;
+                tableDN = dataFromFile.table11;
+                tablev_7 = dataFromFile.tablev_713;
+            }
+
+
+            double col_B = (rpvRadioButtonList1.SelectedIndex == 0 || ws2RadioButtonList1.SelectedIndex == 3) ? Convert.ToDouble(tablev[0]) : Convert.ToDouble(tablev[tablev.Count - 1]); //выбор начальной пропускной способности
+
+
+
 
             int col_C = Convert.ToInt32(tableDN[tableDN.Count - 1]); //выбор начального максимального диаметра
 
             bool exit_t = false;
 
-            if (rpvRadioButtonList1.SelectedIndex == 0)
+            if (rpvRadioButtonList1.SelectedIndex == 0 || ws2RadioButtonList1.SelectedIndex == 3)
             {
                 if (col_B == Convert.ToDouble(tablev[0])) //выбор пропускной способности
                 {
@@ -4640,14 +4682,14 @@ public partial class TRV : System.Web.UI.Page
                 v_in_dict.Add(41, (convertArrToBar(arrConvert3, calcvDropDownList1, calcvTextBox1) <= PressureBeforeValve3x ? "16 бар" : "25 бар"));
             } else
             {
-                v_in_dict[40] = "150 ˚С";
+                v_in_dict[40] = "220˚С";
                 v_in_dict.Add(41, (convertArrToBar(arrConvert3, lpv5DropDownList1, lpv5TextBox1) <= PressureBeforeValve3x ? "16 бар" : "25 бар"));
             }
             
         }
         else {
             v_in_dict.Add(41, "16 бар");
-            v_in_dict[40] = "220 ˚С";
+            v_in_dict[40] = "150 ˚С";
         }
 
         v_in_dict.Add(42, "-");
@@ -5516,7 +5558,7 @@ public partial class TRV : System.Web.UI.Page
                                     }
                                     else
                                     {
-                                        this.maxt2ResultLabel.Text = "Максимальная температура - 220 °С";
+                                        this.maxt2ResultLabel.Text = "Максимальная температура - 150 °С";
                                         maxp2ResultLabel.Text = "Максимальное рабочее давление - 16 бар";
                                     }
 
