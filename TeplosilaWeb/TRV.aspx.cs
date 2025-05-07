@@ -1555,7 +1555,7 @@ public partial class TRV : System.Web.UI.Page
             Newtonsoft.Json.Linq.JArray tableDN = null;
             Newtonsoft.Json.Linq.JArray tablev_7 = null;
 
-            /*if (tvRadioButtonList1.SelectedIndex == 0)
+            if (tvRadioButtonList1.SelectedIndex == 0)
             {
 
                 if (customConverterToDouble(g_dict["p35"].ToString()) > 150)
@@ -1622,9 +1622,9 @@ public partial class TRV : System.Web.UI.Page
                         }
                         else
                         {
-                            tableDN = dataFromFile.table10;
+                            tableDN = dataFromFile.table10trvt;
                             tablev_7 = dataFromFile.tablev_71t;
-                            tablev = dataFromFile.table5v;
+                            tablev = dataFromFile.table5trvt;
                         }
 
                         
@@ -1634,42 +1634,6 @@ public partial class TRV : System.Web.UI.Page
 
                
                
-            }
-            else
-            {
-                tablev = dataFromFile.table6v;
-                tableDN = dataFromFile.table11;
-                tablev_7 = dataFromFile.tablev_713;
-            }*/
-
-
-
-            if (tvRadioButtonList1.SelectedIndex == 0)
-            {
-
-                if (customConverterToDouble(g_dict["p35"].ToString()) > 150)
-                {
-                    tablev = dataFromFile.table5trvt;
-                    tableDN = dataFromFile.table10trvt;
-                }
-                else
-                {
-                    tablev = dataFromFile.table5v;
-                    tableDN = dataFromFile.table10;
-                }
-
-
-
-                if (ws2RadioButtonList1.SelectedIndex != 3)
-                {
-                    if (customConverterToDouble(g_dict["p35"].ToString()) <= 150) tablev_7 = dataFromFile.tablev_71;
-                    else tablev_7 = dataFromFile.tablev_71t;
-                }
-                else
-                {
-                    tablev_7 = dataFromFile.tablev_71t;
-                }
-
             }
             else
             {
