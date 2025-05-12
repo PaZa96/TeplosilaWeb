@@ -6223,7 +6223,7 @@ public partial class TRV : System.Web.UI.Page
                     args.IsValid = false;
                     return;
                 }
-                if (tvRadioButtonList1.SelectedIndex == 0)
+                if (tvRadioButtonList1.SelectedIndex == 0 && ws2RadioButtonList1.SelectedIndex == 0)
                 {
                     if (customConverterToDouble(calcvTextBox2.Text) > MaxT2x)
                     {
