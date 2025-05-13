@@ -243,6 +243,20 @@ public partial class RDT : System.Web.UI.Page
 
     //------------------------------------Table Function START--------------------------------------
 
+    private bool get25BarFlag()
+    {
+        bool flag25Bar = (convertArrToBar(arrConvert3, lp1DropDownList3, lp1TextBox3) > PressureBeforeValve3x) || //Регулятор перепада давления
+                                (convertArrToBar(arrConvert3, lp1DropDownList4, lp1TextBox4) > PressureBeforeValve3x) ||
+                                (convertArrToBar(arrConvert3, lp2DropDownList1, lp2TextBox1) > PressureBeforeValve3x) ||  //Регулятор давления "после себя"
+                                (convertArrToBar(arrConvert3, lp2DropDownList2, lp2TextBox2) > PressureBeforeValve3x) ||
+                                (convertArrToBar(arrConvert3, lp3DropDownList1, lp3TextBox1) > PressureBeforeValve3x) || //Регулятор давления "до себя"
+                                (convertArrToBar(arrConvert3, lp3DropDownList2, lp3TextBox2) > PressureBeforeValve3x) || 
+                                (convertArrToBar(arrConvert3, lp4DropDownList2, lp4TextBox2) > PressureBeforeValve3x) || //Регулятор "перепуска"
+                                (convertArrToBar(arrConvert3, lp5DropDownList1, lp5TextBox1) > PressureBeforeValve3x) || //Регулятор давления "после себя" Пар
+                                (convertArrToBar(arrConvert3, lp5DropDownList2, lp5TextBox2) > PressureBeforeValve3x) ||
+                                (convertArrToBar(arrConvert3, calcrDropDownList1, calcrTextBox1) > PressureBeforeValve3x); // Расчет регулятора давления на кавитацию:
+        return flag25Bar;
+    }
     private Dictionary<string, string[]> generatedTableR(Dictionary<string, double> g_dict)
     {
         try
@@ -254,6 +268,7 @@ public partial class RDT : System.Web.UI.Page
             double Kv_start = 0;
             double tmpKv = 0;
             string tmpA = "";
+            bool flag25Bar = get25BarFlag();
 
             Newtonsoft.Json.Linq.JArray table5 = null;
             Newtonsoft.Json.Linq.JArray table11 = null;
@@ -390,73 +405,146 @@ public partial class RDT : System.Web.UI.Page
             double I = 0;
             Newtonsoft.Json.Linq.JObject tmpI = null;
 
-            if (eorRadioButtonList1.SelectedIndex == 0) //Регулятор перепада давления
+            if (flag25Bar)
             {
-                I = customConverterToDouble(this.lp1TextBox2.Text) * arrConvert3[this.lp1DropDownList2.SelectedIndex - 1] / arrConvert3[2];
-                if (g_dict["p35"] > MaxT3x || customConverterToDouble(this.fprTextBox2.Text) > MaxT3x)
+                if (eorRadioButtonList1.SelectedIndex == 0) //Регулятор перепада давления
                 {
-                    table5 = dataFromFile.table5sbt;
-                    table11 = dataFromFile.table11sbt;
-                }
-                else
-                {
-                    table5 = dataFromFile.table5;
-
-                    if (ws1RadioButtonList1.SelectedIndex != 3)
+                    I = customConverterToDouble(this.lp1TextBox2.Text) * arrConvert3[this.lp1DropDownList2.SelectedIndex - 1] / arrConvert3[2];
+                    if (g_dict["p35"] > MaxT3x || customConverterToDouble(this.fprTextBox2.Text) > MaxT3x)
                     {
-                        table11 = dataFromFile.table11;
+                        table5 = dataFromFile.table5sbt25;
+                        table11 = dataFromFile.table11sbt25;
                     }
                     else
                     {
-                        table11 = dataFromFile.table11sbt;
+                        table5 = dataFromFile.table525;
+
+                        if (ws1RadioButtonList1.SelectedIndex != 3)
+                        {
+                            table11 = dataFromFile.table1125;
+                        }
+                        else
+                        {
+                            table11 = dataFromFile.table11sbt25;
+                        }
                     }
                 }
-            }
 
-            else if (eorRadioButtonList1.SelectedIndex == 1) //Регулятор давления после себя
-            {
-                if (ws1RadioButtonList1.SelectedIndex != 3)
+                else if (eorRadioButtonList1.SelectedIndex == 1) //Регулятор давления после себя
                 {
-                    I = customConverterToDouble(this.lp2TextBox2.Text) * arrConvert3[this.lp2DropDownList2.SelectedIndex - 1] / arrConvert3[2];
-                }
-                else
-                {
-                    I = customConverterToDouble(this.lp5TextBox2.Text) * arrConvert3[this.lp5DropDownList2.SelectedIndex - 1] / arrConvert3[2];
-                }
-
-                if (g_dict["p35"] > MaxT3x || customConverterToDouble(this.fprTextBox2.Text) > MaxT3x)
-                {
-                    table5 = dataFromFile.table5sbt;
-                    table11 = dataFromFile.table11sbt;
-                }
-                else
-                {
-                    table5 = dataFromFile.table5;
-
                     if (ws1RadioButtonList1.SelectedIndex != 3)
                     {
-                        table11 = dataFromFile.table11;
+                        I = customConverterToDouble(this.lp2TextBox2.Text) * arrConvert3[this.lp2DropDownList2.SelectedIndex - 1] / arrConvert3[2];
                     }
                     else
                     {
+                        I = customConverterToDouble(this.lp5TextBox2.Text) * arrConvert3[this.lp5DropDownList2.SelectedIndex - 1] / arrConvert3[2];
+                    }
+
+                    if (g_dict["p35"] > MaxT3x || customConverterToDouble(this.fprTextBox2.Text) > MaxT3x)
+                    {
+                        table5 = dataFromFile.table5sbt25;
+                        table11 = dataFromFile.table11sbt25;
+
+                    }
+                    else
+                    {
+                        table5 = dataFromFile.table525;
+
+                        if (ws1RadioButtonList1.SelectedIndex != 3)
+                        {
+                            table11 = dataFromFile.table1125;
+                        }
+                        else
+                        {
+                            table11 = dataFromFile.table11sbt25;
+                        }
+                    }
+
+                }
+                else if (eorRadioButtonList1.SelectedIndex == 2) //Регулятор давления до себя
+                {
+                    I = customConverterToDouble(this.lp3TextBox1.Text) * arrConvert3[this.lp3DropDownList1.SelectedIndex - 1] / arrConvert3[2];
+                    table5 = dataFromFile.table525;
+                    table11 = dataFromFile.table1125;
+                }
+                else if (eorRadioButtonList1.SelectedIndex == 3) //Регулятор перепуска
+                {
+                    I = customConverterToDouble(this.lp4TextBox2.Text) * arrConvert3[this.lp4DropDownList2.SelectedIndex - 1] / arrConvert3[2];
+                    table5 = dataFromFile.table525;
+                    table11 = dataFromFile.table1125;
+                }
+            }
+            else
+            {
+                if (eorRadioButtonList1.SelectedIndex == 0) //Регулятор перепада давления
+                {
+                    I = customConverterToDouble(this.lp1TextBox2.Text) * arrConvert3[this.lp1DropDownList2.SelectedIndex - 1] / arrConvert3[2];
+                    if (g_dict["p35"] > MaxT3x || customConverterToDouble(this.fprTextBox2.Text) > MaxT3x)
+                    {
+                        table5 = dataFromFile.table5sbt;
                         table11 = dataFromFile.table11sbt;
+                    }
+                    else
+                    {
+                        table5 = dataFromFile.table5;
+
+                        if (ws1RadioButtonList1.SelectedIndex != 3)
+                        {
+                            table11 = dataFromFile.table11;
+                        }
+                        else
+                        {
+                            table11 = dataFromFile.table11sbt;
+                        }
                     }
                 }
 
-            }
-            else if (eorRadioButtonList1.SelectedIndex == 2) //Регулятор давления до себя
-            {
-                I = customConverterToDouble(this.lp3TextBox1.Text) * arrConvert3[this.lp3DropDownList1.SelectedIndex - 1] / arrConvert3[2];
-                table5 = dataFromFile.table5;
-                table11 = dataFromFile.table11;
-            }
-            else if (eorRadioButtonList1.SelectedIndex == 3) //Регулятор перепуска
-            {
-                I = customConverterToDouble(this.lp4TextBox2.Text) * arrConvert3[this.lp4DropDownList2.SelectedIndex - 1] / arrConvert3[2];
-                table5 = dataFromFile.table5;
-                table11 = dataFromFile.table11;
-            }
+                else if (eorRadioButtonList1.SelectedIndex == 1) //Регулятор давления после себя
+                {
+                    if (ws1RadioButtonList1.SelectedIndex != 3)
+                    {
+                        I = customConverterToDouble(this.lp2TextBox2.Text) * arrConvert3[this.lp2DropDownList2.SelectedIndex - 1] / arrConvert3[2];
+                    }
+                    else
+                    {
+                        I = customConverterToDouble(this.lp5TextBox2.Text) * arrConvert3[this.lp5DropDownList2.SelectedIndex - 1] / arrConvert3[2];
+                    }
 
+                    if (g_dict["p35"] > MaxT3x || customConverterToDouble(this.fprTextBox2.Text) > MaxT3x)
+                    {
+                        table5 = dataFromFile.table5sbt;
+                        table11 = dataFromFile.table11sbt;
+
+                    }
+                    else
+                    {
+                        table5 = dataFromFile.table5;
+
+                        if (ws1RadioButtonList1.SelectedIndex != 3)
+                        {
+                            table11 = dataFromFile.table11;
+                        }
+                        else
+                        {
+                            table11 = dataFromFile.table11sbt;
+                        }
+                    }
+
+                }
+                else if (eorRadioButtonList1.SelectedIndex == 2) //Регулятор давления до себя
+                {
+                    I = customConverterToDouble(this.lp3TextBox1.Text) * arrConvert3[this.lp3DropDownList1.SelectedIndex - 1] / arrConvert3[2];
+                    table5 = dataFromFile.table5;
+                    table11 = dataFromFile.table11;
+                }
+                else if (eorRadioButtonList1.SelectedIndex == 3) //Регулятор перепуска
+                {
+                    I = customConverterToDouble(this.lp4TextBox2.Text) * arrConvert3[this.lp4DropDownList2.SelectedIndex - 1] / arrConvert3[2];
+                    table5 = dataFromFile.table5;
+                    table11 = dataFromFile.table11;
+                }
+            }
 
             double col_B = Convert.ToDouble(table5[table5.Count - 1]);
             int col_C = Convert.ToInt32(table11[table11.Count - 1]);
@@ -593,48 +681,95 @@ public partial class RDT : System.Web.UI.Page
             /*AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA*/
             /*CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC*/
             Newtonsoft.Json.Linq.JArray table = null;
-            if (eorRadioButtonList1.SelectedIndex == 0)
-            {
-                if (ws1RadioButtonList1.SelectedIndex != 3 && (g_dict["p35"] > MaxT3x || customConverterToDouble(fprTextBox2.Text) > MaxT3x))
-                {
-                    table = dataFromFile.table75H;
-                }
-                else
-                {
-                    table = dataFromFile.table71;
-                }
 
-            }
-            else if (eorRadioButtonList1.SelectedIndex == 1)
+            if (flag25Bar)
             {
-                if (ws1RadioButtonList1.SelectedIndex != 3)
+                if (eorRadioButtonList1.SelectedIndex == 0)
                 {
-                    if (g_dict["p35"] > MaxT3x || customConverterToDouble(fprTextBox2.Text) > MaxT3x)
+                    if (ws1RadioButtonList1.SelectedIndex != 3 && (g_dict["p35"] > MaxT3x || customConverterToDouble(fprTextBox2.Text) > MaxT3x))
                     {
-                        table = dataFromFile.table75;
+                        table = dataFromFile.table75H25;
                     }
                     else
                     {
-                        table = dataFromFile.table72;
+                        table = dataFromFile.table7125;
                     }
-                }
-                else
-                {
-                    
-                    table = dataFromFile.table75;
-                    
-                }
-                
-            }
-            else if (eorRadioButtonList1.SelectedIndex == 2)
-            {
-                table = dataFromFile.table73;
-            }
-            else if (eorRadioButtonList1.SelectedIndex == 3)
-            {
-                table = dataFromFile.table74;
-            }
 
+                }
+                else if (eorRadioButtonList1.SelectedIndex == 1)
+                {
+                    if (ws1RadioButtonList1.SelectedIndex != 3)
+                    {
+                        if (g_dict["p35"] > MaxT3x || customConverterToDouble(fprTextBox2.Text) > MaxT3x)
+                        {
+                            table = dataFromFile.table7525;
+                        }
+                        else
+                        {
+                            table = dataFromFile.table7225;
+                        }
+                    }
+                    else
+                    {
+
+                        table = dataFromFile.table7525;
+
+                    }
+
+                }
+                else if (eorRadioButtonList1.SelectedIndex == 2)
+                {
+                    table = dataFromFile.table7325;
+                }
+                else if (eorRadioButtonList1.SelectedIndex == 3)
+                {
+                    table = dataFromFile.table7425;
+                }
+            } 
+            else
+            {
+                if (eorRadioButtonList1.SelectedIndex == 0)
+                {
+                    if (ws1RadioButtonList1.SelectedIndex != 3 && (g_dict["p35"] > MaxT3x || customConverterToDouble(fprTextBox2.Text) > MaxT3x))
+                    {
+                        table = dataFromFile.table75H;
+                    }
+                    else
+                    {
+                        table = dataFromFile.table71;
+                    }
+
+                }
+                else if (eorRadioButtonList1.SelectedIndex == 1)
+                {
+                    if (ws1RadioButtonList1.SelectedIndex != 3)
+                    {
+                        if (g_dict["p35"] > MaxT3x || customConverterToDouble(fprTextBox2.Text) > MaxT3x)
+                        {
+                            table = dataFromFile.table75;
+                        }
+                        else
+                        {
+                            table = dataFromFile.table72;
+                        }
+                    }
+                    else
+                    {
+
+                        table = dataFromFile.table75;
+
+                    }
+
+                }
+                else if (eorRadioButtonList1.SelectedIndex == 2)
+                {
+                    table = dataFromFile.table73;
+                }
+                else if (eorRadioButtonList1.SelectedIndex == 3)
+                {
+                    table = dataFromFile.table74;
+                }
+            }
             if (tmpI != null)
             {
                 List<string> listA = new List<string>(),
@@ -1084,6 +1219,8 @@ public partial class RDT : System.Web.UI.Page
             r_in_dict.Add(1, DateTime.Now.ToShortDateString().ToString());
             r_in_dict.Add(2, "-"); // Объект добавляется в диалоговом окне при сохранении
 
+            bool flag25Bar = get25BarFlag();
+
             IEnumerable<RadioButton> ie_rb = null;
 
             r_in_dict.Add(3, "-"); //было ИТП ЦТП
@@ -1212,7 +1349,15 @@ public partial class RDT : System.Web.UI.Page
                 }
             }
 
-            r_in_dict.Add(40, "16 бар");
+            if (flag25Bar)
+            {
+                r_in_dict.Add(40, "25 бар");
+            }
+            else
+            {
+                r_in_dict.Add(40, "16 бар");
+            }
+            
 
             r_in_dict.Add(41, "-");
             r_in_dict.Add(42, "-");
@@ -1394,11 +1539,23 @@ public partial class RDT : System.Web.UI.Page
                     args.IsValid = false;
                     return;
                 }
-                if (convertArrToBar(arrConvert3, lp1DropDownList3, lp1TextBox3) > PressureBeforeValve3x)
+
+                if (ws1RadioButtonList1.SelectedIndex != 3)
                 {
-                    CustomValidator1.ErrorMessage = "На давление свыше 16 бар вариантов нет";
-                    args.IsValid = false;
-                    return;
+                    if (convertArrToBar(arrConvert3, lp1DropDownList3, lp1TextBox3) > PressureBeforeValve2x)
+                    {
+                        CustomValidator1.ErrorMessage = "На давление свыше 25 бар вариантов нет";
+                        args.IsValid = false;
+                        return;
+                    }
+                } else
+                {
+                    if (convertArrToBar(arrConvert3, lp1DropDownList3, lp1TextBox3) > PressureBeforeValve3x)
+                    {
+                        CustomValidator1.ErrorMessage = "На давление свыше 16 бар вариантов нет";
+                        args.IsValid = false;
+                        return;
+                    }
                 }
             }
         }
@@ -1479,10 +1636,22 @@ public partial class RDT : System.Web.UI.Page
                 args.IsValid = false;
                 return;
             }
-            if (convertArrToBar(arrConvert3, lp2DropDownList1, lp2TextBox1) > PressureBeforeValve3x)
+            
+            if (ws1RadioButtonList1.SelectedIndex != 3)
             {
-                CustomValidator3.ErrorMessage = "На давление свыше 16 бар вариантов нет";
-                args.IsValid = false;
+                if (convertArrToBar(arrConvert3, lp2DropDownList1, lp2TextBox1) > PressureBeforeValve2x)
+                {
+                    CustomValidator3.ErrorMessage = "На давление свыше 25 бар вариантов нет";
+                    args.IsValid = false;
+                }
+            }
+            else
+            {
+                if (convertArrToBar(arrConvert3, lp2DropDownList1, lp2TextBox1) > PressureBeforeValve3x)
+                {
+                    CustomValidator3.ErrorMessage = "На давление свыше 16 бар вариантов нет";
+                    args.IsValid = false;
+                }
             }
         }
     }
@@ -1535,10 +1704,22 @@ public partial class RDT : System.Web.UI.Page
                 args.IsValid = false;
                 return;
             }
-            if (convertArrToBar(arrConvert3, lp3DropDownList1, lp3TextBox1) > PressureBeforeValve3x)
+            
+            if (ws1RadioButtonList1.SelectedIndex != 3)
             {
-                CustomValidator5.ErrorMessage = "На давление свыше 16 бар вариантов нет";
-                args.IsValid = false;
+                if (convertArrToBar(arrConvert3, lp3DropDownList1, lp3TextBox1) > PressureBeforeValve2x)
+                {
+                    CustomValidator5.ErrorMessage = "На давление свыше 25 бар вариантов нет";
+                    args.IsValid = false;
+                }
+            }
+            else
+            {
+                if (convertArrToBar(arrConvert3, lp3DropDownList1, lp3TextBox1) > PressureBeforeValve3x)
+                {
+                    CustomValidator5.ErrorMessage = "На давление свыше 16 бар вариантов нет";
+                    args.IsValid = false;
+                }
             }
         }
     }
@@ -1591,10 +1772,22 @@ public partial class RDT : System.Web.UI.Page
                 args.IsValid = false;
                 return;
             }
-            if (convertArrToBar(arrConvert3, lp4DropDownList2, lp4TextBox2) > PressureBeforeValve3x)
+            
+            if (ws1RadioButtonList1.SelectedIndex != 3)
             {
-                CustomValidator7.ErrorMessage = "На давление свыше 16 бар вариантов нет";
-                args.IsValid = false;
+                if (convertArrToBar(arrConvert3, lp4DropDownList2, lp4TextBox2) > PressureBeforeValve2x)
+                {
+                    CustomValidator7.ErrorMessage = "На давление свыше 25 бар вариантов нет";
+                    args.IsValid = false;
+                }
+            }
+            else
+            {
+                if (convertArrToBar(arrConvert3, lp4DropDownList2, lp4TextBox2) > PressureBeforeValve3x)
+                {
+                    CustomValidator7.ErrorMessage = "На давление свыше 16 бар вариантов нет";
+                    args.IsValid = false;
+                }
             }
 
             lp1TextBox4.Text = ConvertPointToComma(lp1TextBox4.Text);
@@ -1649,10 +1842,22 @@ public partial class RDT : System.Web.UI.Page
                     args.IsValid = false;
                     return;
                 }
-                if (convertArrToBar(arrConvert3, calcrDropDownList1, calcrTextBox1) > PressureBeforeValve3x)
+                
+                if (ws1RadioButtonList1.SelectedIndex != 3)
                 {
-                    CustomValidator9.ErrorMessage = "На давление свыше 16 бар вариантов нет";
-                    args.IsValid = false;
+                    if (convertArrToBar(arrConvert3, calcrDropDownList1, calcrTextBox1) > PressureBeforeValve2x)
+                    {
+                        CustomValidator9.ErrorMessage = "На давление свыше 25 бар вариантов нет";
+                        args.IsValid = false;
+                    }
+                }
+                else
+                {
+                    if (convertArrToBar(arrConvert3, calcrDropDownList1, calcrTextBox1) > PressureBeforeValve3x)
+                    {
+                        CustomValidator9.ErrorMessage = "На давление свыше 16 бар вариантов нет";
+                        args.IsValid = false;
+                    }
                 }
             }
         }
@@ -1983,7 +2188,7 @@ public partial class RDT : System.Web.UI.Page
         }
     }
 
-    protected void CustomValidator18_ServerValidate(object source, ServerValidateEventArgs args)
+    protected void CustomValidator18_ServerValidate(object source, ServerValidateEventArgs args) //пар
     {
         if (CustomValidator21.IsValid)
         {
@@ -2001,11 +2206,23 @@ public partial class RDT : System.Web.UI.Page
                     args.IsValid = false;
                     return;
                 }
-                if (convertArrToBar(arrConvert3, lp5DropDownList1, lp5TextBox1) > PressureBeforeValve3x)
+                if(eorRadioButtonList1.SelectedIndex == 1 && ws1RadioButtonList1.SelectedIndex == 3)
                 {
-                    CustomValidator18.ErrorMessage = "На давление свыше 16 бар вариантов нет";
-                    args.IsValid = false;
+                    if (convertArrToBar(arrConvert3, lp5DropDownList1, lp5TextBox1) > PressureBeforeValve2x)
+                    {
+                        CustomValidator18.ErrorMessage = "На давление свыше 25 бар вариантов нет";
+                        args.IsValid = false;
+                    }
+                } 
+                else
+                {
+                    if (convertArrToBar(arrConvert3, lp5DropDownList1, lp5TextBox1) > PressureBeforeValve3x)
+                    {
+                        CustomValidator18.ErrorMessage = "На давление свыше 16 бар вариантов нет";
+                        args.IsValid = false;
+                    }
                 }
+                
             }
         }
         else
@@ -2015,7 +2232,7 @@ public partial class RDT : System.Web.UI.Page
         }
     }
 
-    protected void CustomValidator19_ServerValidate(object source, ServerValidateEventArgs args)
+    protected void CustomValidator19_ServerValidate(object source, ServerValidateEventArgs args) //пар
     {
         if (CustomValidator18.IsValid)
         {
@@ -2656,9 +2873,9 @@ public partial class RDT : System.Web.UI.Page
                                         return;
                                     }
 
-                                    if (!(p21 <= 16))
+                                    if (!(p21 <= 25))
                                     {
-                                        LabelError.Text = "На давление свыше 16 бар вариантов нет";
+                                        LabelError.Text = "На давление свыше 25 бар вариантов нет";
                                         return;
                                     }
                                     else if (!(p23 < p21))
@@ -2735,9 +2952,9 @@ public partial class RDT : System.Web.UI.Page
                                             return;
                                         }
 
-                                        if (!(p26 <= 16))
+                                        if (!(p26 <= 25))
                                         {
-                                            LabelError.Text = "На давление свыше 16 бар вариантов нет";
+                                            LabelError.Text = "На давление свыше 25 бар вариантов нет";
                                             return;
                                         }
                                         else if (!(p26 > p28))
@@ -2837,9 +3054,9 @@ public partial class RDT : System.Web.UI.Page
                                         return;
                                     }
 
-                                    if (!(p30 <= 16))
+                                    if (!(p30 <= 25))
                                     {
-                                        LabelError.Text = "На давление свыше 16 бар вариантов нет";
+                                        LabelError.Text = "На давление свыше 25 бар вариантов нет";
                                         return;
                                     }
                                     else if (!(p30 > p32))
@@ -2884,9 +3101,9 @@ public partial class RDT : System.Web.UI.Page
                                         return;
                                     }
 
-                                    if (!(p19 <= 16))
+                                    if (!(p19 <= 25))
                                     {
-                                        LabelError.Text = "На давление свыше 16 бар вариантов нет";
+                                        LabelError.Text = "На давление свыше 25 бар вариантов нет";
                                         return;
                                     }
                                     else
@@ -2913,10 +3130,10 @@ public partial class RDT : System.Web.UI.Page
                                     LabelError.Text = "Неверно указано значение давления";
                                     return;
                                 }
-                                else if ((customConverterToDouble(this.calcrTextBox1.Text) * arrConvert3[this.calcrDropDownList1.SelectedIndex - 1] / arrConvert3[2]) > 16)
+                                else if ((customConverterToDouble(this.calcrTextBox1.Text) * arrConvert3[this.calcrDropDownList1.SelectedIndex - 1] / arrConvert3[2]) > 25)
                                 {
 
-                                    LabelError.Text = "На давление свыше 16 бар вариантов нет";
+                                    LabelError.Text = "На давление свыше 25 бар вариантов нет";
                                     return;
                                 }
 
@@ -2989,11 +3206,18 @@ public partial class RDT : System.Web.UI.Page
                                 }
                                     
                             }
+                            bool flag25Bar = get25BarFlag();
 
                             if (eorRadioButtonList1.SelectedIndex > 1)
                             {
                                 this.maxt1ResultLabel.Text = "Максимальная температура - 150 °С";
-                                this.maxp1ResultLabel.Text = "Максимальное рабочее давление - 16 бар";
+                                if (flag25Bar)
+                                {
+                                    this.maxp1ResultLabel.Text = "Максимальное рабочее давление - 25 бар";
+                                } else
+                                {
+                                    this.maxp1ResultLabel.Text = "Максимальное рабочее давление - 16 бар";
+                                }
 
                                 labelOptyV.Text = "Оптимальная скорость в выходном сечении регулятора: 2 - 3 м / с для ИТП; 2 - 5 м / с для ЦТП.";
                             } 
@@ -3024,7 +3248,15 @@ public partial class RDT : System.Web.UI.Page
 
                                 }
 
-                                this.maxp1ResultLabel.Text = "Максимальное рабочее давление - 16 бар";
+                                if (flag25Bar)
+                                {
+                                    this.maxp1ResultLabel.Text = "Максимальное рабочее давление - 25 бар";
+                                }
+                                else
+                                {
+                                    this.maxp1ResultLabel.Text = "Максимальное рабочее давление - 16 бар";
+                                }
+
                                 if (ws1RadioButtonList1.SelectedIndex != 3)
                                 {
                                     labelOptyV.Text = "Оптимальная скорость в выходном сечении регулятора: 2 - 3 м / с для ИТП; 2 - 5 м / с для ЦТП.";
