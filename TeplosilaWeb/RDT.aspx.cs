@@ -3003,6 +3003,13 @@ public partial class RDT : System.Web.UI.Page
                                         lp5TextBox3.Text = (Math.Round(100 * Math.Pow((customConverterToDouble(lp5TextBox1.Text) * arrConvert3[lp5DropDownList1.SelectedIndex - 1] / arrConvert3[2]) + 1, 0.25))).ToString();
                                     }
 
+                                    if (customConverterToDouble(lp5TextBox3.Text) > MaxT2x)
+                                    {
+                                        CustomValidator20.ErrorMessage = "На температуру свыше 220°С вариантов нет";
+                                        CustomValidator20.IsValid = false;
+                                        return;
+                                    }
+
                                     g_dict.Add("p61", customConverterToDouble(this.lp5TextBox3.Text));
                                 }
                             }
