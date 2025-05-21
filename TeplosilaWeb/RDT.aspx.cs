@@ -245,16 +245,40 @@ public partial class RDT : System.Web.UI.Page
 
     private bool get25BarFlag()
     {
-        bool flag25Bar = (convertArrToBar(arrConvert3, lp1DropDownList3, lp1TextBox3) > PressureBeforeValve3x) || //Регулятор перепада давления
-                                (convertArrToBar(arrConvert3, lp1DropDownList4, lp1TextBox4) > PressureBeforeValve3x) ||
-                                (convertArrToBar(arrConvert3, lp2DropDownList1, lp2TextBox1) > PressureBeforeValve3x) ||  //Регулятор давления "после себя"
-                                (convertArrToBar(arrConvert3, lp2DropDownList2, lp2TextBox2) > PressureBeforeValve3x) ||
-                                (convertArrToBar(arrConvert3, lp3DropDownList1, lp3TextBox1) > PressureBeforeValve3x) || //Регулятор давления "до себя"
-                                (convertArrToBar(arrConvert3, lp3DropDownList2, lp3TextBox2) > PressureBeforeValve3x) || 
-                                (convertArrToBar(arrConvert3, lp4DropDownList2, lp4TextBox2) > PressureBeforeValve3x) || //Регулятор "перепуска"
-                                (convertArrToBar(arrConvert3, lp5DropDownList1, lp5TextBox1) > PressureBeforeValve3x) || //Регулятор давления "после себя" Пар
-                                (convertArrToBar(arrConvert3, lp5DropDownList2, lp5TextBox2) > PressureBeforeValve3x) ||
-                                (convertArrToBar(arrConvert3, calcrDropDownList1, calcrTextBox1) > PressureBeforeValve3x); // Расчет регулятора давления на кавитацию:
+        bool flag25Bar = false;
+
+        if (ws1RadioButtonList1.SelectedIndex != 3)
+        {
+            flag25Bar = (convertArrToBar(arrConvert3, lp1DropDownList3, lp1TextBox3) > PressureBeforeValve3x) || //Регулятор перепада давления
+                        (convertArrToBar(arrConvert3, lp1DropDownList4, lp1TextBox4) > PressureBeforeValve3x) ||
+                        (convertArrToBar(arrConvert3, lp2DropDownList1, lp2TextBox1) > PressureBeforeValve3x) ||  //Регулятор давления "после себя"
+                        (convertArrToBar(arrConvert3, lp2DropDownList2, lp2TextBox2) > PressureBeforeValve3x) ||
+                        (convertArrToBar(arrConvert3, lp3DropDownList1, lp3TextBox1) > PressureBeforeValve3x) || //Регулятор давления "до себя"
+                        (convertArrToBar(arrConvert3, lp3DropDownList2, lp3TextBox2) > PressureBeforeValve3x) ||
+                        (convertArrToBar(arrConvert3, lp4DropDownList2, lp4TextBox2) > PressureBeforeValve3x) || //Регулятор "перепуска"
+                        (convertArrToBar(arrConvert3, calcrDropDownList1, calcrTextBox1) > PressureBeforeValve3x); // Расчет регулятора давления на кавитацию:
+        } else
+        {
+            if(customConverterToDouble(lp5TextBox3.Text) > 120)
+            {
+                if ((convertArrToBar(arrConvert3, lp5DropDownList1, lp5TextBox1) <= (16 - 0.04 * (customConverterToDouble(lp5TextBox3.Text) - 120))))
+                {
+                    flag25Bar = false;
+                }
+                else if ((convertArrToBar(arrConvert3, lp5DropDownList1, lp5TextBox1) <= (25 - 0.025 * (customConverterToDouble(lp5TextBox3.Text) - 120))))
+                {
+                    flag25Bar = true;
+                }
+            } 
+            else 
+            {
+                flag25Bar = (convertArrToBar(arrConvert3, lp5DropDownList1, lp5TextBox1) > PressureBeforeValve3x) || //Регулятор давления "после себя" Пар
+                     (convertArrToBar(arrConvert3, lp5DropDownList2, lp5TextBox2) > PressureBeforeValve3x) ||
+                     (convertArrToBar(arrConvert3, calcrDropDownList1, calcrTextBox1) > PressureBeforeValve3x); // Расчет регулятора давления на кавитацию:
+            } 
+            
+        }
+         
         return flag25Bar;
     }
     private Dictionary<string, string[]> generatedTableR(Dictionary<string, double> g_dict)
@@ -1515,6 +1539,7 @@ public partial class RDT : System.Web.UI.Page
                 rPictureBox.ImageUrl = null;
                 break;
         }
+        rPictureBox.Visible = true;
     }
 
     //------------------------------------File Function END--------------------------------------
@@ -2296,6 +2321,13 @@ public partial class RDT : System.Web.UI.Page
                     if (customConverterToDouble(lp5TextBox3.Text) < (100 * Math.Pow((customConverterToDouble(lp5TextBox1.Text) * arrConvert3[lp5DropDownList1.SelectedIndex - 1] / arrConvert3[2]) + 1, 0.25)))
                     {
                         CustomValidator20.ErrorMessage = "Указанная температура ниже температуры парообразования. При указанной температуре в трубопроводе движется жидкость";
+                        args.IsValid = false;
+                        return;
+                    }
+
+                    if ((customConverterToDouble(lp5TextBox3.Text) > (25 - 0.025 * (customConverterToDouble(lp5TextBox3.Text) - 120))) && customConverterToDouble(lp5TextBox3.Text) > 120)
+                    {
+                        CustomValidator20.ErrorMessage = "При указанном давлении P'1 и температуре Т1 нужен корпус с Ру больше 25 бар, вариантов нет";
                         args.IsValid = false;
                         return;
                     }
