@@ -269,6 +269,10 @@ public partial class RDT : System.Web.UI.Page
                 {
                     flag25Bar = true;
                 }
+                else
+                {
+                    flag25Bar = true;
+                }
             } 
             else 
             {

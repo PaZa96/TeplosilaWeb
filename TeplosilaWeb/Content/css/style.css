@@ -62,7 +62,7 @@ label {
 }
 
 input[type=number] {
-    width: 8rem;
+    width: 7.5rem;
     padding: 0px;
     box-sizing: border-box;
     border-radius: 4px;
