@@ -2325,7 +2325,7 @@ public partial class RDT : System.Web.UI.Page
                         return;
                     }
 
-                    if ((customConverterToDouble(lp5TextBox3.Text) > (25 - 0.025 * (customConverterToDouble(lp5TextBox3.Text) - 120))) && customConverterToDouble(lp5TextBox3.Text) > 120)
+                    if ((customConverterToDouble(lp5TextBox1.Text) > (25 - 0.025 * (customConverterToDouble(lp5TextBox3.Text) - 120))) && customConverterToDouble(lp5TextBox3.Text) > 120)
                     {
                         CustomValidator20.ErrorMessage = "При указанном давлении P'1 и температуре Т1 нужен корпус с Ру больше 25 бар, вариантов нет";
                         args.IsValid = false;
