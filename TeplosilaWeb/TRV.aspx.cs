@@ -842,6 +842,44 @@ public partial class TRV : System.Web.UI.Page
         //pr = nn * cp * rr / ll;
     }
 
+    private bool get25BarFlag()
+    {
+        bool flag25Bar = false;
+
+        if (tvRadioButtonList1.SelectedIndex == 0)
+        {
+            if (ws2RadioButtonList1.SelectedIndex != 3)
+            {
+                flag25Bar = (convertArrToBar(arrConvert3, calcvDropDownList1, calcvTextBox1) <= PressureBeforeValve3x);
+            }
+            else
+            {
+                if (customConverterToDouble(lpv5TextBox3.Text) > 120)
+                {
+                    if ((convertArrToBar(arrConvert3, lpv5DropDownList1, lpv5TextBox1) <= (16 - 0.04 * (customConverterToDouble(lpv5TextBox3.Text) - 120))))
+                    {
+                        flag25Bar = false;
+                    }
+                    else if ((convertArrToBar(arrConvert3, lpv5DropDownList1, lpv5TextBox1) <= (25 - 0.025 * (customConverterToDouble(lpv5TextBox3.Text) - 120))))
+                    {
+                        flag25Bar = true;
+                    }
+                    else
+                    {
+                        flag25Bar = true;
+                    }
+                }
+                else
+                {
+                    flag25Bar = (convertArrToBar(arrConvert3, lpv5DropDownList1, lpv5TextBox1) > PressureBeforeValve3x);
+                }
+
+            }
+        } 
+
+        return flag25Bar;
+    }
+
     private void readFile(int index)
     {
         try
@@ -4637,24 +4675,22 @@ public partial class TRV : System.Web.UI.Page
         if (tdRadioButtonList4.SelectedIndex == 0) v_in_dict[39] = tdRadioButtonList4.Items[0].Text;
         else v_in_dict[39] = tdRadioButtonList4.Items[1].Text;
 
-
         if (tvRadioButtonList1.SelectedIndex == 0)
         {
             if(ws2RadioButtonList1.SelectedIndex != 3)
             {
                 v_in_dict.Add(40, (customConverterToDouble(v_in_dict[18]) > 150 ? "220 ˚С" : "150 ˚С"));
-                v_in_dict.Add(41, (convertArrToBar(arrConvert3, calcvDropDownList1, calcvTextBox1) <= PressureBeforeValve3x ? "16 бар" : "25 бар"));
             } else
             {
                 v_in_dict[40] = "220˚С";
-                v_in_dict.Add(41, (convertArrToBar(arrConvert3, lpv5DropDownList1, lpv5TextBox1) <= PressureBeforeValve3x ? "16 бар" : "25 бар"));
             }
             
         }
         else {
-            v_in_dict.Add(41, "16 бар");
             v_in_dict[40] = "150 ˚С";
         }
+
+        v_in_dict.Add(41, get25BarFlag() ? "25 бар" : "16 бар");
 
         v_in_dict.Add(42, "-");
         v_in_dict.Add(43, "-");
@@ -5513,18 +5549,17 @@ public partial class TRV : System.Web.UI.Page
                                         if (ws2RadioButtonList1.SelectedIndex != 3)
                                         {
                                             this.maxt2ResultLabel.Text = "Максимальная температура - " + ((double.Parse(g_dict["p35"].ToString()) <= 150) ? "150" : "220") + " °С";
-                                            maxp2ResultLabel.Text = "Максимальное рабочее давление - " + (convertArrToBar(arrConvert3, calcvDropDownList1, calcvTextBox1) <= PressureBeforeValve3x ? "16 бар" : "25 бар");
                                         } else
                                         {
                                             this.maxt2ResultLabel.Text = "Максимальная температура - 220 °С";
-                                            maxp2ResultLabel.Text = "Максимальное рабочее давление - " + (convertArrToBar(arrConvert3, lpv5DropDownList1, lpv5TextBox1) <= PressureBeforeValve3x ? "16 бар" : "25 бар");
                                         }
                                     }
                                     else
                                     {
                                         this.maxt2ResultLabel.Text = "Максимальная температура - 150 °С";
-                                        maxp2ResultLabel.Text = "Максимальное рабочее давление - 16 бар";
                                     }
+
+                                    maxp2ResultLabel.Text = "Максимальное рабочее давление - " + (get25BarFlag() ? "25 бар" : "16 бар");
 
                                     if (ws2RadioButtonList1.SelectedIndex != 3)
                                     {
@@ -6463,6 +6498,13 @@ public partial class TRV : System.Web.UI.Page
                     if (customConverterToDouble(lpv5TextBox3.Text) < (100 * Math.Pow((customConverterToDouble(lpv5TextBox1.Text) * arrConvert3[lpv5DropDownList1.SelectedIndex - 1] / arrConvert3[2]) + 1, 0.25)))
                     {
                         CustomValidator3.ErrorMessage = "Указанная температура ниже температуры парообразования. При указанной температуре в трубопроводе движется жидкость";
+                        args.IsValid = false;
+                        return;
+                    }
+
+                    if ((customConverterToDouble(lpv5TextBox1.Text) > (25 - 0.025 * (customConverterToDouble(lpv5TextBox3.Text) - 120))) && customConverterToDouble(lpv5TextBox3.Text) > 120)
+                    {
+                        CustomValidator20.ErrorMessage = "При указанном давлении P'1 и температуре Т1 нужен корпус с Ру больше 25 бар, вариантов нет";
                         args.IsValid = false;
                         return;
                     }

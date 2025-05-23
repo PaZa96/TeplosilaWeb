@@ -230,7 +230,7 @@
                                         <asp:Label ID="Label58" runat="server" Text="ΔPрд(max) = Р1 - Р2 - ΔРру =">
                                         </asp:Label>
                                         <asp:TextBox ID="lp1TextBox5" runat="server" Enabled="False"
-                                            ReadOnly="True" TextMode="Number"></asp:TextBox>
+                                            ReadOnly="True"></asp:TextBox>
                                         
                                         <asp:Label ID="Label59" runat="server" Text="бар"></asp:Label>
                                         <br />
@@ -643,7 +643,7 @@
                         </ContentTemplate>
                     </asp:UpdatePanel>
                 </div>
-                <div class="col-md-10">
+                <div class="col-12 col-md-10">
                     <asp:UpdatePanel ID="UpdatePanel8" runat="server">
                         <ContentTemplate>
                             <div class="col non-padding">

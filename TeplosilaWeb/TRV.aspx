@@ -60,7 +60,7 @@
                                 <div id="wsPane" runat="server">
                                     <asp:Label ID="Label5" runat="server" Text="Рабочая среда:"></asp:Label>
                                     <div class="row">
-                                        <div class="col-3">
+                                        <div class="col-6 col-md-3">
                                             <asp:RadioButtonList ID="ws2RadioButtonList1" runat="server"
                                                 AutoPostBack="True" required="required"
                                                 OnSelectedIndexChanged="ws2RadioButtonList1_SelectedIndexChanged">
@@ -69,7 +69,7 @@
                                                 <asp:ListItem>Пропиленгликоль</asp:ListItem>
                                                 <asp:ListItem Enabled="False">Водяной пар</asp:ListItem>
                                             </asp:RadioButtonList>
-                                            <div class="col">
+                                            <div class="col-12 sub-col">
                                                 <asp:RadioButtonList ID="lpv5RadioButtonList1" runat="server"
                                                     AutoPostBack="True"
                                                     OnSelectedIndexChanged="lpv5RadioButtonList1_SelectedIndexChanged"
@@ -84,7 +84,7 @@
                                                 ForeColor="Red" OnServerValidate="CustomValidator21_ServerValidate"
                                                 SetFocusOnError="True" ValidateEmptyText="True"></asp:CustomValidator>
                                         </div>
-                                        <div class="col-9">
+                                        <div class="col-6 col-md-6">
                                             <br />
                                             <asp:TextBox ID="ws2TextBox1" runat="server" Enabled="False" type="number"
                                                 required="required" TextMode="Number"></asp:TextBox>
@@ -158,18 +158,18 @@
                                             AutoPostBack="True" required="required"
                                             OnCheckedChanged="aaRadioButton1_CheckedChanged" />
                                         <asp:RadioButtonList ID="aa1RadioButtonList1" required="required"
-                                            CssClass="childRadio" runat="server" RepeatDirection="Horizontal"
+                                            CssClass="childRadio flow-radio-label" runat="server" RepeatDirection="Horizontal"
                                             Enabled="False" AutoPostBack="True"
                                             OnSelectedIndexChanged="aa1RadioButtonList1_SelectedIndexChanged">
                                             <asp:ListItem>Открытая</asp:ListItem>
-                                            <asp:ListItem>Закрытая (через теплообменник)</asp:ListItem>
+                                            <asp:ListItem>Закрытая (через теплообменник)  &nbsp;</asp:ListItem>
                                         </asp:RadioButtonList>
 
                                         <asp:RadioButton ID="aaRadioButton2" runat="server" Text="Отопление"
                                             AutoPostBack="True" required="required"
                                             OnCheckedChanged="aaRadioButton2_CheckedChanged" />
                                         <asp:RadioButtonList ID="aa2RadioButtonList1" required="required"
-                                            CssClass="childRadio" runat="server" RepeatDirection="Horizontal"
+                                            CssClass="childRadio flow-radio-label" runat="server" RepeatDirection="Horizontal"
                                             Enabled="False" AutoPostBack="True"
                                             OnSelectedIndexChanged="aa2RadioButtonList1_SelectedIndexChanged">
                                             <asp:ListItem>Зависимая</asp:ListItem>
@@ -180,7 +180,7 @@
                                             AutoPostBack="True" required="required"
                                             OnCheckedChanged="aaRadioButton3_CheckedChanged" />
                                         <asp:RadioButtonList ID="aa3RadioButtonList1" required="required"
-                                            CssClass="childRadio" runat="server" RepeatDirection="Horizontal"
+                                            CssClass="childRadio flow-radio-label" runat="server" RepeatDirection="Horizontal"
                                             Enabled="False" AutoPostBack="True"
                                             OnSelectedIndexChanged="aa3RadioButtonList1_SelectedIndexChanged">
                                             <asp:ListItem>Зависимая</asp:ListItem>
@@ -209,10 +209,10 @@
                                         <asp:Label ID="Label11" runat="server"
                                             Text="Потери давления на регулируемом участке (без учета регулирующего клапана):">
                                         </asp:Label>
-                                        <div class="col row">
+                                        <div class="col">
                                         
-                                        <div class="col row">
-                                            <div class="col">
+                                        <div class="row">
+                                            <div class="col-12 col-md-6">
                                             <asp:Label ID="Label10" runat="server" Text="&#916;Ppy' = "></asp:Label>
                                             &nbsp;&nbsp;
                                             <asp:TextBox ID="lpvTextBox21" runat="server" Enabled="False" type="number" CssClass="margin-top-bottom"
@@ -227,17 +227,17 @@
                                                 <asp:ListItem>м. в. ст.</asp:ListItem>
                                             </asp:DropDownList>
                                             </div>
-                                            <div class="col">
+                                            <div class="col-12 col-md-6">
                                             <asp:HyperLink ID="HyperLink1" CssClass="btn-link-pdf" Target="_new"
                                                 NavigateUrl="/Content/data/calcTRV.pdf" runat="server">Определение
                                                 потерь давления на регулируемом участке</asp:HyperLink>
                                             </div>
-                                            &nbsp;<asp:CustomValidator ID="CustomValidator19" runat="server"
+                                            <div><asp:CustomValidator ID="CustomValidator19" runat="server"
                                                 ControlToValidate="ws2TextBox2" Display="Dynamic"
                                                 ErrorMessage="CustomValidator" ForeColor="Red"
                                                 OnServerValidate="CustomValidator19_ServerValidate"
                                                 SetFocusOnError="True" ValidateEmptyText="True"></asp:CustomValidator>
-                                            <br />
+                                            </div>
                                         </div>
                                        
                                         </div>
@@ -449,11 +449,11 @@
                                 <div runat="server" id="fvPane1" visible="false">
                                     <div class="col border border-non-bottom">
                                         <asp:Label ID="Label16" runat="server" Text="Расход через клапан:"></asp:Label>
-                                        </br>
+                                        <div class="flow-radio-label">
                                         <asp:RadioButton ID="fvRadioButton1" runat="server"
                                             Text="Задать максимальную величину расхода через клапан:"
                                             AutoPostBack="True" OnCheckedChanged="fvRadioButton1_CheckedChanged" />
-                                        
+                                        </div>
                                         <div class="col">
                                             <asp:Label ID="Label28" runat="server" Text="Gкл = "></asp:Label>
                                             <asp:TextBox ID="fvTextBox1" runat="server" Enabled="False"
@@ -470,11 +470,13 @@
                                                 <asp:ListItem>кг/ч</asp:ListItem>
                                                 <asp:ListItem>т/ч</asp:ListItem>
                                             </asp:DropDownList>
-                                            &nbsp;<asp:CustomValidator ID="CustomValidator12" runat="server"
+                                           <div>
+
+                                           <asp:CustomValidator ID="CustomValidator12" runat="server" Display="Dynamic"
                                                 ControlToValidate="fvDropDownList1" ErrorMessage="CustomValidator"
                                                 ForeColor="Red" OnServerValidate="CustomValidator12_ServerValidate"
                                                 SetFocusOnError="True" ValidateEmptyText="True"></asp:CustomValidator>
-                                            <br />
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -486,9 +488,11 @@
                             <ContentTemplate>
                                 <div runat="server" id="fvPane2" visible="false">
                                     <div class="col border border-non-top">
+                                        <div class="flow-radio-label">
                                         <asp:RadioButton ID="fvRadioButton2" runat="server"
                                             Text="Вычислить максимальную величину расхода через клапан:"
                                             AutoPostBack="True" OnCheckedChanged="fvRadioButton2_CheckedChanged" />
+                                            </div>
                                         <div class="col table-responsive-md">
                                             <table class="table table-bordered col table-normal-style">
                                                 <thead>
@@ -699,7 +703,7 @@
                         </ContentTemplate>
                     </asp:UpdatePanel>
                 </div>
-                <div class="col-10">
+                <div class="col-12 col-md-10">
                     <asp:UpdatePanel ID="UpdatePanel10" runat="server">
                         <ContentTemplate>
                             <asp:Label ID="LabelError" runat="server" Font-Bold="True" Font-Size="Medium"
@@ -760,7 +764,7 @@
                                     </asp:Label>
 
                                     <asp:TextBox ID="objTextBox1" runat="server" Enabled="False" Visible="False"
-                                        Width="1020px">
+                                        CssClass="obj-field">
                                     </asp:TextBox>
                                 </div>
                             </div>

@@ -19,6 +19,12 @@ input[type=radio] {
     display: contents;
 }
 
+.flow-radio-label td {
+    width: auto;
+    display: inline-flex;
+}
+
+
 .block-img {
     display: block;
     text-align: center;
