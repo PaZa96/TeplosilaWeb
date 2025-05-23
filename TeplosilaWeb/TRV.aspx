@@ -211,7 +211,8 @@
                                         </asp:Label>
                                         <div class="col row">
                                         
-                                        <div class="col">
+                                        <div class="col row">
+                                            <div class="col">
                                             <asp:Label ID="Label10" runat="server" Text="&#916;Ppy' = "></asp:Label>
                                             &nbsp;&nbsp;
                                             <asp:TextBox ID="lpvTextBox21" runat="server" Enabled="False" type="number" CssClass="margin-top-bottom"
@@ -225,10 +226,12 @@
                                                 <asp:ListItem>бар</asp:ListItem>
                                                 <asp:ListItem>м. в. ст.</asp:ListItem>
                                             </asp:DropDownList>
-                                            
+                                            </div>
+                                            <div class="col">
                                             <asp:HyperLink ID="HyperLink1" CssClass="btn-link-pdf" Target="_new"
                                                 NavigateUrl="/Content/data/calcTRV.pdf" runat="server">Определение
                                                 потерь давления на регулируемом участке</asp:HyperLink>
+                                            </div>
                                             &nbsp;<asp:CustomValidator ID="CustomValidator19" runat="server"
                                                 ControlToValidate="ws2TextBox2" Display="Dynamic"
                                                 ErrorMessage="CustomValidator" ForeColor="Red"
@@ -690,9 +693,9 @@
                     </div>
                 </div>
                 <div class="col-xs-12 col-sm-2">
-                    <asp:UpdatePanel ID="UpdatePanel16" runat="server">
+                    <asp:UpdatePanel ID="UpdatePanel16" class="block-img" runat="server">
                         <ContentTemplate>
-                            <asp:Image ID="vPictureBox" runat="server" class="valve-image" />
+                            <asp:Image ID="vPictureBox" runat="server" class="col valve-image non-padding"  />
                         </ContentTemplate>
                     </asp:UpdatePanel>
                 </div>

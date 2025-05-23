@@ -113,7 +113,7 @@
                                     <asp:Label ID="Label26" runat="server" Text="Регулятор перепада давления:">
                                     </asp:Label>
                                     <br />
-                                    <div class="panel-hide sub-col" id="lp1" runat="server">
+                                    <div class="panel-hide col" id="lp1" runat="server">
                                         <div class="row">
                                         <div class="col-12 col-md-6">
                                         <asp:Label ID="lpLabel1" runat="server" Text="Потери давления на регуляторе:">
@@ -624,7 +624,7 @@
                                         <asp:Label ID="Label46" runat="server"
                                             Text="Максимальный расход через регулятор Gрд = ">
                                         </asp:Label>
-                                        <asp:TextBox ID="fprTextBox5" runat="server" ReadOnly="True" Enabled="False" TextMode="Number">
+                                        <asp:TextBox ID="fprTextBox5" runat="server" ReadOnly="True" Enabled="False">
                                         </asp:TextBox>
                                         <asp:Label ID="Label48" runat="server" Text=" кг/ч"></asp:Label>
                                         <br />
