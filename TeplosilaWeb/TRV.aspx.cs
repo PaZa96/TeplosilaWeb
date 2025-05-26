@@ -4289,7 +4289,7 @@ public partial class TRV : System.Web.UI.Page
                             } 
                             else
                             {
-                                trvName = convertArrToBar(arrConvert3, lpv5DropDownList1, lpv5TextBox1) <= PressureBeforeValve3x ? match.Value : match.Value + "-25";
+                                trvName = get25BarFlag() ? match.Value + "-25" : match.Value;
                             }
                         } else
                         {
