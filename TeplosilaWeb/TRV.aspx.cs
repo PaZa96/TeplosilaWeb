@@ -1443,6 +1443,7 @@ public partial class TRV : System.Web.UI.Page
         double Kv_start = 0;
         double tmpKv = 0;
         string tmpA = "";
+        bool flag25Bar = get25BarFlag();
         Dictionary<string, string[]> listResult = new Dictionary<string, string[]>();
         listResult.Add("A", new string[] { });
         listResult.Add("C", new string[] { });
@@ -1593,6 +1594,8 @@ public partial class TRV : System.Web.UI.Page
             Newtonsoft.Json.Linq.JArray tableDN = null;
             Newtonsoft.Json.Linq.JArray tablev_7 = null;
 
+            
+
             if (tvRadioButtonList1.SelectedIndex == 0)
             {
 
@@ -1615,7 +1618,7 @@ public partial class TRV : System.Web.UI.Page
                         }
                     } else
                     {
-                        if (convertArrToBar(arrConvert3, lpv5DropDownList1, lpv5TextBox1) > PressureBeforeValve3x)
+                        if (flag25Bar)
                         {
                             tableDN = dataFromFile.table10trvt25;
                             tablev_7 = dataFromFile.tablev_71t25;
@@ -1652,7 +1655,7 @@ public partial class TRV : System.Web.UI.Page
                     }
                     else
                     {
-                        if (convertArrToBar(arrConvert3, lpv5DropDownList1, lpv5TextBox1) > PressureBeforeValve3x)
+                        if (flag25Bar)
                         {
                             tableDN = dataFromFile.table1025;
                             tablev_7 = dataFromFile.tablev_71t25;

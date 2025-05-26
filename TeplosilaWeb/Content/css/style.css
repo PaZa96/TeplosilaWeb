@@ -4,6 +4,9 @@
     font-size: 14px
 }
 
+.obj-field {
+    width: 100% !important;
+}
 
 input[type=radio] {
     margin-left: 5px;
@@ -59,9 +62,7 @@ label {
     width: 40vw;
 }
 
-.obj-field {
-    width: 100%;
-}
+
 
 .table-responsive-lg {
     overflow: auto;
