@@ -850,7 +850,7 @@ public partial class TRV : System.Web.UI.Page
         {
             if (ws2RadioButtonList1.SelectedIndex != 3)
             {
-                flag25Bar = (convertArrToBar(arrConvert3, calcvDropDownList1, calcvTextBox1) <= PressureBeforeValve3x);
+                flag25Bar = (convertArrToBar(arrConvert3, calcvDropDownList1, calcvTextBox1) > PressureBeforeValve3x);
             }
             else
             {
