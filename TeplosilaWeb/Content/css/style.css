@@ -62,10 +62,22 @@ label {
     width: 40vw;
 }
 
+.nav-link {
+    color: #fff;
+    background-color: #f37134;
+}
+    .nav-link:hover {
+        color: black;
+    }
 
+.nav-tabs .nav-link {
+    border: 1px solid #dee2e6
+}
 
-.table-responsive-lg {
-    overflow: auto;
+.nav-tabs .nav-link.active {
+    color: #fff;
+    background-color: #343a4073;
+    border-color: #f37134;
 }
 
 input[type=number] {

@@ -9,28 +9,21 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link href="Content/css/style.css" rel="stylesheet" />
-    <title></title>
-    <style type="text/css">
-        .auto-style1 {
-            width: 300px;
-        }
-
-        .auto-style7 {
-            text-align: center;
-            width: 300px;
-        }
-    </style>
+    <title>Программа подбора регулирующего клапана - Стандартный расчет</title>
 </head>
 <body>
-    <p>
-        <br />
-    </p>
     <div class="container">
         <form id="form1" runat="server" novalidate="novalidate">
             <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
             <div class="row jumbotron">
+                <div class="col-12">
+                    <nav class="nav nav-tabs">
+                      <a class="nav-link active" aria-current="page" href="#">Стандартный расчет</a>
+                      <a class="nav-link" href="/TRV_ver.aspx">Поверочный расчет</a>
+                    </nav>
+                </div>
                 <div class="col-xs-12 col-sm-10">
-                    <div class="col border">
+                    <div class="col border border-non-top">
                         <asp:UpdatePanel ID="UpdatePanel4" runat="server">
                             <ContentTemplate>
                                 <asp:Label ID="Label4" runat="server" Text="Тип клапана:"></asp:Label>
