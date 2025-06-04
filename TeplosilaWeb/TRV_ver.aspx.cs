@@ -213,7 +213,13 @@ public partial class TRV_ver : System.Web.UI.Page
         dropDownList.ClearSelection();
     }
 
-    public void EnablePane1()
+    public void DisableRadioButtonList(RadioButtonList radioButtonList)
+    {
+        radioButtonList.Enabled = false;
+        radioButtonList.ClearSelection();
+    }
+
+    public void EnablePanel1()
     {
         if((tvRadioButton1.Checked == true && tvRadioButtonList1.SelectedIndex != -1 && pnRadioButtonList1.SelectedIndex != -1) || 
             (tvRadioButton2.Checked == true && tvRadioButtonList2.SelectedIndex != -1 && pnRadioButtonList1.SelectedIndex != -1))
@@ -223,8 +229,19 @@ public partial class TRV_ver : System.Web.UI.Page
         } 
         else
         {
-            dnDropDownList1.Enabled = false;
-            kvsDropDownList1.Enabled = false;
+            DisableDropDownList(dnDropDownList1);
+            DisableDropDownList(kvsDropDownList1);
+        }
+    }
+
+    private void ManageWSRBL()
+    {
+        if(tvRadioButton1.Checked && tvRadioButtonList1.SelectedIndex == 1)
+        {
+            wsRadioButtonList1.Items[3].Enabled = true;
+        } else
+        {
+            wsRadioButtonList1.Items[3].Enabled = false;
         }
     }
 
@@ -233,48 +250,47 @@ public partial class TRV_ver : System.Web.UI.Page
     {
         tvRadioButton2.Checked = false;
         tvRadioButtonList1.Enabled = true;
-        tvRadioButtonList2.SelectedIndex = -1;
-        tvRadioButtonList2.Enabled = false;
+        DisableRadioButtonList(tvRadioButtonList2);
 
         pnRadioButtonList1.Enabled = true;
         pnRadioButtonList1.Items[1].Enabled = true;
 
-        EnablePane1();
+        EnablePanel1();
+        ManageWSRBL();
     }
 
     protected void tvRadioButtonList1_SelectedIndexChanged(object sender, EventArgs e)
     {
-        
-        
-
-        EnablePane1();
+        EnablePanel1();
+        ManageWSRBL();
     }
 
     protected void tvRadioButton2_CheckedChanged(object sender, EventArgs e)
     {
         tvRadioButton1.Checked = false;
-        tvRadioButtonList1.Enabled = false;
         tvRadioButtonList2.Enabled = true;
         tvRadioButtonList2.SelectedIndex = 0;
-        tvRadioButtonList1.SelectedIndex = -1;
+        DisableRadioButtonList(tvRadioButtonList1);
 
         pnRadioButtonList1.Enabled = true;
         pnRadioButtonList1.SelectedIndex = 0;
         pnRadioButtonList1.Items[1].Enabled = false;
         pnRadioButtonList1.SelectedIndex = pnRadioButtonList1.SelectedIndex == 1 ? -1 : 0;
 
-        EnablePane1();
+        EnablePanel1();
+        ManageWSRBL();
     }
 
     protected void tvRadioButtonList2_SelectedIndexChanged(object sender, EventArgs e)
     {
-        EnablePane1();
+        EnablePanel1();
+        ManageWSRBL();
     }
 
     protected void pnRadioButtonList1_SelectedIndexChanged(object sender, EventArgs e)
     {
 
-        EnablePane1();
+        EnablePanel1();
     }
 
     protected void dnDropDownList1_SelectedIndexChanged(object sender, EventArgs e)
@@ -285,9 +301,31 @@ public partial class TRV_ver : System.Web.UI.Page
             setKvsDataset();
         } else
         {
-            kvsDropDownList1.Enabled = false;
-            kvsDropDownList1.SelectedIndex = -1;
+            DisableDropDownList(kvsDropDownList1);
         }
         
+    }
+
+    protected void wsRadioButtonList1_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        if (wsRadioButtonList1.SelectedIndex == 1 || wsRadioButtonList1.SelectedIndex == 2)
+        {
+            wsTextBox1.Enabled = true;
+            wsTextBox2.Enabled = true;
+        }
+        else
+        {
+            DisableTextBox(wsTextBox1);
+            DisableTextBox(wsTextBox2);
+        }
+
+        if (wsRadioButtonList1.SelectedIndex != 3)
+        {
+            DisableRadioButtonList(lpvRadioButtonList1);
+        }
+        else
+        {
+            lpvRadioButtonList1.Enabled = true;
+        }
     }
 }

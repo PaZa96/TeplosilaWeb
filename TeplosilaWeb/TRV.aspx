@@ -80,7 +80,7 @@
                                         <div class="col-6 col-md-6">
                                             <br />
                                             <asp:TextBox ID="ws2TextBox1" runat="server" Enabled="False" type="number"
-                                                required="required" TextMode="Number"></asp:TextBox>
+                                                required="required" TextMode="Number"></asp:TextBox>&nbsp;
                                             <asp:Label ID="Label6" runat="server" Text="% (от 5% до 65%)"></asp:Label>
                                             &nbsp;&nbsp;&nbsp;
                                             <asp:CustomValidator ID="CustomValidator16" runat="server"
@@ -90,7 +90,7 @@
                                                 SetFocusOnError="True" ValidateEmptyText="True"></asp:CustomValidator>
                                             <br />
                                             <asp:TextBox ID="ws2TextBox2" runat="server" Enabled="False" type="number"
-                                                required="required" TextMode="Number"></asp:TextBox>
+                                                required="required" TextMode="Number"></asp:TextBox>&nbsp;
                                             <asp:Label ID="Label7" runat="server"
                                                 Text="&#8451; (от 0&#8451; до 150&#8451;)">
                                             </asp:Label>&nbsp;&nbsp;&nbsp;

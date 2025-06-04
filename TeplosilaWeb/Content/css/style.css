@@ -8,11 +8,7 @@
     width: 100% !important;
 }
 
-input[type=radio] {
-    margin-left: 5px;
-    margin-right: 5px;
-    accent-color: #ff6200;
-}
+
 
 .childRadio {
     margin-left: 10px;
@@ -80,6 +76,12 @@ label {
     border-color: #f37134;
 }
 
+input[type=radio] {
+    margin-left: 5px;
+    margin-right: 5px;
+    accent-color: #ff6200;
+}
+
 input[type=number] {
     width: 7.5rem;
     padding: 0px;
@@ -89,6 +91,7 @@ input[type=number] {
     margin-left: 0;
     margin-right: 0;
     margin-bottom: 3px;
+    height: 25px;
 }
 
 input[type="number"] {
@@ -122,6 +125,7 @@ select {
     border-radius: 4px;
     border: 2px solid #808080;
     box-sizing: border-box;
+    height: 25px;
 }
 
     select:disabled {
