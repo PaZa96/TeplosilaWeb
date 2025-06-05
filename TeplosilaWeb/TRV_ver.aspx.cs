@@ -52,6 +52,73 @@ public partial class TRV_ver : System.Web.UI.Page
         }
     }
 
+    //математические функции
+
+    private void convertArrDouble(double[,] arr, DropDownList ddl, ref TextBox tb)
+    {
+        if (ddl.SelectedIndex > 0)
+        {
+            if (!String.IsNullOrWhiteSpace(tb.Text))
+            {
+                int jj = Convert.ToInt32(Session[ddl.ID]);
+
+                if (jj > 0)
+                {
+                    tb.Text = (customConverterToDouble((tb.Text.Replace(".", ","))) * arr[(jj - 1), (ddl.SelectedIndex - 1)]).ToString().Replace(",", ".");
+                }
+            }
+        }
+    }
+
+    private void convertArr(double[] arr, DropDownList ddl, ref TextBox tb)
+    {
+        if (ddl.SelectedIndex > 0)
+        {
+            if (!String.IsNullOrWhiteSpace(tb.Text))
+            {
+                int jj = Convert.ToInt32(Session[ddl.ID]);
+                tb.Text = (customConverterToDouble(tb.Text.Replace(".", ",")) * arr[jj - 1] / arr[ddl.SelectedIndex - 1]).ToString().Replace(",", ".");
+            }
+        }
+    }
+
+    private double convertArrToBar(double[] arr, DropDownList ddl, TextBox tb)
+    {
+        double result = 0;
+
+        if (ddl.SelectedIndex > 0)
+        {
+            if (!String.IsNullOrWhiteSpace(tb.Text))
+            {
+
+                int jj = Convert.ToInt32(Session[ddl.ID]);
+                if (jj > 0)
+                {
+                    result = (customConverterToDouble(tb.Text) * arr[jj - 1] / arr[2]);
+                }
+            }
+        }
+        return result;
+    }
+
+    public double customConverterToDouble(string tb)
+    {
+
+        double afterConvert;
+
+        if (tb.IndexOf(".") != -1)
+        {
+            string beforeConvert = tb.Replace(".", ",");
+            afterConvert = Convert.ToDouble(beforeConvert);
+        }
+        else
+        {
+            afterConvert = Convert.ToDouble(tb);
+        }
+
+        return afterConvert;
+    }
+
     //вспомогательные функции работы с данными
     private void readFile()
     {
@@ -73,134 +140,90 @@ public partial class TRV_ver : System.Web.UI.Page
 
     private void setDNDataset()
     {
-        Newtonsoft.Json.Linq.JArray jArrDN = new Newtonsoft.Json.Linq.JArray();
-
-        if (tvRadioButton1.Checked)
+        if (pnRadioButtonList1.SelectedIndex != -1 && ((tvRadioButton1.Checked && tvRadioButtonList1.SelectedIndex != -1) || (tvRadioButton2.Checked && tvRadioButtonList2.SelectedIndex != -1)))
         {
-            if(pnRadioButtonList1.SelectedIndex == 0)
-            {
-                switch (tvRadioButtonList1.SelectedIndex)
-                {
-                    case 0:
-                        jArrDN = dataFromFile.DN16trv;
-                        break;
-                    case 1:
-                        jArrDN = dataFromFile.DN25trv;
-                        break;
-                    default:
-                        break;
-                }
-            } else
-            {
-                switch (tvRadioButtonList1.SelectedIndex)
-                {
-                    case 0:
-                        jArrDN = dataFromFile.DN16trvt;
-                        break;
-                    case 1:
-                        jArrDN = dataFromFile.DN25trvt;
-                        break;
-                    default:
-                        break;
-                }
-            }
-            
-        }
+            Newtonsoft.Json.Linq.JArray jArrDN = new Newtonsoft.Json.Linq.JArray();
+            string ktName = "";
+            string pnVal = pnRadioButtonList1.SelectedValue;
 
-        if (tvRadioButton2.Checked)
-        {
-            if (pnRadioButtonList1.SelectedIndex == 0)
+            if (tvRadioButton1.Checked)
             {
-                switch (tvRadioButtonList2.SelectedIndex)
-                {
-                    case 0:
-                        jArrDN = dataFromFile.DN16trv3;
-                        break;
-                    default:
-                        break;
-                }
+                ktName = tvRadioButtonList1.SelectedValue;
+                jArrDN = dataFromFile.DN2[ktName][pnVal];
             }
-            else
+
+            if (tvRadioButton2.Checked)
             {
-                //для trv3 -25
+                ktName = tvRadioButtonList2.SelectedValue;
+                jArrDN = dataFromFile.DN3[ktName][pnVal];
             }
-        }
 
-        dnDropDownList1.Items.Clear();
-        dnDropDownList1.Items.Insert(0, "выбрать");
+            dnDropDownList1.Items.Clear();
+            dnDropDownList1.Items.Insert(0, "выбрать");
 
-        foreach (var item in jArrDN)
-        {
-            dnDropDownList1.Items.Add(new ListItem(item.ToString(), item.ToString()));
+            foreach (var item in jArrDN)
+            {
+                dnDropDownList1.Items.Add(new ListItem(item.ToString(), item.ToString()));
+            }
         }
     }
 
     private void setKvsDataset()
     {
-        Newtonsoft.Json.Linq.JArray jArrKvs = new Newtonsoft.Json.Linq.JArray();
-
-        if (tvRadioButton1.Checked)
+        if (pnRadioButtonList1.SelectedIndex != -1 && dnDropDownList1.SelectedIndex > 0 && ((tvRadioButton1.Checked && tvRadioButtonList1.SelectedIndex != -1) || (tvRadioButton2.Checked && tvRadioButtonList2.SelectedIndex != -1)))
         {
-            if (pnRadioButtonList1.SelectedIndex == 0)
+            Newtonsoft.Json.Linq.JArray jArrKvs = new Newtonsoft.Json.Linq.JArray();
+            string ktName = "";
+            string pnVal = pnRadioButtonList1.SelectedValue;
+            string dnVal = dnDropDownList1.SelectedValue;
+
+
+            if (tvRadioButton1.Checked)
             {
-                switch (tvRadioButtonList1.SelectedIndex)
-                {
-                    case 0:
-                        jArrKvs = dataFromFile.DN16trv;
-                        break;
-                    case 1:
-                        jArrKvs = dataFromFile.DN25trv;
-                        break;
-                    default:
-                        break;
-                }
-            }
-            else
-            {
-                switch (tvRadioButtonList1.SelectedIndex)
-                {
-                    case 0:
-                        jArrKvs = dataFromFile.DN16trvt;
-                        break;
-                    case 1:
-                        jArrKvs = dataFromFile.DN25trvt;
-                        break;
-                    default:
-                        break;
-                }
+                ktName = tvRadioButtonList1.SelectedValue;
+                jArrKvs = dataFromFile.Kvs2[ktName][pnVal][dnVal];
             }
 
-        }
-
-        if (tvRadioButton2.Checked)
-        {
-            if (pnRadioButtonList1.SelectedIndex == 0)
+            if (tvRadioButton2.Checked)
             {
-                switch (tvRadioButtonList2.SelectedIndex)
-                {
-                    case 0:
-                        jArrKvs = dataFromFile.DN16trv3;
-                        break;
-                    default:
-                        break;
-                }
+                ktName = tvRadioButtonList2.SelectedValue;
+                jArrKvs = dataFromFile.Kvs3[ktName][pnVal][dnVal];
             }
-            else
+
+            kvsDropDownList1.Items.Clear();
+            kvsDropDownList1.Items.Insert(0, "выбрать");
+
+            foreach (var item in jArrKvs)
             {
-                //для trv3 -25
+                kvsDropDownList1.Items.Add(new ListItem(item.ToString(), item.ToString()));
             }
-        }
-
-        kvsDropDownList1.Items.Clear();
-        kvsDropDownList1.Items.Insert(0, "выбрать");
-
-        foreach (var item in jArrKvs)
-        {
-            kvsDropDownList1.Items.Add(new ListItem(item.ToString(), item.ToString()));
         }
     }
 
+
+
     //вспомогательные функции 
+    public bool SetEnableTextBox(DropDownList dropDownList, TextBox textBox)
+    {
+        bool flag = false;
+
+        if (dropDownList.SelectedIndex == 0)
+        {
+            DisableTextBox(textBox);
+            flag = false;
+        }
+        else
+        {
+            textBox.Enabled = true;
+            flag = true;
+        }
+
+        return flag;
+    }
+    private void SavePrevSelectedIndexDDL(string id, int key)
+    {
+        Session[id] = key;
+    }
     public void DisableTextBox(TextBox textBox)
     {
         textBox.Enabled = false;
@@ -224,6 +247,9 @@ public partial class TRV_ver : System.Web.UI.Page
         if((tvRadioButton1.Checked == true && tvRadioButtonList1.SelectedIndex != -1 && pnRadioButtonList1.SelectedIndex != -1) || 
             (tvRadioButton2.Checked == true && tvRadioButtonList2.SelectedIndex != -1 && pnRadioButtonList1.SelectedIndex != -1))
         {
+            
+            setKvsDataset();
+            DisableDropDownList(kvsDropDownList1);
             setDNDataset();
             dnDropDownList1.Enabled = true;
         } 
@@ -289,7 +315,6 @@ public partial class TRV_ver : System.Web.UI.Page
 
     protected void pnRadioButtonList1_SelectedIndexChanged(object sender, EventArgs e)
     {
-
         EnablePanel1();
     }
 
@@ -322,10 +347,139 @@ public partial class TRV_ver : System.Web.UI.Page
         if (wsRadioButtonList1.SelectedIndex != 3)
         {
             DisableRadioButtonList(lpvRadioButtonList1);
+
+            fvDropDownList1.Enabled = true;
+            lpvDropDownList21.Enabled = true;
+            calcvDropDownList1.Enabled = true;
+            DisableDropDownList(lpv5DropDownList1);
+            DisableTextBox(lpv5TextBox1);
+            DisableTextBox(lpv5TextBox3); 
+            calcvTextBox2.Enabled = true;
+
+            //управление блоками
+            aaPanel2.Visible = true;
+            aaPanel3.Visible = true;
+            aaPanel5.Visible = true;
+            aaPanel4.Visible = false;
         }
         else
         {
             lpvRadioButtonList1.Enabled = true;
+            fvDropDownList1.Enabled = true;
+            lpv5DropDownList1.Enabled = true;
+            DisableDropDownList(lpvDropDownList21);
+            DisableDropDownList(calcvDropDownList1);
+            DisableTextBox(lpvTextBox21);
+            DisableTextBox(calcvTextBox1);
+            DisableTextBox(calcvTextBox2);
+            DisableTextBox(calcvTextBox2);
+            lpv5TextBox3.Enabled = true;
+
+            //управление блоками
+            aaPanel4.Visible = true;
+            aaPanel5.Visible = true;
+            aaPanel2.Visible = false;
+            aaPanel3.Visible = false;
+        }
+    }
+
+    protected void lpvDropDownList21_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        if (SetEnableTextBox(lpvDropDownList21, lpvTextBox21))
+        {
+            convertArr(arrConvert3, (sender as DropDownList), ref lpvTextBox21);
+        }
+        SavePrevSelectedIndexDDL(lpvDropDownList21.ID, lpvDropDownList21.SelectedIndex);
+    }
+
+    protected void calcvDropDownList1_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        if (SetEnableTextBox(calcvDropDownList1, calcvTextBox1))
+        {
+            convertArr(arrConvert3, (sender as DropDownList), ref calcvTextBox1);
+        }
+        SavePrevSelectedIndexDDL(calcvDropDownList1.ID, calcvDropDownList1.SelectedIndex);
+    }
+
+    protected void lpv5DropDownList1_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        if (SetEnableTextBox(lpv5DropDownList1, lpv5TextBox1))
+        {
+            convertArr(arrConvert3, (sender as DropDownList), ref lpv5TextBox1);
+        }
+        SavePrevSelectedIndexDDL(lpv5DropDownList1.ID, lpv5DropDownList1.SelectedIndex);
+    }
+
+    protected void fvDropDownList1_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        if (SetEnableTextBox(fvDropDownList1, fvTextBox1))
+        {
+            convertArrDouble(arrConvert1, (sender as DropDownList), ref fvTextBox1);
+        }
+        SavePrevSelectedIndexDDL(fvDropDownList1.ID, fvDropDownList1.SelectedIndex);
+    }
+
+    protected void kvsDropDownList1_SelectedIndexChanged(object sender, EventArgs e)
+    {
+
+    }
+
+    //Валидаторы элементов
+    protected void tvCustomValidator1_ServerValidate(object source, ServerValidateEventArgs args)
+    {
+        if (!tvRadioButton1.Checked && !tvRadioButton2.Checked)
+        {
+            tvCustomValidator1.ErrorMessage = "Выберите необходимое значение";
+            args.IsValid = false;
+            return;
+        }
+
+        if (tvRadioButton1.Checked && tvRadioButtonList1.SelectedIndex == -1)
+        {
+            tvCustomValidator1.ErrorMessage = "Выберите необходимое значение";
+            args.IsValid = false;
+            return;
+        }
+        if (tvRadioButton2.Checked && tvRadioButtonList2.SelectedIndex == -1)
+        {
+            tvCustomValidator1.ErrorMessage = "Выберите необходимое значение";
+            args.IsValid = false;
+            return;
+        }
+
+    }
+
+    protected void pnCustomValidator1_ServerValidate(object source, ServerValidateEventArgs args)
+    {
+        if (tvCustomValidator1.IsValid && pnRadioButtonList1.SelectedIndex == -1)
+        {
+            pnCustomValidator1.ErrorMessage = "Выберите необходимое значение";
+            args.IsValid = false;
+            return;
+        }
+        
+    }
+
+    protected void dnKvsCustomValidator1_ServerValidate(object source, ServerValidateEventArgs args)
+    {
+        if (pnCustomValidator1.IsValid && (dnDropDownList1.SelectedIndex <= 0 || kvsDropDownList1.SelectedIndex <= 0))
+        {
+            dnKvsCustomValidator1.ErrorMessage = "Выберите необходимое значение";
+            args.IsValid = false;
+            return;
+        }
+    }
+
+    protected void wsCustomValidator1_ServerValidate(object source, ServerValidateEventArgs args)
+    {
+        if (dnKvsCustomValidator1.IsValid && wsRadioButtonList1.SelectedIndex == -1)
+        {
+            if (wsRadioButtonList1.SelectedIndex == -1)
+            {
+                wsCustomValidator1.ErrorMessage = "Выберите необходимое значение";
+                args.IsValid = false;
+                return;
+            }
         }
     }
 }

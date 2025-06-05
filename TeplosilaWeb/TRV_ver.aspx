@@ -21,24 +21,27 @@
                         <a class="nav-link active" aria-current="page" href="#">Поверочный расчет</a>
                     </nav>
                 </div>
-                <div class="col-xs-12 col-sm-10">
+                <div class="col-xs-12 col">
                     <div class="col border border-non-top">
                         <asp:UpdatePanel ID="UpdatePanel1" runat="server">
                             <ContentTemplate>
                                 <asp:Label ID="Label1" runat="server" Text="Тип клапана:"></asp:Label>
                                 <br />
                                 <asp:RadioButton ID="tvRadioButton1" runat="server" Text="2-х ходовой" AutoPostBack="True" OnCheckedChanged="RadioButton1_CheckedChanged" />
-                                <div class="col">
+                                <div class="col-12">
                                     <asp:RadioButtonList ID="tvRadioButtonList1" runat="server" AutoPostBack="True" Enabled="False" OnSelectedIndexChanged="tvRadioButtonList1_SelectedIndexChanged">
                                         <asp:ListItem>TRV</asp:ListItem>
                                         <asp:ListItem>TRV-T</asp:ListItem>
                                     </asp:RadioButtonList>
                                 </div>
                                 <asp:RadioButton ID="tvRadioButton2" runat="server" Text="3-х ходовой" AutoPostBack="True" OnCheckedChanged="tvRadioButton2_CheckedChanged" />
-                                <div class="col">
+                                <div class="col-12">
                                     <asp:RadioButtonList ID="tvRadioButtonList2" runat="server" AutoPostBack="True" Enabled="False" OnSelectedIndexChanged="tvRadioButtonList2_SelectedIndexChanged">
                                         <asp:ListItem>TRV-3</asp:ListItem>
                                     </asp:RadioButtonList>
+                                </div>
+                                <div>
+                                    <asp:CustomValidator ID="tvCustomValidator1" runat="server" SetFocusOnError="True" Display="Dynamic" ForeColor="Red" ErrorMessage="CustomValidator" OnServerValidate="tvCustomValidator1_ServerValidate"></asp:CustomValidator>
                                 </div>
                             </ContentTemplate>
                         </asp:UpdatePanel>
@@ -47,10 +50,15 @@
                         <asp:UpdatePanel ID="UpdatePanel2" runat="server">
                             <ContentTemplate>
                                 <asp:Label ID="Label2" runat="server" Text="Номинальное давление PN, бар:"></asp:Label>
-                                <asp:RadioButtonList ID="pnRadioButtonList1" runat="server" AutoPostBack="True" Enabled="False" OnSelectedIndexChanged="pnRadioButtonList1_SelectedIndexChanged">
-                                    <asp:ListItem>16</asp:ListItem>
-                                    <asp:ListItem>25</asp:ListItem>
-                                </asp:RadioButtonList>
+                                <div class="col-12 row">
+                                    <asp:RadioButtonList ID="pnRadioButtonList1" runat="server" AutoPostBack="True" Enabled="False" OnSelectedIndexChanged="pnRadioButtonList1_SelectedIndexChanged">
+                                        <asp:ListItem>16</asp:ListItem>
+                                        <asp:ListItem>25</asp:ListItem>
+                                    </asp:RadioButtonList>
+                                </div>
+                                <div>
+                                    <asp:CustomValidator ID="pnCustomValidator1" runat="server" SetFocusOnError="True" Display="Dynamic" ForeColor="Red" ErrorMessage="pnCustomValidator" OnServerValidate="pnCustomValidator1_ServerValidate" ControlToValidate="pnRadioButtonList1" ValidateEmptyText="True"></asp:CustomValidator>
+                                </div>
                             </ContentTemplate>
                         </asp:UpdatePanel>
 
@@ -59,7 +67,7 @@
                         <asp:UpdatePanel ID="UpdatePanel3" runat="server">
                             <ContentTemplate>
                                 <asp:Label ID="Label3" runat="server" Text="Диаметр и пропускная способность клапана:"></asp:Label>
-                                <div id="aaPanel1" class="col" runat="server">
+                                <div id="aaPanel0" class="col-12" runat="server">
                                     <div class="row">
                                         <div class="col-6 col-md-2">
                                             <asp:Label ID="dnLabel" runat="server" Text="DN, мм:"></asp:Label>
@@ -75,11 +83,14 @@
                                             <asp:Label ID="kvsLabel" runat="server" Text="Kvs, м3/ч:"></asp:Label>
                                         </div>
                                         <div class="col-6 col-md-2">
-                                            <asp:DropDownList ID="kvsDropDownList1" runat="server" Enabled="False" AutoPostBack="True">
+                                            <asp:DropDownList ID="kvsDropDownList1" runat="server" Enabled="False" AutoPostBack="True" OnSelectedIndexChanged="kvsDropDownList1_SelectedIndexChanged">
                                                 <asp:ListItem>выбрать</asp:ListItem>
                                             </asp:DropDownList>
                                         </div>
                                     </div>
+                                </div>
+                                <div>
+                                    <asp:CustomValidator ID="dnKvsCustomValidator1" runat="server" SetFocusOnError="True" Display="Dynamic" ForeColor="Red" ErrorMessage="dnKvsCustomValidator" OnServerValidate="dnKvsCustomValidator1_ServerValidate"></asp:CustomValidator>
                                 </div>
                             </ContentTemplate>
                         </asp:UpdatePanel>
@@ -87,7 +98,7 @@
                     <div class="col border">
                         <asp:UpdatePanel ID="UpdatePanel4" runat="server">
                             <ContentTemplate>
-                                <div id="wsPanel" runat="server">
+                                <div id="aaPanel1" runat="server">
                                     <asp:Label ID="Label4" runat="server" Text="Рабочая среда:"></asp:Label>
                                     <div class="row">
                                         <div class="col-6 col-md-3">
@@ -108,7 +119,9 @@
                                             </div>
                                         </div>
                                         <div class="col-6 col-md-6">
-                                            <div class="row"></br></div>
+                                            <div class="row">
+                                                </br>
+                                            </div>
                                             <div class="row">
                                                 <asp:TextBox ID="wsTextBox1" runat="server" Enabled="False" type="number"
                                                     required="required" TextMode="Number"></asp:TextBox>&nbsp;
@@ -123,15 +136,21 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <div>
+                                        <asp:CustomValidator ID="wsCustomValidator1" runat="server"
+                                            ControlToValidate="wsRadioButtonList1" Display="Dynamic"
+                                            EnableClientScript="False" ErrorMessage="CustomValidator"
+                                            ForeColor="Red"
+                                            SetFocusOnError="True" ValidateEmptyText="True" OnServerValidate="wsCustomValidator1_ServerValidate"></asp:CustomValidator>
+                                    </div>
                                 </div>
-
                             </ContentTemplate>
                         </asp:UpdatePanel>
                     </div>
                     <div>
                         <asp:UpdatePanel ID="UpdatePanel5" runat="server">
                             <ContentTemplate>
-                                <div id="aaPanel2" runat="server">
+                                <div id="aaPanel2" runat="server" visible="false">
                                     <div class="col border">
                                         <asp:Label ID="Label11" runat="server"
                                             Text="Потери давления на регулируемом участке (без учета регулирующего клапана):">
@@ -143,11 +162,11 @@
                                                     <asp:Label ID="Label10" runat="server" Text="&#916;Ppy' = "></asp:Label>
                                                 </div>
                                                 <div class="row">
-                                                    <asp:TextBox ID="lpvTextBox21" runat="server" Enabled="False" type="number"
+                                                    <asp:TextBox ID="lpvTextBox21" runat="server" Enabled="False" type="number" CssClass="textbox-non-right-radius"
                                                         required="required" TextMode="Number"></asp:TextBox>
 
-                                                    <asp:DropDownList ID="lpvDropDownList21" runat="server" AutoPostBack="True"
-                                                        Enabled="False">
+                                                    <asp:DropDownList ID="lpvDropDownList21" runat="server" AutoPostBack="True" CssClass="dropdown-non-left-radius"
+                                                        Enabled="False" OnSelectedIndexChanged="lpvDropDownList21_SelectedIndexChanged">
                                                         <asp:ListItem>выбрать</asp:ListItem>
                                                         <asp:ListItem>МПа</asp:ListItem>
                                                         <asp:ListItem>кПа</asp:ListItem>
@@ -173,7 +192,7 @@
                     <div>
                         <asp:UpdatePanel ID="UpdatePanel6" runat="server">
                             <ContentTemplate>
-                                <div id="aaPanel3" runat="server">
+                                <div id="aaPanel3" runat="server" visible="false">
                                     <div class="col border">
                                         <asp:Label ID="Label12" runat="server"
                                             Text="Расчёт регулирующего клапана на кавитацию:"></asp:Label>
@@ -187,11 +206,11 @@
                                                     <asp:Label ID="Label21" runat="server" Text="P' = "></asp:Label>
                                                 </div>
                                                 <div class="row">
-                                                    <asp:TextBox ID="calcvTextBox1" runat="server"
+                                                    <asp:TextBox ID="calcvTextBox1" runat="server" CssClass="textbox-non-right-radius"
                                                         Enabled="False" type="number" required="required" TextMode="Number">
                                                     </asp:TextBox>
-                                                    <asp:DropDownList ID="calcvDropDownList1" runat="server" AutoPostBack="True"
-                                                        Enabled="False">
+                                                    <asp:DropDownList ID="calcvDropDownList1" runat="server" AutoPostBack="True" CssClass="dropdown-non-left-radius"
+                                                        Enabled="False" OnSelectedIndexChanged="calcvDropDownList1_SelectedIndexChanged">
                                                         <asp:ListItem>выбрать</asp:ListItem>
                                                         <asp:ListItem>МПа</asp:ListItem>
                                                         <asp:ListItem>кПа</asp:ListItem>
@@ -227,13 +246,65 @@
                         </asp:UpdatePanel>
                     </div>
                     <div>
-                        <asp:UpdatePanel ID="UpdatePanel7" runat="server">
+                        <asp:UpdatePanel ID="UpdatePanel11" runat="server">
                             <ContentTemplate>
-                                <div runat="server" id="fvPane1">
+                                <div id="aaPanel4" runat="server" visible="false">
+                                    <div class="col border">
+
+                                        <asp:Label ID="Label17" runat="server"
+                                            Text="Давление пара перед клапаном (изб.):">
+                                        </asp:Label>
+                                        <div class="col row">
+                                            <div class="col-12 col-md-8 row">
+                                                <div class="col-4 col-md-2">
+                                                    <asp:Label ID="Label18" runat="server" Text="P'1 = "></asp:Label>
+                                                </div>
+                                                <div class="row">
+                                                    <asp:TextBox ID="lpv5TextBox1" runat="server" TextMode="Number" CssClass="textbox-non-right-radius"
+                                                        Enabled="False"></asp:TextBox>
+                                                    <asp:DropDownList ID="lpv5DropDownList1" runat="server" Enabled="False" CssClass="dropdown-non-left-radius"
+                                                        AutoPostBack="True" OnSelectedIndexChanged="lpv5DropDownList1_SelectedIndexChanged">
+                                                        <asp:ListItem>выбрать</asp:ListItem>
+                                                        <asp:ListItem>МПа</asp:ListItem>
+                                                        <asp:ListItem>кПа</asp:ListItem>
+                                                        <asp:ListItem>бар</asp:ListItem>
+                                                        <asp:ListItem>м. в. ст.</asp:ListItem>
+                                                    </asp:DropDownList>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-md-8 row">
+                                                <div class="col-12">
+
+
+                                                    <asp:Label ID="Label57" runat="server" Text="Температура пара через клапан:">
+                                                    </asp:Label>
+                                                </div>
+                                                <div class="col-4 col-md-2">
+                                                    <asp:Label ID="Label58" runat="server" Text="T1 = "></asp:Label>
+                                                </div>
+                                                <div class="row">
+                                                    <asp:TextBox ID="lpv5TextBox3"
+                                                        runat="server" Enabled="False" type="number" TextMode="Number"
+                                                        CausesValidation="True">
+                                                    </asp:TextBox>&nbsp;
+                                            <asp:Label ID="Label59" runat="server" Text=" &#8451;"></asp:Label>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </ContentTemplate>
+                        </asp:UpdatePanel>
+                    </div>
+                    <div>
+                        <asp:UpdatePanel ID="UpdatePanel8" runat="server">
+                            <ContentTemplate>
+                                <div runat="server" id="aaPanel5" visible="false">
                                     <div class="col border">
                                         <asp:Label ID="Label16" runat="server" Text="Расход через клапан:"></asp:Label>
                                         <div class="flow-radio-label col row">
-                                            <div class="col-12">
+                                            <div>
                                                 <asp:RadioButton ID="fvRadioButton1" runat="server"
                                                     Text="Задать максимальную величину расхода через клапан:"
                                                     AutoPostBack="True" />
@@ -243,10 +314,10 @@
                                                     <asp:Label ID="Label28" runat="server" Text="Gкл = "></asp:Label>
                                                 </div>
                                                 <div class="row">
-                                                    <asp:TextBox ID="fvTextBox1" runat="server" Enabled="False"
+                                                    <asp:TextBox ID="fvTextBox1" runat="server" Enabled="False" CssClass="textbox-non-right-radius"
                                                         TextMode="Number"></asp:TextBox>
-                                                    <asp:DropDownList ID="fvDropDownList1" runat="server" AutoPostBack="True"
-                                                        Enabled="False">
+                                                    <asp:DropDownList ID="fvDropDownList1" runat="server" AutoPostBack="True" CssClass="dropdown-non-left-radius"
+                                                        Enabled="False" OnSelectedIndexChanged="fvDropDownList1_SelectedIndexChanged">
                                                         <asp:ListItem>выбрать</asp:ListItem>
                                                         <asp:ListItem>м³/ч</asp:ListItem>
                                                         <asp:ListItem>л/с</asp:ListItem>
@@ -265,7 +336,16 @@
                         </asp:UpdatePanel>
                     </div>
                 </div>
-            </div>
+                <div class="col-12">
+                    <asp:UpdatePanel ID="UpdatePanel10" runat="server">
+                        <ContentTemplate>
+                            <asp:Button ID="vButton" runat="server" type="submit" Text="Рассчитать"
+                                Width="100%" />
+                        </ContentTemplate>
+                    </asp:UpdatePanel>
+                </div>
+                <div class="col-12">
+                </div>
         </form>
     </div>
 </body>
