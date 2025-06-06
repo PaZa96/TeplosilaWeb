@@ -120,7 +120,7 @@
                                         </div>
                                         <div class="col-6 col-md-6">
                                             <div class="row">
-                                                </br>
+                                                <br></br>
                                             </div>
                                             <div class="row">
                                                 <asp:TextBox ID="wsTextBox1" runat="server" Enabled="False" type="number"
@@ -182,7 +182,10 @@
                                             </div>
 
                                         </div>
-
+                                        <div>
+                                            <asp:CustomValidator ID="lpvCustomValidator1" runat="server" ControlToValidate="lpvTextBox21" Display="Dynamic"
+                                                ErrorMessage="CustomValidator" ForeColor="Red" SetFocusOnError="True" ValidateEmptyText="True" OnServerValidate="lpvCustomValidator1_ServerValidate"></asp:CustomValidator>
+                                        </div>
 
                                     </div>
                                 </div>
@@ -219,8 +222,12 @@
                                                     </asp:DropDownList>
                                                 </div>
                                             </div>
-
-
+                                            <div class="col-12 row">
+                                                <asp:CustomValidator ID="calcvCustomValidator1" runat="server"
+                                                    ErrorMessage="CustomValidator" ControlToValidate="calcvDropDownList1"
+                                                    Display="Dynamic" ForeColor="Red" SetFocusOnError="True"
+                                                    ValidateEmptyText="True" OnServerValidate="calcvCustomValidator1_ServerValidate"></asp:CustomValidator>
+                                            </div>
                                             <div class="col-12">
                                                 <asp:Label ID="Label22" runat="server"
                                                     Text="Максимальная температура теплоносителя через клапан:">
@@ -238,9 +245,14 @@
                                                         <asp:Label ID="Label24" runat="server" Text=" &#8451;"></asp:Label>
                                                 </div>
                                             </div>
-
+                                            <div class="col-12 row">
+                                                <asp:CustomValidator ID="calcvCustomValidator2" runat="server"
+                                                    ErrorMessage="CustomValidator" ControlToValidate="calcvTextBox2"
+                                                    Display="Dynamic" ForeColor="Red" SetFocusOnError="True"
+                                                    ValidateEmptyText="True" OnServerValidate="calcvCustomValidator2_ServerValidate"></asp:CustomValidator>
+                                            </div>
                                         </div>
-                                    </div>
+                                </div>
                                 </div>
                             </ContentTemplate>
                         </asp:UpdatePanel>
@@ -272,10 +284,14 @@
                                                     </asp:DropDownList>
                                                 </div>
                                             </div>
+                                            <div class="col-12 row">
+                                                <asp:CustomValidator ID="CustomValidator1" runat="server" Display="Dynamic"
+                                                    ControlToValidate="lpv5DropDownList1" ErrorMessage="CustomValidator"
+                                                    ForeColor="Red" SetFocusOnError="True" OnServerValidate="CustomValidator1_ServerValidate">
+                                                </asp:CustomValidator>
+                                            </div>
                                             <div class="col-12 col-md-8 row">
                                                 <div class="col-12">
-
-
                                                     <asp:Label ID="Label57" runat="server" Text="Температура пара через клапан:">
                                                     </asp:Label>
                                                 </div>
@@ -288,8 +304,14 @@
                                                         CausesValidation="True">
                                                     </asp:TextBox>&nbsp;
                                             <asp:Label ID="Label59" runat="server" Text=" &#8451;"></asp:Label>
-
                                                 </div>
+                                            </div>
+                                            <div class="col-12 row">
+                                                <asp:CustomValidator ID="CustomValidator3" runat="server"
+                                                    ControlToValidate="lpv5TextBox3" Display="Dynamic"
+                                                    EnableClientScript="False" ErrorMessage="CustomValidator"
+                                                    ForeColor="Red"
+                                                    SetFocusOnError="True" ValidateEmptyText="True" OnServerValidate="CustomValidator3_ServerValidate"></asp:CustomValidator>
                                             </div>
                                         </div>
                                     </div>
@@ -328,6 +350,13 @@
                                                         <asp:ListItem>т/ч</asp:ListItem>
                                                     </asp:DropDownList>
                                                 </div>
+                                            </div>
+                                            <div class="col-12 row">
+
+                                                <asp:CustomValidator ID="fvCustomValidator1" runat="server" Display="Dynamic"
+                                                    ControlToValidate="fvDropDownList1" ErrorMessage="CustomValidator"
+                                                    ForeColor="Red"
+                                                    SetFocusOnError="True" ValidateEmptyText="True" OnServerValidate="fvCustomValidator1_ServerValidate"></asp:CustomValidator>
                                             </div>
                                         </div>
                                     </div>

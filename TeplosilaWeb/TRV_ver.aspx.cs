@@ -119,6 +119,16 @@ public partial class TRV_ver : System.Web.UI.Page
         return afterConvert;
     }
 
+    private double getPSbyT(double t)
+    {
+        return Math.Pow(t / 103, 1 / 0.242) - 0.892;
+    }
+
+    private double getTbyPS(double ps)
+    {
+        return 103 * Math.Pow(ps + 0.892, 0.242);
+    }
+
     //вспомогательные функции работы с данными
     private void readFile()
     {
@@ -240,6 +250,11 @@ public partial class TRV_ver : System.Web.UI.Page
     {
         radioButtonList.Enabled = false;
         radioButtonList.ClearSelection();
+    }
+
+    private bool checkTextBoxEmpty(TextBox tb)
+    {
+        return tb.Text == "";
     }
 
     public void EnablePanel1()
@@ -451,28 +466,41 @@ public partial class TRV_ver : System.Web.UI.Page
 
     protected void pnCustomValidator1_ServerValidate(object source, ServerValidateEventArgs args)
     {
-        if (tvCustomValidator1.IsValid && pnRadioButtonList1.SelectedIndex == -1)
+        if (tvCustomValidator1.IsValid)
         {
-            pnCustomValidator1.ErrorMessage = "Выберите необходимое значение";
+            if (pnRadioButtonList1.SelectedIndex == -1)
+            {
+                pnCustomValidator1.ErrorMessage = "Выберите необходимое значение";
+                args.IsValid = false;
+                return;
+            }
+        } else
+        {
             args.IsValid = false;
-            return;
+            pnCustomValidator1.ErrorMessage = "";
         }
-        
     }
 
     protected void dnKvsCustomValidator1_ServerValidate(object source, ServerValidateEventArgs args)
     {
-        if (pnCustomValidator1.IsValid && (dnDropDownList1.SelectedIndex <= 0 || kvsDropDownList1.SelectedIndex <= 0))
+        if (pnCustomValidator1.IsValid)
         {
-            dnKvsCustomValidator1.ErrorMessage = "Выберите необходимое значение";
+            if (dnDropDownList1.SelectedIndex <= 0 || kvsDropDownList1.SelectedIndex <= 0)
+            {
+                dnKvsCustomValidator1.ErrorMessage = "Выберите необходимое значение";
+                args.IsValid = false;
+                return;
+            }
+
+        } else
+        {
             args.IsValid = false;
-            return;
+            dnKvsCustomValidator1.ErrorMessage = "";
         }
     }
-
     protected void wsCustomValidator1_ServerValidate(object source, ServerValidateEventArgs args)
     {
-        if (dnKvsCustomValidator1.IsValid && wsRadioButtonList1.SelectedIndex == -1)
+        if (dnKvsCustomValidator1.IsValid)
         {
             if (wsRadioButtonList1.SelectedIndex == -1)
             {
@@ -480,6 +508,266 @@ public partial class TRV_ver : System.Web.UI.Page
                 args.IsValid = false;
                 return;
             }
+            if (wsRadioButtonList1.SelectedIndex == 3)
+            {
+                if (lpvRadioButtonList1.SelectedIndex == -1)
+                {
+                    wsCustomValidator1.ErrorMessage = "Необходимо выбрать тип пара";
+                    args.IsValid = false;
+                }
+            }
+        }
+        else
+        {
+            args.IsValid = false;
+            wsCustomValidator1.ErrorMessage = "";
+        }
+    }
+
+    protected void lpvCustomValidator1_ServerValidate(object source, ServerValidateEventArgs args)
+    {
+        if (wsCustomValidator1.IsValid)
+        {
+            if (lpvDropDownList21.Enabled)
+            {
+                if (lpvTextBox21.Enabled == false || checkTextBoxEmpty(lpvTextBox21))
+                {
+                    lpvCustomValidator1.ErrorMessage = "Необходимо заполнить поле";
+                    args.IsValid = false;
+                    return;
+                }
+                if (customConverterToDouble(lpvTextBox21.Text) <= 0)
+                {
+                    lpvCustomValidator1.ErrorMessage = "Неверно указано значение давления";
+                    args.IsValid = false;
+                    return;
+                }
+            }
+            if(calcvTextBox1.Enabled == true && !checkTextBoxEmpty(calcvTextBox1) && customConverterToDouble(lpvTextBox21.Text) >= customConverterToDouble(calcvTextBox1.Text))
+            {
+                lpvCustomValidator1.ErrorMessage = "Потери давления на регулируемом участке превышают давление перед клапаном";
+                args.IsValid = false;
+                return;
+            }
+        }
+        else
+        {
+            args.IsValid = false;
+            lpvCustomValidator1.ErrorMessage = "";
+        }
+        return;
+    }
+
+    protected void calcvCustomValidator1_ServerValidate(object source, ServerValidateEventArgs args)
+    {
+        calcvCustomValidator1.Visible = true;
+        if (lpvCustomValidator1.IsValid)
+        {
+            if (calcvDropDownList1.Enabled)
+            {
+
+                if (calcvTextBox1.Enabled == false || checkTextBoxEmpty(calcvTextBox1))
+                {
+                    calcvCustomValidator1.ErrorMessage = "Необходимо заполнить поле";
+                    args.IsValid = false;
+                    return;
+                }
+                if (customConverterToDouble(calcvTextBox1.Text) <= 0)
+                {
+                    calcvCustomValidator1.ErrorMessage = "Неверно указано значение давления";
+                    args.IsValid = false;
+                    return;
+                }
+
+                if (customConverterToDouble(calcvTextBox1.Text) > customConverterToDouble(pnRadioButtonList1.SelectedValue))
+                {
+                    calcvCustomValidator1.ErrorMessage = "Давление перед клапаном больше номинального давления клапана. Указанный клапан не подойдет";
+                    args.IsValid = false;
+                    return;
+                }
+
+                if (tvRadioButtonList1.SelectedIndex == 0)
+                {
+                    if (convertArrToBar(arrConvert3, calcvDropDownList1, calcvTextBox1) > PressureBeforeValve2x)
+                    {
+                        calcvCustomValidator1.ErrorMessage = "На давление свыше 25 бар вариантов нет";
+                        args.IsValid = false;
+                        return;
+                    }
+                }
+                else
+                {
+                    if (convertArrToBar(arrConvert3, calcvDropDownList1, calcvTextBox1) > PressureBeforeValve3x)
+                    {
+                        calcvCustomValidator1.ErrorMessage = "На давление свыше 16 бар вариантов нет";
+                        args.IsValid = false;
+                        return;
+                    }
+                }
+            }
+        }
+        else
+        {
+            calcvCustomValidator1.ErrorMessage = "";
+            args.IsValid = false;
+            return;
+        }
+    }
+
+    protected void calcvCustomValidator2_ServerValidate(object source, ServerValidateEventArgs args)
+    {
+        if (calcvCustomValidator1.IsValid)
+        {
+            if (calcvTextBox2.Enabled)
+            {
+                if (checkTextBoxEmpty(calcvTextBox2))
+                {
+                    calcvCustomValidator2.ErrorMessage = "Необходимо заполнить поле";
+                    args.IsValid = false;
+                    return;
+                }
+                if (customConverterToDouble(calcvTextBox2.Text) <= 0)
+                {
+                    calcvCustomValidator2.ErrorMessage = "Неверно указано значение температуры";
+                    args.IsValid = false;
+                    return;
+                }
+                if (tvRadioButtonList1.SelectedIndex == 1 && customConverterToDouble(calcvTextBox2.Text) > MaxT2x)
+                {
+                    calcvCustomValidator2.ErrorMessage = "Температура теплоносителя больше максимальной температуры рабочей среды для указанного клапана. Указанный клапан не подойдет";
+                    args.IsValid = false;
+                    return; 
+                }
+                
+                if ((tvRadioButtonList1.SelectedIndex == 0 || tvRadioButtonList2.SelectedIndex == 0) && customConverterToDouble(calcvTextBox2.Text) > MaxT3x)
+                {
+                    calcvCustomValidator2.ErrorMessage = "Температура теплоносителя больше максимальной температуры рабочей среды для указанного клапана. Указанный клапан не подойдет";
+                    args.IsValid = false;
+                    return;
+                }
+                
+
+                if (((customConverterToDouble(calcvTextBox1.Text) * arrConvert3[calcvDropDownList1.SelectedIndex - 1] / arrConvert3[2]) - getPSbyT(customConverterToDouble(calcvTextBox2.Text))) <= 0)
+                {
+                    calcvCustomValidator2.ErrorMessage = "Указанная температура выше температуры парообразования. При указанной температуре в трубопроводе движется пар";
+                    args.IsValid = false;
+                    return;
+                }
+            }
+        }
+        else
+        {
+            calcvCustomValidator2.ErrorMessage = "";
+            args.IsValid = false;
+            return;
+        }
+    }
+
+    protected void CustomValidator1_ServerValidate(object source, ServerValidateEventArgs args)
+    {
+        if (wsCustomValidator1.IsValid) { 
+
+            if (lpv5DropDownList1.Enabled)
+            {
+                if (lpv5TextBox1.Enabled == false || checkTextBoxEmpty(lpv5TextBox1))
+                {
+                    CustomValidator1.ErrorMessage = "Необходимо заполнить поле";
+                    args.IsValid = false;
+                    return;
+                }
+                if (customConverterToDouble(lpv5TextBox1.Text) <= 0)
+                {
+                    CustomValidator1.ErrorMessage = "Неверно указано значение давления";
+                    args.IsValid = false;
+                    return;
+                }
+                if (customConverterToDouble(lpv5TextBox1.Text) > customConverterToDouble(pnRadioButtonList1.SelectedValue))
+                {
+                    CustomValidator1.ErrorMessage = "Давление перед клапаном больше номинального давления клапана. Указанный клапан не подойдет";
+                    args.IsValid = false;
+                    return;
+                }
+            }
+        }
+        else
+        {
+            CustomValidator1.ErrorMessage = "";
+            args.IsValid = false;
+            return;
+        }
+    }
+
+    protected void CustomValidator3_ServerValidate(object source, ServerValidateEventArgs args)
+    {
+        if (CustomValidator1.IsValid)
+        {
+            if (lpvRadioButtonList1.SelectedIndex == 0)
+            {
+                if (wsRadioButtonList1.SelectedIndex == 3)
+                {
+                    if (lpv5TextBox3.Enabled == false || checkTextBoxEmpty(lpv5TextBox3))
+                    {
+                        CustomValidator3.ErrorMessage = "Необходимо заполнить поле";
+                        args.IsValid = false;
+                        return;
+                    }
+                    if (customConverterToDouble(lpv5TextBox3.Text) <= 0)
+                    {
+                        CustomValidator3.ErrorMessage = "Неверно указано значение температуры";
+                        args.IsValid = false;
+                        return;
+                    }
+
+                    if (customConverterToDouble(lpv5TextBox3.Text) > MaxT2x)
+                    {
+                        CustomValidator3.ErrorMessage = "Температура теплоносителя больше максимальной температуры рабочей среды для указанного клапана. Указанный клапан не подойдет";
+                        args.IsValid = false;
+                        return;
+                    }
+
+                    if (customConverterToDouble(lpv5TextBox3.Text) < (100 * Math.Pow((customConverterToDouble(lpv5TextBox1.Text) * arrConvert3[lpv5DropDownList1.SelectedIndex - 1] / arrConvert3[2]) + 1, 0.25)))
+                    {
+                        CustomValidator3.ErrorMessage = "Указанная температура ниже температуры парообразования. При указанной температуре в трубопроводе движется жидкость";
+                        args.IsValid = false;
+                        return;
+                    }
+
+                }
+
+            }
+        }
+        else
+            {
+            CustomValidator3.ErrorMessage = "";
+            args.IsValid = false;
+            return;
+        }
+    }
+
+    protected void fvCustomValidator1_ServerValidate(object source, ServerValidateEventArgs args)
+    {
+        if (calcvCustomValidator2.IsValid && CustomValidator3.IsValid && CustomValidator3.IsValid)
+        {
+            if (fvDropDownList1.Enabled)
+            {
+                if (fvTextBox1.Enabled == false || checkTextBoxEmpty(fvTextBox1))
+                {
+                    fvCustomValidator1.ErrorMessage = "Необходимо заполнить поле";
+                    args.IsValid = false;
+                    return;
+                }
+                if (customConverterToDouble(fvTextBox1.Text) <= 0)
+                {
+                    fvCustomValidator1.ErrorMessage = "Неверно указано значение расхода";
+                    args.IsValid = false;
+
+                }
+            }
+        }
+        else
+        {
+            args.IsValid = false;
+            fvCustomValidator1.ErrorMessage = "";
         }
     }
 }
