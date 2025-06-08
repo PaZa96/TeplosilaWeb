@@ -723,26 +723,6 @@ public partial class TRV : System.Web.UI.Page
         else if (ws2RadioButtonList1.SelectedIndex == 1)
         {
             Etgl(GetAvgT(), customConverterToDouble(this.ws2TextBox1.Text), ref rr, ref cp);
-
-            /*double p14 = Convert.ToDouble(ws2TextBox1.Text);
-            double p15 = Math.Round(Convert.ToDouble(ws2TextBox2.Text) / 10) * 10;
-            foreach (Newtonsoft.Json.Linq.JProperty el in dataFromFile.table3)
-            {
-                string s = 0 + "";
-                string[] mas = el.Name.Split('-');
-                if ((Convert.ToDouble(mas[0]) <= p14) && (Convert.ToDouble(mas[1]) >= p14))
-                {
-                    double tmp_t = 0.0;
-                    foreach (Newtonsoft.Json.Linq.JObject val in el.Value)
-                    {
-                        if (Convert.ToDouble(val.GetValue("t")) == p15)
-                        {
-                            tmp_t = Convert.ToDouble(val.GetValue("sr"));
-                        }
-                    }
-                    cp = tmp_t;
-                }
-            }*/
         }
         else if (ws2RadioButtonList1.SelectedIndex == 2)
         {
@@ -1364,73 +1344,18 @@ public partial class TRV : System.Web.UI.Page
 
     private string getPrivodName(string privMark)
     {
-        switch (privMark)
+        string privodName = "";
+
+        try
         {
-            case "37-H":
-                return "TW5000-XD220-S.14";
-            case "101-H":
-                return "TSL-1600-25-1-230-IP67";
-            case "101R-H":
-                return "TSL-1600-25-1R-230-IP67";
-            case "101S-H":
-                return "TSL-2200-25-1S-230-IP67";
-            case "105-H":
-                return "TSL-1600-25-2-24-IP67";
-            case "110-H":
-                return "TSL-2200-40-1-230-IP67";
-            case "110R-H":
-                return "TSL-2200-40-1R-230-IP67";
-            case "110S-H":
-                return "TSL-3000-40-1S-230-IP67";
-            case "115-H":
-                return "TSL-2200-40-2-24-IP67";
-            case "120-H":
-                return "TSL-3000-60-1-230-IP67";
-            case "125-H":
-                return "TSL-3000-60-2-24-IP67";
-            case "130-H":
-                return "TSL-6000-60-1-230-IP67";
-            case "201-H":
-                return "TSL-1600-25-1T-230-IP67";
-            case "201R-H":
-                return "TSL-1600-25-1TR-230-IP67";
-            case "210-H":
-                return "TSL-2200-40-1T-230-IP67";
-            case "210R-H":
-                return "TSL-2200-40-1TR-230-IP67";
-            case "301-H":
-                return "TSL-1600-25-1A-24-IP67";
-            case "302-H":
-                return "TSL-1600-25-2A-230-IP67";
-            case "302R-H":
-                return "TSL-1600-25-2AR-230-IP67";
-            case "302S-H":
-                return "TSL-2200-25-2AS-230-IP67";
-            case "303-H":
-                return "TSL-1600-25-2A-24-IP67";
-            case "303R-H":
-                return "TSL-1600-25-2AR-24-IP67";
-            case "310-H":
-                return "TSL-2200-40-1A-24-IP67";
-            case "312-H":
-                return "TSL-2200-40-2A-230-IP67";
-            case "312R-H":
-                return "TSL-2200-40-2AR-230-IP67";
-            case "312S-H":
-                return "TSL-3000-40-2AS-230-IP67";
-            case "313-H":
-                return "TSL-2200-40-2A-24-IP67";
-            case "313R-H":
-                return "TSL-2200-40-2AR-24-IP67";
-            case "322-H":
-                return "TSL-3000-60-2A-230-IP67";
-            case "323-H":
-                return "TSL-3000-60-2A-24-IP67";
-            case "-":
-                return "вариантов нет";
-            default:
-                return null;
+            privodName = dataFromFile.PrivodName[privMark];
         }
+        catch (Exception er)
+        {
+            Logger.Log.Error(er);
+        }
+
+        return privodName;
     }
 
     private Dictionary<string, string[]> generatedTableV(Dictionary<string, double> g_dict)

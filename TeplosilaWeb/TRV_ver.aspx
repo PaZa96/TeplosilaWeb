@@ -252,7 +252,7 @@
                                                     ValidateEmptyText="True" OnServerValidate="calcvCustomValidator2_ServerValidate"></asp:CustomValidator>
                                             </div>
                                         </div>
-                                </div>
+                                    </div>
                                 </div>
                             </ContentTemplate>
                         </asp:UpdatePanel>
@@ -329,7 +329,7 @@
                                             <div>
                                                 <asp:RadioButton ID="fvRadioButton1" runat="server"
                                                     Text="Задать максимальную величину расхода через клапан:"
-                                                    AutoPostBack="True" />
+                                                    AutoPostBack="True" Checked="True" />
                                             </div>
                                             <div class="col-12 col-md-8 row">
                                                 <div class="col-4 col-md-2">
@@ -368,12 +368,85 @@
                 <div class="col-12">
                     <asp:UpdatePanel ID="UpdatePanel10" runat="server">
                         <ContentTemplate>
-                            <asp:Button ID="vButton" runat="server" type="submit" Text="Рассчитать"
-                                Width="100%" />
+                            <asp:Label ID="LabelError" runat="server" Font-Bold="True" Font-Size="Medium"
+                                Font-Strikeout="False" ForeColor="Red"></asp:Label>
+                            <asp:Button ID="trvCalc" runat="server" type="submit" Text="Рассчитать"
+                                Width="100%" OnClick="trvCalc_Click" />
                         </ContentTemplate>
                     </asp:UpdatePanel>
                 </div>
                 <div class="col-12">
+                    <asp:UpdatePanel ID="UpdatePanel9" runat="server">
+                        <ContentTemplate>
+                            <div id="resultPanel" runat="server">
+                                <asp:Label ID="Label52" runat="server" Enabled="False" Text="Результаты расчёта"
+                                    Visible="False" Font-Size="Medium" Font-Bold="True"></asp:Label>
+
+                                <div class="col non-padding">
+                                    <asp:Label ID="ws2ResultLabel" runat="server" Text="Label" Visible="False">
+                                    </asp:Label>
+                                </div>
+
+                                <div class="col non-padding">
+                                    <asp:Label ID="maxt2ResultLabel" runat="server" Text="maxt2ResultLabel"
+                                        Visible="False">
+                                    </asp:Label>
+                                </div>
+                                <div class="col non-padding">
+                                    <asp:Label ID="maxp2ResultLabel" runat="server" Text="Label" Visible="False">
+                                    </asp:Label>
+                                </div>
+                                <div class="col non-padding">
+                                    <asp:Label ID="calcvDNLabel" runat="server" Visible="False">Расчетный диаметр - </asp:Label>
+                                    <asp:Label ID="calcvDNLabelVal" runat="server" Visible="False"></asp:Label>
+                                </div>
+                                <div class="col non-padding">
+                                    <asp:Label ID="calcvCapacityLabel" runat="server" Visible="False">Расчетная пропускная способность - </asp:Label>
+                                    <asp:Label ID="calcvCapacityLabelVal" runat="server" Visible="False"></asp:Label>
+                                </div>
+                                <div class="col non-padding">
+                                    <asp:Label ID="labelOptyV" runat="server" Visible="False"></asp:Label>
+                                </div>
+
+
+                                <div class="table-responsive-lg" onclick="ShowBTN()">
+                                    <asp:GridView ID="GridView2" CssClass="table table-result trv" runat="server"
+                                        Font-Size="X-Small" Visible="False"
+                                        AutoGenerateSelectButton="True">
+                                        <RowStyle Font-Size="Small" />
+                                        <SelectedRowStyle BackColor="#ff7d00" Font-Bold="False" ForeColor="White" />
+                                    </asp:GridView>
+
+                                </div>
+                                <div class="col non-padding">
+                                    <asp:Label ID="Label53" runat="server" CssClass="show-btn" Text="Объект:"
+                                        Visible="False">
+                                    </asp:Label>
+
+                                    <asp:TextBox ID="objTextBox1" runat="server" Enabled="False" Visible="False"
+                                        CssClass="obj-field">
+                                    </asp:TextBox>
+                                </div>
+                            </div>
+                            <script>
+                                function ShowBTN() {
+                                    var element = document.getElementById('Label53');
+                                    var btn2 = document.getElementById('Button2');
+                                    btn2.classList.add("show-btn");
+                                };
+
+                                function HideBTN() {
+                                    var btn2 = document.getElementById('Button2');
+                                    btn2.classList.remove("show-btn");
+                                };
+                            </script>
+
+                        </ContentTemplate>
+                    </asp:UpdatePanel>
+                    <div class="col non-padding padding-top-bottom">
+                        <asp:Button ID="trvSave" runat="server" Text="Сохранить в PDF"
+                            CssClass="btn btn-primary hide-btn" />
+                    </div>
                 </div>
         </form>
     </div>
