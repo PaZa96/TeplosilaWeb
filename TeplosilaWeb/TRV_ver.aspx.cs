@@ -365,26 +365,334 @@ public partial class TRV_ver : System.Web.UI.Page
         }
     }
 
-    private string getPrivodName(string privMark)
+    private Dictionary<string, string[]> generatedTableV(Dictionary<string, double> g_dict)
     {
-        string privodName = "";
+
+        LabelError.Text = "";
+        /*BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB*/
+        double Kv = 0, Gkl = 0, dPkl = 0, dPto = 0, g = 0, p1 = 0, p2 = 0, V = 0, T1 = 0;
+        int DN = 0;
+        double Kv_start = 0;
+        double tmpKv = 0;
+        string tmpA = "";
+
+
+        Dictionary<string, string[]> listResult = new Dictionary<string, string[]>();
+        listResult.Add("A", new string[] { });
+        listResult.Add("C", new string[] { });
+        listResult.Add("B", new string[] { });
+
+        listResult.Add("I", new string[] { });
+        listResult.Add("I3", new string[] { });
+
+        if (wsRadioButtonList1.SelectedIndex != 3)
+        {
+            listResult.Add("I1", new string[] { });
+            listResult.Add("I2", new string[] { });
+            listResult.Add("D", new string[] { });
+            listResult.Add("F", new string[] { });
+            listResult.Add("G", new string[] { });
+        }
+
+        Gkl = g_dict["p30"];
 
         try
         {
-            privodName = dataFromFile.PrivodName[privMark];
+
+            if (wsRadioButtonList1.SelectedIndex != 3)
+            {
+                dPkl = g_dict["p62"]; 
+
+                dPto = g_dict["p61"]; 
+            }
+
+            if (this.wsRadioButtonList1.SelectedIndex == 0)
+            {
+                Water(GetAvgT(), ref g);
+            }
+            else if (wsRadioButtonList1.SelectedIndex == 1)
+            {
+                double p6 = customConverterToDouble(this.wsTextBox1.Text);
+                double p7 = Math.Round(GetAvgT() / 10) * 10;
+                double cp = 0;
+                Etgl(p7, p6, ref g, ref cp);
+            }
+            else if (wsRadioButtonList1.SelectedIndex == 2)
+            {
+                double p6 = customConverterToDouble(this.wsTextBox1.Text);
+                double p7 = Math.Round(GetAvgT() / 10) * 10;
+                double cp = 0;
+                Prgl(p7, p6, ref g, ref cp);
+            }
+
+            if (wsRadioButtonList1.SelectedIndex == 3)
+            {
+                p1 = (customConverterToDouble(lpv5TextBox1.Text) * arrConvert3[lpv5DropDownList1.SelectedIndex - 1] / arrConvert3[2]);
+
+                if (lpvRadioButtonList1.SelectedIndex == 0)
+                {
+                    T1 = customConverterToDouble(lpv5TextBox3.Text);
+                }
+                else
+                {
+                    T1 = Math.Round(100 * Math.Pow((customConverterToDouble(lpv5TextBox1.Text) * arrConvert3[lpv5DropDownList1.SelectedIndex - 1] / arrConvert3[2]) + 1, 0.25));
+                }
+            }
+
+            double col_B = Kv = customConverterToDouble(kvsDropDownList1.SelectedValue);
+            listResult["B"] = new string[] { Kv.ToString() };
+
+            int col_C = DN = Int32.Parse(dnDropDownList1.SelectedValue);
+
+            double C = customConverterToDouble(dnDropDownList1.SelectedValue);
+
+
+            listResult["C"] = new string[] { dnDropDownList1.SelectedValue };
+
+            int PN = Int32.Parse(pnRadioButtonList1.SelectedValue);
+
+            double Pf = 1;
+
+            if (tvRadioButton1.Checked)
+            {
+                listResult["A"] = new string[] { tvRadioButtonList1.SelectedValue + "-" + DN + "-" + Kv + (PN == 25 ? "-25" : "") };
+            }
+
+            if (tvRadioButton2.Checked)
+            {
+                listResult["A"] = new string[] { tvRadioButtonList2.SelectedValue + "-" + DN + "-" + Kv + (PN == 25 ? "-25" : "") };
+            }
+
+
+            bool exit_t = false;
+
+            /*FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF*/
+            /*GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG*/
+            /*IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII*/
+            List<string> listI = new List<string>(),
+                listI1 = new List<string>(),
+                listI2 = new List<string>(),
+                listI3 = new List<string>(),
+                listF = new List<string>(),
+                listG = new List<string>(),
+                listD = new List<string>();
+
+            listI.AddRange(listResult["I"]);
+
+            listI3.AddRange(listResult["I3"]);
+
+            if (wsRadioButtonList1.SelectedIndex != 3)
+            {
+                listI1.AddRange(listResult["I1"]);
+                listI2.AddRange(listResult["I2"]);
+                listF.AddRange(listResult["F"]);
+                listG.AddRange(listResult["G"]);
+                listD.AddRange(listResult["D"]);
+            }
+
+            for (int i = 0; i < listResult["C"].Count(); i++)
+            {
+
+                Pf = (Math.Pow(Gkl, 2) * 0.1) / (Math.Pow(double.Parse(listResult["B"].GetValue(i).ToString()), 2) * g);
+                double dPf = Pf / 100;
+                Pf = Math.Round(dPf, 2); /*Перевод с кПа в бар*/
+
+                listD.Add(Pf.ToString());
+                /*/DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD*/
+
+                C = Convert.ToDouble(listResult["C"][i]);
+
+                if (wsRadioButtonList1.SelectedIndex != 3)
+                {
+                    V = Gkl / g * Math.Pow((18.8 / C), 2);
+                }
+                else
+                {
+                    V = (Gkl * (T1 + 273)) / Math.Pow((C / 18.8), 2) / (219 * (p2 + 1)); //!!! p2 как расчитать если не указывается для пара
+                }
+
+                if (V <= g_dict["vmax"] || V >= 7)
+                {
+                    exit_t = true;
+                }
+
+                listI.Add(Math.Round(V, 2).ToString());
+
+                double Ia = dPf / (dPf + dPto / 100);
+
+                listI1.Add(Math.Round(Ia, 2).ToString());
+
+                if (Ia >= 0.5)
+                {
+                    listI2.Add("хорошее");
+                }
+                else if (Ia >= 0.4 && Ia < 0.5)
+                {
+                    listI2.Add("удовлетво-\nрительное");
+                }
+                else
+                {
+                    listI2.Add("плохое");
+                }
+
+                if (wsRadioButtonList1.SelectedIndex != 3)
+                {
+
+                    if (V > 3 && V <= 5)
+                    {
+                        listI3.Add("возможен шум");
+                    }
+                    else if (V > 5) // g_dict["vmax"])
+                    {
+                        listI3.Add("возможен эрозийный износ клапана");
+                    }
+                    else if (V < 1.5)
+                    {
+                        listI3.Add("возможен колебательный режим регулирования");
+                    }
+                    else
+                    {
+                        listI3.Add("нет");
+                    }
+                }
+                else
+                {
+                    if (V > 40 && lpvRadioButtonList1.SelectedIndex == 1)
+                        listI3.Add("возможен шум");
+                    else if (V > 60 && lpvRadioButtonList1.SelectedIndex == 0)
+                        listI3.Add("возможен шум");
+                    else
+                    {
+                        listI3.Add("нет");
+                    }
+                }
+
+                if (wsRadioButtonList1.SelectedIndex != 3)
+                {
+
+                    if (!String.IsNullOrWhiteSpace(this.calcvTextBox1.Text) && !String.IsNullOrWhiteSpace(this.calcvTextBox2.Text))
+                    {
+                        double dn = 0.0;
+                        double ps = 0.0;
+                        foreach (Newtonsoft.Json.Linq.JObject ob in dataFromFile.table8)
+                        {
+                            if (C == Convert.ToDouble(ob.GetValue("dn")))
+                            {
+                                dn = Convert.ToDouble(ob.GetValue("z"));
+                                break;
+                            }
+                        }
+
+                        double t1 = customConverterToDouble(this.calcvTextBox2.Text);
+                        Newtonsoft.Json.Linq.JObject max = dataFromFile.table9v[dataFromFile.table9v.Count - 1];
+                        foreach (Newtonsoft.Json.Linq.JObject ob in dataFromFile.table9v)
+                        {
+                            if ((Convert.ToDouble(ob.GetValue("t1")) <= Convert.ToDouble(max.GetValue("t1"))) && (Convert.ToDouble(ob.GetValue("t1")) >= t1))
+                            {
+                                max = ob;
+                            }
+                        }
+                        ps = getPSbyT(t1);
+
+                        double F = Math.Round((dn * ((customConverterToDouble(this.calcvTextBox1.Text) * arrConvert3[this.calcvDropDownList1.SelectedIndex - 1] / arrConvert3[2]) - ps)), 2);
+                        listF.Add(F.ToString());
+
+                        string G_str = "Нет";
+                        if (F < Pf)
+                            G_str = "Угрожает опасность кавитации";
+                        //if (F < (customConverterToDouble(this.lpvTextBox1.Text) * arrConvert3[this.calcvDropDownList1.SelectedIndex - 1] / arrConvert3[2]))
+                        //    G_str = "Угрожает опасность кавитации";
+
+                        listG.Add(G_str);
+                    }
+                }
+            }
+
+            if (wsRadioButtonList1.SelectedIndex != 3)
+            {
+                listResult["I"] = listI.ToArray();
+                listResult["I1"] = listI1.ToArray();
+                listResult["I2"] = listI2.ToArray();
+                listResult["I3"] = listI3.ToArray();
+                listResult["F"] = listF.ToArray();
+                listResult["G"] = listG.ToArray();
+                listResult["D"] = listD.ToArray();
+            }
+            else
+            {
+                listResult["I"] = listI.ToArray();
+                listResult["I3"] = listI3.ToArray();
+            }
+
+
+            string tmpMarkPriv = "";
+            string tmpPriv = "";
+
+            string paramDN = "";
+            string paramKv = "";
+
+            for (int i = 0; i < listResult["C"].Count(); i++)
+            {
+
+                tmpMarkPriv = tmpPriv = "";
+                paramDN = listResult["C"].ElementAt(i);
+                paramKv = listResult["B"].ElementAt(i);
+                
+                if (wsRadioButtonList1.SelectedIndex != 3)
+                {
+
+                    string I = listResult["I"][0];
+                    if (I != "-")
+                    {
+                        if (customConverterToDouble(I) > 10)
+                        {
+                            listResult["A"].SetValue("-", 0);
+                            listResult["D"].SetValue("-", 0);
+                            listResult["I"].SetValue("вариантов нет", 0);
+                            listResult["I1"].SetValue("-", 0);
+                            listResult["I2"].SetValue("-", 0);
+                            listResult["I3"].SetValue("-", 0);
+                            listResult["F"].SetValue("-", 0);
+                            listResult["G"].SetValue("-", 0);
+                        }
+                    }
+                    
+                }
+                else
+                {
+
+
+                    int indexNo = listI3.IndexOf("нет");
+                    List<string> listA = new List<string>();
+
+                    listA.AddRange(listResult["A"]);
+
+                    if (indexNo != -1)
+                    {
+
+                        if (listA.Count - 1 > indexNo + 1)
+                        {
+                            listA.RemoveRange(indexNo + 1, listA.Count - indexNo - 1);
+                            listI.RemoveRange(indexNo + 1, listI.Count - indexNo - 1);
+                            listI3.RemoveRange(indexNo + 1, listI3.Count - indexNo - 1);
+
+                            listResult["A"] = listA.ToArray();
+                            listResult["I"] = listI.ToArray();
+                            listResult["I3"] = listI3.ToArray();
+                        }
+                    }
+
+                }
+            }
+
+
         }
         catch (Exception er)
         {
             Logger.Log.Error(er);
         }
 
-        return privodName;
-    }
-    private Dictionary<string, string[]> generatedTableV(Dictionary<string, double> g_dict)
-    {
-        Dictionary<string, string[]> listResult = new Dictionary<string, string[]>();
         return listResult;
-
     }
 
     //вспомогательные функции 
@@ -612,6 +920,15 @@ public partial class TRV_ver : System.Web.UI.Page
     protected void kvsDropDownList1_SelectedIndexChanged(object sender, EventArgs e)
     {
 
+    }
+
+    protected void GridView2_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        Label53.Visible = true;
+        objTextBox1.Enabled = true;
+        objTextBox1.Visible = true;
+        string clientScript = "javascript:ShowBTN();";
+        this.Page.ClientScript.RegisterStartupScript(this.GetType(), "MyClientScript", clientScript);
     }
 
     //Валидаторы элементов
@@ -986,11 +1303,6 @@ public partial class TRV_ver : System.Web.UI.Page
 
             g_dict.Add("vmax", 3);
 
-
-            /*if (rpvRadioButtonList1.SelectedIndex == 0) g_dict.Add("vKv", 1.0);
-            else g_dict.Add("vKv", 1.2);*/
-            g_dict.Add("vKv", 1.0);
-
             if (tvRadioButtonList1.SelectedIndex == 0) g_dict.Add("vTMax", 220);
             else g_dict.Add("vTMax", 150);
 
@@ -1181,20 +1493,6 @@ public partial class TRV_ver : System.Web.UI.Page
 
             maxp2ResultLabel.Text = "Максимальное рабочее давление - " + pnRadioButtonList1.SelectedValue + " бар";
 
-            if (wsRadioButtonList1.SelectedIndex != 3)
-            {
-                double t1_check = customConverterToDouble(calcvTextBox2.Text);
-                Newtonsoft.Json.Linq.JObject max_check = dataFromFile.table9v[dataFromFile.table9v.Count - 1];
-                foreach (Newtonsoft.Json.Linq.JObject ob in dataFromFile.table9v)
-                {
-                    if ((Convert.ToDouble(ob.GetValue("t1")) <= Convert.ToDouble(max_check.GetValue("t1"))) && (Convert.ToDouble(ob.GetValue("t1")) >= t1_check))
-                    {
-                        max_check = ob;
-                    }
-                }
-
-            }
-
             mapInputParametersV(ref v_input_dict);
 
             Dictionary<string, string[]> gtr = generatedTableV(g_dict);
@@ -1207,8 +1505,6 @@ public partial class TRV_ver : System.Web.UI.Page
             {
                 titles = new string[] {
                 "Марка регулирующего клапана",
-                "Номинальный диаметр DN,\nмм",
-                "Пропускная cпособность Kvs,\nм³/ч",
                 "Фактические потери давления на полностью открытом клапане при заданном расходе ∆Рф,\nбар\n",
                 "Внешний авторитет клапана",
                 "Качество регулирования",
@@ -1216,48 +1512,16 @@ public partial class TRV_ver : System.Web.UI.Page
                 "Шум, колебательный режим",
                 "Предельно допустимый перепад давлений ∆Pпред,\nбар",
                 "Кавитация",
-                "Обозначение привода",
-                "PP54",
-                "PP55",
-                "PP56",
-                "PP57",
-                "PP58",
-                "PP59",
-                "PP60",
-                "PP61",
-                "PP62",
-                "PP63",
-                "PP65",
-                "PP66",
-                "PP67",
-                "PP68",
-                "PP69"
+                "temp"
                 };
             }
             else
             {
                 titles = new string[] {
                     "Марка регулирующего клапана",
-                    "Номинальный диаметр DN,\nмм",
-                    "Пропускная cпособность Kvs,\nм³/ч",
                     "Скорость в выходном сечении клапана V,\nм/с",
                     "Шум, колебательный режим",
-                    "Обозначение привода",
-                    "PP54",
-                    "PP55",
-                    "PP56",
-                    "PP57",
-                    "PP58",
-                    "PP59",
-                    "PP60",
-                    "PP61",
-                    "PP62",
-                    "PP63",
-                    "PP65",
-                    "PP66",
-                    "PP67",
-                    "PP68",
-                    "PP69"
+                    "temp"
                 };
             }
 
@@ -1297,85 +1561,32 @@ public partial class TRV_ver : System.Web.UI.Page
                             case "A":
                                 index = 0;
                                 break;
-                            case "B":
-                                index = 2;
-                                break;
-                            case "C":
-                                index = 1;
-                                break;
                             case "D":
-                                index = 3;
+                                index = 1;
                                 break;
 
                             case "I1":
-                                index = 4;
+                                index = 2;
                                 break;
                             case "I2":
-                                index = 5;
+                                index = 3;
                                 break;
-
                             case "I":
-                                index = 6;
+                                index = 4;
                                 break;
 
                             case "I3":
-                                index = 7;
+                                index = 5;
                                 break;
 
                             case "F":
-                                index = 8;
+                                index = 6;
                                 break;
                             case "G":
-                                index = 9;
+                                index = 7;
                                 break;
-                            case "M":
-                                index = 10;
-                                break;
-
-                            case "PP54":
-                                index = 11;
-                                break;
-                            case "PP55":
-                                index = 12;
-                                break;
-                            case "PP56":
-                                index = 13;
-                                break;
-                            case "PP57":
-                                index = 14;
-                                break;
-                            case "PP58":
-                                index = 15;
-                                break;
-                            case "PP59":
-                                index = 16;
-                                break;
-                            case "PP60":
-                                index = 17;
-                                break;
-                            case "PP61":
-                                index = 18;
-                                break;
-                            case "PP62":
-                                index = 19;
-                                break;
-                            case "PP63":
-                                index = 20;
-                                break;
-                            case "PP65":
-                                index = 21;
-                                break;
-                            case "PP66":
-                                index = 22;
-                                break;
-                            case "PP67":
-                                index = 23;
-                                break;
-                            case "PP68":
-                                index = 24;
-                                break;
-                            case "PP69":
-                                index = 25;
+                            default :
+                                index = 8;
                                 break;
                         }
                     }
@@ -1386,68 +1597,15 @@ public partial class TRV_ver : System.Web.UI.Page
                             case "A":
                                 index = 0;
                                 break;
-                            case "B":
-                                index = 2;
-                                break;
-                            case "C":
+                            case "I":
                                 index = 1;
                                 break;
 
-                            case "I":
-                                index = 3;
-                                break;
-
                             case "I3":
-                                index = 4;
+                                index = 2;
                                 break;
-                            case "M":
-                                index = 5;
-                                break;
-
-                            case "PP54":
-                                index = 6;
-                                break;
-                            case "PP55":
-                                index = 7;
-                                break;
-                            case "PP56":
-                                index = 8;
-                                break;
-                            case "PP57":
-                                index = 9;
-                                break;
-                            case "PP58":
-                                index = 10;
-                                break;
-                            case "PP59":
-                                index = 11;
-                                break;
-                            case "PP60":
-                                index = 12;
-                                break;
-                            case "PP61":
-                                index = 13;
-                                break;
-                            case "PP62":
-                                index = 14;
-                                break;
-                            case "PP63":
-                                index = 15;
-                                break;
-                            case "PP65":
-                                index = 16;
-                                break;
-                            case "PP66":
-                                index = 17;
-                                break;
-                            case "PP67":
-                                index = 18;
-                                break;
-                            case "PP68":
-                                index = 19;
-                                break;
-                            case "PP69":
-                                index = 20;
+                            default:
+                                index = 3;
                                 break;
                         }
                     }
@@ -1492,11 +1650,11 @@ public partial class TRV_ver : System.Web.UI.Page
 
             if (wsRadioButtonList1.SelectedIndex == 3)
             {
-                GridView2.CssClass = "table table-result steam";
+                GridView2.CssClass = "table table-result steam-ver";
             }
             else
             {
-                GridView2.CssClass = "table table-result trv";
+                GridView2.CssClass = "table table-result trv-ver";
             }
         }
         catch (Exception er)

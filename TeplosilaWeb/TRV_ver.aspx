@@ -397,22 +397,14 @@
                                     </asp:Label>
                                 </div>
                                 <div class="col non-padding">
-                                    <asp:Label ID="calcvDNLabel" runat="server" Visible="False">Расчетный диаметр - </asp:Label>
-                                    <asp:Label ID="calcvDNLabelVal" runat="server" Visible="False"></asp:Label>
-                                </div>
-                                <div class="col non-padding">
-                                    <asp:Label ID="calcvCapacityLabel" runat="server" Visible="False">Расчетная пропускная способность - </asp:Label>
-                                    <asp:Label ID="calcvCapacityLabelVal" runat="server" Visible="False"></asp:Label>
-                                </div>
-                                <div class="col non-padding">
                                     <asp:Label ID="labelOptyV" runat="server" Visible="False"></asp:Label>
                                 </div>
 
 
                                 <div class="table-responsive-lg" onclick="ShowBTN()">
-                                    <asp:GridView ID="GridView2" CssClass="table table-result trv" runat="server"
+                                    <asp:GridView ID="GridView2" CssClass="table table-result trv-ver" runat="server"
                                         Font-Size="X-Small" Visible="False"
-                                        AutoGenerateSelectButton="True">
+                                        AutoGenerateSelectButton="True" OnSelectedIndexChanged="GridView2_SelectedIndexChanged">
                                         <RowStyle Font-Size="Small" />
                                         <SelectedRowStyle BackColor="#ff7d00" Font-Bold="False" ForeColor="White" />
                                     </asp:GridView>
@@ -431,12 +423,12 @@
                             <script>
                                 function ShowBTN() {
                                     var element = document.getElementById('Label53');
-                                    var btn2 = document.getElementById('Button2');
+                                    var btn2 = document.getElementById('trvSave');
                                     btn2.classList.add("show-btn");
                                 };
 
                                 function HideBTN() {
-                                    var btn2 = document.getElementById('Button2');
+                                    var btn2 = document.getElementById('trvSave');
                                     btn2.classList.remove("show-btn");
                                 };
                             </script>

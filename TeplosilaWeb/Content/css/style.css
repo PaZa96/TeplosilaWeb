@@ -61,7 +61,8 @@ label {
 
 .nav-link {
     color: #fff;
-    background-color: #f37134;
+    
+    background-color: #343a4073;
 }
     .nav-link:hover {
         color: black;
@@ -71,11 +72,11 @@ label {
     border: 1px solid #dee2e6
 }
 
-.nav-tabs .nav-link.active {
-    color: #fff;
-    background-color: #343a4073;
-    border-color: #f37134;
-}
+    .nav-tabs .nav-link.active {
+        color: #fff;
+        background-color: #f37134;
+        border-color: #f37134;
+    }
 
 input[type=radio] {
     margin-left: 5px;
@@ -263,6 +264,22 @@ tr:nth-child(2) td:nth-child(2) {
 }
 
 .steam tr:nth-child(n) th:nth-child(7) ~ th {
+    display: none;
+}
+
+.trv-ver tr:nth-child(n) td:nth-child(9) ~ td {
+    display: none;
+}
+
+.trv-ver tr:nth-child(n) th:nth-child(9) ~ th {
+    display: none;
+}
+
+.steam-ver tr:nth-child(n) td:nth-child(4) ~ td {
+    display: none;
+}
+
+.steam-ver tr:nth-child(n) th:nth-child(4) ~ th {
     display: none;
 }
 
