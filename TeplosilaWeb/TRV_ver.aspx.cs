@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Web;
@@ -115,6 +116,38 @@ public partial class TRV_ver : System.Web.UI.Page
         else
         {
             afterConvert = Convert.ToDouble(tb);
+        }
+
+        return afterConvert;
+    }
+
+    public string ConvertPointToComma(string tb)
+    {
+        string afterConvert = "";
+
+        if (tb.IndexOf(".") != -1)
+        {
+            afterConvert = tb.Replace(".", ",");
+        }
+        else
+        {
+            afterConvert = tb;
+        }
+
+        return afterConvert;
+    }
+
+    public string ConvertCommaToPoint(string tb)
+    {
+        string afterConvert = "";
+
+        if (tb.IndexOf(",") != -1)
+        {
+            afterConvert = tb.Replace(",", ".");
+        }
+        else
+        {
+            afterConvert = tb;
         }
 
         return afterConvert;
@@ -303,8 +336,8 @@ public partial class TRV_ver : System.Web.UI.Page
             v_in_dict.Add(3, "-"); //было место установки
             v_in_dict.Add(4, "-");
             v_in_dict.Add(5, "-");
-            v_in_dict.Add(6, "-");
-            v_in_dict.Add(7, tvRadioButtonList1.Items[tvRadioButtonList1.SelectedIndex].Text);
+            v_in_dict.Add(6, tvRadioButton1.Checked ? tvRadioButton1.Text : tvRadioButton2.Text);
+            v_in_dict.Add(7, tvRadioButton1.Checked ? tvRadioButtonList1.SelectedValue : tvRadioButtonList2.SelectedValue);
             v_in_dict.Add(8, "Marka"); // Марка добавляется в диалоговом окне при сохранении
 
             if (wsRadioButtonList1.SelectedIndex == 3)
@@ -695,7 +728,186 @@ public partial class TRV_ver : System.Web.UI.Page
         return listResult;
     }
 
+    public void GenerateOtherExel()
+    {
+        try
+        {
+            v_input_dict = (Dictionary<int, string>) Session["v_input_dict"];
+  
+            if (!String.IsNullOrWhiteSpace(objTextBox1.Text))
+            {
+                v_input_dict[2] = objTextBox1.Text;
+            }
+            else
+            {
+                v_input_dict[2] = "-";
+            }
+
+            int pos = 42;
+
+            for (int i = 1; i < GridView2.SelectedRow.Cells.Count; i++)
+            {
+
+                if (pos == 52)
+                {
+                    v_input_dict[pos] = GridView2.SelectedRow.Cells[i].Text;
+                    v_input_dict[pos + 1] = GridView2.SelectedRow.Cells[i].Text;
+                    pos++;
+                }
+                else if (pos >= 64) v_input_dict[pos + 1] = GridView2.SelectedRow.Cells[i].Text;
+                else v_input_dict[pos] = GridView2.SelectedRow.Cells[i].Text;
+
+                pos++;
+
+            }
+
+            v_input_dict[8] = v_input_dict[42];
+            string fileName = ConvertCommaToPoint(v_input_dict[42]);
+
+            if (fileName == "&nbsp;")
+            {
+                fileName = "Регуляторов не найдено";
+            }
+
+            SpreadsheetInfo.SetLicense("FREE-LIMITED-KEY");
+
+            if (!File.Exists(HttpContext.Current.Server.MapPath("~/Content/templates/templateTRV_ver.xlsx")))
+            {
+                LabelError.Text += "Не найден файл шаблона";
+                return;
+            }
+
+            ExcelFile ef = ExcelFile.Load(HttpContext.Current.Server.MapPath("~/Content/templates/templateTRV_ver.xlsx"));
+
+            ExcelWorksheet ws = ef.Worksheets[0];
+
+            ws.PrintOptions.TopMargin = 0.1 / 2.54;
+            ws.PrintOptions.BottomMargin = 0.1 / 2.54;
+            ws.PrintOptions.LeftMargin = 0.6 / 2.54;
+            ws.PrintOptions.RightMargin = 0.6 / 2.54;
+
+            /*for (int i = 1; i < 50; i++)
+            {
+
+                if (i == 10 || i == 12 || i == 14 || i == 16 || i == 18 || i == 20 || i == 22 || i == 23 || i == 24 || i == 25 || i == 26 || i == 27 || i == 28 || i == 29 || i == 30 || i == 31 || i == 32 || i == 34 || i == 43 || i == 44 || i == 45 || i == 46 || i == 48 || i == 50 || i == 52 || i == 54 || i == 57 || i == 63 || i == 64 || i == 65 || i == 66 || i == 67 || i == 68)
+                {
+                    v_input_dict[i] = ConvertPointToComma(v_input_dict[i]);
+                }
+
+                if (v_input_dict[i] == "&nbsp;")
+                {
+                    v_input_dict[i] = "-";
+                }
+            }*/
+
+            ws.Cells["J2"].Value = v_input_dict[1];
+            ws.Cells["B3"].Value = v_input_dict[2];
+
+            ws.Cells["C4"].Value = v_input_dict[6];
+            ws.Cells["C5"].Value = v_input_dict[8];
+            
+
+
+            ws.Cells["C7"].Value = v_input_dict[9];
+
+
+            ws.Cells["J8"].Value = v_input_dict[12];
+            ws.Cells["K8"].Value = v_input_dict[13];
+
+            //ws.Cells["J10"].Value = v_input_dict[14];
+            //ws.Cells["K10"].Value = v_input_dict[15];
+            ws.Cells["J9"].Value = v_input_dict[16];
+            ws.Cells["K9"].Value = v_input_dict[17];
+            ws.Cells["J10"].Value = v_input_dict[18];
+
+            ws.Cells["I11"].Value = v_input_dict[34];
+            ws.Cells["K11"].Value = v_input_dict[35];
+
+            ws.Cells["E13"].Value = v_input_dict[40];
+            ws.Cells["E14"].Value = v_input_dict[41];
+
+            ws.Cells["A17"].Value = v_input_dict[42];
+            ws.Cells["C17"].Value = v_input_dict[43];
+            ws.Cells["E17"].Value = v_input_dict[44];
+            ws.Cells["F17"].Value = v_input_dict[45];
+            ws.Cells["H17"].Value = v_input_dict[46];
+            ws.Cells["I17"].Value = v_input_dict[47];
+            ws.Cells["J17"].Value = v_input_dict[48];
+            ws.Cells["K17"].Value = v_input_dict[49];
+
+
+
+            string path = HttpContext.Current.Server.MapPath("~/Files/TRV/PDF/" + DateTime.Now.ToString("dd-MM-yyyy"));
+            DirectoryInfo dirInfo = new DirectoryInfo(path);
+            if (!dirInfo.Exists)
+            {
+                dirInfo.Create();
+
+            }
+
+            int j = 1;
+            string tempName = fileName;
+
+            link1:
+
+            if (File.Exists(path + "/" + tempName + ".pdf"))
+            {
+                tempName = fileName + "_" + j;
+                j++;
+                goto link1;
+            }
+
+            fileName = tempName;
+            string filePath = path + "/" + fileName + ".pdf";
+
+
+            ef.Save(filePath);
+
+            WaitDownload(50);
+
+            FileInfo file = new FileInfo(filePath);
+            if (file.Exists)
+            {
+
+                Response.ContentType = "application/pdf";
+                Response.AppendHeader("Content-Disposition", "attachment; filename=" + file.Name);
+                Response.TransmitFile(file.FullName);
+                Response.Flush();
+            }
+
+        }
+        catch (Exception er)
+        {
+            Logger.Log.Error(er);
+
+        }
+    }
+
     //вспомогательные функции 
+
+    static void WaitDownload(int second)
+    {
+        Stopwatch sw = new Stopwatch(); // sw cotructor
+        sw.Start(); // starts the stopwatch
+        for (int i = 0; ; i++)
+        {
+            if (i % 100000 == 0) // if in 100000th iteration (could be any other large number
+            // depending on how often you want the time to be checked) 
+            {
+                sw.Stop(); // stop the time measurement
+                if (sw.ElapsedMilliseconds > second) // check if desired period of time has elapsed
+                {
+                    break; // if more than 5000 milliseconds have passed, stop looping and return
+                    // to the existing code
+                }
+                else
+                {
+                    sw.Start(); // if less than 5000 milliseconds have elapsed, continue looping
+                    // and resume time measurement
+                }
+            }
+        }
+    }
     public bool SetEnableTextBox(DropDownList dropDownList, TextBox textBox)
     {
         bool flag = false;
@@ -746,10 +958,10 @@ public partial class TRV_ver : System.Web.UI.Page
             (tvRadioButton2.Checked == true && tvRadioButtonList2.SelectedIndex != -1 && pnRadioButtonList1.SelectedIndex != -1))
         {
             
-            setKvsDataset();
-            DisableDropDownList(kvsDropDownList1);
+            
             setDNDataset();
             dnDropDownList1.Enabled = true;
+            DisableDropDownList(kvsDropDownList1);
         } 
         else
         {
@@ -1638,6 +1850,12 @@ public partial class TRV_ver : System.Web.UI.Page
                 GridView2.DataBind();
             }
 
+            if (GridView2.Rows.Count > 0)
+            {
+                GridView2.SelectedIndex = 0;
+                GridView2_SelectedIndexChanged(GridView2, EventArgs.Empty);
+            }
+
 
             Label52.Visible = true;
             LabelError.Text = "";
@@ -1661,5 +1879,18 @@ public partial class TRV_ver : System.Web.UI.Page
         {
             Logger.Log.Error(er);
         }
+    }
+
+    protected void trvSave_Click(object sender, EventArgs e)
+    {
+        if (lpv5TextBox1.Enabled)
+        {
+            //GenerateSteamExel();
+        }
+        else
+        {
+            GenerateOtherExel();
+        }
+
     }
 }

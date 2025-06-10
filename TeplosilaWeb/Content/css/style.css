@@ -112,7 +112,7 @@ input[type="number"] {
 
 input[type=text] {
     width: 7.5rem;
-    padding: 0px;
+    padding: 2px;
     margin: 3px 0;
     box-sizing: border-box;
     border-radius: 4px;
@@ -176,6 +176,7 @@ input[disabled] {
     margin-top: 7px;
     margin-bottom: 7px;
     height: auto !important;
+    position: relative;
 }
     .table-result tbody {
         border: 1px solid;
@@ -188,6 +189,7 @@ input[disabled] {
 
     .table-result tr td:first-child::before {
         content: counter(rowNumber);
+        display: inline-block;
     }
 
 .table td, .table th {
@@ -209,6 +211,7 @@ input[disabled] {
     .table tr td a {
         position: absolute;
         width: 100%;
+        left: 0px;
         height: 100%;
         color: transparent !important;
     }

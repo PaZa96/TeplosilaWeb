@@ -437,7 +437,7 @@
                     </asp:UpdatePanel>
                     <div class="col non-padding padding-top-bottom">
                         <asp:Button ID="trvSave" runat="server" Text="Сохранить в PDF"
-                            CssClass="btn btn-primary hide-btn" />
+                            CssClass="btn btn-primary hide-btn" OnClick="trvSave_Click" />
                     </div>
                 </div>
         </form>
