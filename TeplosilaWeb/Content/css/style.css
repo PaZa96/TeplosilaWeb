@@ -136,10 +136,10 @@ select {
         pointer-events: none;
         caret-color: transparent;
     }
-        
+
 input [type=button], input[type=submit], input[type=reset] {
     background-color: #ff7d00;
-    border: none;
+    border: 1px solid #f37134;
     color: white;
     padding: 16px 32px;
     text-decoration: none;
@@ -198,6 +198,7 @@ input[disabled] {
     border-top: 1px solid #dee2e6;
     height: max-content;
     white-space: break-spaces;
+    border: 1px solid;
 }
 
 .table-normal-style td, .table-normal-style th {

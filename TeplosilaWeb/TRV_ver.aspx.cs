@@ -46,6 +46,8 @@ public partial class TRV_ver : System.Web.UI.Page
             Logger.InitLogger(); //инициализация - требуется один раз в начале
 
             this.readFile(); //читаем json файл с данными
+            resultPanel.Visible = false;
+            trvSave.Visible = false;
         }
         catch (Exception er)
         {
@@ -405,9 +407,7 @@ public partial class TRV_ver : System.Web.UI.Page
         /*BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB*/
         double Kv = 0, Gkl = 0, dPkl = 0, dPto = 0, g = 0, p1 = 0, p2 = 0, V = 0, T1 = 0;
         int DN = 0;
-        double Kv_start = 0;
-        double tmpKv = 0;
-        string tmpA = "";
+ 
 
 
         Dictionary<string, string[]> listResult = new Dictionary<string, string[]>();
@@ -433,9 +433,7 @@ public partial class TRV_ver : System.Web.UI.Page
         {
 
             if (wsRadioButtonList1.SelectedIndex != 3)
-            {
-                dPkl = g_dict["p62"]; 
-
+            { 
                 dPto = g_dict["p61"]; 
             }
 
@@ -633,8 +631,6 @@ public partial class TRV_ver : System.Web.UI.Page
                         string G_str = "Нет";
                         if (F < Pf)
                             G_str = "Угрожает опасность кавитации";
-                        //if (F < (customConverterToDouble(this.lpvTextBox1.Text) * arrConvert3[this.calcvDropDownList1.SelectedIndex - 1] / arrConvert3[2]))
-                        //    G_str = "Угрожает опасность кавитации";
 
                         listG.Add(G_str);
                     }
@@ -786,46 +782,20 @@ public partial class TRV_ver : System.Web.UI.Page
             ws.PrintOptions.LeftMargin = 0.6 / 2.54;
             ws.PrintOptions.RightMargin = 0.6 / 2.54;
 
-            /*for (int i = 1; i < 50; i++)
-            {
-
-                if (i == 10 || i == 12 || i == 14 || i == 16 || i == 18 || i == 20 || i == 22 || i == 23 || i == 24 || i == 25 || i == 26 || i == 27 || i == 28 || i == 29 || i == 30 || i == 31 || i == 32 || i == 34 || i == 43 || i == 44 || i == 45 || i == 46 || i == 48 || i == 50 || i == 52 || i == 54 || i == 57 || i == 63 || i == 64 || i == 65 || i == 66 || i == 67 || i == 68)
-                {
-                    v_input_dict[i] = ConvertPointToComma(v_input_dict[i]);
-                }
-
-                if (v_input_dict[i] == "&nbsp;")
-                {
-                    v_input_dict[i] = "-";
-                }
-            }*/
-
             ws.Cells["J2"].Value = v_input_dict[1];
             ws.Cells["B3"].Value = v_input_dict[2];
-
             ws.Cells["C4"].Value = v_input_dict[6];
             ws.Cells["C5"].Value = v_input_dict[8];
-            
-
-
             ws.Cells["C7"].Value = v_input_dict[9];
-
-
             ws.Cells["J8"].Value = v_input_dict[12];
             ws.Cells["K8"].Value = v_input_dict[13];
-
-            //ws.Cells["J10"].Value = v_input_dict[14];
-            //ws.Cells["K10"].Value = v_input_dict[15];
             ws.Cells["J9"].Value = v_input_dict[16];
             ws.Cells["K9"].Value = v_input_dict[17];
             ws.Cells["J10"].Value = v_input_dict[18];
-
             ws.Cells["I11"].Value = v_input_dict[34];
             ws.Cells["K11"].Value = v_input_dict[35];
-
             ws.Cells["E13"].Value = v_input_dict[40];
             ws.Cells["E14"].Value = v_input_dict[41];
-
             ws.Cells["A17"].Value = v_input_dict[42];
             ws.Cells["C17"].Value = v_input_dict[43];
             ws.Cells["E17"].Value = v_input_dict[44];
@@ -1139,8 +1109,8 @@ public partial class TRV_ver : System.Web.UI.Page
         Label53.Visible = true;
         objTextBox1.Enabled = true;
         objTextBox1.Visible = true;
-        string clientScript = "javascript:ShowBTN();";
-        this.Page.ClientScript.RegisterStartupScript(this.GetType(), "MyClientScript", clientScript);
+        trvSave.Visible = true;
+        resultPanel.Visible = true;
     }
 
     //Валидаторы элементов
@@ -1874,6 +1844,8 @@ public partial class TRV_ver : System.Web.UI.Page
             {
                 GridView2.CssClass = "table table-result trv-ver";
             }
+
+           
         }
         catch (Exception er)
         {
@@ -1883,13 +1855,21 @@ public partial class TRV_ver : System.Web.UI.Page
 
     protected void trvSave_Click(object sender, EventArgs e)
     {
-        if (lpv5TextBox1.Enabled)
+        try
         {
-            //GenerateSteamExel();
+            if (lpv5TextBox1.Enabled)
+            {
+                //GenerateSteamExel();
+            }
+            else
+            {
+                GenerateOtherExel();
+            }
         }
-        else
+        catch (Exception er)
         {
-            GenerateOtherExel();
+            Logger.Log.Error(er);
+
         }
 
     }

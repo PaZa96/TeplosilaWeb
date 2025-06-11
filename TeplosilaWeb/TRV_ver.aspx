@@ -9,6 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link href="Content/css/style.css" rel="stylesheet" />
     <title>Программа подбора регулирующего клапана - Поверочный расчет</title>
+
 </head>
 <body>
     <div class="container">
@@ -403,8 +404,8 @@
 
                                 <div class="table-responsive-lg" onclick="ShowBTN()">
                                     <asp:GridView ID="GridView2" CssClass="table table-result trv-ver" runat="server"
-                                        Font-Size="X-Small" Visible="False"
-                                        AutoGenerateSelectButton="True" OnSelectedIndexChanged="GridView2_SelectedIndexChanged">
+                                        Font-Size="X-Small"
+                                        AutoGenerateSelectButton="True" OnSelectedIndexChanged="GridView2_SelectedIndexChanged" Style="left: 0px; top: 0px">
                                         <RowStyle Font-Size="Small" />
                                         <SelectedRowStyle BackColor="#ff7d00" Font-Bold="False" ForeColor="White" />
                                     </asp:GridView>
@@ -420,26 +421,27 @@
                                     </asp:TextBox>
                                 </div>
                             </div>
-                            <script>
-                                function ShowBTN() {
-                                    var element = document.getElementById('Label53');
-                                    var btn2 = document.getElementById('trvSave');
-                                    btn2.classList.add("show-btn");
-                                };
+                            <div class="col non-padding padding-top-bottom">
+                                <asp:Button ID="trvSave" runat="server" Text="Сохранить в PDF" Visible="False"
+                                    CssClass="btn btn-primary" OnClick="trvSave_Click" />
 
-                                function HideBTN() {
-                                    var btn2 = document.getElementById('trvSave');
-                                    btn2.classList.remove("show-btn");
-                                };
-                            </script>
-
+                            </div>
                         </ContentTemplate>
+                        <Triggers>
+                            <asp:PostBackTrigger ControlID="trvSave" />
+                        </Triggers>
                     </asp:UpdatePanel>
-                    <div class="col non-padding padding-top-bottom">
-                        <asp:Button ID="trvSave" runat="server" Text="Сохранить в PDF"
-                            CssClass="btn btn-primary hide-btn" OnClick="trvSave_Click" />
-                    </div>
+
                 </div>
+                <div class="col-12">
+                    <asp:UpdatePanel ID="UpdatePanel7" runat="server">
+                        <ContentTemplate>
+                            
+                        </ContentTemplate>
+                        
+                    </asp:UpdatePanel>
+                </div>
+            </div>
         </form>
     </div>
 </body>

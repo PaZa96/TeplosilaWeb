@@ -7007,15 +7007,22 @@ public partial class TRV : System.Web.UI.Page
 
     protected void Button2_Click(object sender, EventArgs e)
     {
-        if (lpv5TextBox1.Enabled)
+        try
         {
-            GenerateSteamExel();
+            if (lpv5TextBox1.Enabled)
+            {
+                GenerateSteamExel();
+            }
+            else
+            {
+                GenerateOtherExel();
+            }
         }
-        else
+        catch (Exception er)
         {
-            GenerateOtherExel();
-        }
+            Logger.Log.Error(er);
 
+        }
     }
 
     static void WaitDownload(int second)

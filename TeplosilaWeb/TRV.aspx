@@ -18,8 +18,8 @@
             <div class="row jumbotron">
                 <div class="col-12">
                     <nav class="nav nav-tabs">
-                      <a class="nav-link active" aria-current="page" href="#">Стандартный расчет</a>
-                      <a class="nav-link" href="/TRV_ver.aspx">Поверочный расчет</a>
+                        <a class="nav-link active" aria-current="page" href="#">Стандартный расчет</a>
+                        <a class="nav-link" href="/TRV_ver.aspx">Поверочный расчет</a>
                     </nav>
                 </div>
                 <div class="col-xs-12 col-sm-10">
@@ -181,7 +181,7 @@
                                         </asp:RadioButtonList>
 
                                         <asp:RadioButton ID="aaRadioButton4" runat="server" Text="Другое"
-                                            AutoPostBack="True" required="required" OnCheckedChanged="aaRadioButton4_CheckedChanged"/><br/>
+                                            AutoPostBack="True" required="required" OnCheckedChanged="aaRadioButton4_CheckedChanged" /><br />
 
                                         <asp:CustomValidator ID="aaCustomValidator8" runat="server"
                                             ControlToValidate="aa1RadioButtonList1" Display="Dynamic"
@@ -203,36 +203,37 @@
                                             Text="Потери давления на регулируемом участке (без учета регулирующего клапана):">
                                         </asp:Label>
                                         <div class="col">
-                                        
-                                        <div class="row">
-                                            <div class="col-12 col-md-6">
-                                            <asp:Label ID="Label10" runat="server" Text="&#916;Ppy' = "></asp:Label>
-                                            &nbsp;&nbsp;
+
+                                            <div class="row">
+                                                <div class="col-12 col-md-6">
+                                                    <asp:Label ID="Label10" runat="server" Text="&#916;Ppy' = "></asp:Label>
+                                                    &nbsp;&nbsp;
                                             <asp:TextBox ID="lpvTextBox21" runat="server" Enabled="False" type="number" CssClass="margin-top-bottom"
                                                 required="required" TextMode="Number"></asp:TextBox>
-                                            <asp:DropDownList ID="lpvDropDownList21" runat="server" AutoPostBack="True"
-                                                Enabled="False"
-                                                OnSelectedIndexChanged="lpvDropDownList21_SelectedIndexChanged">
-                                                <asp:ListItem>выбрать</asp:ListItem>
-                                                <asp:ListItem>МПа</asp:ListItem>
-                                                <asp:ListItem>кПа</asp:ListItem>
-                                                <asp:ListItem>бар</asp:ListItem>
-                                                <asp:ListItem>м. в. ст.</asp:ListItem>
-                                            </asp:DropDownList>
-                                            </div>
-                                            <div class="col-12 col-md-6">
-                                            <asp:HyperLink ID="HyperLink1" CssClass="btn-link-pdf" Target="_new"
-                                                NavigateUrl="/Content/data/calcTRV.pdf" runat="server">Определение
+                                                    <asp:DropDownList ID="lpvDropDownList21" runat="server" AutoPostBack="True"
+                                                        Enabled="False"
+                                                        OnSelectedIndexChanged="lpvDropDownList21_SelectedIndexChanged">
+                                                        <asp:ListItem>выбрать</asp:ListItem>
+                                                        <asp:ListItem>МПа</asp:ListItem>
+                                                        <asp:ListItem>кПа</asp:ListItem>
+                                                        <asp:ListItem>бар</asp:ListItem>
+                                                        <asp:ListItem>м. в. ст.</asp:ListItem>
+                                                    </asp:DropDownList>
+                                                </div>
+                                                <div class="col-12 col-md-6">
+                                                    <asp:HyperLink ID="HyperLink1" CssClass="btn-link-pdf" Target="_new"
+                                                        NavigateUrl="/Content/data/calcTRV.pdf" runat="server">Определение
                                                 потерь давления на регулируемом участке</asp:HyperLink>
+                                                </div>
+                                                <div>
+                                                    <asp:CustomValidator ID="CustomValidator19" runat="server"
+                                                        ControlToValidate="ws2TextBox2" Display="Dynamic"
+                                                        ErrorMessage="CustomValidator" ForeColor="Red"
+                                                        OnServerValidate="CustomValidator19_ServerValidate"
+                                                        SetFocusOnError="True" ValidateEmptyText="True"></asp:CustomValidator>
+                                                </div>
                                             </div>
-                                            <div><asp:CustomValidator ID="CustomValidator19" runat="server"
-                                                ControlToValidate="ws2TextBox2" Display="Dynamic"
-                                                ErrorMessage="CustomValidator" ForeColor="Red"
-                                                OnServerValidate="CustomValidator19_ServerValidate"
-                                                SetFocusOnError="True" ValidateEmptyText="True"></asp:CustomValidator>
-                                            </div>
-                                        </div>
-                                       
+
                                         </div>
                                     </div>
                                 </div>
@@ -443,9 +444,9 @@
                                     <div class="col border border-non-bottom">
                                         <asp:Label ID="Label16" runat="server" Text="Расход через клапан:"></asp:Label>
                                         <div class="flow-radio-label">
-                                        <asp:RadioButton ID="fvRadioButton1" runat="server"
-                                            Text="Задать максимальную величину расхода через клапан:"
-                                            AutoPostBack="True" OnCheckedChanged="fvRadioButton1_CheckedChanged" />
+                                            <asp:RadioButton ID="fvRadioButton1" runat="server"
+                                                Text="Задать максимальную величину расхода через клапан:"
+                                                AutoPostBack="True" OnCheckedChanged="fvRadioButton1_CheckedChanged" />
                                         </div>
                                         <div class="col">
                                             <asp:Label ID="Label28" runat="server" Text="Gкл = "></asp:Label>
@@ -463,12 +464,12 @@
                                                 <asp:ListItem>кг/ч</asp:ListItem>
                                                 <asp:ListItem>т/ч</asp:ListItem>
                                             </asp:DropDownList>
-                                           <div>
+                                            <div>
 
-                                           <asp:CustomValidator ID="CustomValidator12" runat="server" Display="Dynamic"
-                                                ControlToValidate="fvDropDownList1" ErrorMessage="CustomValidator"
-                                                ForeColor="Red" OnServerValidate="CustomValidator12_ServerValidate"
-                                                SetFocusOnError="True" ValidateEmptyText="True"></asp:CustomValidator>
+                                                <asp:CustomValidator ID="CustomValidator12" runat="server" Display="Dynamic"
+                                                    ControlToValidate="fvDropDownList1" ErrorMessage="CustomValidator"
+                                                    ForeColor="Red" OnServerValidate="CustomValidator12_ServerValidate"
+                                                    SetFocusOnError="True" ValidateEmptyText="True"></asp:CustomValidator>
                                             </div>
                                         </div>
                                     </div>
@@ -482,10 +483,10 @@
                                 <div runat="server" id="fvPane2" visible="false">
                                     <div class="col border border-non-top">
                                         <div class="flow-radio-label">
-                                        <asp:RadioButton ID="fvRadioButton2" runat="server"
-                                            Text="Вычислить максимальную величину расхода через клапан:"
-                                            AutoPostBack="True" OnCheckedChanged="fvRadioButton2_CheckedChanged" />
-                                            </div>
+                                            <asp:RadioButton ID="fvRadioButton2" runat="server"
+                                                Text="Вычислить максимальную величину расхода через клапан:"
+                                                AutoPostBack="True" OnCheckedChanged="fvRadioButton2_CheckedChanged" />
+                                        </div>
                                         <div class="col table-responsive-md">
                                             <table class="table table-bordered col table-normal-style">
                                                 <thead>
@@ -692,7 +693,7 @@
                 <div class="col-xs-12 col-sm-2">
                     <asp:UpdatePanel ID="UpdatePanel16" class="block-img" runat="server">
                         <ContentTemplate>
-                            <asp:Image ID="vPictureBox" runat="server" class="col valve-image non-padding"  />
+                            <asp:Image ID="vPictureBox" runat="server" class="col valve-image non-padding" />
                         </ContentTemplate>
                     </asp:UpdatePanel>
                 </div>
@@ -765,17 +766,12 @@
                                 function ShowBTN() {
                                     var element = document.getElementById('Label53');
                                     var btn2 = document.getElementById('Button2');
-                                    //var btn3 = document.getElementById('Button3');
                                     btn2.classList.add("show-btn");
-                                    //btn3.classList.add("show-btn");
                                 };
 
                                 function HideBTN() {
                                     var btn2 = document.getElementById('Button2');
-                                    //var btn3 = document.getElementById('Button3');
                                     btn2.classList.remove("show-btn");
-
-                                    //btn3.classList.add("show-btn");
                                 };
                             </script>
 
@@ -784,14 +780,9 @@
                     <div class="col non-padding padding-top-bottom">
                         <asp:Button ID="Button2" runat="server" Text="Сохранить в PDF"
                             CssClass="btn btn-primary hide-btn" OnClick="Button2_Click" />
-                        <%--<asp:Button ID="Button3" runat="server" Text="Сохранить в Excel"
-                                CssClass="btn btn-primary hide-btn" Display="None" OnClick="Button3_Click" />--%>
                     </div>
                 </div>
             </div>
         </form>
     </div>
-
-</body>
-
 </html>
