@@ -459,6 +459,7 @@ public partial class TRV_ver : System.Web.UI.Page
             if (wsRadioButtonList1.SelectedIndex == 3)
             {
                 p1 = (customConverterToDouble(lpv5TextBox1.Text) * arrConvert3[lpv5DropDownList1.SelectedIndex - 1] / arrConvert3[2]);
+                p2 = 0.6 * p1 - 0.4;
 
                 if (lpvRadioButtonList1.SelectedIndex == 0)
                 {
@@ -521,6 +522,8 @@ public partial class TRV_ver : System.Web.UI.Page
                 listD.AddRange(listResult["D"]);
             }
 
+            Gkl = g_dict["p30"];
+
             for (int i = 0; i < listResult["C"].Count(); i++)
             {
 
@@ -539,7 +542,7 @@ public partial class TRV_ver : System.Web.UI.Page
                 }
                 else
                 {
-                    V = (Gkl * (T1 + 273)) / Math.Pow((C / 18.8), 2) / (219 * (p2 + 1)); //!!! p2 как расчитать если не указывается для пара
+                    V = (Gkl * (T1 + 273)) / Math.Pow((C / 18.8), 2) / (219 * (p2 + 1));
                 }
 
                 if (V <= g_dict["vmax"] || V >= 7)
@@ -724,20 +727,14 @@ public partial class TRV_ver : System.Web.UI.Page
         return listResult;
     }
 
-    public void GenerateOtherExel()
+    public void GenerateSteamExel()
     {
         try
         {
-            v_input_dict = (Dictionary<int, string>) Session["v_input_dict"];
-  
-            if (!String.IsNullOrWhiteSpace(objTextBox1.Text))
-            {
-                v_input_dict[2] = objTextBox1.Text;
-            }
-            else
-            {
-                v_input_dict[2] = "-";
-            }
+            v_input_dict = (Dictionary<int, string>)Session["v_input_dict"];
+
+            v_input_dict[2] = (!String.IsNullOrWhiteSpace(objTextBox1.Text)) ? objTextBox1.Text : "-";
+
 
             int pos = 42;
 
@@ -760,10 +757,120 @@ public partial class TRV_ver : System.Web.UI.Page
             v_input_dict[8] = v_input_dict[42];
             string fileName = ConvertCommaToPoint(v_input_dict[42]);
 
-            if (fileName == "&nbsp;")
+
+            SpreadsheetInfo.SetLicense("FREE-LIMITED-KEY");
+
+            if (!File.Exists(HttpContext.Current.Server.MapPath("~/Content/templates/templateTRVSteam_ver.xlsx")))
             {
-                fileName = "Регуляторов не найдено";
+                LabelError.Text += "Не найден файл шаблона";
+                return;
             }
+
+            ExcelFile ef = ExcelFile.Load(HttpContext.Current.Server.MapPath("~/Content/templates/templateTRVSteam_ver.xlsx"));
+
+            ExcelWorksheet ws = ef.Worksheets[0];
+
+            ws.PrintOptions.TopMargin = 0.1 / 2.54;
+            ws.PrintOptions.BottomMargin = 0.1 / 2.54;
+            ws.PrintOptions.LeftMargin = 0.6 / 2.54;
+            ws.PrintOptions.RightMargin = 0.6 / 2.54;
+
+
+
+            ws.Cells["J2"].Value = v_input_dict[1];
+            ws.Cells["B3"].Value = v_input_dict[2];
+            ws.Cells["C4"].Value = v_input_dict[6];
+            ws.Cells["I4"].Value = v_input_dict[8];
+            ws.Cells["C6"].Value = v_input_dict[9];
+            ws.Cells["I7"].Value = v_input_dict[66];
+            ws.Cells["K7"].Value = v_input_dict[67];
+            ws.Cells["I8"].Value = v_input_dict[71];
+            ws.Cells["I9"].Value = v_input_dict[34];
+            ws.Cells["K9"].Value = v_input_dict[35];
+            ws.Cells["I11"].Value = v_input_dict[34];
+            ws.Cells["K11"].Value = v_input_dict[35];
+            ws.Cells["E11"].Value = v_input_dict[40];
+            ws.Cells["E12"].Value = v_input_dict[41];
+            ws.Cells["A15"].Value = v_input_dict[42];
+            ws.Cells["E15"].Value = v_input_dict[43];
+            ws.Cells["I15"].Value = v_input_dict[44];
+
+
+            string path = HttpContext.Current.Server.MapPath("~/Files/TRV/PDF/" + DateTime.Now.ToString("dd-MM-yyyy"));
+            DirectoryInfo dirInfo = new DirectoryInfo(path);
+            if (!dirInfo.Exists)
+            {
+                dirInfo.Create();
+
+            }
+
+            int j = 1;
+            string tempName = fileName;
+
+            link1:
+
+            if (File.Exists(path + "/" + tempName + ".pdf"))
+            {
+                tempName = fileName + "_" + j;
+                j++;
+                goto link1;
+            }
+
+            fileName = tempName;
+            string filePath = path + "/" + fileName + ".pdf";
+
+            ef.Save(filePath);
+
+            WaitDownload(50);
+
+            FileInfo file = new FileInfo(filePath);
+            if (file.Exists)
+            {
+
+                Response.ContentType = "application/pdf";
+                Response.AppendHeader("Content-Disposition", "attachment; filename=" + file.Name);
+                Response.TransmitFile(file.FullName);
+                Response.Flush();
+            }
+
+        }
+        catch (Exception er)
+        {
+            Logger.Log.Error(er);
+
+        }
+    }
+
+    public void GenerateOtherExel()
+    {
+        try
+        {
+            v_input_dict = (Dictionary<int, string>) Session["v_input_dict"];
+
+            v_input_dict[2] = (!String.IsNullOrWhiteSpace(objTextBox1.Text)) ? objTextBox1.Text : "-";
+
+
+            int pos = 42;
+
+            for (int i = 1; i < GridView2.SelectedRow.Cells.Count; i++)
+            {
+
+                if (pos == 52)
+                {
+                    v_input_dict[pos] = GridView2.SelectedRow.Cells[i].Text;
+                    v_input_dict[pos + 1] = GridView2.SelectedRow.Cells[i].Text;
+                    pos++;
+                }
+                else if (pos >= 64) v_input_dict[pos + 1] = GridView2.SelectedRow.Cells[i].Text;
+                else v_input_dict[pos] = GridView2.SelectedRow.Cells[i].Text;
+
+                pos++;
+
+            }
+
+            v_input_dict[8] = v_input_dict[42];
+            string fileName = ConvertCommaToPoint(v_input_dict[42]);
+
 
             SpreadsheetInfo.SetLicense("FREE-LIMITED-KEY");
 
@@ -1054,6 +1161,12 @@ public partial class TRV_ver : System.Web.UI.Page
             DisableTextBox(calcvTextBox2);
             DisableTextBox(calcvTextBox2);
             lpv5TextBox3.Enabled = true;
+
+            fvDropDownList1.Items[1].Enabled = false;
+            fvDropDownList1.Items[2].Enabled = false;
+            fvDropDownList1.Items[3].Enabled = false;
+            fvDropDownList1.Items[4].Enabled = false;
+            fvDropDownList1.Items[5].Enabled = false;
 
             //управление блоками
             aaPanel4.Visible = true;
@@ -1859,7 +1972,7 @@ public partial class TRV_ver : System.Web.UI.Page
         {
             if (lpv5TextBox1.Enabled)
             {
-                //GenerateSteamExel();
+                GenerateSteamExel();
             }
             else
             {

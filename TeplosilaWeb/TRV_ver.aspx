@@ -125,14 +125,14 @@
                                             </div>
                                             <div class="row">
                                                 <asp:TextBox ID="wsTextBox1" runat="server" Enabled="False" type="number"
-                                                    required="required" TextMode="Number"></asp:TextBox>&nbsp;
-                                                <asp:Label ID="Label6" runat="server" Text="% (от 5% до 65%)"></asp:Label>
+                                                    required="required" TextMode="Number" placeholder=" от 5% до 65%"></asp:TextBox>&nbsp;
+                                                <asp:Label ID="Label6" runat="server" Text="%"></asp:Label>
                                             </div>
                                             <div class="row">
                                                 <asp:TextBox ID="wsTextBox2" runat="server" Enabled="False" type="number"
-                                                    required="required" TextMode="Number"></asp:TextBox>&nbsp;
+                                                    required="required" TextMode="Number" placeholder=" от 0&#8451; до 150&#8451;"></asp:TextBox>&nbsp;
                                                 <asp:Label ID="Label7" runat="server"
-                                                    Text="&#8451; (от 0&#8451; до 150&#8451;)">
+                                                    Text="&#8451;">
                                                 </asp:Label>
                                             </div>
                                         </div>
@@ -412,7 +412,7 @@
 
                                 </div>
                                 <div class="col non-padding">
-                                    <asp:Label ID="Label53" runat="server" CssClass="show-btn" Text="Объект:"
+                                    <asp:Label ID="Label53" runat="server" CssClass="show-btn" Text="Объект:" 
                                         Visible="False">
                                     </asp:Label>
 

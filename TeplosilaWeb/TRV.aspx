@@ -491,9 +491,9 @@
                                             <table class="table table-bordered col table-normal-style">
                                                 <thead>
                                                     <tr>
-                                                        <th scope="col"></th>
-                                                        <th scope="col"></th>
-                                                        <th scope="col" class="auto-style1">Температура
+                                                        <th scope="col" class="col-2"></th>
+                                                        <th scope="col" class="col-2"></th>
+                                                        <th scope="col" class="col-4">Температура
                                                             теплоносителя в подающем трубопроводе</th>
                                                         <th scope="col">Температура теплоносителя в обратном
                                                             трубопроводе
@@ -506,10 +506,10 @@
                                                             теплосети
                                                         </th>
                                                         <td>Зима</td>
-                                                        <td class="auto-style7">
+                                                        <td class="text-center">
                                                             <asp:Label ID="Label27" runat="server" Text="T1 = ">
                                                             </asp:Label>
-                                                            <asp:TextBox ID="fvTextBox2" runat="server" Enabled="False"
+                                                            <asp:TextBox ID="fvTextBox2" runat="server" Enabled="False" type="number"
                                                                 Width="60px" required="required" TextMode="Number">
                                                             </asp:TextBox>
                                                             <asp:Label ID="Label29" runat="server" Text=" &#8451;">
@@ -527,7 +527,7 @@
                                                     </tr>
                                                     <tr>
                                                         <td>Лето</td>
-                                                        <td class="auto-style7">
+                                                        <td class="text-center">
                                                             <asp:Label ID="Label30" runat="server" Text="T'1 = ">
                                                             </asp:Label>
                                                             <asp:TextBox ID="fvTextBox4" runat="server" Enabled="False"
@@ -551,7 +551,7 @@
                                                             системы
                                                         </th>
                                                         <td>Отопления</td>
-                                                        <td class="auto-style7">
+                                                        <td class="text-center">
                                                             <asp:Label ID="Label36" runat="server" Text="T21 = ">
                                                             </asp:Label>
                                                             <asp:TextBox ID="fvTextBox6" runat="server" Enabled="False"
@@ -572,7 +572,7 @@
                                                     </tr>
                                                     <tr>
                                                         <td>Вентиляции</td>
-                                                        <td class="auto-style7">
+                                                        <td class="text-center">
                                                             <asp:Label ID="Label40" runat="server" Text="T11 = ">
                                                             </asp:Label>
                                                             <asp:TextBox ID="fvTextBox8" runat="server" Enabled="False"

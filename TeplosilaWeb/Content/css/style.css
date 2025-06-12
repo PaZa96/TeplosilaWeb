@@ -179,12 +179,13 @@ input[disabled] {
     position: relative;
 }
     .table-result tbody {
-        border: 1px solid;
+        border: 2px solid;
     }
 
     .table-result tbody tr {
         counter-increment: rowNumber;
         height: max-content;
+
     }
 
     .table-result tr td:first-child::before {
@@ -198,7 +199,6 @@ input[disabled] {
     border-top: 1px solid #dee2e6;
     height: max-content;
     white-space: break-spaces;
-    border: 1px solid;
 }
 
 .table-normal-style td, .table-normal-style th {
@@ -226,6 +226,17 @@ input[disabled] {
     white-space: normal;
 }
 
+.btn-primary:hover, .btn-primary:focus, .btn-primary:active {
+    background-color: #ff7d00;
+    border: 1px solid #f37134;
+    box-shadow: #ff702680 !important;
+}
+
+.btn-primary:not(:disabled):not(.disabled):active {
+    background-color: #ff7d00;
+    border: 1px solid #f37134;
+    box-shadow: #ff702680 !important;
+}
 
 .non-padding {
     padding: 0 !important;
