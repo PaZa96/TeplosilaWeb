@@ -1412,40 +1412,10 @@ public partial class TRV : System.Web.UI.Page
 
             if (ws2RadioButtonList1.SelectedIndex != 3)
             {
-                dPkl = g_dict["p62"]; //Convert.ToDouble(this.lpvTextBox1.Text) * arrConvert3[this.lpvComboBox1.SelectedIndex - 1];
+                dPkl = g_dict["p62"]; 
 
-                dPto = g_dict["p61"]; //Convert.ToDouble(this.lpvTextBox2.Text) * arrConvert3[this.lpvComboBox2.SelectedIndex - 1];
+                dPto = g_dict["p61"]; 
             }
-            /*
-            double middle_T = 0;
-
-            if (this.fvRadioButton1.Checked)
-            {
-                if (this.ws2RadioButton1.Checked)
-                {
-                    middle_T = customConverterToDouble(this.calcvTextBox2.Text);
-                }
-                else
-                {
-                    middle_T = Convert.ToDouble(this.ws2TextBox2.Text);
-                }
-            }
-            else
-            {
-                if (tvRadioButtonList1.SelectedIndex == 0 || this.aaRadioButton1.Checked)
-                {
-                    middle_T = 0.5 * (customConverterToDouble(this.fvTextBox2.Text) + customConverterToDouble(this.fvTextBox3.Text));
-                }
-                else if (this.aaRadioButton2.Checked)
-                {
-                    middle_T = 0.5 * (customConverterToDouble(this.fvTextBox6.Text) + customConverterToDouble(this.fvTextBox7.Text));
-                }
-                else if (this.aaRadioButton3.Checked)
-                {
-                    middle_T = 0.5 * (customConverterToDouble(this.fvTextBox8.Text) + customConverterToDouble(this.fvTextBox9.Text));
-                }
-            }
-            */
 
             if (this.ws2RadioButtonList1.SelectedIndex == 0)
             {

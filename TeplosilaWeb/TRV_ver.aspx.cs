@@ -459,7 +459,20 @@ public partial class TRV_ver : System.Web.UI.Page
             if (wsRadioButtonList1.SelectedIndex == 3)
             {
                 p1 = (customConverterToDouble(lpv5TextBox1.Text) * arrConvert3[lpv5DropDownList1.SelectedIndex - 1] / arrConvert3[2]);
-                p2 = 0.6 * p1 - 0.4;
+
+                if (Math.Sqrt(Math.Pow((p1 - 1), 2) - 4 * ((T1 + 273) / Math.Pow((Kv * 461 / 1.3 / Gkl), 2) - p1)) > 0)
+                {
+                    p2 = 0.5 * ((p1 - 1) + Math.Sqrt(Math.Pow((p1 - 1), 2) - 4 * ((T1 + 273) / Math.Pow((Kv * 461 / 1.3 / Gkl), 2) - p1)));
+
+                    if ((p1 - p2) > (0.5 * (p1 + 1)))
+                    {
+                        p2 = 0.6 * p1 - 0.4;
+                    }
+                }
+                else
+                {
+                    p2 = 0.6 * p1 - 0.4;
+                }
 
                 if (lpvRadioButtonList1.SelectedIndex == 0)
                 {
