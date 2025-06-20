@@ -290,11 +290,11 @@ tr:nth-child(2) td:nth-child(2) {
     display: none;
 }
 
-.steam-ver tr:nth-child(n) td:nth-child(4) ~ td {
+.steam-ver tr:nth-child(n) td:nth-child(5) ~ td {
     display: none;
 }
 
-.steam-ver tr:nth-child(n) th:nth-child(4) ~ th {
+.steam-ver tr:nth-child(n) th:nth-child(5) ~ th {
     display: none;
 }
 

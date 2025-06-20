@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Web;
+using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 
 /// <summary>
@@ -156,5 +157,34 @@ public static class AppUtils
         }
 
         return afterConvert;
+    }
+
+    public static void RemoveCssClass(HtmlGenericControl controlInstance, string css)
+    {
+        var strCssClass = controlInstance.Attributes["class"];
+        controlInstance.Attributes["class"] = string.Join(" ", strCssClass.Split(' ').Where(x => x != css).ToArray());
+    }
+
+    public static void AddCssClass(HtmlGenericControl controlInstance, string css)
+    {
+        var strCssClass = controlInstance.Attributes["class"];
+        controlInstance.Attributes["class"] += (" " + css);
+    }
+
+    public static bool firstMoreSecondDouble(string s1, string s2)
+    {
+        if (!String.IsNullOrWhiteSpace(s1) && !String.IsNullOrWhiteSpace(s2) && !String.IsNullOrEmpty(s1) && !String.IsNullOrEmpty(s2))
+        {
+            if (customConverterToDouble(s1) > customConverterToDouble(s2))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static void SavePrevSelectedIndexDDL(string id, int key)
+    {
+        HttpContext.Current.Session[id] = key;
     }
 }

@@ -2,12 +2,40 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.UI.WebControls;
 
 /// <summary>
 /// математические функции
 /// </summary>
 public static class MathUtils
 {
+
+    public static double[,] arrConvert1 = new double[7, 7] { { 1, 0.278, 16.67, 1000, 0.278, 1000, 1 },
+                                             { 3.6, 1, 60, 3600, 1, 3600, 3.6 },
+                                             { 0.06, 0.0167, 1, 60, 0.0167, 60, 0.06 },
+                                             { 0.001, 0.000278, 0.0167, 1, 0.000278, 1, 0.001 },
+                                             { 3.6, 1, 60, 3600, 1, 3600, 3.6 },
+                                             { 0.001, 0.000278, 0.0167, 1, 0.000278, 1, 0.001 },
+                                             { 1, 0.278, 16.67, 1000, 0.278, 1000, 1 }
+        };
+
+    static double[] arrConvert2 = new double[5] { 1000, 1000000, 1, 1163000, 1.163 };
+    static double[] arrConvert3 = new double[4] { 1000, 1, 100, 9.8067 };
+
+    public static double getArrConvert1(int x, int y)
+    {
+        return arrConvert1[x, y];
+    }
+
+    public static double getArrConvert2(int x)
+    {
+        return arrConvert2[x];
+    }
+    public static double getArrConvert3(int x)
+    {
+        return arrConvert3[x];
+    }
+
     public static void Prgl(double t, double d, ref double rr, /*ref double nn, ref double ll, ref double pr,*/ ref double cp)
     {
         //ll = (0.5613 - 0.00363 * d) + (20.1 - 0.372 * d) * t * 0.0001 - (7.39 + 0.071 * d - 0.00326 * d * d) * 0.000001 * t * t;
@@ -60,5 +88,51 @@ public static class MathUtils
     public static double getTbyPS(double ps)
     {
         return 103 * Math.Pow(ps + 0.892, 0.242);
+    }
+
+    public static void convertArrDouble(DropDownList ddl, ref TextBox tb)
+    {
+        if (ddl.SelectedIndex > 0)
+        {
+            if (!String.IsNullOrWhiteSpace(tb.Text))
+            {
+                int jj = Convert.ToInt32(HttpContext.Current.Session?[ddl.ID]);
+
+                if (jj > 0)
+                {
+                    tb.Text = (AppUtils.customConverterToDouble((tb.Text.Replace(".", ","))) * arrConvert1[(jj - 1), (ddl.SelectedIndex - 1)]).ToString().Replace(",", ".");
+                }
+            }
+        }
+    }
+    public static void convertArr(DropDownList ddl, ref TextBox tb)
+    {
+        if (ddl.SelectedIndex > 0)
+        {
+            if (!String.IsNullOrWhiteSpace(tb.Text))
+            {
+                int jj = Convert.ToInt32(HttpContext.Current.Session?[ddl.ID]);
+                tb.Text = (AppUtils.customConverterToDouble(tb.Text.Replace(".", ",")) * arrConvert3[jj - 1] / arrConvert3[ddl.SelectedIndex - 1]).ToString().Replace(",", ".");
+            }
+        }
+    }
+
+    public static double convertArrToBar(DropDownList ddl, TextBox tb)
+    {
+        double result = 0;
+
+        if (ddl.SelectedIndex > 0)
+        {
+            if (!String.IsNullOrWhiteSpace(tb.Text))
+            {
+
+                int jj = Convert.ToInt32(HttpContext.Current.Session?[ddl.ID]);
+                if (jj > 0)
+                {
+                    result = (AppUtils.customConverterToDouble(tb.Text) * arrConvert3[jj - 1] / arrConvert3[2]);
+                }
+            }
+        }
+        return result;
     }
 }

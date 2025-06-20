@@ -233,13 +233,11 @@
                                                         SetFocusOnError="True" ValidateEmptyText="True"></asp:CustomValidator>
                                                 </div>
                                             </div>
-
                                         </div>
                                     </div>
                                 </div>
                             </ContentTemplate>
                         </asp:UpdatePanel>
-
                     </div>
 
                     <div>
@@ -277,8 +275,6 @@
                                                 Text="Суммарные потери давления на регулируемом участке с учетом регулирующего клапана превышают давление перед клапаном"
                                                 Visible="False"></asp:Label>
                                             <br />
-
-
                                         </div>
                                         <div class="col-12">
                                             <asp:Label ID="Label54" runat="server"
@@ -371,7 +367,7 @@
 
                                             &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;<asp:TextBox ID="lpv5TextBox3"
                                                 runat="server" Enabled="False" type="number" TextMode="Number"
-                                                CausesValidation="True" OnTextChanged="lpv5TextBox3_TextChanged">
+                                                CausesValidation="True">
                                             </asp:TextBox>
                                             <asp:Label ID="Label59" runat="server" Text=" &#8451;"></asp:Label>
                                             <asp:CustomValidator ID="CustomValidator3" runat="server"
@@ -435,7 +431,6 @@
                                 </div>
                             </ContentTemplate>
                         </asp:UpdatePanel>
-
                     </div>
                     <div>
                         <asp:UpdatePanel ID="UpdatePanel13" runat="server">
@@ -476,7 +471,6 @@
                                 </div>
                             </ContentTemplate>
                         </asp:UpdatePanel>
-
 
                         <asp:UpdatePanel ID="UpdatePanel14" runat="server">
                             <ContentTemplate>
@@ -600,11 +594,7 @@
                                                 OnServerValidate="tvCustomValidator1_ServerValidate">
                                             </asp:CustomValidator>
 
-
-
                                             <br />
-
-
 
                                             <asp:Label ID="Label45" runat="server" Text="Тепловая мощность Q = ">
                                             </asp:Label>
@@ -642,7 +632,6 @@
                                 </div>
                             </ContentTemplate>
                         </asp:UpdatePanel>
-
                     </div>
                     <div>
                         <asp:UpdatePanel ID="UpdatePanel15" runat="server">
@@ -741,7 +730,6 @@
                                     <asp:Label ID="labelOptyV" runat="server" Visible="False"></asp:Label>
                                 </div>
 
-
                                 <div class="table-responsive-lg" onclick="ShowBTN()">
                                     <asp:GridView ID="GridView2" CssClass="table table-result trv" runat="server"
                                         Font-Size="X-Small" Visible="False"
@@ -750,7 +738,6 @@
                                         <RowStyle Font-Size="Small" />
                                         <SelectedRowStyle BackColor="#ff7d00" Font-Bold="False" ForeColor="White" />
                                     </asp:GridView>
-
                                 </div>
                                 <div class="col non-padding">
                                     <asp:Label ID="Label53" runat="server" CssClass="show-btn" Text="Объект:"
@@ -774,7 +761,6 @@
                                     btn2.classList.remove("show-btn");
                                 };
                             </script>
-
                         </ContentTemplate>
                     </asp:UpdatePanel>
                     <div class="col non-padding padding-top-bottom">

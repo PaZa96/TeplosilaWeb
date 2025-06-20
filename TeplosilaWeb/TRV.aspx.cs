@@ -1,19 +1,14 @@
-﻿using System;
+﻿using GemBox.Spreadsheet;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Net;
-using System.Reflection.Emit;
-using System.Threading;
 using System.Web;
 using System.Web.UI;
-using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
-using GemBox.Spreadsheet;
-using Newtonsoft.Json;
 using TeplosilaWeb.App_Code;
 
 public partial class TRV : System.Web.UI.Page
@@ -25,16 +20,14 @@ public partial class TRV : System.Web.UI.Page
     private dynamic dataFromFile;
     private double[,] convertTable;
 
-    double[,] arrConvert1;
-    double[] arrConvert2;
-    double[] arrConvert3;
-
+    private double[,] arrConvert1;
+    private double[] arrConvert2;
+    private double[] arrConvert3;
 
     public Dictionary<int, string> v_input_dict = new Dictionary<int, string>();
 
     protected void Page_Load(object sender, EventArgs e)
     {
-
         convertTable = new double[2, 7] { { 1000, 3600, 60, 1, 3600, 1, 1000 }, { 1, 3.6, 0.06, 0.001, 3.6, 0.001, 1 } };
 
         arrConvert1 =
@@ -85,7 +78,6 @@ public partial class TRV : System.Web.UI.Page
         DisablePanel(4);
         DisableTextBox(ws2TextBox1);
         DisableTextBox(ws2TextBox2);
-
     }
 
     protected void aaRadioButton1_CheckedChanged(object sender, EventArgs e)
@@ -105,7 +97,6 @@ public partial class TRV : System.Web.UI.Page
         {
             EnableTemperatureTable();
         }
-
     }
 
     protected void aaRadioButton2_CheckedChanged(object sender, EventArgs e)
@@ -124,7 +115,6 @@ public partial class TRV : System.Web.UI.Page
         {
             EnableTemperatureTable();
         }
-
     }
 
     protected void aaRadioButton3_CheckedChanged(object sender, EventArgs e)
@@ -144,6 +134,7 @@ public partial class TRV : System.Web.UI.Page
             EnableTemperatureTable();
         }
     }
+
     protected void aaRadioButton4_CheckedChanged(object sender, EventArgs e)
     {
         aaRadioButton2.Checked = false;
@@ -170,9 +161,11 @@ public partial class TRV : System.Web.UI.Page
             case 0:
                 vPictureBox.ImageUrl = "~/Content/images/TRV-2.png";
                 break;
+
             case 1:
                 vPictureBox.ImageUrl = "~/Content/images/TRV-3.png";
                 break;
+
             default:
                 vPictureBox.ImageUrl = null;
                 break;
@@ -188,13 +181,13 @@ public partial class TRV : System.Web.UI.Page
                 calcvDropDownList1.Enabled = true;
                 calcvTextBox2.Enabled = true;
                 break;
+
             case 2:
                 lpv5DropDownList1.Enabled = true;
                 lpv5RadioButton2.Enabled = true;
                 lpv5RadioButton3.Enabled = true;
                 break;
         }
-
     }
 
     public void DisablePanel(int numberOfPanel)
@@ -208,6 +201,7 @@ public partial class TRV : System.Web.UI.Page
                 DisableTextBox(calcvTextBox1);
                 DisableTextBox(calcvTextBox2);
                 break;
+
             case 2:
                 DisableTextBox(fvTextBox2);
                 DisableTextBox(fvTextBox3);
@@ -218,6 +212,7 @@ public partial class TRV : System.Web.UI.Page
                 DisableTextBox(fvTextBox8);
                 DisableTextBox(fvTextBox9);
                 break;
+
             case 3:
                 DisableTextBox(lpv5TextBox1);
                 DisableTextBox(lpv5TextBox2);
@@ -258,10 +253,8 @@ public partial class TRV : System.Web.UI.Page
         {
             if (tvRadioButtonList1.SelectedIndex == 0)
             {
-
                 fvTextBox2.Enabled = true;
                 fvTextBox3.Enabled = true;
-
             }
             else if (tvRadioButtonList1.SelectedIndex == 1)
             {
@@ -275,12 +268,10 @@ public partial class TRV : System.Web.UI.Page
                     fvTextBox6.Enabled = true;
                     fvTextBox7.Enabled = true;
                 }
-
             }
         }
         else if (aaRadioButton3.Checked)
         {
-
             if (tvRadioButtonList1.SelectedIndex == 0)
             {
                 fvTextBox2.Enabled = true;
@@ -298,11 +289,9 @@ public partial class TRV : System.Web.UI.Page
                     fvTextBox8.Enabled = true;
                     fvTextBox9.Enabled = true;
                 }
-
             }
         }
     }
- 
 
     protected void ws2RadioButtonList1_SelectedIndexChanged(object sender, EventArgs e)
     {
@@ -344,7 +333,6 @@ public partial class TRV : System.Web.UI.Page
             lpv5.Visible = false;
             calcv.Visible = true;
             fvPane1.Visible = true;
-            
 
             if (aa1RadioButtonList1.SelectedIndex == 0 || aa2RadioButtonList1.SelectedIndex == 0 || aa3RadioButtonList1.SelectedIndex == 0)
             {
@@ -354,7 +342,6 @@ public partial class TRV : System.Web.UI.Page
             }
             else
             {
-
                 if (ws2RadioButtonList1.SelectedIndex != 3 && ws2RadioButtonList1.SelectedIndex != -1)
                 {
                     lpvDropDownList21.Enabled = true;
@@ -363,7 +350,7 @@ public partial class TRV : System.Web.UI.Page
                 lpv2.Visible = true;
             }
 
-            if(LabelSteam.Text == "Y")
+            if (LabelSteam.Text == "Y")
             {
                 fvRadioButton1.Checked = false;
                 DisableDropDownList(fvDropDownList1);
@@ -371,7 +358,8 @@ public partial class TRV : System.Web.UI.Page
                 LabelSteam.Text = "N";
             }
 
-            if (lastSelectedIndex == 3) {
+            if (lastSelectedIndex == 3)
+            {
                 rpvRadioButtonList1.ClearSelection();
                 aaRadioButton1.Checked = false;
                 aa1RadioButtonList1.ClearSelection();
@@ -384,7 +372,6 @@ public partial class TRV : System.Web.UI.Page
                 aa3RadioButtonList1.Enabled = false;
                 aaRadioButton4.Checked = false;
             }
-
         }
         else
         {
@@ -425,8 +412,7 @@ public partial class TRV : System.Web.UI.Page
         }
 
         tdRBL.Visible = true;
-        SavePrevSelectedIndexDDL(ws2RadioButtonList1.ID, ws2RadioButtonList1.SelectedIndex);
-
+        AppUtils.SavePrevSelectedIndexDDL(ws2RadioButtonList1.ID, ws2RadioButtonList1.SelectedIndex);
     }
 
     protected void aa1RadioButtonList1_SelectedIndexChanged(object sender, EventArgs e)
@@ -473,65 +459,65 @@ public partial class TRV : System.Web.UI.Page
 
     protected void lpvDropDownList21_SelectedIndexChanged(object sender, EventArgs e)
     {
-        if (SetEnableTextBox(lpvDropDownList21, lpvTextBox21))
+        if (AppUtils.SetEnableTextBox(lpvDropDownList21, lpvTextBox21))
         {
             convertArr(arrConvert3, (sender as DropDownList), ref lpvTextBox21);
         }
-        SavePrevSelectedIndexDDL(lpvDropDownList21.ID, lpvDropDownList21.SelectedIndex);
+        AppUtils.SavePrevSelectedIndexDDL(lpvDropDownList21.ID, lpvDropDownList21.SelectedIndex);
     }
 
     protected void lpvDropDownList1_SelectedIndexChanged(object sender, EventArgs e)
     {
-        if (SetEnableTextBox(lpvDropDownList1, lpvTextBox1))
+        if (AppUtils.SetEnableTextBox(lpvDropDownList1, lpvTextBox1))
         {
             convertArr(arrConvert3, (sender as DropDownList), ref lpvTextBox1);
         }
-        SavePrevSelectedIndexDDL(lpvDropDownList1.ID, lpvDropDownList1.SelectedIndex);
+        AppUtils.SavePrevSelectedIndexDDL(lpvDropDownList1.ID, lpvDropDownList1.SelectedIndex);
     }
 
     protected void lpv5DropDownList1_SelectedIndexChanged(object sender, EventArgs e)
     {
-        if (SetEnableTextBox(lpv5DropDownList1, lpv5TextBox1))
+        if (AppUtils.SetEnableTextBox(lpv5DropDownList1, lpv5TextBox1))
         {
             convertArr(arrConvert3, (sender as DropDownList), ref lpv5TextBox1);
         }
-        SavePrevSelectedIndexDDL(lpv5DropDownList1.ID, lpv5DropDownList1.SelectedIndex);
+        AppUtils.SavePrevSelectedIndexDDL(lpv5DropDownList1.ID, lpv5DropDownList1.SelectedIndex);
     }
 
     protected void lpv5DropDownList2_SelectedIndexChanged(object sender, EventArgs e)
     {
-        if (SetEnableTextBox(lpv5DropDownList2, lpv5TextBox2))
+        if (AppUtils.SetEnableTextBox(lpv5DropDownList2, lpv5TextBox2))
         {
             convertArr(arrConvert3, (sender as DropDownList), ref lpv5TextBox2);
         }
-        SavePrevSelectedIndexDDL(lpv5DropDownList2.ID, lpv5DropDownList2.SelectedIndex);
+        AppUtils.SavePrevSelectedIndexDDL(lpv5DropDownList2.ID, lpv5DropDownList2.SelectedIndex);
     }
 
     protected void calcvDropDownList1_SelectedIndexChanged(object sender, EventArgs e)
     {
-        if (SetEnableTextBox(calcvDropDownList1, calcvTextBox1))
+        if (AppUtils.SetEnableTextBox(calcvDropDownList1, calcvTextBox1))
         {
             convertArr(arrConvert3, (sender as DropDownList), ref calcvTextBox1);
         }
-        SavePrevSelectedIndexDDL(calcvDropDownList1.ID, calcvDropDownList1.SelectedIndex);
+        AppUtils.SavePrevSelectedIndexDDL(calcvDropDownList1.ID, calcvDropDownList1.SelectedIndex);
     }
 
     protected void fvDropDownList1_SelectedIndexChanged(object sender, EventArgs e)
     {
-        if (SetEnableTextBox(fvDropDownList1, fvTextBox1))
+        if (AppUtils.SetEnableTextBox(fvDropDownList1, fvTextBox1))
         {
             convertArrDouble(arrConvert1, (sender as DropDownList), ref fvTextBox1);
         }
-        SavePrevSelectedIndexDDL(fvDropDownList1.ID, fvDropDownList1.SelectedIndex);
+        AppUtils.SavePrevSelectedIndexDDL(fvDropDownList1.ID, fvDropDownList1.SelectedIndex);
     }
 
     protected void fvDropDownList2_SelectedIndexChanged(object sender, EventArgs e)
     {
-        if (SetEnableTextBox(fvDropDownList2, fvTextBox10))
+        if (AppUtils.SetEnableTextBox(fvDropDownList2, fvTextBox10))
         {
             convertArr(arrConvert2, (sender as DropDownList), ref fvTextBox10);
         }
-        SavePrevSelectedIndexDDL(fvDropDownList2.ID, fvDropDownList2.SelectedIndex);
+        AppUtils.SavePrevSelectedIndexDDL(fvDropDownList2.ID, fvDropDownList2.SelectedIndex);
     }
 
     protected void lpv5RadioButtonList1_SelectedIndexChanged(object sender, EventArgs e)
@@ -544,34 +530,6 @@ public partial class TRV : System.Web.UI.Page
         {
             lpv5TextBox3.Enabled = true;
         }
-    }
-
-    protected void lpv5TextBox3_TextChanged(object sender, EventArgs e)
-    {
-
-    }
-
-    public bool SetEnableTextBox(DropDownList dropDownList, TextBox textBox)
-    {
-        bool flag = false;
-
-        if (dropDownList.SelectedIndex == 0)
-        {
-            DisableTextBox(textBox);
-            flag = false;
-        }
-        else
-        {
-            textBox.Enabled = true;
-            flag = true;
-        }
-
-        return flag;
-    }
-
-    private void SavePrevSelectedIndexDDL(string id, int key)
-    {
-        Session[id] = key;
     }
 
     //--------------------------------------Math Function--------------------------------------
@@ -612,7 +570,6 @@ public partial class TRV : System.Web.UI.Page
         {
             if (!String.IsNullOrWhiteSpace(tb.Text))
             {
-
                 int jj = Convert.ToInt32(Session[ddl.ID]);
                 if (jj > 0)
                 {
@@ -625,7 +582,6 @@ public partial class TRV : System.Web.UI.Page
 
     public double customConverterToDouble(string tb)
     {
-
         double afterConvert;
 
         if (tb.IndexOf(".") != -1)
@@ -650,7 +606,6 @@ public partial class TRV : System.Web.UI.Page
         fvDropDownList2.Enabled = false;
         fvDropDownList2.ClearSelection();
         DisablePanel(2);
-
     }
 
     protected void fvRadioButton2_CheckedChanged(object sender, EventArgs e)
@@ -699,18 +654,6 @@ public partial class TRV : System.Web.UI.Page
         }
     }
 
-    private bool firstMoreSecondDouble(string s1, string s2)
-    {
-        if (!String.IsNullOrWhiteSpace(s1) && !String.IsNullOrWhiteSpace(s2) && !String.IsNullOrEmpty(s1) && !String.IsNullOrEmpty(s2))
-        {
-            if (customConverterToDouble(s1) > customConverterToDouble(s2))
-            {
-                return true;
-            }
-        }
-        return false;
-    }
-
     public double math_30_cp()
     {
         double cp = 0;
@@ -748,7 +691,6 @@ public partial class TRV : System.Web.UI.Page
         }
         else
         {
-
             if (this.aaRadioButton2.Checked && this.tvRadioButtonList1.SelectedIndex == 1 && this.aa2RadioButtonList1.SelectedIndex == 0)
             {
                 avg_T = 0.5 * (customConverterToDouble(this.fvTextBox6.Text) + customConverterToDouble(this.fvTextBox7.Text));
@@ -762,12 +704,10 @@ public partial class TRV : System.Web.UI.Page
             {
                 avg_T = 0.5 * (customConverterToDouble(this.fvTextBox2.Text) + customConverterToDouble(this.fvTextBox3.Text));
             }
-
         }
 
         return avg_T;
     }
-
 
     private bool get25BarFlag()
     {
@@ -800,9 +740,8 @@ public partial class TRV : System.Web.UI.Page
                 {
                     flag25Bar = (convertArrToBar(arrConvert3, lpv5DropDownList1, lpv5TextBox1) > PressureBeforeValve3x);
                 }
-
             }
-        } 
+        }
 
         return flag25Bar;
     }
@@ -818,6 +757,7 @@ public partial class TRV : System.Web.UI.Page
                 case 0:
                     jsonText = File.ReadAllText(HttpContext.Current.Server.MapPath(@"Content/data/data.txt"));
                     break;
+
                 case 1:
                     jsonText = File.ReadAllText(Directory.GetCurrentDirectory() + @"\data-two.txt");
                     break;
@@ -837,53 +777,10 @@ public partial class TRV : System.Web.UI.Page
         ref string paramPP54, ref string paramPP55, ref string paramPP56, ref string paramPP57, ref string paramPP58, ref string paramPP59, ref string paramPP60,
         ref string paramPP61, ref string paramPP62, ref string paramPP63, ref string paramPP65, ref string paramPP66, ref string paramPP67, ref string paramPP68, string paramKv)
     {
-        string ColDN = "";
+        string ColDN = dataFromFile.ExcelColumnNameTRV[paramDN];
         string hRowMark = "";
         string gRowMarkH = "";
         string gRowMarkM = "";
-
-        //
-        switch (paramDN)
-        {
-            case "15":
-                ColDN = "C";
-                break;
-            case "20":
-                ColDN = "D";
-                break;
-            case "25":
-                ColDN = "E";
-                break;
-            case "32":
-                ColDN = "F";
-                break;
-            case "40":
-                ColDN = "G";
-                break;
-            case "50":
-                ColDN = "H";
-                break;
-            case "65":
-                ColDN = "I";
-                break;
-            case "80":
-                ColDN = "J";
-                break;
-            case "100":
-                ColDN = "K";
-                break;
-            case "125":
-                ColDN = "L";
-                break;
-            case "150":
-                ColDN = "M";
-                break;
-            case "200":
-                ColDN = "N";
-                break;
-        }
-
-   
 
         if (hod2)
         {
@@ -896,106 +793,127 @@ public partial class TRV : System.Web.UI.Page
                     gRowMarkH = "7";
                     gRowMarkM = "30";
                     break;
+
                 case "101R-H": //TSL-1600-25-1R-230-IP67
                     hRowMark = "7";
                     gRowMarkH = "8";
                     gRowMarkM = "31";
                     break;
+
                 case "105-H": //TSL-1600-25-2-24-IP67
                     hRowMark = "8";
                     gRowMarkH = "9";
                     gRowMarkM = "32";
                     break;
+
                 case "201-H": //TSL-1600-25-1T-230-IP67
                     hRowMark = "9";
                     gRowMarkH = "10";
                     gRowMarkM = "33";
                     break;
+
                 case "201R-H": //TSL-1600-25-1TR-230-IP67
                     hRowMark = "10";
                     gRowMarkH = "11";
                     gRowMarkM = "34";
                     break;
+
                 case "302-H": //TSL-1600-25-2A-230-IP67
                     hRowMark = "11";
                     gRowMarkH = "12";
                     gRowMarkM = "35";
                     break;
+
                 case "302R-H": //TSL-1600-25-2AR-230-IP67
                     hRowMark = "12";
                     gRowMarkH = "13";
                     gRowMarkM = "36";
                     break;
+
                 case "303-H": //TSL-1600-25-2A-24-IP67
                     hRowMark = "13";
                     gRowMarkH = "14";
                     gRowMarkM = "37";
                     break;
+
                 case "303R-H": //TSL-1600-25-2AR-24-IP67
                     hRowMark = "14";
                     gRowMarkH = "15";
                     gRowMarkM = "38";
                     break;
+
                 case "110-H": //TSL-2200-40-1-230-IP67
                     hRowMark = "15";
                     gRowMarkH = "16";
                     gRowMarkM = "39";
                     break;
+
                 case "110R-H": //TSL-2200-40-1R-230-IP67
                     hRowMark = "16";
                     gRowMarkH = "17";
                     gRowMarkM = "40";
                     break;
+
                 case "115-H": //TSL-2200-40-2-24-IP67
                     hRowMark = "17";
                     gRowMarkH = "18";
                     gRowMarkM = "41";
                     break;
+
                 case "210-H": //TSL-2200-40-1T-230-IP67
                     hRowMark = "18";
                     gRowMarkH = "19";
                     gRowMarkM = "42";
                     break;
+
                 case "210R-H": //TSL-2200-40-1TR-230-IP67
                     hRowMark = "19";
                     gRowMarkH = "20";
                     gRowMarkM = "43";
                     break;
+
                 case "312-H": //TSL-2200-40-2A-230-IP67
                     hRowMark = "20";
                     gRowMarkH = "21";
                     gRowMarkM = "44";
                     break;
+
                 case "312R-H": //TSL-2200-40-2AR-230-IP67
                     hRowMark = "21";
                     gRowMarkH = "22";
                     gRowMarkM = "45";
                     break;
+
                 case "313-H": //TSL-2200-40-2A-24-IP67
                     hRowMark = "22";
                     gRowMarkH = "23";
                     gRowMarkM = "46";
                     break;
+
                 case "313R-H": //TSL-2200-40-2AR-24-IP67
                     hRowMark = "23";
                     gRowMarkH = "24";
                     gRowMarkM = "47";
                     break;
+
                 case "120-H": //TSL-3000-60-1-230-IP67
                     hRowMark = "24";
                     gRowMarkH = "25";
                     gRowMarkM = "48";
                     break;
+
                 case "125-H": //TSL-3000-60-2-24-IP67
                     hRowMark = "25";
                     gRowMarkH = "26";
                     gRowMarkM = "49";
                     break;
+
                 case "322-H": //TSL-3000-60-2A-230-IP67
                     hRowMark = "26";
                     gRowMarkH = "27";
                     gRowMarkM = "50";
                     break;
+
                 case "323-H": //TSL-3000-60-2A-24-IP67
                     hRowMark = "27";
                     gRowMarkH = "28";
@@ -1015,116 +933,139 @@ public partial class TRV : System.Web.UI.Page
                         gRowMarkH = "7";
                         gRowMarkM = "36";
                         break;
+
                     case "101R-H": //TSL-1600-25-1R-230-IP67
                         hRowMark = "7";
                         gRowMarkH = "9";
                         gRowMarkM = "38";
                         break;
+
                     case "105-H": //TSL-1600-25-2-24-IP67
                         hRowMark = "8";
                         gRowMarkH = "10";
                         gRowMarkM = "39";
                         break;
+
                     case "201-H": //TSL-1600-25-1T-230-IP67
                         hRowMark = "9";
                         gRowMarkH = "11";
                         gRowMarkM = "40";
                         break;
+
                     case "201R-H": //TSL-1600-25-1TR-230-IP67
                         hRowMark = "10";
                         gRowMarkH = "12";
                         gRowMarkM = "41";
                         break;
+
                     case "302-H": //TSL-1600-25-2A-230-IP67
                         hRowMark = "11";
                         gRowMarkH = "13";
                         gRowMarkM = "42";
                         break;
+
                     case "302R-H": //TSL-1600-25-2AR-230-IP67
                         hRowMark = "12";
                         gRowMarkH = "15";
                         gRowMarkM = "44";
                         break;
+
                     case "303-H": //TSL-1600-25-2A-24-IP67
                         hRowMark = "13";
                         gRowMarkH = "16";
                         gRowMarkM = "45";
                         break;
+
                     case "303R-H": //TSL-1600-25-2AR-24-IP67
                         hRowMark = "14";
                         gRowMarkH = "17";
                         gRowMarkM = "46";
                         break;
+
                     case "110-H": //TSL-2200-40-1-230-IP67
                         hRowMark = "15";
                         gRowMarkH = "18";
                         gRowMarkM = "47";
                         break;
+
                     case "110R-H": //TSL-2200-40-1R-230-IP67
                         hRowMark = "16";
                         gRowMarkH = "20";
                         gRowMarkM = "49";
                         break;
+
                     case "115-H": //TSL-2200-40-2-24-IP67
                         hRowMark = "17";
                         gRowMarkH = "21";
                         gRowMarkM = "50";
                         break;
+
                     case "210-H": //TSL-2200-40-1T-230-IP67
                         hRowMark = "18";
                         gRowMarkH = "22";
                         gRowMarkM = "51";
                         break;
+
                     case "210R-H": //TSL-2200-40-1TR-230-IP67
                         hRowMark = "19";
                         gRowMarkH = "23";
                         gRowMarkM = "52";
                         break;
+
                     case "312-H": //TSL-2200-40-2A-230-IP67
                         hRowMark = "20";
                         gRowMarkH = "24";
                         gRowMarkM = "53";
                         break;
+
                     case "312R-H": //TSL-2200-40-2AR-230-IP67
                         hRowMark = "21";
                         gRowMarkH = "26";
                         gRowMarkM = "55";
                         break;
+
                     case "313-H": //TSL-2200-40-2A-24-IP67
                         hRowMark = "22";
                         gRowMarkH = "27";
                         gRowMarkM = "56";
                         break;
+
                     case "313R-H": //TSL-2200-40-2AR-24-IP67
                         hRowMark = "23";
                         gRowMarkH = "28";
                         gRowMarkM = "57";
                         break;
+
                     case "120-H": //TSL-3000-60-1-230-IP67
                         hRowMark = "24";
                         gRowMarkH = "29";
                         gRowMarkM = "58";
                         break;
+
                     case "125-H": //TSL-3000-60-2-24-IP67
                         hRowMark = "25";
                         gRowMarkH = "30";
                         gRowMarkM = "59";
                         break;
+
                     case "322-H": //TSL-3000-60-2A-230-IP67
                         hRowMark = "26";
                         gRowMarkH = "31";
                         gRowMarkM = "60";
                         break;
+
                     case "323-H": //TSL-3000-60-2A-24-IP67
                         hRowMark = "27";
                         gRowMarkH = "32";
                         gRowMarkM = "61";
                         break;
+
                     case "130-H": //TSL-6000-60-1-230-IP67
                         hRowMark = "28";
                         gRowMarkH = "33";
                         gRowMarkM = "62";
                         break;
+
                     case "37-H": //TW5000-XD220-S.14
                         hRowMark = "29";
                         gRowMarkH = "34";
@@ -1132,7 +1073,7 @@ public partial class TRV : System.Web.UI.Page
                         break;
                 }
             }
-            else 
+            else
             {
                 switch (paramMarkPriv)
                 {
@@ -1142,111 +1083,133 @@ public partial class TRV : System.Web.UI.Page
                         gRowMarkH = "8";
                         gRowMarkM = "37";
                         break;
+
                     case "101R-H": //TSL-1600-25-1R-230-IP67
                         hRowMark = "7";
                         gRowMarkH = "9";
                         gRowMarkM = "38";
                         break;
+
                     case "105-H": //TSL-1600-25-2-24-IP67
                         hRowMark = "8";
                         gRowMarkH = "10";
                         gRowMarkM = "39";
                         break;
+
                     case "201-H": //TSL-1600-25-1T-230-IP67
                         hRowMark = "9";
                         gRowMarkH = "11";
                         gRowMarkM = "40";
                         break;
+
                     case "201R-H": //TSL-1600-25-1TR-230-IP67
                         hRowMark = "10";
                         gRowMarkH = "12";
                         gRowMarkM = "41";
                         break;
+
                     case "302S-H": //TSL-2200-25-2AS-230-IP67
                         hRowMark = "11";
                         gRowMarkH = "14";
                         gRowMarkM = "43";
                         break;
+
                     case "302R-H": //TSL-1600-25-2AR-230-IP67
                         hRowMark = "12";
                         gRowMarkH = "15";
                         gRowMarkM = "44";
                         break;
+
                     case "303-H": //TSL-1600-25-2A-24-IP67
                         hRowMark = "13";
                         gRowMarkH = "16";
                         gRowMarkM = "45";
                         break;
+
                     case "303R-H": //TSL-1600-25-2AR-24-IP67
                         hRowMark = "14";
                         gRowMarkH = "17";
                         gRowMarkM = "46";
                         break;
+
                     case "110S-H": //TSL-3000-40-1S-230-IP67
                         hRowMark = "15";
                         gRowMarkH = "19";
                         gRowMarkM = "48";
                         break;
+
                     case "110R-H": //TSL-2200-40-1R-230-IP67
                         hRowMark = "16";
                         gRowMarkH = "20";
                         gRowMarkM = "49";
                         break;
+
                     case "115-H": //TSL-2200-40-2-24-IP67
                         hRowMark = "17";
                         gRowMarkH = "21";
                         gRowMarkM = "50";
                         break;
+
                     case "210-H": //TSL-2200-40-1T-230-IP67
                         hRowMark = "18";
                         gRowMarkH = "22";
                         gRowMarkM = "51";
                         break;
+
                     case "210R-H": //TSL-2200-40-1TR-230-IP67
                         hRowMark = "19";
                         gRowMarkH = "23";
                         gRowMarkM = "52";
                         break;
+
                     case "312S-H": //TSL-3000-40-2AS-230-IP67
                         hRowMark = "20";
                         gRowMarkH = "25";
                         gRowMarkM = "54";
                         break;
+
                     case "312R-H": //TSL-2200-40-2AR-230-IP67
                         hRowMark = "21";
                         gRowMarkH = "26";
                         gRowMarkM = "55";
                         break;
+
                     case "313-H": //TSL-2200-40-2A-24-IP67
                         hRowMark = "22";
                         gRowMarkH = "27";
                         gRowMarkM = "56";
                         break;
+
                     case "313R-H": //TSL-2200-40-2AR-24-IP67
                         hRowMark = "23";
                         gRowMarkH = "28";
                         gRowMarkM = "57";
                         break;
+
                     case "125-H": //TSL-3000-60-2-24-IP67
                         hRowMark = "24";
                         gRowMarkH = "30";
                         gRowMarkM = "59";
                         break;
+
                     case "322-H": //TSL-3000-60-2A-230-IP67
                         hRowMark = "25";
                         gRowMarkH = "31";
                         gRowMarkM = "60";
                         break;
+
                     case "323-H": //TSL-3000-60-2A-24-IP67
                         hRowMark = "26";
                         gRowMarkH = "32";
                         gRowMarkM = "61";
                         break;
+
                     case "130-H": //TSL-6000-60-1-230-IP67
                         hRowMark = "27";
                         gRowMarkH = "33";
                         gRowMarkM = "62";
                         break;
+
                     case "37-H": //TW5000-XD220-S.14
                         hRowMark = "28";
                         gRowMarkH = "34";
@@ -1255,7 +1218,6 @@ public partial class TRV : System.Web.UI.Page
                 }
             }
         }
-
 
         if (tvRadioButtonList1.SelectedIndex == 0) //trv
         {
@@ -1307,7 +1269,6 @@ public partial class TRV : System.Web.UI.Page
 
     private Dictionary<string, string[]> generatedTableV(Dictionary<string, double> g_dict)
     {
-
         LabelError.Text = "";
         /*BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB*/
         double Kv = 0, Gkl = 0, dPkl = 0, dPto = 0, g = 0, p1 = 0, p2 = 0, V = 0, T1 = 0;
@@ -1356,12 +1317,11 @@ public partial class TRV : System.Web.UI.Page
 
         try
         {
-
             if (ws2RadioButtonList1.SelectedIndex != 3)
             {
-                dPkl = g_dict["p62"]; 
+                dPkl = g_dict["p62"];
 
-                dPto = g_dict["p61"]; 
+                dPto = g_dict["p61"];
             }
 
             if (this.ws2RadioButtonList1.SelectedIndex == 0)
@@ -1396,7 +1356,6 @@ public partial class TRV : System.Web.UI.Page
             }
             else
             {
-
                 p1 = (customConverterToDouble(lpv5TextBox1.Text) * arrConvert3[lpv5DropDownList1.SelectedIndex - 1] / arrConvert3[2]);
 
                 if (lpv5RadioButton2.Checked)
@@ -1425,7 +1384,6 @@ public partial class TRV : System.Web.UI.Page
                 {
                     Kv_start = Kv = 1.3 * (Gkl / (230 * (p1 + 1))) * Math.Sqrt(T1 + 273);
                 }
-
             }
 
             calcvCapacityLabelVal.Text = Math.Round(Kv, 2).ToString() + " м³/ч";
@@ -1436,14 +1394,10 @@ public partial class TRV : System.Web.UI.Page
             Newtonsoft.Json.Linq.JArray tableDN = null;
             Newtonsoft.Json.Linq.JArray tablev_7 = null;
 
-            
-
             if (tvRadioButtonList1.SelectedIndex == 0)
             {
-
                 if (customConverterToDouble(g_dict["p35"].ToString()) > 150)
                 {
-                    
                     if (ws2RadioButtonList1.SelectedIndex != 3)
                     {
                         if (convertArrToBar(arrConvert3, calcvDropDownList1, calcvTextBox1) > PressureBeforeValve3x)
@@ -1458,7 +1412,8 @@ public partial class TRV : System.Web.UI.Page
                             tablev_7 = (customConverterToDouble(g_dict["p35"].ToString()) <= 150) ? dataFromFile.tablev_71 : dataFromFile.tablev_71t;
                             tablev = dataFromFile.table5trvt;
                         }
-                    } else
+                    }
+                    else
                     {
                         if (flag25Bar)
                         {
@@ -1472,14 +1427,10 @@ public partial class TRV : System.Web.UI.Page
                             tablev_7 = dataFromFile.tablev_71t;
                             tablev = dataFromFile.table5trvt;
                         }
-
-                        
                     }
-                        
                 }
                 else
                 {
-
                     if (ws2RadioButtonList1.SelectedIndex != 3)
                     {
                         if (convertArrToBar(arrConvert3, calcvDropDownList1, calcvTextBox1) > PressureBeforeValve3x)
@@ -1509,14 +1460,8 @@ public partial class TRV : System.Web.UI.Page
                             tablev_7 = dataFromFile.tablev_71t;
                             tablev = dataFromFile.table5trvt;
                         }
-
-                        
                     }
-
                 }
-
-               
-               
             }
             else
             {
@@ -1525,11 +1470,7 @@ public partial class TRV : System.Web.UI.Page
                 tablev_7 = dataFromFile.tablev_713;
             }
 
-
             double col_B = (rpvRadioButtonList1.SelectedIndex == 0 || ws2RadioButtonList1.SelectedIndex == 3) ? Convert.ToDouble(tablev[0]) : Convert.ToDouble(tablev[tablev.Count - 1]); //выбор начальной пропускной способности
-
-
-
 
             int col_C = Convert.ToInt32(tableDN[tableDN.Count - 1]); //выбор начального максимального диаметра
 
@@ -1703,27 +1644,6 @@ public partial class TRV : System.Web.UI.Page
                 c_List.AddRange(listC);
                 listResult["C"] = c_List.ToArray();
 
-                /*
-                var k_List = new List<string>();
-                if (listResult.ContainsKey("K"))
-                {
-                    k_List.AddRange(listResult["K"]);
-                }
-
-                k_List.AddRange(listK);
-                listResult["K"] = k_List.ToArray();
-
-
-                var l_List = new List<string>();
-                if (listResult.ContainsKey("L"))
-                {
-                    l_List.AddRange(listResult["L"]);
-                }
-
-                l_List.AddRange(listL);
-                listResult["L"] = l_List.ToArray();
-                */
-
                 var m_List = new List<string>();
                 if (listResult.ContainsKey("M"))
                 {
@@ -1732,7 +1652,6 @@ public partial class TRV : System.Web.UI.Page
 
                 m_List.AddRange(listM);
                 listResult["M"] = m_List.ToArray();
-
             }
             /*/CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC*/
             /*/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA*/
@@ -1743,14 +1662,6 @@ public partial class TRV : System.Web.UI.Page
 
             if (ws2RadioButtonList1.SelectedIndex != 3)
             {
-                //if (spvRadioButtonList1.SelectedIndex == 0)
-                //{
-                //    cDN = 18.8 / Math.Sqrt(((5 * g) / Gkl));
-                //}
-                //else
-                //{
-                //    cDN = 18.8 / Math.Sqrt(((g * 3) / Gkl));
-                //}
                 cDN = 18.8 / Math.Sqrt(((g * 3) / Gkl));
             }
             else
@@ -1930,27 +1841,6 @@ public partial class TRV : System.Web.UI.Page
                         b_List.AddRange(listB);
                         listResult["B"] = b_List.ToArray();
 
-                        /*
-                        var k_List = new List<string>();
-                        if (listResult.ContainsKey("K"))
-                        {
-                            k_List.AddRange(listResult["K"]);
-                        }
-
-                        k_List.AddRange(listK);
-                        listResult["K"] = k_List.ToArray();
-
-
-                        var l_List = new List<string>();
-                        if (listResult.ContainsKey("L"))
-                        {
-                            l_List.AddRange(listResult["L"]);
-                        }
-
-                        l_List.AddRange(listL);
-                        listResult["L"] = l_List.ToArray();
-                        */
-
                         var m_List = new List<string>();
                         if (listResult.ContainsKey("M"))
                         {
@@ -2012,7 +1902,6 @@ public partial class TRV : System.Web.UI.Page
 
             for (int i = 0; i < listResult["C"].Count(); i++)
             {
-
                 Pf = (Math.Pow(Gkl, 2) * 0.1) / (Math.Pow(double.Parse(listResult["B"].GetValue(i).ToString()), 2) * g);
                 double dPf = Pf / 100;
                 Pf = Math.Round(dPf, 2); /*Перевод с кПа в бар*/
@@ -2057,8 +1946,7 @@ public partial class TRV : System.Web.UI.Page
 
                 if (ws2RadioButtonList1.SelectedIndex != 3)
                 {
-
-                    if (V > 3 && V <= 5) 
+                    if (V > 3 && V <= 5)
                     {
                         listI3.Add("возможен шум");
                     }
@@ -2089,7 +1977,6 @@ public partial class TRV : System.Web.UI.Page
 
                 if (ws2RadioButtonList1.SelectedIndex != 3)
                 {
-
                     if (!String.IsNullOrWhiteSpace(this.calcvTextBox1.Text) && !String.IsNullOrWhiteSpace(this.calcvTextBox2.Text))
                     {
                         double dn = 0.0;
@@ -2186,7 +2073,7 @@ public partial class TRV : System.Web.UI.Page
 
             if (ws2RadioButtonList1.SelectedIndex != 3)
             {
-                if(tvRadioButtonList1.SelectedIndex == 0)
+                if (tvRadioButtonList1.SelectedIndex == 0)
                 {
                     excelPath = ((customConverterToDouble(g_dict["p35"].ToString()) > 150) ? "~/Content/properties/gtrvt.xlsx" : "Content\\properties\\gtrv.xlsx");
                 }
@@ -2194,7 +2081,6 @@ public partial class TRV : System.Web.UI.Page
                 {
                     excelPath = "Content\\properties\\gtrv3.xlsx";
                 }
-
             }
             else
             {
@@ -2204,13 +2090,12 @@ public partial class TRV : System.Web.UI.Page
                 }
                 else
                 {
-                    excelPath = "Content\\properties\\gtrv3.xlsx";                }
-
+                    excelPath = "Content\\properties\\gtrv3.xlsx";
+                }
             }
             ExcelFile efGtrv = ExcelFile.Load(HttpContext.Current.Server.MapPath(excelPath));
             ExcelWorksheet wsGtrv = efGtrv.Worksheets[0];
 
-            
             //ws.Cells["C4"].Value = r_input_dict[3];
 
             string tmpMarkPriv = "";
@@ -2255,7 +2140,6 @@ public partial class TRV : System.Web.UI.Page
             //for (int i = 0; i < listResult.ElementAt(2).Value.Count(); i++)
             for (int i = 0; i < listResult["C"].Count(); i++)
             {
-
                 tmpMarkPriv = tmpPriv = tmpPP54 = tmpPP55 = tmpPP56 = tmpPP57 = tmpPP58 = tmpPP59 = tmpPP60 = tmpPP61 = tmpPP62 = tmpPP63 = tmpPP65 = tmpPP66 = tmpPP67 = tmpPP68 = "";
                 paramDN = listResult["C"].ElementAt(i);
                 paramKv = listResult["B"].ElementAt(i);
@@ -2854,7 +2738,6 @@ public partial class TRV : System.Web.UI.Page
                                 tmpMarkPriv = null; break;
                         }
                     }
-
                 }
                 // TRV-3
                 else if (tvRadioButtonList1.SelectedIndex == 1)
@@ -4051,7 +3934,7 @@ public partial class TRV : System.Web.UI.Page
                 else tmpPriv = getPrivodName(tmpMarkPriv);
                 if (tmpPriv is null) return null;
 
-                if (tmpMarkPriv == "-" )
+                if (tmpMarkPriv == "-")
                 {
                     if (ws2RadioButtonList1.SelectedIndex != 3)
                     {
@@ -4076,21 +3959,16 @@ public partial class TRV : System.Web.UI.Page
                         listResult["I3"].SetValue("-", i);
                         listResult["M"].SetValue(tmpPriv, i);
                     }
-                   
-
                 }
                 else
                 {
-                   
                     getDimsV(tvRadioButtonList1.SelectedIndex == 0, listResult["C"].ElementAt(i), tmpMarkPriv, ref wsHtrv, ref wsGtrv,
                     ref tmpPP54, ref tmpPP55, ref tmpPP56, ref tmpPP57, ref tmpPP58, ref tmpPP59, ref tmpPP60,
                     ref tmpPP61, ref tmpPP62, ref tmpPP63, ref tmpPP65, ref tmpPP66, ref tmpPP67, ref tmpPP68, listResult["B"].ElementAt(i));
-                    
-                    
 
                     System.Text.RegularExpressions.Regex regex = null;
 
-                    if(ws2RadioButtonList1.SelectedIndex == 3)
+                    if (ws2RadioButtonList1.SelectedIndex == 3)
                     {
                         if (tvRadioButtonList1.SelectedIndex == 0)
                         {
@@ -4117,23 +3995,21 @@ public partial class TRV : System.Web.UI.Page
                         }
                     }
 
-                  
-
                     System.Text.RegularExpressions.Match match = regex.Match(listResult["A"].ElementAt(i));
                     if (match.Success && !(tmpMarkPriv.Equals("-")))
                     {
-                        if(tvRadioButtonList1.SelectedIndex == 0)
+                        if (tvRadioButtonList1.SelectedIndex == 0)
                         {
                             if (ws2RadioButtonList1.SelectedIndex < 3)
                             {
                                 trvName = convertArrToBar(arrConvert3, calcvDropDownList1, calcvTextBox1) <= PressureBeforeValve3x ? match.Value : match.Value + "-25";
-
-                            } 
+                            }
                             else
                             {
                                 trvName = get25BarFlag() ? match.Value + "-25" : match.Value;
                             }
-                        } else
+                        }
+                        else
                         {
                             trvName = match.Value;
                         }
@@ -4162,11 +4038,8 @@ public partial class TRV : System.Web.UI.Page
 
                 if (ws2RadioButtonList1.SelectedIndex != 3)
                 {
-                   
-
                     if (listResult["A"].Count() > 1)
                     {
-
                         List<string> listA = new List<string>(),
                             listB = new List<string>(),
                             listC = new List<string>(),
@@ -4182,7 +4055,6 @@ public partial class TRV : System.Web.UI.Page
                         int indexNo = listA.IndexOf("-");
                         if (indexNo != -1)
                         {
-
                             if (listI.Count > indexNo)
                             {
                                 listA.RemoveRange(indexNo, listA.Count - indexNo);
@@ -4272,8 +4144,6 @@ public partial class TRV : System.Web.UI.Page
                 }
                 else
                 {
-                    
-
                     int indexNo = listI3.IndexOf("нет");
                     List<string> listA = new List<string>(),
                         listB = new List<string>(),
@@ -4287,7 +4157,6 @@ public partial class TRV : System.Web.UI.Page
 
                     if (indexNo != -1)
                     {
-
                         if (listB.Count - 1 > indexNo + 1)
                         {
                             listA.RemoveRange(indexNo + 1, listA.Count - indexNo - 1);
@@ -4308,9 +4177,8 @@ public partial class TRV : System.Web.UI.Page
 
                     int indexNoVar = listM.IndexOf("вариантов нет");
 
-                    if(indexNoVar > 0)
+                    if (indexNoVar > 0)
                     {
-                        
                         listA.RemoveRange(indexNoVar, listA.Count - indexNoVar);
                         listB.RemoveRange(indexNoVar, listB.Count - indexNoVar);
                         listC.RemoveRange(indexNoVar, listC.Count - indexNoVar);
@@ -4340,8 +4208,6 @@ public partial class TRV : System.Web.UI.Page
                         listResult["I3"] = listI3.ToArray();
                         listResult["M"] = listM.ToArray();
                     }
-
-                    
                 }
             }
 
@@ -4360,8 +4226,6 @@ public partial class TRV : System.Web.UI.Page
             listResult["PP67"] = listPP67.ToArray();
             listResult["PP68"] = listPP68.ToArray();
             listResult["PP69"] = listPP69.ToArray();
-
-
         }
         catch (Exception er)
         {
@@ -4377,8 +4241,6 @@ public partial class TRV : System.Web.UI.Page
         v_in_dict.Add(0, System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString());
         v_in_dict.Add(1, DateTime.Now.ToShortDateString().ToString());
         v_in_dict.Add(2, "-"); // Объект добавляется в диалоговом окне при сохранении
-
-        
 
         v_in_dict.Add(3, ""); //было место установки
 
@@ -4428,10 +4290,10 @@ public partial class TRV : System.Web.UI.Page
         {
             v_in_dict.Add(7, tvRadioButtonList1.Items[tvRadioButtonList1.SelectedIndex].Text);
         }
-        else {
+        else
+        {
             v_in_dict.Add(7, (tvRadioButtonList1.Items[tvRadioButtonList1.SelectedIndex].Text + " " + tv3RadioButtonList1.Items[tv3RadioButtonList1.SelectedIndex].Text));
         }
-        
 
         v_in_dict.Add(8, "Marka"); // Марка добавляется в диалоговом окне при сохранении
 
@@ -4449,7 +4311,6 @@ public partial class TRV : System.Web.UI.Page
         else
         {
             v_in_dict.Add(9, ws2RadioButtonList1.Items[ws2RadioButtonList1.SelectedIndex].Text + " " + ((this.ws2TextBox1.Enabled) ? (customConverterToDouble(this.ws2TextBox1.Text) + " %, " + customConverterToDouble(this.ws2TextBox2.Text) + " °С") : ""));
-
         }
 
         v_in_dict.Add(10, "-");
@@ -4522,16 +4383,17 @@ public partial class TRV : System.Web.UI.Page
 
         if (tvRadioButtonList1.SelectedIndex == 0)
         {
-            if(ws2RadioButtonList1.SelectedIndex != 3)
+            if (ws2RadioButtonList1.SelectedIndex != 3)
             {
                 v_in_dict.Add(40, (customConverterToDouble(v_in_dict[18]) > 150 ? "220 ˚С" : "150 ˚С"));
-            } else
+            }
+            else
             {
                 v_in_dict[40] = "220˚С";
             }
-            
         }
-        else {
+        else
+        {
             v_in_dict[40] = "150 ˚С";
         }
 
@@ -4571,7 +4433,6 @@ public partial class TRV : System.Web.UI.Page
         else v_in_dict[72] = tdRadioButtonList5.Items[1].Text;
 
         Session["v_input_dict"] = v_in_dict;
-
     }
 
     private void ResetColorToAllControls()
@@ -4606,17 +4467,12 @@ public partial class TRV : System.Web.UI.Page
             LabelError.Text = "";
             double g = 0;
 
-
             /*if (spvRadioButtonList1.SelectedIndex == 0) g_dict.Add("vmax", 5);
             else g_dict.Add("vmax", 3);*/
             g_dict.Add("vmax", 3);
 
-                
             if (rpvRadioButtonList1.SelectedIndex == 0) g_dict.Add("vKv", 1.0);
             else g_dict.Add("vKv", 1.2);
-
-           
-            
 
             if (tvRadioButtonList1.SelectedIndex != -1)
             {
@@ -4731,7 +4587,6 @@ public partial class TRV : System.Web.UI.Page
 
                     if (fvRadioButton1.Checked || fvRadioButton2.Checked)
                     {
-
                         if (this.ws2RadioButtonList1.SelectedIndex == 0)
                         {
                             MathUtils.Water(GetAvgT(), ref g);
@@ -4754,7 +4609,6 @@ public partial class TRV : System.Web.UI.Page
                         Double p30 = 0;
                         if (fvRadioButton2.Checked)
                         {
-
                             double checkVal;
 
                             try
@@ -4903,26 +4757,16 @@ public partial class TRV : System.Web.UI.Page
                             Double dt = 0;
                             if (aaRadioButton1.Checked)
                             {
-                                if (!(this.firstMoreSecondDouble(this.fvTextBox2.Text, this.fvTextBox3.Text)))
+                                if (!(AppUtils.firstMoreSecondDouble(this.fvTextBox2.Text, this.fvTextBox3.Text)))
                                 {
                                     LabelError.Text += "Неверно указано значение температуры";
                                     return;
                                 }
-                                else if (!(this.firstMoreSecondDouble(this.fvTextBox4.Text, this.fvTextBox5.Text)))
+                                else if (!(AppUtils.firstMoreSecondDouble(this.fvTextBox4.Text, this.fvTextBox5.Text)))
                                 {
                                     LabelError.Text += "Неверно указано значение температуры";
                                     return;
                                 }
-                                /*else if (!(this.firstMoreSecondDouble(this.fvTextBox2.Text, this.fvTextBox3.Text) &&
-                                    this.firstMoreSecondDouble(this.fvTextBox4.Text, this.fvTextBox5.Text)))
-                                {
-                                    this.fvTextBox3.BackColor = Color.LightPink;
-                                    this.fvTextBox4.BackColor = Color.LightPink;
-                                    this.fvTextBox5.BackColor = Color.LightPink;
-
-                                    ValidationAlertC(fvTextBox2, "Неверно заданы температуры для вычисления расхода", 5000);
-                                    return;
-                                }*/
                                 else
                                 {
                                     dt = (customConverterToDouble(fvTextBox2.Text) - customConverterToDouble(fvTextBox3.Text)) > (customConverterToDouble(fvTextBox4.Text) - customConverterToDouble(fvTextBox5.Text)) ?
@@ -4937,7 +4781,7 @@ public partial class TRV : System.Web.UI.Page
                                 (aaRadioButton3.Checked && tvRadioButtonList1.SelectedIndex == 0) ||
                                 (aaRadioButton3.Checked && tvRadioButtonList1.SelectedIndex == 1 && aa3RadioButtonList1.SelectedIndex == 1) && ws2RadioButtonList1.SelectedIndex != 3)
                             {
-                                if (!firstMoreSecondDouble(fvTextBox2.Text, fvTextBox3.Text))
+                                if (!AppUtils.firstMoreSecondDouble(fvTextBox2.Text, fvTextBox3.Text))
                                 {
                                     //fvTextBox3.BackColor = Color.LightPink;
 
@@ -4973,7 +4817,7 @@ public partial class TRV : System.Web.UI.Page
                                     return;
                                 }
 
-                                if (!firstMoreSecondDouble(fvTextBox6.Text, fvTextBox7.Text))
+                                if (!AppUtils.firstMoreSecondDouble(fvTextBox6.Text, fvTextBox7.Text))
                                 {
                                     //fvTextBox7.BackColor = Color.LightPink;
 
@@ -5007,7 +4851,7 @@ public partial class TRV : System.Web.UI.Page
                                     return;
                                 }
 
-                                if (!firstMoreSecondDouble(fvTextBox8.Text, fvTextBox9.Text))
+                                if (!AppUtils.firstMoreSecondDouble(fvTextBox8.Text, fvTextBox9.Text))
                                 {
                                     //fvTextBox9.BackColor = Color.LightPink;
 
@@ -5096,13 +4940,11 @@ public partial class TRV : System.Web.UI.Page
                                 if (fvDropDownList1.SelectedIndex > 4)
                                 {
                                     p30 = (customConverterToDouble(fvTextBox1.Text) * arrConvert1[(fvDropDownList1.SelectedIndex - 1), 5]);
-
                                 }
                                 else
                                 {
                                     p30 = (customConverterToDouble(fvTextBox1.Text) * arrConvert1[(fvDropDownList1.SelectedIndex - 1), 5] * (g / 1000));
                                 }
-
                             }
                             else
                             {
@@ -5121,7 +4963,7 @@ public partial class TRV : System.Web.UI.Page
                         if (!String.IsNullOrWhiteSpace(lpvTextBox1.Text) || !String.IsNullOrWhiteSpace(lpv5TextBox1.Text))
                         {
                             string checkTextBox = "";
-                                           
+
                             if (lpv5DropDownList1.Enabled)
                             {
                                 checkTextBox = lpv5TextBox1.Text;
@@ -5135,10 +4977,8 @@ public partial class TRV : System.Web.UI.Page
                             {
                                 if (!String.IsNullOrWhiteSpace(calcvTextBox1.Text) || lpv5DropDownList1.Enabled)
                                 {
-
                                     if (ws2RadioButtonList1.SelectedIndex == 3)
                                     {
-
                                         double p56, p58 = 0;
 
                                         try
@@ -5194,8 +5034,6 @@ public partial class TRV : System.Web.UI.Page
                                             }
                                             else
                                             {
-                                                                
-
                                                 if (lpv5RadioButton2.Checked)
                                                 {
                                                     p2 = (customConverterToDouble(lpv5TextBox2.Text) * arrConvert3[lpv5DropDownList2.SelectedIndex - 1] / arrConvert3[2]);
@@ -5215,13 +5053,11 @@ public partial class TRV : System.Web.UI.Page
                                                     p35 = Math.Round(100 * Math.Pow((customConverterToDouble(lpv5TextBox1.Text) * arrConvert3[lpv5DropDownList1.SelectedIndex - 1] / arrConvert3[2]) + 1, 0.25));
                                                 }
                                             }
-
                                         }
                                         catch (Exception) { }
 
                                         if (p35 <= 0)
                                         {
-
                                             LabelError.Text += "Неверно указано значение температуры";
                                             return;
                                         }
@@ -5229,15 +5065,13 @@ public partial class TRV : System.Web.UI.Page
                                         {
                                             lpv5TextBox3.Text = p35.ToString();
                                             CustomValidator3.ErrorMessage = "На температуру свыше " + g_dict["vTMax"].ToString() + "°С вариантов нет";
-;                                           CustomValidator3.IsValid = false;
+                                            ; CustomValidator3.IsValid = false;
                                             return;
                                         }
                                         else g_dict.Add("p35", p35);
-
                                     }
                                     else
                                     {
-
                                         double p35 = 0;
                                         try
                                         {
@@ -5247,13 +5081,11 @@ public partial class TRV : System.Web.UI.Page
 
                                         if (p35 <= 0)
                                         {
-
                                             LabelError.Text += "Неверно указано значение температуры";
                                             return;
                                         }
                                         else if (p35 > g_dict["vTMax"])
                                         {
-
                                             LabelError.Text += "На температуру свыше " + g_dict["vTMax"].ToString() + "°С вариантов нет";
                                             return;
                                         }
@@ -5346,7 +5178,6 @@ public partial class TRV : System.Web.UI.Page
                                             ws2ResultLabel.Text = "Рабочая среда - пропиленгликоль " + ws2TextBox1.Text + " %, " + ws2TextBox2.Text + " °С";
                                             maxt2ResultLabel.Text = "Максимальная температура - 150 °С";
                                         }*/
-
                                     }
 
                                     if (lpv5RadioButtonList1.SelectedIndex == 1)
@@ -5374,7 +5205,6 @@ public partial class TRV : System.Web.UI.Page
                                     }
                                     else
                                     {
-
                                         if (lpv5RadioButtonList1.SelectedIndex == 0)
                                         {
                                             this.ws2ResultLabel.Text = "Рабочая среда - Водяной пар перегретый";
@@ -5388,13 +5218,13 @@ public partial class TRV : System.Web.UI.Page
 
                                     //maxt2ResultLabel.Text = "Максимальная температура - " + g_dict["vTMax"].ToString() + " °С";
 
-
-                                    if(tvRadioButtonList1.SelectedIndex == 0)
+                                    if (tvRadioButtonList1.SelectedIndex == 0)
                                     {
                                         if (ws2RadioButtonList1.SelectedIndex != 3)
                                         {
                                             this.maxt2ResultLabel.Text = "Максимальная температура - " + ((double.Parse(g_dict["p35"].ToString()) <= 150) ? "150" : "220") + " °С";
-                                        } else
+                                        }
+                                        else
                                         {
                                             this.maxt2ResultLabel.Text = "Максимальная температура - 220 °С";
                                         }
@@ -5520,7 +5350,7 @@ public partial class TRV : System.Web.UI.Page
 
                                     DataTable dt = new DataTable();
                                     DataRow dr;
-                                    //for (int i = 0; i < titles.Count(); i++)       
+                                    //for (int i = 0; i < titles.Count(); i++)
 
                                     for (int i = 0; i < titles.Count(); i++)
                                     {
@@ -5554,12 +5384,15 @@ public partial class TRV : System.Web.UI.Page
                                                     case "A":
                                                         index = 0;
                                                         break;
+
                                                     case "B":
                                                         index = 2;
                                                         break;
+
                                                     case "C":
                                                         index = 1;
                                                         break;
+
                                                     case "D":
                                                         index = 3;
                                                         break;
@@ -5567,6 +5400,7 @@ public partial class TRV : System.Web.UI.Page
                                                     case "I1":
                                                         index = 4;
                                                         break;
+
                                                     case "I2":
                                                         index = 5;
                                                         break;
@@ -5582,6 +5416,7 @@ public partial class TRV : System.Web.UI.Page
                                                     case "F":
                                                         index = 8;
                                                         break;
+
                                                     case "G":
                                                         index = 9;
                                                         break;
@@ -5594,45 +5429,59 @@ public partial class TRV : System.Web.UI.Page
                                                     case "PP54":
                                                         index = 11;
                                                         break;
+
                                                     case "PP55":
                                                         index = 12;
                                                         break;
+
                                                     case "PP56":
                                                         index = 13;
                                                         break;
+
                                                     case "PP57":
                                                         index = 14;
                                                         break;
+
                                                     case "PP58":
                                                         index = 15;
                                                         break;
+
                                                     case "PP59":
                                                         index = 16;
                                                         break;
+
                                                     case "PP60":
                                                         index = 17;
                                                         break;
+
                                                     case "PP61":
                                                         index = 18;
                                                         break;
+
                                                     case "PP62":
                                                         index = 19;
                                                         break;
+
                                                     case "PP63":
                                                         index = 20;
                                                         break;
+
                                                     case "PP65":
                                                         index = 21;
                                                         break;
+
                                                     case "PP66":
                                                         index = 22;
                                                         break;
+
                                                     case "PP67":
                                                         index = 23;
                                                         break;
+
                                                     case "PP68":
                                                         index = 24;
                                                         break;
+
                                                     case "PP69":
                                                         index = 25;
                                                         break;
@@ -5645,9 +5494,11 @@ public partial class TRV : System.Web.UI.Page
                                                     case "A":
                                                         index = 0;
                                                         break;
+
                                                     case "B":
                                                         index = 2;
                                                         break;
+
                                                     case "C":
                                                         index = 1;
                                                         break;
@@ -5672,45 +5523,59 @@ public partial class TRV : System.Web.UI.Page
                                                     case "PP54":
                                                         index = 6;
                                                         break;
+
                                                     case "PP55":
                                                         index = 7;
                                                         break;
+
                                                     case "PP56":
                                                         index = 8;
                                                         break;
+
                                                     case "PP57":
                                                         index = 9;
                                                         break;
+
                                                     case "PP58":
                                                         index = 10;
                                                         break;
+
                                                     case "PP59":
                                                         index = 11;
                                                         break;
+
                                                     case "PP60":
                                                         index = 12;
                                                         break;
+
                                                     case "PP61":
                                                         index = 13;
                                                         break;
+
                                                     case "PP62":
                                                         index = 14;
                                                         break;
+
                                                     case "PP63":
                                                         index = 15;
                                                         break;
+
                                                     case "PP65":
                                                         index = 16;
                                                         break;
+
                                                     case "PP66":
                                                         index = 17;
                                                         break;
+
                                                     case "PP67":
                                                         index = 18;
                                                         break;
+
                                                     case "PP68":
                                                         index = 19;
                                                         break;
+
                                                     case "PP69":
                                                         index = 20;
                                                         break;
@@ -5780,10 +5645,6 @@ public partial class TRV : System.Web.UI.Page
                 LabelError.Text += "Не выбран тип регулирующего клапана";
                 return;
             }
-            
-          
-                
-           
 
             Label52.Visible = true;
             LabelError.Text = "";
@@ -5812,7 +5673,6 @@ public partial class TRV : System.Web.UI.Page
     }
 
     //-----------------------------Validators--------------------------------------------------
-
 
     protected void rpvCustomValidator1_ServerValidate(object source, ServerValidateEventArgs args)
     {
@@ -5867,14 +5727,12 @@ public partial class TRV : System.Web.UI.Page
 
     protected void tv1CustomValidator1_ServerValidate(object source, ServerValidateEventArgs args)
     {
-        
         if (tvRadioButtonList1.SelectedIndex == -1)
         {
             tv1CustomValidator1.ErrorMessage = "Выберите необходимое значение";
             args.IsValid = false;
             return;
         }
-       
     }
 
     protected void ws2CustomValidator1_ServerValidate(object source, ServerValidateEventArgs args)
@@ -5901,7 +5759,7 @@ public partial class TRV : System.Web.UI.Page
         {
             if (ws2RadioButtonList1.SelectedIndex == 1 || ws2RadioButtonList1.SelectedIndex == 2)
             {
-                if (ws2TextBox1.Enabled == false || checkTextBoxEmpty(ws2TextBox1))
+                if (ws2TextBox1.Enabled == false || AppUtils.checkTextBoxEmpty(ws2TextBox1))
                 {
                     CustomValidator16.ErrorMessage = "Необходимо заполнить поле";
                     args.IsValid = false;
@@ -5924,12 +5782,11 @@ public partial class TRV : System.Web.UI.Page
 
     protected void CustomValidator17_ServerValidate(object source, ServerValidateEventArgs args)
     {
-
         if (CustomValidator16.IsValid)
         {
             if (ws2RadioButtonList1.SelectedIndex == 1 || ws2RadioButtonList1.SelectedIndex == 2)
             {
-                if (ws2TextBox2.Enabled == false || checkTextBoxEmpty(ws2TextBox2))
+                if (ws2TextBox2.Enabled == false || AppUtils.checkTextBoxEmpty(ws2TextBox2))
                 {
                     CustomValidator17.ErrorMessage = "Необходимо заполнить поле";
                     args.IsValid = false;
@@ -5956,7 +5813,7 @@ public partial class TRV : System.Web.UI.Page
         {
             if (lpvDropDownList21.Enabled)
             {
-                if (lpvTextBox21.Enabled == false || checkTextBoxEmpty(lpvTextBox21))
+                if (lpvTextBox21.Enabled == false || AppUtils.checkTextBoxEmpty(lpvTextBox21))
                 {
                     CustomValidator19.ErrorMessage = "Необходимо заполнить поле";
                     args.IsValid = false;
@@ -5984,7 +5841,7 @@ public partial class TRV : System.Web.UI.Page
         {
             if (lpvDropDownList1.Enabled)
             {
-                if (lpvTextBox1.Enabled == false || checkTextBoxEmpty(lpvTextBox1))
+                if (lpvTextBox1.Enabled == false || AppUtils.checkTextBoxEmpty(lpvTextBox1))
                 {
                     lpvCustomValidator1.ErrorMessage = "Необходимо заполнить поле";
                     args.IsValid = false;
@@ -6004,7 +5861,6 @@ public partial class TRV : System.Web.UI.Page
             args.IsValid = false;
             return;
         }
-
     }
 
     protected void calcvCustomValidator1_ServerValidate(object source, ServerValidateEventArgs args)
@@ -6014,8 +5870,7 @@ public partial class TRV : System.Web.UI.Page
         {
             if (calcvDropDownList1.Enabled)
             {
-
-                if (calcvTextBox1.Enabled == false || checkTextBoxEmpty(calcvTextBox1))
+                if (calcvTextBox1.Enabled == false || AppUtils.checkTextBoxEmpty(calcvTextBox1))
                 {
                     calcvCustomValidator1.ErrorMessage = "Необходимо заполнить поле";
                     args.IsValid = false;
@@ -6036,7 +5891,8 @@ public partial class TRV : System.Web.UI.Page
                         args.IsValid = false;
                         return;
                     }
-                } else 
+                }
+                else
                 {
                     if (convertArrToBar(arrConvert3, calcvDropDownList1, calcvTextBox1) > PressureBeforeValve3x)
                     {
@@ -6091,7 +5947,7 @@ public partial class TRV : System.Web.UI.Page
         {
             if (calcvTextBox2.Enabled)
             {
-                if (checkTextBoxEmpty(calcvTextBox2))
+                if (AppUtils.checkTextBoxEmpty(calcvTextBox2))
                 {
                     calcvCustomValidator2.ErrorMessage = "Необходимо заполнить поле";
                     args.IsValid = false;
@@ -6136,7 +5992,6 @@ public partial class TRV : System.Web.UI.Page
             args.IsValid = false;
             return;
         }
-
     }
 
     protected void CustomValidator12_ServerValidate(object source, ServerValidateEventArgs args)
@@ -6145,7 +6000,7 @@ public partial class TRV : System.Web.UI.Page
         {
             if (fvDropDownList1.Enabled)
             {
-                if (fvTextBox1.Enabled == false || checkTextBoxEmpty(fvTextBox1))
+                if (fvTextBox1.Enabled == false || AppUtils.checkTextBoxEmpty(fvTextBox1))
                 {
                     CustomValidator12.ErrorMessage = "Необходимо заполнить поле";
                     args.IsValid = false;
@@ -6155,7 +6010,6 @@ public partial class TRV : System.Web.UI.Page
                 {
                     CustomValidator12.ErrorMessage = "Неверно указано значение расхода";
                     args.IsValid = false;
-
                 }
             }
         }
@@ -6172,7 +6026,7 @@ public partial class TRV : System.Web.UI.Page
         {
             if (fvDropDownList2.Enabled)
             {
-                if (fvTextBox10.Enabled == false || checkTextBoxEmpty(fvTextBox10))
+                if (fvTextBox10.Enabled == false || AppUtils.checkTextBoxEmpty(fvTextBox10))
                 {
                     CustomValidator20.ErrorMessage = "Необходимо заполнить поле";
                     args.IsValid = false;
@@ -6219,14 +6073,13 @@ public partial class TRV : System.Web.UI.Page
             args.IsValid = false;
             tvCustomValidator1.ErrorMessage = "";
         }
-
     }
 
     protected void CustomValidator1_ServerValidate(object source, ServerValidateEventArgs args)
     {
         if (lpv5DropDownList1.Enabled)
         {
-            if (lpv5TextBox1.Enabled == false || checkTextBoxEmpty(lpv5TextBox1))
+            if (lpv5TextBox1.Enabled == false || AppUtils.checkTextBoxEmpty(lpv5TextBox1))
             {
                 CustomValidator1.ErrorMessage = "Необходимо заполнить поле";
                 args.IsValid = false;
@@ -6266,7 +6119,7 @@ public partial class TRV : System.Web.UI.Page
         {
             if (lpv5DropDownList2.Enabled)
             {
-                if (lpv5TextBox2.Enabled == false || checkTextBoxEmpty(lpv5TextBox2))
+                if (lpv5TextBox2.Enabled == false || AppUtils.checkTextBoxEmpty(lpv5TextBox2))
                 {
                     CustomValidator2.ErrorMessage = "Необходимо заполнить поле";
                     args.IsValid = false;
@@ -6320,7 +6173,7 @@ public partial class TRV : System.Web.UI.Page
             {
                 if (ws2RadioButtonList1.SelectedIndex == 3)
                 {
-                    if (lpv5TextBox3.Enabled == false || checkTextBoxEmpty(lpv5TextBox3))
+                    if (lpv5TextBox3.Enabled == false || AppUtils.checkTextBoxEmpty(lpv5TextBox3))
                     {
                         CustomValidator3.ErrorMessage = "Необходимо заполнить поле";
                         args.IsValid = false;
@@ -6362,13 +6215,14 @@ public partial class TRV : System.Web.UI.Page
             }
         }
     }
+
     protected void CustomValidator22_ServerValidate(object source, ServerValidateEventArgs args)
     {
         if (CustomValidator23.IsValid)
         {
             if (lpv5TextBox4.Enabled)
             {
-                if (lpv5TextBox4.Enabled == false || checkTextBoxEmpty(lpv5TextBox4))
+                if (lpv5TextBox4.Enabled == false || AppUtils.checkTextBoxEmpty(lpv5TextBox4))
                 {
                     CustomValidator22.ErrorMessage = "Необходимо заполнить поле";
                     args.IsValid = false;
@@ -6396,7 +6250,6 @@ public partial class TRV : System.Web.UI.Page
 
     protected void CustomValidator23_ServerValidate(object source, ServerValidateEventArgs args)
     {
-
         if (CustomValidator1.IsValid)
         {
             if (ws2RadioButtonList1.SelectedIndex == 3)
@@ -6426,7 +6279,6 @@ public partial class TRV : System.Web.UI.Page
             {
                 customValidator.ErrorMessage = "На температуру свыше 220&#8451; вариантов нет";
                 args.IsValid = false;
-
             }
         }
         else
@@ -6477,7 +6329,6 @@ public partial class TRV : System.Web.UI.Page
                 args.IsValid = false;
                 return false;
             }
-
         }
 
         return true;
@@ -6500,7 +6351,6 @@ public partial class TRV : System.Web.UI.Page
 
     protected void fvTextBox10_TextChanged(object sender, EventArgs e)
     {
-
     }
 
     protected void GridView2_SelectedIndexChanged(object sender, EventArgs e)
@@ -6510,13 +6360,11 @@ public partial class TRV : System.Web.UI.Page
         objTextBox1.Visible = true;
         string clientScript = "javascript:ShowBTN();";
         this.Page.ClientScript.RegisterStartupScript(this.GetType(), "MyClientScript", clientScript);
-
     }
 
     protected void GridView2_RowDataBound(object sender, GridViewRowEventArgs e)
     {
         int index = GridView2.SelectedIndex;
-
     }
 
     public void GenerateSteamExel()
@@ -6545,7 +6393,6 @@ public partial class TRV : System.Web.UI.Page
 
             for (int i = 1; i < GridView2.SelectedRow.Cells.Count; i++)
             {
-
                 if (pos == 52)
                 {
                     v_input_dict[pos] = GridView2.SelectedRow.Cells[i].Text;
@@ -6556,11 +6403,10 @@ public partial class TRV : System.Web.UI.Page
                 else v_input_dict[pos] = GridView2.SelectedRow.Cells[i].Text;
 
                 pos++;
-
             }
 
             v_input_dict[8] = v_input_dict[42];
-            string fileName = ConvertCommaToPoint(v_input_dict[42]) + "(" + v_input_dict[63] + ")";
+            string fileName = AppUtils.ConvertCommaToPoint(v_input_dict[42]) + "(" + v_input_dict[63] + ")";
 
             if (fileName == "&nbsp;")
             {
@@ -6569,13 +6415,15 @@ public partial class TRV : System.Web.UI.Page
 
             SpreadsheetInfo.SetLicense("FREE-LIMITED-KEY");
 
-            if (!File.Exists(HttpContext.Current.Server.MapPath("~/Content/templates/templateTRVSteam.xlsx")))
+            string templatePath = HttpContext.Current.Server.MapPath("~/Content/templates/templateTRVSteam.xlsx");
+
+            if (!File.Exists(templatePath))
             {
                 LabelError.Text += "Не найден файл шаблона";
                 return;
             }
 
-            ExcelFile ef = ExcelFile.Load(HttpContext.Current.Server.MapPath("~/Content/templates/templateTRVSteam.xlsx"));
+            ExcelFile ef = ExcelFile.Load(templatePath);
 
             ExcelWorksheet ws = ef.Worksheets[0];
 
@@ -6590,7 +6438,7 @@ public partial class TRV : System.Web.UI.Page
                 {
                     if (i == 10 || i == 12 || i == 14 || i == 16 || i == 18 || i == 20 || i == 22 || i == 23 || i == 24 || i == 25 || i == 26 || i == 27 || i == 28 || i == 34 || i == 66 || i == 68 || i == 71 || i == 73)
                     {
-                        v_input_dict[i] = ConvertPointToComma(v_input_dict[i]);
+                        v_input_dict[i] = AppUtils.ConvertPointToComma(v_input_dict[i]);
                     }
 
                     if (v_input_dict[i] == "&nbsp;")
@@ -6655,48 +6503,20 @@ public partial class TRV : System.Web.UI.Page
 
             ws.Pictures.Add(HttpContext.Current.Server.MapPath("\\Content\\images\\trv\\" + ((v_input_dict[7] == this.tvRadioButtonList1.Items[tvRadioButtonList1.SelectedIndex].Text) ? "Габаритный TRV и TRV-P.png" : "Габаритный TRV-3.png")), "A30");
 
-            string path = HttpContext.Current.Server.MapPath("~/Files/TRV/PDF/" + DateTime.Now.ToString("dd-MM-yyyy"));
-            DirectoryInfo dirInfo = new DirectoryInfo(path);
-            if (!dirInfo.Exists)
-            {
-                dirInfo.Create();
+            string saveDirectory = HttpContext.Current.Server.MapPath($"~/Files/TRV/PDF/{DateTime.Now:dd-MM-yyyy}");
+            AppUtils.EnsureDirectoryExists(saveDirectory);
 
-            }
+            string uniqueFileName = AppUtils.GenerateUniqueFileName(saveDirectory, fileName);
+            string fullPath = Path.Combine(saveDirectory, uniqueFileName + ".pdf");
 
-            int j = 1;
-            string tempName = fileName;
+            ef.Save(fullPath);
+            AppUtils.WaitDownload(50);
 
-            link1:
-
-            if (File.Exists(path + "/" + tempName + ".pdf"))
-            {
-                tempName = fileName + "_" + j;
-                j++;
-                goto link1;
-            }
-
-            fileName = tempName;
-            string filePath = path + "/" + fileName + ".pdf";
-
-            ef.Save(filePath);
-
-            WaitDownload(50);
-
-            FileInfo file = new FileInfo(filePath);
-            if (file.Exists)
-            {
-
-                Response.ContentType = "application/pdf";
-                Response.AppendHeader("Content-Disposition", "attachment; filename=" + file.Name);
-                Response.TransmitFile(file.FullName);
-                Response.Flush();
-            }
-
+            AppUtils.ServeFile(Response, fullPath);
         }
         catch (Exception er)
         {
             Logger.Log.Error(er);
-
         }
     }
 
@@ -6722,7 +6542,6 @@ public partial class TRV : System.Web.UI.Page
 
             for (int i = 1; i < GridView2.SelectedRow.Cells.Count; i++)
             {
-
                 if (pos == 52)
                 {
                     v_input_dict[pos] = GridView2.SelectedRow.Cells[i].Text;
@@ -6733,11 +6552,10 @@ public partial class TRV : System.Web.UI.Page
                 else v_input_dict[pos] = GridView2.SelectedRow.Cells[i].Text;
 
                 pos++;
-
             }
 
             v_input_dict[8] = v_input_dict[42];
-            string fileName = ConvertCommaToPoint(v_input_dict[42])+"(" +v_input_dict[69]+")";
+            string fileName = AppUtils.ConvertCommaToPoint(v_input_dict[42]) + "(" + v_input_dict[69] + ")";
 
             if (fileName == "&nbsp;")
             {
@@ -6746,13 +6564,15 @@ public partial class TRV : System.Web.UI.Page
 
             SpreadsheetInfo.SetLicense("FREE-LIMITED-KEY");
 
-            if (!File.Exists(HttpContext.Current.Server.MapPath("~/Content/templates/templateTRV.xlsx")))
+            string templatePath = HttpContext.Current.Server.MapPath("~/Content/templates/templateTRV.xlsx");
+
+            if (!File.Exists(templatePath))
             {
                 LabelError.Text += "Не найден файл шаблона";
                 return;
             }
 
-            ExcelFile ef = ExcelFile.Load(HttpContext.Current.Server.MapPath("~/Content/templates/templateTRV.xlsx"));
+            ExcelFile ef = ExcelFile.Load(templatePath);
 
             ExcelWorksheet ws = ef.Worksheets[0];
 
@@ -6763,10 +6583,9 @@ public partial class TRV : System.Web.UI.Page
 
             for (int i = 1; i < 50; i++)
             {
-
                 if (i == 10 || i == 12 || i == 14 || i == 16 || i == 18 || i == 20 || i == 22 || i == 23 || i == 24 || i == 25 || i == 26 || i == 27 || i == 28 || i == 29 || i == 30 || i == 31 || i == 32 || i == 34 || i == 43 || i == 44 || i == 45 || i == 46 || i == 48 || i == 50 || i == 52 || i == 54 || i == 57 || i == 63 || i == 64 || i == 65 || i == 66 || i == 67 || i == 68)
                 {
-                    v_input_dict[i] = ConvertPointToComma(v_input_dict[i]);
+                    v_input_dict[i] = AppUtils.ConvertPointToComma(v_input_dict[i]);
                 }
 
                 if (v_input_dict[i] == "&nbsp;")
@@ -6785,7 +6604,6 @@ public partial class TRV : System.Web.UI.Page
             ws.Cells["C6"].Value = v_input_dict[8] + "/" + v_input_dict[53];
 
             ws.Cells["C8"].Value = v_input_dict[9];
-
 
             ws.Cells["J9"].Value = v_input_dict[12];
             ws.Cells["K9"].Value = v_input_dict[13];
@@ -6857,68 +6675,37 @@ public partial class TRV : System.Web.UI.Page
                 {
                     ws.Pictures.Add(HttpContext.Current.Server.MapPath("\\Content\\images\\trv\\габаритный TRV и TRV-T.png"), "A39");
                 }
-                else {
+                else
+                {
                     ws.Pictures.Add(HttpContext.Current.Server.MapPath("\\Content\\images\\trv\\габаритный TRV (китай).png"), "A39");
                 }
-
             }
             else
             {
                 if (Convert.ToInt32(v_input_dict[43]) >= 65)
                 {
                     ws.Pictures.Add(HttpContext.Current.Server.MapPath("\\Content\\images\\trv\\габаритный TRV-3 (китай).png"), "A39");
-                } 
+                }
                 else
                 {
                     ws.Pictures.Add(HttpContext.Current.Server.MapPath("\\Content\\images\\trv\\Габаритный TRV-3.png"), "A39");
                 }
-                
-
             }
 
-            string path = HttpContext.Current.Server.MapPath("~/Files/TRV/PDF/" + DateTime.Now.ToString("dd-MM-yyyy"));
-            DirectoryInfo dirInfo = new DirectoryInfo(path);
-            if (!dirInfo.Exists)
-            {
-                dirInfo.Create();
+            string saveDirectory = HttpContext.Current.Server.MapPath($"~/Files/TRV/PDF/{DateTime.Now:dd-MM-yyyy}");
+            AppUtils.EnsureDirectoryExists(saveDirectory);
 
-            }
+            string uniqueFileName = AppUtils.GenerateUniqueFileName(saveDirectory, fileName);
+            string fullPath = Path.Combine(saveDirectory, uniqueFileName + ".pdf");
 
-            int j = 1;
-            string tempName = fileName;
+            ef.Save(fullPath);
+            AppUtils.WaitDownload(50);
 
-            link1:
-            
-            if (File.Exists(path + "/" + tempName + ".pdf"))
-            {
-                tempName = fileName + "_" + j;
-                j++;
-                goto link1;
-            }
-
-            fileName = tempName;
-            string filePath = path + "/" + fileName + ".pdf";
-
-
-            ef.Save(filePath);
-
-            WaitDownload(50);
-
-            FileInfo file = new FileInfo(filePath);
-            if (file.Exists)
-            {
-
-                Response.ContentType = "application/pdf";
-                Response.AppendHeader("Content-Disposition", "attachment; filename=" + file.Name);
-                Response.TransmitFile(file.FullName);
-                Response.Flush();
-            }
-
+            AppUtils.ServeFile(Response, fullPath);
         }
         catch (Exception er)
         {
             Logger.Log.Error(er);
-
         }
     }
 
@@ -6938,207 +6725,7 @@ public partial class TRV : System.Web.UI.Page
         catch (Exception er)
         {
             Logger.Log.Error(er);
-
         }
-    }
-
-    static void WaitDownload(int second)
-    {
-        Stopwatch sw = new Stopwatch(); // sw cotructor
-        sw.Start(); // starts the stopwatch
-        for (int i = 0; ; i++)
-        {
-            if (i % 100000 == 0) // if in 100000th iteration (could be any other large number
-            // depending on how often you want the time to be checked) 
-            {
-                sw.Stop(); // stop the time measurement
-                if (sw.ElapsedMilliseconds > second) // check if desired period of time has elapsed
-                {
-                    break; // if more than 5000 milliseconds have passed, stop looping and return
-                    // to the existing code
-                }
-                else
-                {
-                    sw.Start(); // if less than 5000 milliseconds have elapsed, continue looping
-                    // and resume time measurement
-                }
-            }
-        }
-    }
-
-    protected void Button3_Click(object sender, EventArgs e)
-    {
-        v_input_dict[2] = objTextBox1.Text;
-        v_input_dict[8] = "-";
-
-        int pos = 42;
-
-        for (int i = 1; i < GridView2.SelectedRow.Cells.Count; i++)
-        {
-
-            if (pos == 52)
-            {
-                v_input_dict[pos] = GridView2.SelectedRow.Cells[i].Text;
-                v_input_dict[pos + 1] = GridView2.SelectedRow.Cells[i].Text;
-                pos++;
-            }
-            else if (pos >= 64) v_input_dict[pos + 1] = GridView2.SelectedRow.Cells[i].Text;
-            else v_input_dict[pos] = GridView2.SelectedRow.Cells[i].Text;
-
-            pos++;
-
-        }
-
-        v_input_dict[8] = v_input_dict[42];
-
-        SpreadsheetInfo.SetLicense("FREE-LIMITED-KEY");
-
-        if (!File.Exists(HttpContext.Current.Server.MapPath(@"./Content/templates/templateTRV.xlsx")))
-        {
-            LabelError.Text += "Не найден файл шаблона";
-            return;
-        }
-
-        ExcelFile ef = ExcelFile.Load(HttpContext.Current.Server.MapPath(@"./Content/templates/templateTRV.xlsx"));
-
-        ExcelWorksheet ws = ef.Worksheets[0];
-
-        ws.PrintOptions.TopMargin = 0.1 / 2.54;
-        ws.PrintOptions.BottomMargin = 0.1 / 2.54;
-        ws.PrintOptions.LeftMargin = 1 / 2.54;
-        ws.PrintOptions.RightMargin = 0.78 / 2.54;
-
-        ws.Cells["K46"].Value = v_input_dict[0];
-
-        ws.Cells["J2"].Value = v_input_dict[1];
-        ws.Cells["B3"].Value = v_input_dict[2];
-
-        ws.Cells["C4"].Value = v_input_dict[3];
-        ws.Cells["J4"].Value = v_input_dict[4];
-        ws.Cells["C5"].Value = v_input_dict[5];
-        ws.Cells["J5"].Value = v_input_dict[6];
-        ws.Cells["C6"].Value = v_input_dict[7];
-        ws.Cells["J6"].Value = v_input_dict[8];
-
-        ws.Cells["C8"].Value = v_input_dict[9];
-
-        ws.Cells["E9"].Value = v_input_dict[10];
-        ws.Cells["F9"].Value = v_input_dict[11];
-        ws.Cells["J9"].Value = v_input_dict[12];
-        ws.Cells["K9"].Value = v_input_dict[13];
-
-        ws.Cells["E10"].Value = v_input_dict[14];
-        ws.Cells["F10"].Value = v_input_dict[15];
-        ws.Cells["E11"].Value = v_input_dict[16];
-        ws.Cells["F11"].Value = v_input_dict[17];
-        ws.Cells["E12"].Value = v_input_dict[18];
-
-        // пар
-        ws.Cells["J10"].Value = "-";
-        ws.Cells["K10"].Value = "-";
-        ws.Cells["J11"].Value = "-";
-        ws.Cells["K11"].Value = "-";
-        ws.Cells["J12"].Value = "-";
-        // пар
-
-        ws.Cells["E14"].Value = v_input_dict[24];
-        ws.Cells["I14"].Value = v_input_dict[25];
-        ws.Cells["E15"].Value = v_input_dict[26];
-        ws.Cells["I15"].Value = v_input_dict[27];
-        ws.Cells["E16"].Value = v_input_dict[28];
-        ws.Cells["I16"].Value = v_input_dict[29];
-        ws.Cells["E17"].Value = v_input_dict[30];
-        ws.Cells["I17"].Value = v_input_dict[31];
-
-        ws.Cells["I18"].Value = v_input_dict[32];
-        ws.Cells["K18"].Value = v_input_dict[33];
-        ws.Cells["I19"].Value = v_input_dict[34];
-        ws.Cells["K19"].Value = v_input_dict[35];
-
-        ws.Cells["C21"].Value = v_input_dict[36];
-        ws.Cells["C22"].Value = v_input_dict[37];
-
-        ws.Cells["J21"].Value = v_input_dict[38];
-        ws.Cells["J22"].Value = v_input_dict[39];
-
-        ws.Cells["E24"].Value = v_input_dict[40];
-        ws.Cells["E25"].Value = v_input_dict[41];
-
-        ws.Cells["A28"].Value = v_input_dict[42];
-        ws.Cells["B28"].Value = v_input_dict[43];
-        ws.Cells["C28"].Value = v_input_dict[44];
-        ws.Cells["D28"].Value = v_input_dict[45];
-        ws.Cells["E28"].Value = v_input_dict[46];
-        ws.Cells["F28"].Value = v_input_dict[47];
-        ws.Cells["G28"].Value = v_input_dict[48];
-        ws.Cells["H28"].Value = v_input_dict[49];
-        ws.Cells["I28"].Value = v_input_dict[50];
-        ws.Cells["J28"].Value = v_input_dict[51];
-        ws.Cells["K28"].Value = v_input_dict[52];
-
-        ws.Cells["A32"].Value = v_input_dict[53];
-        ws.Cells["B32"].Value = v_input_dict[54];
-        ws.Cells["C32"].Value = v_input_dict[55];
-        ws.Cells["D32"].Value = v_input_dict[56];
-        ws.Cells["E32"].Value = v_input_dict[57];
-        ws.Cells["F32"].Value = v_input_dict[58];
-        ws.Cells["G32"].Value = v_input_dict[59];
-        ws.Cells["H32"].Value = v_input_dict[60];
-        ws.Cells["I32"].Value = v_input_dict[61];
-        ws.Cells["J32"].Value = v_input_dict[62];
-        ws.Cells["K32"].Value = v_input_dict[63];
-
-        ws.Cells["G37"].Value = v_input_dict[65];
-        ws.Cells["G38"].Value = v_input_dict[66];
-        ws.Cells["G39"].Value = v_input_dict[67];
-        ws.Cells["G40"].Value = v_input_dict[68];
-
-        ws.Pictures.Add(HttpContext.Current.Server.MapPath("~/Content/images/trv/" + ((v_input_dict[7] == this.tvRadioButtonList1.Items[tvRadioButtonList1.SelectedIndex].Text) ? "TRV-2.png" : "TRV-3.png")), "A37", "B46");
-
-        string path = HttpContext.Current.Server.MapPath("`/Files/TRV/Excel/" + DateTime.Now.ToString("dd-MM-yyyy"));
-        DirectoryInfo dirInfo = new DirectoryInfo(path);
-        if (!dirInfo.Exists)
-        {
-            dirInfo.Create();
-        }
-
-        string fileName = "";
-
-        if (!String.IsNullOrWhiteSpace(objTextBox1.Text))
-        {
-            fileName = objTextBox1.Text;
-        }
-        else
-        {
-            fileName += DateTime.Now.ToString("dd-MM-yyyy");
-        }
-
-        string filePath = path + "\\" + fileName + ".xlsx";
-
-        ef.Save(filePath);
-        WaitDownload(50);
-
-        FileInfo file = new FileInfo(filePath);
-        if (file.Exists)
-        {
-            Response.ContentType = "application/x-msexcel";
-            Response.AppendHeader("Content-Disposition", "attachment; filename=" + file.Name);
-            Response.TransmitFile(file.FullName);
-
-        }
-
-    }
-
-    public void RemoveCssClass(HtmlGenericControl controlInstance, string css)
-    {
-        var strCssClass = controlInstance.Attributes["class"];
-        controlInstance.Attributes["class"] = string.Join(" ", strCssClass.Split(' ').Where(x => x != css).ToArray());
-    }
-
-    public void AddCssClass(HtmlGenericControl controlInstance, string css)
-    {
-        var strCssClass = controlInstance.Attributes["class"];
-        controlInstance.Attributes["class"] += (" " + css);
     }
 
     protected void spvRadioButtonList1_SelectedIndexChanged(object sender, EventArgs e)
@@ -7149,54 +6736,14 @@ public partial class TRV : System.Web.UI.Page
         tdRadioButtonList4.Enabled = true;
         tdRadioButtonList5.Enabled = true;
 
-        RemoveCssClass(tdRBL, "panel-hide");
-    }
-    private bool checkTextBoxEmpty(TextBox tb)
-    {
-        return tb.Text == "";
-    }
-
-    public string ConvertPointToComma(string tb)
-    {
-        string afterConvert = "";
-
-        if (tb.IndexOf(".") != -1)
-        {
-            afterConvert = tb.Replace(".", ",");
-        }
-        else
-        {
-            afterConvert = tb;
-        }
-
-        return afterConvert;
-    }
-
-    public string ConvertCommaToPoint(string tb)
-    {
-        string afterConvert = "";
-
-        if (tb.IndexOf(",") != -1)
-        {
-            afterConvert = tb.Replace(",", ".");
-        }
-        else
-        {
-            afterConvert = tb;
-        }
-
-        return afterConvert;
+        AppUtils.RemoveCssClass(tdRBL, "panel-hide");
     }
 
     protected void CustomValidator2_ServerValidate1(object source, ServerValidateEventArgs args)
     {
-
     }
-
-
 
     protected void tv3RadioButtonList1_SelectedIndexChanged(object sender, EventArgs e)
     {
-
     }
 }

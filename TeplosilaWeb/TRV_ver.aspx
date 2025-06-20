@@ -9,7 +9,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link href="Content/css/style.css" rel="stylesheet" />
     <title>Программа подбора регулирующего клапана - Поверочный расчет</title>
-
 </head>
 <body>
     <div class="container">
@@ -62,7 +61,6 @@
                                 </div>
                             </ContentTemplate>
                         </asp:UpdatePanel>
-
                     </div>
                     <div class="col border">
                         <asp:UpdatePanel ID="UpdatePanel3" runat="server">
@@ -113,7 +111,7 @@
                                             <div class="col-12 sub-col">
                                                 <asp:RadioButtonList ID="lpvRadioButtonList1" runat="server"
                                                     AutoPostBack="True"
-                                                    Enabled="False">
+                                                    Enabled="False" OnSelectedIndexChanged="lpvRadioButtonList1_SelectedIndexChanged">
                                                     <asp:ListItem>Перегретый</asp:ListItem>
                                                     <asp:ListItem>Насыщеный</asp:ListItem>
                                                 </asp:RadioButtonList>
@@ -121,7 +119,9 @@
                                         </div>
                                         <div class="col-6 col-md-6">
                                             <div class="row">
-                                                <br></br>
+                                                <br>
+                                                    <br></br>
+                                                </br>
                                             </div>
                                             <div class="row">
                                                 <asp:TextBox ID="wsTextBox1" runat="server" Enabled="False" type="number"
@@ -181,13 +181,11 @@
                                                     NavigateUrl="/Content/data/calcTRV.pdf" runat="server">Определение
                                                 потерь давления на регулируемом участке</asp:HyperLink>
                                             </div>
-
                                         </div>
                                         <div>
                                             <asp:CustomValidator ID="lpvCustomValidator1" runat="server" ControlToValidate="lpvTextBox21" Display="Dynamic"
                                                 ErrorMessage="CustomValidator" ForeColor="Red" SetFocusOnError="True" ValidateEmptyText="True" OnServerValidate="lpvCustomValidator1_ServerValidate"></asp:CustomValidator>
                                         </div>
-
                                     </div>
                                 </div>
                             </ContentTemplate>
@@ -401,7 +399,6 @@
                                     <asp:Label ID="labelOptyV" runat="server" Visible="False"></asp:Label>
                                 </div>
 
-
                                 <div class="table-responsive-lg" onclick="ShowBTN()">
                                     <asp:GridView ID="GridView2" CssClass="table table-result trv-ver" runat="server"
                                         Font-Size="X-Small"
@@ -409,10 +406,9 @@
                                         <RowStyle Font-Size="Small" />
                                         <SelectedRowStyle BackColor="#ff7d00" Font-Bold="False" ForeColor="White" />
                                     </asp:GridView>
-
                                 </div>
                                 <div class="col non-padding">
-                                    <asp:Label ID="Label53" runat="server" CssClass="show-btn" Text="Объект:" 
+                                    <asp:Label ID="Label53" runat="server" CssClass="show-btn" Text="Объект:"
                                         Visible="False">
                                     </asp:Label>
 
@@ -424,21 +420,17 @@
                             <div class="col non-padding padding-top-bottom">
                                 <asp:Button ID="trvSave" runat="server" Text="Сохранить в PDF" Visible="False"
                                     CssClass="btn btn-primary" OnClick="trvSave_Click" />
-
                             </div>
                         </ContentTemplate>
                         <Triggers>
                             <asp:PostBackTrigger ControlID="trvSave" />
                         </Triggers>
                     </asp:UpdatePanel>
-
                 </div>
                 <div class="col-12">
                     <asp:UpdatePanel ID="UpdatePanel7" runat="server">
                         <ContentTemplate>
-                            
                         </ContentTemplate>
-                        
                     </asp:UpdatePanel>
                 </div>
             </div>
