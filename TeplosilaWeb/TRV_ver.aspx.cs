@@ -1161,6 +1161,17 @@ public partial class TRV_ver : System.Web.UI.Page
                         return;
                     }
                 }
+            } else
+            {
+                if (!AppUtils.checkTextBoxEmpty(lpv5TextBox3))
+                {
+                    if (AppUtils.customConverterToDouble(lpv5TextBox3.Text) > MaxT2x)
+                    {
+                        CustomValidator3.ErrorMessage = "Температура теплоносителя больше максимальной температуры рабочей среды для указанного клапана. Указанный клапан не подойдет";
+                        args.IsValid = false;
+                        return;
+                    }
+                }
             }
         }
         else
