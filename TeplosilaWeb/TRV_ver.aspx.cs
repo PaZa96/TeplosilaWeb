@@ -155,6 +155,15 @@ public partial class TRV_ver : System.Web.UI.Page
         }
     }
 
+    private void getT1Steam()
+    {
+        if (lpvRadioButtonList1.SelectedIndex == 1)
+        {
+            double T1 = Math.Round(100 * Math.Pow((AppUtils.customConverterToDouble(lpv5TextBox1.Text) * MathUtils.getArrConvert3(lpv5DropDownList1.SelectedIndex - 1) / MathUtils.getArrConvert3(2)) + 1, 0.25));
+            lpv5TextBox3.Text = T1.ToString();
+        }
+    }
+
     private void mapInputParametersV(ref Dictionary<int, string> v_in_dict)
     {
         try
@@ -271,30 +280,21 @@ public partial class TRV_ver : System.Web.UI.Page
             {
                 p1 = (AppUtils.customConverterToDouble(lpv5TextBox1.Text) * MathUtils.getArrConvert3(lpv5DropDownList1.SelectedIndex - 1) / MathUtils.getArrConvert3(2));
 
-                if (Math.Pow((p1 - 1), 2) - 4 * ((T1 + 273) / Math.Pow((Kv * 461 / 1.3 / Gkl), 2) - p1) > 0)
+                if (Math.Pow((p1 - 1), 2) - 4 * ((T1 + 273) / Math.Pow((Kv * 461 / Gkl), 2) - p1) > 0)
                 {
-                    p2 = 0.5 * ((p1 - 1) + Math.Sqrt(Math.Pow((p1 - 1), 2) - 4 * ((T1 + 273) / Math.Pow((Kv * 461 / 1.3 / Gkl), 2) - p1)));
+                    p2 = 0.5 * ((p1 - 1) + Math.Sqrt(Math.Pow((p1 - 1), 2) - 4 * ((T1 + 273) / Math.Pow((Kv * 461 / Gkl), 2) - p1)));
 
                     if ((p1 - p2) > (0.5 * (p1 + 1)))
                     {
-                        p2 = 0.6 * p1 - 0.4;
+                        p2 = 0.5 * p1 - 0.5;
                     }
                 }
                 else
                 {
-                    p2 = 0.6 * p1 - 0.4;
+                    p2 = 0.5 * p1 - 0.5;
                 }
 
-                if (lpvRadioButtonList1.SelectedIndex == 0)
-                {
-                    T1 = AppUtils.customConverterToDouble(lpv5TextBox3.Text);
-                }
-                else
-                {
-                    T1 = Math.Round(100 * Math.Pow((AppUtils.customConverterToDouble(lpv5TextBox1.Text) * MathUtils.getArrConvert3(lpv5DropDownList1.SelectedIndex - 1) / MathUtils.getArrConvert3(2)) + 1, 0.25));
-                    lpv5TextBox3.Text = T1.ToString();
-                    CustomValidator3.Validate();
-                }
+                T1 = AppUtils.customConverterToDouble(lpv5TextBox3.Text);
             }
 
             double col_B = Kv = AppUtils.customConverterToDouble(kvsDropDownList1.SelectedValue);
@@ -1161,13 +1161,15 @@ public partial class TRV_ver : System.Web.UI.Page
                         return;
                     }
                 }
-            } else
+            }
+            else
             {
                 if (!AppUtils.checkTextBoxEmpty(lpv5TextBox3))
                 {
                     if (AppUtils.customConverterToDouble(lpv5TextBox3.Text) > MaxT2x)
                     {
                         CustomValidator3.ErrorMessage = "Температура теплоносителя больше максимальной температуры рабочей среды для указанного клапана. Указанный клапан не подойдет";
+                        CustomValidator3.IsValid = false;
                         args.IsValid = false;
                         return;
                     }
@@ -1210,6 +1212,9 @@ public partial class TRV_ver : System.Web.UI.Page
 
     protected void trvCalc_Click(object sender, EventArgs e)
     {
+        getT1Steam(); //расчет температуры
+        Page.Validate();
+
         if (!Page.IsValid) { return; }
         try
         {

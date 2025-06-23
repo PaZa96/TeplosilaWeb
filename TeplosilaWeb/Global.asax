@@ -4,7 +4,6 @@
 
     void Application_Start(object sender, EventArgs e) 
     {
-        // Код, выполняемый при запуске приложения
 
     new ScriptResourceDefinition
     {
@@ -13,7 +12,6 @@
         CdnPath = "http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.4.1.min.js",
         CdnDebugPath = "http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.4.1.js"
     };
-
     }
     
     void Application_End(object sender, EventArgs e) 
