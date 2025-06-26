@@ -693,13 +693,13 @@ public partial class TRV_ver : System.Web.UI.Page
         pnRadioButtonList1.Items[1].Enabled = true;
 
         EnablePanel1();
-        ManageWSRBL();
+        //ManageWSRBL();
     }
 
     protected void tvRadioButtonList1_SelectedIndexChanged(object sender, EventArgs e)
     {
         EnablePanel1();
-        ManageWSRBL();
+        //ManageWSRBL();
     }
 
     protected void tvRadioButton2_CheckedChanged(object sender, EventArgs e)
@@ -715,13 +715,13 @@ public partial class TRV_ver : System.Web.UI.Page
         pnRadioButtonList1.SelectedIndex = pnRadioButtonList1.SelectedIndex == 1 ? -1 : 0;
 
         EnablePanel1();
-        ManageWSRBL();
+        //ManageWSRBL();
     }
 
     protected void tvRadioButtonList2_SelectedIndexChanged(object sender, EventArgs e)
     {
         EnablePanel1();
-        ManageWSRBL();
+        //ManageWSRBL();
     }
 
     protected void pnRadioButtonList1_SelectedIndexChanged(object sender, EventArgs e)

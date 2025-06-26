@@ -106,12 +106,11 @@
                                                 <asp:ListItem>Вода</asp:ListItem>
                                                 <asp:ListItem>Этиленгликоль</asp:ListItem>
                                                 <asp:ListItem>Пропиленгликоль</asp:ListItem>
-                                                <asp:ListItem Enabled="False">Водяной пар</asp:ListItem>
                                             </asp:RadioButtonList>
                                             <div class="col-12 sub-col">
                                                 <asp:RadioButtonList ID="lpvRadioButtonList1" runat="server"
                                                     AutoPostBack="True"
-                                                    Enabled="False" OnSelectedIndexChanged="lpvRadioButtonList1_SelectedIndexChanged">
+                                                    Enabled="False" OnSelectedIndexChanged="lpvRadioButtonList1_SelectedIndexChanged" Visible="False">
                                                     <asp:ListItem>Перегретый</asp:ListItem>
                                                     <asp:ListItem>Насыщеный</asp:ListItem>
                                                 </asp:RadioButtonList>
@@ -119,8 +118,6 @@
                                         </div>
                                         <div class="col-6 col-md-6">
                                             <div class="row">
-                                                <br>
-                                                    <br></br>
                                                 </br>
                                             </div>
                                             <div class="row">
