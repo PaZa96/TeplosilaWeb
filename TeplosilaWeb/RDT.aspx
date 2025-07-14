@@ -17,8 +17,14 @@
         <form id="form1" runat="server" novalidate="novalidate">
             <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
             <div class="row jumbotron">
-                <div class="col-md-10">
-                    <div class="col border">
+                <div class="col-12">
+                    <nav class="nav nav-tabs">
+                        <a class="nav-link active" aria-current="page" href="#">Стандартный расчет</a>
+                        <a class="nav-link" href="/RDT_ver.aspx">Поверочный расчет</a>
+                    </nav>
+                </div>
+                <div class="col-xs-12 col">
+                    <div class="col border border-non-top">
                         <asp:UpdatePanel ID="UpdatePanel2" runat="server" UpdateMode="Conditional">
                             <ContentTemplate>
                                 Исполнение регулятора:<asp:RadioButtonList ID="eorRadioButtonList1" runat="server"
