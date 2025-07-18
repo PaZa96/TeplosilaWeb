@@ -8,6 +8,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using TeplosilaWeb.App_Code;
 using System.IO;
+using Newtonsoft.Json.Linq;
 
 public partial class RDT_ver : System.Web.UI.Page
 {
@@ -15,17 +16,29 @@ public partial class RDT_ver : System.Web.UI.Page
     private const int PressureBeforeValve3x = 16;
     private const int MaxT2x = 220;
     private const int MaxT3x = 150;
+    private const string JsonKeyName = "JSON_RDT_ver";
     private dynamic dataFromFile;
 
     protected void Page_Load(object sender, EventArgs e)
     {
         try
         {
-            Logger.InitLogger(); //инициализация - требуется один раз в начале
+            if (!IsPostBack)
+            {
+                Logger.InitLogger(); //инициализация - требуется один раз в начале
 
-            this.readFile(); //читаем json файл с данными
-            //resultPanel.Visible = false;
-            //rdtSave.Visible = false;
+                readFile(); //читаем json файл с данными
+                  //rdtSave.Visible = false;
+            } else
+            {
+                if(Session[JsonKeyName] == null)
+                {
+                    //LabelError.Text = "Сессия завершена. Пожалуйста, перезагрузите страницу.";
+                    return;
+                }
+                dataFromFile = Session[JsonKeyName];
+            }
+
         }
         catch (Exception er)
         {
@@ -39,11 +52,10 @@ public partial class RDT_ver : System.Web.UI.Page
         try
         {
             string jsonText = File.ReadAllText(HttpContext.Current.Server.MapPath(@"Content/data/dataRDT_ver.json"));
-            this.dataFromFile = null;
 
             if (jsonText != null)
             {
-                this.dataFromFile = JsonConvert.DeserializeObject(jsonText);
+                Session[JsonKeyName] = JsonConvert.DeserializeObject(jsonText);
             }
         }
         catch (Exception er)
@@ -54,6 +66,7 @@ public partial class RDT_ver : System.Web.UI.Page
 
     private void setKvsDataset()
     {
+
         if (pnRadioButtonList1.SelectedIndex != -1 && dnDropDownList1.SelectedIndex > 0 && ((eorRadioButton1.Checked && eorRadioButtonList1.SelectedIndex != -1) || 
                                                                                             (eorRadioButton2.Checked && eorRadioButtonList2.SelectedIndex != -1) ||
                                                                                             eorRadioButton3.Checked && eorRadioButtonList3.SelectedIndex != -1 ||
@@ -76,8 +89,7 @@ public partial class RDT_ver : System.Web.UI.Page
             if (eorRadioButtonList4.Enabled && eorRadioButtonList4.SelectedIndex >= 0)
                 ktName = eorRadioButtonList4.SelectedValue;
 
-            jArrKvs = dataFromFile.Kvs[ktName][pnVal][dnVal];
-            
+            jArrKvs = dataFromFile.DN_Kvs[ktName][pnVal][dnVal];          
 
             kvsDropDownList1.Items.Clear();
             kvsDropDownList1.Items.Insert(0, "выбрать");
@@ -90,12 +102,12 @@ public partial class RDT_ver : System.Web.UI.Page
     }
     private void setDNDataset()
     {
+
         if (pnRadioButtonList1.SelectedIndex != -1 && ((eorRadioButton1.Checked && eorRadioButtonList1.SelectedIndex != -1) ||
                                                         (eorRadioButton2.Checked && eorRadioButtonList2.SelectedIndex != -1) ||
                                                         eorRadioButton3.Checked && eorRadioButtonList3.SelectedIndex != -1 ||
                                                         eorRadioButton4.Checked && eorRadioButtonList4.SelectedIndex != -1))
         {
-            Newtonsoft.Json.Linq.JArray jArrDN = new Newtonsoft.Json.Linq.JArray();
             string ktName = "";
             string pnVal = pnRadioButtonList1.SelectedValue;
 
@@ -111,12 +123,18 @@ public partial class RDT_ver : System.Web.UI.Page
             if (eorRadioButtonList4.Enabled && eorRadioButtonList4.SelectedIndex >= 0)
                 ktName = eorRadioButtonList4.SelectedValue;
 
-            jArrDN = dataFromFile.DN[ktName][pnVal];
+            JObject dnObject = (JObject)dataFromFile["DN_Kvs"][ktName][pnVal];
+
+            // Получаем список DN, отсортированных по возрастанию
+            List<int> dnList = dnObject.Properties()
+                                       .Select(p => int.Parse(p.Name))
+                                       .OrderBy(x => x)
+                                       .ToList();
 
             dnDropDownList1.Items.Clear();
             dnDropDownList1.Items.Insert(0, "выбрать");
 
-            foreach (var item in jArrDN)
+            foreach (var item in dnList)
             {
                 dnDropDownList1.Items.Add(new ListItem(item.ToString(), item.ToString()));
             }
@@ -235,5 +253,144 @@ public partial class RDT_ver : System.Web.UI.Page
     protected void pnRadioButtonList1_SelectedIndexChanged(object sender, EventArgs e)
     {
         EnableDNPanel();
+    }
+
+    protected void wsRadioButtonList1_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        if (wsRadioButtonList1.SelectedIndex == 1 || wsRadioButtonList1.SelectedIndex == 2)
+        {
+            wsTextBox1.Enabled = true;
+            wsTextBox2.Enabled = true;
+        }
+        else
+        {
+            AppUtils.DisableTextBox(wsTextBox1);
+            AppUtils.DisableTextBox(wsTextBox2);
+        }
+
+        if (wsRadioButtonList1.SelectedIndex != 3)
+        {
+        }
+    }
+
+    //Валидаторы элементор управления
+    protected void eorCustomValidator1_ServerValidate(object source, ServerValidateEventArgs args)
+    {
+        if (!eorRadioButton1.Checked && !eorRadioButton2.Checked && !eorRadioButton3.Checked && !eorRadioButton3.Checked)
+        {
+            eorCustomValidator1.ErrorMessage = "Выберите необходимое значение";
+            args.IsValid = false;
+            return;
+        }
+
+        if (eorRadioButton1.Checked && eorRadioButtonList1.SelectedIndex == -1)
+        {
+            eorCustomValidator1.ErrorMessage = "Выберите необходимое значение";
+            args.IsValid = false;
+            return;
+        }
+        if (eorRadioButton2.Checked && eorRadioButtonList2.SelectedIndex == -1)
+        {
+            eorCustomValidator1.ErrorMessage = "Выберите необходимое значение";
+            args.IsValid = false;
+            return;
+        }
+    }
+
+    protected void csrCustomValidator1_ServerValidate(object source, ServerValidateEventArgs args)
+    {
+        if (eorCustomValidator1.IsValid)
+        {
+            if (csrRadioButtonList1.SelectedIndex == -1)
+            {
+                pnCustomValidator1.ErrorMessage = "Выберите необходимое значение";
+                args.IsValid = false;
+                return;
+            }
+        }
+        else
+        {
+            args.IsValid = false;
+            pnCustomValidator1.ErrorMessage = "";
+        }
+    }
+
+    protected void pnCustomValidator1_ServerValidate(object source, ServerValidateEventArgs args)
+    {
+        if (csrCustomValidator1.IsValid)
+        {
+            if (pnRadioButtonList1.SelectedIndex == -1)
+            {
+                pnCustomValidator1.ErrorMessage = "Выберите необходимое значение";
+                args.IsValid = false;
+                return;
+            }
+        }
+        else
+        {
+            args.IsValid = false;
+            pnCustomValidator1.ErrorMessage = "";
+        }
+    }
+
+    protected void dnKvsCustomValidator1_ServerValidate(object source, ServerValidateEventArgs args)
+    {
+        if (pnCustomValidator1.IsValid)
+        {
+            if (dnDropDownList1.SelectedIndex <= 0 || kvsDropDownList1.SelectedIndex <= 0)
+            {
+                dnKvsCustomValidator1.ErrorMessage = "Выберите необходимое значение";
+                args.IsValid = false;
+                return;
+            }
+        }
+        else
+        {
+            args.IsValid = false;
+            dnKvsCustomValidator1.ErrorMessage = "";
+        }
+    }
+
+    protected void wsCustomValidator1_ServerValidate(object source, ServerValidateEventArgs args)
+    {
+        if (dnKvsCustomValidator1.IsValid)
+        {
+            if (wsRadioButtonList1.SelectedIndex == -1)
+            {
+                wsCustomValidator1.ErrorMessage = "Выберите необходимое значение";
+                args.IsValid = false;
+                return;
+            }
+            if (wsRadioButtonList1.SelectedIndex == 3)
+            {
+                if (lpvRadioButtonList1.SelectedIndex == -1)
+                {
+                    wsCustomValidator1.ErrorMessage = "Необходимо выбрать тип пара";
+                    args.IsValid = false;
+                    return;
+                }
+            }
+            if (wsTextBox1.Enabled || wsTextBox2.Enabled)
+            {
+                if (AppUtils.customConverterToDouble(wsTextBox1.Text) < 5 || AppUtils.customConverterToDouble(wsTextBox1.Text) > 65)
+                {
+                    wsCustomValidator1.ErrorMessage = "Неверно указано значение концентрации";
+                    args.IsValid = false;
+                    return;
+                }
+
+                if (AppUtils.customConverterToDouble(wsTextBox2.Text) < 0 || AppUtils.customConverterToDouble(wsTextBox2.Text) > 150)
+                {
+                    wsCustomValidator1.ErrorMessage = "Неверно указано значение температуры";
+                    args.IsValid = false;
+                    return;
+                }
+            }
+        }
+        else
+        {
+            args.IsValid = false;
+            wsCustomValidator1.ErrorMessage = "";
+        }
     }
 }

@@ -17,6 +17,7 @@ public partial class TRV_ver : System.Web.UI.Page
     private const int MaxT2x = 220;
     private const int MaxT3x = 150;
     private dynamic dataFromFile;
+    private const string JsonKeyName = "JSON_TRV_ver";
 
     public Dictionary<int, string> v_input_dict = new Dictionary<int, string>();
 
@@ -24,11 +25,22 @@ public partial class TRV_ver : System.Web.UI.Page
     {
         try
         {
-            Logger.InitLogger(); //инициализация - требуется один раз в начале
+            if (!IsPostBack)
+            {
+                Logger.InitLogger(); //инициализация - требуется один раз в начале
+                readFile(); //читаем json файл с данными
+            } else
+            {
+                if (Session[JsonKeyName] == null)
+                {
+                    LabelError.Text = "Сессия завершена. Пожалуйста, перезагрузите страницу.";
+                    return;
+                }
 
-            this.readFile(); //читаем json файл с данными
-            resultPanel.Visible = false;
-            trvSave.Visible = false;
+                dataFromFile = Session[JsonKeyName];
+                resultPanel.Visible = false;
+                trvSave.Visible = false;
+            }
         }
         catch (Exception er)
         {
@@ -85,7 +97,7 @@ public partial class TRV_ver : System.Web.UI.Page
 
             if (jsonText != null)
             {
-                this.dataFromFile = JsonConvert.DeserializeObject(jsonText);
+                Session[JsonKeyName] = JsonConvert.DeserializeObject(jsonText);
             }
         }
         catch (Exception er)
@@ -828,7 +840,7 @@ public partial class TRV_ver : System.Web.UI.Page
         {
             MathUtils.convertArr((sender as DropDownList), ref lpvTextBox21);
         }
-        AppUtils.SavePrevSelectedIndexDDL(lpvDropDownList21.ID, lpvDropDownList21.SelectedIndex);
+        AppUtils.SaveKeyToSession(lpvDropDownList21.ID, lpvDropDownList21.SelectedIndex);
     }
 
     protected void calcvDropDownList1_SelectedIndexChanged(object sender, EventArgs e)
@@ -837,7 +849,7 @@ public partial class TRV_ver : System.Web.UI.Page
         {
             MathUtils.convertArr((sender as DropDownList), ref calcvTextBox1);
         }
-        AppUtils.SavePrevSelectedIndexDDL(calcvDropDownList1.ID, calcvDropDownList1.SelectedIndex);
+        AppUtils.SaveKeyToSession(calcvDropDownList1.ID, calcvDropDownList1.SelectedIndex);
     }
 
     protected void lpv5DropDownList1_SelectedIndexChanged(object sender, EventArgs e)
@@ -846,7 +858,7 @@ public partial class TRV_ver : System.Web.UI.Page
         {
             MathUtils.convertArr((sender as DropDownList), ref lpv5TextBox1);
         }
-        AppUtils.SavePrevSelectedIndexDDL(lpv5DropDownList1.ID, lpv5DropDownList1.SelectedIndex);
+        AppUtils.SaveKeyToSession(lpv5DropDownList1.ID, lpv5DropDownList1.SelectedIndex);
     }
 
     protected void fvDropDownList1_SelectedIndexChanged(object sender, EventArgs e)
@@ -855,7 +867,7 @@ public partial class TRV_ver : System.Web.UI.Page
         {
             MathUtils.convertArrDouble((sender as DropDownList), ref fvTextBox1);
         }
-        AppUtils.SavePrevSelectedIndexDDL(fvDropDownList1.ID, fvDropDownList1.SelectedIndex);
+        AppUtils.SaveKeyToSession(fvDropDownList1.ID, fvDropDownList1.SelectedIndex);
     }
 
     protected void kvsDropDownList1_SelectedIndexChanged(object sender, EventArgs e)

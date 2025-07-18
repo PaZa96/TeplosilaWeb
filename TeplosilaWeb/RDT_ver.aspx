@@ -53,14 +53,17 @@
                                         <asp:ListItem>RDT-B</asp:ListItem>
                                     </asp:RadioButtonList>
                                 </div>
+                                 <div>
+                                    <asp:CustomValidator ID="eorCustomValidator1" runat="server" SetFocusOnError="True" Display="Dynamic" ForeColor="Red" ErrorMessage="CustomValidator" OnServerValidate="eorCustomValidator1_ServerValidate"></asp:CustomValidator>
+                                </div>
                             </ContentTemplate>
                         </asp:UpdatePanel>
                     </div>
                     <div class="col border">
-                        <asp:UpdatePanel ID="UpdatePanel2" runat="server" UpdateMode="Conditional">
+                        <asp:UpdatePanel ID="UpdatePanel2" runat="server">
                             <ContentTemplate>
                                 <asp:Label ID="Label1" runat="server" Text="Диапазон настройки регулятора:"></asp:Label>
-                                <br />
+                                <div class="col-12 row">
                                 <asp:RadioButtonList ID="csrRadioButtonList1" runat="server" AutoPostBack="True">
                                     <asp:ListItem>0.1 (0,08...0,9 бар)</asp:ListItem>
                                     <asp:ListItem>1.1 (0,16...1,8 бар)</asp:ListItem>
@@ -70,6 +73,10 @@
                                     <asp:ListItem>2.2 (0,9...10,0 бар)</asp:ListItem>
                                     <asp:ListItem>2.3 (1,4...15,8 бар)</asp:ListItem>
                                 </asp:RadioButtonList>
+                                </div>
+                                <div>
+                                    <asp:CustomValidator ID="csrCustomValidator1" runat="server" SetFocusOnError="True" Display="Dynamic" ForeColor="Red" ErrorMessage="pnCustomValidator" ControlToValidate="csrRadioButtonList1" ValidateEmptyText="True" OnServerValidate="csrCustomValidator1_ServerValidate"></asp:CustomValidator>
+                                </div>
                             </ContentTemplate>
                         </asp:UpdatePanel>
                     </div>
@@ -82,6 +89,9 @@
                                         <asp:ListItem>16</asp:ListItem>
                                         <asp:ListItem>25</asp:ListItem>
                                     </asp:RadioButtonList>
+                                </div>
+                                <div>
+                                    <asp:CustomValidator ID="pnCustomValidator1" runat="server" SetFocusOnError="True" Display="Dynamic" ForeColor="Red" ErrorMessage="pnCustomValidator" ControlToValidate="pnRadioButtonList1" ValidateEmptyText="True" OnServerValidate="pnCustomValidator1_ServerValidate"></asp:CustomValidator>
                                 </div>
                             </ContentTemplate>
                         </asp:UpdatePanel>
@@ -112,6 +122,9 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div>
+                                    <asp:CustomValidator ID="dnKvsCustomValidator1" runat="server" SetFocusOnError="True" Display="Dynamic" ForeColor="Red" ErrorMessage="dnKvsCustomValidator" OnServerValidate="dnKvsCustomValidator1_ServerValidate"></asp:CustomValidator>
+                                </div>
                             </ContentTemplate>
                         </asp:UpdatePanel>
                     </div>
@@ -123,7 +136,7 @@
                                     <div class="row">
                                         <div class="col-6 col-md-3">
                                             <asp:RadioButtonList ID="wsRadioButtonList1" runat="server"
-                                                AutoPostBack="True" required="required">
+                                                AutoPostBack="True" required="required" OnSelectedIndexChanged="wsRadioButtonList1_SelectedIndexChanged">
                                                 <asp:ListItem>Вода</asp:ListItem>
                                                 <asp:ListItem>Этиленгликоль</asp:ListItem>
                                                 <asp:ListItem>Пропиленгликоль</asp:ListItem>
@@ -139,7 +152,7 @@
                                         </div>
                                         <div class="col-6 col-md-6">
                                             <div class="row">
-                                                <br></br>
+                                                <br />
                                             </div>
                                             <div class="row">
                                                 <asp:TextBox ID="wsTextBox1" runat="server" Enabled="False" type="number"
@@ -154,6 +167,13 @@
                                                 </asp:Label>
                                             </div>
                                         </div>
+                                    </div>
+                                    <div>
+                                        <asp:CustomValidator ID="wsCustomValidator1" runat="server"
+                                            ControlToValidate="wsRadioButtonList1" Display="Dynamic"
+                                            EnableClientScript="False" ErrorMessage="CustomValidator"
+                                            ForeColor="Red"
+                                            SetFocusOnError="True" ValidateEmptyText="True" OnServerValidate="wsCustomValidator1_ServerValidate"></asp:CustomValidator>
                                     </div>
                                 </div>
                             </ContentTemplate>

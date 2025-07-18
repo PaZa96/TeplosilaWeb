@@ -92,10 +92,31 @@ public static class AppUtils
         textBox.Text = "";
     }
 
+    public static void textBoxEnabled(TextBox textBox, bool flag)
+    {
+        textBox.Enabled = flag;
+        if (flag == false)
+        {
+            textBox.Text = String.Empty;
+        }
+
+    
+    }
+
     public static void DisableDropDownList(DropDownList dropDownList)
     {
         dropDownList.Enabled = false;
         dropDownList.ClearSelection();
+    }
+
+    public static void dropDownListEnable(DropDownList dropDownList, bool flag)
+    {
+        dropDownList.Enabled = flag;
+        if (flag != true)
+        {
+            dropDownList.ClearSelection();
+        };
+
     }
 
     public static void DisableRadioButtonList(RadioButtonList radioButtonList)
@@ -183,7 +204,7 @@ public static class AppUtils
         return false;
     }
 
-    public static void SavePrevSelectedIndexDDL(string id, int key)
+    public static void SaveKeyToSession(string id, int key)
     {
         HttpContext.Current.Session[id] = key;
     }

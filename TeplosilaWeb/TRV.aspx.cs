@@ -28,23 +28,26 @@ public partial class TRV : System.Web.UI.Page
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        convertTable = new double[2, 7] { { 1000, 3600, 60, 1, 3600, 1, 1000 }, { 1, 3.6, 0.06, 0.001, 3.6, 0.001, 1 } };
-
-        arrConvert1 =
-            new double[7, 7] { { 1, 0.278, 16.67, 1000, 0.278, 1000, 1 }, { 3.6, 1, 60, 3600, 1, 3600, 3.6 }, { 0.06, 0.0167, 1, 60, 0.0167, 60, 0.06 }, { 0.001, 0.000278, 0.0167, 1, 0.000278, 1, 0.001 }, { 3.6, 1, 60, 3600, 1, 3600, 3.6 }, { 0.001, 0.000278, 0.0167, 1, 0.000278, 1, 0.001 }, { 1, 0.278, 16.67, 1000, 0.278, 1000, 1 }
-            };
-        arrConvert2 = new double[5] { 1000, 1000000, 1, 1163000, 1.163 };
-        arrConvert3 = new double[4] { 1000, 1, 100, 9.8067 };
-
-        Logger.InitLogger(); //инициализация - требуется один раз в начале
-        Label8.Text = "";
-        Label55.Visible = false;
-
-        string ctrlname = Page.Request.Params["__EVENTTARGET"];
-        if (ctrlname != "GridView2")
+        if (!IsPostBack)
         {
-            resultPanel.Visible = false;
-            ScriptManager.RegisterStartupScript(this.Page, Page.GetType(), "MyClientScript1", "javascript:HideBTN()", true);
+            convertTable = new double[2, 7] { { 1000, 3600, 60, 1, 3600, 1, 1000 }, { 1, 3.6, 0.06, 0.001, 3.6, 0.001, 1 } };
+
+            arrConvert1 =
+                new double[7, 7] { { 1, 0.278, 16.67, 1000, 0.278, 1000, 1 }, { 3.6, 1, 60, 3600, 1, 3600, 3.6 }, { 0.06, 0.0167, 1, 60, 0.0167, 60, 0.06 }, { 0.001, 0.000278, 0.0167, 1, 0.000278, 1, 0.001 }, { 3.6, 1, 60, 3600, 1, 3600, 3.6 }, { 0.001, 0.000278, 0.0167, 1, 0.000278, 1, 0.001 }, { 1, 0.278, 16.67, 1000, 0.278, 1000, 1 }
+                };
+            arrConvert2 = new double[5] { 1000, 1000000, 1, 1163000, 1.163 };
+            arrConvert3 = new double[4] { 1000, 1, 100, 9.8067 };
+
+            Logger.InitLogger(); //инициализация - требуется один раз в начале
+            Label8.Text = "";
+            Label55.Visible = false;
+
+            string ctrlname = Page.Request.Params["__EVENTTARGET"];
+            if (ctrlname != "GridView2")
+            {
+                resultPanel.Visible = false;
+                ScriptManager.RegisterStartupScript(this.Page, Page.GetType(), "MyClientScript1", "javascript:HideBTN()", true);
+            }
         }
     }
 
@@ -412,7 +415,7 @@ public partial class TRV : System.Web.UI.Page
         }
 
         tdRBL.Visible = true;
-        AppUtils.SavePrevSelectedIndexDDL(ws2RadioButtonList1.ID, ws2RadioButtonList1.SelectedIndex);
+        AppUtils.SaveKeyToSession(ws2RadioButtonList1.ID, ws2RadioButtonList1.SelectedIndex);
     }
 
     protected void aa1RadioButtonList1_SelectedIndexChanged(object sender, EventArgs e)
@@ -463,7 +466,7 @@ public partial class TRV : System.Web.UI.Page
         {
             convertArr(arrConvert3, (sender as DropDownList), ref lpvTextBox21);
         }
-        AppUtils.SavePrevSelectedIndexDDL(lpvDropDownList21.ID, lpvDropDownList21.SelectedIndex);
+        AppUtils.SaveKeyToSession(lpvDropDownList21.ID, lpvDropDownList21.SelectedIndex);
     }
 
     protected void lpvDropDownList1_SelectedIndexChanged(object sender, EventArgs e)
@@ -472,7 +475,7 @@ public partial class TRV : System.Web.UI.Page
         {
             convertArr(arrConvert3, (sender as DropDownList), ref lpvTextBox1);
         }
-        AppUtils.SavePrevSelectedIndexDDL(lpvDropDownList1.ID, lpvDropDownList1.SelectedIndex);
+        AppUtils.SaveKeyToSession(lpvDropDownList1.ID, lpvDropDownList1.SelectedIndex);
     }
 
     protected void lpv5DropDownList1_SelectedIndexChanged(object sender, EventArgs e)
@@ -481,7 +484,7 @@ public partial class TRV : System.Web.UI.Page
         {
             convertArr(arrConvert3, (sender as DropDownList), ref lpv5TextBox1);
         }
-        AppUtils.SavePrevSelectedIndexDDL(lpv5DropDownList1.ID, lpv5DropDownList1.SelectedIndex);
+        AppUtils.SaveKeyToSession(lpv5DropDownList1.ID, lpv5DropDownList1.SelectedIndex);
     }
 
     protected void lpv5DropDownList2_SelectedIndexChanged(object sender, EventArgs e)
@@ -490,7 +493,7 @@ public partial class TRV : System.Web.UI.Page
         {
             convertArr(arrConvert3, (sender as DropDownList), ref lpv5TextBox2);
         }
-        AppUtils.SavePrevSelectedIndexDDL(lpv5DropDownList2.ID, lpv5DropDownList2.SelectedIndex);
+        AppUtils.SaveKeyToSession(lpv5DropDownList2.ID, lpv5DropDownList2.SelectedIndex);
     }
 
     protected void calcvDropDownList1_SelectedIndexChanged(object sender, EventArgs e)
@@ -499,7 +502,7 @@ public partial class TRV : System.Web.UI.Page
         {
             convertArr(arrConvert3, (sender as DropDownList), ref calcvTextBox1);
         }
-        AppUtils.SavePrevSelectedIndexDDL(calcvDropDownList1.ID, calcvDropDownList1.SelectedIndex);
+        AppUtils.SaveKeyToSession(calcvDropDownList1.ID, calcvDropDownList1.SelectedIndex);
     }
 
     protected void fvDropDownList1_SelectedIndexChanged(object sender, EventArgs e)
@@ -508,7 +511,7 @@ public partial class TRV : System.Web.UI.Page
         {
             convertArrDouble(arrConvert1, (sender as DropDownList), ref fvTextBox1);
         }
-        AppUtils.SavePrevSelectedIndexDDL(fvDropDownList1.ID, fvDropDownList1.SelectedIndex);
+        AppUtils.SaveKeyToSession(fvDropDownList1.ID, fvDropDownList1.SelectedIndex);
     }
 
     protected void fvDropDownList2_SelectedIndexChanged(object sender, EventArgs e)
@@ -517,7 +520,7 @@ public partial class TRV : System.Web.UI.Page
         {
             convertArr(arrConvert2, (sender as DropDownList), ref fvTextBox10);
         }
-        AppUtils.SavePrevSelectedIndexDDL(fvDropDownList2.ID, fvDropDownList2.SelectedIndex);
+        AppUtils.SaveKeyToSession(fvDropDownList2.ID, fvDropDownList2.SelectedIndex);
     }
 
     protected void lpv5RadioButtonList1_SelectedIndexChanged(object sender, EventArgs e)
