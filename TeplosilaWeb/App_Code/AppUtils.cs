@@ -1,7 +1,9 @@
 ﻿using GemBox.Spreadsheet;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Web;
@@ -130,54 +132,27 @@ public static class AppUtils
         return tb.Text == "";
     }
 
-    public static string ConvertPointToComma(string tb)
+    public static string ConvertPointToComma(string input)
     {
-        string afterConvert = "";
-
-        if (tb.IndexOf(".") != -1)
-        {
-            afterConvert = tb.Replace(".", ",");
-        }
-        else
-        {
-            afterConvert = tb;
-        }
-
-        return afterConvert;
+        return string.IsNullOrEmpty(input) ? "" : input.Replace('.', ',');
     }
 
-    public static string ConvertCommaToPoint(string tb)
+    public static string ConvertCommaToPoint(string input)
     {
-        string afterConvert = "";
-
-        if (tb.IndexOf(",") != -1)
-        {
-            afterConvert = tb.Replace(",", ".");
-        }
-        else
-        {
-            afterConvert = tb;
-        }
-
-        return afterConvert;
+        return string.IsNullOrEmpty(input) ? "" : input.Replace(',', '.');
     }
 
-    public static double customConverterToDouble(string tb)
+    public static double customConverterToDouble(string input)
     {
+        if (string.IsNullOrWhiteSpace(input))
+            return 0;
 
-        double afterConvert;
+        string normalized = input.Replace('.', ',');
 
-        if (tb.IndexOf(".") != -1)
-        {
-            string beforeConvert = tb.Replace(".", ",");
-            afterConvert = Convert.ToDouble(beforeConvert);
-        }
-        else
-        {
-            afterConvert = Convert.ToDouble(tb);
-        }
+        if (double.TryParse(normalized, out double result))
+            return result;
 
-        return afterConvert;
+        return 0;
     }
 
     public static void RemoveCssClass(HtmlGenericControl controlInstance, string css)
@@ -207,5 +182,29 @@ public static class AppUtils
     public static void SaveKeyToSession(string id, int key)
     {
         HttpContext.Current.Session[id] = key;
+    }
+
+    public static void readFile(string jsonPathName, string JsonKeyName)
+    {
+
+        string jsonText = File.ReadAllText(HttpContext.Current.Server.MapPath(jsonPathName));
+
+        if (jsonText != null)
+        {
+            HttpContext.Current.Session[JsonKeyName] = JsonConvert.DeserializeObject(jsonText);
+        }
+
+    }
+
+    public static void SetCellValue(ExcelWorksheet worksheet, string cellName, int dictKey, Dictionary<int, string> dict, bool convertPointToComma = false)
+    {
+        if (dict.TryGetValue(dictKey, out string value))
+        {
+            worksheet.Cells[cellName].Value = convertPointToComma ? AppUtils.ConvertPointToComma(value) : value;
+        }
+        else
+        {
+            worksheet.Cells[cellName].Value = "";
+        }
     }
 }

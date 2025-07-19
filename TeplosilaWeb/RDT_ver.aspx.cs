@@ -26,17 +26,16 @@ public partial class RDT_ver : System.Web.UI.Page
             if (!IsPostBack)
             {
                 Logger.InitLogger(); //инициализация - требуется один раз в начале
-
-                readFile(); //читаем json файл с данными
-                  //rdtSave.Visible = false;
+                AppUtils.readFile(@"Content/data/dataRDT_ver.json", JsonKeyName); //читаем json файл с данными
             } else
             {
                 if(Session[JsonKeyName] == null)
                 {
-                    //LabelError.Text = "Сессия завершена. Пожалуйста, перезагрузите страницу.";
+                    LabelError.Text = "Сессия завершена. Пожалуйста, перезагрузите страницу.";
                     return;
                 }
                 dataFromFile = Session[JsonKeyName];
+                rdtSave.Visible = false;
             }
 
         }
@@ -47,23 +46,6 @@ public partial class RDT_ver : System.Web.UI.Page
     }
 
     //вспомогательные функции работы с данными
-    private void readFile()
-    {
-        try
-        {
-            string jsonText = File.ReadAllText(HttpContext.Current.Server.MapPath(@"Content/data/dataRDT_ver.json"));
-
-            if (jsonText != null)
-            {
-                Session[JsonKeyName] = JsonConvert.DeserializeObject(jsonText);
-            }
-        }
-        catch (Exception er)
-        {
-            Logger.Log.Error(er);
-        }
-    }
-
     private void setKvsDataset()
     {
 
@@ -72,7 +54,8 @@ public partial class RDT_ver : System.Web.UI.Page
                                                                                             eorRadioButton3.Checked && eorRadioButtonList3.SelectedIndex != -1 ||
                                                                                             eorRadioButton4.Checked && eorRadioButtonList4.SelectedIndex != -1))
         {
-            Newtonsoft.Json.Linq.JArray jArrKvs = new Newtonsoft.Json.Linq.JArray();
+            JArray jArrKvs = new JArray();
+
             string ktName = "";
             string pnVal = pnRadioButtonList1.SelectedValue;
             string dnVal = dnDropDownList1.SelectedValue;
@@ -303,7 +286,7 @@ public partial class RDT_ver : System.Web.UI.Page
         {
             if (csrRadioButtonList1.SelectedIndex == -1)
             {
-                pnCustomValidator1.ErrorMessage = "Выберите необходимое значение";
+                csrCustomValidator1.ErrorMessage = "Выберите необходимое значение";
                 args.IsValid = false;
                 return;
             }
@@ -311,7 +294,7 @@ public partial class RDT_ver : System.Web.UI.Page
         else
         {
             args.IsValid = false;
-            pnCustomValidator1.ErrorMessage = "";
+            csrCustomValidator1.ErrorMessage = "";
         }
     }
 

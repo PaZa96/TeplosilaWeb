@@ -23,6 +23,7 @@ public partial class RDT : System.Web.UI.Page
     private const int MaxT3x = 150;
     public dynamic dataFromFile;
     double minVar = 0.000000001;
+    private const string JsonKeyName = "JSON_RDT";
 
     public Dictionary<int, string> r_input_dict = new Dictionary<int, string>();
 
@@ -40,11 +41,23 @@ public partial class RDT : System.Web.UI.Page
                     resultPanel.Visible = false;
                     ScriptManager.RegisterStartupScript(this.Page, Page.GetType(), "MyClientScript", "javascript:HideBTN()", true);
                 }
+
+                AppUtils.readFile(@"Content/data/data.txt", JsonKeyName);
+            } else
+            {
+                if (Session[JsonKeyName] == null)
+                {
+                    LabelError.Text = "Сессия завершена. Пожалуйста, перезагрузите страницу.";
+                    return;
+                }
+
+                dataFromFile = Session[JsonKeyName];
+                LabelError.Text = "";
+                fprLabelError.Text = "";
+                LabelCustomValid.Visible = false;
             }
 
-            LabelError.Text = "";
-            fprLabelError.Text = "";
-            LabelCustomValid.Visible = false;
+            
         }
         catch (Exception er)
         {
@@ -1380,33 +1393,7 @@ public partial class RDT : System.Web.UI.Page
 
     //------------------------------------File Function START--------------------------------------
 
-    private void readFile(int index)
-    {
-        try
-        {
-            string jsonText = null;
-            this.dataFromFile = null;
-            switch (index)
-            {
-                case 0:
-                    jsonText = File.ReadAllText(HttpContext.Current.Server.MapPath(@"Content/data/data.txt"));
-                    break;
-                case 1:
-                    jsonText = File.ReadAllText(Directory.GetCurrentDirectory() + @"\data-two.txt");
-                    break;
-            }
-            if (jsonText != null)
-            {
-                dataFromFile = JsonConvert.DeserializeObject(jsonText);
-            }
-        }
-        catch (Exception e)
-        {
-            Logger.Log.Error(e);
-
-        }
-    }
-
+    
     private void changeImage(int index)
     {
         switch (index)
@@ -2322,7 +2309,6 @@ public partial class RDT : System.Web.UI.Page
             GridView1.DataBind();
             GridView1.SelectedIndex = -1;
 
-            this.readFile(0);
             Dictionary<string, double> g_dict = new Dictionary<string, double>();
             double g = 0;
             r_input_dict.Clear();
@@ -3206,7 +3192,7 @@ public partial class RDT : System.Web.UI.Page
 
         if (AppUtils.SetEnableTextBox(lp1DropDownList1, lp1TextBox1))
         {
-            MathUtils.convertArr((sender as DropDownList), ref lp1TextBox1);
+            MathUtils.convertArr3((sender as DropDownList), ref lp1TextBox1);
         }
         AppUtils.SaveKeyToSession(lp1DropDownList1.ID, lp1DropDownList1.SelectedIndex);
     }
@@ -3216,7 +3202,7 @@ public partial class RDT : System.Web.UI.Page
 
         if (AppUtils.SetEnableTextBox(lp1DropDownList2, lp1TextBox2))
         {
-            MathUtils.convertArr((sender as DropDownList), ref lp1TextBox2);
+            MathUtils.convertArr3((sender as DropDownList), ref lp1TextBox2);
         }
         AppUtils.SaveKeyToSession(lp1DropDownList2.ID, lp1DropDownList2.SelectedIndex);
     }
@@ -3225,7 +3211,7 @@ public partial class RDT : System.Web.UI.Page
     {
         if (AppUtils.SetEnableTextBox(lp1DropDownList3, lp1TextBox3))
         {
-            MathUtils.convertArr((sender as DropDownList), ref lp1TextBox3);
+            MathUtils.convertArr3((sender as DropDownList), ref lp1TextBox3);
         }
         AppUtils.SaveKeyToSession(lp1DropDownList3.ID, lp1DropDownList3.SelectedIndex);
     }
@@ -3234,7 +3220,7 @@ public partial class RDT : System.Web.UI.Page
     {
         if (AppUtils.SetEnableTextBox(lp1DropDownList4, lp1TextBox4))
         {
-            MathUtils.convertArr((sender as DropDownList), ref lp1TextBox4);
+            MathUtils.convertArr3((sender as DropDownList), ref lp1TextBox4);
         }
         AppUtils.SaveKeyToSession(lp1DropDownList4.ID, lp1DropDownList4.SelectedIndex);
     }
@@ -3243,7 +3229,7 @@ public partial class RDT : System.Web.UI.Page
     {
         if (AppUtils.SetEnableTextBox(lp2DropDownList1, lp2TextBox1))
         {
-            MathUtils.convertArr((sender as DropDownList), ref lp2TextBox1);
+            MathUtils.convertArr3((sender as DropDownList), ref lp2TextBox1);
         }
         AppUtils.SaveKeyToSession(lp2DropDownList1.ID, lp2DropDownList1.SelectedIndex);
     }
@@ -3252,7 +3238,7 @@ public partial class RDT : System.Web.UI.Page
     {
         if (AppUtils.SetEnableTextBox(lp2DropDownList2, lp2TextBox2))
         {
-            MathUtils.convertArr((sender as DropDownList), ref lp2TextBox2);
+            MathUtils.convertArr3((sender as DropDownList), ref lp2TextBox2);
         }
         AppUtils.SaveKeyToSession(lp2DropDownList2.ID, lp2DropDownList2.SelectedIndex);
     }
@@ -3261,7 +3247,7 @@ public partial class RDT : System.Web.UI.Page
     {
         if (AppUtils.SetEnableTextBox(lp3DropDownList1, lp3TextBox1))
         {
-            MathUtils.convertArr((sender as DropDownList), ref lp3TextBox1);
+            MathUtils.convertArr3((sender as DropDownList), ref lp3TextBox1);
         }
         AppUtils.SaveKeyToSession(lp3DropDownList1.ID, lp3DropDownList1.SelectedIndex);
     }
@@ -3270,7 +3256,7 @@ public partial class RDT : System.Web.UI.Page
     {
         if (AppUtils.SetEnableTextBox(lp3DropDownList2, lp3TextBox2))
         {
-            MathUtils.convertArr((sender as DropDownList), ref lp3TextBox2);
+            MathUtils.convertArr3((sender as DropDownList), ref lp3TextBox2);
         }
         AppUtils.SaveKeyToSession(lp3DropDownList2.ID, lp3DropDownList2.SelectedIndex);
     }
@@ -3279,7 +3265,7 @@ public partial class RDT : System.Web.UI.Page
     {
         if (AppUtils.SetEnableTextBox(lp4DropDownList2, lp4TextBox2))
         {
-            MathUtils.convertArr((sender as DropDownList), ref lp4TextBox2);
+            MathUtils.convertArr3((sender as DropDownList), ref lp4TextBox2);
         }
         AppUtils.SaveKeyToSession(lp4DropDownList2.ID, lp4DropDownList2.SelectedIndex);
     }
@@ -3288,7 +3274,7 @@ public partial class RDT : System.Web.UI.Page
     {
         if (AppUtils.SetEnableTextBox(lp5DropDownList1, lp5TextBox1))
         {
-            MathUtils.convertArr((sender as DropDownList), ref lp5TextBox1);
+            MathUtils.convertArr3((sender as DropDownList), ref lp5TextBox1);
         }
         AppUtils.SaveKeyToSession(lp5DropDownList1.ID, lp5DropDownList1.SelectedIndex);
     }
@@ -3297,7 +3283,7 @@ public partial class RDT : System.Web.UI.Page
     {
         if (AppUtils.SetEnableTextBox(lp5DropDownList2, lp5TextBox2))
         {
-            MathUtils.convertArr((sender as DropDownList), ref lp5TextBox2);
+            MathUtils.convertArr3((sender as DropDownList), ref lp5TextBox2);
         }
         AppUtils.SaveKeyToSession(lp5DropDownList2.ID, lp5DropDownList2.SelectedIndex);
     }
@@ -3306,7 +3292,7 @@ public partial class RDT : System.Web.UI.Page
     {
         if (AppUtils.SetEnableTextBox(calcrDropDownList1, calcrTextBox1))
         {
-            MathUtils.convertArr((sender as DropDownList), ref calcrTextBox1);
+            MathUtils.convertArr3((sender as DropDownList), ref calcrTextBox1);
         }
         AppUtils.SaveKeyToSession(calcrDropDownList1.ID, calcrDropDownList1.SelectedIndex);
     }
@@ -3324,7 +3310,7 @@ public partial class RDT : System.Web.UI.Page
     {
         if (AppUtils.SetEnableTextBox(fprDropDownList2, fprTextBox4))
         {
-            MathUtils.convertArr((sender as DropDownList), ref fprTextBox4);
+            MathUtils.convertArr2((sender as DropDownList), ref fprTextBox4);
         }
         AppUtils.SaveKeyToSession(fprDropDownList2.ID, fprDropDownList2.SelectedIndex);
     }
@@ -3343,30 +3329,39 @@ public partial class RDT : System.Web.UI.Page
 
     protected void Button2_Click(object sender, EventArgs e)
     {
-       
-        if(eorRadioButtonList1.SelectedIndex == 1) //после себя
+        try
         {
-            if (lp5TextBox1.Enabled)
+            switch (eorRadioButtonList1.SelectedIndex)
             {
-                GenerateSteamExel();
+                case 0: // Регулятор перепада давления
+                    GenerateOtherExel();
+                    break;
+
+                case 1: // Регулятор давления "после себя"
+                    if (lp5TextBox1.Enabled)
+                        GenerateSteamExel();
+                    else
+                        GeneratePosleExel();
+                    break;
+
+                case 2: // Регулятор давления "до себя"
+                    GenerateDoExel();
+                    break;
+
+                case 3: // Регулятор "перепуска"
+                    GeneratePerepyskaExel();
+                    break;
+
+                default:
+                    break;
             }
-            else
-            {
-                GeneratePosleExel();
-            }
         }
-        else if (eorRadioButtonList1.SelectedIndex == 2) //Регулятор давления "до себя"
+        catch (Exception er)
         {
-            GenerateDoExel();
+            Logger.Log.Error(er);
+
         }
-        else if (eorRadioButtonList1.SelectedIndex == 3) //Регулятор "перепуска" 
-        {
-            GeneratePerepyskaExel();
-        }
-        else
-        {
-            GenerateOtherExel(); //Регулятор перепада давления 
-        }
+
     }
 
     public void GenerateSteamExel()
@@ -3374,8 +3369,6 @@ public partial class RDT : System.Web.UI.Page
         try
         {
             r_input_dict = (Dictionary<int, string>)Session["r_input_dict"];
-
-            this.readFile(0);
 
             if (!String.IsNullOrWhiteSpace(objTextBox1.Text))
             {
@@ -3400,20 +3393,17 @@ public partial class RDT : System.Web.UI.Page
 
             r_input_dict[5] = r_input_dict[41];
             string fileName = AppUtils.ConvertCommaToPoint(r_input_dict[41]);
-            if (fileName == "&nbsp;")
-            {
-                fileName = "Регуляторов не найдено";
-            }
 
             SpreadsheetInfo.SetLicense("FREE-LIMITED-KEY");
 
-            if (!File.Exists(HttpContext.Current.Server.MapPath("~/Content/templates/templateRDTSteam.xlsx")))
+            string templatePath = HttpContext.Current.Server.MapPath("~/Content/templates/templateRDTSteam.xlsx");
+            if (!File.Exists(templatePath))
             {
-                LabelError.Text = "Не найден файл шаблона";
+                LabelError.Text += "Не найден файл шаблона";
                 return;
             }
 
-            ExcelFile ef = ExcelFile.Load(HttpContext.Current.Server.MapPath("~/Content/templates/templateRDTSteam.xlsx"));
+            ExcelFile ef = ExcelFile.Load(templatePath);
 
             ExcelWorksheet ws = ef.Worksheets[0];
 
@@ -3422,102 +3412,56 @@ public partial class RDT : System.Web.UI.Page
             ws.PrintOptions.LeftMargin = 1 / 2.54;
             ws.PrintOptions.RightMargin = 1 / 2.54;
 
-            for (int i = 1; i < 61; i++)
-            {
-                if (i != 50)
-                {
-                    if (i == 6 || i == 38 || i == 42 || i == 43 || i == 46 || i == 55 || i == 57 || i == 60)
-                    {
-                        r_input_dict[i] = AppUtils.ConvertPointToComma(r_input_dict[i]);
+            AppUtils.SetCellValue(ws, "J2", 1, r_input_dict);
+            AppUtils.SetCellValue(ws, "C3", 2, r_input_dict);
+            AppUtils.SetCellValue(ws, "C4", 4, r_input_dict);
+            AppUtils.SetCellValue(ws, "C5", 5, r_input_dict);
+            AppUtils.SetCellValue(ws, "C8", 6, r_input_dict, true);
 
-                    }
+            AppUtils.SetCellValue(ws, "I10", 55, r_input_dict, true);
+            AppUtils.SetCellValue(ws, "K10", 56, r_input_dict);
 
-                    if (r_input_dict[i] == "&nbsp;")
-                    {
-                        r_input_dict[i] = "-";
-                    }
-                }
-            }
+            AppUtils.SetCellValue(ws, "I11", 57, r_input_dict, true);
+            AppUtils.SetCellValue(ws, "K11", 58, r_input_dict);
 
-            ws.Cells["J2"].Value = r_input_dict[1];
-            ws.Cells["C3"].Value = r_input_dict[2];
-            ws.Cells["C4"].Value = r_input_dict[4];
-            ws.Cells["C5"].Value = r_input_dict[5];
-            ws.Cells["C8"].Value = r_input_dict[6];
+            AppUtils.SetCellValue(ws, "I12", 60, r_input_dict, true);
 
+            AppUtils.SetCellValue(ws, "I14", 38, r_input_dict, true);
+            AppUtils.SetCellValue(ws, "K14", 381, r_input_dict);
 
-            ws.Cells["I10"].Value = r_input_dict[55];
-            ws.Cells["K10"].Value = r_input_dict[56];
+            AppUtils.SetCellValue(ws, "E17", 39, r_input_dict);
+            AppUtils.SetCellValue(ws, "J17", 20, r_input_dict);
+            AppUtils.SetCellValue(ws, "E18", 40, r_input_dict);
+            AppUtils.SetCellValue(ws, "J18", 21, r_input_dict);
 
-            ws.Cells["I11"].Value = r_input_dict[57];
-            ws.Cells["K11"].Value = r_input_dict[58];
+            AppUtils.SetCellValue(ws, "A21", 41, r_input_dict);
+            AppUtils.SetCellValue(ws, "C21", 42, r_input_dict, true);
+            AppUtils.SetCellValue(ws, "E21", 43, r_input_dict, true);
+            AppUtils.SetCellValue(ws, "G21", 44, r_input_dict);
+            AppUtils.SetCellValue(ws, "H21", 45, r_input_dict);
+            AppUtils.SetCellValue(ws, "J21", 46, r_input_dict, true);
 
-            ws.Cells["I12"].Value = r_input_dict[60];
-
-            ws.Cells["I14"].Value = r_input_dict[38];
-            ws.Cells["K14"].Value = r_input_dict[381];
-
-            ws.Cells["E17"].Value = r_input_dict[39];
-            ws.Cells["J17"].Value = r_input_dict[20];
-            ws.Cells["E18"].Value = r_input_dict[40];
-            ws.Cells["J18"].Value = r_input_dict[21];
-
-            ws.Cells["A21"].Value = r_input_dict[41];
-            ws.Cells["C21"].Value = r_input_dict[42];
-            ws.Cells["E21"].Value = r_input_dict[43];
-            ws.Cells["G21"].Value = r_input_dict[44];
-            ws.Cells["H21"].Value = r_input_dict[45];
-            ws.Cells["J21"].Value = r_input_dict[46];
-        
 
 
             getDimsR(ref r_input_dict);
             
             ws.Pictures.Add(HttpContext.Current.Server.MapPath("~/Content/images/rdt/Габаритный RDT-S и RDT-B.jpg"), "A25");
 
-            ws.Cells["F25"].Value = r_input_dict[51];
-            ws.Cells["F26"].Value = r_input_dict[52];
-            ws.Cells["F27"].Value = r_input_dict[53];
-            ws.Cells["F28"].Value = r_input_dict[54];
+            AppUtils.SetCellValue(ws, "F25", 51, r_input_dict);
+            AppUtils.SetCellValue(ws, "F26", 52, r_input_dict);
+            AppUtils.SetCellValue(ws, "F27", 53, r_input_dict);
+            AppUtils.SetCellValue(ws, "F28", 54, r_input_dict);
 
+            string saveDirectory = HttpContext.Current.Server.MapPath($"~/Files/RDT/PDF/{DateTime.Now:dd-MM-yyyy}");
+            AppUtils.EnsureDirectoryExists(saveDirectory);
 
-            string path = HttpContext.Current.Server.MapPath("~/Files/RDT/PDF/" + DateTime.Now.ToString("dd-MM-yyyy"));
-            DirectoryInfo dirInfo = new DirectoryInfo(path);
-            if (!dirInfo.Exists)
-            {
-                dirInfo.Create();
-            }
+            string uniqueFileName = AppUtils.GenerateUniqueFileName(saveDirectory, fileName);
+            string fullPath = Path.Combine(saveDirectory, uniqueFileName + ".pdf");
 
-
-
-            int j = 1;
-            string tempName = fileName;
-
-            link1:
-
-            if (File.Exists(path + "/" + tempName + ".pdf"))
-            {
-                tempName = fileName + "_" + j;
-                j++;
-                goto link1;
-            }
-
-            fileName = tempName;
-            string filePath = path + "/" + fileName + ".pdf";
-
-            ef.Save(filePath);
-
+            ef.Save(fullPath);
             AppUtils.WaitDownload(50);
 
-            FileInfo file = new FileInfo(filePath);
-            if (file.Exists)
-            {
-                Response.ContentType = "application/pdf";
-                Response.AppendHeader("Content-Disposition", "attachment; filename=" + file.Name);
-                Response.TransmitFile(file.FullName);
-                Response.Flush();
-                //Response.Close();
-            }
+            AppUtils.ServeFile(Response, fullPath);
         }
         catch (Exception er)
         {
@@ -3533,8 +3477,6 @@ public partial class RDT : System.Web.UI.Page
         {
             r_input_dict = (Dictionary<int, string>)Session["r_input_dict"];
 
-            this.readFile(0);
-
             if (!String.IsNullOrWhiteSpace(objTextBox1.Text))
             {
                 r_input_dict[2] = objTextBox1.Text;
@@ -3558,21 +3500,16 @@ public partial class RDT : System.Web.UI.Page
 
             r_input_dict[5] = r_input_dict[41];
             string fileName = AppUtils.ConvertCommaToPoint(r_input_dict[41]);
-            if (fileName == "&nbsp;")
-            {
-                fileName = "Регуляторов не найдено";
-            }
-
             SpreadsheetInfo.SetLicense("FREE-LIMITED-KEY");
 
-            if (!File.Exists(HttpContext.Current.Server.MapPath("~/Content/templates/templateRDT-P,RDT-PH.xlsx")))
+            string templatePath = HttpContext.Current.Server.MapPath("~/Content/templates/templateRDT-P,RDT-PH.xlsx");
+            if (!File.Exists(templatePath))
             {
-                LabelError.Text = "Не найден файл шаблона";
+                LabelError.Text += "Не найден файл шаблона";
                 return;
             }
 
-            ExcelFile ef = ExcelFile.Load(HttpContext.Current.Server.MapPath("~/Content/templates/templateRDT-P,RDT-PH.xlsx"));
-
+            ExcelFile ef = ExcelFile.Load(templatePath);
             ExcelWorksheet ws = ef.Worksheets[0];
 
             ws.PrintOptions.TopMargin = 0.2 / 2.54;
@@ -3580,58 +3517,42 @@ public partial class RDT : System.Web.UI.Page
             ws.PrintOptions.LeftMargin = 1 / 2.54;
             ws.PrintOptions.RightMargin = 1 / 2.54;
 
-            for (int i = 1; i < 50; i++)
-            {
+            AppUtils.SetCellValue(ws, "J2", 1, r_input_dict);
+            AppUtils.SetCellValue(ws, "C3", 2, r_input_dict);
+            AppUtils.SetCellValue(ws, "C4", 4, r_input_dict);
+            AppUtils.SetCellValue(ws, "C5", 5, r_input_dict);
+            AppUtils.SetCellValue(ws, "C8", 6, r_input_dict, true);
 
-                if (i == 6 || i == 7 || i == 9 || i == 11 || i == 13 || i == 16 || i == 18 || i == 20 || i == 22 || i == 23 || i == 25 || i == 27 || i == 29 || i == 31 || i == 33 || i == 34 || i == 35 || i == 36 || i == 37 || i == 38 || i == 42 || i == 43 || i == 44 || i == 46 || i == 48)
-                {
-                    r_input_dict[i] = AppUtils.ConvertPointToComma(r_input_dict[i]);
+            AppUtils.SetCellValue(ws, "I10", 16, r_input_dict, true);
+            AppUtils.SetCellValue(ws, "K10", 17, r_input_dict);
+            AppUtils.SetCellValue(ws, "I11", 18, r_input_dict, true);
+            AppUtils.SetCellValue(ws, "K11", 19, r_input_dict);
 
-                }
+            AppUtils.SetCellValue(ws, "I13", 31, r_input_dict, true);
+            AppUtils.SetCellValue(ws, "K13", 32, r_input_dict);
+            AppUtils.SetCellValue(ws, "I14", 33, r_input_dict, true);
 
-                if (r_input_dict[i] == "&nbsp;")
-                {
-                    r_input_dict[i] = "-";
-                }
+            AppUtils.SetCellValue(ws, "I16", 34, r_input_dict, true);
+            AppUtils.SetCellValue(ws, "I17", 35, r_input_dict, true);
+            AppUtils.SetCellValue(ws, "I18", 36, r_input_dict, true);
+            AppUtils.SetCellValue(ws, "K18", 37, r_input_dict, true);
+            AppUtils.SetCellValue(ws, "I19", 38, r_input_dict, true);
+            AppUtils.SetCellValue(ws, "K19", 381, r_input_dict); // не входит в список — без true
 
-            }
+            AppUtils.SetCellValue(ws, "E22", 39, r_input_dict);
+            AppUtils.SetCellValue(ws, "J22", 20, r_input_dict, true);
+            AppUtils.SetCellValue(ws, "E23", 40, r_input_dict);
+            AppUtils.SetCellValue(ws, "J23", 21, r_input_dict);
 
-            ws.Cells["J2"].Value = r_input_dict[1];
-            ws.Cells["C3"].Value = r_input_dict[2];
-            ws.Cells["C4"].Value = r_input_dict[4];
-            ws.Cells["C5"].Value = r_input_dict[5];
-            ws.Cells["C8"].Value = r_input_dict[6];
-
-            ws.Cells["I10"].Value = r_input_dict[16];
-            ws.Cells["K10"].Value = r_input_dict[17];
-            ws.Cells["I11"].Value = r_input_dict[18];
-            ws.Cells["K11"].Value = r_input_dict[19];
-
-            ws.Cells["I13"].Value = r_input_dict[31];
-            ws.Cells["K13"].Value = r_input_dict[32];
-            ws.Cells["I14"].Value = r_input_dict[33];
-
-            ws.Cells["I16"].Value = r_input_dict[34];
-            ws.Cells["I17"].Value = r_input_dict[35];
-            ws.Cells["I18"].Value = r_input_dict[36];
-            ws.Cells["K18"].Value = r_input_dict[37];
-            ws.Cells["I19"].Value = r_input_dict[38];
-            ws.Cells["K19"].Value = r_input_dict[381];
-
-            ws.Cells["E22"].Value = r_input_dict[39];
-            ws.Cells["J22"].Value = r_input_dict[20];
-            ws.Cells["E23"].Value = r_input_dict[40];
-            ws.Cells["J23"].Value = r_input_dict[21];
-
-            ws.Cells["A26"].Value = r_input_dict[41];
-            ws.Cells["B26"].Value = r_input_dict[42];
-            ws.Cells["C26"].Value = r_input_dict[43];
-            ws.Cells["D26"].Value = r_input_dict[44];
-            ws.Cells["F26"].Value = r_input_dict[45];
-            ws.Cells["G26"].Value = r_input_dict[46];
-            ws.Cells["H26"].Value = r_input_dict[47];
-            ws.Cells["I26"].Value = r_input_dict[48];
-            ws.Cells["K26"].Value = r_input_dict[49];
+            AppUtils.SetCellValue(ws, "A26", 41, r_input_dict);
+            AppUtils.SetCellValue(ws, "B26", 42, r_input_dict, true);
+            AppUtils.SetCellValue(ws, "C26", 43, r_input_dict, true);
+            AppUtils.SetCellValue(ws, "D26", 44, r_input_dict, true);
+            AppUtils.SetCellValue(ws, "F26", 45, r_input_dict);
+            AppUtils.SetCellValue(ws, "G26", 46, r_input_dict, true);
+            AppUtils.SetCellValue(ws, "H26", 47, r_input_dict);
+            AppUtils.SetCellValue(ws, "I26", 48, r_input_dict, true);
+            AppUtils.SetCellValue(ws, "K26", 49, r_input_dict);
 
             getDimsR(ref r_input_dict);
 
@@ -3651,47 +3572,22 @@ public partial class RDT : System.Web.UI.Page
                 ws.Pictures.Add(HttpContext.Current.Server.MapPath("~/Content/images/rdt/Габаритный RDT-S и RDT-B.jpg"), "A30");
             }
 
-            ws.Cells["F30"].Value = r_input_dict[51];
-            ws.Cells["F31"].Value = r_input_dict[52];
-            ws.Cells["F32"].Value = r_input_dict[53];
-            ws.Cells["F33"].Value = r_input_dict[54];
+            AppUtils.SetCellValue(ws, "F30", 51, r_input_dict);
+            AppUtils.SetCellValue(ws, "F31", 52, r_input_dict);
+            AppUtils.SetCellValue(ws, "F32", 53, r_input_dict);
+            AppUtils.SetCellValue(ws, "F33", 54, r_input_dict);
 
 
-            string path = HttpContext.Current.Server.MapPath("~/Files/RDT/PDF/" + DateTime.Now.ToString("dd-MM-yyyy"));
-            DirectoryInfo dirInfo = new DirectoryInfo(path);
-            if (!dirInfo.Exists)
-            {
-                dirInfo.Create();
-            }
+            string saveDirectory = HttpContext.Current.Server.MapPath($"~/Files/RDT/PDF/{DateTime.Now:dd-MM-yyyy}");
+            AppUtils.EnsureDirectoryExists(saveDirectory);
 
-            int j = 1;
-            string tempName = fileName;
+            string uniqueFileName = AppUtils.GenerateUniqueFileName(saveDirectory, fileName);
+            string fullPath = Path.Combine(saveDirectory, uniqueFileName + ".pdf");
 
-            link1:
-
-            if (File.Exists(path + "/" + tempName + ".pdf"))
-            {
-                tempName = fileName + "_" + j;
-                j++;
-                goto link1;
-            }
-
-            fileName = tempName;
-            string filePath = path + "/" + fileName + ".pdf";
-
-            ef.Save(filePath);
-
+            ef.Save(fullPath);
             AppUtils.WaitDownload(50);
 
-            FileInfo file = new FileInfo(filePath);
-            if (file.Exists)
-            {
-                Response.ContentType = "application/pdf";
-                Response.AppendHeader("Content-Disposition", "attachment; filename=" + file.Name);
-                Response.TransmitFile(file.FullName);
-                Response.Flush();
-                //Response.Close();
-            }
+            AppUtils.ServeFile(Response, fullPath);
         }
         catch (Exception er)
         {
@@ -3706,8 +3602,6 @@ public partial class RDT : System.Web.UI.Page
         {
             r_input_dict = (Dictionary<int, string>)Session["r_input_dict"];
 
-            this.readFile(0);
-
             if (!String.IsNullOrWhiteSpace(objTextBox1.Text))
             {
                 r_input_dict[2] = objTextBox1.Text;
@@ -3731,21 +3625,16 @@ public partial class RDT : System.Web.UI.Page
 
             r_input_dict[5] = r_input_dict[41];
             string fileName = AppUtils.ConvertCommaToPoint(r_input_dict[41]);
-            if (fileName == "&nbsp;")
-            {
-                fileName = "Регуляторов не найдено";
-            }
-
             SpreadsheetInfo.SetLicense("FREE-LIMITED-KEY");
 
-            if (!File.Exists(HttpContext.Current.Server.MapPath("~/Content/templates/templateRDT-S.xlsx")))
+            string templatePath = HttpContext.Current.Server.MapPath("~/Content/templates/templateRDT-S.xlsx");
+            if (!File.Exists(templatePath))
             {
-                LabelError.Text = "Не найден файл шаблона";
+                LabelError.Text += "Не найден файл шаблона";
                 return;
             }
 
-            ExcelFile ef = ExcelFile.Load(HttpContext.Current.Server.MapPath("~/Content/templates/templateRDT-S.xlsx"));
-
+            ExcelFile ef = ExcelFile.Load(templatePath);
             ExcelWorksheet ws = ef.Worksheets[0];
 
             ws.PrintOptions.TopMargin = 0.2 / 2.54;
@@ -3753,104 +3642,62 @@ public partial class RDT : System.Web.UI.Page
             ws.PrintOptions.LeftMargin = 1 / 2.54;
             ws.PrintOptions.RightMargin = 1 / 2.54;
 
-            for (int i = 1; i < 50; i++)
-            {
+            AppUtils.SetCellValue(ws, "J2", 1, r_input_dict);
+            AppUtils.SetCellValue(ws, "C3", 2, r_input_dict);
+            AppUtils.SetCellValue(ws, "C4", 4, r_input_dict);
+            AppUtils.SetCellValue(ws, "C5", 5, r_input_dict);
+            AppUtils.SetCellValue(ws, "C8", 6, r_input_dict, true);
 
-                if (i == 6 || i == 7 || i == 9 || i == 11 || i == 13 || i == 16 || i == 18 || i == 20 || i == 22 || i == 23 || i == 25 || i == 27 || i == 29 || i == 31 || i == 33 || i == 34 || i == 35 || i == 36 || i == 37 || i == 38 || i == 42 || i == 43 || i == 44 || i == 46 || i == 48)
-                {
-                    r_input_dict[i] = AppUtils.ConvertPointToComma(r_input_dict[i]);
+            AppUtils.SetCellValue(ws, "I10", 25, r_input_dict, true);
+            AppUtils.SetCellValue(ws, "K10", 26, r_input_dict);
+            AppUtils.SetCellValue(ws, "I11", 27, r_input_dict, true);
+            AppUtils.SetCellValue(ws, "K11", 28, r_input_dict);
 
-                }
+            AppUtils.SetCellValue(ws, "I13", 31, r_input_dict, true);
+            AppUtils.SetCellValue(ws, "K13", 32, r_input_dict);
+            AppUtils.SetCellValue(ws, "I14", 33, r_input_dict, true);
 
-                if (r_input_dict[i] == "&nbsp;")
-                {
-                    r_input_dict[i] = "-";
-                }
+            AppUtils.SetCellValue(ws, "I16", 34, r_input_dict, true);
+            AppUtils.SetCellValue(ws, "I17", 35, r_input_dict, true);
+            AppUtils.SetCellValue(ws, "I18", 36, r_input_dict, true);
+            AppUtils.SetCellValue(ws, "K18", 37, r_input_dict, true);
+            AppUtils.SetCellValue(ws, "I19", 38, r_input_dict, true);
+            AppUtils.SetCellValue(ws, "K19", 381, r_input_dict); // не входит в список — без true
 
-            }
+            AppUtils.SetCellValue(ws, "E22", 39, r_input_dict);
+            AppUtils.SetCellValue(ws, "J22", 20, r_input_dict, true);
+            AppUtils.SetCellValue(ws, "E23", 40, r_input_dict);
+            AppUtils.SetCellValue(ws, "J23", 21, r_input_dict);
 
-            ws.Cells["J2"].Value = r_input_dict[1];
-            ws.Cells["C3"].Value = r_input_dict[2];
-            ws.Cells["C4"].Value = r_input_dict[4];
-            ws.Cells["C5"].Value = r_input_dict[5];
-            ws.Cells["C8"].Value = r_input_dict[6];
-
-            ws.Cells["I10"].Value = r_input_dict[25];
-            ws.Cells["K10"].Value = r_input_dict[26];
-            ws.Cells["I11"].Value = r_input_dict[27];
-            ws.Cells["K11"].Value = r_input_dict[28];
-
-            ws.Cells["I13"].Value = r_input_dict[31];
-            ws.Cells["K13"].Value = r_input_dict[32];
-            ws.Cells["I14"].Value = r_input_dict[33];
-
-            ws.Cells["I16"].Value = r_input_dict[34];
-            ws.Cells["I17"].Value = r_input_dict[35];
-            ws.Cells["I18"].Value = r_input_dict[36];
-            ws.Cells["K18"].Value = r_input_dict[37];
-            ws.Cells["I19"].Value = r_input_dict[38];
-            ws.Cells["K19"].Value = r_input_dict[381];
-
-            ws.Cells["E22"].Value = r_input_dict[39];
-            ws.Cells["J22"].Value = r_input_dict[20];
-            ws.Cells["E23"].Value = r_input_dict[40];
-            ws.Cells["J23"].Value = r_input_dict[21];
-
-            ws.Cells["A26"].Value = r_input_dict[41];
-            ws.Cells["B26"].Value = r_input_dict[42];
-            ws.Cells["C26"].Value = r_input_dict[43];
-            ws.Cells["D26"].Value = r_input_dict[44];
-            ws.Cells["F26"].Value = r_input_dict[45];
-            ws.Cells["G26"].Value = r_input_dict[46];
-            ws.Cells["H26"].Value = r_input_dict[47];
-            ws.Cells["I26"].Value = r_input_dict[48];
-            ws.Cells["K26"].Value = r_input_dict[49];
+            AppUtils.SetCellValue(ws, "A26", 41, r_input_dict);
+            AppUtils.SetCellValue(ws, "B26", 42, r_input_dict, true);
+            AppUtils.SetCellValue(ws, "C26", 43, r_input_dict, true);
+            AppUtils.SetCellValue(ws, "D26", 44, r_input_dict, true);
+            AppUtils.SetCellValue(ws, "F26", 45, r_input_dict);
+            AppUtils.SetCellValue(ws, "G26", 46, r_input_dict, true);
+            AppUtils.SetCellValue(ws, "H26", 47, r_input_dict);
+            AppUtils.SetCellValue(ws, "I26", 48, r_input_dict, true);
+            AppUtils.SetCellValue(ws, "K26", 49, r_input_dict);
 
             getDimsR(ref r_input_dict);
 
             ws.Pictures.Add(HttpContext.Current.Server.MapPath("~/Content/images/rdt/Габаритный RDT-S и RDT-B.jpg"), "A30");
 
-            ws.Cells["F30"].Value = r_input_dict[51];
-            ws.Cells["F31"].Value = r_input_dict[52];
-            ws.Cells["F32"].Value = r_input_dict[53];
-            ws.Cells["F33"].Value = r_input_dict[54];
+            AppUtils.SetCellValue(ws, "F30", 51, r_input_dict);
+            AppUtils.SetCellValue(ws, "F31", 52, r_input_dict);
+            AppUtils.SetCellValue(ws, "F32", 53, r_input_dict);
+            AppUtils.SetCellValue(ws, "F33", 54, r_input_dict);
 
+            string saveDirectory = HttpContext.Current.Server.MapPath($"~/Files/RDT/PDF/{DateTime.Now:dd-MM-yyyy}");
+            AppUtils.EnsureDirectoryExists(saveDirectory);
 
-            string path = HttpContext.Current.Server.MapPath("~/Files/RDT/PDF/" + DateTime.Now.ToString("dd-MM-yyyy"));
-            DirectoryInfo dirInfo = new DirectoryInfo(path);
-            if (!dirInfo.Exists)
-            {
-                dirInfo.Create();
-            }
+            string uniqueFileName = AppUtils.GenerateUniqueFileName(saveDirectory, fileName);
+            string fullPath = Path.Combine(saveDirectory, uniqueFileName + ".pdf");
 
-            int j = 1;
-            string tempName = fileName;
-
-            link1:
-
-            if (File.Exists(path + "/" + tempName + ".pdf"))
-            {
-                tempName = fileName + "_" + j;
-                j++;
-                goto link1;
-            }
-
-            fileName = tempName;
-            string filePath = path + "/" + fileName + ".pdf";
-
-            ef.Save(filePath);
-
+            ef.Save(fullPath);
             AppUtils.WaitDownload(50);
 
-            FileInfo file = new FileInfo(filePath);
-            if (file.Exists)
-            {
-                Response.ContentType = "application/pdf";
-                Response.AppendHeader("Content-Disposition", "attachment; filename=" + file.Name);
-                Response.TransmitFile(file.FullName);
-                Response.Flush();
-                //Response.Close();
-            }
+            AppUtils.ServeFile(Response, fullPath);
         }
         catch (Exception er)
         {
@@ -3865,8 +3712,6 @@ public partial class RDT : System.Web.UI.Page
         {
             r_input_dict = (Dictionary<int, string>)Session["r_input_dict"];
 
-            this.readFile(0);
-
             if (!String.IsNullOrWhiteSpace(objTextBox1.Text))
             {
                 r_input_dict[2] = objTextBox1.Text;
@@ -3890,21 +3735,16 @@ public partial class RDT : System.Web.UI.Page
 
             r_input_dict[5] = r_input_dict[41];
             string fileName = AppUtils.ConvertCommaToPoint(r_input_dict[41]);
-            if (fileName == "&nbsp;")
-            {
-                fileName = "Регуляторов не найдено";
-            }
-
             SpreadsheetInfo.SetLicense("FREE-LIMITED-KEY");
 
-            if (!File.Exists(HttpContext.Current.Server.MapPath("~/Content/templates/templateRDT-B.xlsx")))
+            string templatePath = HttpContext.Current.Server.MapPath("~/Content/templates/templateRDT-B.xlsx");
+            if (!File.Exists(templatePath))
             {
-                LabelError.Text = "Не найден файл шаблона";
+                LabelError.Text += "Не найден файл шаблона";
                 return;
             }
 
-            ExcelFile ef = ExcelFile.Load(HttpContext.Current.Server.MapPath("~/Content/templates/templateRDT-B.xlsx"));
-
+            ExcelFile ef = ExcelFile.Load(templatePath);
             ExcelWorksheet ws = ef.Worksheets[0];
 
             ws.PrintOptions.TopMargin = 0.2 / 2.54;
@@ -3912,102 +3752,61 @@ public partial class RDT : System.Web.UI.Page
             ws.PrintOptions.LeftMargin = 1 / 2.54;
             ws.PrintOptions.RightMargin = 1 / 2.54;
 
-            for (int i = 1; i < 50; i++)
-            {
+            AppUtils.SetCellValue(ws, "J2", 1, r_input_dict);
+            AppUtils.SetCellValue(ws, "C3", 2, r_input_dict);
+            AppUtils.SetCellValue(ws, "C4", 4, r_input_dict);
+            AppUtils.SetCellValue(ws, "C5", 5, r_input_dict);
+            AppUtils.SetCellValue(ws, "C8", 6, r_input_dict, true);
 
-                if (i == 6 || i == 7 || i == 9 || i == 11 || i == 13 || i == 16 || i == 18 || i == 20 || i == 22 || i == 23 || i == 25 || i == 27 || i == 29 || i == 31 || i == 33 || i == 34 || i == 35 || i == 36 || i == 37 || i == 38 || i == 42 || i == 43 || i == 44 || i == 46 || i == 48)
-                {
-                    r_input_dict[i] = AppUtils.ConvertPointToComma(r_input_dict[i]);
+            AppUtils.SetCellValue(ws, "I10", 29, r_input_dict, true);
+            AppUtils.SetCellValue(ws, "K10", 30, r_input_dict);
 
-                }
+            AppUtils.SetCellValue(ws, "I12", 31, r_input_dict, true);
+            AppUtils.SetCellValue(ws, "K12", 32, r_input_dict);
+            AppUtils.SetCellValue(ws, "I13", 33, r_input_dict, true);
 
-                if (r_input_dict[i] == "&nbsp;")
-                {
-                    r_input_dict[i] = "-";
-                }
+            AppUtils.SetCellValue(ws, "I15", 34, r_input_dict, true);
+            AppUtils.SetCellValue(ws, "I16", 35, r_input_dict, true);
+            AppUtils.SetCellValue(ws, "I17", 36, r_input_dict, true);
+            AppUtils.SetCellValue(ws, "K17", 37, r_input_dict, true);
+            AppUtils.SetCellValue(ws, "I18", 38, r_input_dict, true);
+            AppUtils.SetCellValue(ws, "K18", 381, r_input_dict);
 
-            }
+            AppUtils.SetCellValue(ws, "E21", 39, r_input_dict);
+            AppUtils.SetCellValue(ws, "J21", 20, r_input_dict, true);
+            AppUtils.SetCellValue(ws, "E22", 40, r_input_dict);
+            AppUtils.SetCellValue(ws, "J22", 21, r_input_dict);
 
-            ws.Cells["J2"].Value = r_input_dict[1];
-            ws.Cells["C3"].Value = r_input_dict[2];
-            ws.Cells["C4"].Value = r_input_dict[4];
-            ws.Cells["C5"].Value = r_input_dict[5];
-            ws.Cells["C8"].Value = r_input_dict[6];
-
-            ws.Cells["I10"].Value = r_input_dict[29];
-            ws.Cells["K10"].Value = r_input_dict[30];
-
-            ws.Cells["I12"].Value = r_input_dict[31];
-            ws.Cells["K12"].Value = r_input_dict[32];
-            ws.Cells["I13"].Value = r_input_dict[33];
-
-            ws.Cells["I15"].Value = r_input_dict[34];
-            ws.Cells["I16"].Value = r_input_dict[35];
-            ws.Cells["I17"].Value = r_input_dict[36];
-            ws.Cells["K17"].Value = r_input_dict[37];
-            ws.Cells["I18"].Value = r_input_dict[38];
-            ws.Cells["K18"].Value = r_input_dict[381];
-
-            ws.Cells["E21"].Value = r_input_dict[39];
-            ws.Cells["J21"].Value = r_input_dict[20];
-            ws.Cells["E22"].Value = r_input_dict[40];
-            ws.Cells["J22"].Value = r_input_dict[21];
-
-            ws.Cells["A25"].Value = r_input_dict[41];
-            ws.Cells["B25"].Value = r_input_dict[42];
-            ws.Cells["C25"].Value = r_input_dict[43];
-            ws.Cells["D25"].Value = r_input_dict[44];
-            ws.Cells["F25"].Value = r_input_dict[45];
-            ws.Cells["G25"].Value = r_input_dict[46];
-            ws.Cells["H25"].Value = r_input_dict[47];
-            ws.Cells["I25"].Value = r_input_dict[48];
-            ws.Cells["K25"].Value = r_input_dict[49];
+            AppUtils.SetCellValue(ws, "A25", 41, r_input_dict);
+            AppUtils.SetCellValue(ws, "B25", 42, r_input_dict, true);
+            AppUtils.SetCellValue(ws, "C25", 43, r_input_dict, true);
+            AppUtils.SetCellValue(ws, "D25", 44, r_input_dict, true);
+            AppUtils.SetCellValue(ws, "F25", 45, r_input_dict);
+            AppUtils.SetCellValue(ws, "G25", 46, r_input_dict, true);
+            AppUtils.SetCellValue(ws, "H25", 47, r_input_dict);
+            AppUtils.SetCellValue(ws, "I25", 48, r_input_dict, true);
+            AppUtils.SetCellValue(ws, "K25", 49, r_input_dict);
 
             getDimsR(ref r_input_dict);
            
             ws.Pictures.Add(HttpContext.Current.Server.MapPath("~/Content/images/rdt/Габаритный RDT-S и RDT-B.jpg"), "A29");
+
+            AppUtils.SetCellValue(ws, "F29", 51, r_input_dict);
+            AppUtils.SetCellValue(ws, "F30", 52, r_input_dict);
+            AppUtils.SetCellValue(ws, "F31", 53, r_input_dict);
+            AppUtils.SetCellValue(ws, "F32", 54, r_input_dict);
             
-            ws.Cells["F29"].Value = r_input_dict[51];
-            ws.Cells["F30"].Value = r_input_dict[52];
-            ws.Cells["F31"].Value = r_input_dict[53];
-            ws.Cells["F32"].Value = r_input_dict[54];
 
+            string saveDirectory = HttpContext.Current.Server.MapPath($"~/Files/RDT/PDF/{DateTime.Now:dd-MM-yyyy}");
+            AppUtils.EnsureDirectoryExists(saveDirectory);
 
-            string path = HttpContext.Current.Server.MapPath("~/Files/RDT/PDF/" + DateTime.Now.ToString("dd-MM-yyyy"));
-            DirectoryInfo dirInfo = new DirectoryInfo(path);
-            if (!dirInfo.Exists)
-            {
-                dirInfo.Create();
-            }
+            string uniqueFileName = AppUtils.GenerateUniqueFileName(saveDirectory, fileName);
+            string fullPath = Path.Combine(saveDirectory, uniqueFileName + ".pdf");
 
-            int j = 1;
-            string tempName = fileName;
-
-            link1:
-
-            if (File.Exists(path + "/" + tempName + ".pdf"))
-            {
-                tempName = fileName + "_" + j;
-                j++;
-                goto link1;
-            }
-
-            fileName = tempName;
-            string filePath = path + "/" + fileName + ".pdf";
-
-            ef.Save(filePath);
-
+            ef.Save(fullPath);
             AppUtils.WaitDownload(50);
 
-            FileInfo file = new FileInfo(filePath);
-            if (file.Exists)
-            {
-                Response.ContentType = "application/pdf";
-                Response.AppendHeader("Content-Disposition", "attachment; filename=" + file.Name);
-                Response.TransmitFile(file.FullName);
-                Response.Flush();
-                //Response.Close();
-            }
+            AppUtils.ServeFile(Response, fullPath);
         }
         catch (Exception er)
         {
@@ -4022,8 +3821,6 @@ public partial class RDT : System.Web.UI.Page
         {
             r_input_dict = (Dictionary<int, string>)Session["r_input_dict"];
 
-            this.readFile(0);
-
             if (!String.IsNullOrWhiteSpace(objTextBox1.Text))
             {
                 r_input_dict[2] = objTextBox1.Text;
@@ -4047,21 +3844,16 @@ public partial class RDT : System.Web.UI.Page
 
             r_input_dict[5] = r_input_dict[41];
             string fileName = AppUtils.ConvertCommaToPoint(r_input_dict[41]);
-            if (fileName == "&nbsp;")
-            {
-                fileName = "Регуляторов не найдено";
-            }
-
             SpreadsheetInfo.SetLicense("FREE-LIMITED-KEY");
 
-            if (!File.Exists(HttpContext.Current.Server.MapPath("~/Content/templates/templateRDT,RDT-H.xlsx")))
+            string templatePath = HttpContext.Current.Server.MapPath("~/Content/templates/templateRDT,RDT-H.xlsx");
+            if (!File.Exists(templatePath))
             {
-                LabelError.Text = "Не найден файл шаблона";
+                LabelError.Text += "Не найден файл шаблона";
                 return;
             }
 
-            ExcelFile ef = ExcelFile.Load(HttpContext.Current.Server.MapPath("~/Content/templates/templateRDT,RDT-H.xlsx"));
-
+            ExcelFile ef = ExcelFile.Load(templatePath);
             ExcelWorksheet ws = ef.Worksheets[0];
 
             ws.PrintOptions.TopMargin = 0.2 / 2.54;
@@ -4069,65 +3861,46 @@ public partial class RDT : System.Web.UI.Page
             ws.PrintOptions.LeftMargin = 1 / 2.54;
             ws.PrintOptions.RightMargin = 1 / 2.54;
 
-            for (int i = 1; i < 50; i++)
-            {
+            AppUtils.SetCellValue(ws, "J2", 1, r_input_dict);
+            AppUtils.SetCellValue(ws, "C3", 2, r_input_dict);
+            AppUtils.SetCellValue(ws, "C4", 4, r_input_dict);
+            AppUtils.SetCellValue(ws, "C5", 5, r_input_dict);
+            AppUtils.SetCellValue(ws, "C8", 6, r_input_dict, true);
 
-                if (i == 6 || i == 7 || i == 9 || i == 11 || i == 13 || i == 16 || i == 18 || i == 20 || i == 22 || i == 23 || i == 25 || i == 27 || i == 29 || i == 31 || i == 33 || i == 34 || i == 35 || i == 36 || i == 37 || i == 38 || i == 42 || i == 43 || i == 44 || i == 46 || i == 48)
-                {
-                    r_input_dict[i] = AppUtils.ConvertPointToComma(r_input_dict[i]);
+            AppUtils.SetCellValue(ws, "I11", 9, r_input_dict, true);
+            AppUtils.SetCellValue(ws, "K11", 10, r_input_dict);
+            AppUtils.SetCellValue(ws, "I12", 11, r_input_dict, true);
+            AppUtils.SetCellValue(ws, "K12", 12, r_input_dict);
+            AppUtils.SetCellValue(ws, "I13", 13, r_input_dict, true);
+            AppUtils.SetCellValue(ws, "K13", 14, r_input_dict);
+            AppUtils.SetCellValue(ws, "I14", 15, r_input_dict);
 
-                }
+            AppUtils.SetCellValue(ws, "I16", 31, r_input_dict, true);
+            AppUtils.SetCellValue(ws, "K16", 32, r_input_dict);
+            AppUtils.SetCellValue(ws, "I17", 33, r_input_dict, true);
 
-                if (r_input_dict[i] == "&nbsp;")
-                {
-                    r_input_dict[i] = "-";
-                }
+            AppUtils.SetCellValue(ws, "I19", 34, r_input_dict, true);
+            AppUtils.SetCellValue(ws, "I20", 35, r_input_dict, true);
+            AppUtils.SetCellValue(ws, "I21", 36, r_input_dict, true);
+            AppUtils.SetCellValue(ws, "K21", 37, r_input_dict, true);
 
-            }
+            AppUtils.SetCellValue(ws, "I22", 38, r_input_dict, true);
+            AppUtils.SetCellValue(ws, "K22", 381, r_input_dict);
 
-            ws.Cells["J2"].Value = r_input_dict[1];
-            ws.Cells["C3"].Value = r_input_dict[2];
-            ws.Cells["C4"].Value = r_input_dict[4];
-            ws.Cells["C5"].Value = r_input_dict[5];
-            ws.Cells["C8"].Value = r_input_dict[6];
-   
-            
-            //ws.Cells["I10"].Value = r_input_dict[7];
-            //ws.Cells["K10"].Value = r_input_dict[8];
-            ws.Cells["I11"].Value = r_input_dict[9];
-            ws.Cells["K11"].Value = r_input_dict[10];
-            ws.Cells["I12"].Value = r_input_dict[11];
-            ws.Cells["K12"].Value = r_input_dict[12];
-            ws.Cells["I13"].Value = r_input_dict[13];
-            ws.Cells["K13"].Value = r_input_dict[14];
-            ws.Cells["I14"].Value = r_input_dict[15];
+            AppUtils.SetCellValue(ws, "E25", 39, r_input_dict);
+            AppUtils.SetCellValue(ws, "J25", 20, r_input_dict, true);
+            AppUtils.SetCellValue(ws, "E26", 40, r_input_dict);
+            AppUtils.SetCellValue(ws, "J26", 21, r_input_dict);
 
-            ws.Cells["I16"].Value = r_input_dict[31];
-            ws.Cells["K16"].Value = r_input_dict[32];
-            ws.Cells["I17"].Value = r_input_dict[33];
-
-            ws.Cells["I19"].Value = r_input_dict[34];
-            ws.Cells["I20"].Value = r_input_dict[35];
-            ws.Cells["I21"].Value = r_input_dict[36];
-            ws.Cells["K21"].Value = r_input_dict[37];
-
-            ws.Cells["I22"].Value = r_input_dict[38];
-            ws.Cells["K22"].Value = r_input_dict[381];
-
-            ws.Cells["E25"].Value = r_input_dict[39];
-            ws.Cells["J25"].Value = r_input_dict[20];
-            ws.Cells["E26"].Value = r_input_dict[40];
-            ws.Cells["J26"].Value = r_input_dict[21];
-
-            ws.Cells["A29"].Value = r_input_dict[41];
-            ws.Cells["B29"].Value = r_input_dict[42];
-            ws.Cells["C29"].Value = r_input_dict[43];
-            ws.Cells["D29"].Value = r_input_dict[44];
-            ws.Cells["F29"].Value = r_input_dict[45];
-            ws.Cells["G29"].Value = r_input_dict[46];
-            ws.Cells["H29"].Value = r_input_dict[47];
-            ws.Cells["I29"].Value = r_input_dict[48];
-            ws.Cells["K29"].Value = r_input_dict[49];
+            AppUtils.SetCellValue(ws, "A29", 41, r_input_dict);
+            AppUtils.SetCellValue(ws, "B29", 42, r_input_dict, true);
+            AppUtils.SetCellValue(ws, "C29", 43, r_input_dict, true);
+            AppUtils.SetCellValue(ws, "D29", 44, r_input_dict, true);
+            AppUtils.SetCellValue(ws, "F29", 45, r_input_dict);
+            AppUtils.SetCellValue(ws, "G29", 46, r_input_dict, true);
+            AppUtils.SetCellValue(ws, "H29", 47, r_input_dict);
+            AppUtils.SetCellValue(ws, "I29", 48, r_input_dict, true);
+            AppUtils.SetCellValue(ws, "K29", 49, r_input_dict);
 
             getDimsR(ref r_input_dict);
 
@@ -4159,47 +3932,21 @@ public partial class RDT : System.Web.UI.Page
                 ws.Pictures.Add(HttpContext.Current.Server.MapPath("~/Content/images/rdt/Габаритный RDT-S и RDT-B.jpg"), "A33");
             }
 
-            ws.Cells["F33"].Value = r_input_dict[51];
-            ws.Cells["F34"].Value = r_input_dict[52];
-            ws.Cells["F35"].Value = r_input_dict[53];
-            ws.Cells["F36"].Value = r_input_dict[54];
+            AppUtils.SetCellValue(ws, "F33", 51, r_input_dict);
+            AppUtils.SetCellValue(ws, "F34", 52, r_input_dict);
+            AppUtils.SetCellValue(ws, "F35", 53, r_input_dict);
+            AppUtils.SetCellValue(ws, "F36", 54, r_input_dict);
 
+            string saveDirectory = HttpContext.Current.Server.MapPath($"~/Files/RDT/PDF/{DateTime.Now:dd-MM-yyyy}");
+            AppUtils.EnsureDirectoryExists(saveDirectory);
 
-            string path = HttpContext.Current.Server.MapPath("~/Files/RDT/PDF/" + DateTime.Now.ToString("dd-MM-yyyy"));
-            DirectoryInfo dirInfo = new DirectoryInfo(path);
-            if (!dirInfo.Exists)
-            {
-                dirInfo.Create();
-            }
+            string uniqueFileName = AppUtils.GenerateUniqueFileName(saveDirectory, fileName);
+            string fullPath = Path.Combine(saveDirectory, uniqueFileName + ".pdf");
 
-            int j = 1;
-            string tempName = fileName;
-
-            link1:
-
-            if (File.Exists(path + "/" + tempName + ".pdf"))
-            {
-                tempName = fileName + "_" + j;
-                j++;
-                goto link1;
-            }
-
-            fileName = tempName;
-            string filePath = path + "/" + fileName + ".pdf";
-
-            ef.Save(filePath);
-
+            ef.Save(fullPath);
             AppUtils.WaitDownload(50);
 
-            FileInfo file = new FileInfo(filePath);
-            if (file.Exists)
-            {
-                Response.ContentType = "application/pdf";
-                Response.AppendHeader("Content-Disposition", "attachment; filename=" + file.Name);
-                Response.TransmitFile(file.FullName);
-                Response.Flush();
-                //Response.Close();
-            }
+            AppUtils.ServeFile(Response, fullPath);
         }
         catch (Exception er)
         {

@@ -23,10 +23,11 @@
                 </div>
                 <div class="col-xs-12 col">
                     <div class="col border border-non-top">
-                        <asp:UpdatePanel ID="UpdatePanel1" runat="server" UpdateMode="Conditional">
+                        <asp:UpdatePanel ID="UpdatePanel1" runat="server">
                             <ContentTemplate>
-                                <asp:Label ID="Label4" runat="server" Text="Исполнение регулятора:"></asp:Label>
-                                <br />
+                                <div class="col-12 row">
+                                    <asp:Label ID="Label4" runat="server" Text="Исполнение регулятора:"></asp:Label>
+                                </div>
                                 <asp:RadioButton ID="eorRadioButton1" runat="server" AutoPostBack="True" OnCheckedChanged="eorRadioButton1_CheckedChanged" Text="Регулятор перепада давления" />
                                 <div class="col-12">
                                     <asp:RadioButtonList ID="eorRadioButtonList1" Enabled="False" AutoPostBack="True" runat="server" OnSelectedIndexChanged="eorRadioButtonList1_SelectedIndexChanged">
@@ -53,7 +54,7 @@
                                         <asp:ListItem>RDT-B</asp:ListItem>
                                     </asp:RadioButtonList>
                                 </div>
-                                 <div>
+                                <div>
                                     <asp:CustomValidator ID="eorCustomValidator1" runat="server" SetFocusOnError="True" Display="Dynamic" ForeColor="Red" ErrorMessage="CustomValidator" OnServerValidate="eorCustomValidator1_ServerValidate"></asp:CustomValidator>
                                 </div>
                             </ContentTemplate>
@@ -64,15 +65,15 @@
                             <ContentTemplate>
                                 <asp:Label ID="Label1" runat="server" Text="Диапазон настройки регулятора:"></asp:Label>
                                 <div class="col-12 row">
-                                <asp:RadioButtonList ID="csrRadioButtonList1" runat="server" AutoPostBack="True">
-                                    <asp:ListItem>0.1 (0,08...0,9 бар)</asp:ListItem>
-                                    <asp:ListItem>1.1 (0,16...1,8 бар)</asp:ListItem>
-                                    <asp:ListItem>1.2 (0,24...3,0 бар)</asp:ListItem>
-                                    <asp:ListItem>1.3 (0,4...4,8 бар)</asp:ListItem>
-                                    <asp:ListItem>2.1 (0,5...5,8 бар)</asp:ListItem>
-                                    <asp:ListItem>2.2 (0,9...10,0 бар)</asp:ListItem>
-                                    <asp:ListItem>2.3 (1,4...15,8 бар)</asp:ListItem>
-                                </asp:RadioButtonList>
+                                    <asp:RadioButtonList ID="csrRadioButtonList1" runat="server" AutoPostBack="True">
+                                        <asp:ListItem>0.1 (0,08...0,9 бар)</asp:ListItem>
+                                        <asp:ListItem>1.1 (0,16...1,8 бар)</asp:ListItem>
+                                        <asp:ListItem>1.2 (0,24...3,0 бар)</asp:ListItem>
+                                        <asp:ListItem>1.3 (0,4...4,8 бар)</asp:ListItem>
+                                        <asp:ListItem>2.1 (0,5...5,8 бар)</asp:ListItem>
+                                        <asp:ListItem>2.2 (0,9...10,0 бар)</asp:ListItem>
+                                        <asp:ListItem>2.3 (1,4...15,8 бар)</asp:ListItem>
+                                    </asp:RadioButtonList>
                                 </div>
                                 <div>
                                     <asp:CustomValidator ID="csrCustomValidator1" runat="server" SetFocusOnError="True" Display="Dynamic" ForeColor="Red" ErrorMessage="pnCustomValidator" ControlToValidate="csrRadioButtonList1" ValidateEmptyText="True" OnServerValidate="csrCustomValidator1_ServerValidate"></asp:CustomValidator>
@@ -177,6 +178,71 @@
                                     </div>
                                 </div>
                             </ContentTemplate>
+                        </asp:UpdatePanel>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <asp:UpdatePanel ID="UpdatePanel10" runat="server">
+                        <ContentTemplate>
+                            <asp:Label ID="LabelError" runat="server" Font-Bold="True" Font-Size="Medium"
+                                Font-Strikeout="False" ForeColor="Red"></asp:Label>
+                            <asp:Button ID="trvCalc" runat="server" type="submit" Text="Рассчитать"
+                                Width="100%" />
+                        </ContentTemplate>
+                    </asp:UpdatePanel>
+                </div>
+                <div class="col-12">
+                    <div class="col non-padding">
+                        <asp:UpdatePanel ID="UpdatePanel9" runat="server">
+                            <ContentTemplate>
+                                <div id="resultPanel" runat="server">
+                                    <asp:Label ID="Label52" runat="server" Enabled="False" Text="Результаты расчёта"
+                                        Visible="False" Font-Bold="True" Font-Size="Medium"></asp:Label>
+
+                                    <div class="col non-padding">
+                                        <asp:Label ID="ws1ResultLabel" runat="server" Visible="False"></asp:Label>
+                                    </div>
+                                    <div class="col non-padding">
+                                        <asp:Label ID="maxt1ResultLabel" runat="server" Visible="False"></asp:Label>
+                                    </div>
+                                    <div class="col non-padding">
+                                        <asp:Label ID="maxp1ResultLabel" runat="server" Visible="False"></asp:Label>
+                                    </div>
+                                    <div class="col non-padding">
+                                        <asp:Label ID="calcDNLabel" runat="server" Visible="False">Расчетный диаметр - </asp:Label>
+                                        <asp:Label ID="calcDNLabelVal" runat="server" Visible="False"></asp:Label>
+                                    </div>
+                                    <div class="col non-padding">
+                                        <asp:Label ID="calcCapacityLabel" runat="server" Visible="False">Расчетная пропускная способность - </asp:Label>
+                                        <asp:Label ID="calcCapacityLabelVal" runat="server" Visible="False"></asp:Label>
+                                    </div>
+                                    <div class="col non-padding">
+                                        <asp:Label ID="labelOptyV" runat="server" Visible="False"></asp:Label>
+                                    </div>
+                                    <div class="table-responsive-lg">
+                                        <asp:GridView ID="GridView1" CssClass="table table-result rdt" runat="server"
+                                            Font-Size="X-Small" Visible="False"
+                                            AutoGenerateSelectButton="True">
+                                            <RowStyle Font-Size="Small" />
+                                            <SelectedRowStyle BackColor="#ff7d00" Font-Bold="False" ForeColor="White" />
+                                        </asp:GridView>
+                                    </div>
+                                    <div class="col non-padding">
+                                        <asp:Label ID="Label53" runat="server" CssClass="show-btn" Text="Объект:"
+                                            Visible="False">
+                                        </asp:Label>
+
+                                        <asp:TextBox ID="objTextBox1" runat="server" Enabled="False" Visible="False" CssClass="obj-field"></asp:TextBox>
+                                    </div>
+                                </div>
+                                <div class="col non-padding padding-top-bottom">
+                                    <asp:Button ID="rdtSave" runat="server" Text="Сохранить в PDF" Visible="False"
+                                        CssClass="btn btn-primary" />
+                                </div>
+                            </ContentTemplate>
+                            <Triggers>
+                                <asp:PostBackTrigger ControlID="rdtSave" />
+                            </Triggers>
                         </asp:UpdatePanel>
                     </div>
                 </div>

@@ -105,7 +105,7 @@ public static class MathUtils
             }
         }
     }
-    public static void convertArr(DropDownList ddl, ref TextBox tb)
+    public static void convertArr3(DropDownList ddl, ref TextBox tb)
     {
         if (ddl.SelectedIndex > 0)
         {
@@ -113,6 +113,17 @@ public static class MathUtils
             {
                 int jj = Convert.ToInt32(HttpContext.Current.Session?[ddl.ID]);
                 tb.Text = (AppUtils.customConverterToDouble(tb.Text.Replace(".", ",")) * arrConvert3[jj - 1] / arrConvert3[ddl.SelectedIndex - 1]).ToString().Replace(",", ".");
+            }
+        }
+    }
+    public static void convertArr2(DropDownList ddl, ref TextBox tb)
+    {
+        if (ddl.SelectedIndex > 0)
+        {
+            if (!String.IsNullOrWhiteSpace(tb.Text))
+            {
+                int jj = Convert.ToInt32(HttpContext.Current.Session?[ddl.ID]);
+                tb.Text = (AppUtils.customConverterToDouble(tb.Text.Replace(".", ",")) * arrConvert2[jj - 1] / arrConvert2[ddl.SelectedIndex - 1]).ToString().Replace(",", ".");
             }
         }
     }

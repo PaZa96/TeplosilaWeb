@@ -1,5 +1,6 @@
 ﻿using GemBox.Spreadsheet;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -28,7 +29,7 @@ public partial class TRV_ver : System.Web.UI.Page
             if (!IsPostBack)
             {
                 Logger.InitLogger(); //инициализация - требуется один раз в начале
-                readFile(); //читаем json файл с данными
+                AppUtils.readFile(@"Content/data/dataTRV_ver.json", JsonKeyName); //читаем json файл с данными
             } else
             {
                 if (Session[JsonKeyName] == null)
@@ -88,48 +89,38 @@ public partial class TRV_ver : System.Web.UI.Page
     }
 
     //вспомогательные функции работы с данными
-    private void readFile()
-    {
-        try
-        {
-            string jsonText = File.ReadAllText(HttpContext.Current.Server.MapPath(@"Content/data/dataTRV_ver.json"));
-            this.dataFromFile = null;
-
-            if (jsonText != null)
-            {
-                Session[JsonKeyName] = JsonConvert.DeserializeObject(jsonText);
-            }
-        }
-        catch (Exception er)
-        {
-            Logger.Log.Error(er);
-        }
-    }
+    
 
     private void setDNDataset()
     {
         if (pnRadioButtonList1.SelectedIndex != -1 && ((tvRadioButton1.Checked && tvRadioButtonList1.SelectedIndex != -1) || (tvRadioButton2.Checked && tvRadioButtonList2.SelectedIndex != -1)))
         {
-            Newtonsoft.Json.Linq.JArray jArrDN = new Newtonsoft.Json.Linq.JArray();
             string ktName = "";
             string pnVal = pnRadioButtonList1.SelectedValue;
 
             if (tvRadioButton1.Checked)
             {
                 ktName = tvRadioButtonList1.SelectedValue;
-                jArrDN = dataFromFile.DN2[ktName][pnVal];
             }
 
             if (tvRadioButton2.Checked)
             {
                 ktName = tvRadioButtonList2.SelectedValue;
-                jArrDN = dataFromFile.DN3[ktName][pnVal];
             }
+
+
+            JObject dnObject = (JObject)dataFromFile["DN_Kvs"][ktName][pnVal];
+
+            // Получаем список DN, отсортированных по возрастанию
+            List<int> dnList = dnObject.Properties()
+                                       .Select(p => int.Parse(p.Name))
+                                       .OrderBy(x => x)
+                                       .ToList();
 
             dnDropDownList1.Items.Clear();
             dnDropDownList1.Items.Insert(0, "выбрать");
 
-            foreach (var item in jArrDN)
+            foreach (var item in dnList)
             {
                 dnDropDownList1.Items.Add(new ListItem(item.ToString(), item.ToString()));
             }
@@ -148,14 +139,14 @@ public partial class TRV_ver : System.Web.UI.Page
             if (tvRadioButton1.Checked)
             {
                 ktName = tvRadioButtonList1.SelectedValue;
-                jArrKvs = dataFromFile.Kvs2[ktName][pnVal][dnVal];
             }
 
             if (tvRadioButton2.Checked)
             {
-                ktName = tvRadioButtonList2.SelectedValue;
-                jArrKvs = dataFromFile.Kvs3[ktName][pnVal][dnVal];
+                ktName = tvRadioButtonList2.SelectedValue;  
             }
+
+            jArrKvs = dataFromFile.DN_Kvs[ktName][pnVal][dnVal];
 
             kvsDropDownList1.Items.Clear();
             kvsDropDownList1.Items.Insert(0, "выбрать");
@@ -539,24 +530,24 @@ public partial class TRV_ver : System.Web.UI.Page
             ws.PrintOptions.LeftMargin = 0.6 / 2.54;
             ws.PrintOptions.RightMargin = 0.6 / 2.54;
 
-            SetCellValue(ws, "J2", 1);
-            SetCellValue(ws, "B3", 2);
-            SetCellValue(ws, "C4", 6);
-            SetCellValue(ws, "I4", 8);
-            SetCellValue(ws, "C6", 9);
-            SetCellValue(ws, "I7", 66, true); // ConvertPointToComma
-            SetCellValue(ws, "K7", 67);
-            SetCellValue(ws, "I8", 71, true); // ConvertPointToComma
-            SetCellValue(ws, "I9", 34, true); // ConvertPointToComma
-            SetCellValue(ws, "K9", 35);
-            SetCellValue(ws, "I11", 34);
-            SetCellValue(ws, "K11", 35);
-            SetCellValue(ws, "E11", 40);
-            SetCellValue(ws, "E12", 41);
-            SetCellValue(ws, "A15", 42);
-            SetCellValue(ws, "D15", 43, true); // ConvertPointToComma
-            SetCellValue(ws, "G15", 44, true); // ConvertPointToComma
-            SetCellValue(ws, "I15", 45);
+            AppUtils.SetCellValue(ws, "J2", 1, v_input_dict);
+            AppUtils.SetCellValue(ws, "B3", 2, v_input_dict);
+            AppUtils.SetCellValue(ws, "C4", 6, v_input_dict);
+            AppUtils.SetCellValue(ws, "I4", 8, v_input_dict);
+            AppUtils.SetCellValue(ws, "C6", 9, v_input_dict);
+            AppUtils.SetCellValue(ws, "I7", 66, v_input_dict, true); // ConvertPointToComma
+            AppUtils.SetCellValue(ws, "K7", 67, v_input_dict);
+            AppUtils.SetCellValue(ws, "I8", 71, v_input_dict, true); // ConvertPointToComma
+            AppUtils.SetCellValue(ws, "I9", 34, v_input_dict, true); // ConvertPointToComma
+            AppUtils.SetCellValue(ws, "K9", 35, v_input_dict);
+            AppUtils.SetCellValue(ws, "I11", 34, v_input_dict);
+            AppUtils.SetCellValue(ws, "K11", 35, v_input_dict);
+            AppUtils.SetCellValue(ws, "E11", 40, v_input_dict);
+            AppUtils.SetCellValue(ws, "E12", 41, v_input_dict);
+            AppUtils.SetCellValue(ws, "A15", 42, v_input_dict);
+            AppUtils.SetCellValue(ws, "D15", 43, v_input_dict, true); // ConvertPointToComma
+            AppUtils.SetCellValue(ws, "G15", 44, v_input_dict, true); // ConvertPointToComma
+            AppUtils.SetCellValue(ws, "I15", 45, v_input_dict);
 
             string saveDirectory = HttpContext.Current.Server.MapPath($"~/Files/TRV/PDF/{DateTime.Now:dd-MM-yyyy}");
             AppUtils.EnsureDirectoryExists(saveDirectory);
@@ -612,30 +603,30 @@ public partial class TRV_ver : System.Web.UI.Page
             ws.PrintOptions.LeftMargin = 0.6 / 2.54;
             ws.PrintOptions.RightMargin = 0.6 / 2.54;
 
-            SetCellValue(ws, "J2", 1);
-            SetCellValue(ws, "B3", 2);
-            SetCellValue(ws, "C4", 6);
-            SetCellValue(ws, "C5", 8);
-            SetCellValue(ws, "C7", 9);
-            SetCellValue(ws, "J8", 12, true); // ConvertPointToComma
-            SetCellValue(ws, "K8", 13);
-            SetCellValue(ws, "J9", 16, true); // ConvertPointToComma
-            SetCellValue(ws, "K9", 17);
-            SetCellValue(ws, "J10", 18, true);
-            SetCellValue(ws, "I11", 34, true);
-            SetCellValue(ws, "K11", 35);
-            SetCellValue(ws, "E13", 40);
-            SetCellValue(ws, "E14", 41);
-            SetCellValue(ws, "A17", 42);
-            SetCellValue(ws, "C17", 43, true);
-            SetCellValue(ws, "E17", 44, true);
-            SetCellValue(ws, "F17", 45);
-            SetCellValue(ws, "H17", 46, true);
-            SetCellValue(ws, "I17", 47);
-            SetCellValue(ws, "J17", 48, true);
-            SetCellValue(ws, "K17", 49);
+            AppUtils.SetCellValue(ws, "J2", 1, v_input_dict);
+            AppUtils.SetCellValue(ws, "B3", 2, v_input_dict);
+            AppUtils.SetCellValue(ws, "C4", 6, v_input_dict);
+            AppUtils.SetCellValue(ws, "C5", 8, v_input_dict);
+            AppUtils.SetCellValue(ws, "C7", 9, v_input_dict);
+            AppUtils.SetCellValue(ws, "J8", 12, v_input_dict, true); // ConvertPointToComma
+            AppUtils.SetCellValue(ws, "K8", 13, v_input_dict);
+            AppUtils.SetCellValue(ws, "J9", 16, v_input_dict, true); // ConvertPointToComma
+            AppUtils.SetCellValue(ws, "K9", 17, v_input_dict);
+            AppUtils.SetCellValue(ws, "J10", 18, v_input_dict, true);
+            AppUtils.SetCellValue(ws, "I11", 34, v_input_dict, true);
+            AppUtils.SetCellValue(ws, "K11", 35, v_input_dict);
+            AppUtils.SetCellValue(ws, "E13", 40, v_input_dict);
+            AppUtils.SetCellValue(ws, "E14", 41, v_input_dict);
+            AppUtils.SetCellValue(ws, "A17", 42, v_input_dict);
+            AppUtils.SetCellValue(ws, "C17", 43, v_input_dict, true);
+            AppUtils.SetCellValue(ws, "E17", 44, v_input_dict, true);
+            AppUtils.SetCellValue(ws, "F17", 45, v_input_dict);
+            AppUtils.SetCellValue(ws, "H17", 46, v_input_dict, true);
+            AppUtils.SetCellValue(ws, "I17", 47, v_input_dict);
+            AppUtils.SetCellValue(ws, "J17", 48, v_input_dict, true);
+            AppUtils.SetCellValue(ws, "K17", 49, v_input_dict);
 
-            string saveDirectory = HttpContext.Current.Server.MapPath($"~/Files/TRV/PDF/{DateTime.Now:dd-MM-yyyy}");
+            string saveDirectory = HttpContext.Current.Server.MapPath($"~/Files/TRV_ver/PDF/{DateTime.Now:dd-MM-yyyy}");
             AppUtils.EnsureDirectoryExists(saveDirectory);
 
             string uniqueFileName = AppUtils.GenerateUniqueFileName(saveDirectory, fileName);
@@ -654,17 +645,6 @@ public partial class TRV_ver : System.Web.UI.Page
 
     //вспомогательные функции
 
-    public void SetCellValue(ExcelWorksheet worksheet, string cellName, int dictKey, bool convertPointToComma = false)
-    {
-        if (v_input_dict.TryGetValue(dictKey, out string value))
-        {
-            worksheet.Cells[cellName].Value = convertPointToComma ? AppUtils.ConvertPointToComma(value) : value;
-        }
-        else
-        {
-            worksheet.Cells[cellName].Value = "";
-        }
-    }
 
     public void EnablePanel1()
     {
@@ -838,7 +818,7 @@ public partial class TRV_ver : System.Web.UI.Page
     {
         if (AppUtils.SetEnableTextBox(lpvDropDownList21, lpvTextBox21))
         {
-            MathUtils.convertArr((sender as DropDownList), ref lpvTextBox21);
+            MathUtils.convertArr3((sender as DropDownList), ref lpvTextBox21);
         }
         AppUtils.SaveKeyToSession(lpvDropDownList21.ID, lpvDropDownList21.SelectedIndex);
     }
@@ -847,7 +827,7 @@ public partial class TRV_ver : System.Web.UI.Page
     {
         if (AppUtils.SetEnableTextBox(calcvDropDownList1, calcvTextBox1))
         {
-            MathUtils.convertArr((sender as DropDownList), ref calcvTextBox1);
+            MathUtils.convertArr3((sender as DropDownList), ref calcvTextBox1);
         }
         AppUtils.SaveKeyToSession(calcvDropDownList1.ID, calcvDropDownList1.SelectedIndex);
     }
@@ -856,7 +836,7 @@ public partial class TRV_ver : System.Web.UI.Page
     {
         if (AppUtils.SetEnableTextBox(lpv5DropDownList1, lpv5TextBox1))
         {
-            MathUtils.convertArr((sender as DropDownList), ref lpv5TextBox1);
+            MathUtils.convertArr3((sender as DropDownList), ref lpv5TextBox1);
         }
         AppUtils.SaveKeyToSession(lpv5DropDownList1.ID, lpv5DropDownList1.SelectedIndex);
     }
@@ -1237,7 +1217,6 @@ public partial class TRV_ver : System.Web.UI.Page
             GridView2.DataSource = null;
             GridView2.DataBind();
             GridView2.SelectedIndex = -1;
-            readFile();
             Dictionary<string, double> g_dict = new Dictionary<string, double>();
             v_input_dict.Clear();
             LabelError.Text = "";

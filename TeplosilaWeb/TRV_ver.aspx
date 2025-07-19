@@ -396,7 +396,7 @@
                                     <asp:Label ID="labelOptyV" runat="server" Visible="False"></asp:Label>
                                 </div>
 
-                                <div class="table-responsive-lg" onclick="ShowBTN()">
+                                <div class="table-responsive-lg">
                                     <asp:GridView ID="GridView2" CssClass="table table-result trv-ver" runat="server"
                                         Font-Size="X-Small"
                                         AutoGenerateSelectButton="True" OnSelectedIndexChanged="GridView2_SelectedIndexChanged" Style="left: 0px; top: 0px">
@@ -422,12 +422,6 @@
                         <Triggers>
                             <asp:PostBackTrigger ControlID="trvSave" />
                         </Triggers>
-                    </asp:UpdatePanel>
-                </div>
-                <div class="col-12">
-                    <asp:UpdatePanel ID="UpdatePanel7" runat="server">
-                        <ContentTemplate>
-                        </ContentTemplate>
                     </asp:UpdatePanel>
                 </div>
             </div>
