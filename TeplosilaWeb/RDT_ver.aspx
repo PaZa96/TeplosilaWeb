@@ -100,7 +100,7 @@
                     <div class="col border">
                         <asp:UpdatePanel ID="UpdatePanel4" runat="server">
                             <ContentTemplate>
-                                <asp:Label ID="Label5" runat="server" Text="Диаметр и пропускная способность клапана:"></asp:Label>
+                                <asp:Label ID="Label5" runat="server" Text="Диаметр и пропускная способность регулятора:"></asp:Label>
                                 <div id="aaPanel0" class="col-12" runat="server">
                                     <div class="row">
                                         <div class="col-6 col-md-2">
@@ -180,13 +180,123 @@
                             </ContentTemplate>
                         </asp:UpdatePanel>
                     </div>
+                    <div>
+                        <asp:UpdatePanel ID="UpdatePanel6" runat="server">
+                            <ContentTemplate>
+                                <div id="aaPanel3" runat="server" visible="true">
+                                    <div class="col border">
+                                        <asp:Label ID="Label12" runat="server"
+                                            Text="Расчёт регулирующего клапана на кавитацию:"></asp:Label>
+                                        <div class="col row">
+                                            <div class="col-12">
+                                                <asp:Label ID="Label26" runat="server" Text="Давление перед регулятором:">
+                                                </asp:Label>
+                                            </div>
+                                            <div class="col-12 col-md-8 row">
+                                                <div class="col-4 col-md-2">
+                                                    <asp:Label ID="Label21" runat="server" Text="P' = "></asp:Label>
+                                                </div>
+                                                <div class="row">
+                                                    <asp:TextBox ID="calcrTextBox1" runat="server" CssClass="textbox-non-right-radius"
+                                                        Enabled="False" type="number" required="required" TextMode="Number">
+                                                    </asp:TextBox>
+                                                    <asp:DropDownList ID="calcrDropDownList1" runat="server" AutoPostBack="True" CssClass="dropdown-non-left-radius"
+                                                        Enabled="False">
+                                                        <asp:ListItem>выбрать</asp:ListItem>
+                                                        <asp:ListItem>МПа</asp:ListItem>
+                                                        <asp:ListItem>кПа</asp:ListItem>
+                                                        <asp:ListItem>бар</asp:ListItem>
+                                                        <asp:ListItem>м. в. ст.</asp:ListItem>
+                                                    </asp:DropDownList>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 row">
+                                                <asp:CustomValidator ID="calcrCustomValidator1" runat="server"
+                                                    ErrorMessage="CustomValidator" ControlToValidate="calcrDropDownList1"
+                                                    Display="Dynamic" ForeColor="Red" SetFocusOnError="True"
+                                                    ValidateEmptyText="True"></asp:CustomValidator>
+                                            </div>
+                                            <div class="col-12">
+                                                <asp:Label ID="Label22" runat="server"
+                                                    Text="Температура теплоносителя через регулятор (максимальная):">
+                                                </asp:Label>
+                                            </div>
+                                            <div class="col-12 col-md-8 row">
+                                                <div class="col-4 col-md-2">
+                                                    <asp:Label ID="Label23" runat="server" Text="T1 = "></asp:Label>
+                                                </div>
+                                                <div class="row">
+                                                    <asp:TextBox ID="calcrTextBox2" runat="server" Enabled="False"
+                                                        type="number" required="required" TextMode="Number"
+                                                        CausesValidation="True">
+                                                    </asp:TextBox>&nbsp;
+                                                        <asp:Label ID="Label24" runat="server" Text=" &#8451;"></asp:Label>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 row">
+                                                <asp:CustomValidator ID="calcrCustomValidator2" runat="server"
+                                                    ErrorMessage="CustomValidator" ControlToValidate="calcrTextBox2"
+                                                    Display="Dynamic" ForeColor="Red" SetFocusOnError="True"
+                                                    ValidateEmptyText="True"></asp:CustomValidator>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </ContentTemplate>
+                        </asp:UpdatePanel>
+                    </div>
+                     <div>
+                        <asp:UpdatePanel ID="UpdatePanel8" runat="server">
+                            <ContentTemplate>
+                                <div runat="server" id="aaPanel5" visible="true">
+                                    <div class="col border">
+                                        <asp:Label ID="Label16" runat="server" Text="Расход через регулятор давления:"></asp:Label>
+                                        <div class="flow-radio-label col row">
+                                            <div>
+                                                <asp:RadioButton ID="fprRadioButton1" runat="server"
+                                                    Text="Задать максимальную величину расхода через регулятор давления:"
+                                                    AutoPostBack="True" Checked="True" />
+                                            </div>
+                                            <div class="col-12 col-md-8 row">
+                                                <div class="col-4 col-md-2">
+                                                    <asp:Label ID="Label28" runat="server" Text="Gкл = "></asp:Label>
+                                                </div>
+                                                <div class="row">
+                                                    <asp:TextBox ID="fprTextBox1" runat="server" Enabled="False" CssClass="textbox-non-right-radius"
+                                                        TextMode="Number"></asp:TextBox>
+                                                    <asp:DropDownList ID="fprDropDownList1" runat="server" AutoPostBack="True" CssClass="dropdown-non-left-radius"
+                                                        Enabled="False">
+                                                        <asp:ListItem>выбрать</asp:ListItem>
+                                                        <asp:ListItem>м³/ч</asp:ListItem>
+                                                        <asp:ListItem>л/с</asp:ListItem>
+                                                        <asp:ListItem>л/мин</asp:ListItem>
+                                                        <asp:ListItem>л/ч</asp:ListItem>
+                                                        <asp:ListItem>кг/с</asp:ListItem>
+                                                        <asp:ListItem>кг/ч</asp:ListItem>
+                                                        <asp:ListItem>т/ч</asp:ListItem>
+                                                    </asp:DropDownList>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 row">
+
+                                                <asp:CustomValidator ID="fprCustomValidator1" runat="server" Display="Dynamic"
+                                                    ControlToValidate="fprDropDownList1" ErrorMessage="CustomValidator"
+                                                    ForeColor="Red"
+                                                    SetFocusOnError="True" ValidateEmptyText="True"></asp:CustomValidator>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </ContentTemplate>
+                        </asp:UpdatePanel>
+                    </div>
                 </div>
                 <div class="col-12">
                     <asp:UpdatePanel ID="UpdatePanel10" runat="server">
                         <ContentTemplate>
                             <asp:Label ID="LabelError" runat="server" Font-Bold="True" Font-Size="Medium"
                                 Font-Strikeout="False" ForeColor="Red"></asp:Label>
-                            <asp:Button ID="trvCalc" runat="server" type="submit" Text="Рассчитать"
+                            <asp:Button ID="rdtCalc" runat="server" type="submit" Text="Рассчитать"
                                 Width="100%" />
                         </ContentTemplate>
                     </asp:UpdatePanel>

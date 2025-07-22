@@ -174,12 +174,14 @@ public partial class RDT_ver : System.Web.UI.Page
     {
         SetRadioButtonGroupState(eorRadioButton1, eorRadioButtonList1);
         pnRadioButtonList1.Enabled = true;
+        EnableDNPanel();
     }
 
     protected void eorRadioButton2_CheckedChanged(object sender, EventArgs e)
     {
         SetRadioButtonGroupState(eorRadioButton2, eorRadioButtonList2);
         pnRadioButtonList1.Enabled = true;
+        EnableDNPanel();
     }
 
     protected void eorRadioButton3_CheckedChanged(object sender, EventArgs e)
@@ -187,6 +189,7 @@ public partial class RDT_ver : System.Web.UI.Page
         SetRadioButtonGroupState(eorRadioButton3, eorRadioButtonList3);
         eorRadioButtonList3.SelectedIndex = 0;
         pnRadioButtonList1.Enabled = true;
+        EnableDNPanel();
     }
 
     protected void eorRadioButton4_CheckedChanged(object sender, EventArgs e)
@@ -194,6 +197,7 @@ public partial class RDT_ver : System.Web.UI.Page
         SetRadioButtonGroupState(eorRadioButton4, eorRadioButtonList4);
         eorRadioButtonList4.SelectedIndex = 0;
         pnRadioButtonList1.Enabled = true;
+        EnableDNPanel();
     }
     protected void eorRadioButtonList1_SelectedIndexChanged(object sender, EventArgs e)
     {
