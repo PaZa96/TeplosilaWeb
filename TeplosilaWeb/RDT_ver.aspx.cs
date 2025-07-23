@@ -126,6 +126,41 @@ public partial class RDT_ver : System.Web.UI.Page
 
     //вспомогательные функции
 
+    public void lp1ControlEnable(bool flag)
+    {
+        lpPane1.Visible = flag;
+        AppUtils.dropDownListEnable(lp1DropDownList2, flag);
+        AppUtils.DisableTextBox(lp1TextBox2);
+        AppUtils.dropDownListEnable(lp1DropDownList3, flag);
+        AppUtils.DisableTextBox(lp1TextBox3);
+        AppUtils.dropDownListEnable(lp1DropDownList4, flag);
+        AppUtils.DisableTextBox(lp1TextBox4);
+        AppUtils.DisableTextBox(lp1TextBox5);
+    }
+    public void lp2ControlEnable(bool flag)
+    {
+        lpPane2.Visible = flag;
+        AppUtils.dropDownListEnable(lp2DropDownList1, flag);
+        AppUtils.DisableTextBox(lp2TextBox1);
+        AppUtils.dropDownListEnable(lp2DropDownList2, flag);
+        AppUtils.DisableTextBox(lp2TextBox2);
+    }
+    public void lp3ControlEnable(bool flag)
+    {
+        lpPane3.Visible = flag;
+        AppUtils.dropDownListEnable(lp3DropDownList1, flag);
+        AppUtils.DisableTextBox(lp3TextBox1);
+        AppUtils.dropDownListEnable(lp3DropDownList2, flag);
+        AppUtils.DisableTextBox(lp3TextBox2);
+    }
+    public void lp4ControlEnable(bool flag)
+    {
+        lpPane4.Visible = flag;
+        AppUtils.dropDownListEnable(lp4DropDownList2, flag);
+        AppUtils.DisableTextBox(lp4TextBox2);
+    }
+   
+
     private void SetRadioButtonGroupState(RadioButton selectedRadio, RadioButtonList selectedList)
     {
         // Все радио-кнопки
@@ -175,6 +210,10 @@ public partial class RDT_ver : System.Web.UI.Page
         SetRadioButtonGroupState(eorRadioButton1, eorRadioButtonList1);
         pnRadioButtonList1.Enabled = true;
         EnableDNPanel();
+        lp1ControlEnable(true);
+        lp2ControlEnable(false);
+        lp3ControlEnable(false);
+        lp4ControlEnable(false);
     }
 
     protected void eorRadioButton2_CheckedChanged(object sender, EventArgs e)
@@ -182,6 +221,10 @@ public partial class RDT_ver : System.Web.UI.Page
         SetRadioButtonGroupState(eorRadioButton2, eorRadioButtonList2);
         pnRadioButtonList1.Enabled = true;
         EnableDNPanel();
+        lp1ControlEnable(false);
+        lp2ControlEnable(true);
+        lp3ControlEnable(false);
+        lp4ControlEnable(false);
     }
 
     protected void eorRadioButton3_CheckedChanged(object sender, EventArgs e)
@@ -190,6 +233,10 @@ public partial class RDT_ver : System.Web.UI.Page
         eorRadioButtonList3.SelectedIndex = 0;
         pnRadioButtonList1.Enabled = true;
         EnableDNPanel();
+        lp1ControlEnable(false);
+        lp2ControlEnable(false);
+        lp3ControlEnable(true);
+        lp4ControlEnable(false);
     }
 
     protected void eorRadioButton4_CheckedChanged(object sender, EventArgs e)
@@ -198,6 +245,10 @@ public partial class RDT_ver : System.Web.UI.Page
         eorRadioButtonList4.SelectedIndex = 0;
         pnRadioButtonList1.Enabled = true;
         EnableDNPanel();
+        lp1ControlEnable(false);
+        lp2ControlEnable(false);
+        lp3ControlEnable(false);
+        lp4ControlEnable(true);
     }
     protected void eorRadioButtonList1_SelectedIndexChanged(object sender, EventArgs e)
     {
@@ -255,9 +306,101 @@ public partial class RDT_ver : System.Web.UI.Page
             AppUtils.DisableTextBox(wsTextBox2);
         }
 
-        if (wsRadioButtonList1.SelectedIndex != 3)
+        aaPanel3.Visible = true;
+        AppUtils.dropDownListEnable(calcrDropDownList1, true);
+        calcrTextBox2.Enabled = true;
+        aaPanel5.Visible = true;
+        AppUtils.dropDownListEnable(fprDropDownList1, true);
+    }
+
+    protected void lp1DropDownList2_SelectedIndexChanged(object sender, EventArgs e)
+    {
+
+        if (AppUtils.SetEnableTextBox(lp1DropDownList2, lp1TextBox2))
         {
+            MathUtils.convertArr3((sender as DropDownList), ref lp1TextBox2);
         }
+        AppUtils.SaveKeyToSession(lp1DropDownList2.ID, lp1DropDownList2.SelectedIndex);
+    }
+
+    protected void lp1DropDownList3_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        if (AppUtils.SetEnableTextBox(lp1DropDownList3, lp1TextBox3))
+        {
+            MathUtils.convertArr3((sender as DropDownList), ref lp1TextBox3);
+        }
+        AppUtils.SaveKeyToSession(lp1DropDownList3.ID, lp1DropDownList3.SelectedIndex);
+    }
+
+    protected void lp1DropDownList4_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        if (AppUtils.SetEnableTextBox(lp1DropDownList4, lp1TextBox4))
+        {
+            MathUtils.convertArr3((sender as DropDownList), ref lp1TextBox4);
+        }
+        AppUtils.SaveKeyToSession(lp1DropDownList4.ID, lp1DropDownList4.SelectedIndex);
+    }
+
+    protected void lp2DropDownList1_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        if (AppUtils.SetEnableTextBox(lp2DropDownList1, lp2TextBox1))
+        {
+            MathUtils.convertArr3((sender as DropDownList), ref lp2TextBox1);
+        }
+        AppUtils.SaveKeyToSession(lp2DropDownList1.ID, lp2DropDownList1.SelectedIndex);
+    }
+
+    protected void lp2DropDownList2_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        if (AppUtils.SetEnableTextBox(lp2DropDownList2, lp2TextBox2))
+        {
+            MathUtils.convertArr3((sender as DropDownList), ref lp2TextBox2);
+        }
+        AppUtils.SaveKeyToSession(lp2DropDownList2.ID, lp2DropDownList2.SelectedIndex);
+    }
+
+    protected void lp3DropDownList1_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        if (AppUtils.SetEnableTextBox(lp3DropDownList1, lp3TextBox1))
+        {
+            MathUtils.convertArr3((sender as DropDownList), ref lp3TextBox1);
+        }
+        AppUtils.SaveKeyToSession(lp3DropDownList1.ID, lp3DropDownList1.SelectedIndex);
+    }
+
+    protected void lp3DropDownList2_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        if (AppUtils.SetEnableTextBox(lp3DropDownList2, lp3TextBox2))
+        {
+            MathUtils.convertArr3((sender as DropDownList), ref lp3TextBox2);
+        }
+        AppUtils.SaveKeyToSession(lp3DropDownList2.ID, lp3DropDownList2.SelectedIndex);
+    }
+
+    protected void lp4DropDownList2_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        if (AppUtils.SetEnableTextBox(lp4DropDownList2, lp4TextBox2))
+        {
+            MathUtils.convertArr3((sender as DropDownList), ref lp4TextBox2);
+        }
+        AppUtils.SaveKeyToSession(lp4DropDownList2.ID, lp4DropDownList2.SelectedIndex);
+    }
+
+    protected void calcrDropDownList1_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        if (AppUtils.SetEnableTextBox(calcrDropDownList1, calcrTextBox1))
+        {
+            MathUtils.convertArr3((sender as DropDownList), ref calcrTextBox1);
+        }
+        AppUtils.SaveKeyToSession(calcrDropDownList1.ID, calcrDropDownList1.SelectedIndex);
+    }
+    protected void fprDropDownList1_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        if (AppUtils.SetEnableTextBox(fprDropDownList1, fprTextBox1))
+        {
+            MathUtils.convertArrDouble((sender as DropDownList), ref fprTextBox1);
+        }
+        AppUtils.SaveKeyToSession(fprDropDownList1.ID, fprDropDownList1.SelectedIndex);
     }
 
     //Валидаторы элементор управления
