@@ -290,6 +290,15 @@ tr:nth-child(2) td:nth-child(2) {
     display: none;
 }
 
+.rdt-ver tr:nth-child(n) td:nth-child(7) ~ td {
+    display: none;
+}
+
+.rdt-ver tr:nth-child(n) th:nth-child(7) ~ th {
+    display: none;
+}
+
+
 .steam-ver tr:nth-child(n) td:nth-child(5) ~ td {
     display: none;
 }

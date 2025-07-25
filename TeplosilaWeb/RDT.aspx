@@ -483,7 +483,7 @@
                                         <br />
                                         <asp:Label ID="Label21" runat="server" Text="P' = "></asp:Label>
                                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                        <asp:TextBox ID="calcrTextBox1" runat="server" Enabled="False" type="number"
+                                        <asp:TextBox ID="calcrTextBox1" runat="server" Enabled="False"
                                             TextMode="Number" CausesValidation="True">
                                         </asp:TextBox>
                                         <asp:DropDownList ID="calcrDropDownList1" runat="server" AutoPostBack="True"
@@ -494,8 +494,6 @@
                                             <asp:ListItem>кПа</asp:ListItem>
                                             <asp:ListItem>бар</asp:ListItem>
                                             <asp:ListItem>м. в. ст.</asp:ListItem>
-
-                                            
                                         </asp:DropDownList>
                                         <div>
                                         <asp:CustomValidator ID="CustomValidator9" Display="Dynamic"
@@ -510,7 +508,7 @@
                                         </asp:Label><br />
                                         <asp:Label ID="Label23" runat="server" Text="T1 = "></asp:Label>
                                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                        <asp:TextBox ID="calcrTextBox2" runat="server" Enabled="False" type="number"
+                                        <asp:TextBox ID="calcrTextBox2" runat="server" Enabled="False"
                                             TextMode="Number" CausesValidation="True">
                                         </asp:TextBox>
                                         <asp:Label ID="Label24" runat="server" Text=" &#8451;"></asp:Label>
@@ -540,7 +538,7 @@
                                     <div class="col panel-hide sub-col" id="fpr1_1" runat="server">
                                         <asp:Label ID="Label28" runat="server" Text="Gрд = "></asp:Label>
                                         &nbsp;&nbsp;
-                                        <asp:TextBox ID="fprTextBox1" runat="server" Enabled="False" type="number"
+                                        <asp:TextBox ID="fprTextBox1" runat="server" Enabled="False"
                                             TextMode="Number"></asp:TextBox>
                                         <asp:DropDownList ID="fprDropDownList1" runat="server" AutoPostBack="True"
                                             Enabled="False"
