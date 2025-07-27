@@ -39,6 +39,7 @@ public partial class RDT_ver : System.Web.UI.Page
                 }
                 dataFromFile = Session[JsonKeyName];
                 rdtSave.Visible = false;
+                resultPanel.Visible = false;
             }
         }
         catch (Exception er)
@@ -59,7 +60,25 @@ public partial class RDT_ver : System.Web.UI.Page
 
             IEnumerable<RadioButton> ie_rb = null;
 
-            r_in_dict.Add(4, eorRadioButtonList1.Items[eorRadioButtonList1.SelectedIndex].Text);
+            string eorName = "";
+            if (eorRadioButton1.Checked)
+            {
+                eorName = eorRadioButton1.Text;
+            }
+            else if (eorRadioButton2.Checked)
+            {
+                eorName = eorRadioButton2.Text;
+            }
+            else if (eorRadioButton3.Checked)
+            {
+                eorName = eorRadioButton3.Text;
+            }
+            else if (eorRadioButton4.Checked)
+            {
+                eorName = eorRadioButton4.Text;
+            }
+
+            r_in_dict.Add(4, eorName);
 
             r_in_dict.Add(5, "Marka"); // Марка добавляется в диалоговом окне при сохранении
 
@@ -976,17 +995,17 @@ public partial class RDT_ver : System.Web.UI.Page
             {
                 GenerateOtherExel();
             } 
-            else if (eorRadioButton1.Checked)
+            else if (eorRadioButton2.Checked)
             {
-                //GeneratePosleExel();
+                GeneratePosleExel();
             }
-            else if (eorRadioButton1.Checked)
+            else if (eorRadioButton3.Checked)
             {
-                //GenerateDoExel();
+                GenerateDoExel();
             }
-            else if (eorRadioButton1.Checked)
+            else if (eorRadioButton4.Checked)
             {
-                //GeneratePerepyskaExel();
+                GeneratePerepyskaExel();
             }    
         }
         catch (Exception er)
@@ -1528,9 +1547,6 @@ public partial class RDT_ver : System.Web.UI.Page
                 r_input_dict[2] = "-";
             }
 
-            r_input_dict[20] = this.calcDNLabelVal.Text;
-            r_input_dict[21] = this.calcCapacityLabelVal.Text;
-
             int pos = 41;
 
             for (int r = 1; r < GridView1.SelectedRow.Cells.Count; r++)
@@ -1607,6 +1623,271 @@ public partial class RDT_ver : System.Web.UI.Page
             Logger.Log.Error(er);
         }
     }
+    public void GeneratePosleExel()
+    {
 
+        try
+        {
+            r_input_dict = (Dictionary<int, string>)Session["r_input_dict"];
+
+            if (!String.IsNullOrWhiteSpace(objTextBox1.Text))
+            {
+                r_input_dict[2] = objTextBox1.Text;
+            }
+            else
+            {
+                r_input_dict[2] = "-";
+            }
+
+            int pos = 41;
+
+            for (int r = 1; r < GridView1.SelectedRow.Cells.Count; r++)
+            {
+                r_input_dict[pos] = GridView1.SelectedRow.Cells[r].Text;
+                pos++;
+
+            }
+
+            r_input_dict[5] = r_input_dict[41];
+            string fileName = AppUtils.ConvertCommaToPoint(r_input_dict[41]);
+            SpreadsheetInfo.SetLicense("FREE-LIMITED-KEY");
+
+            string templatePath = HttpContext.Current.Server.MapPath("~/Content/templates/templateRDT-P,RDT-PH_ver.xlsx");
+            if (!File.Exists(templatePath))
+            {
+                LabelError.Text += "Не найден файл шаблона";
+                return;
+            }
+
+            ExcelFile ef = ExcelFile.Load(templatePath);
+            ExcelWorksheet ws = ef.Worksheets[0];
+
+            ws.PrintOptions.TopMargin = 0.2 / 2.54;
+            ws.PrintOptions.BottomMargin = 0.2 / 2.54;
+            ws.PrintOptions.LeftMargin = 1 / 2.54;
+            ws.PrintOptions.RightMargin = 1 / 2.54;
+
+            AppUtils.SetCellValue(ws, "J2", 1, r_input_dict);
+            AppUtils.SetCellValue(ws, "C3", 2, r_input_dict);
+            AppUtils.SetCellValue(ws, "C4", 4, r_input_dict);
+            AppUtils.SetCellValue(ws, "C5", 5, r_input_dict);
+            AppUtils.SetCellValue(ws, "C8", 6, r_input_dict, true);
+
+            AppUtils.SetCellValue(ws, "I10", 16, r_input_dict, true);
+            AppUtils.SetCellValue(ws, "K10", 17, r_input_dict);
+            AppUtils.SetCellValue(ws, "I11", 18, r_input_dict, true);
+            AppUtils.SetCellValue(ws, "K11", 19, r_input_dict);
+
+            AppUtils.SetCellValue(ws, "I13", 31, r_input_dict, true);
+            AppUtils.SetCellValue(ws, "K13", 32, r_input_dict);
+            AppUtils.SetCellValue(ws, "I14", 33, r_input_dict, true);
+
+            AppUtils.SetCellValue(ws, "I16", 38, r_input_dict, true);
+            AppUtils.SetCellValue(ws, "K16", 381, r_input_dict); // не входит в список — без true
+
+            AppUtils.SetCellValue(ws, "E19", 39, r_input_dict);
+            AppUtils.SetCellValue(ws, "E20", 40, r_input_dict);
+
+            AppUtils.SetCellValue(ws, "A23", 41, r_input_dict);
+            AppUtils.SetCellValue(ws, "C23", 42, r_input_dict, true);
+            AppUtils.SetCellValue(ws, "E23", 43, r_input_dict, true);
+            AppUtils.SetCellValue(ws, "G23", 44, r_input_dict);
+            AppUtils.SetCellValue(ws, "I23", 45, r_input_dict, true);
+            AppUtils.SetCellValue(ws, "J23", 46, r_input_dict);
+
+            string saveDirectory = HttpContext.Current.Server.MapPath($"~/Files/RDT_ver/PDF/{DateTime.Now:dd-MM-yyyy}");
+            AppUtils.EnsureDirectoryExists(saveDirectory);
+
+            string uniqueFileName = AppUtils.GenerateUniqueFileName(saveDirectory, fileName);
+            string fullPath = Path.Combine(saveDirectory, uniqueFileName + ".pdf");
+
+            ef.Save(fullPath);
+            AppUtils.WaitDownload(50);
+
+            AppUtils.ServeFile(Response, fullPath);
+        }
+        catch (Exception er)
+        {
+            Logger.Log.Error(er);
+
+        }
+    }
+
+    public void GenerateDoExel()
+    {
+        try
+        {
+            r_input_dict = (Dictionary<int, string>)Session["r_input_dict"];
+
+            if (!String.IsNullOrWhiteSpace(objTextBox1.Text))
+            {
+                r_input_dict[2] = objTextBox1.Text;
+            }
+            else
+            {
+                r_input_dict[2] = "-";
+            }
+
+            int pos = 41;
+
+            for (int r = 1; r < GridView1.SelectedRow.Cells.Count; r++)
+            {
+                r_input_dict[pos] = GridView1.SelectedRow.Cells[r].Text;
+                pos++;
+
+            }
+
+            r_input_dict[5] = r_input_dict[41];
+            string fileName = AppUtils.ConvertCommaToPoint(r_input_dict[41]);
+            SpreadsheetInfo.SetLicense("FREE-LIMITED-KEY");
+
+            string templatePath = HttpContext.Current.Server.MapPath("~/Content/templates/templateRDT-S_ver.xlsx");
+            if (!File.Exists(templatePath))
+            {
+                LabelError.Text += "Не найден файл шаблона";
+                return;
+            }
+
+            ExcelFile ef = ExcelFile.Load(templatePath);
+            ExcelWorksheet ws = ef.Worksheets[0];
+
+            ws.PrintOptions.TopMargin = 0.2 / 2.54;
+            ws.PrintOptions.BottomMargin = 0.2 / 2.54;
+            ws.PrintOptions.LeftMargin = 1 / 2.54;
+            ws.PrintOptions.RightMargin = 1 / 2.54;
+
+            AppUtils.SetCellValue(ws, "J2", 1, r_input_dict);
+            AppUtils.SetCellValue(ws, "C3", 2, r_input_dict);
+            AppUtils.SetCellValue(ws, "C4", 4, r_input_dict);
+            AppUtils.SetCellValue(ws, "C5", 5, r_input_dict);
+            AppUtils.SetCellValue(ws, "C8", 6, r_input_dict, true);
+
+            AppUtils.SetCellValue(ws, "I10", 25, r_input_dict, true);
+            AppUtils.SetCellValue(ws, "K10", 26, r_input_dict);
+            AppUtils.SetCellValue(ws, "I11", 27, r_input_dict, true);
+            AppUtils.SetCellValue(ws, "K11", 28, r_input_dict);
+
+            AppUtils.SetCellValue(ws, "I13", 31, r_input_dict, true);
+            AppUtils.SetCellValue(ws, "K13", 32, r_input_dict);
+            AppUtils.SetCellValue(ws, "I14", 33, r_input_dict, true);
+
+            AppUtils.SetCellValue(ws, "I16", 38, r_input_dict, true);
+            AppUtils.SetCellValue(ws, "K16", 381, r_input_dict); // не входит в список — без true
+
+            AppUtils.SetCellValue(ws, "E19", 39, r_input_dict);
+            AppUtils.SetCellValue(ws, "E20", 40, r_input_dict);
+
+            AppUtils.SetCellValue(ws, "A23", 41, r_input_dict);
+            AppUtils.SetCellValue(ws, "C23", 42, r_input_dict, true);
+            AppUtils.SetCellValue(ws, "E23", 43, r_input_dict, true);
+            AppUtils.SetCellValue(ws, "G23", 44, r_input_dict);
+            AppUtils.SetCellValue(ws, "I23", 45, r_input_dict, true);
+            AppUtils.SetCellValue(ws, "J23", 46, r_input_dict);
+
+            string saveDirectory = HttpContext.Current.Server.MapPath($"~/Files/RDT_ver/PDF/{DateTime.Now:dd-MM-yyyy}");
+            AppUtils.EnsureDirectoryExists(saveDirectory);
+
+            string uniqueFileName = AppUtils.GenerateUniqueFileName(saveDirectory, fileName);
+            string fullPath = Path.Combine(saveDirectory, uniqueFileName + ".pdf");
+
+            ef.Save(fullPath);
+            AppUtils.WaitDownload(50);
+
+            AppUtils.ServeFile(Response, fullPath);
+        }
+        catch (Exception er)
+        {
+            Logger.Log.Error(er);
+
+        }
+    }
+
+    public void GeneratePerepyskaExel()
+    {
+        try
+        {
+            r_input_dict = (Dictionary<int, string>)Session["r_input_dict"];
+
+            if (!String.IsNullOrWhiteSpace(objTextBox1.Text))
+            {
+                r_input_dict[2] = objTextBox1.Text;
+            }
+            else
+            {
+                r_input_dict[2] = "-";
+            }
+
+            int pos = 41;
+
+            for (int r = 1; r < GridView1.SelectedRow.Cells.Count; r++)
+            {
+                r_input_dict[pos] = GridView1.SelectedRow.Cells[r].Text;
+                pos++;
+
+            }
+
+            r_input_dict[5] = r_input_dict[41];
+            string fileName = AppUtils.ConvertCommaToPoint(r_input_dict[41]);
+            SpreadsheetInfo.SetLicense("FREE-LIMITED-KEY");
+
+            string templatePath = HttpContext.Current.Server.MapPath("~/Content/templates/templateRDT-B_ver.xlsx");
+            if (!File.Exists(templatePath))
+            {
+                LabelError.Text += "Не найден файл шаблона";
+                return;
+            }
+
+            ExcelFile ef = ExcelFile.Load(templatePath);
+            ExcelWorksheet ws = ef.Worksheets[0];
+
+            ws.PrintOptions.TopMargin = 0.2 / 2.54;
+            ws.PrintOptions.BottomMargin = 0.2 / 2.54;
+            ws.PrintOptions.LeftMargin = 1 / 2.54;
+            ws.PrintOptions.RightMargin = 1 / 2.54;
+
+            AppUtils.SetCellValue(ws, "J2", 1, r_input_dict);
+            AppUtils.SetCellValue(ws, "C3", 2, r_input_dict);
+            AppUtils.SetCellValue(ws, "C4", 4, r_input_dict);
+            AppUtils.SetCellValue(ws, "C5", 5, r_input_dict);
+            AppUtils.SetCellValue(ws, "C8", 6, r_input_dict, true);
+
+            AppUtils.SetCellValue(ws, "I10", 29, r_input_dict, true);
+            AppUtils.SetCellValue(ws, "K10", 30, r_input_dict);
+
+            AppUtils.SetCellValue(ws, "I12", 31, r_input_dict, true);
+            AppUtils.SetCellValue(ws, "K12", 32, r_input_dict);
+            AppUtils.SetCellValue(ws, "I13", 33, r_input_dict, true);
+
+            AppUtils.SetCellValue(ws, "I15", 38, r_input_dict, true);
+            AppUtils.SetCellValue(ws, "K15", 381, r_input_dict);
+
+            AppUtils.SetCellValue(ws, "E18", 39, r_input_dict);
+            AppUtils.SetCellValue(ws, "E19", 40, r_input_dict);
+
+            AppUtils.SetCellValue(ws, "A22", 41, r_input_dict);
+            AppUtils.SetCellValue(ws, "C22", 42, r_input_dict, true);
+            AppUtils.SetCellValue(ws, "E22", 43, r_input_dict, true);
+            AppUtils.SetCellValue(ws, "G22", 44, r_input_dict);
+            AppUtils.SetCellValue(ws, "I22", 45, r_input_dict, true);
+            AppUtils.SetCellValue(ws, "J22", 46, r_input_dict);
+
+
+            string saveDirectory = HttpContext.Current.Server.MapPath($"~/Files/RDT_ver/PDF/{DateTime.Now:dd-MM-yyyy}");
+            AppUtils.EnsureDirectoryExists(saveDirectory);
+
+            string uniqueFileName = AppUtils.GenerateUniqueFileName(saveDirectory, fileName);
+            string fullPath = Path.Combine(saveDirectory, uniqueFileName + ".pdf");
+
+            ef.Save(fullPath);
+            AppUtils.WaitDownload(50);
+
+            AppUtils.ServeFile(Response, fullPath);
+        }
+        catch (Exception er)
+        {
+            Logger.Log.Error(er);
+
+        }
+    }
 
 }
