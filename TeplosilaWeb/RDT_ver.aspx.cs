@@ -397,7 +397,7 @@ public partial class RDT_ver : System.Web.UI.Page
 
         if (wsRadioButtonList1.SelectedIndex == 1 || wsRadioButtonList1.SelectedIndex == 2)
         {
-            workEnv = wsRadioButtonList1.SelectedValue + wsTextBox1.Text + "%, " + wsTextBox2 + " °С";
+            workEnv = wsRadioButtonList1.SelectedValue + wsTextBox1.Text + "%, " + wsTextBox2.Text + " °С";
         }
         else
         {
@@ -1239,7 +1239,7 @@ public partial class RDT_ver : System.Web.UI.Page
 
                 if (MathUtils.convertArrToBar(lp1DropDownList2, lp1TextBox2) >= (MathUtils.convertArrToBar(lp1DropDownList3, lp1TextBox3) - MathUtils.convertArrToBar(lp1DropDownList4, lp1TextBox4)))
                 {
-                    CustomValidator8.ErrorMessage = "Неверно указано значение давления";
+                    CustomValidator8.ErrorMessage = "Потери давления на регулируемом участке превышают располагаемый перепад давлений на вводе";
                     CustomValidator8.IsValid = false;
                     return;
                 }
@@ -1473,14 +1473,15 @@ public partial class RDT_ver : System.Web.UI.Page
                     return;
                 }
 
-                if ((eorRadioButtonList1.SelectedIndex == 0 || eorRadioButtonList2.SelectedIndex == 0 || eorRadioButtonList3.SelectedIndex == 0 || eorRadioButtonList4.SelectedIndex == 0) && AppUtils.customConverterToDouble(this.calcrTextBox1.Text) > MaxT3x)
+                if ((eorRadioButtonList1.SelectedIndex == 0 || eorRadioButtonList2.SelectedIndex == 0 || eorRadioButtonList3.SelectedIndex == 0 || eorRadioButtonList4.SelectedIndex == 0) 
+                    && AppUtils.customConverterToDouble(this.calcrTextBox2.Text) > MaxT3x)
                 {
                     calcrCustomValidator2.ErrorMessage = "Температура теплоносителя больше максимальной температуры рабочей среды для указанного регулятора. Указанный регулятор не подойдет";
                     args.IsValid = false;
                     return;
                 }
 
-                if ((eorRadioButtonList1.SelectedIndex == 1 || eorRadioButtonList2.SelectedIndex == 1) && AppUtils.customConverterToDouble(this.calcrTextBox1.Text) > MaxT2x)
+                if ((eorRadioButtonList1.SelectedIndex == 1 || eorRadioButtonList2.SelectedIndex == 1) && AppUtils.customConverterToDouble(this.calcrTextBox2.Text) > MaxT2x)
                 {
                     calcrCustomValidator2.ErrorMessage = "Температура теплоносителя больше максимальной температуры рабочей среды для указанного регулятора. Указанный регулятор не подойдет";
                     args.IsValid = false;
@@ -1578,7 +1579,7 @@ public partial class RDT_ver : System.Web.UI.Page
             AppUtils.SetCellValue(ws, "J2", 1, r_input_dict);
             AppUtils.SetCellValue(ws, "C3", 2, r_input_dict);
             AppUtils.SetCellValue(ws, "C4", 4, r_input_dict);
-            AppUtils.SetCellValue(ws, "C5", 5, r_input_dict);
+            AppUtils.SetCellValue(ws, "C5", 5, r_input_dict, true);
             AppUtils.SetCellValue(ws, "C8", 6, r_input_dict, true);
 
             AppUtils.SetCellValue(ws, "I11", 9, r_input_dict, true);
@@ -1587,7 +1588,7 @@ public partial class RDT_ver : System.Web.UI.Page
             AppUtils.SetCellValue(ws, "K12", 12, r_input_dict);
             AppUtils.SetCellValue(ws, "I13", 13, r_input_dict, true);
             AppUtils.SetCellValue(ws, "K13", 14, r_input_dict);
-            AppUtils.SetCellValue(ws, "I14", 15, r_input_dict);
+            AppUtils.SetCellValue(ws, "I14", 15, r_input_dict, true);
 
             AppUtils.SetCellValue(ws, "I16", 31, r_input_dict, true);
             AppUtils.SetCellValue(ws, "K16", 32, r_input_dict);
@@ -1670,7 +1671,7 @@ public partial class RDT_ver : System.Web.UI.Page
             AppUtils.SetCellValue(ws, "J2", 1, r_input_dict);
             AppUtils.SetCellValue(ws, "C3", 2, r_input_dict);
             AppUtils.SetCellValue(ws, "C4", 4, r_input_dict);
-            AppUtils.SetCellValue(ws, "C5", 5, r_input_dict);
+            AppUtils.SetCellValue(ws, "C5", 5, r_input_dict, true);
             AppUtils.SetCellValue(ws, "C8", 6, r_input_dict, true);
 
             AppUtils.SetCellValue(ws, "I10", 16, r_input_dict, true);
@@ -1759,7 +1760,7 @@ public partial class RDT_ver : System.Web.UI.Page
             AppUtils.SetCellValue(ws, "J2", 1, r_input_dict);
             AppUtils.SetCellValue(ws, "C3", 2, r_input_dict);
             AppUtils.SetCellValue(ws, "C4", 4, r_input_dict);
-            AppUtils.SetCellValue(ws, "C5", 5, r_input_dict);
+            AppUtils.SetCellValue(ws, "C5", 5, r_input_dict, true);
             AppUtils.SetCellValue(ws, "C8", 6, r_input_dict, true);
 
             AppUtils.SetCellValue(ws, "I10", 25, r_input_dict, true);
@@ -1848,7 +1849,7 @@ public partial class RDT_ver : System.Web.UI.Page
             AppUtils.SetCellValue(ws, "J2", 1, r_input_dict);
             AppUtils.SetCellValue(ws, "C3", 2, r_input_dict);
             AppUtils.SetCellValue(ws, "C4", 4, r_input_dict);
-            AppUtils.SetCellValue(ws, "C5", 5, r_input_dict);
+            AppUtils.SetCellValue(ws, "C5", 5, r_input_dict, true);
             AppUtils.SetCellValue(ws, "C8", 6, r_input_dict, true);
 
             AppUtils.SetCellValue(ws, "I10", 29, r_input_dict, true);

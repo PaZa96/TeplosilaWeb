@@ -12,7 +12,7 @@
 </head>
 <body>
     <div class="container">
-        <form id="form1" runat="server">
+        <form id="form1" runat="server" novalidate="novalidate">
             <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
             <div class="row jumbotron">
                 <div class="col-12">
@@ -198,7 +198,7 @@
                                                 </asp:Label>
                                             </div>
                                             <div class="col-12 col-md-8 row">
-                                                <div class="col-4 col-md-2">
+                                                <div class="col-4 col-md-3 col-lg-2">
                                                     <asp:Label ID="Label55" runat="server" Text="ΔPру ="></asp:Label>
                                                 </div>
                                                 <div class="row">
@@ -231,7 +231,7 @@
                                                 </asp:Label>
                                             </div>
                                             <div class="col-12 col-md-8 row">
-                                                <div class="col-4 col-md-2">
+                                                <div class="col-4 col-md-3 col-lg-2">
                                                     <asp:Label ID="Label56" runat="server" Text="P1 = "></asp:Label>
                                                 </div>
                                                 <div class="row">
@@ -264,7 +264,7 @@
                                                 </asp:Label>
                                             </div>
                                             <div class="col-12 col-md-8 row">
-                                                <div class="col-4 col-md-2">
+                                                <div class="col-4 col-md-3 col-lg-2">
                                                     <asp:Label ID="Label57" runat="server" Text="P2 = "></asp:Label>
                                                 </div>
                                                 <div class="row">
@@ -328,7 +328,7 @@
                                                 </asp:Label>
                                             </div>
                                             <div class="col-12 col-md-8 row">
-                                                <div class="col-4 col-md-2">
+                                                <div class="col-4 col-md-3 col-lg-2">
                                                     <asp:Label ID="Label13" runat="server" Text="P'1 = "></asp:Label>
                                                 </div>
                                                 <div class="row">
@@ -356,7 +356,7 @@
                                                     Text="Требуемое давление после регулятора:"></asp:Label>
                                             </div>
                                             <div class="col-12 col-md-8 row">
-                                                <div class="col-4 col-md-2">
+                                                <div class="col-4 col-md-3 col-lg-2">
                                                     <asp:Label ID="Label15" runat="server" Text="Р(треб) ="></asp:Label>
                                                 </div>
                                                 <div class="row">
@@ -400,7 +400,7 @@
                                                     Text="Требуемое давление перед регулятором:"></asp:Label>
                                             </div>
                                             <div class="col-12 col-md-8 row">
-                                                <div class="col-4 col-md-2">
+                                                <div class="col-4 col-md-3 col-lg-2">
                                                     <asp:Label ID="Label19" runat="server" Text="Р(треб) ="></asp:Label>
                                                 </div>
                                                 <div class="row">
@@ -428,7 +428,7 @@
                                                 </asp:Label>
                                             </div>
                                             <div class="col-12 col-md-8 row">
-                                                <div class="col-4 col-md-2">
+                                                <div class="col-4 col-md-3 col-lg-2">
                                                     <asp:Label ID="Label27" runat="server" Text="Р'2 = "></asp:Label>
                                                 </div>
                                                 <div class="row">
@@ -474,7 +474,7 @@
                                                 </asp:Label>
                                             </div>
                                             <div class="col-12 col-md-8 row">
-                                                <div class="col-4 col-md-2">
+                                                <div class="col-4 col-md-3 col-lg-2">
                                                     <asp:Label ID="Label31" runat="server" Text="ΔPру ="></asp:Label>
                                                 </div>
                                                 <div class="row">
@@ -516,7 +516,7 @@
                                                 </asp:Label>
                                             </div>
                                             <div class="col-12 col-md-8 row">
-                                                <div class="col-4 col-md-2">
+                                                <div class="col-4 col-md-3 col-lg-2">
                                                     <asp:Label ID="Label21" runat="server" Text="P' = "></asp:Label>
                                                 </div>
                                                 <div class="row">
@@ -524,7 +524,7 @@
                                                         Enabled="False" TextMode="Number">
                                                     </asp:TextBox>
                                                     <asp:DropDownList ID="calcrDropDownList1" runat="server" Enabled="False" CssClass="dropdown-non-left-radius"
-                                                         AutoPostBack="True" OnSelectedIndexChanged="calcrDropDownList1_SelectedIndexChanged">
+                                                        AutoPostBack="True" OnSelectedIndexChanged="calcrDropDownList1_SelectedIndexChanged">
                                                         <asp:ListItem>выбрать</asp:ListItem>
                                                         <asp:ListItem>МПа</asp:ListItem>
                                                         <asp:ListItem>кПа</asp:ListItem>
@@ -545,7 +545,7 @@
                                                 </asp:Label>
                                             </div>
                                             <div class="col-12 col-md-8 row">
-                                                <div class="col-4 col-md-2">
+                                                <div class="col-4 col-md-3 col-lg-2">
                                                     <asp:Label ID="Label23" runat="server" Text="T1 = "></asp:Label>
                                                 </div>
                                                 <div class="row">
@@ -581,7 +581,7 @@
                                                     AutoPostBack="True" Checked="True" />
                                             </div>
                                             <div class="col-12 col-md-8 row">
-                                                <div class="col-4 col-md-2">
+                                                <div class="col-4 col-md-3 col-lg-2">
                                                     <asp:Label ID="Label28" runat="server" Text="Gкл = "></asp:Label>
                                                 </div>
                                                 <div class="row">
@@ -641,7 +641,7 @@
                                     <div class="col non-padding">
                                         <asp:Label ID="maxp1ResultLabel" runat="server" Visible="False"></asp:Label>
                                     </div>
- 
+
                                     <div class="col non-padding">
                                         <asp:Label ID="labelOptyV" runat="server" Visible="False"></asp:Label>
                                     </div>
@@ -677,6 +677,7 @@
                         </asp:UpdatePanel>
                     </div>
                 </div>
+            </div>
         </form>
     </div>
 </body>
