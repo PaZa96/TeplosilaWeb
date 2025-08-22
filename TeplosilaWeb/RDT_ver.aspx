@@ -137,7 +137,7 @@
                                 <div id="aaPanel1" runat="server">
                                     <asp:Label ID="Label3" runat="server" Text="Рабочая среда:"></asp:Label>
                                     <div class="row">
-                                        <div class="col-6 col-md-3">
+                                        <div class="col-6 col-md-4 col-lg-3">
                                             <asp:RadioButtonList ID="wsRadioButtonList1" runat="server"
                                                 AutoPostBack="True" required="required" OnSelectedIndexChanged="wsRadioButtonList1_SelectedIndexChanged">
                                                 <asp:ListItem>Вода</asp:ListItem>
@@ -199,7 +199,7 @@
                                             </div>
                                             <div class="col-12 col-md-8 row">
                                                 <div class="col-4 col-md-3 col-lg-2">
-                                                    <asp:Label ID="Label55" runat="server" Text="ΔPру ="></asp:Label>
+                                                    <asp:Label ID="Label55" CssClass="label-no-wrap" runat="server" Text="ΔPру ="></asp:Label>
                                                 </div>
                                                 <div class="row">
                                                     <asp:TextBox ID="lp1TextBox2" runat="server" Enabled="False" CssClass="textbox-non-right-radius"
@@ -232,7 +232,7 @@
                                             </div>
                                             <div class="col-12 col-md-8 row">
                                                 <div class="col-4 col-md-3 col-lg-2">
-                                                    <asp:Label ID="Label56" runat="server" Text="P1 = "></asp:Label>
+                                                    <asp:Label ID="Label56" CssClass="label-no-wrap" runat="server" Text="P1 = "></asp:Label>
                                                 </div>
                                                 <div class="row">
                                                     <asp:TextBox ID="lp1TextBox3" runat="server" Enabled="False" CssClass="textbox-non-right-radius"
@@ -265,7 +265,7 @@
                                             </div>
                                             <div class="col-12 col-md-8 row">
                                                 <div class="col-4 col-md-3 col-lg-2">
-                                                    <asp:Label ID="Label57" runat="server" Text="P2 = "></asp:Label>
+                                                    <asp:Label ID="Label57" CssClass="label-no-wrap" runat="server" Text="P2 = "></asp:Label>
                                                 </div>
                                                 <div class="row">
                                                     <asp:TextBox ID="lp1TextBox4" runat="server" Enabled="False" CssClass="textbox-non-right-radius"
@@ -292,8 +292,8 @@
                                                     Text="Максимальный перепад на регуляторе:"></asp:Label>
                                             </div>
                                             <div class="col-12 col-md-8 row">
-                                                <div class="col-6 col-md-5">
-                                                    <asp:Label ID="Label58" runat="server" Text="ΔPрд(max) = Р1 - Р2 - ΔРру =">
+                                                <div class="col-8 col-md-8 col-lg-5">
+                                                    <asp:Label ID="Label58" CssClass="label-no-wrap" runat="server" Text="ΔPрд(max) = Р1 - Р2 - ΔРру =">
                                                     </asp:Label>
                                                 </div>
                                                 <div class="row">
@@ -329,7 +329,7 @@
                                             </div>
                                             <div class="col-12 col-md-8 row">
                                                 <div class="col-4 col-md-3 col-lg-2">
-                                                    <asp:Label ID="Label13" runat="server" Text="P'1 = "></asp:Label>
+                                                    <asp:Label ID="Label13" CssClass="label-no-wrap" runat="server" Text="P'1 = "></asp:Label>
                                                 </div>
                                                 <div class="row">
                                                     <asp:TextBox ID="lp2TextBox1" runat="server" Enabled="False" TextMode="Number" CssClass="textbox-non-right-radius">
@@ -357,7 +357,7 @@
                                             </div>
                                             <div class="col-12 col-md-8 row">
                                                 <div class="col-4 col-md-3 col-lg-2">
-                                                    <asp:Label ID="Label15" runat="server" Text="Р(треб) ="></asp:Label>
+                                                    <asp:Label ID="Label15" CssClass="label-no-wrap" runat="server" Text="Р(треб) ="></asp:Label>
                                                 </div>
                                                 <div class="row">
                                                     <asp:TextBox ID="lp2TextBox2" runat="server" Enabled="False" TextMode="Number" CssClass="textbox-non-right-radius">
@@ -401,7 +401,7 @@
                                             </div>
                                             <div class="col-12 col-md-8 row">
                                                 <div class="col-4 col-md-3 col-lg-2">
-                                                    <asp:Label ID="Label19" runat="server" Text="Р(треб) ="></asp:Label>
+                                                    <asp:Label ID="Label19" CssClass="label-no-wrap" runat="server" Text="Р(треб) ="></asp:Label>
                                                 </div>
                                                 <div class="row">
                                                     <asp:TextBox ID="lp3TextBox1" runat="server" Enabled="False" TextMode="Number" CssClass="textbox-non-right-radius">
@@ -429,7 +429,7 @@
                                             </div>
                                             <div class="col-12 col-md-8 row">
                                                 <div class="col-4 col-md-3 col-lg-2">
-                                                    <asp:Label ID="Label27" runat="server" Text="Р'2 = "></asp:Label>
+                                                    <asp:Label ID="Label27" CssClass="label-no-wrap" runat="server" Text="Р'2 = "></asp:Label>
                                                 </div>
                                                 <div class="row">
                                                     <asp:TextBox ID="lp3TextBox2" runat="server" Enabled="False" CssClass="textbox-non-right-radius"
@@ -475,7 +475,7 @@
                                             </div>
                                             <div class="col-12 col-md-8 row">
                                                 <div class="col-4 col-md-3 col-lg-2">
-                                                    <asp:Label ID="Label31" runat="server" Text="ΔPру ="></asp:Label>
+                                                    <asp:Label ID="Label31" CssClass="label-no-wrap" runat="server" Text="ΔPру ="></asp:Label>
                                                 </div>
                                                 <div class="row">
                                                     <asp:TextBox ID="lp4TextBox2" runat="server" Enabled="False" CssClass="textbox-non-right-radius"
@@ -517,7 +517,7 @@
                                             </div>
                                             <div class="col-12 col-md-8 row">
                                                 <div class="col-4 col-md-3 col-lg-2">
-                                                    <asp:Label ID="Label21" runat="server" Text="P' = "></asp:Label>
+                                                    <asp:Label ID="Label21" CssClass="label-no-wrap" runat="server" Text="P' = "></asp:Label>
                                                 </div>
                                                 <div class="row">
                                                     <asp:TextBox ID="calcrTextBox1" runat="server" CssClass="textbox-non-right-radius"
@@ -546,7 +546,7 @@
                                             </div>
                                             <div class="col-12 col-md-8 row">
                                                 <div class="col-4 col-md-3 col-lg-2">
-                                                    <asp:Label ID="Label23" runat="server" Text="T1 = "></asp:Label>
+                                                    <asp:Label ID="Label23" CssClass="label-no-wrap" runat="server" Text="T1 = "></asp:Label>
                                                 </div>
                                                 <div class="row">
                                                     <asp:TextBox ID="calcrTextBox2" runat="server" Enabled="False"
@@ -582,7 +582,7 @@
                                             </div>
                                             <div class="col-12 col-md-8 row">
                                                 <div class="col-4 col-md-3 col-lg-2">
-                                                    <asp:Label ID="Label28" runat="server" Text="Gкл = "></asp:Label>
+                                                    <asp:Label ID="Label28" CssClass="label-no-wrap" runat="server" Text="Gкл = "></asp:Label>
                                                 </div>
                                                 <div class="row">
                                                     <asp:TextBox ID="fprTextBox1" runat="server" Enabled="False" CssClass="textbox-non-right-radius"

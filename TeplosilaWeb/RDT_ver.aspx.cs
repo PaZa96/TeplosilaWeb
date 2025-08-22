@@ -183,19 +183,19 @@ public partial class RDT_ver : System.Web.UI.Page
 
             if (eorRadioButton1.Checked)
             {
-                listResult["A"] = new string[] { eorRadioButtonList1.SelectedValue + "-" + csr + "-" + DN + "-" + AppUtils.ConvertCommaToPoint(Kv) + (PN == 25 ? "-25" : "") };
+                listResult["A"] = new string[] { eorRadioButtonList1.SelectedValue + "-" + csr + "-" + DN + "-" + Kv + (PN == 25 ? "-25" : "") };
             }
             else if (eorRadioButton2.Checked)
             {
-                listResult["A"] = new string[] { eorRadioButtonList2.SelectedValue + "-" + csr + "-" + DN + "-" + AppUtils.ConvertCommaToPoint(Kv) + (PN == 25 ? "-25" : "") };
+                listResult["A"] = new string[] { eorRadioButtonList2.SelectedValue + "-" + csr + "-" + DN + "-" + Kv + (PN == 25 ? "-25" : "") };
             }
             else if (eorRadioButton3.Checked)
             {
-                listResult["A"] = new string[] { eorRadioButtonList3.SelectedValue + "-" + csr + "-" + DN + "-" + AppUtils.ConvertCommaToPoint(Kv) + (PN == 25 ? "-25" : "") };
+                listResult["A"] = new string[] { eorRadioButtonList3.SelectedValue + "-" + csr + "-" + DN + "-" + Kv + (PN == 25 ? "-25" : "") };
             }
             else
             {
-                listResult["A"] = new string[] { eorRadioButtonList4.SelectedValue + "-" + csr + "-" + DN + "-" + AppUtils.ConvertCommaToPoint(Kv) + (PN == 25 ? "-25" : "") };
+                listResult["A"] = new string[] { eorRadioButtonList4.SelectedValue + "-" + csr + "-" + DN + "-" + Kv + (PN == 25 ? "-25" : "") };
             }
 
 
@@ -397,7 +397,7 @@ public partial class RDT_ver : System.Web.UI.Page
 
         if (wsRadioButtonList1.SelectedIndex == 1 || wsRadioButtonList1.SelectedIndex == 2)
         {
-            workEnv = wsRadioButtonList1.SelectedValue + wsTextBox1.Text + "%, " + wsTextBox2.Text + " °С";
+            workEnv = wsRadioButtonList1.SelectedValue + " " + AppUtils.ConvertPointToComma(wsTextBox1.Text) + "%, " + AppUtils.ConvertPointToComma(wsTextBox2.Text) + " °С";
         }
         else
         {
@@ -1579,7 +1579,7 @@ public partial class RDT_ver : System.Web.UI.Page
             AppUtils.SetCellValue(ws, "J2", 1, r_input_dict);
             AppUtils.SetCellValue(ws, "C3", 2, r_input_dict);
             AppUtils.SetCellValue(ws, "C4", 4, r_input_dict);
-            AppUtils.SetCellValue(ws, "C5", 5, r_input_dict, true);
+            AppUtils.SetCellValue(ws, "C5", 5, r_input_dict);
             AppUtils.SetCellValue(ws, "C8", 6, r_input_dict, true);
 
             AppUtils.SetCellValue(ws, "I11", 9, r_input_dict, true);
@@ -1671,7 +1671,7 @@ public partial class RDT_ver : System.Web.UI.Page
             AppUtils.SetCellValue(ws, "J2", 1, r_input_dict);
             AppUtils.SetCellValue(ws, "C3", 2, r_input_dict);
             AppUtils.SetCellValue(ws, "C4", 4, r_input_dict);
-            AppUtils.SetCellValue(ws, "C5", 5, r_input_dict, true);
+            AppUtils.SetCellValue(ws, "C5", 5, r_input_dict);
             AppUtils.SetCellValue(ws, "C8", 6, r_input_dict, true);
 
             AppUtils.SetCellValue(ws, "I10", 16, r_input_dict, true);
@@ -1760,7 +1760,7 @@ public partial class RDT_ver : System.Web.UI.Page
             AppUtils.SetCellValue(ws, "J2", 1, r_input_dict);
             AppUtils.SetCellValue(ws, "C3", 2, r_input_dict);
             AppUtils.SetCellValue(ws, "C4", 4, r_input_dict);
-            AppUtils.SetCellValue(ws, "C5", 5, r_input_dict, true);
+            AppUtils.SetCellValue(ws, "C5", 5, r_input_dict);
             AppUtils.SetCellValue(ws, "C8", 6, r_input_dict, true);
 
             AppUtils.SetCellValue(ws, "I10", 25, r_input_dict, true);
@@ -1849,7 +1849,7 @@ public partial class RDT_ver : System.Web.UI.Page
             AppUtils.SetCellValue(ws, "J2", 1, r_input_dict);
             AppUtils.SetCellValue(ws, "C3", 2, r_input_dict);
             AppUtils.SetCellValue(ws, "C4", 4, r_input_dict);
-            AppUtils.SetCellValue(ws, "C5", 5, r_input_dict, true);
+            AppUtils.SetCellValue(ws, "C5", 5, r_input_dict);
             AppUtils.SetCellValue(ws, "C8", 6, r_input_dict, true);
 
             AppUtils.SetCellValue(ws, "I10", 29, r_input_dict, true);

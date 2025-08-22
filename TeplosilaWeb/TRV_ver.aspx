@@ -100,7 +100,7 @@
                                 <div id="aaPanel1" runat="server">
                                     <asp:Label ID="Label4" runat="server" Text="Рабочая среда:"></asp:Label>
                                     <div class="row">
-                                        <div class="col-6 col-md-3">
+                                        <div class="col-6 col-md-4 col-lg-3">
                                             <asp:RadioButtonList ID="wsRadioButtonList1" runat="server"
                                                 AutoPostBack="True" required="required" OnSelectedIndexChanged="wsRadioButtonList1_SelectedIndexChanged">
                                                 <asp:ListItem>Вода</asp:ListItem>
@@ -156,7 +156,7 @@
 
                                         <div class="col row">
                                             <div class="col-12 col-md-8 row">
-                                                <div class="col-4 col-md-2">
+                                                <div class="col-4 col-md-3 col-lg-2">
                                                     <asp:Label ID="Label10" runat="server" Text="&#916;Ppy' = "></asp:Label>
                                                 </div>
                                                 <div class="row">
@@ -201,7 +201,7 @@
                                                 </asp:Label>
                                             </div>
                                             <div class="col-12 col-md-8 row">
-                                                <div class="col-4 col-md-2">
+                                                <div class="col-4 col-md-3 col-lg-2">
                                                     <asp:Label ID="Label21" runat="server" Text="P' = "></asp:Label>
                                                 </div>
                                                 <div class="row">
@@ -230,7 +230,7 @@
                                                 </asp:Label>
                                             </div>
                                             <div class="col-12 col-md-8 row">
-                                                <div class="col-4 col-md-2">
+                                                <div class="col-4 col-md-3 col-lg-2">
                                                     <asp:Label ID="Label23" runat="server" Text="T1 = "></asp:Label>
                                                 </div>
                                                 <div class="row">
@@ -264,7 +264,7 @@
                                         </asp:Label>
                                         <div class="col row">
                                             <div class="col-12 col-md-8 row">
-                                                <div class="col-4 col-md-2">
+                                                <div class="col-4 col-md-3 col-lg-2">
                                                     <asp:Label ID="Label18" runat="server" Text="P'1 = "></asp:Label>
                                                 </div>
                                                 <div class="row">
@@ -291,7 +291,7 @@
                                                     <asp:Label ID="Label57" runat="server" Text="Температура пара через клапан:">
                                                     </asp:Label>
                                                 </div>
-                                                <div class="col-4 col-md-2">
+                                                <div class="col-4 col-md-3 col-lg-2">
                                                     <asp:Label ID="Label58" runat="server" Text="T1 = "></asp:Label>
                                                 </div>
                                                 <div class="row">
@@ -328,7 +328,7 @@
                                                     AutoPostBack="True" Checked="True" />
                                             </div>
                                             <div class="col-12 col-md-8 row">
-                                                <div class="col-4 col-md-2">
+                                                <div class="col-4 col-md-3 col-lg-2">
                                                     <asp:Label ID="Label28" runat="server" Text="Gкл = "></asp:Label>
                                                 </div>
                                                 <div class="row">

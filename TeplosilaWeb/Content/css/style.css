@@ -85,7 +85,7 @@ input[type=radio] {
 }
 
 input[type=number] {
-    width: 7.5rem;
+    width: 7rem;
     padding: 0px;
     box-sizing: border-box;
     border-radius: 4px;
@@ -111,7 +111,7 @@ input[type="number"] {
     }
 
 input[type=text] {
-    width: 7.5rem;
+    width: 7rem;
     padding: 2px;
     margin: 3px 0;
     box-sizing: border-box;
@@ -169,6 +169,10 @@ input[disabled] {
 
 .show-btn {
     display:inline-block;
+}
+
+.label-no-wrap{
+    text-wrap:none;
 }
 
 .table-result {
