@@ -357,7 +357,7 @@
                                             </div>
                                             <div class="col-12 col-md-8 row">
                                                 <div class="col-4 col-md-3 col-lg-2">
-                                                    <asp:Label ID="Label15" CssClass="label-no-wrap" runat="server" Text="Р(треб) ="></asp:Label>
+                                                    <asp:Label ID="Label15" CssClass="label-no-wrap long-label" runat="server" Text="Р(треб) ="></asp:Label>
                                                 </div>
                                                 <div class="row">
                                                     <asp:TextBox ID="lp2TextBox2" runat="server" Enabled="False" TextMode="Number" CssClass="textbox-non-right-radius">
@@ -401,7 +401,7 @@
                                             </div>
                                             <div class="col-12 col-md-8 row">
                                                 <div class="col-4 col-md-3 col-lg-2">
-                                                    <asp:Label ID="Label19" CssClass="label-no-wrap" runat="server" Text="Р(треб) ="></asp:Label>
+                                                    <asp:Label ID="Label19" CssClass="label-no-wrap long-label" runat="server" Text="Р(треб) = "></asp:Label>
                                                 </div>
                                                 <div class="row">
                                                     <asp:TextBox ID="lp3TextBox1" runat="server" Enabled="False" TextMode="Number" CssClass="textbox-non-right-radius">
