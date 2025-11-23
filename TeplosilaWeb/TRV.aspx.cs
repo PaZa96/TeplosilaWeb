@@ -3893,7 +3893,17 @@ public partial class TRV : System.Web.UI.Page
                 }
                 else
                 {
-                    getDimsV(tvRadioButtonList1.SelectedIndex == 0, listResult["C"].ElementAt(i), tmpMarkPriv, ref wsHtrv, ref wsGtrv,
+                    string DNName = "";
+
+                    if (tvRadioButtonList1.SelectedIndex == 1 && listResult["B"].ElementAt(i) == "560")
+                    {
+                        DNName = "201";
+                    } else
+                    {
+                        DNName = listResult["C"].ElementAt(i);
+                    }
+
+                    getDimsV(tvRadioButtonList1.SelectedIndex == 0, DNName, tmpMarkPriv, ref wsHtrv, ref wsGtrv,
                     ref tmpPP54, ref tmpPP55, ref tmpPP56, ref tmpPP57, ref tmpPP58, ref tmpPP59, ref tmpPP60,
                     ref tmpPP61, ref tmpPP62, ref tmpPP63, ref tmpPP65, ref tmpPP66, ref tmpPP67, ref tmpPP68, listResult["B"].ElementAt(i));
 
