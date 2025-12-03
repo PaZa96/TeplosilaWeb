@@ -6582,7 +6582,7 @@ public partial class TRV : System.Web.UI.Page
 
             if (tvRadioButtonList1.SelectedIndex == 0)
             {
-                if ((v_input_dict[40] == "150 ˚С" && Convert.ToInt32(v_input_dict[43]) <= 150) || v_input_dict[40] == "220 ˚С")
+                if ((v_input_dict[40] == "150 ˚С" && Convert.ToInt32(v_input_dict[43]) <= 150) || v_input_dict[40] == "220 ˚С" || Convert.ToInt32(v_input_dict[43]) == 200) 
                 {
                     ws.Pictures.Add(HttpContext.Current.Server.MapPath("\\Content\\images\\trv\\габаритный TRV и TRV-T.png"), "A39");
                 }
