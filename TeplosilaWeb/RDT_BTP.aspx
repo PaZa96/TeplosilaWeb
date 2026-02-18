@@ -1,5 +1,5 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="RDT.aspx.cs" Inherits="RDT" Culture="ru-RU"%>
-<% @Import Namespace="System.Globalization" %>
+
 <!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -13,17 +13,11 @@
 </head>
 
 <body>
-    <div class="container">
+    <div class="container-fluid">
         <form id="form1" runat="server" novalidate="novalidate">
             <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
             <div class="row jumbotron">
-                <div class="col-12">
-                    <nav class="nav nav-tabs">
-                        <a class="nav-link active" aria-current="page" href="#">Стандартный расчет</a>
-                        <a class="nav-link" href="/RDT_ver.aspx">Поверочный расчет</a>
-                    </nav>
-                </div>
-                <div class="col-xs-12 col">
+                <div class="col-12 col">
                     <div class="col border border-non-top">
                         <asp:UpdatePanel ID="UpdatePanel2" runat="server" UpdateMode="Conditional">
                             <ContentTemplate>
@@ -50,9 +44,9 @@
                                     <div class="col-6 col-md-3">
                                         <asp:RadioButtonList ID="ws1RadioButtonList1" runat="server" AutoPostBack="True"
                                             OnSelectedIndexChanged="ws1RadioButtonList1_SelectedIndexChanged">
-                                            <asp:ListItem>Вода</asp:ListItem>
-                                            <asp:ListItem>Этиленгликоль</asp:ListItem>
-                                            <asp:ListItem>Пропиленгликоль</asp:ListItem>
+                                            <asp:ListItem Selected="True">Вода</asp:ListItem>
+                                            <asp:ListItem Enabled="False">Этиленгликоль</asp:ListItem>
+                                            <asp:ListItem Enabled="False">Пропиленгликоль</asp:ListItem>
                                             <asp:ListItem Enabled="False">Водяной пар</asp:ListItem>
                                         </asp:RadioButtonList>
                                        
@@ -138,10 +132,6 @@
                                             <asp:ListItem>м. в. ст.</asp:ListItem>
                                         </asp:DropDownList>
                                         </div>
-                                        <div class="col-12 col-md-6">
-                                        <asp:HyperLink ID="HyperLink2" runat="server" CssClass="btn-link-pdf" NavigateUrl="/Content/data/calcRDT.pdf" Target="_new">Определение
-                                                потерь давления на регуляторе перепада давления</asp:HyperLink>
-                                            </div>
                                         <div>
                                         <asp:CustomValidator ID="CustomValidator10" runat="server"
                                             ControlToValidate="lp1DropDownList1" ErrorMessage="CustomValidator"
@@ -640,7 +630,7 @@
 
                     </div>
                 </div>
-                <div class="col-md-2">
+                <div class="col-md-2" style="display: none;">
                     <asp:UpdatePanel ID="UpdatePanel16" class="block-img" runat="server">
                         <ContentTemplate>
                             <asp:Image ID="rPictureBox" runat="server" class="col valve-image non-padding" Visible="False" />
@@ -756,7 +746,10 @@
                 </div>
             </div>
         </form>
-    </div> 
+    </div>
+    <script src="./Scripts/jquery-3.7.1.min.js"></script>
+    <script src="https://ts-btp.techinby.com/libs/teplosila/rdt/0.1.0/rdt.min.js"></script>
+    <script src="./Scripts/rdt.btp.js"></script>
 
 </body>
 
