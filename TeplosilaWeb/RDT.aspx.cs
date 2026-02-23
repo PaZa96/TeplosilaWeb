@@ -45,6 +45,7 @@ public partial class RDT : System.Web.UI.Page
                 AppUtils.readFile(@"Content/data/data.txt", JsonKeyName);
             } else
             {
+
                 if (Session[JsonKeyName] == null)
                 {
                     LabelError.Text = "Сессия завершена. Пожалуйста, перезагрузите страницу.";
