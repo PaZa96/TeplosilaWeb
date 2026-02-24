@@ -755,6 +755,7 @@
                     </div>
                 </div>
             </div>
+            <asp:HiddenField ID="hfToken" runat="server" />
         </form>
     </div> 
 

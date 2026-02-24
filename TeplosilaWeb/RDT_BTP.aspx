@@ -1,4 +1,5 @@
-﻿<%@ Page Language="C#" CodeFile="RDT.aspx.cs" Inherits="RDT" Culture="ru-RU" %>
+﻿<%@ Page Language="C#" CodeFile="RDT.aspx.cs" Inherits="RDT" Culture="ru-RU" EnableEventValidation="False" EnableViewState="True" %>
+<% @Import Namespace="System.Globalization" %>
 
 <!DOCTYPE html>
 
@@ -51,11 +52,10 @@
 
                                 <div class="col-12 sub-col">
                                     <asp:RadioButtonList ID="lp5RadioButtonList1" runat="server"
-                                        AutoPostBack="False"
                                         OnSelectedIndexChanged="lp5RadioButtonList1_SelectedIndexChanged"
-                                        Enabled="False" Style="height: 46px">
-                                        <asp:ListItem>Перегретый</asp:ListItem>
-                                        <asp:ListItem>Насыщеный</asp:ListItem>
+                                        Style="height: 46px">
+                                        <asp:ListItem Enabled="False">Перегретый</asp:ListItem>
+                                        <asp:ListItem Enabled="False">Насыщеный</asp:ListItem>
                                     </asp:RadioButtonList>
                                 </div>
 
@@ -72,7 +72,7 @@
                             </div>
                             <div class="col-6 col-md-6">
                                 <br />
-                                <asp:TextBox ID="ws1TextBox1" runat="server" Enabled="False" type="number"
+                                <asp:TextBox ID="ws1TextBox1" runat="server" type="number" Enabled="False"
                                     TextMode="Number" CausesValidation="True">
                                 </asp:TextBox>
                                 <asp:Label ID="Label6" runat="server" Text="% (от 5% до 65%)"></asp:Label>
@@ -92,8 +92,8 @@
                                     ErrorMessage="CustomValidator" ForeColor="Red"
                                     OnServerValidate="CustomValidator17_ServerValidate" SetFocusOnError="True"
                                     ValidateEmptyText="True"></asp:CustomValidator>
-                                <asp:Label ID="LabelSteam" runat="server" Text="N" Enabled="false"
-                                    Visible="false"></asp:Label>
+                                <asp:Label ID="LabelSteam" runat="server" Text="N" Enabled="false" Visible="false"
+                                    ></asp:Label>
                                 <br />
                             </div>
 
@@ -102,41 +102,42 @@
                     <div>
                         <div id="lpPane1" runat="server" class="col border">
 
-                            <asp:Label ID="Label20" runat="server" Text="Потери давления на клапане регулятора:" Visible="false">
+                            <asp:Label ID="Label20" runat="server" Text="Потери давления на клапане регулятора:" >
                             </asp:Label>
                             <div class="border">
                                 <asp:Label ID="Label26" runat="server" Text="Регулятор перепада давления:">
                                 </asp:Label>
                                 <br />
-                                <div class="panel-hide col" id="lp1" runat="server">
+                                <div class="col" id="lp1" runat="server">
                                     <div class="row">
-                                        <div class="col-12 col-md-6">
+                                        <div class="col">
                                             <asp:Label ID="lpLabel1" runat="server" Text="Потери давления на регуляторе:">
                                             </asp:Label>
                                             <br />
                                             <asp:Label ID="Label54" runat="server" Text="ΔPрд ="></asp:Label>
-                                            <asp:TextBox ID="lp1TextBox1" runat="server" Enabled="False"
+                                            <asp:TextBox ID="lp1TextBox1" runat="server"
                                                 TextMode="Number"></asp:TextBox>
-                                            <asp:DropDownList ID="lp1DropDownList1" runat="server" Enabled="False"
+                                            <asp:DropDownList ID="lp1DropDownList1" runat="server"
                                                 OnSelectedIndexChanged="lp1DropDownList1_SelectedIndexChanged"
-                                                AutoPostBack="True">
+                                                >
                                                 <asp:ListItem>выбрать</asp:ListItem>
                                                 <asp:ListItem>МПа</asp:ListItem>
                                                 <asp:ListItem>кПа</asp:ListItem>
                                                 <asp:ListItem>бар</asp:ListItem>
                                                 <asp:ListItem>м. в. ст.</asp:ListItem>
                                             </asp:DropDownList>
-                                        </div>
+                                        
                                         <div>
                                             <asp:CustomValidator ID="CustomValidator10" runat="server"
                                                 ControlToValidate="lp1DropDownList1" ErrorMessage="CustomValidator"
                                                 Display="Dynamic" ForeColor="Red"
                                                 OnServerValidate="CustomValidator10_ServerValidate" SetFocusOnError="True"
                                                 ValidateEmptyText="True"></asp:CustomValidator>
-                                            <asp:Label ID="LabelCustomValid" runat="server" ForeColor="Red"
+                                            <asp:Label ID="LabelCustomValid" runat="server" ForeColor="Red" Visible="False"
                                                 Text="Суммарные потери давления на регуляторе и регулируемом участке превышают допустимый перепад давлений на вводе"
-                                                Visible="False"></asp:Label>
+                                                ></asp:Label>
                                         </div>
+										</div>
                                     </div>
                                     <div class="row">
                                         <div class="col">
@@ -146,11 +147,11 @@
                                             <br />
                                             <asp:Label ID="Label55" runat="server" Text="ΔPру ="></asp:Label>
 
-                                            <asp:TextBox ID="lp1TextBox2" runat="server" Enabled="False"
+                                            <asp:TextBox ID="lp1TextBox2" runat="server"
                                                 TextMode="Number"></asp:TextBox>
-                                            <asp:DropDownList ID="lp1DropDownList2" runat="server" Enabled="False"
+                                            <asp:DropDownList ID="lp1DropDownList2" runat="server"
                                                 OnSelectedIndexChanged="lp1DropDownList2_SelectedIndexChanged"
-                                                AutoPostBack="True">
+                                                >
                                                 <asp:ListItem>выбрать</asp:ListItem>
                                                 <asp:ListItem>МПа</asp:ListItem>
                                                 <asp:ListItem>кПа</asp:ListItem>
@@ -172,11 +173,11 @@
                                             <br />
                                             <asp:Label ID="Label56" runat="server" Text="P1 = "></asp:Label>
                                             &nbsp;&nbsp;
-                                        &nbsp;<asp:TextBox ID="lp1TextBox3" runat="server" Enabled="False"
+                                        &nbsp;<asp:TextBox ID="lp1TextBox3" runat="server"
                                             TextMode="Number"></asp:TextBox>
-                                            <asp:DropDownList ID="lp1DropDownList3" runat="server" Enabled="False"
+                                            <asp:DropDownList ID="lp1DropDownList3" runat="server"
                                                 OnSelectedIndexChanged="lp1DropDownList3_SelectedIndexChanged"
-                                                AutoPostBack="True">
+                                                >
                                                 <asp:ListItem>выбрать</asp:ListItem>
                                                 <asp:ListItem>МПа</asp:ListItem>
                                                 <asp:ListItem>кПа</asp:ListItem>
@@ -199,10 +200,10 @@
                                             <asp:Label ID="Label57" runat="server" Text="P2 = "></asp:Label>
                                             &nbsp;&nbsp;
                                         &nbsp;<asp:TextBox ID="lp1TextBox4" runat="server" Enabled="False"
-                                            TextMode="Number" AutoPostBack="True"></asp:TextBox>
+                                            TextMode="Number" ></asp:TextBox>
                                             <asp:DropDownList ID="lp1DropDownList4" runat="server" Enabled="False"
                                                 OnSelectedIndexChanged="lp1DropDownList4_SelectedIndexChanged"
-                                                AutoPostBack="True">
+                                                >
                                                 <asp:ListItem>выбрать</asp:ListItem>
                                                 <asp:ListItem>МПа</asp:ListItem>
                                                 <asp:ListItem>кПа</asp:ListItem>
@@ -249,7 +250,7 @@
                                     </asp:TextBox>
                                     &nbsp;<asp:DropDownList ID="lp2DropDownList1" runat="server" Enabled="False"
                                         OnSelectedIndexChanged="lp2DropDownList1_SelectedIndexChanged"
-                                        AutoPostBack="True">
+                                        >
                                         <asp:ListItem>выбрать</asp:ListItem>
                                         <asp:ListItem>МПа</asp:ListItem>
                                         <asp:ListItem>кПа</asp:ListItem>
@@ -270,7 +271,7 @@
                                     </asp:TextBox>
                                     &nbsp;<asp:DropDownList ID="lp2DropDownList2" runat="server" Enabled="False"
                                         OnSelectedIndexChanged="lp2DropDownList2_SelectedIndexChanged"
-                                        AutoPostBack="True">
+                                        >
                                         <asp:ListItem>выбрать</asp:ListItem>
                                         <asp:ListItem>МПа</asp:ListItem>
                                         <asp:ListItem>кПа</asp:ListItem>
@@ -296,7 +297,7 @@
                                             TextMode="Number"></asp:TextBox>&nbsp;
                                         <asp:DropDownList ID="lp5DropDownList1" runat="server" Enabled="False"
                                             OnSelectedIndexChanged="lp5DropDownList1_SelectedIndexChanged"
-                                            AutoPostBack="True">
+                                            >
                                             <asp:ListItem>выбрать</asp:ListItem>
                                             <asp:ListItem>МПа</asp:ListItem>
                                             <asp:ListItem>кПа</asp:ListItem>
@@ -317,7 +318,7 @@
                                         TextMode="Number"></asp:TextBox>
                                     &nbsp;<asp:DropDownList ID="lp5DropDownList2" runat="server" Enabled="False"
                                         OnSelectedIndexChanged="lp5DropDownList2_SelectedIndexChanged"
-                                        AutoPostBack="True">
+                                        >
                                         <asp:ListItem>выбрать</asp:ListItem>
                                         <asp:ListItem>МПа</asp:ListItem>
                                         <asp:ListItem>кПа</asp:ListItem>
@@ -367,7 +368,7 @@
                                     </asp:TextBox>
                                     &nbsp;<asp:DropDownList ID="lp3DropDownList1" runat="server" Enabled="False"
                                         OnSelectedIndexChanged="lp3DropDownList1_SelectedIndexChanged"
-                                        AutoPostBack="True">
+                                        >
                                         <asp:ListItem>выбрать</asp:ListItem>
                                         <asp:ListItem>МПа</asp:ListItem>
                                         <asp:ListItem>кПа</asp:ListItem>
@@ -389,7 +390,7 @@
                                             TextMode="Number"></asp:TextBox>
                                     &nbsp;<asp:DropDownList ID="lp3DropDownList2" runat="server" Enabled="False"
                                         OnSelectedIndexChanged="lp3DropDownList2_SelectedIndexChanged"
-                                        AutoPostBack="True">
+                                        >
                                         <asp:ListItem>выбрать</asp:ListItem>
                                         <asp:ListItem>МПа</asp:ListItem>
                                         <asp:ListItem>кПа</asp:ListItem>
@@ -425,7 +426,7 @@
                                             TextMode="Number"></asp:TextBox>
                                     &nbsp;<asp:DropDownList ID="lp4DropDownList2" runat="server" Enabled="False"
                                         OnSelectedIndexChanged="lp4DropDownList2_SelectedIndexChanged"
-                                        AutoPostBack="True">
+                                        >
                                         <asp:ListItem>выбрать</asp:ListItem>
                                         <asp:ListItem>МПа</asp:ListItem>
                                         <asp:ListItem>кПа</asp:ListItem>
@@ -456,7 +457,7 @@
                                         <asp:TextBox ID="calcrTextBox1" runat="server" Enabled="False"
                                             TextMode="Number" CausesValidation="True">
                                         </asp:TextBox>
-                                <asp:DropDownList ID="calcrDropDownList1" runat="server" AutoPostBack="True"
+                                <asp:DropDownList ID="calcrDropDownList1" runat="server" 
                                     Enabled="False"
                                     OnSelectedIndexChanged="calcrDropDownList1_SelectedIndexChanged">
                                     <asp:ListItem>выбрать</asp:ListItem>
@@ -493,12 +494,12 @@
 
                     <div>
                         <div class="col border border-non-bottom" id="fpr1" runat="server">
-                            <asp:Label ID="Label31" runat="server" Text="Расход через регулятор давления:" Visible="false"></asp:Label>
+                            <asp:Label ID="Label31" runat="server" Text="Расход через регулятор давления:" ></asp:Label>
                             <div>
                                 <div class="flow-radio-label">
                                     <asp:RadioButton ID="fprRadioButton1" runat="server"
                                         Text="Задать максимальную величину расхода через регулятор давления:"
-                                        AutoPostBack="True" OnCheckedChanged="fprRadioButton1_CheckedChanged"
+                                         OnCheckedChanged="fprRadioButton1_CheckedChanged"
                                         Enabled="False" />
                                 </div>
                                 <div class="col panel-hide sub-col" id="fpr1_1" runat="server">
@@ -506,7 +507,7 @@
                                     &nbsp;&nbsp;
                                         <asp:TextBox ID="fprTextBox1" runat="server" Enabled="False"
                                             TextMode="Number"></asp:TextBox>
-                                    <asp:DropDownList ID="fprDropDownList1" runat="server" AutoPostBack="True"
+                                    <asp:DropDownList ID="fprDropDownList1" runat="server" 
                                         Enabled="False"
                                         OnSelectedIndexChanged="fprDropDownList1_SelectedIndexChanged">
                                         <asp:ListItem>выбрать</asp:ListItem>
@@ -532,7 +533,7 @@
                             <div class="flow-radio-label">
                                 <asp:RadioButton ID="fprRadioButton2" runat="server"
                                     Text="Вычислить максимальную величину расхода через регулятор давления:"
-                                    AutoPostBack="True" OnCheckedChanged="fprRadioButton2_CheckedChanged"
+                                     OnCheckedChanged="fprRadioButton2_CheckedChanged"
                                     Enabled="False" />
                             </div>
                             <div class="col panel-hide sub-col" id="fpr2_1" runat="server">
@@ -567,7 +568,7 @@
                                 </asp:Label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                         <asp:TextBox ID="fprTextBox4" runat="server" Enabled="False" TextMode="Number">
                                         </asp:TextBox>
-                                <asp:DropDownList ID="fprDropDownList2" runat="server" AutoPostBack="True"
+                                <asp:DropDownList ID="fprDropDownList2" runat="server" 
                                     Enabled="False"
                                     OnSelectedIndexChanged="fprDropDownList2_SelectedIndexChanged">
                                     <asp:ListItem class="dropdown-item">выбрать</asp:ListItem>
@@ -600,7 +601,7 @@
                 </div>
                 <div class="col-md-2" style="display: none;">
 
-                    <asp:Image ID="rPictureBox" runat="server" class="col valve-image non-padding" Visible="False" />
+                    <asp:Image ID="rPictureBox" runat="server" class="col valve-image non-padding"  />
 
                 </div>
                 <div class="col-12 col-md-10">
@@ -620,31 +621,31 @@
 
                         <div id="resultPanel" runat="server">
                             <asp:Label ID="Label52" runat="server" Enabled="False" Text="Результаты расчёта"
-                                Visible="False" Font-Bold="True" Font-Size="Medium"></asp:Label>
+                                 Font-Bold="True" Font-Size="Medium"></asp:Label>
 
                             <div class="col non-padding">
-                                <asp:Label ID="ws1ResultLabel" runat="server" Visible="False"></asp:Label>
+                                <asp:Label ID="ws1ResultLabel" runat="server" ></asp:Label>
                             </div>
                             <div class="col non-padding">
-                                <asp:Label ID="maxt1ResultLabel" runat="server" Visible="False"></asp:Label>
+                                <asp:Label ID="maxt1ResultLabel" runat="server" ></asp:Label>
                             </div>
                             <div class="col non-padding">
-                                <asp:Label ID="maxp1ResultLabel" runat="server" Visible="False"></asp:Label>
+                                <asp:Label ID="maxp1ResultLabel" runat="server" ></asp:Label>
                             </div>
                             <div class="col non-padding">
-                                <asp:Label ID="calcDNLabel" runat="server" Visible="False">Расчетный диаметр - </asp:Label>
-                                <asp:Label ID="calcDNLabelVal" runat="server" Visible="False"></asp:Label>
+                                <asp:Label ID="calcDNLabel" runat="server" >Расчетный диаметр - </asp:Label>
+                                <asp:Label ID="calcDNLabelVal" runat="server" ></asp:Label>
                             </div>
                             <div class="col non-padding">
-                                <asp:Label ID="calcCapacityLabel" runat="server" Visible="False">Расчетная пропускная способность - </asp:Label>
-                                <asp:Label ID="calcCapacityLabelVal" runat="server" Visible="False"></asp:Label>
+                                <asp:Label ID="calcCapacityLabel" runat="server" >Расчетная пропускная способность - </asp:Label>
+                                <asp:Label ID="calcCapacityLabelVal" runat="server" ></asp:Label>
                             </div>
                             <div class="col non-padding">
-                                <asp:Label ID="labelOptyV" runat="server" Visible="False"></asp:Label>
+                                <asp:Label ID="labelOptyV" runat="server" ></asp:Label>
                             </div>
                             <div class="table-responsive-lg" onclick="ShowBTN()">
                                 <asp:GridView ID="GridView1" CssClass="table table-result rdt" runat="server"
-                                    Font-Size="X-Small" Visible="False"
+                                    Font-Size="X-Small" 
                                     OnSelectedIndexChanged="GridView1_SelectedIndexChanged"
                                     AutoGenerateSelectButton="True">
                                     <RowStyle Font-Size="Small" />
@@ -653,10 +654,10 @@
                             </div>
                             <div class="col non-padding">
                                 <asp:Label ID="Label53" runat="server" CssClass="show-btn" Text="Объект:"
-                                    Visible="False">
+                                    >
                                 </asp:Label>
 
-                                <asp:TextBox ID="objTextBox1" runat="server" Enabled="False" Visible="False" CssClass="obj-field"></asp:TextBox>
+                                <asp:TextBox ID="objTextBox1" runat="server" Enabled="False"  CssClass="obj-field"></asp:TextBox>
                             </div>
                         </div>
 
@@ -704,12 +705,8 @@
                     </div>
                 </div>
             </div>
-            <asp:HiddenField ID="hiddenPrefill" runat="server" />
-
-<asp:Button ID="btnApplyPrefill"
-            runat="server"
-            Style="display:none"
-            OnClick="btnApplyPrefill_Click" />
+            <asp:HiddenField ID="hfToken" runat="server" />
+			<asp:HiddenField ID="hfPayload" runat="server" />
         </form>
     </div>
 

@@ -184,6 +184,11 @@ public static class AppUtils
         HttpContext.Current.Session[id] = key;
     }
 
+    public static void SaveKeyToSession(string id, string token, int key)
+    {
+        StateStore.Set(token, id, key);
+    }
+
     public static void readFile(string jsonPathName, string JsonKeyName)
     {
 
@@ -192,6 +197,18 @@ public static class AppUtils
         if (jsonText != null)
         {
             HttpContext.Current.Session[JsonKeyName] = JsonConvert.DeserializeObject(jsonText);
+        }
+
+    }
+
+    public static void readFile(string jsonPathName, string token, string JsonKeyName)
+    {
+
+        string jsonText = File.ReadAllText(HttpContext.Current.Server.MapPath(jsonPathName));
+
+        if (jsonText != null)
+        {
+            StateStore.Set(token, JsonKeyName, JsonConvert.DeserializeObject(jsonText));
         }
 
     }

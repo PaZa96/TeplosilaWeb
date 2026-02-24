@@ -24,6 +24,7 @@ public partial class RDT : System.Web.UI.Page
     public dynamic dataFromFile;
     double minVar = 0.000000001;
     private const string JsonKeyName = "JSON_RDT";
+    private string _token;
 
     public Dictionary<int, string> r_input_dict = new Dictionary<int, string>();
 
@@ -33,6 +34,12 @@ public partial class RDT : System.Web.UI.Page
         {
             if (!IsPostBack)
             {
+                if (string.IsNullOrEmpty(hfToken.Value)) //уникальный токен
+                { 
+                    hfToken.Value = Guid.NewGuid().ToString();
+                    _token = hfToken.Value;
+                }
+
                 Logger.InitLogger(); //инициализация - требуется один раз в начале
               
                 string ctrlname = Page.Request.Params["__EVENTTARGET"];
@@ -42,17 +49,19 @@ public partial class RDT : System.Web.UI.Page
                     ScriptManager.RegisterStartupScript(this.Page, Page.GetType(), "MyClientScript", "javascript:HideBTN()", true);
                 }
 
-                AppUtils.readFile(@"Content/data/data.txt", JsonKeyName);
+                AppUtils.readFile(@"Content/data/data.txt", hfToken.Value,  JsonKeyName);
             } else
             {
+                _token = hfToken.Value;
+                dataFromFile = StateStore.Get<Newtonsoft.Json.Linq.JObject>(_token, JsonKeyName);
 
-                if (Session[JsonKeyName] == null)
+                if (dataFromFile == null)
                 {
                     LabelError.Text = "Сессия завершена. Пожалуйста, перезагрузите страницу.";
                     return;
                 }
 
-                dataFromFile = Session[JsonKeyName];
+                
                 LabelError.Text = "";
                 fprLabelError.Text = "";
                 LabelCustomValid.Visible = false;
@@ -148,23 +157,23 @@ public partial class RDT : System.Web.UI.Page
 
         if (ws1RadioButtonList1.SelectedIndex != 3)
         {
-            flag25Bar = (MathUtils.convertArrToBar(lp1DropDownList3, lp1TextBox3) > PressureBeforeValve3x) || //Регулятор перепада давления
-                        (MathUtils.convertArrToBar(lp1DropDownList4, lp1TextBox4) > PressureBeforeValve3x) ||
-                        (MathUtils.convertArrToBar(lp2DropDownList1, lp2TextBox1) > PressureBeforeValve3x) ||  //Регулятор давления "после себя"
-                        (MathUtils.convertArrToBar(lp2DropDownList2, lp2TextBox2) > PressureBeforeValve3x) ||
-                        (MathUtils.convertArrToBar(lp3DropDownList1, lp3TextBox1) > PressureBeforeValve3x) || //Регулятор давления "до себя"
-                        (MathUtils.convertArrToBar(lp3DropDownList2, lp3TextBox2) > PressureBeforeValve3x) ||
-                        (MathUtils.convertArrToBar(lp4DropDownList2, lp4TextBox2) > PressureBeforeValve3x) || //Регулятор "перепуска"
-                        (MathUtils.convertArrToBar(calcrDropDownList1, calcrTextBox1) > PressureBeforeValve3x); // Расчет регулятора давления на кавитацию:
+            flag25Bar = (MathUtils.convertArrToBar(_token, lp1DropDownList3, lp1TextBox3) > PressureBeforeValve3x) || //Регулятор перепада давления
+                        (MathUtils.convertArrToBar(_token, lp1DropDownList4, lp1TextBox4) > PressureBeforeValve3x) ||
+                        (MathUtils.convertArrToBar(_token, lp2DropDownList1, lp2TextBox1) > PressureBeforeValve3x) ||  //Регулятор давления "после себя"
+                        (MathUtils.convertArrToBar(_token, lp2DropDownList2, lp2TextBox2) > PressureBeforeValve3x) ||
+                        (MathUtils.convertArrToBar(_token, lp3DropDownList1, lp3TextBox1) > PressureBeforeValve3x) || //Регулятор давления "до себя"
+                        (MathUtils.convertArrToBar(_token, lp3DropDownList2, lp3TextBox2) > PressureBeforeValve3x) ||
+                        (MathUtils.convertArrToBar(_token, lp4DropDownList2, lp4TextBox2) > PressureBeforeValve3x) || //Регулятор "перепуска"
+                        (MathUtils.convertArrToBar(_token, calcrDropDownList1, calcrTextBox1) > PressureBeforeValve3x); // Расчет регулятора давления на кавитацию:
         } else
         {
             if(AppUtils.customConverterToDouble(lp5TextBox3.Text) > 120)
             {
-                if ((MathUtils.convertArrToBar(lp5DropDownList1, lp5TextBox1) <= (16 - 0.04 * (AppUtils.customConverterToDouble(lp5TextBox3.Text) - 120))))
+                if ((MathUtils.convertArrToBar(_token, lp5DropDownList1, lp5TextBox1) <= (16 - 0.04 * (AppUtils.customConverterToDouble(lp5TextBox3.Text) - 120))))
                 {
                     flag25Bar = false;
                 }
-                else if ((MathUtils.convertArrToBar(lp5DropDownList1, lp5TextBox1) <= (25 - 0.025 * (AppUtils.customConverterToDouble(lp5TextBox3.Text) - 120))))
+                else if ((MathUtils.convertArrToBar(_token, lp5DropDownList1, lp5TextBox1) <= (25 - 0.025 * (AppUtils.customConverterToDouble(lp5TextBox3.Text) - 120))))
                 {
                     flag25Bar = true;
                 }
@@ -175,9 +184,9 @@ public partial class RDT : System.Web.UI.Page
             } 
             else 
             {
-                flag25Bar = (MathUtils.convertArrToBar(lp5DropDownList1, lp5TextBox1) > PressureBeforeValve3x) || //Регулятор давления "после себя" Пар
-                     (MathUtils.convertArrToBar(lp5DropDownList2, lp5TextBox2) > PressureBeforeValve3x) ||
-                     (MathUtils.convertArrToBar(calcrDropDownList1, calcrTextBox1) > PressureBeforeValve3x); // Расчет регулятора давления на кавитацию:
+                flag25Bar = (MathUtils.convertArrToBar(_token, lp5DropDownList1, lp5TextBox1) > PressureBeforeValve3x) || //Регулятор давления "после себя" Пар
+                     (MathUtils.convertArrToBar(_token, lp5DropDownList2, lp5TextBox2) > PressureBeforeValve3x) ||
+                     (MathUtils.convertArrToBar(_token, calcrDropDownList1, calcrTextBox1) > PressureBeforeValve3x); // Расчет регулятора давления на кавитацию:
             } 
             
         }
@@ -1339,8 +1348,7 @@ public partial class RDT : System.Web.UI.Page
                 r_in_dict.Add(61, (Label38.Text));
             }
 
-            Session["r_input_dict"] = r_in_dict;
-
+            StateStore.Set(_token, "r_input_dict", r_in_dict);
         }
         catch (Exception e)
         {
@@ -1444,7 +1452,7 @@ public partial class RDT : System.Web.UI.Page
 
                 if (ws1RadioButtonList1.SelectedIndex != 3)
                 {
-                    if (MathUtils.convertArrToBar(lp1DropDownList3, lp1TextBox3) > PressureBeforeValve2x)
+                    if (MathUtils.convertArrToBar(_token, lp1DropDownList3, lp1TextBox3) > PressureBeforeValve2x)
                     {
                         CustomValidator1.ErrorMessage = "На давление свыше 25 бар вариантов нет";
                         args.IsValid = false;
@@ -1452,7 +1460,7 @@ public partial class RDT : System.Web.UI.Page
                     }
                 } else
                 {
-                    if (MathUtils.convertArrToBar(lp1DropDownList3, lp1TextBox3) > PressureBeforeValve3x)
+                    if (MathUtils.convertArrToBar(_token, lp1DropDownList3, lp1TextBox3) > PressureBeforeValve3x)
                     {
                         CustomValidator1.ErrorMessage = "На давление свыше 16 бар вариантов нет";
                         args.IsValid = false;
@@ -1487,7 +1495,7 @@ public partial class RDT : System.Web.UI.Page
                     args.IsValid = false;
                     return;
                 }
-                if (MathUtils.convertArrToBar(lp1DropDownList4, lp1TextBox4) >= MathUtils.convertArrToBar(lp1DropDownList3, lp1TextBox3))
+                if (MathUtils.convertArrToBar(_token, lp1DropDownList4, lp1TextBox4) >= MathUtils.convertArrToBar(_token, lp1DropDownList3, lp1TextBox3))
                 {
                     CustomValidator2.ErrorMessage = "Неверно указано значение давления";
                     args.IsValid = false;
@@ -1541,7 +1549,7 @@ public partial class RDT : System.Web.UI.Page
             
             if (ws1RadioButtonList1.SelectedIndex != 3)
             {
-                if (MathUtils.convertArrToBar(lp2DropDownList1, lp2TextBox1) > PressureBeforeValve2x)
+                if (MathUtils.convertArrToBar(_token, lp2DropDownList1, lp2TextBox1) > PressureBeforeValve2x)
                 {
                     CustomValidator3.ErrorMessage = "На давление свыше 25 бар вариантов нет";
                     args.IsValid = false;
@@ -1549,7 +1557,7 @@ public partial class RDT : System.Web.UI.Page
             }
             else
             {
-                if (MathUtils.convertArrToBar(lp2DropDownList1, lp2TextBox1) > PressureBeforeValve3x)
+                if (MathUtils.convertArrToBar(_token, lp2DropDownList1, lp2TextBox1) > PressureBeforeValve3x)
                 {
                     CustomValidator3.ErrorMessage = "На давление свыше 16 бар вариантов нет";
                     args.IsValid = false;
@@ -1576,7 +1584,7 @@ public partial class RDT : System.Web.UI.Page
                     args.IsValid = false;
                     return;
                 }
-                if (MathUtils.convertArrToBar(lp2DropDownList2, lp2TextBox2) >= MathUtils.convertArrToBar(lp2DropDownList1, lp2TextBox1))
+                if (MathUtils.convertArrToBar(_token, lp2DropDownList2, lp2TextBox2) >= MathUtils.convertArrToBar(_token, lp2DropDownList1, lp2TextBox1))
                 {
                     CustomValidator4.ErrorMessage = "Неверно указано значение давления";
                     args.IsValid = false;
@@ -1609,7 +1617,7 @@ public partial class RDT : System.Web.UI.Page
             
             if (ws1RadioButtonList1.SelectedIndex != 3)
             {
-                if (MathUtils.convertArrToBar(lp3DropDownList1, lp3TextBox1) > PressureBeforeValve2x)
+                if (MathUtils.convertArrToBar(_token, lp3DropDownList1, lp3TextBox1) > PressureBeforeValve2x)
                 {
                     CustomValidator5.ErrorMessage = "На давление свыше 25 бар вариантов нет";
                     args.IsValid = false;
@@ -1617,7 +1625,7 @@ public partial class RDT : System.Web.UI.Page
             }
             else
             {
-                if (MathUtils.convertArrToBar(lp3DropDownList1, lp3TextBox1) > PressureBeforeValve3x)
+                if (MathUtils.convertArrToBar(_token, lp3DropDownList1, lp3TextBox1) > PressureBeforeValve3x)
                 {
                     CustomValidator5.ErrorMessage = "На давление свыше 16 бар вариантов нет";
                     args.IsValid = false;
@@ -1644,7 +1652,7 @@ public partial class RDT : System.Web.UI.Page
                     args.IsValid = false;
                     return;
                 }
-                if (MathUtils.convertArrToBar(lp3DropDownList2, lp3TextBox2) >= MathUtils.convertArrToBar(lp3DropDownList1, lp3TextBox1))
+                if (MathUtils.convertArrToBar(_token, lp3DropDownList2, lp3TextBox2) >= MathUtils.convertArrToBar(_token, lp3DropDownList1, lp3TextBox1))
                 {
                     CustomValidator6.ErrorMessage = "Неверно указано значение давления";
                     args.IsValid = false;
@@ -1677,7 +1685,7 @@ public partial class RDT : System.Web.UI.Page
             
             if (ws1RadioButtonList1.SelectedIndex != 3)
             {
-                if (MathUtils.convertArrToBar(lp4DropDownList2, lp4TextBox2) > PressureBeforeValve2x)
+                if (MathUtils.convertArrToBar(_token, lp4DropDownList2, lp4TextBox2) > PressureBeforeValve2x)
                 {
                     CustomValidator7.ErrorMessage = "На давление свыше 25 бар вариантов нет";
                     args.IsValid = false;
@@ -1685,7 +1693,7 @@ public partial class RDT : System.Web.UI.Page
             }
             else
             {
-                if (MathUtils.convertArrToBar(lp4DropDownList2, lp4TextBox2) > PressureBeforeValve3x)
+                if (MathUtils.convertArrToBar(_token, lp4DropDownList2, lp4TextBox2) > PressureBeforeValve3x)
                 {
                     CustomValidator7.ErrorMessage = "На давление свыше 16 бар вариантов нет";
                     args.IsValid = false;
@@ -1747,7 +1755,7 @@ public partial class RDT : System.Web.UI.Page
                 
                 if (ws1RadioButtonList1.SelectedIndex != 3)
                 {
-                    if (MathUtils.convertArrToBar(calcrDropDownList1, calcrTextBox1) > PressureBeforeValve2x)
+                    if (MathUtils.convertArrToBar(_token, calcrDropDownList1, calcrTextBox1) > PressureBeforeValve2x)
                     {
                         CustomValidator9.ErrorMessage = "На давление свыше 25 бар вариантов нет";
                         args.IsValid = false;
@@ -1755,7 +1763,7 @@ public partial class RDT : System.Web.UI.Page
                 }
                 else
                 {
-                    if (MathUtils.convertArrToBar(calcrDropDownList1, calcrTextBox1) > PressureBeforeValve3x)
+                    if (MathUtils.convertArrToBar(_token, calcrDropDownList1, calcrTextBox1) > PressureBeforeValve3x)
                     {
                         CustomValidator9.ErrorMessage = "На давление свыше 16 бар вариантов нет";
                         args.IsValid = false;
@@ -2110,7 +2118,7 @@ public partial class RDT : System.Web.UI.Page
                 }
                 if(eorRadioButtonList1.SelectedIndex == 1 && ws1RadioButtonList1.SelectedIndex == 3)
                 {
-                    if (MathUtils.convertArrToBar(lp5DropDownList1, lp5TextBox1) > PressureBeforeValve2x)
+                    if (MathUtils.convertArrToBar(_token, lp5DropDownList1, lp5TextBox1) > PressureBeforeValve2x)
                     {
                         CustomValidator18.ErrorMessage = "На давление свыше 25 бар вариантов нет";
                         args.IsValid = false;
@@ -2118,7 +2126,7 @@ public partial class RDT : System.Web.UI.Page
                 } 
                 else
                 {
-                    if (MathUtils.convertArrToBar(lp5DropDownList1, lp5TextBox1) > PressureBeforeValve3x)
+                    if (MathUtils.convertArrToBar(_token, lp5DropDownList1, lp5TextBox1) > PressureBeforeValve3x)
                     {
                         CustomValidator18.ErrorMessage = "На давление свыше 16 бар вариантов нет";
                         args.IsValid = false;
@@ -2152,7 +2160,7 @@ public partial class RDT : System.Web.UI.Page
                     args.IsValid = false;
                     return;
                 }
-                if (MathUtils.convertArrToBar(lp5DropDownList2, lp5TextBox2) >= MathUtils.convertArrToBar(lp5DropDownList1, lp5TextBox1))
+                if (MathUtils.convertArrToBar(_token, lp5DropDownList2, lp5TextBox2) >= MathUtils.convertArrToBar(_token, lp5DropDownList1, lp5TextBox1))
                 {
                     CustomValidator19.ErrorMessage = "Неверно указано значение давления";
                     args.IsValid = false;
@@ -3193,9 +3201,9 @@ public partial class RDT : System.Web.UI.Page
 
         if (AppUtils.SetEnableTextBox(lp1DropDownList1, lp1TextBox1))
         {
-            MathUtils.convertArr3((sender as DropDownList), ref lp1TextBox1);
+            MathUtils.convertArr3(_token, (sender as DropDownList), ref lp1TextBox1);
         }
-        AppUtils.SaveKeyToSession(lp1DropDownList1.ID, lp1DropDownList1.SelectedIndex);
+        AppUtils.SaveKeyToSession(lp1DropDownList1.ID, _token, lp1DropDownList1.SelectedIndex);
     }
 
     protected void lp1DropDownList2_SelectedIndexChanged(object sender, EventArgs e)
@@ -3203,117 +3211,117 @@ public partial class RDT : System.Web.UI.Page
 
         if (AppUtils.SetEnableTextBox(lp1DropDownList2, lp1TextBox2))
         {
-            MathUtils.convertArr3((sender as DropDownList), ref lp1TextBox2);
+            MathUtils.convertArr3(_token, (sender as DropDownList), ref lp1TextBox2);
         }
-        AppUtils.SaveKeyToSession(lp1DropDownList2.ID, lp1DropDownList2.SelectedIndex);
+        AppUtils.SaveKeyToSession(lp1DropDownList2.ID, _token, lp1DropDownList2.SelectedIndex);
     }
 
     protected void lp1DropDownList3_SelectedIndexChanged(object sender, EventArgs e)
     {
         if (AppUtils.SetEnableTextBox(lp1DropDownList3, lp1TextBox3))
         {
-            MathUtils.convertArr3((sender as DropDownList), ref lp1TextBox3);
+            MathUtils.convertArr3(_token, (sender as DropDownList), ref lp1TextBox3);
         }
-        AppUtils.SaveKeyToSession(lp1DropDownList3.ID, lp1DropDownList3.SelectedIndex);
+        AppUtils.SaveKeyToSession(lp1DropDownList3.ID, _token, lp1DropDownList3.SelectedIndex);
     }
 
     protected void lp1DropDownList4_SelectedIndexChanged(object sender, EventArgs e)
     {
         if (AppUtils.SetEnableTextBox(lp1DropDownList4, lp1TextBox4))
         {
-            MathUtils.convertArr3((sender as DropDownList), ref lp1TextBox4);
+            MathUtils.convertArr3(_token, (sender as DropDownList), ref lp1TextBox4);
         }
-        AppUtils.SaveKeyToSession(lp1DropDownList4.ID, lp1DropDownList4.SelectedIndex);
+        AppUtils.SaveKeyToSession(lp1DropDownList4.ID, _token, lp1DropDownList4.SelectedIndex);
     }
 
     protected void lp2DropDownList1_SelectedIndexChanged(object sender, EventArgs e)
     {
         if (AppUtils.SetEnableTextBox(lp2DropDownList1, lp2TextBox1))
         {
-            MathUtils.convertArr3((sender as DropDownList), ref lp2TextBox1);
+            MathUtils.convertArr3(_token, (sender as DropDownList), ref lp2TextBox1);
         }
-        AppUtils.SaveKeyToSession(lp2DropDownList1.ID, lp2DropDownList1.SelectedIndex);
+        AppUtils.SaveKeyToSession(lp2DropDownList1.ID, _token, lp2DropDownList1.SelectedIndex);
     }
 
     protected void lp2DropDownList2_SelectedIndexChanged(object sender, EventArgs e)
     {
         if (AppUtils.SetEnableTextBox(lp2DropDownList2, lp2TextBox2))
         {
-            MathUtils.convertArr3((sender as DropDownList), ref lp2TextBox2);
+            MathUtils.convertArr3(_token, (sender as DropDownList), ref lp2TextBox2);
         }
-        AppUtils.SaveKeyToSession(lp2DropDownList2.ID, lp2DropDownList2.SelectedIndex);
+        AppUtils.SaveKeyToSession(lp2DropDownList2.ID, _token, lp2DropDownList2.SelectedIndex);
     }
 
     protected void lp3DropDownList1_SelectedIndexChanged(object sender, EventArgs e)
     {
         if (AppUtils.SetEnableTextBox(lp3DropDownList1, lp3TextBox1))
         {
-            MathUtils.convertArr3((sender as DropDownList), ref lp3TextBox1);
+            MathUtils.convertArr3(_token, (sender as DropDownList), ref lp3TextBox1);
         }
-        AppUtils.SaveKeyToSession(lp3DropDownList1.ID, lp3DropDownList1.SelectedIndex);
+        AppUtils.SaveKeyToSession(lp3DropDownList1.ID, _token, lp3DropDownList1.SelectedIndex);
     }
 
     protected void lp3DropDownList2_SelectedIndexChanged(object sender, EventArgs e)
     {
         if (AppUtils.SetEnableTextBox(lp3DropDownList2, lp3TextBox2))
         {
-            MathUtils.convertArr3((sender as DropDownList), ref lp3TextBox2);
+            MathUtils.convertArr3(_token, (sender as DropDownList), ref lp3TextBox2);
         }
-        AppUtils.SaveKeyToSession(lp3DropDownList2.ID, lp3DropDownList2.SelectedIndex);
+        AppUtils.SaveKeyToSession(lp3DropDownList2.ID, _token, lp3DropDownList2.SelectedIndex);
     }
 
     protected void lp4DropDownList2_SelectedIndexChanged(object sender, EventArgs e)
     {
         if (AppUtils.SetEnableTextBox(lp4DropDownList2, lp4TextBox2))
         {
-            MathUtils.convertArr3((sender as DropDownList), ref lp4TextBox2);
+            MathUtils.convertArr3(_token, (sender as DropDownList), ref lp4TextBox2);
         }
-        AppUtils.SaveKeyToSession(lp4DropDownList2.ID, lp4DropDownList2.SelectedIndex);
+        AppUtils.SaveKeyToSession(lp4DropDownList2.ID, _token, lp4DropDownList2.SelectedIndex);
     }
 
     protected void lp5DropDownList1_SelectedIndexChanged(object sender, EventArgs e)
     {
         if (AppUtils.SetEnableTextBox(lp5DropDownList1, lp5TextBox1))
         {
-            MathUtils.convertArr3((sender as DropDownList), ref lp5TextBox1);
+            MathUtils.convertArr3(_token, (sender as DropDownList), ref lp5TextBox1);
         }
-        AppUtils.SaveKeyToSession(lp5DropDownList1.ID, lp5DropDownList1.SelectedIndex);
+        AppUtils.SaveKeyToSession(lp5DropDownList1.ID, _token, lp5DropDownList1.SelectedIndex);
     }
 
     protected void lp5DropDownList2_SelectedIndexChanged(object sender, EventArgs e)
     {
         if (AppUtils.SetEnableTextBox(lp5DropDownList2, lp5TextBox2))
         {
-            MathUtils.convertArr3((sender as DropDownList), ref lp5TextBox2);
+            MathUtils.convertArr3(_token, (sender as DropDownList), ref lp5TextBox2);
         }
-        AppUtils.SaveKeyToSession(lp5DropDownList2.ID, lp5DropDownList2.SelectedIndex);
+        AppUtils.SaveKeyToSession(lp5DropDownList2.ID, _token, lp5DropDownList2.SelectedIndex);
     }
 
     protected void calcrDropDownList1_SelectedIndexChanged(object sender, EventArgs e)
     {
         if (AppUtils.SetEnableTextBox(calcrDropDownList1, calcrTextBox1))
         {
-            MathUtils.convertArr3((sender as DropDownList), ref calcrTextBox1);
+            MathUtils.convertArr3(_token, (sender as DropDownList), ref calcrTextBox1);
         }
-        AppUtils.SaveKeyToSession(calcrDropDownList1.ID, calcrDropDownList1.SelectedIndex);
+        AppUtils.SaveKeyToSession(calcrDropDownList1.ID, _token, calcrDropDownList1.SelectedIndex);
     }
 
     protected void fprDropDownList1_SelectedIndexChanged(object sender, EventArgs e)
     {
         if (AppUtils.SetEnableTextBox(fprDropDownList1, fprTextBox1))
         {
-            MathUtils.convertArrDouble((sender as DropDownList), ref fprTextBox1);
+            MathUtils.convertArrDouble(_token, (sender as DropDownList), ref fprTextBox1);
         }
-        AppUtils.SaveKeyToSession(fprDropDownList1.ID, fprDropDownList1.SelectedIndex);
+        AppUtils.SaveKeyToSession(fprDropDownList1.ID, _token, fprDropDownList1.SelectedIndex);
     }
 
     protected void fprDropDownList2_SelectedIndexChanged(object sender, EventArgs e)
     {
         if (AppUtils.SetEnableTextBox(fprDropDownList2, fprTextBox4))
         {
-            MathUtils.convertArr2((sender as DropDownList), ref fprTextBox4);
+            MathUtils.convertArr2(_token, (sender as DropDownList), ref fprTextBox4);
         }
-        AppUtils.SaveKeyToSession(fprDropDownList2.ID, fprDropDownList2.SelectedIndex);
+        AppUtils.SaveKeyToSession(fprDropDownList2.ID, _token, fprDropDownList2.SelectedIndex);
     }
 
     protected void lp5RadioButtonList1_SelectedIndexChanged(object sender, EventArgs e)
@@ -3369,7 +3377,7 @@ public partial class RDT : System.Web.UI.Page
     {
         try
         {
-            r_input_dict = (Dictionary<int, string>)Session["r_input_dict"];
+            r_input_dict = StateStore.Get<Dictionary<int, string>>(_token, "r_input_dict");
 
             if (!String.IsNullOrWhiteSpace(objTextBox1.Text))
             {
@@ -3476,7 +3484,7 @@ public partial class RDT : System.Web.UI.Page
 
         try
         {
-            r_input_dict = (Dictionary<int, string>)Session["r_input_dict"];
+            r_input_dict = StateStore.Get<Dictionary<int, string>>(_token, "r_input_dict");
 
             if (!String.IsNullOrWhiteSpace(objTextBox1.Text))
             {
@@ -3601,7 +3609,7 @@ public partial class RDT : System.Web.UI.Page
     {
         try
         {
-            r_input_dict = (Dictionary<int, string>)Session["r_input_dict"];
+            r_input_dict = StateStore.Get<Dictionary<int, string>>(_token, "r_input_dict");
 
             if (!String.IsNullOrWhiteSpace(objTextBox1.Text))
             {
@@ -3711,7 +3719,7 @@ public partial class RDT : System.Web.UI.Page
     {
         try
         {
-            r_input_dict = (Dictionary<int, string>)Session["r_input_dict"];
+            r_input_dict = StateStore.Get<Dictionary<int, string>>(_token, "r_input_dict");
 
             if (!String.IsNullOrWhiteSpace(objTextBox1.Text))
             {
@@ -3820,7 +3828,7 @@ public partial class RDT : System.Web.UI.Page
     {
         try
         {
-            r_input_dict = (Dictionary<int, string>)Session["r_input_dict"];
+            r_input_dict = StateStore.Get<Dictionary<int, string>>(_token, "r_input_dict");
 
             if (!String.IsNullOrWhiteSpace(objTextBox1.Text))
             {

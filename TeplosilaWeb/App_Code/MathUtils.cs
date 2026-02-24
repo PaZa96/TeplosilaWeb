@@ -146,4 +146,61 @@ public static class MathUtils
         }
         return result;
     }
+
+    public static void convertArrDouble(string token, DropDownList ddl, ref TextBox tb)
+    {
+        if (ddl.SelectedIndex > 0)
+        {
+            if (!String.IsNullOrWhiteSpace(tb.Text))
+            {
+                int jj = Convert.ToInt32(StateStore.Get<int>(token, ddl.ID));
+
+                if (jj > 0)
+                {
+                    tb.Text = (AppUtils.customConverterToDouble((tb.Text.Replace(".", ","))) * arrConvert1[(jj - 1), (ddl.SelectedIndex - 1)]).ToString().Replace(",", ".");
+                }
+            }
+        }
+    }
+    public static void convertArr3(string token, DropDownList ddl, ref TextBox tb)
+    {
+        if (ddl.SelectedIndex > 0)
+        {
+            if (!String.IsNullOrWhiteSpace(tb.Text))
+            {
+                int jj = Convert.ToInt32(StateStore.Get<int>(token, ddl.ID));
+                tb.Text = (AppUtils.customConverterToDouble(tb.Text.Replace(".", ",")) * arrConvert3[jj - 1] / arrConvert3[ddl.SelectedIndex - 1]).ToString().Replace(",", ".");
+            }
+        }
+    }
+    public static void convertArr2(string token, DropDownList ddl, ref TextBox tb)
+    {
+        if (ddl.SelectedIndex > 0)
+        {
+            if (!String.IsNullOrWhiteSpace(tb.Text))
+            {
+                int jj = Convert.ToInt32(StateStore.Get<int>(token, ddl.ID));
+                tb.Text = (AppUtils.customConverterToDouble(tb.Text.Replace(".", ",")) * arrConvert2[jj - 1] / arrConvert2[ddl.SelectedIndex - 1]).ToString().Replace(",", ".");
+            }
+        }
+    }
+
+    public static double convertArrToBar(string token, DropDownList ddl, TextBox tb)
+    {
+        double result = 0;
+
+        if (ddl.SelectedIndex > 0)
+        {
+            if (!String.IsNullOrWhiteSpace(tb.Text))
+            {
+
+                int jj = Convert.ToInt32(StateStore.Get<int>(token, ddl.ID));
+                if (jj > 0)
+                {
+                    result = (AppUtils.customConverterToDouble(tb.Text) * arrConvert3[jj - 1] / arrConvert3[2]);
+                }
+            }
+        }
+        return result;
+    }
 }

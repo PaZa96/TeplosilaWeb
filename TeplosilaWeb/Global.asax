@@ -40,41 +40,5 @@
         // или SQLServer, событие не порождается.
 
     }
-    protected void Application_EndRequest(object sender, EventArgs e)
-    {
-        var cookies = Response.Headers.GetValues("Set-Cookie");
-        if (cookies == null) return;
-
-        Response.Headers.Remove("Set-Cookie");
-
-        foreach (var cookie in cookies)
-        {
-            var updated = cookie;
-
-            // Принудительно ставим SameSite=None
-            if (updated.Contains("SameSite"))
-            {
-                updated = System.Text.RegularExpressions.Regex.Replace(
-                    updated,
-                    @"SameSite=\w+",
-                    "SameSite=None",
-                    System.Text.RegularExpressions.RegexOptions.IgnoreCase
-                );
-            }
-            else
-            {
-                updated += "; SameSite=None";
-            }
-
-            // Принудительно ставим Secure
-            if (!updated.Contains("Secure"))
-            {
-                updated += "; Secure";
-            }
-
-            Response.Headers.Add("Set-Cookie", updated);
-        }
-    }
-
 
 </script>
