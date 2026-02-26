@@ -127,6 +127,16 @@ public static class AppUtils
         radioButtonList.ClearSelection();
     }
 
+    public static void DisableAllExcept(RadioButtonList list, int enabledIndex)
+    {
+        for (int i = 0; i < list.Items.Count; i++)
+        {
+            list.Items[i].Enabled = (i == enabledIndex);
+            list.Items[i].Selected = (i == enabledIndex);
+        }
+    }
+
+
     public static bool checkTextBoxEmpty(TextBox tb)
     {
         return tb.Text == "";

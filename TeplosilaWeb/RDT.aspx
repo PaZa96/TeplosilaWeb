@@ -708,6 +708,7 @@
                                             ></asp:TextBox>
                                     </div>
                                 </div>
+                                <asp:HiddenField ID="hfResult" runat="server" />
                             </ContentTemplate>
                         </asp:UpdatePanel>
                         <script>
@@ -756,6 +757,9 @@
                 </div>
             </div>
             <asp:HiddenField ID="hfToken" runat="server" />
+			<asp:HiddenField ID="hfPayload" runat="server" />
+			<asp:HiddenField ID="hfPayloadVersion" runat="server" />
+            
         </form>
     </div> 
 

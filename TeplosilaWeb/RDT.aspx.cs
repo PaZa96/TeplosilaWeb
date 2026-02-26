@@ -34,14 +34,13 @@ public partial class RDT : System.Web.UI.Page
         {
             if (!IsPostBack)
             {
+                Logger.Log.Info("NPB");
                 if (string.IsNullOrEmpty(hfToken.Value)) //уникальный токен
-                { 
+                {
                     hfToken.Value = Guid.NewGuid().ToString();
                     _token = hfToken.Value;
                 }
 
-                Logger.InitLogger(); //инициализация - требуется один раз в начале
-              
                 string ctrlname = Page.Request.Params["__EVENTTARGET"];
                 if (ctrlname != "GridView1")
                 {
@@ -49,9 +48,20 @@ public partial class RDT : System.Web.UI.Page
                     ScriptManager.RegisterStartupScript(this.Page, Page.GetType(), "MyClientScript", "javascript:HideBTN()", true);
                 }
 
-                AppUtils.readFile(@"Content/data/data.txt", hfToken.Value,  JsonKeyName);
-            } else
+                AppUtils.readFile(@"Content/data/data.txt", hfToken.Value, JsonKeyName);
+
+                if (Page.FindControl("form2") != null)
+                {
+                    HtmlForm form2Control = (HtmlForm)Page.FindControl("form2");
+                    if (form2Control != null)
+                    {
+                        form2Control.Attributes["style"] = "display: none;";
+                    }
+                }
+            }
+            else
             {
+                Logger.Log.Info("PB");
                 _token = hfToken.Value;
                 dataFromFile = StateStore.Get<Newtonsoft.Json.Linq.JObject>(_token, JsonKeyName);
 
@@ -61,13 +71,23 @@ public partial class RDT : System.Web.UI.Page
                     return;
                 }
 
-                
+
                 LabelError.Text = "";
                 fprLabelError.Text = "";
                 LabelCustomValid.Visible = false;
+
+                if (!string.IsNullOrEmpty(hfPayloadVersion.Value))
+                {
+                    string hashString = BTPUtils.GetSHA256HashString(hfPayloadVersion.Value);
+                    if (hashString != StateStore.Get<string>(_token, "PayloadHash"))
+                    {
+                        dynamic payload = JsonConvert.DeserializeObject(hfPayload.Value);
+                        FillForm(payload);
+                        StateStore.Set(_token, "PayloadHash", hashString);
+                    }
+                }
             }
 
-            
         }
         catch (Exception er)
         {
@@ -75,6 +95,90 @@ public partial class RDT : System.Web.UI.Page
 
         }
     }
+
+    private void FillForm(dynamic payload)
+    {
+
+        var b = payload;
+
+        switch ((string)b.block_type_code)
+        {
+            case "TBR":
+                Logger.Log.Info("TBR");
+
+                AppUtils.DisableTextBox(lp1TextBox2);
+                lp1DropDownList2.SelectedIndex = 0;
+
+                AppUtils.DisableAllExcept(eorRadioButtonList1, 0);
+                eorRadioButtonList1_SelectedIndexChanged(eorRadioButtonList1, EventArgs.Empty);
+
+                AppUtils.DisableAllExcept(ws1RadioButtonList1, 0);
+                ws1RadioButtonList1_SelectedIndexChanged(ws1RadioButtonList1, EventArgs.Empty);
+
+                BTPUtils.SetPressureUnit(lp1DropDownList3, (string)b.pressure_t1_unit);
+                lp1DropDownList3_SelectedIndexChanged(lp1DropDownList3, EventArgs.Empty);
+
+                lp1TextBox3.Text = (string)b.pressure_t1_val;
+
+                BTPUtils.SetPressureUnit(lp1DropDownList4, (string)b.pressure_t1_unit);
+                lp1DropDownList4_SelectedIndexChanged(lp1DropDownList4, EventArgs.Empty);
+
+                lp1TextBox4.Text = (string)b.pressure_t2_val;
+
+                if ((string)b.regulator_position == "1")
+                {
+                    BTPUtils.SetPressureUnit(calcrDropDownList1, (string)b.pressure_t1_unit);
+                    calcrDropDownList1_SelectedIndexChanged(calcrDropDownList1, EventArgs.Empty);
+
+                    calcrTextBox1.Text = (string)b.pressure_t1_val;
+                    calcrTextBox2.Text = (string)b.supply_temp;
+                }
+                else
+                {
+                    calcrTextBox2.Text = (string)b.return_temp;
+                }
+
+                if ((string)b.method_setting_expenses == "set")
+                {
+                    fprRadioButton2.Enabled = false;
+                    fprRadioButton1.Checked = true;
+                    fprRadioButton1_CheckedChanged(fprRadioButton1, EventArgs.Empty);
+
+                    BTPUtils.SetFlowPipeUnit(fprDropDownList1, (string)b.flow_pipe_unit);
+                    fprDropDownList1_SelectedIndexChanged(fprDropDownList1, EventArgs.Empty);
+
+                    fprTextBox1.Text = (string)b.flow_pipe_val;
+
+                }
+                else if ((string)b.method_setting_expenses == "calculate")
+                {
+                    fprRadioButton1.Enabled = false;
+                    fprRadioButton2.Checked = true;
+                    fprRadioButton2_CheckedChanged(fprRadioButton2, EventArgs.Empty);
+
+                    fprTextBox2.Text = (string)b.supply_temp;
+                    fprTextBox3.Text = (string)b.return_temp;
+
+                    BTPUtils.SetPowerPipeUnit(fprDropDownList2, (string)b.power_pipe_unit);
+                    fprDropDownList2_SelectedIndexChanged(fprDropDownList2, EventArgs.Empty);
+
+                    fprTextBox4.Text = (string)b.power_pipe_val;
+                }
+                else
+                {
+
+                }
+
+
+                break;
+            default:
+                return;
+
+        }
+    }
+
+
+
 
     //------------------------------------Math Function START--------------------------------------
 
@@ -2304,6 +2408,7 @@ public partial class RDT : System.Web.UI.Page
 
     protected void rButton_Click(object sender, EventArgs e)
     {
+        Logger.Log.Info("BTN");
 
         if (!Page.IsValid) { return; }
         try
@@ -3151,9 +3256,12 @@ public partial class RDT : System.Web.UI.Page
                                         }
                                     }
                                 }
-                                GridView1.DataSource = dt;
-                                GridView1.DataBind();
                             }
+
+                            GridView1.DataSource = dt;
+                            GridView1.DataBind();
+
+                            hfResult.Value = JsonConvert.SerializeObject(dt);
 
                         }
                     }

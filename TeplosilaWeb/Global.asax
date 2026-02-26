@@ -4,6 +4,8 @@
 
     void Application_Start(object sender, EventArgs e)
     {
+        log4net.Config.XmlConfigurator.Configure();
+        TeplosilaWeb.App_Code.Logger.InitLogger();
 
         new ScriptResourceDefinition
         {
