@@ -9,17 +9,10 @@ using System.Web.UI.WebControls;
 /// </summary>
 public static class BTPUtils
 {
-    public static void SetPressureUnit(DropDownList ddl, string unit)
+    public static void SetUnit(DropDownList ddl, string unit, Dictionary<string, string> map)
     {
-        if (string.IsNullOrWhiteSpace(unit))
+        if (string.IsNullOrWhiteSpace(unit) || map == null)
             return;
-
-        var map = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
-        {
-            { "mpa", "МПа" },
-            { "bar", "бар" },
-            { "mwc", "м. в. ст." }
-        };
 
         if (!map.TryGetValue(unit, out string displayValue))
             return;
@@ -27,49 +20,45 @@ public static class BTPUtils
         var item = ddl.Items.FindByText(displayValue);
         if (item != null)
             ddl.SelectedValue = displayValue;
+    }
+
+    public static void SetPressureUnit(DropDownList ddl, string unit)
+    {
+        var map = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
+    {
+        { "mpa", "МПа" },
+        { "bar", "бар" },
+        { "mwc", "м. в. ст." }
+    };
+
+        SetUnit(ddl, unit, map);
     }
 
     public static void SetFlowPipeUnit(DropDownList ddl, string unit)
     {
-        if (string.IsNullOrWhiteSpace(unit))
-            return;
-
         var map = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
-        {
-            { "m3_per_h", "м³/ч" },
-            { "l_per_s", "л/с" },
-            { "kg_per_s", "кг/с" },
-            { "kg_per_h", "кг/ч" },
-            { "t_per_h", "т/ч" }
-        };
+    {
+        { "m3_per_h", "м³/ч" },
+        { "l_per_s", "л/с" },
+        { "kg_per_s", "кг/с" },
+        { "kg_per_h", "кг/ч" },
+        { "t_per_h", "т/ч" }
+    };
 
-        if (!map.TryGetValue(unit, out string displayValue))
-            return;
-
-        var item = ddl.Items.FindByText(displayValue);
-        if (item != null)
-            ddl.SelectedValue = displayValue;
+        SetUnit(ddl, unit, map);
     }
 
     public static void SetPowerPipeUnit(DropDownList ddl, string unit)
     {
-        if (string.IsNullOrWhiteSpace(unit))
-            return;
-
         var map = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
-        {
-            { "mw", "МВт" }, 
-            { "kw", "кВт" }, 
-            { "w", "Вт" }, 
-            { "gcal_per_h", "Гкал/ч" }
-        };
+    {
+        { "mw", "МВт" },
+        { "kw", "кВт" },
+        { "w", "Вт" },
+        { "gcal_per_h", "Гкал/ч" }
+    };
 
-        if (!map.TryGetValue(unit, out string displayValue))
-            return;
-
-        var item = ddl.Items.FindByText(displayValue);
-        if (item != null)
-            ddl.SelectedValue = displayValue;
+        SetUnit(ddl, unit, map);
     }
 
     public static string GetSHA256HashString(string input)
@@ -84,5 +73,80 @@ public static class BTPUtils
             }
             return builder.ToString();
         }
+    }
+
+    public static string CreateResultObject(string blockType, string methodSettingRegulator, GridView GridView1)
+    {
+
+        GridViewRow row = GridView1.SelectedRow;
+
+        var ResultList = new Dictionary<string, object>();
+
+        switch (blockType)
+        {
+            case "TBV_TBVU":
+                switch (methodSettingRegulator)
+                {
+                    case "method_setting_regulator_after":
+                        ResultList["mark_regulator_after"] = row.Cells[1].Text.Trim();
+                        ResultList["dn_regulator_after"] = AppUtils.customConverterToDouble(row.Cells[2].Text.Trim());
+                        ResultList["kvs_regulator_after"] = AppUtils.customConverterToDouble(row.Cells[3].Text.Trim());
+                        ResultList["loss_pressure_regulator_after"] = AppUtils.customConverterToDouble(row.Cells[4].Text.Trim());
+                        ResultList["setting_range_regulator_after"] = row.Cells[5].Text.Trim();
+                        break;
+                    case "method_setting_regulator_before":
+                        ResultList["mark_regulator_before"] = row.Cells[1].Text.Trim();
+                        ResultList["dn_regulator_before"] = AppUtils.customConverterToDouble(row.Cells[2].Text.Trim());
+                        ResultList["kvs_regulator_before"] = AppUtils.customConverterToDouble(row.Cells[3].Text.Trim());
+                        ResultList["loss_pressure_regulator_before"] = AppUtils.customConverterToDouble(row.Cells[4].Text.Trim());
+                        ResultList["setting_range_regulator_before"] = row.Cells[5].Text.Trim();
+                        break;
+                    case "method_setting_regulator_differential":
+                        ResultList["mark_regulator_differential"] = row.Cells[1].Text.Trim();
+                        ResultList["dn_regulator_differential"] = AppUtils.customConverterToDouble(row.Cells[2].Text.Trim());
+                        ResultList["kvs_regulator_differential"] = AppUtils.customConverterToDouble(row.Cells[3].Text.Trim());
+                        ResultList["loss_pressure_regulator_differential"] = AppUtils.customConverterToDouble(row.Cells[4].Text.Trim());
+                        ResultList["setting_range_regulator_differential"] = row.Cells[5].Text.Trim();
+                        break;
+                    default:
+                        return "";
+                }
+                break;
+            case "TBGV":
+                ResultList["mark_regulator_differential"] = row.Cells[1].Text.Trim();
+                ResultList["dn_regulator_differential"] = AppUtils.customConverterToDouble(row.Cells[2].Text.Trim());
+                ResultList["kvs_regulator_differential"] = AppUtils.customConverterToDouble(row.Cells[3].Text.Trim());
+                ResultList["loss_pressure_regulator_differential"] = AppUtils.customConverterToDouble(row.Cells[4].Text.Trim());
+                ResultList["setting_range_regulator_differential"] = row.Cells[5].Text.Trim();
+                break;
+            case "TBO":
+                ResultList["mark_regulator_differential"] = row.Cells[1].Text.Trim();
+                ResultList["dn_regulator_differential"] = AppUtils.customConverterToDouble(row.Cells[2].Text.Trim());
+                ResultList["kvs_regulator_differential"] = AppUtils.customConverterToDouble(row.Cells[3].Text.Trim());
+                ResultList["loss_pressure_regulator_differential"] = AppUtils.customConverterToDouble(row.Cells[4].Text.Trim());
+                ResultList["setting_range_regulator_differential"] = row.Cells[5].Text.Trim();
+                break;
+            case "TBR":
+                ResultList["mark_regulator"] = row.Cells[1].Text.Trim();
+                ResultList["dn_regulator"] = AppUtils.customConverterToDouble(row.Cells[2].Text.Trim());
+                ResultList["kvs_regulator"] = AppUtils.customConverterToDouble(row.Cells[3].Text.Trim());
+                ResultList["loss_pressure_regulator"] = AppUtils.customConverterToDouble(row.Cells[4].Text.Trim());
+                ResultList["setting_range_regulator"] = row.Cells[5].Text.Trim();
+                break;
+            case "TBSV":
+                ResultList["mark_regulator_differential"] = row.Cells[1].Text.Trim();
+                ResultList["dn_regulator_differential"] = AppUtils.customConverterToDouble(row.Cells[2].Text.Trim());
+                ResultList["kvs_regulator_differential"] = AppUtils.customConverterToDouble(row.Cells[3].Text.Trim());
+                ResultList["loss_pressure_regulator_differential"] = AppUtils.customConverterToDouble(row.Cells[4].Text.Trim());
+                ResultList["setting_range_regulator_differential"] = row.Cells[5].Text.Trim();
+                break;
+
+            default:
+                return "";
+        }
+
+        string result = Newtonsoft.Json.JsonConvert.SerializeObject(ResultList);
+
+        return result;
     }
 }

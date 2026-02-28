@@ -1,18 +1,14 @@
-﻿using System;
+﻿using GemBox.Spreadsheet;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Diagnostics;
-using System.Diagnostics.Tracing;
-using System.Drawing;
-using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
-using GemBox.Spreadsheet;
-using Newtonsoft.Json;
 using TeplosilaWeb.App_Code;
 
 public partial class RDT : System.Web.UI.Page
@@ -22,7 +18,7 @@ public partial class RDT : System.Web.UI.Page
     private const int MaxT2x = 220;
     private const int MaxT3x = 150;
     public dynamic dataFromFile;
-    double minVar = 0.000000001;
+    private double minVar = 0.000000001;
     private const string JsonKeyName = "JSON_RDT";
     private string _token;
 
@@ -71,7 +67,6 @@ public partial class RDT : System.Web.UI.Page
                     return;
                 }
 
-
                 LabelError.Text = "";
                 fprLabelError.Text = "";
                 LabelCustomValid.Visible = false;
@@ -87,22 +82,60 @@ public partial class RDT : System.Web.UI.Page
                     }
                 }
             }
-
         }
         catch (Exception er)
         {
             Logger.Log.Error(er);
-
         }
     }
 
     private void FillForm(dynamic payload)
     {
-
         var b = payload;
+        var blockType = (string)b.block_type_code;
+        StateStore.Set(_token, "BlockTypeCode", blockType);
 
-        switch ((string)b.block_type_code)
+        string methodSettingRegulator = "";
+        
+        if (b.ContainsKey("method_setting_regulator_before")) 
+        { 
+            methodSettingRegulator = "method_setting_regulator_before";
+        } 
+        else if (b.ContainsKey("method_setting_regulator_after")) 
+        { 
+            methodSettingRegulator = "method_setting_regulator_after"; 
+        } 
+        else 
+        { 
+            methodSettingRegulator = "method_setting_regulator_differential"; 
+        }
+
+        StateStore.Set(_token, "MethodSettingRegulator", methodSettingRegulator);
+
+        switch (blockType)
         {
+            case "TBV_TBVU":
+                switch (methodSettingRegulator)
+                {
+                    case "method_setting_regulator_after":
+
+                        break;
+                    case "method_setting_regulator_before":
+
+                        break;
+                    case "method_setting_regulator_differential":
+
+                        break;
+                    default:
+                        return;
+                }
+                break;
+            case "TBGV":
+
+                break;
+            case "TBO":
+
+                break;
             case "TBR":
                 Logger.Log.Info("TBR");
 
@@ -148,7 +181,6 @@ public partial class RDT : System.Web.UI.Page
                     fprDropDownList1_SelectedIndexChanged(fprDropDownList1, EventArgs.Empty);
 
                     fprTextBox1.Text = (string)b.flow_pipe_val;
-
                 }
                 else if ((string)b.method_setting_expenses == "calculate")
                 {
@@ -166,25 +198,29 @@ public partial class RDT : System.Web.UI.Page
                 }
                 else
                 {
-
+                    fprRadioButton1.Checked = false;
+                    fprRadioButton1_CheckedChanged(fprRadioButton1, EventArgs.Empty);
+                    fprRadioButton2.Checked = false;
+                    fprRadioButton2_CheckedChanged(fprRadioButton2, EventArgs.Empty);
                 }
 
+                objTextBox1.Text = (string)b.description + " " + (string)b.object_name;
 
                 break;
+            case "TBSV":
+ 
+                break;
+
+
             default:
                 return;
-
         }
     }
-
-
-
 
     //------------------------------------Math Function START--------------------------------------
 
     public double SteamCP()  //теплоёмкость пара
     {
-
         double T1 = AppUtils.customConverterToDouble(fprTextBox2.Text);
         double T2 = AppUtils.customConverterToDouble(fprTextBox3.Text);
         double p1 = (AppUtils.customConverterToDouble(lp5TextBox1.Text) * MathUtils.getArrConvert3(lp5DropDownList1.SelectedIndex - 1) / MathUtils.getArrConvert3(2));
@@ -196,7 +232,6 @@ public partial class RDT : System.Web.UI.Page
         if (lp5RadioButtonList1.SelectedIndex == 0)
         {
             h1 = (10258.8 - 20231.3 / r + 24702.8 / Math.Pow(r, 2) - 16307.3 / Math.Pow(r, 3) + 5579.31 / Math.Pow(r, 4) - 777.285 / Math.Pow(r, 5)) + pp * (-355.878 / r + 817.288 / Math.Pow(r, 2) - 845.841 / Math.Pow(r, 3)) - Math.Pow(pp, 2) * (160.276 / Math.Pow(r, 3)) + Math.Pow(pp, 3) * (-95607.5 / r + 443740 / Math.Pow(r, 2) - 767668 / Math.Pow(r, 3) + 587261 / Math.Pow(r, 4) - 167657 / Math.Pow(r, 5)) + Math.Pow(pp, 4) * (22542.8 / Math.Pow(r, 2) - 84140.2 / Math.Pow(r, 3) + 104198 / Math.Pow(r, 4) - 42886.7 / Math.Pow(r, 5));
-
         }
         else
         {
@@ -241,8 +276,6 @@ public partial class RDT : System.Web.UI.Page
         else if (ws1RadioButtonList1.SelectedIndex == 1)
         {
             MathUtils.Etgl(GetAvgT(), AppUtils.customConverterToDouble(this.ws1TextBox1.Text), ref rr, ref cp);
-
-            
         }
         else if (ws1RadioButtonList1.SelectedIndex == 2)
         {
@@ -269,9 +302,10 @@ public partial class RDT : System.Web.UI.Page
                         (MathUtils.convertArrToBar(_token, lp3DropDownList2, lp3TextBox2) > PressureBeforeValve3x) ||
                         (MathUtils.convertArrToBar(_token, lp4DropDownList2, lp4TextBox2) > PressureBeforeValve3x) || //Регулятор "перепуска"
                         (MathUtils.convertArrToBar(_token, calcrDropDownList1, calcrTextBox1) > PressureBeforeValve3x); // Расчет регулятора давления на кавитацию:
-        } else
+        }
+        else
         {
-            if(AppUtils.customConverterToDouble(lp5TextBox3.Text) > 120)
+            if (AppUtils.customConverterToDouble(lp5TextBox3.Text) > 120)
             {
                 if ((MathUtils.convertArrToBar(_token, lp5DropDownList1, lp5TextBox1) <= (16 - 0.04 * (AppUtils.customConverterToDouble(lp5TextBox3.Text) - 120))))
                 {
@@ -285,23 +319,22 @@ public partial class RDT : System.Web.UI.Page
                 {
                     flag25Bar = true;
                 }
-            } 
-            else 
+            }
+            else
             {
                 flag25Bar = (MathUtils.convertArrToBar(_token, lp5DropDownList1, lp5TextBox1) > PressureBeforeValve3x) || //Регулятор давления "после себя" Пар
                      (MathUtils.convertArrToBar(_token, lp5DropDownList2, lp5TextBox2) > PressureBeforeValve3x) ||
                      (MathUtils.convertArrToBar(_token, calcrDropDownList1, calcrTextBox1) > PressureBeforeValve3x); // Расчет регулятора давления на кавитацию:
-            } 
-            
+            }
         }
-         
+
         return flag25Bar;
     }
+
     private Dictionary<string, string[]> generatedTableR(Dictionary<string, double> g_dict)
     {
         try
         {
-
             /*BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB*/
             double Kv = 0, Gpg = 0, dPg = 0, g = 0, p1 = 0, p2 = 0, V = 0, T1 = 0;
             int DN = 0;
@@ -417,7 +450,7 @@ public partial class RDT : System.Web.UI.Page
                 p1 = (AppUtils.customConverterToDouble(lp5TextBox1.Text) * MathUtils.getArrConvert3(lp5DropDownList1.SelectedIndex - 1) / MathUtils.getArrConvert3(2));
                 p2 = (AppUtils.customConverterToDouble(lp5TextBox2.Text) * MathUtils.getArrConvert3(lp5DropDownList2.SelectedIndex - 1) / MathUtils.getArrConvert3(2));
 
-                if(lp5RadioButtonList1.SelectedIndex == 0)
+                if (lp5RadioButtonList1.SelectedIndex == 0)
                 {
                     T1 = AppUtils.customConverterToDouble(lp5TextBox3.Text);
                 }
@@ -425,7 +458,7 @@ public partial class RDT : System.Web.UI.Page
                 {
                     T1 = Math.Round(100 * Math.Pow((AppUtils.customConverterToDouble(lp5TextBox1.Text) * MathUtils.getArrConvert3(lp5DropDownList1.SelectedIndex - 1) / MathUtils.getArrConvert3(2)) + 1, 0.25));
                 }
-                
+
                 if ((p1 - p2) <= (0.5 * (p1 + 1)))
                 {
                     Kv = 1.3 * ((Gpg / 461) * Math.Sqrt((T1 + 273) / ((p1 - p2) * (p2 + 1))));
@@ -469,7 +502,6 @@ public partial class RDT : System.Web.UI.Page
                         }
                     }
                 }
-
                 else if (eorRadioButtonList1.SelectedIndex == 1) //Регулятор давления после себя
                 {
                     if (ws1RadioButtonList1.SelectedIndex != 3)
@@ -485,7 +517,6 @@ public partial class RDT : System.Web.UI.Page
                     {
                         table5 = dataFromFile.table5sbt25;
                         table11 = dataFromFile.table11sbt25;
-
                     }
                     else
                     {
@@ -500,7 +531,6 @@ public partial class RDT : System.Web.UI.Page
                             table11 = dataFromFile.table11sbt25;
                         }
                     }
-
                 }
                 else if (eorRadioButtonList1.SelectedIndex == 2) //Регулятор давления до себя
                 {
@@ -539,7 +569,6 @@ public partial class RDT : System.Web.UI.Page
                         }
                     }
                 }
-
                 else if (eorRadioButtonList1.SelectedIndex == 1) //Регулятор давления после себя
                 {
                     if (ws1RadioButtonList1.SelectedIndex != 3)
@@ -555,7 +584,6 @@ public partial class RDT : System.Web.UI.Page
                     {
                         table5 = dataFromFile.table5sbt;
                         table11 = dataFromFile.table11sbt;
-
                     }
                     else
                     {
@@ -570,7 +598,6 @@ public partial class RDT : System.Web.UI.Page
                             table11 = dataFromFile.table11sbt;
                         }
                     }
-
                 }
                 else if (eorRadioButtonList1.SelectedIndex == 2) //Регулятор давления до себя
                 {
@@ -660,7 +687,6 @@ public partial class RDT : System.Web.UI.Page
             /*/IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII*/
 
             bool exit_t = false;
-           
 
             if (col_B == Convert.ToDouble(table5[table5.Count - 1]))
             {
@@ -734,7 +760,6 @@ public partial class RDT : System.Web.UI.Page
                     {
                         table = dataFromFile.table7125;
                     }
-
                 }
                 else if (eorRadioButtonList1.SelectedIndex == 1)
                 {
@@ -751,11 +776,8 @@ public partial class RDT : System.Web.UI.Page
                     }
                     else
                     {
-
                         table = dataFromFile.table7525;
-
                     }
-
                 }
                 else if (eorRadioButtonList1.SelectedIndex == 2)
                 {
@@ -765,7 +787,7 @@ public partial class RDT : System.Web.UI.Page
                 {
                     table = dataFromFile.table7425;
                 }
-            } 
+            }
             else
             {
                 if (eorRadioButtonList1.SelectedIndex == 0)
@@ -778,7 +800,6 @@ public partial class RDT : System.Web.UI.Page
                     {
                         table = dataFromFile.table71;
                     }
-
                 }
                 else if (eorRadioButtonList1.SelectedIndex == 1)
                 {
@@ -795,11 +816,8 @@ public partial class RDT : System.Web.UI.Page
                     }
                     else
                     {
-
                         table = dataFromFile.table75;
-
                     }
-
                 }
                 else if (eorRadioButtonList1.SelectedIndex == 2)
                 {
@@ -852,17 +870,17 @@ public partial class RDT : System.Web.UI.Page
 
                 c_List.AddRange(listC);
                 listResult["C"] = c_List.ToArray();
-
             }
             /*/CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC*/
             /*/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA*/
 
             double C;
-            if (listResult["C"].Count() >0){
+            if (listResult["C"].Count() > 0)
+            {
                 C = Convert.ToDouble(listResult["C"][listResult["C"].Count() - 1]);
             }
-            else {
-
+            else
+            {
                 var _List = new List<string>();
 
                 if (listResult.ContainsKey("B"))
@@ -874,8 +892,6 @@ public partial class RDT : System.Web.UI.Page
                 return listResult;
             }
 
-
-            
             if (ws1RadioButtonList1.SelectedIndex != 3)
             {
                 V = Gpg / g * Math.Pow((18.8 / C), 2);
@@ -888,11 +904,11 @@ public partial class RDT : System.Web.UI.Page
             double cDN = 0;
             if (ws1RadioButtonList1.SelectedIndex != 3)
             {
-                 cDN = 18.8 / Math.Sqrt(((g  * 3) / Gpg));   //ИТП
+                cDN = 18.8 / Math.Sqrt(((g * 3) / Gpg));   //ИТП
             }
             else
             {
-                if(lp5RadioButtonList1.SelectedIndex == 0)
+                if (lp5RadioButtonList1.SelectedIndex == 0)
                 {
                     cDN = 18.8 * Math.Sqrt((Gpg * (T1 + 273)) / (219 * (p2 + 1) * 60));
                 }
@@ -906,7 +922,6 @@ public partial class RDT : System.Web.UI.Page
             calcDNLabel.Visible = true;
             calcDNLabelVal.Visible = true;
 
-
             double Pf = 1;
 
             while (!exit_t && (V >= g_dict["vmax"]))
@@ -916,7 +931,6 @@ public partial class RDT : System.Web.UI.Page
                 else
                 {
                     // DN ближайший больший из table11
-                   
 
                     if (col_C == Convert.ToDouble(table11[table11.Count - 1]))
                     {
@@ -945,7 +959,6 @@ public partial class RDT : System.Web.UI.Page
 
                     if (col_C == Convert.ToDouble(table11[table11.Count - 1]))
                     {
-
                         exit_t = true;
 
                         foreach (string keyValue in listResult["C"])
@@ -953,7 +966,6 @@ public partial class RDT : System.Web.UI.Page
                             if (keyValue.Equals(table11[table11.Count - 1].ToString()))
                                 meetEnd = true;
                         }
-
                     }
 
                     if (meetEnd) break;
@@ -996,7 +1008,6 @@ public partial class RDT : System.Web.UI.Page
                         List<string> listA = new List<string>(),
                         listB = new List<string>();
 
-
                         if (ws1RadioButtonList1.SelectedIndex != 3)
                         {
                             Kv_start = 1.2 * (Gpg * 0.01) / (Math.Sqrt(dPg * 0.001 * g));
@@ -1024,16 +1035,15 @@ public partial class RDT : System.Web.UI.Page
                                 if (Kv_start < Convert.ToDouble(ob.GetValue("prop")) && tmpKv >= Convert.ToDouble(ob.GetValue("prop")))
                                 {
                                     tmpKv = Convert.ToDouble(ob.GetValue("prop"));
-                                    tmpA = ob.GetValue("name").ToString();    
+                                    tmpA = ob.GetValue("name").ToString();
                                 }
                                 //listA.Add(ob.GetValue("name").ToString());
                                 //listB.Add(ob.GetValue("prop").ToString());
                                 //DN = int.Parse(ob.GetValue("d").ToString());
-
                             }
                         }
 
-                        if(tmpA != "")
+                        if (tmpA != "")
                         {
                             listA.Add(tmpA.ToString());
                             listB.Add(tmpKv.ToString());
@@ -1059,7 +1069,6 @@ public partial class RDT : System.Web.UI.Page
                     }
                     /*/CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC*/
                     /*/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA*/
-
                 }
 
                 if (ws1RadioButtonList1.SelectedIndex != 3)
@@ -1068,7 +1077,7 @@ public partial class RDT : System.Web.UI.Page
                 }
                 else
                 {
-                    V = (Gpg * (T1 + 273)) / Math.Pow(( DN / 18.8), 2) / ((219 * (p2 + 1)));
+                    V = (Gpg * (T1 + 273)) / Math.Pow((DN / 18.8), 2) / ((219 * (p2 + 1)));
                 }
             }
 
@@ -1080,7 +1089,6 @@ public partial class RDT : System.Web.UI.Page
                 listE = new List<string>(),
                 listK = new List<string>();
 
-            
             listF.AddRange(listResult["F"]);
             listE.AddRange(listResult["E"]);
 
@@ -1090,7 +1098,6 @@ public partial class RDT : System.Web.UI.Page
                 listG.AddRange(listResult["G"]);
                 listK.AddRange(listResult["K"]);
             }
-            
 
             for (int i = 0; i < listResult["C"].Count(); i++)
             {
@@ -1156,8 +1163,6 @@ public partial class RDT : System.Web.UI.Page
                     }
                 }
 
-
-
                 if (!String.IsNullOrWhiteSpace(this.calcrTextBox1.Text) && !String.IsNullOrWhiteSpace(this.calcrTextBox2.Text))
                 {
                     double dn = 0.0;
@@ -1184,7 +1189,6 @@ public partial class RDT : System.Web.UI.Page
 
                     double G = Math.Round((dn * ((AppUtils.customConverterToDouble(this.calcrTextBox1.Text) * MathUtils.getArrConvert3(this.calcrDropDownList1.SelectedIndex - 1) / MathUtils.getArrConvert3(2)) - ps)), 2);
                     listG.Add(G.ToString());
-
 
                     string K = "Нет";
                     if (G < Pf) //double.Parse(listResult["D"].GetValue(i).ToString()) )//Pf)
@@ -1247,7 +1251,6 @@ public partial class RDT : System.Web.UI.Page
             Logger.Log.Error(e);
             return null;
         }
-
     }
 
     private void mapInputParametersR(ref Dictionary<int, string> r_in_dict)
@@ -1283,9 +1286,7 @@ public partial class RDT : System.Web.UI.Page
             else
             {
                 r_in_dict.Add(6, ws1RadioButtonList1.Items[ws1RadioButtonList1.SelectedIndex].Text + " " + ((this.ws1TextBox1.Enabled) ? (this.ws1TextBox1.Text + " %, " + this.ws1TextBox2.Text + " °С") : ""));
-
             }
-
 
             r_in_dict.Add(7, (this.lp1TextBox1.Enabled) ? this.lp1TextBox1.Text : "-");
             r_in_dict.Add(8, (this.lp1TextBox1.Enabled) ? this.lp1DropDownList1.Text : "-");
@@ -1357,7 +1358,6 @@ public partial class RDT : System.Web.UI.Page
                 //r_input_dict.Add(38, (this.fprTextBox4.Enabled) ? this.fprTextBox5.Text : "-");
                 //r_input_dict.Add(381, (this.fprTextBox4.Enabled) ? "кг/ч" : "-");
             }
-           
 
             if (eorRadioButtonList1.SelectedIndex > 1)
             {
@@ -1397,7 +1397,6 @@ public partial class RDT : System.Web.UI.Page
             {
                 r_in_dict.Add(40, "16 бар");
             }
-            
 
             r_in_dict.Add(41, "-");
             r_in_dict.Add(42, "-");
@@ -1446,7 +1445,7 @@ public partial class RDT : System.Web.UI.Page
             {
                 r_in_dict.Add(60, "-");
             }
-            
+
             if (lp5RadioButtonList1.SelectedIndex == 0)
             {
                 r_in_dict.Add(61, (Label38.Text));
@@ -1473,14 +1472,13 @@ public partial class RDT : System.Web.UI.Page
                 if (r_in_dict[41].Contains("-0.1-"))
                     tableDimR = dataFromFile.table24;
                 else tableDimR = dataFromFile.table25;
-            } 
+            }
             else
             {
                 if (r_in_dict[41].Contains("-0.1-"))
                     tableDimR = dataFromFile.table20;
                 else tableDimR = dataFromFile.table21;
             }
-            
         }
         else
         {
@@ -1506,7 +1504,6 @@ public partial class RDT : System.Web.UI.Page
 
     //------------------------------------File Function START--------------------------------------
 
-    
     private void changeImage(int index)
     {
         switch (index)
@@ -1514,12 +1511,15 @@ public partial class RDT : System.Web.UI.Page
             case 0:
                 rPictureBox.ImageUrl = "~/Content/images/RDT-RDT-P.png";
                 break;
+
             case 1:
                 rPictureBox.ImageUrl = "~/Content/images/RDT-RDT-P.png";
                 break;
+
             case 2:
                 rPictureBox.ImageUrl = "~/Content/images/RDT-S-RDT-B.png";
                 break;
+
             case 3:
                 rPictureBox.ImageUrl = "~/Content/images/RDT-S-RDT-B.png";
                 break;
@@ -1562,7 +1562,8 @@ public partial class RDT : System.Web.UI.Page
                         args.IsValid = false;
                         return;
                     }
-                } else
+                }
+                else
                 {
                     if (MathUtils.convertArrToBar(_token, lp1DropDownList3, lp1TextBox3) > PressureBeforeValve3x)
                     {
@@ -1586,7 +1587,6 @@ public partial class RDT : System.Web.UI.Page
         {
             if (lp1DropDownList4.Enabled)
             {
-
                 if (lp1TextBox4.Enabled == false || AppUtils.checkTextBoxEmpty(lp1TextBox4))
                 {
                     CustomValidator2.ErrorMessage = "Необходимо заполнить поле";
@@ -1632,8 +1632,8 @@ public partial class RDT : System.Web.UI.Page
             CustomValidator2.ErrorMessage = "";
             return;
         }
-
     }
+
     protected void CustomValidator3_ServerValidate(object source, ServerValidateEventArgs args)
     {
         if (lp2DropDownList1.Enabled)
@@ -1650,7 +1650,7 @@ public partial class RDT : System.Web.UI.Page
                 args.IsValid = false;
                 return;
             }
-            
+
             if (ws1RadioButtonList1.SelectedIndex != 3)
             {
                 if (MathUtils.convertArrToBar(_token, lp2DropDownList1, lp2TextBox1) > PressureBeforeValve2x)
@@ -1718,7 +1718,7 @@ public partial class RDT : System.Web.UI.Page
                 args.IsValid = false;
                 return;
             }
-            
+
             if (ws1RadioButtonList1.SelectedIndex != 3)
             {
                 if (MathUtils.convertArrToBar(_token, lp3DropDownList1, lp3TextBox1) > PressureBeforeValve2x)
@@ -1786,7 +1786,7 @@ public partial class RDT : System.Web.UI.Page
                 args.IsValid = false;
                 return;
             }
-            
+
             if (ws1RadioButtonList1.SelectedIndex != 3)
             {
                 if (MathUtils.convertArrToBar(_token, lp4DropDownList2, lp4TextBox2) > PressureBeforeValve2x)
@@ -1840,7 +1840,7 @@ public partial class RDT : System.Web.UI.Page
 
     protected void CustomValidator9_ServerValidate(object source, ServerValidateEventArgs args)
     {
-        if (CustomValidator2.IsValid && CustomValidator4.IsValid && CustomValidator6.IsValid && CustomValidator7.IsValid )
+        if (CustomValidator2.IsValid && CustomValidator4.IsValid && CustomValidator6.IsValid && CustomValidator7.IsValid)
         {
             if (calcrDropDownList1.Enabled)
             {
@@ -1856,7 +1856,7 @@ public partial class RDT : System.Web.UI.Page
                     args.IsValid = false;
                     return;
                 }
-                
+
                 if (ws1RadioButtonList1.SelectedIndex != 3)
                 {
                     if (MathUtils.convertArrToBar(_token, calcrDropDownList1, calcrTextBox1) > PressureBeforeValve2x)
@@ -1910,6 +1910,7 @@ public partial class RDT : System.Web.UI.Page
             CustomValidator10.ErrorMessage = "";
         }
     }
+
     protected void CustomValidator11_ServerValidate(object source, ServerValidateEventArgs args)
     {
         if (CustomValidator9.IsValid)
@@ -1928,7 +1929,7 @@ public partial class RDT : System.Web.UI.Page
                     args.IsValid = false;
                     return;
                 }
-                if(eorRadioButtonList1.SelectedIndex > 1)
+                if (eorRadioButtonList1.SelectedIndex > 1)
                 {
                     if (AppUtils.customConverterToDouble(calcrTextBox2.Text) > MaxT3x)
                     {
@@ -1947,7 +1948,6 @@ public partial class RDT : System.Web.UI.Page
                             args.IsValid = false;
                             return;
                         }
-
                     }
                     else
                     {
@@ -1958,7 +1958,6 @@ public partial class RDT : System.Web.UI.Page
                             return;
                         }
                     }
-
                 }
 
                 if (((AppUtils.customConverterToDouble(this.calcrTextBox1.Text) * MathUtils.getArrConvert3(this.calcrDropDownList1.SelectedIndex - 1) / MathUtils.getArrConvert3(2)) - MathUtils.getPSbyT(AppUtils.customConverterToDouble(this.calcrTextBox2.Text))) <= 0)
@@ -1992,7 +1991,6 @@ public partial class RDT : System.Web.UI.Page
                 {
                     CustomValidator12.ErrorMessage = "Неверно указано значение расхода";
                     args.IsValid = false;
-
                 }
             }
         }
@@ -2002,6 +2000,7 @@ public partial class RDT : System.Web.UI.Page
             CustomValidator12.ErrorMessage = "";
         }
     }
+
     protected void CustomValidator13_ServerValidate(object source, ServerValidateEventArgs args)
     {
         if (fprRadioButton2.Checked)
@@ -2058,6 +2057,7 @@ public partial class RDT : System.Web.UI.Page
             }
         }
     }
+
     protected void CustomValidator14_ServerValidate(object source, ServerValidateEventArgs args)
     {
         if (fprRadioButton2.Checked)
@@ -2120,6 +2120,7 @@ public partial class RDT : System.Web.UI.Page
             }
         }
     }
+
     protected void CustomValidator15_ServerValidate(object source, ServerValidateEventArgs args)
     {
         if (CustomValidator14.IsValid)
@@ -2136,7 +2137,6 @@ public partial class RDT : System.Web.UI.Page
                 {
                     CustomValidator15.ErrorMessage = "Неверно указано значение тепловой мощности";
                     args.IsValid = false;
-
                 }
             }
         }
@@ -2192,7 +2192,6 @@ public partial class RDT : System.Web.UI.Page
                     args.IsValid = false;
                     return;
                 }
-
             }
             else
             {
@@ -2220,14 +2219,14 @@ public partial class RDT : System.Web.UI.Page
                     args.IsValid = false;
                     return;
                 }
-                if(eorRadioButtonList1.SelectedIndex == 1 && ws1RadioButtonList1.SelectedIndex == 3)
+                if (eorRadioButtonList1.SelectedIndex == 1 && ws1RadioButtonList1.SelectedIndex == 3)
                 {
                     if (MathUtils.convertArrToBar(_token, lp5DropDownList1, lp5TextBox1) > PressureBeforeValve2x)
                     {
                         CustomValidator18.ErrorMessage = "На давление свыше 25 бар вариантов нет";
                         args.IsValid = false;
                     }
-                } 
+                }
                 else
                 {
                     if (MathUtils.convertArrToBar(_token, lp5DropDownList1, lp5TextBox1) > PressureBeforeValve3x)
@@ -2236,7 +2235,6 @@ public partial class RDT : System.Web.UI.Page
                         args.IsValid = false;
                     }
                 }
-                
             }
         }
         else
@@ -2284,7 +2282,6 @@ public partial class RDT : System.Web.UI.Page
         {
             if (lp5RadioButtonList1.SelectedIndex == 0)
             {
-            
                 if (ws1RadioButtonList1.SelectedIndex == 3)
                 {
                     if (lp5TextBox3.Enabled == false || AppUtils.checkTextBoxEmpty(lp5TextBox3))
@@ -2322,7 +2319,6 @@ public partial class RDT : System.Web.UI.Page
                     }
                 }
             }
-            
         }
         else
         {
@@ -2335,7 +2331,6 @@ public partial class RDT : System.Web.UI.Page
     {
         if (ws1RadioButtonList1.SelectedIndex == 3)
         {
-            
             if (lp5RadioButtonList1.SelectedIndex == -1)
             {
                 CustomValidator21.ErrorMessage = "Необходимо выбрать тип пара";
@@ -2343,7 +2338,6 @@ public partial class RDT : System.Web.UI.Page
                 return;
             }
         }
-      
     }
 
     protected void CustomValidator22_ServerValidate(object source, ServerValidateEventArgs args)
@@ -2372,6 +2366,7 @@ public partial class RDT : System.Web.UI.Page
         AppUtils.DisableTextBox(lp1TextBox4);
         AppUtils.DisableTextBox(lp1TextBox5);
     }
+
     public void lp2ControlEnable(bool flag)
     {
         AppUtils.dropDownListEnable(lp2DropDownList1, flag);
@@ -2379,6 +2374,7 @@ public partial class RDT : System.Web.UI.Page
         AppUtils.dropDownListEnable(lp2DropDownList2, flag);
         AppUtils.DisableTextBox(lp2TextBox2);
     }
+
     public void lp3ControlEnable(bool flag)
     {
         AppUtils.dropDownListEnable(lp3DropDownList1, flag);
@@ -2386,11 +2382,13 @@ public partial class RDT : System.Web.UI.Page
         AppUtils.dropDownListEnable(lp3DropDownList2, flag);
         AppUtils.DisableTextBox(lp3TextBox2);
     }
+
     public void lp4ControlEnable(bool flag)
     {
         AppUtils.dropDownListEnable(lp4DropDownList2, flag);
         AppUtils.DisableTextBox(lp4TextBox2);
     }
+
     public void lp5ControlEnable(bool flag)
     {
         AppUtils.dropDownListEnable(lp5DropDownList1, flag);
@@ -2426,17 +2424,15 @@ public partial class RDT : System.Web.UI.Page
             Dictionary<string, double> g_dict = new Dictionary<string, double>();
             double g = 0;
             r_input_dict.Clear();
-           
+
             g_dict.Add("vmax", 3);
 
             if (eorRadioButtonList1.SelectedIndex != -1)
             {
                 if (ws1RadioButtonList1.SelectedIndex != -1)
                 {
-
                     if (this.ws1RadioButtonList1.SelectedIndex == 1 || ws1RadioButtonList1.SelectedIndex == 2)
                     {
-                            
                         Double p6 = -1;
                         Double p7 = -1;
                         try
@@ -2470,12 +2466,10 @@ public partial class RDT : System.Web.UI.Page
                         }
 
                         g_dict.Add("p7", p7);
-                            
                     }
 
                     if (fprRadioButton1.Checked || fprRadioButton2.Checked)
                     {
-
                         if (ws1RadioButtonList1.SelectedIndex == 0)
                         {
                             MathUtils.Water(GetAvgT(), ref g);
@@ -2559,48 +2553,45 @@ public partial class RDT : System.Web.UI.Page
                             return;
                         }
 
-                    if (this.fprRadioButton1.Checked && AppUtils.checkTextBoxEmpty(this.fprTextBox1))
-                    {
-                        LabelError.Text = "Не задан расход через регулятор давления";
-                        return;
-                    }
-                    else if (this.fprRadioButton2.Checked && AppUtils.checkTextBoxEmpty(this.fprTextBox2))
-                    {
-                        LabelError.Text = "Не задано значение температуры";
-                        return;
-                    }
-                       
-                    else if (this.fprRadioButton2.Checked && AppUtils.checkTextBoxEmpty(this.fprTextBox3))
-                    {
-                        LabelError.Text = "Не задано значение температуры";
-                        return;
-                    }
-                    else if (this.fprRadioButton2.Checked && AppUtils.customConverterToDouble(this.fprTextBox2.Text) <= AppUtils.customConverterToDouble(this.fprTextBox3.Text))
-                    {
-                        LabelError.Text = "Неверно указано значение температуры";
-                        return;
-                    }
-                        
-                    else if (this.fprRadioButton2.Checked && AppUtils.checkTextBoxEmpty(this.fprTextBox4))
-                    {
-                        LabelError.Text = "Не задано значение тепловой мощности";
-                        return;
-                    }
-                    else
-                    {
-                        Double p16, p25 = 0;
-                        if (this.fprRadioButton2.Checked)
+                        if (this.fprRadioButton1.Checked && AppUtils.checkTextBoxEmpty(this.fprTextBox1))
                         {
-                            try
+                            LabelError.Text = "Не задан расход через регулятор давления";
+                            return;
+                        }
+                        else if (this.fprRadioButton2.Checked && AppUtils.checkTextBoxEmpty(this.fprTextBox2))
+                        {
+                            LabelError.Text = "Не задано значение температуры";
+                            return;
+                        }
+                        else if (this.fprRadioButton2.Checked && AppUtils.checkTextBoxEmpty(this.fprTextBox3))
+                        {
+                            LabelError.Text = "Не задано значение температуры";
+                            return;
+                        }
+                        else if (this.fprRadioButton2.Checked && AppUtils.customConverterToDouble(this.fprTextBox2.Text) <= AppUtils.customConverterToDouble(this.fprTextBox3.Text))
+                        {
+                            LabelError.Text = "Неверно указано значение температуры";
+                            return;
+                        }
+                        else if (this.fprRadioButton2.Checked && AppUtils.checkTextBoxEmpty(this.fprTextBox4))
+                        {
+                            LabelError.Text = "Не задано значение тепловой мощности";
+                            return;
+                        }
+                        else
+                        {
+                            Double p16, p25 = 0;
+                            if (this.fprRadioButton2.Checked)
                             {
-                                    if (ws1RadioButtonList1.SelectedIndex != 3) { 
-                                p16 = Math.Round((AppUtils.customConverterToDouble(this.fprTextBox4.Text) * MathUtils.getArrConvert2(this.fprDropDownList2.SelectedIndex - 1)) * 3.6 / (this.math_16_cp() * (AppUtils.customConverterToDouble(this.fprTextBox2.Text) - AppUtils.customConverterToDouble(this.fprTextBox3.Text))), 2);
-
+                                try
+                                {
+                                    if (ws1RadioButtonList1.SelectedIndex != 3)
+                                    {
+                                        p16 = Math.Round((AppUtils.customConverterToDouble(this.fprTextBox4.Text) * MathUtils.getArrConvert2(this.fprDropDownList2.SelectedIndex - 1)) * 3.6 / (this.math_16_cp() * (AppUtils.customConverterToDouble(this.fprTextBox2.Text) - AppUtils.customConverterToDouble(this.fprTextBox3.Text))), 2);
                                     }
                                     else
                                     {
                                         p16 = Math.Round((AppUtils.customConverterToDouble(this.fprTextBox4.Text) * MathUtils.getArrConvert2(this.fprDropDownList2.SelectedIndex - 1)) * 3.6 / SteamCP(), 2);
-
                                     }
                                 }
                                 catch (Exception)
@@ -2609,16 +2600,13 @@ public partial class RDT : System.Web.UI.Page
                                     return;
                                 }
                                 this.fprTextBox5.Text = p16.ToString();
-                                
                             }
                             else
                             {
-                                    
-                                if(fprDropDownList1.SelectedIndex > 4)
+                                if (fprDropDownList1.SelectedIndex > 4)
                                 {
                                     p16 = (AppUtils.customConverterToDouble(this.fprTextBox1.Text) * MathUtils.getArrConvert1((this.fprDropDownList1.SelectedIndex - 1), 5));
-
-                                } 
+                                }
                                 else
                                 {
                                     p16 = (AppUtils.customConverterToDouble(this.fprTextBox1.Text) * MathUtils.getArrConvert1((this.fprDropDownList1.SelectedIndex - 1), 5) * (g / 1000));
@@ -2653,7 +2641,6 @@ public partial class RDT : System.Web.UI.Page
                                 }
                                 else
                                 {
-
                                     double p17, p19, p21, p23;
 
                                     try
@@ -2734,7 +2721,6 @@ public partial class RDT : System.Web.UI.Page
                                     }
                                     else
                                     {
-
                                         g_dict.Add("p17", p17);
                                         g_dict.Add("p19", p19);
                                         g_dict.Add("p21", p21);
@@ -2762,7 +2748,6 @@ public partial class RDT : System.Web.UI.Page
                                     }
                                     else
                                     {
-
                                         double p26, p28;
 
                                         try
@@ -2871,7 +2856,6 @@ public partial class RDT : System.Web.UI.Page
                                 }
                                 else
                                 {
-
                                     double p30, p32;
 
                                     try
@@ -2933,7 +2917,6 @@ public partial class RDT : System.Web.UI.Page
                                 }
                                 else
                                 {
-
                                     double p19;
 
                                     try
@@ -2977,18 +2960,14 @@ public partial class RDT : System.Web.UI.Page
 
                                 if (AppUtils.customConverterToDouble(this.calcrTextBox1.Text) <= 0)
                                 {
-
                                     LabelError.Text = "Неверно указано значение давления";
                                     return;
                                 }
                                 else if ((AppUtils.customConverterToDouble(this.calcrTextBox1.Text) * MathUtils.getArrConvert3(this.calcrDropDownList1.SelectedIndex - 1) / MathUtils.getArrConvert3(2)) > 25)
                                 {
-
                                     LabelError.Text = "На давление свыше 25 бар вариантов нет";
                                     return;
                                 }
-
-
 
                                 double p35 = 0;
                                 try
@@ -3002,7 +2981,6 @@ public partial class RDT : System.Web.UI.Page
                                 }
                                 if (p35 <= 0)
                                 {
-
                                     LabelError.Text = "Неверно указано значение температуры";
                                     return;
                                 }
@@ -3024,13 +3002,12 @@ public partial class RDT : System.Web.UI.Page
                                 }
 
                                 g_dict.Add("p35", p35);
-
                             }
-                            else {
+                            else
+                            {
                                 double p35 = 0;
                                 p35 = AppUtils.customConverterToDouble(this.lp5TextBox3.Text);
                                 g_dict.Add("p35", p35);
-                                
                             }
 
                             if (ws1RadioButtonList1.SelectedIndex == 0)
@@ -3055,7 +3032,6 @@ public partial class RDT : System.Web.UI.Page
                                 {
                                     this.ws1ResultLabel.Text = "Рабочая среда - Водяной пар насыщенный";
                                 }
-                                    
                             }
                             bool flag25Bar = get25BarFlag();
 
@@ -3065,13 +3041,14 @@ public partial class RDT : System.Web.UI.Page
                                 if (flag25Bar)
                                 {
                                     this.maxp1ResultLabel.Text = "Максимальное рабочее давление - 25 бар";
-                                } else
+                                }
+                                else
                                 {
                                     this.maxp1ResultLabel.Text = "Максимальное рабочее давление - 16 бар";
                                 }
 
                                 labelOptyV.Text = "Оптимальная скорость в выходном сечении регулятора: 2 - 3 м / с для ИТП; 2 - 5 м / с для ЦТП.";
-                            } 
+                            }
                             else
                             {
                                 if (ws1RadioButtonList1.SelectedIndex != 3)
@@ -3094,9 +3071,7 @@ public partial class RDT : System.Web.UI.Page
                                 }
                                 else
                                 {
-
                                     this.maxt1ResultLabel.Text = "Максимальная температура - 220 °С";
-
                                 }
 
                                 if (flag25Bar)
@@ -3115,7 +3090,7 @@ public partial class RDT : System.Web.UI.Page
                                 else
                                 {
                                     labelOptyV.Text = "Оптимальная скорость в выходном сечении регулятора: 40 м/с для насыщенного пара; 60 м/с для перегретого пара.";
-                                } 
+                                }
                             }
 
                             if (ws1RadioButtonList1.SelectedIndex != 3)
@@ -3174,7 +3149,7 @@ public partial class RDT : System.Web.UI.Page
 
                             DataTable dt = new DataTable();
                             DataRow dr;
-                            //for (int i = 0; i < titles.Count(); i++)       
+                            //for (int i = 0; i < titles.Count(); i++)
 
                             for (int i = 0; i < titles.Count(); i++)
                             {
@@ -3206,27 +3181,35 @@ public partial class RDT : System.Web.UI.Page
                                         case "A":
                                             index = 0;
                                             break;
+
                                         case "B":
                                             index = 2;
                                             break;
+
                                         case "C":
                                             index = 1;
                                             break;
+
                                         case "D":
                                             index = 3;
                                             break;
+
                                         case "I":
                                             if (ws1RadioButtonList1.SelectedIndex != 3) { index = 4; } else { index = 3; }
                                             break;
+
                                         case "F":
                                             if (ws1RadioButtonList1.SelectedIndex != 3) { index = 5; } else { index = 4; }
                                             break;
+
                                         case "E":
                                             if (ws1RadioButtonList1.SelectedIndex != 3) { index = 6; } else { index = 5; }
                                             break;
+
                                         case "G":
                                             index = 7;
                                             break;
+
                                         case "K":
                                             index = 8;
                                             break;
@@ -3240,7 +3223,6 @@ public partial class RDT : System.Web.UI.Page
                                             if (GridView1.Rows.Count > 1)
                                             {
                                                 dt.Rows[GridView1.Rows.Count - 1][index] = dt.Rows[GridView1.Rows.Count - 2][index];
-
                                             }
                                         }
                                         else
@@ -3262,7 +3244,6 @@ public partial class RDT : System.Web.UI.Page
                             GridView1.DataBind();
 
                             hfResult.Value = JsonConvert.SerializeObject(dt);
-
                         }
                     }
                     else
@@ -3282,7 +3263,7 @@ public partial class RDT : System.Web.UI.Page
                 LabelError.Text = "Не выбрано исполнение регулятора";
                 return;
             }
-           
+
             LabelError.Text = "";
             Label52.Visible = true;
             maxp1ResultLabel.Visible = true;
@@ -3294,19 +3275,15 @@ public partial class RDT : System.Web.UI.Page
             GridView1.Height = 250;
             this.Button2.Visible = true;
             this.Button2.Enabled = true;
-
         }
         catch (Exception er)
         {
             Logger.Log.Error(er);
-
         }
-
     }
 
     protected void lp1DropDownList1_SelectedIndexChanged(object sender, EventArgs e)
     {
-
         if (AppUtils.SetEnableTextBox(lp1DropDownList1, lp1TextBox1))
         {
             MathUtils.convertArr3(_token, (sender as DropDownList), ref lp1TextBox1);
@@ -3316,7 +3293,6 @@ public partial class RDT : System.Web.UI.Page
 
     protected void lp1DropDownList2_SelectedIndexChanged(object sender, EventArgs e)
     {
-
         if (AppUtils.SetEnableTextBox(lp1DropDownList2, lp1TextBox2))
         {
             MathUtils.convertArr3(_token, (sender as DropDownList), ref lp1TextBox2);
@@ -3476,9 +3452,7 @@ public partial class RDT : System.Web.UI.Page
         catch (Exception er)
         {
             Logger.Log.Error(er);
-
         }
-
     }
 
     public void GenerateSteamExel()
@@ -3505,7 +3479,6 @@ public partial class RDT : System.Web.UI.Page
             {
                 r_input_dict[pos] = GridView1.SelectedRow.Cells[r].Text;
                 pos++;
-
             }
 
             r_input_dict[5] = r_input_dict[41];
@@ -3558,10 +3531,8 @@ public partial class RDT : System.Web.UI.Page
             AppUtils.SetCellValue(ws, "H21", 45, r_input_dict);
             AppUtils.SetCellValue(ws, "J21", 46, r_input_dict, true);
 
-
-
             getDimsR(ref r_input_dict);
-            
+
             ws.Pictures.Add(HttpContext.Current.Server.MapPath("~/Content/images/rdt/Габаритный RDT-S и RDT-B.jpg"), "A25");
 
             AppUtils.SetCellValue(ws, "F25", 51, r_input_dict);
@@ -3583,13 +3554,11 @@ public partial class RDT : System.Web.UI.Page
         catch (Exception er)
         {
             Logger.Log.Error(er);
-
         }
     }
 
     public void GeneratePosleExel()
     {
-
         try
         {
             r_input_dict = StateStore.Get<Dictionary<int, string>>(_token, "r_input_dict");
@@ -3612,7 +3581,6 @@ public partial class RDT : System.Web.UI.Page
             {
                 r_input_dict[pos] = GridView1.SelectedRow.Cells[r].Text;
                 pos++;
-
             }
 
             r_input_dict[5] = r_input_dict[41];
@@ -3694,7 +3662,6 @@ public partial class RDT : System.Web.UI.Page
             AppUtils.SetCellValue(ws, "F32", 53, r_input_dict);
             AppUtils.SetCellValue(ws, "F33", 54, r_input_dict);
 
-
             string saveDirectory = HttpContext.Current.Server.MapPath($"~/Files/RDT/PDF/{DateTime.Now:dd-MM-yyyy}");
             AppUtils.EnsureDirectoryExists(saveDirectory);
 
@@ -3709,7 +3676,6 @@ public partial class RDT : System.Web.UI.Page
         catch (Exception er)
         {
             Logger.Log.Error(er);
-
         }
     }
 
@@ -3737,7 +3703,6 @@ public partial class RDT : System.Web.UI.Page
             {
                 r_input_dict[pos] = GridView1.SelectedRow.Cells[r].Text;
                 pos++;
-
             }
 
             r_input_dict[5] = r_input_dict[41];
@@ -3819,7 +3784,6 @@ public partial class RDT : System.Web.UI.Page
         catch (Exception er)
         {
             Logger.Log.Error(er);
-
         }
     }
 
@@ -3847,7 +3811,6 @@ public partial class RDT : System.Web.UI.Page
             {
                 r_input_dict[pos] = GridView1.SelectedRow.Cells[r].Text;
                 pos++;
-
             }
 
             r_input_dict[5] = r_input_dict[41];
@@ -3905,14 +3868,13 @@ public partial class RDT : System.Web.UI.Page
             AppUtils.SetCellValue(ws, "K25", 49, r_input_dict);
 
             getDimsR(ref r_input_dict);
-           
+
             ws.Pictures.Add(HttpContext.Current.Server.MapPath("~/Content/images/rdt/Габаритный RDT-S и RDT-B.jpg"), "A29");
 
             AppUtils.SetCellValue(ws, "F29", 51, r_input_dict);
             AppUtils.SetCellValue(ws, "F30", 52, r_input_dict);
             AppUtils.SetCellValue(ws, "F31", 53, r_input_dict);
             AppUtils.SetCellValue(ws, "F32", 54, r_input_dict);
-            
 
             string saveDirectory = HttpContext.Current.Server.MapPath($"~/Files/RDT/PDF/{DateTime.Now:dd-MM-yyyy}");
             AppUtils.EnsureDirectoryExists(saveDirectory);
@@ -3928,7 +3890,6 @@ public partial class RDT : System.Web.UI.Page
         catch (Exception er)
         {
             Logger.Log.Error(er);
-
         }
     }
 
@@ -3956,7 +3917,6 @@ public partial class RDT : System.Web.UI.Page
             {
                 r_input_dict[pos] = GridView1.SelectedRow.Cells[r].Text;
                 pos++;
-
             }
 
             r_input_dict[5] = r_input_dict[41];
@@ -4021,7 +3981,6 @@ public partial class RDT : System.Web.UI.Page
 
             getDimsR(ref r_input_dict);
 
-
             if ((r_input_dict[4] == this.eorRadioButtonList1.Items[1].Text))
             {
                 if (r_input_dict[4] == eorRadioButtonList1.Items[1].Text && AppUtils.customConverterToDouble(calcrTextBox2.Text) > 150 && ws1RadioButtonList1.SelectedIndex == 0)
@@ -4068,7 +4027,6 @@ public partial class RDT : System.Web.UI.Page
         catch (Exception er)
         {
             Logger.Log.Error(er);
-
         }
     }
 
@@ -4108,6 +4066,7 @@ public partial class RDT : System.Web.UI.Page
                 switchPane(lpPane1);
 
                 break;
+
             case 1:
                 lp1ControlEnable(false);
                 lp2ControlEnable(false);
@@ -4129,6 +4088,7 @@ public partial class RDT : System.Web.UI.Page
 
                 switchPane(lpPane2);
                 break;
+
             case 2:
                 lp1ControlEnable(false);
                 lp2ControlEnable(false);
@@ -4147,6 +4107,7 @@ public partial class RDT : System.Web.UI.Page
                 switchPane(lpPane3);
 
                 break;
+
             case 3:
                 lp1ControlEnable(false);
                 lp2ControlEnable(false);
@@ -4234,7 +4195,6 @@ public partial class RDT : System.Web.UI.Page
 
     protected void ws1RadioButtonList1_SelectedIndexChanged(object sender, EventArgs e)
     {
-
         if (ws1RadioButtonList1.SelectedIndex == 1 || ws1RadioButtonList1.SelectedIndex == 2)
         {
             ws1TextBox1.Enabled = true;
@@ -4242,7 +4202,7 @@ public partial class RDT : System.Web.UI.Page
             AppUtils.AddCssClass(lp5, "panel-hide");
             lp5ControlEnable(false);
 
-            if(eorRadioButtonList1.SelectedIndex == 1)
+            if (eorRadioButtonList1.SelectedIndex == 1)
             {
                 lp1ControlEnable(false);
                 lp2ControlEnable(true);
@@ -4268,7 +4228,6 @@ public partial class RDT : System.Web.UI.Page
         calcrDropDownList1.Enabled = true;
         calcrTextBox2.Enabled = true;
         AppUtils.RemoveCssClass(calcr, "panel-hide");
-        
 
         if (eorRadioButtonList1.SelectedIndex == 1 && ws1RadioButtonList1.SelectedIndex == 0)
         {
@@ -4315,7 +4274,7 @@ public partial class RDT : System.Web.UI.Page
             lp5RadioButtonList1.Enabled = false;
             lp5RadioButtonList1.SelectedIndex = -1;
             lp5TextBox3.Enabled = false;
-            
+
             fprRadioButton2.Enabled = true;
 
             if (LabelSteam.Text == "Y")
@@ -4366,7 +4325,6 @@ public partial class RDT : System.Web.UI.Page
             fpr2.Visible = false;
             Label31.Visible = true;
         }
-
     }
 
     protected void GridView1_SelectedIndexChanged(object sender, EventArgs e)
@@ -4376,8 +4334,18 @@ public partial class RDT : System.Web.UI.Page
         objTextBox1.Visible = true;
         objTextBox1.Enabled = true;
         Label53.Visible = true;
+
+        int idx = GridView1.SelectedIndex; 
+        
+        if (idx < 0 || idx >= GridView1.Rows.Count) 
+            return;
+
+        string blockType = StateStore.Get<string>(_token, "BlockTypeCode");
+        string methodSettingRegulator = StateStore.Get<string>(_token, "MethodSettingRegulator");
+
+        hfResult.Value = BTPUtils.CreateResultObject(blockType, methodSettingRegulator, GridView1);
+
     }
 
     //------------------------------------Event Function END--------------------------------------
-
 }
