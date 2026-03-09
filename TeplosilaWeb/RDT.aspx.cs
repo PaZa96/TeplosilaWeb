@@ -89,27 +89,17 @@ public partial class RDT : System.Web.UI.Page
         }
     }
 
+    //------------------------------------BTP Function START---------------------------------------
+
     private void FillForm(dynamic payload)
     {
         var b = payload;
-        var blockType = (string)b.block_type_code;
+
+        string blockType = BTPUtils.CheckJsonAttr(b, "block_type_code");
+
         StateStore.Set(_token, "BlockTypeCode", blockType);
 
-        string methodSettingRegulator = "";
-
-        if (b.ContainsKey("method_setting_regulator_before"))
-        {
-            methodSettingRegulator = "method_setting_regulator_before";
-        }
-        else if (b.ContainsKey("method_setting_regulator_after"))
-        {
-            methodSettingRegulator = "method_setting_regulator_after";
-        }
-        else
-        {
-            methodSettingRegulator = "method_setting_regulator_differential";
-        }
-
+        string methodSettingRegulator = BTPUtils.DetectMethodSetting(b);
         StateStore.Set(_token, "MethodSettingRegulator", methodSettingRegulator);
 
         switch (blockType)
@@ -118,379 +108,587 @@ public partial class RDT : System.Web.UI.Page
                 switch (methodSettingRegulator)
                 {
                     case "method_setting_regulator_after":
-
+                        FillTBV_TBVU_After(b);
                         break;
+
                     case "method_setting_regulator_before":
-
+                        FillTBV_TBVU_Before(b);
                         break;
+
                     case "method_setting_regulator_differential":
-
+                        FillTBV_TBVU_Differential(b);
                         break;
+
                     default:
                         return;
                 }
                 break;
+
             case "TBGV":
-
-                Logger.Log.Info("TBGV");
-
-                AppUtils.DisableAllExcept(eorRadioButtonList1, 0);
-                eorRadioButtonList1_SelectedIndexChanged(eorRadioButtonList1, EventArgs.Empty);
-
-                AppUtils.DisableAllExcept(ws1RadioButtonList1, 0);
-                ws1RadioButtonList1_SelectedIndexChanged(ws1RadioButtonList1, EventArgs.Empty);
-
-                AppUtils.DisableTextBox(lp1TextBox1);
-                lp1DropDownList1.SelectedIndex = 0;
-
-                BTPUtils.SetPressureUnit(lp1DropDownList2, "mwc");
-                lp1DropDownList2_SelectedIndexChanged(lp1DropDownList2, EventArgs.Empty);
-                lp1DropDownList2.Enabled = false;
-
-                if (b.block_schema == "each" && b.method_setting_heat_exchanger == "choose" && b.method_setting_control_valve == "choose")
-                {
-                    lp1TextBox2.Text = AppUtils.ConvertCommaToPoint((Math.Round((double)(((b.loss_pressure_control_valve / 0.7) + b.loss_pressure_heating + b.loss_pressure_heating_2 + 1)), 2)).ToString());
-                }
-                else if ((b.block_schema == "parallel" || b.block_schema == "monoblock") && b.method_setting_heat_exchanger == "choose" && b.method_setting_control_valve == "choose")
-                {
-                    lp1TextBox2.Text = AppUtils.ConvertCommaToPoint((Math.Round((double)(((b.loss_pressure_control_valve / 0.7) + b.loss_pressure_heating + 1)), 2)).ToString());
-                }
-
-                else
-                {
-                    lp1TextBox2.Text = "";
-                }
-
-                AppUtils.DisableTextBox(lp1TextBox3);
-                lp1DropDownList3.SelectedIndex = 0;
-
-                AppUtils.DisableTextBox(lp1TextBox4);
-                lp1DropDownList4.SelectedIndex = 0;
-
-                AppUtils.DisableTextBox(calcrTextBox1);
-                calcrDropDownList1.SelectedIndex = 0;
-
-                if (b.method_setting_expenses == "calculate")
-                {
-                    calcrTextBox2.Text = (string)b.supply_temp_t1w;
-                }
-                else
-                {
-                    calcrTextBox2.Text = "";
-                }
-
-                if (b.method_setting_expenses == "set")
-                {
-                    fprRadioButton2.Enabled = false;
-                    fprRadioButton1.Checked = true;
-                    fprRadioButton1_CheckedChanged(fprRadioButton1, EventArgs.Empty);
-
-                    BTPUtils.SetFlowPipeUnit(fprDropDownList1, (string)b.flow_t1_unit);
-                    fprDropDownList1_SelectedIndexChanged(fprDropDownList1, EventArgs.Empty);
-
-                    fprTextBox1.Text = (string)b.flow_t1_val;
-                }
-                else if ((string)b.method_setting_expenses == "calculate" && (((double)b.supply_temp_t1w - (double)b.return_temp_t2w) > ((double)b.supply_temp_t1s - (double)b.return_temp_t2s)))
-                {
-                    fprRadioButton1.Enabled = false;
-                    fprRadioButton2.Checked = true;
-                    fprRadioButton2_CheckedChanged(fprRadioButton2, EventArgs.Empty);
-
-                    fprTextBox2.Text = (string)b.supply_temp_t1s;
-                    fprTextBox3.Text = (string)b.return_temp_t2s;
-
-                    BTPUtils.SetPowerPipeUnit(fprDropDownList2, (string)b.power_gvs_unit);
-                    fprDropDownList2_SelectedIndexChanged(fprDropDownList2, EventArgs.Empty);
-
-                    fprTextBox4.Text = (string)b.power_gvs_val;
-                }
-                else if ((string)b.method_setting_expenses == "calculate" && (((double)b.supply_temp_t1w - (double)b.return_temp_t2w) < ((double)b.supply_temp_t1s - (double)b.return_temp_t2s)))
-                {
-                    fprRadioButton1.Enabled = false;
-                    fprRadioButton2.Checked = true;
-                    fprRadioButton2_CheckedChanged(fprRadioButton2, EventArgs.Empty);
-
-                    fprTextBox2.Text = (string)b.supply_temp_t1w;
-                    fprTextBox3.Text = (string)b.return_temp_t2w;
-
-                    BTPUtils.SetPowerPipeUnit(fprDropDownList2, (string)b.power_gvs_unit);
-                    fprDropDownList2_SelectedIndexChanged(fprDropDownList2, EventArgs.Empty);
-
-                    fprTextBox4.Text = (string)b.power_gvs_val;
-                }
-                else
-                {
-                    fprRadioButton1.Checked = false;
-                    fprRadioButton1_CheckedChanged(fprRadioButton1, EventArgs.Empty);
-                    fprRadioButton2.Checked = false;
-                    fprRadioButton2_CheckedChanged(fprRadioButton2, EventArgs.Empty);
-                }
-
-                objTextBox1.Text = (string)b.description + " " + (string)b.object_name;
-
+                FillTBGV(b);
                 break;
+
             case "TBO":
-
-                Logger.Log.Info("TBO");
-
-                AppUtils.DisableAllExcept(eorRadioButtonList1, 0);
-                eorRadioButtonList1_SelectedIndexChanged(eorRadioButtonList1, EventArgs.Empty);
-
-                AppUtils.DisableAllExcept(ws1RadioButtonList1, 0);
-                ws1RadioButtonList1_SelectedIndexChanged(ws1RadioButtonList1, EventArgs.Empty);
-
-                AppUtils.DisableTextBox(lp1TextBox1);
-                lp1DropDownList1.SelectedIndex = 0;
-
-                BTPUtils.SetPressureUnit(lp1DropDownList2, "mwc");
-                lp1DropDownList2_SelectedIndexChanged(lp1DropDownList2, EventArgs.Empty);
-                lp1DropDownList2.Enabled = false;
-
-                if (b.block_schema == "independent" && b.method_setting_heat_exchanger == "choose" && b.method_setting_2_way_control_valve == "choose")
-                {
-                    lp1TextBox2.Text = AppUtils.ConvertCommaToPoint((Math.Round((double)(((b.loss_pressure_control_valve / 0.7) + b.loss_pressure_heating + 1)), 2)).ToString());
-                }
-                else if ((b.circulation_pump_position == "supply" || b.circulation_pump_position == "return") && (b.method_setting_2_way_control_valve == "choose" || b.method_setting_3_way_control_valve == "choose"))
-                {
-                    lp1TextBox2.Text = AppUtils.ConvertCommaToPoint((Math.Round((double)(((b.loss_pressure_control_valve / 0.7) + 1)), 2)).ToString());
-                }
-                else if (b.circulation_pump_position == "bridge" && b.method_setting_2_way_control_valve == "choose" && (string)b.loss_pressure_system != "")
-                {
-                    lp1TextBox2.Text = AppUtils.ConvertCommaToPoint((Math.Round((double)(((b.loss_pressure_control_valve / 0.7) + b.loss_pressure_system + 1)), 2)).ToString());
-                }
-
-                else
-                {
-                    lp1TextBox2.Text = "";
-                }
-
-                AppUtils.DisableTextBox(lp1TextBox3);
-                lp1DropDownList3.SelectedIndex = 0;
-
-                AppUtils.DisableTextBox(lp1TextBox4);
-                lp1DropDownList4.SelectedIndex = 0;
-
-                AppUtils.DisableTextBox(calcrTextBox1);
-                calcrDropDownList1.SelectedIndex = 0;
-
-                if (b.block_schema == "dependent" || (string)b.regulator_position == "1")
-                {
-                    calcrTextBox2.Text = (string)b.supply_temp_t1t2;
-                }
-                else if ((string)b.regulator_position == "2")
-                {
-                    calcrTextBox2.Text = (string)b.return_temp_t1t2;
-                }
-                else
-                {
-                    calcrTextBox2.Text = "";
-                }
-
-                if ((string)b.method_setting_expenses == "set")
-                {
-                    fprRadioButton2.Enabled = false;
-                    fprRadioButton1.Checked = true;
-                    fprRadioButton1_CheckedChanged(fprRadioButton1, EventArgs.Empty);
-
-                    BTPUtils.SetFlowPipeUnit(fprDropDownList1, (string)b.flow_t1t2_unit);
-                    fprDropDownList1_SelectedIndexChanged(fprDropDownList1, EventArgs.Empty);
-
-                    fprTextBox1.Text = (string)b.flow_t1t2_val;
-                }
-                else if ((string)b.method_setting_expenses == "calculate")
-                {
-                    fprRadioButton1.Enabled = false;
-                    fprRadioButton2.Checked = true;
-                    fprRadioButton2_CheckedChanged(fprRadioButton2, EventArgs.Empty);
-
-                    fprTextBox2.Text = (string)b.supply_temp;
-                    fprTextBox3.Text = (string)b.return_temp;
-
-                    BTPUtils.SetPowerPipeUnit(fprDropDownList2, (string)b.power_unit);
-                    fprDropDownList2_SelectedIndexChanged(fprDropDownList2, EventArgs.Empty);
-
-                    fprTextBox4.Text = (string)b.power_val;
-                }
-                else
-                {
-                    fprRadioButton1.Checked = false;
-                    fprRadioButton1_CheckedChanged(fprRadioButton1, EventArgs.Empty);
-                    fprRadioButton2.Checked = false;
-                    fprRadioButton2_CheckedChanged(fprRadioButton2, EventArgs.Empty);
-                }
-
-                objTextBox1.Text = (string)b.description + " " + (string)b.object_name;
-
+                FillTBO(b);
                 break;
+
             case "TBR":
-                Logger.Log.Info("TBR");
-
-                AppUtils.DisableTextBox(lp1TextBox2);
-                lp1DropDownList2.SelectedIndex = 0;
-
-                AppUtils.DisableAllExcept(eorRadioButtonList1, 0);
-                eorRadioButtonList1_SelectedIndexChanged(eorRadioButtonList1, EventArgs.Empty);
-
-                AppUtils.DisableAllExcept(ws1RadioButtonList1, 0);
-                ws1RadioButtonList1_SelectedIndexChanged(ws1RadioButtonList1, EventArgs.Empty);
-
-                BTPUtils.SetPressureUnit(lp1DropDownList3, (string)b.pressure_t1_unit);
-                lp1DropDownList3_SelectedIndexChanged(lp1DropDownList3, EventArgs.Empty);
-
-                lp1TextBox3.Text = (string)b.pressure_t1_val;
-
-                BTPUtils.SetPressureUnit(lp1DropDownList4, (string)b.pressure_t1_unit);
-                lp1DropDownList4_SelectedIndexChanged(lp1DropDownList4, EventArgs.Empty);
-
-                lp1TextBox4.Text = (string)b.pressure_t2_val;
-
-                if ((string)b.regulator_position == "1")
-                {
-                    BTPUtils.SetPressureUnit(calcrDropDownList1, (string)b.pressure_t1_unit);
-                    calcrDropDownList1_SelectedIndexChanged(calcrDropDownList1, EventArgs.Empty);
-
-                    calcrTextBox1.Text = (string)b.pressure_t1_val;
-                    calcrTextBox2.Text = (string)b.supply_temp;
-                }
-                else
-                {
-                    calcrTextBox2.Text = (string)b.return_temp;
-                }
-
-                if ((string)b.method_setting_expenses == "set")
-                {
-                    fprRadioButton2.Enabled = false;
-                    fprRadioButton1.Checked = true;
-                    fprRadioButton1_CheckedChanged(fprRadioButton1, EventArgs.Empty);
-
-                    BTPUtils.SetFlowPipeUnit(fprDropDownList1, (string)b.flow_pipe_unit);
-                    fprDropDownList1_SelectedIndexChanged(fprDropDownList1, EventArgs.Empty);
-
-                    fprTextBox1.Text = (string)b.flow_pipe_val;
-                }
-                else if ((string)b.method_setting_expenses == "calculate")
-                {
-                    fprRadioButton1.Enabled = false;
-                    fprRadioButton2.Checked = true;
-                    fprRadioButton2_CheckedChanged(fprRadioButton2, EventArgs.Empty);
-
-                    fprTextBox2.Text = (string)b.supply_temp;
-                    fprTextBox3.Text = (string)b.return_temp;
-
-                    BTPUtils.SetPowerPipeUnit(fprDropDownList2, (string)b.power_pipe_unit);
-                    fprDropDownList2_SelectedIndexChanged(fprDropDownList2, EventArgs.Empty);
-
-                    fprTextBox4.Text = (string)b.power_pipe_val;
-                }
-                else
-                {
-                    fprRadioButton1.Checked = false;
-                    fprRadioButton1_CheckedChanged(fprRadioButton1, EventArgs.Empty);
-                    fprRadioButton2.Checked = false;
-                    fprRadioButton2_CheckedChanged(fprRadioButton2, EventArgs.Empty);
-                }
-
-                objTextBox1.Text = (string)b.description + " " + (string)b.object_name;
-
+                FillTBR(b);
                 break;
+
             case "TBSV":
-                Logger.Log.Info("TBSV");
-
-                AppUtils.DisableAllExcept(eorRadioButtonList1, 0);
-                eorRadioButtonList1_SelectedIndexChanged(eorRadioButtonList1, EventArgs.Empty);
-
-                AppUtils.DisableAllExcept(ws1RadioButtonList1, 0);
-                ws1RadioButtonList1_SelectedIndexChanged(ws1RadioButtonList1, EventArgs.Empty);
-
-                AppUtils.DisableTextBox(lp1TextBox1);
-                lp1DropDownList1.SelectedIndex = 0;
-
-                BTPUtils.SetPressureUnit(lp1DropDownList2, "mwc");
-                lp1DropDownList2_SelectedIndexChanged(lp1DropDownList2, EventArgs.Empty);
-                lp1DropDownList2.Enabled = false;
-
-                if (b.block_schema == "independent" && b.method_setting_heat_exchanger == "choose" && b.method_setting_2_way_control_valve == "choose")
-                {
-                    lp1TextBox2.Text = AppUtils.ConvertCommaToPoint((Math.Round((double)(((b.loss_pressure_control_valve / 0.7) + b.loss_pressure_heating + 1)), 2)).ToString());
-                }
-                else if ((b.circulation_pump_position == "supply" || b.circulation_pump_position == "return") && (b.method_setting_2_way_control_valve == "choose" || b.method_setting_3_way_control_valve == "choose"))
-                {
-                    lp1TextBox2.Text = AppUtils.ConvertCommaToPoint((Math.Round((double)(((b.loss_pressure_control_valve / 0.7) + 1)), 2)).ToString());
-                }
-                else if (b.circulation_pump_position == "bridge" && b.method_setting_2_way_control_valve == "choose" && (string)b.loss_pressure_system != "")
-                {
-                    lp1TextBox2.Text = AppUtils.ConvertCommaToPoint((Math.Round((double)(((b.loss_pressure_control_valve / 0.7) + b.loss_pressure_system + 1)), 2)).ToString());
-                }
-
-                else
-                {
-                    lp1TextBox2.Text = "";
-                }
-
-                AppUtils.DisableTextBox(lp1TextBox3);
-                lp1DropDownList3.SelectedIndex = 0;
-
-                AppUtils.DisableTextBox(lp1TextBox4);
-                lp1DropDownList4.SelectedIndex = 0;
-
-                AppUtils.DisableTextBox(calcrTextBox1);
-                calcrDropDownList1.SelectedIndex = 0;
-
-                if (b.block_schema == "dependent" || (string)b.regulator_position == "1")
-                {
-                    calcrTextBox2.Text = (string)b.supply_temp_t1t2;
-                }
-                else if ((string)b.regulator_position == "2")
-                {
-                    calcrTextBox2.Text = (string)b.return_temp_t1t2;
-                }
-                else
-                {
-                    calcrTextBox2.Text = "";
-                }
-
-                if ((string)b.method_setting_expenses == "set")
-                {
-                    fprRadioButton2.Enabled = false;
-                    fprRadioButton1.Checked = true;
-                    fprRadioButton1_CheckedChanged(fprRadioButton1, EventArgs.Empty);
-
-                    BTPUtils.SetFlowPipeUnit(fprDropDownList1, (string)b.flow_t1t2_unit);
-                    fprDropDownList1_SelectedIndexChanged(fprDropDownList1, EventArgs.Empty);
-
-                    fprTextBox1.Text = (string)b.flow_t1t2_val;
-                }
-                else if ((string)b.method_setting_expenses == "calculate")
-                {
-                    fprRadioButton1.Enabled = false;
-                    fprRadioButton2.Checked = true;
-                    fprRadioButton2_CheckedChanged(fprRadioButton2, EventArgs.Empty);
-
-                    fprTextBox2.Text = (string)b.supply_temp;
-                    fprTextBox3.Text = (string)b.return_temp;
-
-                    BTPUtils.SetPowerPipeUnit(fprDropDownList2, (string)b.power_unit);
-                    fprDropDownList2_SelectedIndexChanged(fprDropDownList2, EventArgs.Empty);
-
-                    fprTextBox4.Text = (string)b.power_val;
-                }
-                else
-                {
-                    fprRadioButton1.Checked = false;
-                    fprRadioButton1_CheckedChanged(fprRadioButton1, EventArgs.Empty);
-                    fprRadioButton2.Checked = false;
-                    fprRadioButton2_CheckedChanged(fprRadioButton2, EventArgs.Empty);
-                }
-
-                objTextBox1.Text = (string)b.description + " " + (string)b.object_name;
-
+                FillTBSV(b);
                 break;
 
 
             default:
                 return;
         }
+
+        objTextBox1.Text = $"{BTPUtils.CheckJsonAttr(b, "description")} {BTPUtils.CheckJsonAttr(b, "object_name")}";
     }
+
+   
+
+    private void FillTBV_TBVU_Differential(dynamic b)
+    {
+        Logger.Log.Info("TBV_TBVU DIF");
+
+        AppUtils.ApplyAndTrigger(eorRadioButtonList1, 0, eorRadioButtonList1_SelectedIndexChanged);
+
+        AppUtils.ApplyAndTrigger(ws1RadioButtonList1, 0, ws1RadioButtonList1_SelectedIndexChanged);
+
+        AppUtils.DisableTextBox(lp1TextBox1);
+        lp1DropDownList1.SelectedIndex = 0;
+
+        AppUtils.DisableTextBox(lp1TextBox2);
+        lp1DropDownList2.SelectedIndex = 0;
+
+        if (((string)b.regulator_position == "1" || (string)b.regulator_position == "2") || (((string)b.differential_pressure_regulator == "1" || (string)b.differential_pressure_regulator == "2") && (string)b.pressure_regulator_after == "0" && (string)b.pressure_regulator_before == "0"))
+        {
+            BTPUtils.SetPressureUnit(lp1DropDownList3, (string)b.pressure_t1_unit);
+            lp1DropDownList3_SelectedIndexChanged(lp1DropDownList3, EventArgs.Empty);
+
+            lp1TextBox3.Text = (string)b.pressure_t1_val;
+
+            BTPUtils.SetPressureUnit(lp1DropDownList4, (string)b.pressure_t2_unit);
+            lp1DropDownList4_SelectedIndexChanged(lp1DropDownList4, EventArgs.Empty);
+
+            lp1TextBox4.Text = (string)b.pressure_t2_val;
+        }
+        else
+        {
+            AppUtils.DisableTextBox(lp1TextBox3);
+            lp1DropDownList3.SelectedIndex = 0;
+
+            AppUtils.DisableTextBox(lp1TextBox4);
+            lp1DropDownList4.SelectedIndex = 0;
+        }
+
+        if ((string)b.regulator_position == "1" || ((string)b.differential_pressure_regulator == "1" && (string)b.pressure_regulator_after == "0" && (string)b.pressure_regulator_before == "0"))
+        {
+            BTPUtils.SetPressureUnit(calcrDropDownList1, (string)b.pressure_t1_unit);
+            calcrDropDownList1_SelectedIndexChanged(calcrDropDownList1, EventArgs.Empty);
+
+            calcrTextBox1.Text = (string)b.pressure_t1_val;
+        }
+        else
+        {
+            AppUtils.DisableTextBox(calcrTextBox1);
+            calcrDropDownList1.SelectedIndex = 0;
+        }
+
+        if ((string)b.regulator_position == "1" || (string)b.differential_pressure_regulator == "1")
+        {
+            calcrTextBox2.Text = (string)b.supply_temp;
+        }
+        else if ((string)b.regulator_position == "2" || (string)b.differential_pressure_regulator == "2")
+        {
+            calcrTextBox2.Text = (string)b.return_temp;
+        }
+        else
+        {
+            calcrTextBox2.Text = "";
+        }
+
+        if (b.method_setting_expenses == "set")
+        {
+            fprRadioButton2.Enabled = false;
+            fprRadioButton1.Checked = true;
+            fprRadioButton1_CheckedChanged(fprRadioButton1, EventArgs.Empty);
+
+            BTPUtils.SetFlowPipeUnit(fprDropDownList1, (string)b.flow_t1t2_unit);
+            fprDropDownList1_SelectedIndexChanged(fprDropDownList1, EventArgs.Empty);
+
+            fprTextBox1.Text = (string)b.flow_t1t2_val;
+        }
+
+        else if ((string)b.method_setting_expenses == "calculate")
+        {
+            fprRadioButton1.Enabled = false;
+            fprRadioButton2.Checked = true;
+            fprRadioButton2_CheckedChanged(fprRadioButton2, EventArgs.Empty);
+
+            fprTextBox2.Text = (string)b.supply_temp;
+            fprTextBox3.Text = (string)b.return_temp;
+
+            BTPUtils.SetPowerPipeUnit(fprDropDownList2, (string)b.power_t1t2_unit);
+            fprDropDownList2_SelectedIndexChanged(fprDropDownList2, EventArgs.Empty);
+
+            fprTextBox4.Text = (string)b.power_t1t2_val;
+        }
+        else
+        {
+            ClearFprRadioButton();
+        }
+    }
+
+    private void FillTBV_TBVU_Before(dynamic b)
+    {
+        Logger.Log.Info("TBV_TBVU BEFORE");
+
+        AppUtils.ApplyAndTrigger(eorRadioButtonList1, 2, eorRadioButtonList1_SelectedIndexChanged);
+
+        AppUtils.ApplyAndTrigger(ws1RadioButtonList1, 0, ws1RadioButtonList1_SelectedIndexChanged);
+
+        AppUtils.DisableTextBox(lp3TextBox1);
+        lp3DropDownList1.SelectedIndex = 0;
+
+        BTPUtils.SetPressureUnit(lp3DropDownList2, (string)b.pressure_t2_unit);
+        lp3DropDownList2_SelectedIndexChanged(lp3DropDownList2, EventArgs.Empty);
+
+        lp3TextBox2.Text = (string)b.pressure_t2_val;
+
+        AppUtils.DisableTextBox(calcrTextBox1);
+        calcrDropDownList1.SelectedIndex = 0;
+
+        calcrTextBox2.Text = (string)b.return_temp;
+
+        if (b.method_setting_expenses == "set")
+        {
+            fprRadioButton2.Enabled = false;
+            fprRadioButton1.Checked = true;
+            fprRadioButton1_CheckedChanged(fprRadioButton1, EventArgs.Empty);
+
+            BTPUtils.SetFlowPipeUnit(fprDropDownList1, (string)b.flow_t1t2_unit);
+            fprDropDownList1_SelectedIndexChanged(fprDropDownList1, EventArgs.Empty);
+
+            fprTextBox1.Text = (string)b.flow_t1t2_val;
+        }
+
+        else if ((string)b.method_setting_expenses == "calculate")
+        {
+            fprRadioButton1.Enabled = false;
+            fprRadioButton2.Checked = true;
+            fprRadioButton2_CheckedChanged(fprRadioButton2, EventArgs.Empty);
+
+            fprTextBox2.Text = (string)b.supply_temp;
+            fprTextBox3.Text = (string)b.return_temp;
+
+            BTPUtils.SetPowerPipeUnit(fprDropDownList2, (string)b.power_t1t2_unit);
+            fprDropDownList2_SelectedIndexChanged(fprDropDownList2, EventArgs.Empty);
+
+            fprTextBox4.Text = (string)b.power_t1t2_val;
+        }
+        else
+        {
+            ClearFprRadioButton();
+        }
+    }
+
+    private void FillTBV_TBVU_After(dynamic b)
+    {
+        Logger.Log.Info("TBV_TBVU AFTER");
+
+        AppUtils.ApplyAndTrigger(eorRadioButtonList1, 1, eorRadioButtonList1_SelectedIndexChanged);
+
+        AppUtils.ApplyAndTrigger(ws1RadioButtonList1, 0, ws1RadioButtonList1_SelectedIndexChanged);
+
+        BTPUtils.SetPressureUnit(lp2DropDownList1, (string)b.pressure_t1_unit);
+        lp2DropDownList1_SelectedIndexChanged(lp2DropDownList1, EventArgs.Empty);
+
+        lp2TextBox1.Text = (string)b.pressure_t1_val;
+
+        AppUtils.DisableTextBox(lp2TextBox2);
+        lp2DropDownList2.SelectedIndex = 0;
+
+        BTPUtils.SetPressureUnit(calcrDropDownList1, (string)b.pressure_t1_unit);
+        calcrDropDownList1_SelectedIndexChanged(calcrDropDownList1, EventArgs.Empty);
+
+        calcrTextBox1.Text = (string)b.pressure_t1_val;
+
+        calcrTextBox2.Text = (string)b.supply_temp;
+
+        if (b.method_setting_expenses == "set")
+        {
+            fprRadioButton2.Enabled = false;
+            fprRadioButton1.Checked = true;
+            fprRadioButton1_CheckedChanged(fprRadioButton1, EventArgs.Empty);
+
+            BTPUtils.SetFlowPipeUnit(fprDropDownList1, (string)b.flow_t1t2_unit);
+            fprDropDownList1_SelectedIndexChanged(fprDropDownList1, EventArgs.Empty);
+
+            fprTextBox1.Text = (string)b.flow_t1t2_val;
+        }
+
+        else if ((string)b.method_setting_expenses == "calculate")
+        {
+            fprRadioButton1.Enabled = false;
+            fprRadioButton2.Checked = true;
+            fprRadioButton2_CheckedChanged(fprRadioButton2, EventArgs.Empty);
+
+            fprTextBox2.Text = (string)b.supply_temp;
+            fprTextBox3.Text = (string)b.return_temp;
+
+            BTPUtils.SetPowerPipeUnit(fprDropDownList2, (string)b.power_t1t2_unit);
+            fprDropDownList2_SelectedIndexChanged(fprDropDownList2, EventArgs.Empty);
+
+            fprTextBox4.Text = (string)b.power_t1t2_val;
+        }
+        else
+        {
+            ClearFprRadioButton();
+        }
+    }
+
+    private void FillTBSV(dynamic b)
+    {
+        Logger.Log.Info("TBSV");
+
+        AppUtils.ApplyAndTrigger(eorRadioButtonList1, 0, eorRadioButtonList1_SelectedIndexChanged);
+
+        AppUtils.ApplyAndTrigger(ws1RadioButtonList1, 0, ws1RadioButtonList1_SelectedIndexChanged);
+
+        AppUtils.DisableTextBox(lp1TextBox1);
+        lp1DropDownList1.SelectedIndex = 0;
+
+        BTPUtils.SetPressureUnit(lp1DropDownList2, "mwc");
+        lp1DropDownList2_SelectedIndexChanged(lp1DropDownList2, EventArgs.Empty);
+        lp1DropDownList2.Enabled = false;
+
+        if (b.block_schema == "independent" && b.method_setting_heat_exchanger == "choose" && b.method_setting_2_way_control_valve == "choose")
+        {
+            lp1TextBox2.Text = AppUtils.ConvertCommaToPoint((Math.Round((double)(((b.loss_pressure_control_valve / 0.7) + b.loss_pressure_heating + 1)), 2)).ToString());
+        }
+        else if ((b.circulation_pump_position == "supply" || b.circulation_pump_position == "return") && (b.method_setting_2_way_control_valve == "choose" || b.method_setting_3_way_control_valve == "choose"))
+        {
+            lp1TextBox2.Text = AppUtils.ConvertCommaToPoint((Math.Round((double)(((b.loss_pressure_control_valve / 0.7) + 1)), 2)).ToString());
+        }
+        else if (b.circulation_pump_position == "bridge" && b.method_setting_2_way_control_valve == "choose" && (string)b.loss_pressure_system != "")
+        {
+            lp1TextBox2.Text = AppUtils.ConvertCommaToPoint((Math.Round((double)(((b.loss_pressure_control_valve / 0.7) + b.loss_pressure_system + 1)), 2)).ToString());
+        }
+
+        else
+        {
+            lp1TextBox2.Text = "";
+        }
+
+        AppUtils.DisableTextBox(lp1TextBox3);
+        lp1DropDownList3.SelectedIndex = 0;
+
+        AppUtils.DisableTextBox(lp1TextBox4);
+        lp1DropDownList4.SelectedIndex = 0;
+
+        AppUtils.DisableTextBox(calcrTextBox1);
+        calcrDropDownList1.SelectedIndex = 0;
+
+        if (b.block_schema == "dependent" || (string)b.regulator_position == "1")
+        {
+            calcrTextBox2.Text = (string)b.supply_temp_t1t2;
+        }
+        else if ((string)b.regulator_position == "2")
+        {
+            calcrTextBox2.Text = (string)b.return_temp_t1t2;
+        }
+        else
+        {
+            calcrTextBox2.Text = "";
+        }
+
+        if ((string)b.method_setting_expenses == "set")
+        {
+            fprRadioButton2.Enabled = false;
+            fprRadioButton1.Checked = true;
+            fprRadioButton1_CheckedChanged(fprRadioButton1, EventArgs.Empty);
+
+            BTPUtils.SetFlowPipeUnit(fprDropDownList1, (string)b.flow_t1t2_unit);
+            fprDropDownList1_SelectedIndexChanged(fprDropDownList1, EventArgs.Empty);
+
+            fprTextBox1.Text = (string)b.flow_t1t2_val;
+        }
+        else if ((string)b.method_setting_expenses == "calculate")
+        {
+            fprRadioButton1.Enabled = false;
+            fprRadioButton2.Checked = true;
+            fprRadioButton2_CheckedChanged(fprRadioButton2, EventArgs.Empty);
+
+            fprTextBox2.Text = (string)b.supply_temp;
+            fprTextBox3.Text = (string)b.return_temp;
+
+            BTPUtils.SetPowerPipeUnit(fprDropDownList2, (string)b.power_unit);
+            fprDropDownList2_SelectedIndexChanged(fprDropDownList2, EventArgs.Empty);
+
+            fprTextBox4.Text = (string)b.power_val;
+        }
+        else
+        {
+            ClearFprRadioButton();
+        }
+    }
+
+    private void FillTBR(dynamic b)
+    {
+        Logger.Log.Info("TBR");
+
+        AppUtils.ApplyAndTrigger(eorRadioButtonList1, 0, eorRadioButtonList1_SelectedIndexChanged);
+
+        AppUtils.ApplyAndTrigger(ws1RadioButtonList1, 0, ws1RadioButtonList1_SelectedIndexChanged);
+
+        AppUtils.DisableTextBox(lp1TextBox2);
+        lp1DropDownList2.SelectedIndex = 0;
+
+        BTPUtils.SetPressureUnit(lp1DropDownList3, (string)b.pressure_t1_unit);
+        lp1DropDownList3_SelectedIndexChanged(lp1DropDownList3, EventArgs.Empty);
+
+        lp1TextBox3.Text = (string)b.pressure_t1_val;
+
+        BTPUtils.SetPressureUnit(lp1DropDownList4, (string)b.pressure_t1_unit);
+        lp1DropDownList4_SelectedIndexChanged(lp1DropDownList4, EventArgs.Empty);
+
+        lp1TextBox4.Text = (string)b.pressure_t2_val;
+
+        if ((string)b.regulator_position == "1")
+        {
+            BTPUtils.SetPressureUnit(calcrDropDownList1, (string)b.pressure_t1_unit);
+            calcrDropDownList1_SelectedIndexChanged(calcrDropDownList1, EventArgs.Empty);
+
+            calcrTextBox1.Text = (string)b.pressure_t1_val;
+            calcrTextBox2.Text = (string)b.supply_temp;
+        }
+        else
+        {
+            calcrTextBox2.Text = (string)b.return_temp;
+        }
+
+        if ((string)b.method_setting_expenses == "set")
+        {
+            fprRadioButton2.Enabled = false;
+            fprRadioButton1.Checked = true;
+            fprRadioButton1_CheckedChanged(fprRadioButton1, EventArgs.Empty);
+
+            BTPUtils.SetFlowPipeUnit(fprDropDownList1, (string)b.flow_pipe_unit);
+            fprDropDownList1_SelectedIndexChanged(fprDropDownList1, EventArgs.Empty);
+
+            fprTextBox1.Text = (string)b.flow_pipe_val;
+        }
+        else if ((string)b.method_setting_expenses == "calculate")
+        {
+            fprRadioButton1.Enabled = false;
+            fprRadioButton2.Checked = true;
+            fprRadioButton2_CheckedChanged(fprRadioButton2, EventArgs.Empty);
+
+            fprTextBox2.Text = (string)b.supply_temp;
+            fprTextBox3.Text = (string)b.return_temp;
+
+            BTPUtils.SetPowerPipeUnit(fprDropDownList2, (string)b.power_pipe_unit);
+            fprDropDownList2_SelectedIndexChanged(fprDropDownList2, EventArgs.Empty);
+
+            fprTextBox4.Text = (string)b.power_pipe_val;
+        }
+        else
+        {
+            ClearFprRadioButton();
+        }
+    }
+
+    private void FillTBO(dynamic b)
+    {
+        Logger.Log.Info("TBO");
+
+        AppUtils.ApplyAndTrigger(eorRadioButtonList1, 0, eorRadioButtonList1_SelectedIndexChanged);
+
+        AppUtils.ApplyAndTrigger(ws1RadioButtonList1, 0, ws1RadioButtonList1_SelectedIndexChanged);
+
+        AppUtils.DisableTextBox(lp1TextBox1);
+        lp1DropDownList1.SelectedIndex = 0;
+
+        BTPUtils.SetPressureUnit(lp1DropDownList2, "mwc");
+        lp1DropDownList2_SelectedIndexChanged(lp1DropDownList2, EventArgs.Empty);
+        lp1DropDownList2.Enabled = false;
+
+        if (b.block_schema == "independent" && b.method_setting_heat_exchanger == "choose" && b.method_setting_2_way_control_valve == "choose")
+        {
+            lp1TextBox2.Text = AppUtils.ConvertCommaToPoint((Math.Round((double)(((b.loss_pressure_control_valve / 0.7) + b.loss_pressure_heating + 1)), 2)).ToString());
+        }
+        else if ((b.circulation_pump_position == "supply" || b.circulation_pump_position == "return") && (b.method_setting_2_way_control_valve == "choose" || b.method_setting_3_way_control_valve == "choose"))
+        {
+            lp1TextBox2.Text = AppUtils.ConvertCommaToPoint((Math.Round((double)(((b.loss_pressure_control_valve / 0.7) + 1)), 2)).ToString());
+        }
+        else if (b.circulation_pump_position == "bridge" && b.method_setting_2_way_control_valve == "choose" && (string)b.loss_pressure_system != "")
+        {
+            lp1TextBox2.Text = AppUtils.ConvertCommaToPoint((Math.Round((double)(((b.loss_pressure_control_valve / 0.7) + b.loss_pressure_system + 1)), 2)).ToString());
+        }
+
+        else
+        {
+            lp1TextBox2.Text = "";
+        }
+
+        AppUtils.DisableTextBox(lp1TextBox3);
+        lp1DropDownList3.SelectedIndex = 0;
+
+        AppUtils.DisableTextBox(lp1TextBox4);
+        lp1DropDownList4.SelectedIndex = 0;
+
+        AppUtils.DisableTextBox(calcrTextBox1);
+        calcrDropDownList1.SelectedIndex = 0;
+
+        if (b.block_schema == "dependent" || (string)b.regulator_position == "1")
+        {
+            calcrTextBox2.Text = (string)b.supply_temp_t1t2;
+        }
+        else if ((string)b.regulator_position == "2")
+        {
+            calcrTextBox2.Text = (string)b.return_temp_t1t2;
+        }
+        else
+        {
+            calcrTextBox2.Text = "";
+        }
+
+        if ((string)b.method_setting_expenses == "set")
+        {
+            fprRadioButton2.Enabled = false;
+            fprRadioButton1.Checked = true;
+            fprRadioButton1_CheckedChanged(fprRadioButton1, EventArgs.Empty);
+
+            BTPUtils.SetFlowPipeUnit(fprDropDownList1, (string)b.flow_t1t2_unit);
+            fprDropDownList1_SelectedIndexChanged(fprDropDownList1, EventArgs.Empty);
+
+            fprTextBox1.Text = (string)b.flow_t1t2_val;
+        }
+        else if ((string)b.method_setting_expenses == "calculate")
+        {
+            fprRadioButton1.Enabled = false;
+            fprRadioButton2.Checked = true;
+            fprRadioButton2_CheckedChanged(fprRadioButton2, EventArgs.Empty);
+
+            fprTextBox2.Text = (string)b.supply_temp;
+            fprTextBox3.Text = (string)b.return_temp;
+
+            BTPUtils.SetPowerPipeUnit(fprDropDownList2, (string)b.power_unit);
+            fprDropDownList2_SelectedIndexChanged(fprDropDownList2, EventArgs.Empty);
+
+            fprTextBox4.Text = (string)b.power_val;
+        }
+        else
+        {
+            ClearFprRadioButton();
+        }
+    }
+
+    private void FillTBGV(dynamic b) 
+    {
+        Logger.Log.Info("TBGV");
+
+        AppUtils.ApplyAndTrigger(eorRadioButtonList1, 0, eorRadioButtonList1_SelectedIndexChanged);
+
+        AppUtils.ApplyAndTrigger(ws1RadioButtonList1, 0, ws1RadioButtonList1_SelectedIndexChanged);
+
+        AppUtils.DisableTextBox(lp1TextBox1);
+        lp1DropDownList1.SelectedIndex = 0;
+
+        BTPUtils.SetPressureUnit(lp1DropDownList2, "mwc");
+        lp1DropDownList2_SelectedIndexChanged(lp1DropDownList2, EventArgs.Empty);
+        lp1DropDownList2.Enabled = false;
+
+        if (b.block_schema == "each" && b.method_setting_heat_exchanger == "choose" && b.method_setting_control_valve == "choose")
+        {
+            lp1TextBox2.Text = AppUtils.ConvertCommaToPoint((Math.Round((double)(((b.loss_pressure_control_valve / 0.7) + b.loss_pressure_heating + b.loss_pressure_heating_2 + 1)), 2)).ToString());
+        }
+        else if ((b.block_schema == "parallel" || b.block_schema == "monoblock") && b.method_setting_heat_exchanger == "choose" && b.method_setting_control_valve == "choose")
+        {
+            lp1TextBox2.Text = AppUtils.ConvertCommaToPoint((Math.Round((double)(((b.loss_pressure_control_valve / 0.7) + b.loss_pressure_heating + 1)), 2)).ToString());
+        }
+
+        else
+        {
+            lp1TextBox2.Text = "";
+        }
+
+        AppUtils.DisableTextBox(lp1TextBox3);
+        lp1DropDownList3.SelectedIndex = 0;
+
+        AppUtils.DisableTextBox(lp1TextBox4);
+        lp1DropDownList4.SelectedIndex = 0;
+
+        AppUtils.DisableTextBox(calcrTextBox1);
+        calcrDropDownList1.SelectedIndex = 0;
+
+        if (b.method_setting_expenses == "calculate")
+        {
+            calcrTextBox2.Text = (string)b.supply_temp_t1w;
+        }
+        else
+        {
+            calcrTextBox2.Text = "";
+        }
+
+        if (b.method_setting_expenses == "set")
+        {
+            fprRadioButton2.Enabled = false;
+            fprRadioButton1.Checked = true;
+            fprRadioButton1_CheckedChanged(fprRadioButton1, EventArgs.Empty);
+
+            BTPUtils.SetFlowPipeUnit(fprDropDownList1, (string)b.flow_t1_unit);
+            fprDropDownList1_SelectedIndexChanged(fprDropDownList1, EventArgs.Empty);
+
+            fprTextBox1.Text = (string)b.flow_t1_val;
+        }
+        else if ((string)b.method_setting_expenses == "calculate" && (((double)b.supply_temp_t1w - (double)b.return_temp_t2w) > ((double)b.supply_temp_t1s - (double)b.return_temp_t2s)))
+        {
+            fprRadioButton1.Enabled = false;
+            fprRadioButton2.Checked = true;
+            fprRadioButton2_CheckedChanged(fprRadioButton2, EventArgs.Empty);
+
+            fprTextBox2.Text = (string)b.supply_temp_t1s;
+            fprTextBox3.Text = (string)b.return_temp_t2s;
+
+            BTPUtils.SetPowerPipeUnit(fprDropDownList2, (string)b.power_gvs_unit);
+            fprDropDownList2_SelectedIndexChanged(fprDropDownList2, EventArgs.Empty);
+
+            fprTextBox4.Text = (string)b.power_gvs_val;
+        }
+        else if ((string)b.method_setting_expenses == "calculate" && (((double)b.supply_temp_t1w - (double)b.return_temp_t2w) < ((double)b.supply_temp_t1s - (double)b.return_temp_t2s)))
+        {
+            fprRadioButton1.Enabled = false;
+            fprRadioButton2.Checked = true;
+            fprRadioButton2_CheckedChanged(fprRadioButton2, EventArgs.Empty);
+
+            fprTextBox2.Text = (string)b.supply_temp_t1w;
+            fprTextBox3.Text = (string)b.return_temp_t2w;
+
+            BTPUtils.SetPowerPipeUnit(fprDropDownList2, (string)b.power_gvs_unit);
+            fprDropDownList2_SelectedIndexChanged(fprDropDownList2, EventArgs.Empty);
+
+            fprTextBox4.Text = (string)b.power_gvs_val;
+        }
+        else
+        {
+            ClearFprRadioButton();
+        }
+    }
+
+    private void ClearFprRadioButton()
+    {
+        fprRadioButton1.Checked = false;
+        fprRadioButton1_CheckedChanged(fprRadioButton1, EventArgs.Empty);
+        fprRadioButton2.Checked = false;
+        fprRadioButton2_CheckedChanged(fprRadioButton2, EventArgs.Empty);
+    }
+
+    //------------------------------------BTP Function END-----------------------------------------
 
     //------------------------------------Math Function START--------------------------------------
 
@@ -4618,7 +4816,7 @@ public partial class RDT : System.Web.UI.Page
         string blockType = StateStore.Get<string>(_token, "BlockTypeCode");
         string methodSettingRegulator = StateStore.Get<string>(_token, "MethodSettingRegulator");
 
-        hfResult.Value = BTPUtils.CreateResultObject(blockType, methodSettingRegulator, GridView1);
+        hfResult.Value = BTPUtils.CreateResultObjectRTD(blockType, methodSettingRegulator, GridView1);
 
     }
 

@@ -9,20 +9,14 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link href="Content/css/style.css" rel="stylesheet" />
-    <title>Программа подбора регулирующего клапана - Стандартный расчет</title>
+    <title>TRV_BTP</title>
 </head>
 <body>
-    <div class="container">
-        <form id="form1" runat="server" novalidate="novalidate">
+    <div class="container-fluid">
+        <form id="form2" runat="server" novalidate="novalidate">
             <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
             <div class="row jumbotron">
-                <div class="col-12">
-                    <nav class="nav nav-tabs">
-                        <a class="nav-link active" aria-current="page" href="#">Стандартный расчет</a>
-                        <a class="nav-link" href="/TRV_ver.aspx">Поверочный расчет</a>
-                    </nav>
-                </div>
-                <div class="col-xs-12 col-sm-10">
+                <div class="col-xs-12 col">
                     <div class="col border border-non-top">
                         <asp:UpdatePanel ID="UpdatePanel4" runat="server">
                             <ContentTemplate>
@@ -205,7 +199,7 @@
                                         <div class="col">
 
                                             <div class="row">
-                                                <div class="col-12 col-md-6">
+                                                <div class="col-12">
                                                     <asp:Label ID="Label10" runat="server" Text="&#916;Ppy' = "></asp:Label>
                                                     &nbsp;&nbsp;
                                             <asp:TextBox ID="lpvTextBox21" runat="server" Enabled="False" type="number" CssClass="margin-top-bottom"
@@ -219,13 +213,7 @@
                                                         <asp:ListItem>бар</asp:ListItem>
                                                         <asp:ListItem>м. в. ст.</asp:ListItem>
                                                     </asp:DropDownList>
-                                                </div>
-                                                <div class="col-12 col-md-6">
-                                                    <asp:HyperLink ID="HyperLink1" CssClass="btn-link-pdf" Target="_new"
-                                                        NavigateUrl="/Content/data/calcTRV.pdf" runat="server">Определение
-                                                потерь давления на регулируемом участке</asp:HyperLink>
-                                                </div>
-                                                <div>
+                                              
                                                     <asp:CustomValidator ID="CustomValidator19" runat="server"
                                                         ControlToValidate="ws2TextBox2" Display="Dynamic"
                                                         ErrorMessage="CustomValidator" ForeColor="Red"
@@ -679,14 +667,14 @@
                         </asp:UpdatePanel>
                     </div>
                 </div>
-                <div class="col-xs-12 col-sm-2">
+                <div class="col-md-12">
                     <asp:UpdatePanel ID="UpdatePanel16" class="block-img" runat="server">
                         <ContentTemplate>
-                            <asp:Image ID="vPictureBox" runat="server" class="col valve-image non-padding" />
+                            <asp:Image ID="vPictureBox" runat="server" class="col valve-image non-padding" visible="false"/>
                         </ContentTemplate>
                     </asp:UpdatePanel>
                 </div>
-                <div class="col-12 col-md-10">
+                <div class="col-12">
                     <asp:UpdatePanel ID="UpdatePanel10" runat="server">
                         <ContentTemplate>
                             <asp:Label ID="LabelError" runat="server" Font-Bold="True" Font-Size="Medium"
@@ -773,8 +761,11 @@
              <asp:HiddenField ID="hfToken" runat="server" />
 			<asp:HiddenField ID="hfPayload" runat="server" />
 			<asp:HiddenField ID="hfPayloadVersion" runat="server" />
+
+            <script src="/Scripts/jquery-3.7.1.min.js" type="text/javascript"></script>
+			<script src="https://ts-btp.techinby.com/libs/teplosila/trv/0.1.0/trv.min.js" type="text/javascript"></script>
+			<script src="/Scripts/trv-btp.js" type="text/javascript"></script>
         </form>
     </div>
-
 </body>
 </html>

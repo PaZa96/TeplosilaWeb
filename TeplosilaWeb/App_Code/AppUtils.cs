@@ -223,6 +223,12 @@ public static class AppUtils
 
     }
 
+    public static void ApplyAndTrigger(RadioButtonList rbl, int index, Action<object, EventArgs> handler)
+    {
+        AppUtils.DisableAllExcept(rbl, index);
+        handler(rbl, EventArgs.Empty);
+    }
+
     public static void SetCellValue(ExcelWorksheet worksheet, string cellName, int dictKey, Dictionary<int, string> dict, bool convertPointToComma = false)
     {
         if (dict.TryGetValue(dictKey, out string value))

@@ -75,7 +75,23 @@ public static class BTPUtils
         }
     }
 
-    public static string CreateResultObject(string blockType, string methodSettingRegulator, GridView GridView1)
+    public static string CheckJsonAttr(dynamic b, string key)
+    {
+        return b.ContainsKey(key) ? b[key]?.ToString() ?? "" : "";
+    }
+
+    public static string DetectMethodSetting(dynamic b)
+    {
+        if (b.ContainsKey("method_setting_regulator_before"))
+            return "method_setting_regulator_before";
+
+        if (b.ContainsKey("method_setting_regulator_after"))
+            return "method_setting_regulator_after";
+
+        return "method_setting_regulator_differential";
+    }
+
+    public static string CreateResultObjectRTD(string blockType, string methodSettingRegulator, GridView GridView1)
     {
 
         GridViewRow row = GridView1.SelectedRow;

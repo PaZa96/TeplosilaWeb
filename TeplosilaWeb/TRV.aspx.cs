@@ -8,6 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
+using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 using TeplosilaWeb.App_Code;
 
@@ -19,6 +20,7 @@ public partial class TRV : System.Web.UI.Page
     private const int MaxT3x = 150;
     private dynamic dataFromFile;
     private const string JsonKeyName = "JSON_TRV";
+    private string _token;
 
     public Dictionary<int, string> v_input_dict = new Dictionary<int, string>();
 
@@ -26,9 +28,13 @@ public partial class TRV : System.Web.UI.Page
     {
         if (!IsPostBack)
         {
+            Logger.Log.Info("NPB");
+            if (string.IsNullOrEmpty(hfToken.Value)) //уникальный токен
+            {
+                hfToken.Value = Guid.NewGuid().ToString();
+                _token = hfToken.Value;
+            }
 
-            Logger.InitLogger(); //инициализация - требуется один раз в начале
-            
             string ctrlname = Page.Request.Params["__EVENTTARGET"];
             if (ctrlname != "GridView2")
             {
@@ -36,22 +42,86 @@ public partial class TRV : System.Web.UI.Page
                 ScriptManager.RegisterStartupScript(this.Page, Page.GetType(), "MyClientScript1", "javascript:HideBTN()", true);
             }
 
-            AppUtils.readFile(@"Content/data/data.txt", JsonKeyName);
+            AppUtils.readFile(@"Content/data/data.txt", hfToken.Value, JsonKeyName);
+
+            if (Page.FindControl("form2") != null)
+            {
+                HtmlForm form2Control = (HtmlForm)Page.FindControl("form2");
+                if (form2Control != null)
+                {
+                    form2Control.Attributes["style"] = "display: none;";
+                }
+            }
         }
         else
         {
-            if (Session[JsonKeyName] == null)
+
+            Logger.Log.Info("PB");
+            _token = hfToken.Value;
+            dataFromFile = StateStore.Get<Newtonsoft.Json.Linq.JObject>(_token, JsonKeyName);
+
+            if (dataFromFile == null)
             {
                 LabelError.Text = "Сессия завершена. Пожалуйста, перезагрузите страницу.";
                 return;
             }
 
-            dataFromFile = Session[JsonKeyName];
             LabelError.Text = "";
             Label8.Text = "";
             Label55.Visible = false;
+
+            if (!string.IsNullOrEmpty(hfPayloadVersion.Value))
+            {
+                string hashString = BTPUtils.GetSHA256HashString(hfPayloadVersion.Value);
+                if (hashString != StateStore.Get<string>(_token, "PayloadHash"))
+                {
+                    dynamic payload = JsonConvert.DeserializeObject(hfPayload.Value);
+                    FillForm(payload);
+                    StateStore.Set(_token, "PayloadHash", hashString);
+                }
+            }
         }
     }
+
+    //------------------------------------BTP Function START---------------------------------------
+
+    private void FillForm(dynamic payload)
+    {
+        var b = payload;
+
+        string blockType = BTPUtils.CheckJsonAttr(b, "block_type_code");
+
+
+        switch (blockType)
+        {
+            case "TBV_TBVU":
+
+            case "TBGV":
+
+                break;
+
+            case "TBO":
+
+                break;
+
+            case "TBR":
+
+                break;
+
+            case "TBSV":
+
+                break;
+
+
+            default:
+                return;
+        }
+
+        objTextBox1.Text = $"{BTPUtils.CheckJsonAttr(b, "description")} {BTPUtils.CheckJsonAttr(b, "object_name")}";
+    }
+
+    //------------------------------------BTP Function END-----------------------------------------
+
 
     protected void tvRadioButtonList1_SelectedIndexChanged(object sender, EventArgs e)
     {
@@ -288,7 +358,7 @@ public partial class TRV : System.Web.UI.Page
 
     protected void ws2RadioButtonList1_SelectedIndexChanged(object sender, EventArgs e)
     {
-        int lastSelectedIndex = Convert.ToInt32(Session[ws2RadioButtonList1.ID]);
+        int lastSelectedIndex = Convert.ToInt32(StateStore.Get<string>(_token, ws2RadioButtonList1.ID));
         if (ws2RadioButtonList1.SelectedIndex == 1 || ws2RadioButtonList1.SelectedIndex == 2)
         {
             ws2TextBox1.Enabled = true;
@@ -405,7 +475,7 @@ public partial class TRV : System.Web.UI.Page
         }
 
         tdRBL.Visible = true;
-        AppUtils.SaveKeyToSession(ws2RadioButtonList1.ID, ws2RadioButtonList1.SelectedIndex);
+        AppUtils.SaveKeyToSession(ws2RadioButtonList1.ID, _token, ws2RadioButtonList1.SelectedIndex);
     }
 
     protected void aa1RadioButtonList1_SelectedIndexChanged(object sender, EventArgs e)
@@ -454,63 +524,63 @@ public partial class TRV : System.Web.UI.Page
     {
         if (AppUtils.SetEnableTextBox(lpvDropDownList21, lpvTextBox21))
         {
-            MathUtils.convertArr3((sender as DropDownList), ref lpvTextBox21);
+            MathUtils.convertArr3(_token, (sender as DropDownList), ref lpvTextBox21);
         }
-        AppUtils.SaveKeyToSession(lpvDropDownList21.ID, lpvDropDownList21.SelectedIndex);
+        AppUtils.SaveKeyToSession(lpvDropDownList21.ID, _token, lpvDropDownList21.SelectedIndex);
     }
 
     protected void lpvDropDownList1_SelectedIndexChanged(object sender, EventArgs e)
     {
         if (AppUtils.SetEnableTextBox(lpvDropDownList1, lpvTextBox1))
         {
-            MathUtils.convertArr3((sender as DropDownList), ref lpvTextBox1);
+            MathUtils.convertArr3(_token, (sender as DropDownList), ref lpvTextBox1);
         }
-        AppUtils.SaveKeyToSession(lpvDropDownList1.ID, lpvDropDownList1.SelectedIndex);
+        AppUtils.SaveKeyToSession(lpvDropDownList1.ID, _token, lpvDropDownList1.SelectedIndex);
     }
 
     protected void lpv5DropDownList1_SelectedIndexChanged(object sender, EventArgs e)
     {
         if (AppUtils.SetEnableTextBox(lpv5DropDownList1, lpv5TextBox1))
         {
-            MathUtils.convertArr3((sender as DropDownList), ref lpv5TextBox1);
+            MathUtils.convertArr3(_token, (sender as DropDownList), ref lpv5TextBox1);
         }
-        AppUtils.SaveKeyToSession(lpv5DropDownList1.ID, lpv5DropDownList1.SelectedIndex);
+        AppUtils.SaveKeyToSession(lpv5DropDownList1.ID, _token, lpv5DropDownList1.SelectedIndex);
     }
 
     protected void lpv5DropDownList2_SelectedIndexChanged(object sender, EventArgs e)
     {
         if (AppUtils.SetEnableTextBox(lpv5DropDownList2, lpv5TextBox2))
         {
-            MathUtils.convertArr3((sender as DropDownList), ref lpv5TextBox2);
+            MathUtils.convertArr3(_token, (sender as DropDownList), ref lpv5TextBox2);
         }
-        AppUtils.SaveKeyToSession(lpv5DropDownList2.ID, lpv5DropDownList2.SelectedIndex);
+        AppUtils.SaveKeyToSession(lpv5DropDownList2.ID, _token, lpv5DropDownList2.SelectedIndex);
     }
 
     protected void calcvDropDownList1_SelectedIndexChanged(object sender, EventArgs e)
     {
         if (AppUtils.SetEnableTextBox(calcvDropDownList1, calcvTextBox1))
         {
-            MathUtils.convertArr3((sender as DropDownList), ref calcvTextBox1);
+            MathUtils.convertArr3(_token, (sender as DropDownList), ref calcvTextBox1);
         }
-        AppUtils.SaveKeyToSession(calcvDropDownList1.ID, calcvDropDownList1.SelectedIndex);
+        AppUtils.SaveKeyToSession(calcvDropDownList1.ID, _token, calcvDropDownList1.SelectedIndex);
     }
 
     protected void fvDropDownList1_SelectedIndexChanged(object sender, EventArgs e)
     {
         if (AppUtils.SetEnableTextBox(fvDropDownList1, fvTextBox1))
         {
-            MathUtils.convertArrDouble((sender as DropDownList), ref fvTextBox1);
+            MathUtils.convertArrDouble(_token, (sender as DropDownList), ref fvTextBox1);
         }
-        AppUtils.SaveKeyToSession(fvDropDownList1.ID, fvDropDownList1.SelectedIndex);
+        AppUtils.SaveKeyToSession(fvDropDownList1.ID, _token, fvDropDownList1.SelectedIndex);
     }
 
     protected void fvDropDownList2_SelectedIndexChanged(object sender, EventArgs e)
     {
         if (AppUtils.SetEnableTextBox(fvDropDownList2, fvTextBox10))
         {
-            MathUtils.convertArr2((sender as DropDownList), ref fvTextBox10);
+            MathUtils.convertArr2(_token, (sender as DropDownList), ref fvTextBox10);
         }
-        AppUtils.SaveKeyToSession(fvDropDownList2.ID, fvDropDownList2.SelectedIndex);
+        AppUtils.SaveKeyToSession(fvDropDownList2.ID, _token, fvDropDownList2.SelectedIndex);
     }
 
     protected void lpv5RadioButtonList1_SelectedIndexChanged(object sender, EventArgs e)
@@ -4373,7 +4443,7 @@ public partial class TRV : System.Web.UI.Page
         if (tdRadioButtonList5.SelectedIndex == 0) v_in_dict[72] = tdRadioButtonList5.Items[0].Text;
         else v_in_dict[72] = tdRadioButtonList5.Items[1].Text;
 
-        Session["v_input_dict"] = v_in_dict;
+        StateStore.Set(_token, "v_input_dict", v_in_dict);
     }
 
     private void ResetColorToAllControls()
@@ -6312,7 +6382,7 @@ public partial class TRV : System.Web.UI.Page
     {
         try
         {
-            v_input_dict = (Dictionary<int, string>)Session["v_input_dict"];
+            v_input_dict = StateStore.Get<Dictionary<int, string>>(_token, "v_input_dict");
 
             this.readFile(0);
             if (!String.IsNullOrWhiteSpace(objTextBox1.Text))
@@ -6449,7 +6519,7 @@ public partial class TRV : System.Web.UI.Page
     {
         try
         {
-            v_input_dict = (Dictionary<int, string>)Session["v_input_dict"];
+            v_input_dict = StateStore.Get<Dictionary<int, string>>(_token, "v_input_dict");
             this.readFile(0);
             if (!String.IsNullOrWhiteSpace(objTextBox1.Text))
             {
