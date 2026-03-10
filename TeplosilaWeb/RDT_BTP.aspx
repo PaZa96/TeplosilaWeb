@@ -734,7 +734,6 @@
                             };
 
                             function HideBTN() {
-                                console.log("jndt1");
                                 var btn2 = document.getElementById('Button2');
                                 //var btn3 = document.getElementById('Button3');
                                 btn2.classList.remove("show-btn");
@@ -746,10 +745,9 @@
                         </script>
 
                         <div class="col non-padding padding-top-bottom">
-                            <asp:Button ID="Button2" runat="server" Text="Сохранить в PDF"
-                                CssClass="btn btn-primary hide-btn" OnClick="Button2_Click" />
-                            <%--                            <asp:Button ID="Button3" runat="server" Text="Сохранить в Excel"
-                                CssClass="btn btn-primary hide-btn" Display="None" OnClick="Button3_Click" />--%>
+                            <asp:Button ID="Button2" runat="server" Text="Сохранить в PDF и вернуться в программу БТП"
+                                CssClass="btn btn-primary hide-btn" OnClick="Button2_Click" OnClientClick="returnData()"/>
+
                         </div>
                     </div>
                 </div>
@@ -759,8 +757,6 @@
             <asp:HiddenField ID="hfPayload" runat="server" />
             <asp:HiddenField ID="hfPayloadVersion" runat="server" />
 			
-			
-			<script src="/Scripts/jquery-3.7.1.min.js" type="text/javascript"></script>
 			<script src="https://ts-btp.techinby.com/libs/teplosila/rdt/0.1.0/rdt.min.js" type="text/javascript"></script>
 			<script src="/Scripts/rdt-btp.js" type="text/javascript"></script>
         </form>

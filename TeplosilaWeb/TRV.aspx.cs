@@ -87,38 +87,124 @@ public partial class TRV : System.Web.UI.Page
 
     private void FillForm(dynamic payload)
     {
-        var b = payload;
-
-        string blockType = BTPUtils.CheckJsonAttr(b, "block_type_code");
-
-
-        switch (blockType)
+        try
         {
-            case "TBV_TBVU":
+            var b = payload;
 
-            case "TBGV":
+            string blockType = BTPUtils.CheckJsonAttr(b, "block_type_code");
 
-                break;
+            StateStore.Set(_token, "BlockTypeCode", blockType);
+            StateStore.Set(_token, "MethodSettingRegulator", "");
 
-            case "TBO":
+            switch (blockType)
+            {
 
-                break;
+                case "TBGV":
+                    FillTBGV(b);
+                    break;
+                case "TBSV":
+                    break;
 
-            case "TBR":
+                case "TBO":
 
-                break;
+                    break;
 
-            case "TBSV":
+                default:
+                    return;
+            }
 
-                break;
+            objTextBox1.Text = $"{BTPUtils.CheckJsonAttr(b, "description")} {BTPUtils.CheckJsonAttr(b, "object_name")}";
 
+        }
+        catch (Exception er)
+        {
+            Logger.Log.Error(er);
+        }
+    }
 
-            default:
-                return;
+    public void FillTBGV(dynamic b)
+    {
+        Logger.Log.Info("TBGV");
+
+        AppUtils.ApplyAndTrigger(tvRadioButtonList1, 0, tvRadioButtonList1_SelectedIndexChanged);
+
+        AppUtils.ApplyAndTrigger(ws2RadioButtonList1, 0, ws2RadioButtonList1_SelectedIndexChanged);
+
+        if ((string)b.regulator_position == "0")
+        {
+            AppUtils.ApplyAndTrigger(rpvRadioButtonList1, 0, rpvRadioButtonList1_SelectedIndexChanged);
+        }
+        else
+        {
+            AppUtils.ApplyAndTrigger(rpvRadioButtonList1, 1, rpvRadioButtonList1_SelectedIndexChanged);
         }
 
-        objTextBox1.Text = $"{BTPUtils.CheckJsonAttr(b, "description")} {BTPUtils.CheckJsonAttr(b, "object_name")}";
+        aaRadioButton1.Checked = true;
+        aaRadioButton1_CheckedChanged(aaRadioButton1, EventArgs.Empty);
+        aaRadioButton2.Enabled = false;
+        aaRadioButton3.Enabled = false;
+        aaRadioButton4.Enabled = false;
+
+        AppUtils.ApplyAndTrigger(aa1RadioButtonList1, 1, aa1RadioButtonList1_SelectedIndexChanged);
+
+        BTPUtils.SetPressureUnit(lpvDropDownList21, "mwc");
+        lpvDropDownList21_SelectedIndexChanged(lpvDropDownList21, EventArgs.Empty);
+        lpvDropDownList21.Enabled = false;
+
+        lpvTextBox21.Text = (string)b.loss_pressure_heating;
+
+        AppUtils.DisableTextBox(lpvTextBox1);
+        lpvDropDownList1.SelectedIndex = 0;
+
+        AppUtils.DisableTextBox(calcvTextBox1);
+        calcvDropDownList1.SelectedIndex = 0;
+
+        calcvTextBox2.Text = "";
+
+        if (b.method_setting_expenses == "set")
+        {
+            fvRadioButton2.Enabled = false;
+            fvRadioButton1.Checked = true;
+            fvRadioButton1_CheckedChanged(fvRadioButton1, EventArgs.Empty);
+
+            BTPUtils.SetFlowPipeUnit(fvDropDownList1, (string)b.flow_t1_unit);
+            fvDropDownList1_SelectedIndexChanged(fvDropDownList1, EventArgs.Empty);
+
+            fvTextBox1.Text = (string)b.flow_t1_val;
+        }
+        else if (b.method_setting_expenses == "calculate")
+        {
+            fvRadioButton1.Enabled = false;
+            fvRadioButton2.Checked = true;
+            fvRadioButton2_CheckedChanged(fvRadioButton2, EventArgs.Empty);
+
+            fvTextBox2.Text = (string)b.supply_temp_t1w;
+            fvTextBox3.Text = (string)b.return_temp_t2w;
+
+            fvTextBox4.Text = (string)b.supply_temp_t1s;
+
+            fvTextBox5.Text = (string)b.return_temp_t2s;
+
+            BTPUtils.SetPowerPipeUnit(fvDropDownList2, (string)b.power_gvs_unit);
+            fvDropDownList2_SelectedIndexChanged(fvDropDownList2, EventArgs.Empty);
+
+            fvTextBox10.Text = (string)b.power_gvs_val;
+        }
+        else
+        {
+            ClearFvRadioButton();
+        }
     }
+
+    private void ClearFvRadioButton()
+    {
+        fvRadioButton1.Checked = false;
+        fvRadioButton1_CheckedChanged(fvRadioButton1, EventArgs.Empty);
+        fvRadioButton2.Checked = false;
+        fvRadioButton2_CheckedChanged(fvRadioButton2, EventArgs.Empty);
+    }
+
+
 
     //------------------------------------BTP Function END-----------------------------------------
 
@@ -358,7 +444,7 @@ public partial class TRV : System.Web.UI.Page
 
     protected void ws2RadioButtonList1_SelectedIndexChanged(object sender, EventArgs e)
     {
-        int lastSelectedIndex = Convert.ToInt32(StateStore.Get<string>(_token, ws2RadioButtonList1.ID));
+        int lastSelectedIndex = StateStore.Get<int>(_token, ws2RadioButtonList1.ID);
         if (ws2RadioButtonList1.SelectedIndex == 1 || ws2RadioButtonList1.SelectedIndex == 2)
         {
             ws2TextBox1.Enabled = true;
@@ -475,6 +561,7 @@ public partial class TRV : System.Web.UI.Page
         }
 
         tdRBL.Visible = true;
+
         AppUtils.SaveKeyToSession(ws2RadioButtonList1.ID, _token, ws2RadioButtonList1.SelectedIndex);
     }
 
@@ -3968,7 +4055,8 @@ public partial class TRV : System.Web.UI.Page
                     if (tvRadioButtonList1.SelectedIndex == 1 && listResult["B"].ElementAt(i) == "560")
                     {
                         DNName = "201";
-                    } else
+                    }
+                    else
                     {
                         DNName = listResult["C"].ElementAt(i);
                     }
@@ -4464,10 +4552,9 @@ public partial class TRV : System.Web.UI.Page
         if (!Page.IsValid) { return; }
         try
         {
-            //ResetColorToAllControls();
             resultPanel.Visible = true;
-            AppUtils.DisableTextBox(objTextBox1);
             objTextBox1.Enabled = false;
+            objTextBox1.Visible = false;
             GridView2.Columns.Clear();
             GridView2.DataSource = null;
             GridView2.DataBind();
@@ -6371,6 +6458,16 @@ public partial class TRV : System.Web.UI.Page
         objTextBox1.Visible = true;
         string clientScript = "javascript:ShowBTN();";
         this.Page.ClientScript.RegisterStartupScript(this.GetType(), "MyClientScript", clientScript);
+
+        int idx = GridView2.SelectedIndex;
+
+        if (idx < 0 || idx >= GridView2.Rows.Count)
+            return;
+
+        string blockType = StateStore.Get<string>(_token, "BlockTypeCode");
+        string methodSettingRegulator = StateStore.Get<string>(_token, "MethodSettingRegulator");
+
+        hfResult.Value = BTPUtils.CreateResultObjectTRV(blockType, methodSettingRegulator, GridView2);
     }
 
     protected void GridView2_RowDataBound(object sender, GridViewRowEventArgs e)
@@ -6652,7 +6749,7 @@ public partial class TRV : System.Web.UI.Page
 
             if (tvRadioButtonList1.SelectedIndex == 0)
             {
-                if ((v_input_dict[40] == "150 ˚С" && Convert.ToInt32(v_input_dict[43]) <= 150) || v_input_dict[40] == "220 ˚С" || Convert.ToInt32(v_input_dict[43]) == 200) 
+                if ((v_input_dict[40] == "150 ˚С" && Convert.ToInt32(v_input_dict[43]) <= 150) || v_input_dict[40] == "220 ˚С" || Convert.ToInt32(v_input_dict[43]) == 200)
                 {
                     ws.Pictures.Add(HttpContext.Current.Server.MapPath("\\Content\\images\\trv\\габаритный TRV и TRV-T.png"), "A39");
                 }
@@ -6726,5 +6823,10 @@ public partial class TRV : System.Web.UI.Page
 
     protected void tv3RadioButtonList1_SelectedIndexChanged(object sender, EventArgs e)
     {
+    }
+
+    protected void rpvRadioButtonList1_SelectedIndexChanged(object sender, EventArgs e)
+    {
+
     }
 }

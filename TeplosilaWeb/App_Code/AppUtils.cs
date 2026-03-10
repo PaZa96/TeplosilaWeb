@@ -102,7 +102,7 @@ public static class AppUtils
             textBox.Text = String.Empty;
         }
 
-    
+
     }
 
     public static void DisableDropDownList(DropDownList dropDownList)
@@ -189,26 +189,9 @@ public static class AppUtils
         return false;
     }
 
-    public static void SaveKeyToSession(string id, int key)
-    {
-        HttpContext.Current.Session[id] = key;
-    }
-
     public static void SaveKeyToSession(string id, string token, int key)
     {
         StateStore.Set(token, id, key);
-    }
-
-    public static void readFile(string jsonPathName, string JsonKeyName)
-    {
-
-        string jsonText = File.ReadAllText(HttpContext.Current.Server.MapPath(jsonPathName));
-
-        if (jsonText != null)
-        {
-            HttpContext.Current.Session[JsonKeyName] = JsonConvert.DeserializeObject(jsonText);
-        }
-
     }
 
     public static void readFile(string jsonPathName, string token, string JsonKeyName)

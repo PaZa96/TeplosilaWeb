@@ -55,7 +55,8 @@ public static class BTPUtils
         { "mw", "МВт" },
         { "kw", "кВт" },
         { "w", "Вт" },
-        { "gcal_per_h", "Гкал/ч" }
+        { "gcal_per_h", "Гкал/ч" },
+        { "kcal_per_h", "ккал/ч" }
     };
 
         SetUnit(ddl, unit, map);
@@ -91,7 +92,7 @@ public static class BTPUtils
         return "method_setting_regulator_differential";
     }
 
-    public static string CreateResultObjectRTD(string blockType, string methodSettingRegulator, GridView GridView1)
+    public static string CreateResultObjectRDT(string blockType, string methodSettingRegulator, GridView GridView1)
     {
 
         GridViewRow row = GridView1.SelectedRow;
@@ -155,6 +156,88 @@ public static class BTPUtils
                 ResultList["kvs_regulator_differential"] = AppUtils.customConverterToDouble(row.Cells[3].Text.Trim());
                 ResultList["loss_pressure_regulator_differential"] = AppUtils.customConverterToDouble(row.Cells[4].Text.Trim());
                 ResultList["setting_range_regulator_differential"] = row.Cells[5].Text.Trim();
+                break;
+
+            default:
+                return "";
+        }
+
+        string result = Newtonsoft.Json.JsonConvert.SerializeObject(ResultList);
+
+        return result;
+    }
+
+    public static string CreateResultObjectTRV(string blockType, string methodSettingRegulator, GridView GridView1)
+    {
+
+        GridViewRow row = GridView1.SelectedRow;
+
+        var ResultList = new Dictionary<string, object>();
+
+        switch (blockType)
+        {
+            case "TBSV":
+                switch (methodSettingRegulator)
+                {
+                    case "method_setting_regulator_after":
+                        ResultList["mark_control_valve"] = row.Cells[1].Text.Trim();
+                        ResultList["dn_control_valve"] = AppUtils.customConverterToDouble(row.Cells[2].Text.Trim());
+                        ResultList["kvs_control_valve"] = AppUtils.customConverterToDouble(row.Cells[3].Text.Trim());
+                        ResultList["loss_pressure_control_valve"] = AppUtils.customConverterToDouble(row.Cells[4].Text.Trim());
+                        ResultList["mark_drive"] = row.Cells[11].Text.Trim();
+                        break;
+                    case "method_setting_regulator_before":
+                        ResultList["mark_control_valve"] = row.Cells[1].Text.Trim();
+                        ResultList["dn_control_valve"] = AppUtils.customConverterToDouble(row.Cells[2].Text.Trim());
+                        ResultList["kvs_control_valve"] = AppUtils.customConverterToDouble(row.Cells[3].Text.Trim());
+                        ResultList["loss_pressure_control_valve"] = AppUtils.customConverterToDouble(row.Cells[4].Text.Trim());
+                        ResultList["mark_drive"] = row.Cells[11].Text.Trim();
+                        break;
+                    case "method_setting_regulator_differential":
+                        ResultList["mark_control_valve"] = row.Cells[1].Text.Trim();
+                        ResultList["dn_control_valve"] = AppUtils.customConverterToDouble(row.Cells[2].Text.Trim());
+                        ResultList["kvs_control_valve"] = AppUtils.customConverterToDouble(row.Cells[3].Text.Trim());
+                        ResultList["loss_pressure_control_valve"] = AppUtils.customConverterToDouble(row.Cells[4].Text.Trim());
+                        ResultList["mark_drive"] = row.Cells[11].Text.Trim();
+                        break;
+                    default:
+                        return "";
+                }
+                break;
+            case "TBO":
+                switch (methodSettingRegulator)
+                {
+                    case "method_setting_regulator_after":
+                        ResultList["mark_control_valve"] = row.Cells[1].Text.Trim();
+                        ResultList["dn_control_valve"] = AppUtils.customConverterToDouble(row.Cells[2].Text.Trim());
+                        ResultList["kvs_control_valve"] = AppUtils.customConverterToDouble(row.Cells[3].Text.Trim());
+                        ResultList["loss_pressure_control_valve"] = AppUtils.customConverterToDouble(row.Cells[4].Text.Trim());
+                        ResultList["mark_drive"] = row.Cells[11].Text.Trim();
+                        break;
+                    case "method_setting_regulator_before":
+                        ResultList["mark_control_valve"] = row.Cells[1].Text.Trim();
+                        ResultList["dn_control_valve"] = AppUtils.customConverterToDouble(row.Cells[2].Text.Trim());
+                        ResultList["kvs_control_valve"] = AppUtils.customConverterToDouble(row.Cells[3].Text.Trim());
+                        ResultList["loss_pressure_control_valve"] = AppUtils.customConverterToDouble(row.Cells[4].Text.Trim());
+                        ResultList["mark_drive"] = row.Cells[11].Text.Trim();
+                        break;
+                    case "method_setting_regulator_differential":
+                        ResultList["mark_control_valve"] = row.Cells[1].Text.Trim();
+                        ResultList["dn_control_valve"] = AppUtils.customConverterToDouble(row.Cells[2].Text.Trim());
+                        ResultList["kvs_control_valve"] = AppUtils.customConverterToDouble(row.Cells[3].Text.Trim());
+                        ResultList["loss_pressure_control_valve"] = AppUtils.customConverterToDouble(row.Cells[4].Text.Trim());
+                        ResultList["mark_drive"] = row.Cells[11].Text.Trim();
+                        break;
+                    default:
+                        return "";
+                }
+                break;
+            case "TBGV":
+                ResultList["mark_control_valve"] = row.Cells[1].Text.Trim();
+                ResultList["dn_control_valve"] = AppUtils.customConverterToDouble(row.Cells[2].Text.Trim());
+                ResultList["kvs_control_valve"] = AppUtils.customConverterToDouble(row.Cells[3].Text.Trim());
+                ResultList["loss_pressure_control_valve"] = AppUtils.customConverterToDouble(row.Cells[4].Text.Trim());
+                ResultList["mark_drive"] = row.Cells[11].Text.Trim();
                 break;
 
             default:

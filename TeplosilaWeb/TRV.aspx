@@ -124,7 +124,7 @@
                                             Text="Наличие регулятора перепада давления:">
                                         </asp:Label>
                                         <asp:RadioButtonList ID="rpvRadioButtonList1" required="required" runat="server"
-                                            AutoPostBack="True">
+                                            AutoPostBack="True" OnSelectedIndexChanged="rpvRadioButtonList1_SelectedIndexChanged">
                                             <asp:ListItem>Да</asp:ListItem>
                                             <asp:ListItem>Нет</asp:ListItem>
                                         </asp:RadioButtonList>

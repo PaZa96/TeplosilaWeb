@@ -148,7 +148,7 @@ public partial class RDT : System.Web.UI.Page
         objTextBox1.Text = $"{BTPUtils.CheckJsonAttr(b, "description")} {BTPUtils.CheckJsonAttr(b, "object_name")}";
     }
 
-   
+
 
     private void FillTBV_TBVU_Differential(dynamic b)
     {
@@ -588,7 +588,7 @@ public partial class RDT : System.Web.UI.Page
         }
     }
 
-    private void FillTBGV(dynamic b) 
+    private void FillTBGV(dynamic b)
     {
         Logger.Log.Info("TBGV");
 
@@ -3716,7 +3716,6 @@ public partial class RDT : System.Web.UI.Page
                             GridView1.DataSource = dt;
                             GridView1.DataBind();
 
-                            hfResult.Value = JsonConvert.SerializeObject(dt);
                         }
                     }
                     else
@@ -4816,7 +4815,7 @@ public partial class RDT : System.Web.UI.Page
         string blockType = StateStore.Get<string>(_token, "BlockTypeCode");
         string methodSettingRegulator = StateStore.Get<string>(_token, "MethodSettingRegulator");
 
-        hfResult.Value = BTPUtils.CreateResultObjectRTD(blockType, methodSettingRegulator, GridView1);
+        hfResult.Value = BTPUtils.CreateResultObjectRDT(blockType, methodSettingRegulator, GridView1);
 
     }
 

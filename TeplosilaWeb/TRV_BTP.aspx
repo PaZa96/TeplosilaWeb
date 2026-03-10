@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="TRV.aspx.cs" Inherits="TRV" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="TRV.aspx.cs" Inherits="TRV" Culture="ru-RU"%>
 
 <!DOCTYPE html>
 
@@ -118,7 +118,7 @@
                                             Text="Наличие регулятора перепада давления:">
                                         </asp:Label>
                                         <asp:RadioButtonList ID="rpvRadioButtonList1" required="required" runat="server"
-                                            AutoPostBack="True">
+                                            AutoPostBack="True" OnSelectedIndexChanged="rpvRadioButtonList1_SelectedIndexChanged">
                                             <asp:ListItem>Да</asp:ListItem>
                                             <asp:ListItem>Нет</asp:ListItem>
                                         </asp:RadioButtonList>
@@ -754,15 +754,14 @@
                     </asp:UpdatePanel>
                     <div class="col non-padding padding-top-bottom">
                         <asp:Button ID="Button2" runat="server" Text="Сохранить в PDF"
-                            CssClass="btn btn-primary hide-btn" OnClick="Button2_Click" />
+                            CssClass="btn btn-primary hide-btn" OnClick="Button2_Click" OnClientClick="returnData()"/>
                     </div>
                 </div>
             </div>
-             <asp:HiddenField ID="hfToken" runat="server" />
+            <asp:HiddenField ID="hfToken" runat="server" />
 			<asp:HiddenField ID="hfPayload" runat="server" />
 			<asp:HiddenField ID="hfPayloadVersion" runat="server" />
 
-            <script src="/Scripts/jquery-3.7.1.min.js" type="text/javascript"></script>
 			<script src="https://ts-btp.techinby.com/libs/teplosila/trv/0.1.0/trv.min.js" type="text/javascript"></script>
 			<script src="/Scripts/trv-btp.js" type="text/javascript"></script>
         </form>
