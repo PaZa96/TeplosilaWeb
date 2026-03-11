@@ -81,7 +81,23 @@ public static class BTPUtils
         return b.ContainsKey(key) ? b[key]?.ToString() ?? "" : "";
     }
 
-    public static string DetectMethodSetting(dynamic b)
+    public static string DetectMethodSettingTRV(dynamic b)
+    {
+        if (b.ContainsKey("control_valve_t1")) 
+        { 
+            if(b.control_valve_t1 == "2")
+            {
+                return "method_setting_valve_dependent_2";
+            } else
+            {
+                return "method_setting_valve_dependent_3";
+            }  
+        }
+   
+        return "method_setting_valve_independent_2";
+    }
+
+    public static string DetectMethodSettingRDT(dynamic b)
     {
         if (b.ContainsKey("method_setting_regulator_before"))
             return "method_setting_regulator_before";
@@ -179,21 +195,21 @@ public static class BTPUtils
             case "TBSV":
                 switch (methodSettingRegulator)
                 {
-                    case "method_setting_regulator_after":
+                    case "method_setting_valve_independent_2":
                         ResultList["mark_control_valve"] = row.Cells[1].Text.Trim();
                         ResultList["dn_control_valve"] = AppUtils.customConverterToDouble(row.Cells[2].Text.Trim());
                         ResultList["kvs_control_valve"] = AppUtils.customConverterToDouble(row.Cells[3].Text.Trim());
                         ResultList["loss_pressure_control_valve"] = AppUtils.customConverterToDouble(row.Cells[4].Text.Trim());
                         ResultList["mark_drive"] = row.Cells[11].Text.Trim();
                         break;
-                    case "method_setting_regulator_before":
+                    case "method_setting_valve_dependent_2":
                         ResultList["mark_control_valve"] = row.Cells[1].Text.Trim();
                         ResultList["dn_control_valve"] = AppUtils.customConverterToDouble(row.Cells[2].Text.Trim());
                         ResultList["kvs_control_valve"] = AppUtils.customConverterToDouble(row.Cells[3].Text.Trim());
                         ResultList["loss_pressure_control_valve"] = AppUtils.customConverterToDouble(row.Cells[4].Text.Trim());
                         ResultList["mark_drive"] = row.Cells[11].Text.Trim();
                         break;
-                    case "method_setting_regulator_differential":
+                    case "method_setting_valve_dependent_3":
                         ResultList["mark_control_valve"] = row.Cells[1].Text.Trim();
                         ResultList["dn_control_valve"] = AppUtils.customConverterToDouble(row.Cells[2].Text.Trim());
                         ResultList["kvs_control_valve"] = AppUtils.customConverterToDouble(row.Cells[3].Text.Trim());
@@ -207,21 +223,21 @@ public static class BTPUtils
             case "TBO":
                 switch (methodSettingRegulator)
                 {
-                    case "method_setting_regulator_after":
+                    case "method_setting_valve_independent_2":
                         ResultList["mark_control_valve"] = row.Cells[1].Text.Trim();
                         ResultList["dn_control_valve"] = AppUtils.customConverterToDouble(row.Cells[2].Text.Trim());
                         ResultList["kvs_control_valve"] = AppUtils.customConverterToDouble(row.Cells[3].Text.Trim());
                         ResultList["loss_pressure_control_valve"] = AppUtils.customConverterToDouble(row.Cells[4].Text.Trim());
                         ResultList["mark_drive"] = row.Cells[11].Text.Trim();
                         break;
-                    case "method_setting_regulator_before":
+                    case "method_setting_valve_dependent_2":
                         ResultList["mark_control_valve"] = row.Cells[1].Text.Trim();
                         ResultList["dn_control_valve"] = AppUtils.customConverterToDouble(row.Cells[2].Text.Trim());
                         ResultList["kvs_control_valve"] = AppUtils.customConverterToDouble(row.Cells[3].Text.Trim());
                         ResultList["loss_pressure_control_valve"] = AppUtils.customConverterToDouble(row.Cells[4].Text.Trim());
                         ResultList["mark_drive"] = row.Cells[11].Text.Trim();
                         break;
-                    case "method_setting_regulator_differential":
+                    case "method_setting_valve_dependent_3":
                         ResultList["mark_control_valve"] = row.Cells[1].Text.Trim();
                         ResultList["dn_control_valve"] = AppUtils.customConverterToDouble(row.Cells[2].Text.Trim());
                         ResultList["kvs_control_valve"] = AppUtils.customConverterToDouble(row.Cells[3].Text.Trim());

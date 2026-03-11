@@ -19,6 +19,7 @@ public partial class TRV_ver : System.Web.UI.Page
     private const int MaxT3x = 150;
     private dynamic dataFromFile;
     private const string JsonKeyName = "JSON_TRV_ver";
+    private string _token;
 
     public Dictionary<int, string> v_input_dict = new Dictionary<int, string>();
 
@@ -28,17 +29,25 @@ public partial class TRV_ver : System.Web.UI.Page
         {
             if (!IsPostBack)
             {
-                Logger.InitLogger(); //инициализация - требуется один раз в начале
-                AppUtils.readFile(@"Content/data/dataTRV_ver.json", JsonKeyName); //читаем json файл с данными
+
+                if (string.IsNullOrEmpty(hfToken.Value)) //уникальный токен
+                {
+                    hfToken.Value = Guid.NewGuid().ToString();
+                    _token = hfToken.Value;
+                }
+
+                AppUtils.readFile(@"Content/data/data.txt", hfToken.Value, JsonKeyName);
             } else
             {
-                if (Session[JsonKeyName] == null)
+                _token = hfToken.Value;
+                dataFromFile = StateStore.Get<Newtonsoft.Json.Linq.JObject>(_token, JsonKeyName);
+
+                if (dataFromFile == null)
                 {
                     LabelError.Text = "Сессия завершена. Пожалуйста, перезагрузите страницу.";
                     return;
                 }
 
-                dataFromFile = Session[JsonKeyName];
                 resultPanel.Visible = false;
                 trvSave.Visible = false;
             }
@@ -220,7 +229,7 @@ public partial class TRV_ver : System.Web.UI.Page
 
             v_in_dict.Add(71, this.lpv5TextBox3.Text);
 
-            Session["v_input_dict"] = v_in_dict;
+            StateStore.Set(_token, "v_input_dict", v_in_dict);
         }
         catch (Exception er)
         {
@@ -498,7 +507,7 @@ public partial class TRV_ver : System.Web.UI.Page
     {
         try
         {
-            v_input_dict = (Dictionary<int, string>)Session["v_input_dict"];
+            v_input_dict = StateStore.Get<Dictionary<int, string>>(_token, "v_input_dict");
 
             v_input_dict[2] = (!String.IsNullOrWhiteSpace(objTextBox1.Text)) ? objTextBox1.Text : "-";
 
@@ -570,7 +579,7 @@ public partial class TRV_ver : System.Web.UI.Page
     {
         try
         {
-            v_input_dict = (Dictionary<int, string>)Session["v_input_dict"];
+            v_input_dict = StateStore.Get<Dictionary<int, string>>(_token, "v_input_dict");
 
             v_input_dict[2] = (!String.IsNullOrWhiteSpace(objTextBox1.Text)) ? objTextBox1.Text : "-";
 
@@ -818,36 +827,36 @@ public partial class TRV_ver : System.Web.UI.Page
     {
         if (AppUtils.SetEnableTextBox(lpvDropDownList21, lpvTextBox21))
         {
-            MathUtils.convertArr3((sender as DropDownList), ref lpvTextBox21);
+            MathUtils.convertArr3(_token, (sender as DropDownList), ref lpvTextBox21);
         }
-        AppUtils.SaveKeyToSession(lpvDropDownList21.ID, lpvDropDownList21.SelectedIndex);
+        AppUtils.SaveKeyToSession(lpvDropDownList21.ID, _token, lpvDropDownList21.SelectedIndex);
     }
 
     protected void calcvDropDownList1_SelectedIndexChanged(object sender, EventArgs e)
     {
         if (AppUtils.SetEnableTextBox(calcvDropDownList1, calcvTextBox1))
         {
-            MathUtils.convertArr3((sender as DropDownList), ref calcvTextBox1);
+            MathUtils.convertArr3(_token, (sender as DropDownList), ref calcvTextBox1);
         }
-        AppUtils.SaveKeyToSession(calcvDropDownList1.ID, calcvDropDownList1.SelectedIndex);
+        AppUtils.SaveKeyToSession(calcvDropDownList1.ID, _token, calcvDropDownList1.SelectedIndex);
     }
 
     protected void lpv5DropDownList1_SelectedIndexChanged(object sender, EventArgs e)
     {
         if (AppUtils.SetEnableTextBox(lpv5DropDownList1, lpv5TextBox1))
         {
-            MathUtils.convertArr3((sender as DropDownList), ref lpv5TextBox1);
+            MathUtils.convertArr3(_token, (sender as DropDownList), ref lpv5TextBox1);
         }
-        AppUtils.SaveKeyToSession(lpv5DropDownList1.ID, lpv5DropDownList1.SelectedIndex);
+        AppUtils.SaveKeyToSession(lpv5DropDownList1.ID, _token, lpv5DropDownList1.SelectedIndex);
     }
 
     protected void fvDropDownList1_SelectedIndexChanged(object sender, EventArgs e)
     {
         if (AppUtils.SetEnableTextBox(fvDropDownList1, fvTextBox1))
         {
-            MathUtils.convertArrDouble((sender as DropDownList), ref fvTextBox1);
+            MathUtils.convertArrDouble(_token, (sender as DropDownList), ref fvTextBox1);
         }
-        AppUtils.SaveKeyToSession(fvDropDownList1.ID, fvDropDownList1.SelectedIndex);
+        AppUtils.SaveKeyToSession(fvDropDownList1.ID, _token, fvDropDownList1.SelectedIndex);
     }
 
     protected void kvsDropDownList1_SelectedIndexChanged(object sender, EventArgs e)
@@ -985,7 +994,7 @@ public partial class TRV_ver : System.Web.UI.Page
                     return;
                 }
             }
-            if (calcvTextBox1.Enabled == true && !AppUtils.checkTextBoxEmpty(calcvTextBox1) && MathUtils.convertArrToBar(lpvDropDownList21, lpvTextBox21) >= MathUtils.convertArrToBar(calcvDropDownList1, calcvTextBox1))
+            if (calcvTextBox1.Enabled == true && !AppUtils.checkTextBoxEmpty(calcvTextBox1) && MathUtils.convertArrToBar(_token, lpvDropDownList21, lpvTextBox21) >= MathUtils.convertArrToBar(_token, calcvDropDownList1, calcvTextBox1))
             {
                 lpvCustomValidator1.ErrorMessage = "Потери давления на регулируемом участке превышают давление перед клапаном";
                 args.IsValid = false;
@@ -1020,7 +1029,7 @@ public partial class TRV_ver : System.Web.UI.Page
                     return;
                 }
 
-                if (MathUtils.convertArrToBar(calcvDropDownList1, calcvTextBox1) > AppUtils.customConverterToDouble(pnRadioButtonList1.SelectedValue))
+                if (MathUtils.convertArrToBar(_token, calcvDropDownList1, calcvTextBox1) > AppUtils.customConverterToDouble(pnRadioButtonList1.SelectedValue))
                 {
                     calcvCustomValidator1.ErrorMessage = "Давление перед клапаном больше номинального давления клапана. Указанный клапан не подойдет";
                     args.IsValid = false;
@@ -1102,7 +1111,7 @@ public partial class TRV_ver : System.Web.UI.Page
                     args.IsValid = false;
                     return;
                 }
-                if (MathUtils.convertArrToBar(lpv5DropDownList1, lpv5TextBox1) > AppUtils.customConverterToDouble(pnRadioButtonList1.SelectedValue))
+                if (MathUtils.convertArrToBar(_token, lpv5DropDownList1, lpv5TextBox1) > AppUtils.customConverterToDouble(pnRadioButtonList1.SelectedValue))
                 {
                     CustomValidator1.ErrorMessage = "Давление перед клапаном больше номинального давления клапана. Указанный клапан не подойдет";
                     args.IsValid = false;

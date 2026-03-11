@@ -30,7 +30,7 @@ public partial class RDT : System.Web.UI.Page
         {
             if (!IsPostBack)
             {
-                Logger.Log.Info("NPB");
+
                 if (string.IsNullOrEmpty(hfToken.Value)) //уникальный токен
                 {
                     hfToken.Value = Guid.NewGuid().ToString();
@@ -57,7 +57,7 @@ public partial class RDT : System.Web.UI.Page
             }
             else
             {
-                Logger.Log.Info("PB");
+
                 _token = hfToken.Value;
                 dataFromFile = StateStore.Get<Newtonsoft.Json.Linq.JObject>(_token, JsonKeyName);
 
@@ -99,7 +99,7 @@ public partial class RDT : System.Web.UI.Page
 
         StateStore.Set(_token, "BlockTypeCode", blockType);
 
-        string methodSettingRegulator = BTPUtils.DetectMethodSetting(b);
+        string methodSettingRegulator = BTPUtils.DetectMethodSettingRDT(b);
         StateStore.Set(_token, "MethodSettingRegulator", methodSettingRegulator);
 
         switch (blockType)
@@ -152,7 +152,6 @@ public partial class RDT : System.Web.UI.Page
 
     private void FillTBV_TBVU_Differential(dynamic b)
     {
-        Logger.Log.Info("TBV_TBVU DIF");
 
         AppUtils.ApplyAndTrigger(eorRadioButtonList1, 0, eorRadioButtonList1_SelectedIndexChanged);
 
@@ -245,7 +244,6 @@ public partial class RDT : System.Web.UI.Page
 
     private void FillTBV_TBVU_Before(dynamic b)
     {
-        Logger.Log.Info("TBV_TBVU BEFORE");
 
         AppUtils.ApplyAndTrigger(eorRadioButtonList1, 2, eorRadioButtonList1_SelectedIndexChanged);
 
@@ -298,7 +296,6 @@ public partial class RDT : System.Web.UI.Page
 
     private void FillTBV_TBVU_After(dynamic b)
     {
-        Logger.Log.Info("TBV_TBVU AFTER");
 
         AppUtils.ApplyAndTrigger(eorRadioButtonList1, 1, eorRadioButtonList1_SelectedIndexChanged);
 
@@ -353,7 +350,6 @@ public partial class RDT : System.Web.UI.Page
 
     private void FillTBSV(dynamic b)
     {
-        Logger.Log.Info("TBSV");
 
         AppUtils.ApplyAndTrigger(eorRadioButtonList1, 0, eorRadioButtonList1_SelectedIndexChanged);
 
@@ -439,7 +435,6 @@ public partial class RDT : System.Web.UI.Page
 
     private void FillTBR(dynamic b)
     {
-        Logger.Log.Info("TBR");
 
         AppUtils.ApplyAndTrigger(eorRadioButtonList1, 0, eorRadioButtonList1_SelectedIndexChanged);
 
@@ -504,7 +499,6 @@ public partial class RDT : System.Web.UI.Page
 
     private void FillTBO(dynamic b)
     {
-        Logger.Log.Info("TBO");
 
         AppUtils.ApplyAndTrigger(eorRadioButtonList1, 0, eorRadioButtonList1_SelectedIndexChanged);
 
@@ -590,7 +584,6 @@ public partial class RDT : System.Web.UI.Page
 
     private void FillTBGV(dynamic b)
     {
-        Logger.Log.Info("TBGV");
 
         AppUtils.ApplyAndTrigger(eorRadioButtonList1, 0, eorRadioButtonList1_SelectedIndexChanged);
 
@@ -1064,7 +1057,7 @@ public partial class RDT : System.Web.UI.Page
 
                         if (ws1RadioButtonList1.SelectedIndex != 3)
                         {
-                            table11 = dataFromFile.table11;
+                            table11 = dataFromFile.table11p;
                         }
                         else
                         {
@@ -2879,7 +2872,6 @@ public partial class RDT : System.Web.UI.Page
 
     protected void rButton_Click(object sender, EventArgs e)
     {
-        Logger.Log.Info("BTN");
 
         if (!Page.IsValid) { return; }
         try

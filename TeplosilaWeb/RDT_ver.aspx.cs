@@ -18,6 +18,7 @@ public partial class RDT_ver : System.Web.UI.Page
     private const int MaxT3x = 150;
     private const string JsonKeyName = "JSON_RDT_ver";
     private dynamic dataFromFile;
+    private string _token;
 
     public Dictionary<int, string> r_input_dict = new Dictionary<int, string>();
 
@@ -27,17 +28,25 @@ public partial class RDT_ver : System.Web.UI.Page
         {
             if (!IsPostBack)
             {
-                Logger.InitLogger(); //инициализация - требуется один раз в начале
-                AppUtils.readFile(@"Content/data/dataRDT_ver.json", JsonKeyName); //читаем json файл с данными
+                if (string.IsNullOrEmpty(hfToken.Value)) //уникальный токен
+                {
+                    hfToken.Value = Guid.NewGuid().ToString();
+                    _token = hfToken.Value;
+                }
+
+                AppUtils.readFile(@"Content/data/data.txt", hfToken.Value, JsonKeyName);
             }
             else
             {
-                if (Session[JsonKeyName] == null)
+                _token = hfToken.Value;
+                dataFromFile = StateStore.Get<Newtonsoft.Json.Linq.JObject>(_token, JsonKeyName);
+
+                if (dataFromFile == null)
                 {
                     LabelError.Text = "Сессия завершена. Пожалуйста, перезагрузите страницу.";
                     return;
                 }
-                dataFromFile = Session[JsonKeyName];
+
                 rdtSave.Visible = false;
                 resultPanel.Visible = false;
             }
@@ -122,7 +131,7 @@ public partial class RDT_ver : System.Web.UI.Page
 
             r_in_dict.Add(40, pnRadioButtonList1.SelectedValue + " бар");
 
-            Session["r_input_dict"] = r_in_dict;
+            StateStore.Set(_token, "r_input_dict", r_in_dict);
         }
         catch (Exception e)
         {
@@ -618,94 +627,95 @@ public partial class RDT_ver : System.Web.UI.Page
     {
         if (AppUtils.SetEnableTextBox(lp1DropDownList2, lp1TextBox2))
         {
-            MathUtils.convertArr3((sender as DropDownList), ref lp1TextBox2);
+            MathUtils.convertArr3(_token, (sender as DropDownList), ref lp1TextBox2);
         }
-        AppUtils.SaveKeyToSession(lp1DropDownList2.ID, lp1DropDownList2.SelectedIndex);
+        AppUtils.SaveKeyToSession(lp1DropDownList2.ID, _token, lp1DropDownList2.SelectedIndex);
     }
 
     protected void lp1DropDownList3_SelectedIndexChanged(object sender, EventArgs e)
     {
         if (AppUtils.SetEnableTextBox(lp1DropDownList3, lp1TextBox3))
         {
-            MathUtils.convertArr3((sender as DropDownList), ref lp1TextBox3);
+            MathUtils.convertArr3(_token, (sender as DropDownList), ref lp1TextBox3);
         }
-        AppUtils.SaveKeyToSession(lp1DropDownList3.ID, lp1DropDownList3.SelectedIndex);
+        AppUtils.SaveKeyToSession(lp1DropDownList3.ID, _token, lp1DropDownList3.SelectedIndex);
     }
 
     protected void lp1DropDownList4_SelectedIndexChanged(object sender, EventArgs e)
     {
         if (AppUtils.SetEnableTextBox(lp1DropDownList4, lp1TextBox4))
         {
-            MathUtils.convertArr3((sender as DropDownList), ref lp1TextBox4);
+            MathUtils.convertArr3(_token, (sender as DropDownList), ref lp1TextBox4);
         }
-        AppUtils.SaveKeyToSession(lp1DropDownList4.ID, lp1DropDownList4.SelectedIndex);
+        AppUtils.SaveKeyToSession(lp1DropDownList4.ID, _token, lp1DropDownList4.SelectedIndex);
     }
 
     protected void lp2DropDownList1_SelectedIndexChanged(object sender, EventArgs e)
     {
         if (AppUtils.SetEnableTextBox(lp2DropDownList1, lp2TextBox1))
         {
-            MathUtils.convertArr3((sender as DropDownList), ref lp2TextBox1);
+            MathUtils.convertArr3(_token, (sender as DropDownList), ref lp2TextBox1);
         }
-        AppUtils.SaveKeyToSession(lp2DropDownList1.ID, lp2DropDownList1.SelectedIndex);
+        AppUtils.SaveKeyToSession(lp2DropDownList1.ID, _token, lp2DropDownList1.SelectedIndex);
     }
 
     protected void lp2DropDownList2_SelectedIndexChanged(object sender, EventArgs e)
     {
         if (AppUtils.SetEnableTextBox(lp2DropDownList2, lp2TextBox2))
         {
-            MathUtils.convertArr3((sender as DropDownList), ref lp2TextBox2);
+            MathUtils.convertArr3(_token, (sender as DropDownList), ref lp2TextBox2);
         }
-        AppUtils.SaveKeyToSession(lp2DropDownList2.ID, lp2DropDownList2.SelectedIndex);
+        AppUtils.SaveKeyToSession(lp2DropDownList2.ID, _token, lp2DropDownList2.SelectedIndex);
     }
 
     protected void lp3DropDownList1_SelectedIndexChanged(object sender, EventArgs e)
     {
         if (AppUtils.SetEnableTextBox(lp3DropDownList1, lp3TextBox1))
         {
-            MathUtils.convertArr3((sender as DropDownList), ref lp3TextBox1);
+            MathUtils.convertArr3(_token, (sender as DropDownList), ref lp3TextBox1);
         }
-        AppUtils.SaveKeyToSession(lp3DropDownList1.ID, lp3DropDownList1.SelectedIndex);
+        AppUtils.SaveKeyToSession(lp3DropDownList1.ID, _token, lp3DropDownList1.SelectedIndex);
     }
 
     protected void lp3DropDownList2_SelectedIndexChanged(object sender, EventArgs e)
     {
         if (AppUtils.SetEnableTextBox(lp3DropDownList2, lp3TextBox2))
         {
-            MathUtils.convertArr3((sender as DropDownList), ref lp3TextBox2);
+            MathUtils.convertArr3(_token, (sender as DropDownList), ref lp3TextBox2);
         }
-        AppUtils.SaveKeyToSession(lp3DropDownList2.ID, lp3DropDownList2.SelectedIndex);
+        AppUtils.SaveKeyToSession(lp3DropDownList2.ID, _token, lp3DropDownList2.SelectedIndex);
     }
 
     protected void lp4DropDownList2_SelectedIndexChanged(object sender, EventArgs e)
     {
         if (AppUtils.SetEnableTextBox(lp4DropDownList2, lp4TextBox2))
         {
-            MathUtils.convertArr3((sender as DropDownList), ref lp4TextBox2);
+            MathUtils.convertArr3(_token, (sender as DropDownList), ref lp4TextBox2);
         }
-        AppUtils.SaveKeyToSession(lp4DropDownList2.ID, lp4DropDownList2.SelectedIndex);
+        AppUtils.SaveKeyToSession(lp4DropDownList2.ID, _token, lp4DropDownList2.SelectedIndex);
     }
 
     protected void calcrDropDownList1_SelectedIndexChanged(object sender, EventArgs e)
     {
         if (AppUtils.SetEnableTextBox(calcrDropDownList1, calcrTextBox1))
         {
-            MathUtils.convertArr3((sender as DropDownList), ref calcrTextBox1);
+            MathUtils.convertArr3(_token, (sender as DropDownList), ref calcrTextBox1);
         }
-        AppUtils.SaveKeyToSession(calcrDropDownList1.ID, calcrDropDownList1.SelectedIndex);
+        AppUtils.SaveKeyToSession(calcrDropDownList1.ID, _token, calcrDropDownList1.SelectedIndex);
     }
 
     protected void fprDropDownList1_SelectedIndexChanged(object sender, EventArgs e)
     {
         if (AppUtils.SetEnableTextBox(fprDropDownList1, fprTextBox1))
         {
-            MathUtils.convertArrDouble((sender as DropDownList), ref fprTextBox1);
+            MathUtils.convertArrDouble(_token, (sender as DropDownList), ref fprTextBox1);
         }
-        AppUtils.SaveKeyToSession(fprDropDownList1.ID, fprDropDownList1.SelectedIndex);
+        AppUtils.SaveKeyToSession(fprDropDownList1.ID, _token, fprDropDownList1.SelectedIndex);
     }
     protected void GridView1_SelectedIndexChanged(object sender, EventArgs e)
     {
-        bool BlockGridSelect = Convert.ToBoolean(Session["BlockGridSelect"] ?? false);
+        bool BlockGridSelect = StateStore.Get<bool>(_token, "r_in_dict");
+
         if (BlockGridSelect) 
         {
             return; 
@@ -858,7 +868,6 @@ public partial class RDT_ver : System.Web.UI.Page
 
             DataTable dt = new DataTable();
             DataRow dr;
-            //for (int i = 0; i < titles.Count(); i++)
 
             for (int i = 0; i < titles.Count(); i++)
             {
@@ -939,17 +948,17 @@ public partial class RDT_ver : System.Web.UI.Page
             } 
             else if (eorRadioButton2.Checked) 
             {
-                mtmFlag = ppy > (MathUtils.convertArrToBar(lp2DropDownList1, lp2TextBox1) - MathUtils.convertArrToBar(lp2DropDownList2, lp2TextBox2));
+                mtmFlag = ppy > (MathUtils.convertArrToBar(_token, lp2DropDownList1, lp2TextBox1) - MathUtils.convertArrToBar(_token, lp2DropDownList2, lp2TextBox2));
                 mtmErrorMsg = "Фактические потери давления на полностью открытом регуляторе при заданном расходе ∆Рф больше максимального располагаемого перепада давления на регуляторе ΔPрд(max) = P'1 - Р(треб), указанный регулятор не подойдет";
             }
             else if (eorRadioButton3.Checked)
             {
-                mtmFlag = ppy > (MathUtils.convertArrToBar(lp3DropDownList1, lp3TextBox1) - MathUtils.convertArrToBar(lp3DropDownList2, lp3TextBox2));
+                mtmFlag = ppy > (MathUtils.convertArrToBar(_token, lp3DropDownList1, lp3TextBox1) - MathUtils.convertArrToBar(_token, lp3DropDownList2, lp3TextBox2));
                 mtmErrorMsg = "Фактические потери давления на полностью открытом регуляторе при заданном расходе ∆Рф больше максимального располагаемого перепада давления на регуляторе ΔPрд(max) = Р(треб) - Р'2, указанный регулятор не подойдет";
             }
             else if (eorRadioButton4.Checked)
             {
-                mtmFlag = ppy > MathUtils.convertArrToBar(lp4DropDownList2, lp4TextBox2);
+                mtmFlag = ppy > MathUtils.convertArrToBar(_token, lp4DropDownList2, lp4TextBox2);
                 mtmErrorMsg = "Фактические потери давления на полностью открытом регуляторе при заданном расходе ∆Рф больше максимального располагаемого перепада давления на регуляторе ΔPрд(max) = ΔPру, указанный регулятор не подойдет";
             }
 
@@ -959,7 +968,7 @@ public partial class RDT_ver : System.Web.UI.Page
                 mtmLabelError.Enabled = true;
                 rdtSave.Visible = false;
                 rdtSave.Enabled = false;
-                Session["BlockGridSelect"] = true;
+                StateStore.Set(_token, "BlockGridSelect", true);
             } 
             else
             {
@@ -972,7 +981,7 @@ public partial class RDT_ver : System.Web.UI.Page
                 rdtSave.Enabled = true;
                 mtmLabelError.Text = "";
                 mtmLabelError.Enabled = false;
-                Session["BlockGridSelect"] = false;
+                StateStore.Set(_token, "BlockGridSelect", false);
             }
 
             labelOptyV.Visible = true;
@@ -1169,7 +1178,7 @@ public partial class RDT_ver : System.Web.UI.Page
                 double csrMin = dataFromFile.ControllerSettingRange.SettingsParam[csrRadioButtonList1.SelectedValue.Split(' ')[0]].min;
                 double csrMax = dataFromFile.ControllerSettingRange.SettingsParam[csrRadioButtonList1.SelectedValue.Split(' ')[0]].max;
 
-                if (!(csrMin <= MathUtils.convertArrToBar(lp1DropDownList2, lp1TextBox2) && MathUtils.convertArrToBar(lp1DropDownList2, lp1TextBox2) <= csrMax))
+                if (!(csrMin <= MathUtils.convertArrToBar(_token, lp1DropDownList2, lp1TextBox2) && MathUtils.convertArrToBar(_token, lp1DropDownList2, lp1TextBox2) <= csrMax))
                 {
                     CustomValidator8.ErrorMessage = "Давление настройки не попадает в выбранный диапазон настройки. Указанный регулятор не подойдет";
                     args.IsValid = false;
@@ -1230,14 +1239,14 @@ public partial class RDT_ver : System.Web.UI.Page
                     args.IsValid = false;
                     return;
                 }
-                if (MathUtils.convertArrToBar(lp1DropDownList4, lp1TextBox4) >= MathUtils.convertArrToBar(lp1DropDownList3, lp1TextBox3))
+                if (MathUtils.convertArrToBar(_token, lp1DropDownList4, lp1TextBox4) >= MathUtils.convertArrToBar(_token, lp1DropDownList3, lp1TextBox3))
                 {
                     CustomValidator2.ErrorMessage = "Неверно указано значение давления";
                     args.IsValid = false;
                     return;
                 }
 
-                if (MathUtils.convertArrToBar(lp1DropDownList2, lp1TextBox2) >= (MathUtils.convertArrToBar(lp1DropDownList3, lp1TextBox3) - MathUtils.convertArrToBar(lp1DropDownList4, lp1TextBox4)))
+                if (MathUtils.convertArrToBar(_token, lp1DropDownList2, lp1TextBox2) >= (MathUtils.convertArrToBar(_token, lp1DropDownList3, lp1TextBox3) - MathUtils.convertArrToBar(_token, lp1DropDownList4, lp1TextBox4)))
                 {
                     CustomValidator8.ErrorMessage = "Потери давления на регулируемом участке превышают располагаемый перепад давлений на вводе";
                     CustomValidator8.IsValid = false;
@@ -1269,7 +1278,7 @@ public partial class RDT_ver : System.Web.UI.Page
                 args.IsValid = false;
                 return;
             }
-            if (MathUtils.convertArrToBar(lp2DropDownList1, lp2TextBox1) > AppUtils.customConverterToDouble(pnRadioButtonList1.SelectedValue))
+            if (MathUtils.convertArrToBar(_token, lp2DropDownList1, lp2TextBox1) > AppUtils.customConverterToDouble(pnRadioButtonList1.SelectedValue))
             {
                 CustomValidator3.ErrorMessage = "Давление перед регулятором больше номинального давления регулятора. Указанный регулятор не подойдет";
                 args.IsValid = false;
@@ -1296,7 +1305,7 @@ public partial class RDT_ver : System.Web.UI.Page
                     args.IsValid = false;
                     return;
                 }
-                if (MathUtils.convertArrToBar(lp2DropDownList2, lp2TextBox2) >= MathUtils.convertArrToBar(lp2DropDownList1, lp2TextBox1))
+                if (MathUtils.convertArrToBar(_token, lp2DropDownList2, lp2TextBox2) >= MathUtils.convertArrToBar(_token, lp2DropDownList1, lp2TextBox1))
                 {
                     CustomValidator4.ErrorMessage = "Неверно указано значение давления";
                     args.IsValid = false;
@@ -1306,7 +1315,7 @@ public partial class RDT_ver : System.Web.UI.Page
                 double csrMin = dataFromFile.ControllerSettingRange.SettingsParam[csrRadioButtonList1.SelectedValue.Split(' ')[0]].min;
                 double csrMax = dataFromFile.ControllerSettingRange.SettingsParam[csrRadioButtonList1.SelectedValue.Split(' ')[0]].max;
 
-                if (!(csrMin <= MathUtils.convertArrToBar(lp2DropDownList2, lp2TextBox2) && MathUtils.convertArrToBar(lp2DropDownList2, lp2TextBox2) <= csrMax))
+                if (!(csrMin <= MathUtils.convertArrToBar(_token, lp2DropDownList2, lp2TextBox2) && MathUtils.convertArrToBar(_token, lp2DropDownList2, lp2TextBox2) <= csrMax))
                 {
                     CustomValidator4.ErrorMessage = "Давление настройки не попадает в выбранный диапазон настройки. Указанный регулятор не подойдет";
                     args.IsValid = false;
@@ -1338,7 +1347,7 @@ public partial class RDT_ver : System.Web.UI.Page
                 return;
             }
 
-            if (MathUtils.convertArrToBar(lp3DropDownList1, lp3TextBox1) > AppUtils.customConverterToDouble(pnRadioButtonList1.SelectedValue))
+            if (MathUtils.convertArrToBar(_token, lp3DropDownList1, lp3TextBox1) > AppUtils.customConverterToDouble(pnRadioButtonList1.SelectedValue))
             {
                 CustomValidator5.ErrorMessage = "Давление перед регулятором больше номинального давления регулятора. Указанный регулятор не подойдет";
                 args.IsValid = false;
@@ -1347,7 +1356,7 @@ public partial class RDT_ver : System.Web.UI.Page
             double csrMin = dataFromFile.ControllerSettingRange.SettingsParam[csrRadioButtonList1.SelectedValue.Split(' ')[0]].min;
             double csrMax = dataFromFile.ControllerSettingRange.SettingsParam[csrRadioButtonList1.SelectedValue.Split(' ')[0]].max;
 
-            if (!(csrMin <= MathUtils.convertArrToBar(lp3DropDownList1, lp3TextBox1) && MathUtils.convertArrToBar(lp3DropDownList1, lp3TextBox1) <= csrMax))
+            if (!(csrMin <= MathUtils.convertArrToBar(_token, lp3DropDownList1, lp3TextBox1) && MathUtils.convertArrToBar(_token, lp3DropDownList1, lp3TextBox1) <= csrMax))
             {
                 CustomValidator5.ErrorMessage = "Давление настройки не попадает в выбранный диапазон настройки. Указанный регулятор не подойдет";
                 args.IsValid = false;
@@ -1374,7 +1383,7 @@ public partial class RDT_ver : System.Web.UI.Page
                     args.IsValid = false;
                     return;
                 }
-                if (MathUtils.convertArrToBar(lp3DropDownList2, lp3TextBox2) >= MathUtils.convertArrToBar(lp3DropDownList1, lp3TextBox1))
+                if (MathUtils.convertArrToBar(_token, lp3DropDownList2, lp3TextBox2) >= MathUtils.convertArrToBar(_token, lp3DropDownList1, lp3TextBox1))
                 {
                     CustomValidator6.ErrorMessage = "Неверно указано значение давления";
                     args.IsValid = false;
@@ -1409,7 +1418,7 @@ public partial class RDT_ver : System.Web.UI.Page
             double csrMin = dataFromFile.ControllerSettingRange.SettingsParam[csrRadioButtonList1.SelectedValue.Split(' ')[0]].min;
             double csrMax = dataFromFile.ControllerSettingRange.SettingsParam[csrRadioButtonList1.SelectedValue.Split(' ')[0]].max;
 
-            if (!(csrMin <= MathUtils.convertArrToBar(lp4DropDownList2, lp4TextBox2) && MathUtils.convertArrToBar(lp4DropDownList2, lp4TextBox2) <= csrMax))
+            if (!(csrMin <= MathUtils.convertArrToBar(_token, lp4DropDownList2, lp4TextBox2) && MathUtils.convertArrToBar(_token, lp4DropDownList2, lp4TextBox2) <= csrMax))
             {
                 CustomValidator7.ErrorMessage = "Давление настройки не попадает в выбранный диапазон настройки. Указанный регулятор не подойдет";
                 args.IsValid = false;
@@ -1438,7 +1447,7 @@ public partial class RDT_ver : System.Web.UI.Page
                     args.IsValid = false;
                     return;
                 }
-                if (MathUtils.convertArrToBar(calcrDropDownList1, calcrTextBox1) > AppUtils.customConverterToDouble(pnRadioButtonList1.SelectedValue))
+                if (MathUtils.convertArrToBar(_token, calcrDropDownList1, calcrTextBox1) > AppUtils.customConverterToDouble(pnRadioButtonList1.SelectedValue))
                 {
                     calcrCustomValidator1.ErrorMessage = "Давление перед регулятором больше номинального давления регулятора. Указанный регулятор не подойдет";
                     args.IsValid = false;
@@ -1537,7 +1546,7 @@ public partial class RDT_ver : System.Web.UI.Page
     {
         try
         {
-            r_input_dict = (Dictionary<int, string>)Session["r_input_dict"];
+            r_input_dict = StateStore.Get<Dictionary<int, string>>(_token, "r_input_dict");
 
             if (!String.IsNullOrWhiteSpace(objTextBox1.Text))
             {
@@ -1629,7 +1638,7 @@ public partial class RDT_ver : System.Web.UI.Page
 
         try
         {
-            r_input_dict = (Dictionary<int, string>)Session["r_input_dict"];
+            r_input_dict = StateStore.Get<Dictionary<int, string>>(_token, "r_input_dict");
 
             if (!String.IsNullOrWhiteSpace(objTextBox1.Text))
             {
@@ -1718,7 +1727,7 @@ public partial class RDT_ver : System.Web.UI.Page
     {
         try
         {
-            r_input_dict = (Dictionary<int, string>)Session["r_input_dict"];
+            r_input_dict = StateStore.Get<Dictionary<int, string>>(_token, "r_input_dict");
 
             if (!String.IsNullOrWhiteSpace(objTextBox1.Text))
             {
@@ -1807,7 +1816,7 @@ public partial class RDT_ver : System.Web.UI.Page
     {
         try
         {
-            r_input_dict = (Dictionary<int, string>)Session["r_input_dict"];
+            r_input_dict = StateStore.Get<Dictionary<int, string>>(_token, "r_input_dict");
 
             if (!String.IsNullOrWhiteSpace(objTextBox1.Text))
             {

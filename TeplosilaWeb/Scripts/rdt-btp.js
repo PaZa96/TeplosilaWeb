@@ -3,7 +3,11 @@ const RDT = new TeplosilaRDT({
     baseUrl: 'https://ts-btp.techinby.com',
 });
 
+let onSetTriggered = false;
+
 RDT.onSet((payload) => {
+    onSetTriggered = true;
+
     const hfPayloadElement = document.getElementById('hfPayload');
     const hfVersionElement = document.getElementById('hfPayloadVersion');
     const formElement = document.getElementById('form2');
@@ -14,7 +18,6 @@ RDT.onSet((payload) => {
     }
 
     const newPayload = JSON.stringify(payload.block);
-
 
     if (hfVersionElement.value === newPayload) {
         console.log('Payload уже обработан');
@@ -28,6 +31,14 @@ RDT.onSet((payload) => {
     setTimeout(() => __doPostBack('hfPayload', ''), 0);
 });
 
+// fallback: если onSet не вызвался
+setTimeout(() => {
+    if (!onSetTriggered) {
+        console.log('onSet не вызвался — показываем форму вручную');
+        document.getElementById('form2').style.display = 'block';
+    }
+}, 1000);
+
 function returnData() {
     const hfResultElement = document.getElementById('hfResult');
 
@@ -40,11 +51,10 @@ function returnData() {
     try {
         const data = JSON.parse(hfResultElement.value.trim());
 
-        console.log('📦 Отправляемые данные:', JSON.stringify(data, null, 2));
+        console.log('Отправляемые данные:', JSON.stringify(data, null, 2));
 
         RDT.save(data);
     } catch (e) {
         console.error('Ошибка при парсинге JSON:', e);
     }
 }
-

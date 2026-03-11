@@ -90,63 +90,6 @@ public static class MathUtils
         return 103 * Math.Pow(ps + 0.892, 0.242);
     }
 
-    public static void convertArrDouble(DropDownList ddl, ref TextBox tb)
-    {
-        if (ddl.SelectedIndex > 0)
-        {
-            if (!String.IsNullOrWhiteSpace(tb.Text))
-            {
-                int jj = Convert.ToInt32(HttpContext.Current.Session?[ddl.ID]);
-
-                if (jj > 0)
-                {
-                    tb.Text = (AppUtils.customConverterToDouble((tb.Text.Replace(".", ","))) * arrConvert1[(jj - 1), (ddl.SelectedIndex - 1)]).ToString().Replace(",", ".");
-                }
-            }
-        }
-    }
-    public static void convertArr3(DropDownList ddl, ref TextBox tb)
-    {
-        if (ddl.SelectedIndex > 0)
-        {
-            if (!String.IsNullOrWhiteSpace(tb.Text))
-            {
-                int jj = Convert.ToInt32(HttpContext.Current.Session?[ddl.ID]);
-                tb.Text = (AppUtils.customConverterToDouble(tb.Text.Replace(".", ",")) * arrConvert3[jj - 1] / arrConvert3[ddl.SelectedIndex - 1]).ToString().Replace(",", ".");
-            }
-        }
-    }
-    public static void convertArr2(DropDownList ddl, ref TextBox tb)
-    {
-        if (ddl.SelectedIndex > 0)
-        {
-            if (!String.IsNullOrWhiteSpace(tb.Text))
-            {
-                int jj = Convert.ToInt32(HttpContext.Current.Session?[ddl.ID]);
-                tb.Text = (AppUtils.customConverterToDouble(tb.Text.Replace(".", ",")) * arrConvert2[jj - 1] / arrConvert2[ddl.SelectedIndex - 1]).ToString().Replace(",", ".");
-            }
-        }
-    }
-
-    public static double convertArrToBar(DropDownList ddl, TextBox tb)
-    {
-        double result = 0;
-
-        if (ddl.SelectedIndex > 0)
-        {
-            if (!String.IsNullOrWhiteSpace(tb.Text))
-            {
-
-                int jj = Convert.ToInt32(HttpContext.Current.Session?[ddl.ID]);
-                if (jj > 0)
-                {
-                    result = (AppUtils.customConverterToDouble(tb.Text) * arrConvert3[jj - 1] / arrConvert3[2]);
-                }
-            }
-        }
-        return result;
-    }
-
     public static void convertArrDouble(string token, DropDownList ddl, ref TextBox tb)
     {
         if (ddl.SelectedIndex > 0)

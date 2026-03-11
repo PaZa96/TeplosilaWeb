@@ -28,7 +28,7 @@ public partial class TRV : System.Web.UI.Page
     {
         if (!IsPostBack)
         {
-            Logger.Log.Info("NPB");
+
             if (string.IsNullOrEmpty(hfToken.Value)) //уникальный токен
             {
                 hfToken.Value = Guid.NewGuid().ToString();
@@ -56,7 +56,6 @@ public partial class TRV : System.Web.UI.Page
         else
         {
 
-            Logger.Log.Info("PB");
             _token = hfToken.Value;
             dataFromFile = StateStore.Get<Newtonsoft.Json.Linq.JObject>(_token, JsonKeyName);
 
@@ -94,19 +93,54 @@ public partial class TRV : System.Web.UI.Page
             string blockType = BTPUtils.CheckJsonAttr(b, "block_type_code");
 
             StateStore.Set(_token, "BlockTypeCode", blockType);
-            StateStore.Set(_token, "MethodSettingRegulator", "");
+
+            string methodSettingValve = BTPUtils.DetectMethodSettingTRV(b);
+            StateStore.Set(_token, "MethodSettingValve", methodSettingValve);
 
             switch (blockType)
             {
-
                 case "TBGV":
                     FillTBGV(b);
                     break;
+
                 case "TBSV":
+                    switch (methodSettingValve)
+                    {
+                        case "method_setting_valve_independent_2":
+                            FillTBSVIndep2(b);
+                            break;
+
+                        case "method_setting_valve_dependent_2":
+                            FillTBSVDep2(b);
+                            break;
+
+                        case "method_setting_valve_dependent_3":
+                            FillTBSVDep3(b);
+                            break;
+
+                        default:
+                            return;
+                    }
                     break;
 
                 case "TBO":
+                    switch (methodSettingValve)
+                    {
+                        case "method_setting_valve_independent_2":
+                            FillTBOIndep2(b);
+                            break;
 
+                        case "method_setting_valve_dependent_2":
+                            FillTBODep2(b);
+                            break;
+
+                        case "method_setting_valve_dependent_3":
+                            FillTBODep3(b);
+                            break;
+
+                        default:
+                            return;
+                    }
                     break;
 
                 default:
@@ -114,7 +148,6 @@ public partial class TRV : System.Web.UI.Page
             }
 
             objTextBox1.Text = $"{BTPUtils.CheckJsonAttr(b, "description")} {BTPUtils.CheckJsonAttr(b, "object_name")}";
-
         }
         catch (Exception er)
         {
@@ -122,9 +155,440 @@ public partial class TRV : System.Web.UI.Page
         }
     }
 
+    public void FillTBSVIndep2(dynamic b)
+    {
+
+        AppUtils.ApplyAndTrigger(tvRadioButtonList1, 0, tvRadioButtonList1_SelectedIndexChanged);
+
+        AppUtils.ApplyAndTrigger(ws2RadioButtonList1, 0, ws2RadioButtonList1_SelectedIndexChanged);
+
+        if ((string)b.regulator_position == "0")
+        {
+            AppUtils.ApplyAndTrigger(rpvRadioButtonList1, 1, rpvRadioButtonList1_SelectedIndexChanged);
+        }
+        else
+        {
+            AppUtils.ApplyAndTrigger(rpvRadioButtonList1, 0, rpvRadioButtonList1_SelectedIndexChanged);
+        }
+
+        aaRadioButton1.Enabled = false;
+        aaRadioButton2.Enabled = false;
+        aaRadioButton3.Checked = true;
+        aaRadioButton3_CheckedChanged(aaRadioButton2, EventArgs.Empty);
+        aaRadioButton4.Enabled = false;
+
+        AppUtils.ApplyAndTrigger(aa3RadioButtonList1, 1, aa3RadioButtonList1_SelectedIndexChanged);
+
+        BTPUtils.SetPressureUnit(lpvDropDownList21, "mwc");
+        lpvDropDownList21_SelectedIndexChanged(lpvDropDownList21, EventArgs.Empty);
+        lpvDropDownList21.Enabled = false;
+
+        lpvTextBox21.Text = (string)b.loss_pressure_heat_exchanger;
+
+        AppUtils.DisableTextBox(lpvTextBox1);
+        lpvDropDownList1.SelectedIndex = 0;
+
+        AppUtils.DisableTextBox(calcvTextBox1);
+        calcvDropDownList1.SelectedIndex = 0;
+
+        calcvTextBox2.Text = "";
+
+        if (b.method_setting_expenses == "set")
+        {
+            fvRadioButton2.Enabled = false;
+            fvRadioButton1.Checked = true;
+            fvRadioButton1_CheckedChanged(fvRadioButton1, EventArgs.Empty);
+
+            BTPUtils.SetFlowPipeUnit(fvDropDownList1, (string)b.flow_t1t2_unit);
+            fvDropDownList1_SelectedIndexChanged(fvDropDownList1, EventArgs.Empty);
+
+            fvTextBox1.Text = (string)b.flow_t1t2_val;
+        }
+        else if (b.method_setting_expenses == "calculate")
+        {
+            fvRadioButton1.Enabled = false;
+            fvRadioButton2.Checked = true;
+            fvRadioButton2_CheckedChanged(fvRadioButton2, EventArgs.Empty);
+
+            fvTextBox2.Text = (string)b.supply_temp_t1t2;
+            fvTextBox3.Text = (string)b.return_temp_t1t2;
+
+            BTPUtils.SetPowerPipeUnit(fvDropDownList2, (string)b.power_unit);
+            fvDropDownList2_SelectedIndexChanged(fvDropDownList2, EventArgs.Empty);
+
+            fvTextBox10.Text = (string)b.power_val;
+        }
+        else
+        {
+            ClearFvRadioButton();
+        }
+    }
+
+    public void FillTBSVDep2(dynamic b)
+    {
+
+        AppUtils.ApplyAndTrigger(tvRadioButtonList1, 0, tvRadioButtonList1_SelectedIndexChanged);
+
+        AppUtils.ApplyAndTrigger(ws2RadioButtonList1, 0, ws2RadioButtonList1_SelectedIndexChanged);
+
+        if ((string)b.regulator_position == "0")
+        {
+            AppUtils.ApplyAndTrigger(rpvRadioButtonList1, 1, rpvRadioButtonList1_SelectedIndexChanged);
+        }
+        else
+        {
+            AppUtils.ApplyAndTrigger(rpvRadioButtonList1, 0, rpvRadioButtonList1_SelectedIndexChanged);
+        }
+
+        aaRadioButton1.Enabled = false;
+        aaRadioButton2.Enabled = false;
+        aaRadioButton3.Checked = true;
+        aaRadioButton3_CheckedChanged(aaRadioButton2, EventArgs.Empty);
+        aaRadioButton4.Enabled = false;
+
+        AppUtils.ApplyAndTrigger(aa3RadioButtonList1, 0, aa3RadioButtonList1_SelectedIndexChanged);
+
+        BTPUtils.SetPressureUnit(lpvDropDownList21, "mwc");
+        lpvDropDownList21_SelectedIndexChanged(lpvDropDownList21, EventArgs.Empty);
+        lpvDropDownList21.Enabled = false;
+
+        if (b.circulation_pump_position == "supply" || b.circulation_pump_position == "return")
+        {
+            lpvTextBox21.Text = "1";
+        }
+        else
+        {
+            lpvTextBox21.Text = (string)b.loss_pressure_system;
+        }
+
+        AppUtils.DisableTextBox(lpvTextBox1);
+        lpvDropDownList1.SelectedIndex = 0;
+
+        AppUtils.DisableTextBox(calcvTextBox1);
+        calcvDropDownList1.SelectedIndex = 0;
+
+        calcvTextBox2.Text = "";
+
+        if (b.method_setting_expenses == "set")
+        {
+            fvRadioButton2.Enabled = false;
+            fvRadioButton1.Checked = true;
+            fvRadioButton1_CheckedChanged(fvRadioButton1, EventArgs.Empty);
+
+            BTPUtils.SetFlowPipeUnit(fvDropDownList1, (string)b.flow_t1t2_unit);
+            fvDropDownList1_SelectedIndexChanged(fvDropDownList1, EventArgs.Empty);
+
+            fvTextBox1.Text = (string)b.flow_t1t2_val;
+        }
+        else if (b.method_setting_expenses == "calculate")
+        {
+            fvRadioButton1.Enabled = false;
+            fvRadioButton2.Checked = true;
+            fvRadioButton2_CheckedChanged(fvRadioButton2, EventArgs.Empty);
+
+            fvTextBox2.Text = (string)b.supply_temp_t1t2;
+            fvTextBox3.Text = (string)b.return_temp_t1t2;
+
+            BTPUtils.SetPowerPipeUnit(fvDropDownList2, (string)b.power_unit);
+            fvDropDownList2_SelectedIndexChanged(fvDropDownList2, EventArgs.Empty);
+
+            fvTextBox10.Text = (string)b.power_val;
+        }
+        else
+        {
+            ClearFvRadioButton();
+        }
+    }
+
+    public void FillTBSVDep3(dynamic b)
+    {
+
+        AppUtils.ApplyAndTrigger(tvRadioButtonList1, 1, tvRadioButtonList1_SelectedIndexChanged);
+        AppUtils.ApplyAndTrigger(tv3RadioButtonList1, 0, tv3RadioButtonList1_SelectedIndexChanged);
+
+        AppUtils.ApplyAndTrigger(ws2RadioButtonList1, 0, ws2RadioButtonList1_SelectedIndexChanged);
+
+        if ((string)b.regulator_position == "0")
+        {
+            AppUtils.ApplyAndTrigger(rpvRadioButtonList1, 1, rpvRadioButtonList1_SelectedIndexChanged);
+        }
+        else
+        {
+            AppUtils.ApplyAndTrigger(rpvRadioButtonList1, 0, rpvRadioButtonList1_SelectedIndexChanged);
+        }
+
+        aaRadioButton1.Enabled = false;
+        aaRadioButton2.Enabled = false;
+        aaRadioButton3.Checked = true;
+        aaRadioButton3_CheckedChanged(aaRadioButton2, EventArgs.Empty);
+        aaRadioButton4.Enabled = false;
+
+        AppUtils.ApplyAndTrigger(aa3RadioButtonList1, 0, aa3RadioButtonList1_SelectedIndexChanged);
+
+        BTPUtils.SetPressureUnit(lpvDropDownList21, "mwc");
+        lpvDropDownList21_SelectedIndexChanged(lpvDropDownList21, EventArgs.Empty);
+        lpvDropDownList21.Enabled = false;
+
+        lpvTextBox21.Text = "1";
+
+
+        AppUtils.DisableTextBox(lpvTextBox1);
+        lpvDropDownList1.SelectedIndex = 0;
+
+        AppUtils.DisableTextBox(calcvTextBox1);
+        calcvDropDownList1.SelectedIndex = 0;
+
+        calcvTextBox2.Text = "";
+
+        if (b.method_setting_expenses == "set")
+        {
+            fvRadioButton2.Enabled = false;
+            fvRadioButton1.Checked = true;
+            fvRadioButton1_CheckedChanged(fvRadioButton1, EventArgs.Empty);
+
+            BTPUtils.SetFlowPipeUnit(fvDropDownList1, (string)b.flow_t11t21_unit);
+            fvDropDownList1_SelectedIndexChanged(fvDropDownList1, EventArgs.Empty);
+
+            fvTextBox1.Text = (string)b.flow_t11t21_val;
+        }
+        else if (b.method_setting_expenses == "calculate")
+        {
+            fvRadioButton1.Enabled = false;
+            fvRadioButton2.Checked = true;
+            fvRadioButton2_CheckedChanged(fvRadioButton2, EventArgs.Empty);
+
+            fvTextBox8.Text = (string)b.supply_temp_t11t21;
+            fvTextBox9.Text = (string)b.return_temp_t11t21;
+
+            BTPUtils.SetPowerPipeUnit(fvDropDownList2, (string)b.power_unit);
+            fvDropDownList2_SelectedIndexChanged(fvDropDownList2, EventArgs.Empty);
+
+            fvTextBox10.Text = (string)b.power_val;
+        }
+        else
+        {
+            ClearFvRadioButton();
+        }
+    }
+
+    public void FillTBOIndep2(dynamic b)
+    {
+
+        AppUtils.ApplyAndTrigger(tvRadioButtonList1, 0, tvRadioButtonList1_SelectedIndexChanged);
+
+        AppUtils.ApplyAndTrigger(ws2RadioButtonList1, 0, ws2RadioButtonList1_SelectedIndexChanged);
+
+        if ((string)b.regulator_position == "0")
+        {
+            AppUtils.ApplyAndTrigger(rpvRadioButtonList1, 1, rpvRadioButtonList1_SelectedIndexChanged);
+        }
+        else
+        {
+            AppUtils.ApplyAndTrigger(rpvRadioButtonList1, 0, rpvRadioButtonList1_SelectedIndexChanged);
+        }
+
+        aaRadioButton1.Enabled = false;
+        aaRadioButton2.Checked = true;
+        aaRadioButton2_CheckedChanged(aaRadioButton2, EventArgs.Empty);
+        aaRadioButton3.Enabled = false;
+        aaRadioButton4.Enabled = false;
+
+        AppUtils.ApplyAndTrigger(aa2RadioButtonList1, 1, aa2RadioButtonList1_SelectedIndexChanged);
+
+        BTPUtils.SetPressureUnit(lpvDropDownList21, "mwc");
+        lpvDropDownList21_SelectedIndexChanged(lpvDropDownList21, EventArgs.Empty);
+        lpvDropDownList21.Enabled = false;
+
+        lpvTextBox21.Text = (string)b.loss_pressure_heat_exchanger;
+
+        AppUtils.DisableTextBox(lpvTextBox1);
+        lpvDropDownList1.SelectedIndex = 0;
+
+        AppUtils.DisableTextBox(calcvTextBox1);
+        calcvDropDownList1.SelectedIndex = 0;
+
+        calcvTextBox2.Text = "";
+
+        if (b.method_setting_expenses == "set")
+        {
+            fvRadioButton2.Enabled = false;
+            fvRadioButton1.Checked = true;
+            fvRadioButton1_CheckedChanged(fvRadioButton1, EventArgs.Empty);
+
+            BTPUtils.SetFlowPipeUnit(fvDropDownList1, (string)b.flow_t1t2_unit);
+            fvDropDownList1_SelectedIndexChanged(fvDropDownList1, EventArgs.Empty);
+
+            fvTextBox1.Text = (string)b.flow_t1t2_val;
+        }
+        else if (b.method_setting_expenses == "calculate")
+        {
+            fvRadioButton1.Enabled = false;
+            fvRadioButton2.Checked = true;
+            fvRadioButton2_CheckedChanged(fvRadioButton2, EventArgs.Empty);
+
+            fvTextBox2.Text = (string)b.supply_temp_t1t2;
+            fvTextBox3.Text = (string)b.return_temp_t1t2;
+
+            BTPUtils.SetPowerPipeUnit(fvDropDownList2, (string)b.power_unit);
+            fvDropDownList2_SelectedIndexChanged(fvDropDownList2, EventArgs.Empty);
+
+            fvTextBox10.Text = (string)b.power_val;
+        }
+        else
+        {
+            ClearFvRadioButton();
+        }
+    }
+
+    public void FillTBODep2(dynamic b)
+    {
+
+        AppUtils.ApplyAndTrigger(tvRadioButtonList1, 0, tvRadioButtonList1_SelectedIndexChanged);
+
+        AppUtils.ApplyAndTrigger(ws2RadioButtonList1, 0, ws2RadioButtonList1_SelectedIndexChanged);
+
+        if ((string)b.regulator_position == "0")
+        {
+            AppUtils.ApplyAndTrigger(rpvRadioButtonList1, 1, rpvRadioButtonList1_SelectedIndexChanged);
+        }
+        else
+        {
+            AppUtils.ApplyAndTrigger(rpvRadioButtonList1, 0, rpvRadioButtonList1_SelectedIndexChanged);
+        }
+
+        aaRadioButton1.Enabled = false;
+        aaRadioButton2.Checked = true;
+        aaRadioButton2_CheckedChanged(aaRadioButton2, EventArgs.Empty);
+        aaRadioButton3.Enabled = false;
+        aaRadioButton4.Enabled = false;
+
+        AppUtils.ApplyAndTrigger(aa2RadioButtonList1, 0, aa2RadioButtonList1_SelectedIndexChanged);
+
+        BTPUtils.SetPressureUnit(lpvDropDownList21, "mwc");
+        lpvDropDownList21_SelectedIndexChanged(lpvDropDownList21, EventArgs.Empty);
+        lpvDropDownList21.Enabled = false;
+
+        if (b.circulation_pump_position == "supply" || b.circulation_pump_position == "return")
+        {
+            lpvTextBox21.Text = "1";
+        }
+        else
+        {
+            lpvTextBox21.Text = (string)b.loss_pressure_system;
+        }
+
+        AppUtils.DisableTextBox(lpvTextBox1);
+        lpvDropDownList1.SelectedIndex = 0;
+
+        AppUtils.DisableTextBox(calcvTextBox1);
+        calcvDropDownList1.SelectedIndex = 0;
+
+        calcvTextBox2.Text = "";
+
+        if (b.method_setting_expenses == "set")
+        {
+            fvRadioButton2.Enabled = false;
+            fvRadioButton1.Checked = true;
+            fvRadioButton1_CheckedChanged(fvRadioButton1, EventArgs.Empty);
+
+            BTPUtils.SetFlowPipeUnit(fvDropDownList1, (string)b.flow_t1t2_unit);
+            fvDropDownList1_SelectedIndexChanged(fvDropDownList1, EventArgs.Empty);
+
+            fvTextBox1.Text = (string)b.flow_t1t2_val;
+        }
+        else if (b.method_setting_expenses == "calculate")
+        {
+            fvRadioButton1.Enabled = false;
+            fvRadioButton2.Checked = true;
+            fvRadioButton2_CheckedChanged(fvRadioButton2, EventArgs.Empty);
+
+            fvTextBox2.Text = (string)b.supply_temp_t1t2;
+            fvTextBox3.Text = (string)b.return_temp_t1t2;
+
+            BTPUtils.SetPowerPipeUnit(fvDropDownList2, (string)b.power_unit);
+            fvDropDownList2_SelectedIndexChanged(fvDropDownList2, EventArgs.Empty);
+
+            fvTextBox10.Text = (string)b.power_val;
+        }
+        else
+        {
+            ClearFvRadioButton();
+        }
+    }
+
+    public void FillTBODep3(dynamic b)
+    {
+
+        AppUtils.ApplyAndTrigger(tvRadioButtonList1, 1, tvRadioButtonList1_SelectedIndexChanged);
+        AppUtils.ApplyAndTrigger(tv3RadioButtonList1, 0, tv3RadioButtonList1_SelectedIndexChanged);
+
+        AppUtils.ApplyAndTrigger(ws2RadioButtonList1, 0, ws2RadioButtonList1_SelectedIndexChanged);
+
+        if ((string)b.regulator_position == "0")
+        {
+            AppUtils.ApplyAndTrigger(rpvRadioButtonList1, 1, rpvRadioButtonList1_SelectedIndexChanged);
+        }
+        else
+        {
+            AppUtils.ApplyAndTrigger(rpvRadioButtonList1, 0, rpvRadioButtonList1_SelectedIndexChanged);
+        }
+
+        aaRadioButton1.Enabled = false;
+        aaRadioButton2.Checked = true;
+        aaRadioButton2_CheckedChanged(aaRadioButton2, EventArgs.Empty);
+        aaRadioButton3.Enabled = false;
+        aaRadioButton4.Enabled = false;
+
+        AppUtils.ApplyAndTrigger(aa2RadioButtonList1, 0, aa2RadioButtonList1_SelectedIndexChanged);
+
+        BTPUtils.SetPressureUnit(lpvDropDownList21, "mwc");
+        lpvDropDownList21_SelectedIndexChanged(lpvDropDownList21, EventArgs.Empty);
+        lpvDropDownList21.Enabled = false;
+
+        lpvTextBox21.Text = "1";
+
+
+        AppUtils.DisableTextBox(lpvTextBox1);
+        lpvDropDownList1.SelectedIndex = 0;
+
+        AppUtils.DisableTextBox(calcvTextBox1);
+        calcvDropDownList1.SelectedIndex = 0;
+
+        calcvTextBox2.Text = "";
+
+        if (b.method_setting_expenses == "set")
+        {
+            fvRadioButton2.Enabled = false;
+            fvRadioButton1.Checked = true;
+            fvRadioButton1_CheckedChanged(fvRadioButton1, EventArgs.Empty);
+
+            BTPUtils.SetFlowPipeUnit(fvDropDownList1, (string)b.flow_t11t21_unit);
+            fvDropDownList1_SelectedIndexChanged(fvDropDownList1, EventArgs.Empty);
+
+            fvTextBox1.Text = (string)b.flow_t11t21_val;
+        }
+        else if (b.method_setting_expenses == "calculate")
+        {
+            fvRadioButton1.Enabled = false;
+            fvRadioButton2.Checked = true;
+            fvRadioButton2_CheckedChanged(fvRadioButton2, EventArgs.Empty);
+
+            fvTextBox6.Text = (string)b.supply_temp_t11t21;
+            fvTextBox7.Text = (string)b.return_temp_t11t21;
+
+            BTPUtils.SetPowerPipeUnit(fvDropDownList2, (string)b.power_unit);
+            fvDropDownList2_SelectedIndexChanged(fvDropDownList2, EventArgs.Empty);
+
+            fvTextBox10.Text = (string)b.power_val;
+        }
+        else
+        {
+            ClearFvRadioButton();
+        }
+    }
+
     public void FillTBGV(dynamic b)
     {
-        Logger.Log.Info("TBGV");
 
         AppUtils.ApplyAndTrigger(tvRadioButtonList1, 0, tvRadioButtonList1_SelectedIndexChanged);
 
@@ -204,10 +668,7 @@ public partial class TRV : System.Web.UI.Page
         fvRadioButton2_CheckedChanged(fvRadioButton2, EventArgs.Empty);
     }
 
-
-
     //------------------------------------BTP Function END-----------------------------------------
-
 
     protected void tvRadioButtonList1_SelectedIndexChanged(object sender, EventArgs e)
     {
@@ -684,7 +1145,6 @@ public partial class TRV : System.Web.UI.Page
 
     //--------------------------------------Math Function--------------------------------------
 
-
     protected void fvRadioButton1_CheckedChanged(object sender, EventArgs e)
     {
         fvDropDownList1.Enabled = true;
@@ -805,17 +1265,17 @@ public partial class TRV : System.Web.UI.Page
         {
             if (ws2RadioButtonList1.SelectedIndex != 3)
             {
-                flag25Bar = (MathUtils.convertArrToBar(calcvDropDownList1, calcvTextBox1) > PressureBeforeValve3x);
+                flag25Bar = (MathUtils.convertArrToBar(_token, calcvDropDownList1, calcvTextBox1) > PressureBeforeValve3x);
             }
             else
             {
                 if (AppUtils.customConverterToDouble(lpv5TextBox3.Text) > 120)
                 {
-                    if ((MathUtils.convertArrToBar(lpv5DropDownList1, lpv5TextBox1) <= (16 - 0.04 * (AppUtils.customConverterToDouble(lpv5TextBox3.Text) - 120))))
+                    if ((MathUtils.convertArrToBar(_token, lpv5DropDownList1, lpv5TextBox1) <= (16 - 0.04 * (AppUtils.customConverterToDouble(lpv5TextBox3.Text) - 120))))
                     {
                         flag25Bar = false;
                     }
-                    else if ((MathUtils.convertArrToBar(lpv5DropDownList1, lpv5TextBox1) <= (25 - 0.025 * (AppUtils.customConverterToDouble(lpv5TextBox3.Text) - 120))))
+                    else if ((MathUtils.convertArrToBar(_token, lpv5DropDownList1, lpv5TextBox1) <= (25 - 0.025 * (AppUtils.customConverterToDouble(lpv5TextBox3.Text) - 120))))
                     {
                         flag25Bar = true;
                     }
@@ -826,7 +1286,7 @@ public partial class TRV : System.Web.UI.Page
                 }
                 else
                 {
-                    flag25Bar = (MathUtils.convertArrToBar(lpv5DropDownList1, lpv5TextBox1) > PressureBeforeValve3x);
+                    flag25Bar = (MathUtils.convertArrToBar(_token, lpv5DropDownList1, lpv5TextBox1) > PressureBeforeValve3x);
                 }
             }
         }
@@ -1488,7 +1948,7 @@ public partial class TRV : System.Web.UI.Page
                 {
                     if (ws2RadioButtonList1.SelectedIndex != 3)
                     {
-                        if (MathUtils.convertArrToBar(calcvDropDownList1, calcvTextBox1) > PressureBeforeValve3x)
+                        if (MathUtils.convertArrToBar(_token, calcvDropDownList1, calcvTextBox1) > PressureBeforeValve3x)
                         {
                             tableDN = dataFromFile.table10trvt25;
                             tablev_7 = (AppUtils.customConverterToDouble(g_dict["p35"].ToString()) <= 150) ? dataFromFile.tablev_7125 : dataFromFile.tablev_71t25;
@@ -1521,7 +1981,7 @@ public partial class TRV : System.Web.UI.Page
                 {
                     if (ws2RadioButtonList1.SelectedIndex != 3)
                     {
-                        if (MathUtils.convertArrToBar(calcvDropDownList1, calcvTextBox1) > PressureBeforeValve3x)
+                        if (MathUtils.convertArrToBar(_token, calcvDropDownList1, calcvTextBox1) > PressureBeforeValve3x)
                         {
                             tableDN = dataFromFile.table1025;
                             tablev_7 = (AppUtils.customConverterToDouble(g_dict["p35"].ToString()) <= 150) ? dataFromFile.tablev_7125 : dataFromFile.tablev_71t25;
@@ -4101,7 +4561,7 @@ public partial class TRV : System.Web.UI.Page
                         {
                             if (ws2RadioButtonList1.SelectedIndex < 3)
                             {
-                                trvName = MathUtils.convertArrToBar(calcvDropDownList1, calcvTextBox1) <= PressureBeforeValve3x ? match.Value : match.Value + "-25";
+                                trvName = MathUtils.convertArrToBar(_token, calcvDropDownList1, calcvTextBox1) <= PressureBeforeValve3x ? match.Value : match.Value + "-25";
                             }
                             else
                             {
@@ -5983,7 +6443,7 @@ public partial class TRV : System.Web.UI.Page
 
                 if (tvRadioButtonList1.SelectedIndex == 0)
                 {
-                    if (MathUtils.convertArrToBar(calcvDropDownList1, calcvTextBox1) > PressureBeforeValve2x)
+                    if (MathUtils.convertArrToBar(_token, calcvDropDownList1, calcvTextBox1) > PressureBeforeValve2x)
                     {
                         calcvCustomValidator1.ErrorMessage = "На давление свыше 25 бар вариантов нет";
                         args.IsValid = false;
@@ -5992,7 +6452,7 @@ public partial class TRV : System.Web.UI.Page
                 }
                 else
                 {
-                    if (MathUtils.convertArrToBar(calcvDropDownList1, calcvTextBox1) > PressureBeforeValve3x)
+                    if (MathUtils.convertArrToBar(_token, calcvDropDownList1, calcvTextBox1) > PressureBeforeValve3x)
                     {
                         calcvCustomValidator1.ErrorMessage = "На давление свыше 16 бар вариантов нет";
                         args.IsValid = false;
@@ -6192,7 +6652,7 @@ public partial class TRV : System.Web.UI.Page
 
             if (tdRadioButtonList1.SelectedIndex == 0)
             {
-                if (MathUtils.convertArrToBar(lpv5DropDownList1, lpv5TextBox1) > PressureBeforeValve2x)
+                if (MathUtils.convertArrToBar(_token, lpv5DropDownList1, lpv5TextBox1) > PressureBeforeValve2x)
                 {
                     CustomValidator1.ErrorMessage = "На давление свыше 25 бар вариантов нет";
                     args.IsValid = false;
@@ -6201,7 +6661,7 @@ public partial class TRV : System.Web.UI.Page
             }
             else
             {
-                if (MathUtils.convertArrToBar(lpv5DropDownList1, lpv5TextBox1) > PressureBeforeValve3x)
+                if (MathUtils.convertArrToBar(_token, lpv5DropDownList1, lpv5TextBox1) > PressureBeforeValve3x)
                 {
                     CustomValidator1.ErrorMessage = "На давление свыше 16 бар вариантов нет";
                     args.IsValid = false;
@@ -6229,7 +6689,7 @@ public partial class TRV : System.Web.UI.Page
                     args.IsValid = false;
                     return;
                 }
-                if (MathUtils.convertArrToBar(lpv5DropDownList2, lpv5TextBox2) >= MathUtils.convertArrToBar(lpv5DropDownList1, lpv5TextBox1))
+                if (MathUtils.convertArrToBar(_token, lpv5DropDownList2, lpv5TextBox2) >= MathUtils.convertArrToBar(_token, lpv5DropDownList1, lpv5TextBox1))
                 {
                     CustomValidator2.ErrorMessage = "Неверно указано значение давления";
                     args.IsValid = false;
@@ -6332,7 +6792,7 @@ public partial class TRV : System.Web.UI.Page
                     args.IsValid = false;
                     return;
                 }
-                if (AppUtils.customConverterToDouble(lpv5TextBox4.Text) >= MathUtils.convertArrToBar(lpv5DropDownList1, lpv5TextBox1))
+                if (AppUtils.customConverterToDouble(lpv5TextBox4.Text) >= MathUtils.convertArrToBar(_token, lpv5DropDownList1, lpv5TextBox1))
                 {
                     CustomValidator22.ErrorMessage = "Неверно указано значение давления";
                     args.IsValid = false;
@@ -6465,9 +6925,9 @@ public partial class TRV : System.Web.UI.Page
             return;
 
         string blockType = StateStore.Get<string>(_token, "BlockTypeCode");
-        string methodSettingRegulator = StateStore.Get<string>(_token, "MethodSettingRegulator");
+        string methodSettingValve = StateStore.Get<string>(_token, "MethodSettingValve");
 
-        hfResult.Value = BTPUtils.CreateResultObjectTRV(blockType, methodSettingRegulator, GridView2);
+        hfResult.Value = BTPUtils.CreateResultObjectTRV(blockType, methodSettingValve, GridView2);
     }
 
     protected void GridView2_RowDataBound(object sender, GridViewRowEventArgs e)
@@ -6673,7 +7133,6 @@ public partial class TRV : System.Web.UI.Page
             ws.PrintOptions.LeftMargin = 0.6 / 2.54;
             ws.PrintOptions.RightMargin = 0.6 / 2.54;
 
-
             AppUtils.SetCellValue(ws, "J2", 1, v_input_dict);
             AppUtils.SetCellValue(ws, "B3", 2, v_input_dict);
 
@@ -6827,6 +7286,5 @@ public partial class TRV : System.Web.UI.Page
 
     protected void rpvRadioButtonList1_SelectedIndexChanged(object sender, EventArgs e)
     {
-
     }
 }
