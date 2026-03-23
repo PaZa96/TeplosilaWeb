@@ -6927,7 +6927,24 @@ public partial class TRV : System.Web.UI.Page
         string blockType = StateStore.Get<string>(_token, "BlockTypeCode");
         string methodSettingValve = StateStore.Get<string>(_token, "MethodSettingValve");
 
-        hfResult.Value = BTPUtils.CreateResultObjectTRV(blockType, methodSettingValve, GridView2);
+        string dateFolder = DateTime.Now.ToString("dd-MM-yyyy");
+        string saveDirectory = Server.MapPath($"~/Files/RDT/PDF/{dateFolder}");
+        AppUtils.EnsureDirectoryExists(saveDirectory);
+
+        // 6. Генерация имени файла
+        string baseName = AppUtils.ConvertCommaToPoint(GridView2.SelectedRow.Cells[1].Text.Trim());
+        string uniqueFileName = AppUtils.GenerateUniqueFileName(saveDirectory, baseName);
+
+        StateStore.Set(_token, "UniqueFileName", uniqueFileName);
+
+        // 7. Кодирование пути для передачи
+        string encodedPath = HttpUtility.UrlEncode($"{dateFolder}/{uniqueFileName}.pdf");
+
+        // 8. Формирование ссылки
+        string server = Request.Url.GetLeftPart(UriPartial.Authority);
+        string downloadUrl = $"{server}/DownloadFile.aspx?path={encodedPath}";
+
+        hfResult.Value = BTPUtils.CreateResultObjectTRV(blockType, methodSettingValve, GridView2, downloadUrl);
     }
 
     protected void GridView2_RowDataBound(object sender, GridViewRowEventArgs e)
@@ -7055,16 +7072,28 @@ public partial class TRV : System.Web.UI.Page
 
             ws.Pictures.Add(HttpContext.Current.Server.MapPath("\\Content\\images\\trv\\" + ((v_input_dict[7] == this.tvRadioButtonList1.Items[tvRadioButtonList1.SelectedIndex].Text) ? "Габаритный TRV и TRV-P.png" : "Габаритный TRV-3.png")), "A30");
 
+            string uniqueFileName = "";
             string saveDirectory = HttpContext.Current.Server.MapPath($"~/Files/TRV/PDF/{DateTime.Now:dd-MM-yyyy}");
-            AppUtils.EnsureDirectoryExists(saveDirectory);
 
-            string uniqueFileName = AppUtils.GenerateUniqueFileName(saveDirectory, fileName);
-            string fullPath = Path.Combine(saveDirectory, uniqueFileName + ".pdf");
+            if (StateStore.Get<string>(_token, "BlockTypeCode") != null)
+            {
+                uniqueFileName = StateStore.Get<string>(_token, "UniqueFileName");
+                string fullPath = Path.Combine(saveDirectory, uniqueFileName + ".pdf");
 
-            ef.Save(fullPath);
-            AppUtils.WaitDownload(50);
+                ef.Save(fullPath);
+            }
+            else
+            {
+                AppUtils.EnsureDirectoryExists(saveDirectory);
 
-            AppUtils.ServeFile(Response, fullPath);
+                uniqueFileName = AppUtils.GenerateUniqueFileName(saveDirectory, fileName);
+                string fullPath = Path.Combine(saveDirectory, uniqueFileName + ".pdf");
+
+                ef.Save(fullPath);
+                AppUtils.WaitDownload(50);
+
+                AppUtils.ServeFile(Response, fullPath);
+            }
         }
         catch (Exception er)
         {
@@ -7229,16 +7258,28 @@ public partial class TRV : System.Web.UI.Page
                 }
             }
 
+            string uniqueFileName = "";
             string saveDirectory = HttpContext.Current.Server.MapPath($"~/Files/TRV/PDF/{DateTime.Now:dd-MM-yyyy}");
-            AppUtils.EnsureDirectoryExists(saveDirectory);
 
-            string uniqueFileName = AppUtils.GenerateUniqueFileName(saveDirectory, fileName);
-            string fullPath = Path.Combine(saveDirectory, uniqueFileName + ".pdf");
+            if (StateStore.Get<string>(_token, "BlockTypeCode") != null)
+            {
+                uniqueFileName = StateStore.Get<string>(_token, "UniqueFileName");
+                string fullPath = Path.Combine(saveDirectory, uniqueFileName + ".pdf");
 
-            ef.Save(fullPath);
-            AppUtils.WaitDownload(50);
+                ef.Save(fullPath);
+            }
+            else
+            {
+                AppUtils.EnsureDirectoryExists(saveDirectory);
 
-            AppUtils.ServeFile(Response, fullPath);
+                uniqueFileName = AppUtils.GenerateUniqueFileName(saveDirectory, fileName);
+                string fullPath = Path.Combine(saveDirectory, uniqueFileName + ".pdf");
+
+                ef.Save(fullPath);
+                AppUtils.WaitDownload(50);
+
+                AppUtils.ServeFile(Response, fullPath);
+            }
         }
         catch (Exception er)
         {

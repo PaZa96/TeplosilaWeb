@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Security.Cryptography;
 using System.Text;
+using System.Web;
 using System.Web.UI.WebControls;
 
 /// <summary>
@@ -108,7 +109,7 @@ public static class BTPUtils
         return "method_setting_regulator_differential";
     }
 
-    public static string CreateResultObjectRDT(string blockType, string methodSettingRegulator, GridView GridView1)
+    public static string CreateResultObjectRDT(string blockType, string methodSettingRegulator, GridView GridView1, string fileUrl)
     {
 
         GridViewRow row = GridView1.SelectedRow;
@@ -178,12 +179,14 @@ public static class BTPUtils
                 return "";
         }
 
+        ResultList["pdf_regulator_url"] = fileUrl;
+
         string result = Newtonsoft.Json.JsonConvert.SerializeObject(ResultList);
 
         return result;
     }
 
-    public static string CreateResultObjectTRV(string blockType, string methodSettingRegulator, GridView GridView1)
+    public static string CreateResultObjectTRV(string blockType, string methodSettingRegulator, GridView GridView1, string fileUrl)
     {
 
         GridViewRow row = GridView1.SelectedRow;
@@ -259,6 +262,8 @@ public static class BTPUtils
             default:
                 return "";
         }
+
+        ResultList["pdf_control_valve_url"] = fileUrl;
 
         string result = Newtonsoft.Json.JsonConvert.SerializeObject(ResultList);
 

@@ -4004,16 +4004,28 @@ public partial class RDT : System.Web.UI.Page
             AppUtils.SetCellValue(ws, "F27", 53, r_input_dict);
             AppUtils.SetCellValue(ws, "F28", 54, r_input_dict);
 
+            string uniqueFileName = "";
             string saveDirectory = HttpContext.Current.Server.MapPath($"~/Files/RDT/PDF/{DateTime.Now:dd-MM-yyyy}");
-            AppUtils.EnsureDirectoryExists(saveDirectory);
 
-            string uniqueFileName = AppUtils.GenerateUniqueFileName(saveDirectory, fileName);
-            string fullPath = Path.Combine(saveDirectory, uniqueFileName + ".pdf");
+            if (StateStore.Get<string>(_token, "BlockTypeCode") != null)
+            {
+                uniqueFileName = StateStore.Get<string>(_token, "UniqueFileName");
+                string fullPath = Path.Combine(saveDirectory, uniqueFileName + ".pdf");
 
-            ef.Save(fullPath);
-            AppUtils.WaitDownload(50);
+                ef.Save(fullPath);
+            }
+            else
+            {
+                AppUtils.EnsureDirectoryExists(saveDirectory);
 
-            AppUtils.ServeFile(Response, fullPath);
+                uniqueFileName = AppUtils.GenerateUniqueFileName(saveDirectory, fileName);
+                string fullPath = Path.Combine(saveDirectory, uniqueFileName + ".pdf");
+
+                ef.Save(fullPath);
+                AppUtils.WaitDownload(50);
+
+                AppUtils.ServeFile(Response, fullPath);
+            }
         }
         catch (Exception er)
         {
@@ -4126,16 +4138,28 @@ public partial class RDT : System.Web.UI.Page
             AppUtils.SetCellValue(ws, "F32", 53, r_input_dict);
             AppUtils.SetCellValue(ws, "F33", 54, r_input_dict);
 
+            string uniqueFileName = "";
             string saveDirectory = HttpContext.Current.Server.MapPath($"~/Files/RDT/PDF/{DateTime.Now:dd-MM-yyyy}");
-            AppUtils.EnsureDirectoryExists(saveDirectory);
 
-            string uniqueFileName = AppUtils.GenerateUniqueFileName(saveDirectory, fileName);
-            string fullPath = Path.Combine(saveDirectory, uniqueFileName + ".pdf");
+            if (StateStore.Get<string>(_token, "BlockTypeCode") != null)
+            {
+                uniqueFileName = StateStore.Get<string>(_token, "UniqueFileName");
+                string fullPath = Path.Combine(saveDirectory, uniqueFileName + ".pdf");
 
-            ef.Save(fullPath);
-            AppUtils.WaitDownload(50);
+                ef.Save(fullPath);
+            }
+            else
+            {
+                AppUtils.EnsureDirectoryExists(saveDirectory);
 
-            AppUtils.ServeFile(Response, fullPath);
+                uniqueFileName = AppUtils.GenerateUniqueFileName(saveDirectory, fileName);
+                string fullPath = Path.Combine(saveDirectory, uniqueFileName + ".pdf");
+
+                ef.Save(fullPath);
+                AppUtils.WaitDownload(50);
+
+                AppUtils.ServeFile(Response, fullPath);
+            }
         }
         catch (Exception er)
         {
@@ -4234,16 +4258,28 @@ public partial class RDT : System.Web.UI.Page
             AppUtils.SetCellValue(ws, "F32", 53, r_input_dict);
             AppUtils.SetCellValue(ws, "F33", 54, r_input_dict);
 
+            string uniqueFileName = "";
             string saveDirectory = HttpContext.Current.Server.MapPath($"~/Files/RDT/PDF/{DateTime.Now:dd-MM-yyyy}");
-            AppUtils.EnsureDirectoryExists(saveDirectory);
 
-            string uniqueFileName = AppUtils.GenerateUniqueFileName(saveDirectory, fileName);
-            string fullPath = Path.Combine(saveDirectory, uniqueFileName + ".pdf");
+            if (StateStore.Get<string>(_token, "BlockTypeCode") != null)
+            {
+                uniqueFileName = StateStore.Get<string>(_token, "UniqueFileName");
+                string fullPath = Path.Combine(saveDirectory, uniqueFileName + ".pdf");
 
-            ef.Save(fullPath);
-            AppUtils.WaitDownload(50);
+                ef.Save(fullPath);
+            }
+            else
+            {
+                AppUtils.EnsureDirectoryExists(saveDirectory);
 
-            AppUtils.ServeFile(Response, fullPath);
+                uniqueFileName = AppUtils.GenerateUniqueFileName(saveDirectory, fileName);
+                string fullPath = Path.Combine(saveDirectory, uniqueFileName + ".pdf");
+
+                ef.Save(fullPath);
+                AppUtils.WaitDownload(50);
+
+                AppUtils.ServeFile(Response, fullPath);
+            }
         }
         catch (Exception er)
         {
@@ -4340,16 +4376,28 @@ public partial class RDT : System.Web.UI.Page
             AppUtils.SetCellValue(ws, "F31", 53, r_input_dict);
             AppUtils.SetCellValue(ws, "F32", 54, r_input_dict);
 
+            string uniqueFileName = "";
             string saveDirectory = HttpContext.Current.Server.MapPath($"~/Files/RDT/PDF/{DateTime.Now:dd-MM-yyyy}");
-            AppUtils.EnsureDirectoryExists(saveDirectory);
 
-            string uniqueFileName = AppUtils.GenerateUniqueFileName(saveDirectory, fileName);
-            string fullPath = Path.Combine(saveDirectory, uniqueFileName + ".pdf");
+            if (StateStore.Get<string>(_token, "BlockTypeCode") != null)
+            {
+                uniqueFileName = StateStore.Get<string>(_token, "UniqueFileName");
+                string fullPath = Path.Combine(saveDirectory, uniqueFileName + ".pdf");
 
-            ef.Save(fullPath);
-            AppUtils.WaitDownload(50);
+                ef.Save(fullPath);
+            }
+            else
+            {
+                AppUtils.EnsureDirectoryExists(saveDirectory);
 
-            AppUtils.ServeFile(Response, fullPath);
+                uniqueFileName = AppUtils.GenerateUniqueFileName(saveDirectory, fileName);
+                string fullPath = Path.Combine(saveDirectory, uniqueFileName + ".pdf");
+
+                ef.Save(fullPath);
+                AppUtils.WaitDownload(50);
+
+                AppUtils.ServeFile(Response, fullPath);
+            }
         }
         catch (Exception er)
         {
@@ -4477,16 +4525,29 @@ public partial class RDT : System.Web.UI.Page
             AppUtils.SetCellValue(ws, "F35", 53, r_input_dict);
             AppUtils.SetCellValue(ws, "F36", 54, r_input_dict);
 
+            string uniqueFileName = "";
             string saveDirectory = HttpContext.Current.Server.MapPath($"~/Files/RDT/PDF/{DateTime.Now:dd-MM-yyyy}");
-            AppUtils.EnsureDirectoryExists(saveDirectory);
 
-            string uniqueFileName = AppUtils.GenerateUniqueFileName(saveDirectory, fileName);
-            string fullPath = Path.Combine(saveDirectory, uniqueFileName + ".pdf");
+            if (StateStore.Get<string>(_token, "BlockTypeCode") != null)
+            {
+                uniqueFileName = StateStore.Get<string>(_token, "UniqueFileName");
+                string fullPath = Path.Combine(saveDirectory, uniqueFileName + ".pdf");
 
-            ef.Save(fullPath);
-            AppUtils.WaitDownload(50);
+                ef.Save(fullPath);
+            }
+            else
+            {
+                AppUtils.EnsureDirectoryExists(saveDirectory);
 
-            AppUtils.ServeFile(Response, fullPath);
+                uniqueFileName = AppUtils.GenerateUniqueFileName(saveDirectory, fileName);
+                string fullPath = Path.Combine(saveDirectory, uniqueFileName + ".pdf");
+
+                ef.Save(fullPath);
+                AppUtils.WaitDownload(50);
+
+                AppUtils.ServeFile(Response, fullPath);
+            }
+
         }
         catch (Exception er)
         {
@@ -4793,22 +4854,52 @@ public partial class RDT : System.Web.UI.Page
 
     protected void GridView1_SelectedIndexChanged(object sender, EventArgs e)
     {
-        string clientScript = "javascript:ShowBTN();";
-        this.Page.ClientScript.RegisterStartupScript(this.GetType(), "MyClientScript", clientScript);
+        // 1. Клиентский скрипт
+        Page.ClientScript.RegisterStartupScript(
+            GetType(),
+            "ShowBTN",
+            "javascript:ShowBTN();"
+        );
+
+        // 2. UI-элементы
         objTextBox1.Visible = true;
         objTextBox1.Enabled = true;
         Label53.Visible = true;
 
+        // 3. Проверка выбранной строки
         int idx = GridView1.SelectedIndex;
-
         if (idx < 0 || idx >= GridView1.Rows.Count)
             return;
 
+        // 4. Получение параметров состояния
         string blockType = StateStore.Get<string>(_token, "BlockTypeCode");
         string methodSettingRegulator = StateStore.Get<string>(_token, "MethodSettingRegulator");
 
-        hfResult.Value = BTPUtils.CreateResultObjectRDT(blockType, methodSettingRegulator, GridView1);
+        // 5. Подготовка директории
+        string dateFolder = DateTime.Now.ToString("dd-MM-yyyy");
+        string saveDirectory = Server.MapPath($"~/Files/RDT/PDF/{dateFolder}");
+        AppUtils.EnsureDirectoryExists(saveDirectory);
 
+        // 6. Генерация имени файла
+        string baseName = AppUtils.ConvertCommaToPoint(GridView1.SelectedRow.Cells[1].Text.Trim());
+        string uniqueFileName = AppUtils.GenerateUniqueFileName(saveDirectory, baseName);
+
+        StateStore.Set(_token, "UniqueFileName", uniqueFileName);
+
+        // 7. Кодирование пути для передачи
+        string encodedPath = HttpUtility.UrlEncode($"{dateFolder}/{uniqueFileName}.pdf");
+
+        // 8. Формирование ссылки
+        string server = Request.Url.GetLeftPart(UriPartial.Authority);
+        string downloadUrl = $"{server}/DownloadFile.aspx?path={encodedPath}";
+
+        // 9. Формирование результата
+        hfResult.Value = BTPUtils.CreateResultObjectRDT(
+            blockType,
+            methodSettingRegulator,
+            GridView1,
+            downloadUrl
+        );
     }
 
     //------------------------------------Event Function END--------------------------------------
