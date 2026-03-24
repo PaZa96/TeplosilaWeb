@@ -34,7 +34,7 @@ public partial class RDT_ver : System.Web.UI.Page
                     _token = hfToken.Value;
                 }
 
-                AppUtils.readFile(@"Content/data/data.txt", hfToken.Value, JsonKeyName);
+                AppUtils.readFile(@"Content/data/dataRDT_ver.json", hfToken.Value, JsonKeyName);
             }
             else
             {

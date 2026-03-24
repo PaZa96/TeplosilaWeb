@@ -42,7 +42,7 @@ public partial class TRV : System.Web.UI.Page
                 ScriptManager.RegisterStartupScript(this.Page, Page.GetType(), "MyClientScript1", "javascript:HideBTN()", true);
             }
 
-            AppUtils.readFile(@"Content/data/data.txt", hfToken.Value, JsonKeyName);
+            AppUtils.readFile(@"Content/data/dataTRV_ver.json", hfToken.Value, JsonKeyName);
 
             if (Page.FindControl("form2") != null)
             {
@@ -1861,7 +1861,16 @@ public partial class TRV : System.Web.UI.Page
         listResult.Add("PP67", new string[] { });
         listResult.Add("PP68", new string[] { });
 
-        Gkl = g_dict["p30"];
+        Gkl = g_dict["p30"] * 1000;
+
+        if (fvRadioButton1.Checked)
+        {
+            Gkl = g_dict["p30"] * 1000;
+        }
+        else
+        {
+            Gkl = g_dict["p30"];
+        }
 
         try
         {
@@ -4913,7 +4922,7 @@ public partial class TRV : System.Web.UI.Page
         if (this.fvTextBox10.Enabled)
         {
             v_in_dict[34] = this.fvTextBox11.Text;
-            v_in_dict[35] = "кг/ч";
+            v_in_dict[35] = "т/ч";
         }
         else if (this.fvTextBox1.Enabled)
         {
@@ -5465,7 +5474,7 @@ public partial class TRV : System.Web.UI.Page
 
                             if (!String.IsNullOrWhiteSpace(fvTextBox10.Text))
                             {
-                                p30 = Math.Round(((AppUtils.customConverterToDouble(fvTextBox10.Text) * MathUtils.getArrConvert2(fvDropDownList2.SelectedIndex - 1) * 3.6) / (math_30_cp() * dt)), 2);
+                                p30 = Math.Round(((AppUtils.customConverterToDouble(fvTextBox10.Text) * MathUtils.getArrConvert2(fvDropDownList2.SelectedIndex - 1) * 3.6) / (math_30_cp() * dt)) / 1000, 2);
                                 fvTextBox11.Text = p30.ToString();
                                 fvTextBox11.Enabled = true;
                             }

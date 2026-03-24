@@ -592,10 +592,10 @@
                                                         <asp:ListItem>выбрать</asp:ListItem>
                                                         <asp:ListItem>м³/ч</asp:ListItem>
                                                         <asp:ListItem>л/с</asp:ListItem>
-                                                        <asp:ListItem>л/мин</asp:ListItem>
-                                                        <asp:ListItem>л/ч</asp:ListItem>
+                                                        <asp:ListItem Enabled="False">л/мин</asp:ListItem>
+                                                        <asp:ListItem Enabled="False">л/ч</asp:ListItem>
                                                         <asp:ListItem>кг/с</asp:ListItem>
-                                                        <asp:ListItem>кг/ч</asp:ListItem>
+                                                        <asp:ListItem Enabled="False">кг/ч</asp:ListItem>
                                                         <asp:ListItem>т/ч</asp:ListItem>
                                                     </asp:DropDownList>
                                                 </div>
@@ -666,6 +666,7 @@
                                         <asp:TextBox ID="objTextBox1" runat="server" Enabled="False" Visible="False" CssClass="obj-field"></asp:TextBox>
                                     </div>
                                 </div>
+                                <asp:HiddenField ID="hfResult" runat="server" />
                                 <div class="col non-padding padding-top-bottom">
                                     <asp:Button ID="rdtSave" runat="server" Text="Сохранить в PDF" Visible="False"
                                         CssClass="btn btn-primary" OnClick="rdtSave_Click" />

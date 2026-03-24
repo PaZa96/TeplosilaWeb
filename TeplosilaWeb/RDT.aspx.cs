@@ -827,7 +827,15 @@ public partial class RDT : System.Web.UI.Page
                 listResult.Add("K", new string[] { });
             }
 
-            Gpg = g_dict["p16"];
+
+            if (fprRadioButton2.Checked)
+            {
+                Gpg = g_dict["p16"] * 1000;
+            } 
+            else
+            {
+                Gpg = g_dict["p16"];
+            }
 
             if (eorRadioButtonList1.SelectedIndex == 0)
             {
@@ -1819,7 +1827,7 @@ public partial class RDT : System.Web.UI.Page
             if (this.fprTextBox4.Enabled)
             {
                 r_in_dict[38] = this.fprTextBox5.Text;
-                r_in_dict[381] = "кг/ч";
+                r_in_dict[381] = "т/ч";
 
                 //r_input_dict.Add(38, (this.fprTextBox4.Enabled) ? this.fprTextBox5.Text : "-");
                 //r_input_dict.Add(381, (this.fprTextBox4.Enabled) ? "кг/ч" : "-");
@@ -3052,11 +3060,11 @@ public partial class RDT : System.Web.UI.Page
                                 {
                                     if (ws1RadioButtonList1.SelectedIndex != 3)
                                     {
-                                        p16 = Math.Round((AppUtils.customConverterToDouble(this.fprTextBox4.Text) * MathUtils.getArrConvert2(this.fprDropDownList2.SelectedIndex - 1)) * 3.6 / (this.math_16_cp() * (AppUtils.customConverterToDouble(this.fprTextBox2.Text) - AppUtils.customConverterToDouble(this.fprTextBox3.Text))), 2);
+                                        p16 = Math.Round(((AppUtils.customConverterToDouble(this.fprTextBox4.Text) * MathUtils.getArrConvert2(this.fprDropDownList2.SelectedIndex - 1)) * 3.6 / (this.math_16_cp() * (AppUtils.customConverterToDouble(this.fprTextBox2.Text) - AppUtils.customConverterToDouble(this.fprTextBox3.Text)))) / 1000, 2);
                                     }
                                     else
                                     {
-                                        p16 = Math.Round((AppUtils.customConverterToDouble(this.fprTextBox4.Text) * MathUtils.getArrConvert2(this.fprDropDownList2.SelectedIndex - 1)) * 3.6 / SteamCP(), 2);
+                                        p16 = Math.Round(((AppUtils.customConverterToDouble(this.fprTextBox4.Text) * MathUtils.getArrConvert2(this.fprDropDownList2.SelectedIndex - 1)) * 3.6 / SteamCP()) / 1000, 2);
                                     }
                                 }
                                 catch (Exception)

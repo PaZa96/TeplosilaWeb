@@ -546,10 +546,10 @@
                                             <asp:ListItem>выбрать</asp:ListItem>
                                             <asp:ListItem>м³/ч</asp:ListItem>
                                             <asp:ListItem>л/с</asp:ListItem>
-                                            <asp:ListItem>л/мин</asp:ListItem>
-                                            <asp:ListItem>л/ч</asp:ListItem>
+                                            <asp:ListItem Enabled="False">л/мин</asp:ListItem>
+                                            <asp:ListItem Enabled="False">л/ч</asp:ListItem>
                                             <asp:ListItem>кг/с</asp:ListItem>
-                                            <asp:ListItem>кг/ч</asp:ListItem>
+                                            <asp:ListItem Enabled="False">кг/ч</asp:ListItem>
                                             <asp:ListItem>т/ч</asp:ListItem>
                                         </asp:DropDownList>
                                         <div>
@@ -613,7 +613,7 @@
                                             <asp:ListItem class="dropdown-item">выбрать</asp:ListItem>
                                             <asp:ListItem Value="кВт" class="dropdown-item">кВт</asp:ListItem>
                                             <asp:ListItem class="dropdown-item">МВт</asp:ListItem>
-                                            <asp:ListItem class="dropdown-item">Вт</asp:ListItem>
+                                            <asp:ListItem class="dropdown-item" Enabled="False">Вт</asp:ListItem>
                                             <asp:ListItem class="dropdown-item">Гкал/ч</asp:ListItem>
                                             <asp:ListItem class="dropdown-item">ккал/ч</asp:ListItem>
                                         </asp:DropDownList>
@@ -630,7 +630,7 @@
                                         </asp:Label>
                                         <asp:TextBox ID="fprTextBox5" runat="server" ReadOnly="True" Enabled="False">
                                         </asp:TextBox>
-                                        <asp:Label ID="Label48" runat="server" Text=" кг/ч"></asp:Label>
+                                        <asp:Label ID="Label48" runat="server" Text=" т/ч"></asp:Label>
                                         <br />
                                     </div>
                                     <asp:Label ID="fprLabelError" runat="server" ForeColor="Red"></asp:Label>
