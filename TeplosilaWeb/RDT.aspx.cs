@@ -828,13 +828,13 @@ public partial class RDT : System.Web.UI.Page
             }
 
 
-            if (fprRadioButton2.Checked)
+            if (fprRadioButton1.Checked)
             {
-                Gpg = g_dict["p16"] * 1000;
+                Gpg = g_dict["p16"];
             } 
             else
             {
-                Gpg = g_dict["p16"];
+                Gpg = g_dict["p16"] * 1000;
             }
 
             if (eorRadioButtonList1.SelectedIndex == 0)

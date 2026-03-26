@@ -36,7 +36,7 @@ public partial class TRV_ver : System.Web.UI.Page
                     _token = hfToken.Value;
                 }
 
-                AppUtils.readFile(@"Content/data/data.txt", hfToken.Value, JsonKeyName);
+                AppUtils.readFile(@"Content/data/dataTRV_ver.json", hfToken.Value, JsonKeyName);
             } else
             {
                 _token = hfToken.Value;

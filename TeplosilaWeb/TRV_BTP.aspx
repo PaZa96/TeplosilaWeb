@@ -441,10 +441,10 @@
                                                 <asp:ListItem>выбрать</asp:ListItem>
                                                 <asp:ListItem>м³/ч</asp:ListItem>
                                                 <asp:ListItem>л/с</asp:ListItem>
-                                                <asp:ListItem>л/мин</asp:ListItem>
-                                                <asp:ListItem>л/ч</asp:ListItem>
+                                                <asp:ListItem Style="display: none;">л/мин</asp:ListItem>
+                                                <asp:ListItem Style="display: none;">л/ч</asp:ListItem>
                                                 <asp:ListItem>кг/с</asp:ListItem>
-                                                <asp:ListItem>кг/ч</asp:ListItem>
+                                                <asp:ListItem Style="display: none;">кг/ч</asp:ListItem>
                                                 <asp:ListItem>т/ч</asp:ListItem>
                                             </asp:DropDownList>
                                             <div>
@@ -596,7 +596,7 @@
                                                 <asp:ListItem class="dropdown-item">выбрать</asp:ListItem>
                                                 <asp:ListItem Value="кВт" class="dropdown-item">кВт</asp:ListItem>
                                                 <asp:ListItem class="dropdown-item">МВт</asp:ListItem>
-                                                <asp:ListItem class="dropdown-item">Вт</asp:ListItem>
+                                                <asp:ListItem class="dropdown-item" Style="display: none;">Вт</asp:ListItem>
                                                 <asp:ListItem class="dropdown-item">Гкал/ч</asp:ListItem>
                                                 <asp:ListItem class="dropdown-item">ккал/ч</asp:ListItem>
                                             </asp:DropDownList>

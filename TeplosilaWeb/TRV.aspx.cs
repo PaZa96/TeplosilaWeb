@@ -42,7 +42,7 @@ public partial class TRV : System.Web.UI.Page
                 ScriptManager.RegisterStartupScript(this.Page, Page.GetType(), "MyClientScript1", "javascript:HideBTN()", true);
             }
 
-            AppUtils.readFile(@"Content/data/dataTRV_ver.json", hfToken.Value, JsonKeyName);
+            AppUtils.readFile(@"Content/data/data.txt", hfToken.Value, JsonKeyName);
 
             if (Page.FindControl("form2") != null)
             {
@@ -1861,15 +1861,13 @@ public partial class TRV : System.Web.UI.Page
         listResult.Add("PP67", new string[] { });
         listResult.Add("PP68", new string[] { });
 
-        Gkl = g_dict["p30"] * 1000;
-
         if (fvRadioButton1.Checked)
         {
-            Gkl = g_dict["p30"] * 1000;
+            Gkl = g_dict["p30"]; 
         }
         else
         {
-            Gkl = g_dict["p30"];
+            Gkl = g_dict["p30"] * 1000;
         }
 
         try
