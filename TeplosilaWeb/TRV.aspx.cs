@@ -1336,7 +1336,7 @@ public partial class TRV : System.Web.UI.Page
             switch (paramMarkPriv)
             {
                 // TRV, TRV-T
-                case "101-H": //TSL-1600-25-1-230-IP67
+                case "104М-Н": //TSL-1600-25-2М-230-IP67
                     hRowMark = "6";
                     gRowMarkH = "7";
                     gRowMarkM = "31";
@@ -1390,7 +1390,7 @@ public partial class TRV : System.Web.UI.Page
                     gRowMarkM = "39";
                     break;
 
-                case "110-H": //TSL-2200-40-1-230-IP67
+                case "114М-Н": //TSL-2200-40-2М-230-IP67
                     hRowMark = "15";
                     gRowMarkH = "16";
                     gRowMarkM = "40";
@@ -1444,7 +1444,7 @@ public partial class TRV : System.Web.UI.Page
                     gRowMarkM = "48";
                     break;
 
-                case "120-H": //TSL-3000-60-1-230-IP67
+                case "124М-Н": //TSL-3000-60-2М-230-IP67
                     hRowMark = "24";
                     gRowMarkH = "25";
                     gRowMarkM = "49";
@@ -1482,7 +1482,7 @@ public partial class TRV : System.Web.UI.Page
                 switch (paramMarkPriv)
                 {
                     //TRV-3 смесительный
-                    case "101-H": //TSL-1600-25-1-230-IP67
+                    case "104М-Н": //TSL-1600-25-2М-230-IP67
                         hRowMark = "6";
                         gRowMarkH = "7";
                         gRowMarkM = "40";
@@ -1536,7 +1536,7 @@ public partial class TRV : System.Web.UI.Page
                         gRowMarkM = "51";
                         break;
 
-                    case "110-H": //TSL-2200-40-1-230-IP67
+                    case "114М-Н": //TSL-2200-40-2М-230-IP67
                         hRowMark = "15";
                         gRowMarkH = "19";
                         gRowMarkM = "52";
@@ -1590,7 +1590,7 @@ public partial class TRV : System.Web.UI.Page
                         gRowMarkM = "64";
                         break;
 
-                    case "120-H": //TSL-3000-60-1-230-IP67
+                    case "124М-Н": //TSL-3000-60-2М-230-IP67
                         hRowMark = "24";
                         gRowMarkH = "32";
                         gRowMarkM = "65";
@@ -2795,29 +2795,29 @@ public partial class TRV : System.Web.UI.Page
                         switch (listResult["C"].ElementAt(i))
                         {
                             case "15":
-                                tmpMarkPriv = "101-H"; break;
+                                tmpMarkPriv = "104М-Н"; break;
                             case "20":
-                                tmpMarkPriv = "101-H"; break;
+                                tmpMarkPriv = "104М-Н"; break;
                             case "25":
-                                tmpMarkPriv = "101-H"; break;
+                                tmpMarkPriv = "104М-Н"; break;
                             case "32":
-                                tmpMarkPriv = "101-H"; break;
+                                tmpMarkPriv = "104М-Н"; break;
                             case "40":
-                                tmpMarkPriv = "101-H"; break;
+                                tmpMarkPriv = "104М-Н"; break;
                             case "50":
-                                tmpMarkPriv = "101-H"; break;
+                                tmpMarkPriv = "104М-Н"; break;
                             case "65":
-                                tmpMarkPriv = "110-H"; break;
+                                tmpMarkPriv = "114М-Н"; break;
                             case "80":
-                                tmpMarkPriv = "110-H"; break;
+                                tmpMarkPriv = "114М-Н"; break;
                             case "100":
-                                tmpMarkPriv = "110-H"; break;
+                                tmpMarkPriv = "114М-Н"; break;
                             case "125":
-                                tmpMarkPriv = "120-H"; break;
+                                tmpMarkPriv = "124М-Н"; break;
                             case "150":
-                                tmpMarkPriv = "120-H"; break;
+                                tmpMarkPriv = "124М-Н"; break;
                             case "200":
-                                tmpMarkPriv = "120-H"; break;
+                                tmpMarkPriv = "124М-Н"; break;
                             default:
                                 tmpMarkPriv = null; break;
                         }
@@ -3391,27 +3391,27 @@ public partial class TRV : System.Web.UI.Page
                             switch (listResult["C"].ElementAt(i))
                             {
                                 case "15":
-                                    tmpMarkPriv = "101-H"; break;
+                                    tmpMarkPriv = "104М-Н"; break;
                                 case "20":
-                                    tmpMarkPriv = "101-H"; break;
+                                    tmpMarkPriv = "104М-Н"; break;
                                 case "25":
-                                    tmpMarkPriv = "101-H"; break;
+                                    tmpMarkPriv = "104М-Н"; break;
                                 case "32":
-                                    tmpMarkPriv = "101-H"; break;
+                                    tmpMarkPriv = "104М-Н"; break;
                                 case "40":
-                                    tmpMarkPriv = "101-H"; break;
+                                    tmpMarkPriv = "104М-Н"; break;
                                 case "50":
-                                    tmpMarkPriv = "101-H"; break;
+                                    tmpMarkPriv = "104М-Н"; break;
                                 case "65":
-                                    tmpMarkPriv = "110-H"; break;
+                                    tmpMarkPriv = "114М-Н"; break;
                                 case "80":
-                                    tmpMarkPriv = "110-H"; break;
+                                    tmpMarkPriv = "114М-Н"; break;
                                 case "100":
-                                    tmpMarkPriv = "110-H"; break;
+                                    tmpMarkPriv = "114М-Н"; break;
                                 case "125":
-                                    tmpMarkPriv = "120-H"; break;
+                                    tmpMarkPriv = "124М-Н"; break;
                                 case "150":
-                                    tmpMarkPriv = "120-H"; break;
+                                    tmpMarkPriv = "124М-Н"; break;
                                 case "200":
                                     tmpMarkPriv = "130-H"; break;
                                 default:
