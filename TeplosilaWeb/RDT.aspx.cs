@@ -1035,7 +1035,7 @@ public partial class RDT : System.Web.UI.Page
 
                         if (ws1RadioButtonList1.SelectedIndex != 3)
                         {
-                            table11 = dataFromFile.table11;
+                            table11 = dataFromFile.table11p;
                         }
                         else
                         {
@@ -1077,13 +1077,13 @@ public partial class RDT : System.Web.UI.Page
                 {
                     I = AppUtils.customConverterToDouble(this.lp3TextBox1.Text) * MathUtils.getArrConvert3(this.lp3DropDownList1.SelectedIndex - 1) / MathUtils.getArrConvert3(2);
                     table5 = dataFromFile.table5;
-                    table11 = dataFromFile.table11;
+                    table11 = dataFromFile.table11p;
                 }
                 else if (eorRadioButtonList1.SelectedIndex == 3) //Регулятор перепуска
                 {
                     I = AppUtils.customConverterToDouble(this.lp4TextBox2.Text) * MathUtils.getArrConvert3(this.lp4DropDownList2.SelectedIndex - 1) / MathUtils.getArrConvert3(2);
                     table5 = dataFromFile.table5;
-                    table11 = dataFromFile.table11;
+                    table11 = dataFromFile.table11p;
                 }
             }
 
