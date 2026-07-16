@@ -1,11 +1,8 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="RDT.aspx.cs" Inherits="RDT" Culture="ru-RU"%>
 
-<%@ Import Namespace="System.Globalization" %>
-
 <!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
-
 <head runat="server">
     <link href="Content/bootstrap.min.css" rel="stylesheet" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -13,13 +10,10 @@
     <link href="Content/css/style.css" rel="stylesheet" />
     <title>RDT_BTP</title>
 </head>
-
 <body>
     <div class="container-fluid">
         <form id="form2" runat="server" novalidate="novalidate">
-            <asp:ScriptManager ID="ScriptManager1" runat="server">
-
-            </asp:ScriptManager>
+            <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
             <div class="row jumbotron">
                 <div class="col-xs-12 col">
                     <div class="col border border-non-top">

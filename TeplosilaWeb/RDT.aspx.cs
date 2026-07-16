@@ -364,15 +364,15 @@ public partial class RDT : System.Web.UI.Page
 
         if (b.block_schema == "independent" && b.method_setting_heat_exchanger == "choose" && b.method_setting_2_way_control_valve == "choose")
         {
-            lp1TextBox2.Text = AppUtils.ConvertCommaToPoint((Math.Round((double)(((b.loss_pressure_control_valve / 0.7) + b.loss_pressure_heating + 1)), 2)).ToString());
+            lp1TextBox2.Text = AppUtils.ConvertCommaToPoint((Math.Round((double)((((b.loss_pressure_control_valve ?? 0)  / 0.7) + b.loss_pressure_heating + 1)), 2)).ToString());
         }
         else if ((b.circulation_pump_position == "supply" || b.circulation_pump_position == "return") && (b.method_setting_2_way_control_valve == "choose" || b.method_setting_3_way_control_valve == "choose"))
         {
-            lp1TextBox2.Text = AppUtils.ConvertCommaToPoint((Math.Round((double)(((b.loss_pressure_control_valve / 0.7) + 1)), 2)).ToString());
+            lp1TextBox2.Text = AppUtils.ConvertCommaToPoint((Math.Round((double)((((b.loss_pressure_control_valve ?? 0)  / 0.7) + 1)), 2)).ToString());
         }
         else if (b.circulation_pump_position == "bridge" && b.method_setting_2_way_control_valve == "choose" && (string)b.loss_pressure_system != "")
         {
-            lp1TextBox2.Text = AppUtils.ConvertCommaToPoint((Math.Round((double)(((b.loss_pressure_control_valve / 0.7) + b.loss_pressure_system + 1)), 2)).ToString());
+            lp1TextBox2.Text = AppUtils.ConvertCommaToPoint((Math.Round((double)((((b.loss_pressure_control_valve ?? 0)  / 0.7) + b.loss_pressure_system + 1)), 2)).ToString());
         }
 
         else
@@ -513,15 +513,15 @@ public partial class RDT : System.Web.UI.Page
 
         if (b.block_schema == "independent" && b.method_setting_heat_exchanger == "choose" && b.method_setting_2_way_control_valve == "choose")
         {
-            lp1TextBox2.Text = AppUtils.ConvertCommaToPoint((Math.Round((double)(((b.loss_pressure_control_valve / 0.7) + b.loss_pressure_heating + 1)), 2)).ToString());
+            lp1TextBox2.Text = AppUtils.ConvertCommaToPoint((Math.Round((double)((((b.loss_pressure_control_valve ?? 0)  / 0.7) + b.loss_pressure_heating + 1)), 2)).ToString());
         }
         else if ((b.circulation_pump_position == "supply" || b.circulation_pump_position == "return") && (b.method_setting_2_way_control_valve == "choose" || b.method_setting_3_way_control_valve == "choose"))
         {
-            lp1TextBox2.Text = AppUtils.ConvertCommaToPoint((Math.Round((double)(((b.loss_pressure_control_valve / 0.7) + 1)), 2)).ToString());
+            lp1TextBox2.Text = AppUtils.ConvertCommaToPoint((Math.Round((double)((((b.loss_pressure_control_valve ?? 0)  / 0.7) + 1)), 2)).ToString());
         }
         else if (b.circulation_pump_position == "bridge" && b.method_setting_2_way_control_valve == "choose" && (string)b.loss_pressure_system != "")
         {
-            lp1TextBox2.Text = AppUtils.ConvertCommaToPoint((Math.Round((double)(((b.loss_pressure_control_valve / 0.7) + b.loss_pressure_system + 1)), 2)).ToString());
+            lp1TextBox2.Text = AppUtils.ConvertCommaToPoint((Math.Round((double)((((b.loss_pressure_control_valve ?? 0)  / 0.7) + b.loss_pressure_system + 1)), 2)).ToString());
         }
 
         else
@@ -598,11 +598,11 @@ public partial class RDT : System.Web.UI.Page
 
         if (b.block_schema == "each" && b.method_setting_heat_exchanger == "choose" && b.method_setting_control_valve == "choose")
         {
-            lp1TextBox2.Text = AppUtils.ConvertCommaToPoint((Math.Round((double)(((b.loss_pressure_control_valve / 0.7) + b.loss_pressure_heating + b.loss_pressure_heating_2 + 1)), 2)).ToString());
+            lp1TextBox2.Text = AppUtils.ConvertCommaToPoint((Math.Round((double)((((b.loss_pressure_control_valve ?? 0)  / 0.7) + b.loss_pressure_heating + b.loss_pressure_heating_2 + 1)), 2)).ToString());
         }
         else if ((b.block_schema == "parallel" || b.block_schema == "monoblock") && b.method_setting_heat_exchanger == "choose" && b.method_setting_control_valve == "choose")
         {
-            lp1TextBox2.Text = AppUtils.ConvertCommaToPoint((Math.Round((double)(((b.loss_pressure_control_valve / 0.7) + b.loss_pressure_heating + 1)), 2)).ToString());
+            lp1TextBox2.Text = AppUtils.ConvertCommaToPoint((Math.Round((double)((((b.loss_pressure_control_valve ?? 0)  / 0.7) + b.loss_pressure_heating + 1)), 2)).ToString());
         }
 
         else
