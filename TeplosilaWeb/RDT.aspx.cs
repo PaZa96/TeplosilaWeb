@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
@@ -4014,6 +4015,7 @@ public partial class RDT : System.Web.UI.Page
 
             string uniqueFileName = "";
             string saveDirectory = HttpContext.Current.Server.MapPath($"~/Files/RDT/PDF/{DateTime.Now:dd-MM-yyyy}");
+            AppUtils.EnsureDirectoryExists(saveDirectory);
 
             if (StateStore.Get<string>(_token, "BlockTypeCode") != null)
             {
@@ -4021,10 +4023,17 @@ public partial class RDT : System.Web.UI.Page
                 string fullPath = Path.Combine(saveDirectory, uniqueFileName + ".pdf");
 
                 ef.Save(fullPath);
+
+                int attempts = 0;
+                while (!AppUtils.IsFileReady(fullPath) && attempts < 20)
+                {
+                    Thread.Sleep(50);
+                    attempts++;
+                }
             }
             else
             {
-                AppUtils.EnsureDirectoryExists(saveDirectory);
+                
 
                 uniqueFileName = AppUtils.GenerateUniqueFileName(saveDirectory, fileName);
                 string fullPath = Path.Combine(saveDirectory, uniqueFileName + ".pdf");
@@ -4148,6 +4157,7 @@ public partial class RDT : System.Web.UI.Page
 
             string uniqueFileName = "";
             string saveDirectory = HttpContext.Current.Server.MapPath($"~/Files/RDT/PDF/{DateTime.Now:dd-MM-yyyy}");
+            AppUtils.EnsureDirectoryExists(saveDirectory);
 
             if (StateStore.Get<string>(_token, "BlockTypeCode") != null)
             {
@@ -4155,11 +4165,16 @@ public partial class RDT : System.Web.UI.Page
                 string fullPath = Path.Combine(saveDirectory, uniqueFileName + ".pdf");
 
                 ef.Save(fullPath);
+
+                int attempts = 0;
+                while (!AppUtils.IsFileReady(fullPath) && attempts < 20)
+                {
+                    Thread.Sleep(50);
+                    attempts++;
+                }
             }
             else
             {
-                AppUtils.EnsureDirectoryExists(saveDirectory);
-
                 uniqueFileName = AppUtils.GenerateUniqueFileName(saveDirectory, fileName);
                 string fullPath = Path.Combine(saveDirectory, uniqueFileName + ".pdf");
 
@@ -4268,6 +4283,7 @@ public partial class RDT : System.Web.UI.Page
 
             string uniqueFileName = "";
             string saveDirectory = HttpContext.Current.Server.MapPath($"~/Files/RDT/PDF/{DateTime.Now:dd-MM-yyyy}");
+            AppUtils.EnsureDirectoryExists(saveDirectory);
 
             if (StateStore.Get<string>(_token, "BlockTypeCode") != null)
             {
@@ -4275,6 +4291,13 @@ public partial class RDT : System.Web.UI.Page
                 string fullPath = Path.Combine(saveDirectory, uniqueFileName + ".pdf");
 
                 ef.Save(fullPath);
+
+                int attempts = 0;
+                while (!AppUtils.IsFileReady(fullPath) && attempts < 20)
+                {
+                    Thread.Sleep(50);
+                    attempts++;
+                }
             }
             else
             {
@@ -4386,6 +4409,7 @@ public partial class RDT : System.Web.UI.Page
 
             string uniqueFileName = "";
             string saveDirectory = HttpContext.Current.Server.MapPath($"~/Files/RDT/PDF/{DateTime.Now:dd-MM-yyyy}");
+            AppUtils.EnsureDirectoryExists(saveDirectory);
 
             if (StateStore.Get<string>(_token, "BlockTypeCode") != null)
             {
@@ -4393,6 +4417,13 @@ public partial class RDT : System.Web.UI.Page
                 string fullPath = Path.Combine(saveDirectory, uniqueFileName + ".pdf");
 
                 ef.Save(fullPath);
+
+                int attempts = 0;
+                while (!AppUtils.IsFileReady(fullPath) && attempts < 20)
+                {
+                    Thread.Sleep(50);
+                    attempts++;
+                }
             }
             else
             {
@@ -4535,6 +4566,7 @@ public partial class RDT : System.Web.UI.Page
 
             string uniqueFileName = "";
             string saveDirectory = HttpContext.Current.Server.MapPath($"~/Files/RDT/PDF/{DateTime.Now:dd-MM-yyyy}");
+            AppUtils.EnsureDirectoryExists(saveDirectory);
 
             if (StateStore.Get<string>(_token, "BlockTypeCode") != null)
             {
@@ -4542,6 +4574,13 @@ public partial class RDT : System.Web.UI.Page
                 string fullPath = Path.Combine(saveDirectory, uniqueFileName + ".pdf");
 
                 ef.Save(fullPath);
+
+                int attempts = 0;
+                while (!AppUtils.IsFileReady(fullPath) && attempts < 20)
+                {
+                    Thread.Sleep(50);
+                    attempts++;
+                }
             }
             else
             {

@@ -64,11 +64,21 @@ public partial class DownloadFile : System.Web.UI.Page
 
             // 5. Отдаём файл
             Response.Clear();
-            Response.ContentType = "application/octet-stream";
-            Response.AddHeader("Content-Disposition", "attachment; filename=" + fileName);
+            Response.ClearHeaders();
+            Response.ClearContent();
+
+            Response.BufferOutput = true;
+            Response.ContentType = "application/pdf";
+
+            Response.AddHeader(
+                "Content-Disposition",
+                $"attachment; filename=\"{fileName}\"");
+
             Response.TransmitFile(fullPath);
+
             Response.Flush();
-            Response.End();
+
+            Context.ApplicationInstance.CompleteRequest();
         }
 
         catch (Exception ex)

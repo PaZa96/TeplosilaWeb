@@ -71,6 +71,22 @@ public static class AppUtils
             }
         }
     }
+
+    public static bool IsFileReady(string path)
+    {
+        try
+        {
+            using (FileStream stream = File.Open(path, FileMode.Open, FileAccess.Read, FileShare.None))
+            {
+                return true;
+            }
+        }
+        catch
+        {
+            return false;
+        }
+    }
+
     public static bool SetEnableTextBox(DropDownList dropDownList, TextBox textBox)
     {
         bool flag = false;
