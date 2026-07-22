@@ -773,6 +773,7 @@
              <asp:HiddenField ID="hfToken" runat="server" />
 			<asp:HiddenField ID="hfPayload" runat="server" />
 			<asp:HiddenField ID="hfPayloadVersion" runat="server" />
+            <asp:HiddenField ID="hfReturnFlag" runat="server" />
         </form>
     </div>
 

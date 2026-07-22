@@ -22,6 +22,29 @@ TRV.onSet((payload) => {
     if (hfVersionElement.value === newPayload) {
         console.log('Payload уже обработан');
         formElement.style.display = 'block';
+
+        if (hfReturnFlag.value == "true") {
+
+            try {
+
+                const hfResultElement = document.getElementById('hfResult');
+
+                if (!hfResultElement) {
+                    console.error('Элемент hfResult не найден.');
+                    return true; // разрешаем постбэк
+                }
+                const data = JSON.parse(hfResultElement.value.trim());
+
+                console.log('Отправляемые данные:', JSON.stringify(data, null, 2));
+
+                TRV.save(data);
+
+            } catch (e) {
+                console.error('Ошибка при парсинге JSON:', e);
+            }
+
+        }
+
         return;
     }
 
@@ -38,23 +61,3 @@ setTimeout(() => {
         document.getElementById('form2').style.display = 'block';
     }
 }, 1000);
-
-function returnData() {
-    const hfResultElement = document.getElementById('hfResult');
-
-    if (!hfResultElement) {
-        console.error('Элемент hfResult не найден.');
-        return;
-    }
-
-
-    try {
-        const data = JSON.parse(hfResultElement.value.trim());
-
-        console.log('Отправляемые данные:', JSON.stringify(data, null, 2));
-
-        TRV.save(data);
-    } catch (e) {
-        console.error('Ошибка при парсинге JSON:', e);
-    }
-}

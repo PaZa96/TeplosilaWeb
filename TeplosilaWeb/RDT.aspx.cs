@@ -31,7 +31,6 @@ public partial class RDT : System.Web.UI.Page
         {
             if (!IsPostBack)
             {
-
                 if (string.IsNullOrEmpty(hfToken.Value)) //уникальный токен
                 {
                     hfToken.Value = Guid.NewGuid().ToString();
@@ -58,7 +57,7 @@ public partial class RDT : System.Web.UI.Page
             }
             else
             {
-
+                
                 _token = hfToken.Value;
                 dataFromFile = StateStore.Get<Newtonsoft.Json.Linq.JObject>(_token, JsonKeyName);
 
@@ -3990,6 +3989,7 @@ public partial class RDT : System.Web.UI.Page
                     Thread.Sleep(50);
                     attempts++;
                 }
+                hfReturnFlag.Value = "true";
             }
             else
             {
@@ -4130,6 +4130,7 @@ public partial class RDT : System.Web.UI.Page
                     Thread.Sleep(50);
                     attempts++;
                 }
+                hfReturnFlag.Value = "true";
             }
             else
             {
@@ -4256,6 +4257,7 @@ public partial class RDT : System.Web.UI.Page
                     Thread.Sleep(50);
                     attempts++;
                 }
+                hfReturnFlag.Value = "true";
             }
             else
             {
@@ -4380,6 +4382,7 @@ public partial class RDT : System.Web.UI.Page
                     Thread.Sleep(50);
                     attempts++;
                 }
+                hfReturnFlag.Value = "true";
             }
             else
             {
@@ -4400,6 +4403,7 @@ public partial class RDT : System.Web.UI.Page
 
     public void GenerateOtherExel()
     {
+        Logger.Log.Info("dfgdf");
         try
         {
             r_input_dict = StateStore.Get<Dictionary<int, string>>(_token, "r_input_dict");
@@ -4535,6 +4539,8 @@ public partial class RDT : System.Web.UI.Page
                     Thread.Sleep(50);
                     attempts++;
                 }
+
+                hfReturnFlag.Value = "true";
             }
             else
             {

@@ -740,7 +740,7 @@
 
                         <div class="col non-padding padding-top-bottom">
                             <asp:Button ID="Button2" runat="server" Text="Сохранить в PDF и вернуться в программу БТП"
-                                CssClass="btn btn-primary hide-btn" OnClick="Button2_Click" OnClientClick="returnData()"/>
+                                CssClass="btn btn-primary hide-btn" OnClick="Button2_Click"/>
 
                         </div>
                     </div>
@@ -750,6 +750,7 @@
             <asp:HiddenField ID="hfToken" runat="server" />
             <asp:HiddenField ID="hfPayload" runat="server" />
             <asp:HiddenField ID="hfPayloadVersion" runat="server" />
+            <asp:HiddenField ID="hfReturnFlag" runat="server" />
 			
 			<script src="https://ts-btp.techinby.com/libs/teplosila/rdt/0.1.0/rdt.min.js" type="text/javascript"></script>
 			<script src="/Scripts/rdt-btp.js" type="text/javascript"></script>

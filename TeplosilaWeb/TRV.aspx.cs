@@ -7121,6 +7121,7 @@ public partial class TRV : System.Web.UI.Page
                     Thread.Sleep(50);
                     attempts++;
                 }
+                hfReturnFlag.Value = "true";
             }
             else
             {
@@ -7315,6 +7316,7 @@ public partial class TRV : System.Web.UI.Page
                     Thread.Sleep(50);
                     attempts++;
                 }
+                hfReturnFlag.Value = "true";
             }
             else
             {

@@ -11,6 +11,7 @@ RDT.onSet((payload) => {
     const hfPayloadElement = document.getElementById('hfPayload');
     const hfVersionElement = document.getElementById('hfPayloadVersion');
     const formElement = document.getElementById('form2');
+    const hfReturnFlag = document.getElementById('hfReturnFlag');
 
     if (!hfPayloadElement || !hfVersionElement || !formElement) {
         console.error('Необходимые элементы DOM не найдены.');
@@ -22,6 +23,28 @@ RDT.onSet((payload) => {
     if (hfVersionElement.value === newPayload) {
         console.log('Payload уже обработан');
         formElement.style.display = 'block';
+
+        if (hfReturnFlag.value == "true") {
+
+            try {
+
+                const hfResultElement = document.getElementById('hfResult');
+
+                if (!hfResultElement) {
+                    console.error('Элемент hfResult не найден.');
+                    return true; // разрешаем постбэк
+                }
+                const data = JSON.parse(hfResultElement.value.trim());
+
+                console.log('Отправляемые данные:', JSON.stringify(data, null, 2));
+
+                RDT.save(data);
+
+            } catch (e) {
+                console.error('Ошибка при парсинге JSON:', e);
+            }
+            
+        }
         return;
     }
 
@@ -38,23 +61,3 @@ setTimeout(() => {
         document.getElementById('form2').style.display = 'block';
     }
 }, 1000);
-
-function returnData() {
-    const hfResultElement = document.getElementById('hfResult');
-
-    if (!hfResultElement) {
-        console.error('Элемент hfResult не найден.');
-        return;
-    }
-
-
-    try {
-        const data = JSON.parse(hfResultElement.value.trim());
-
-        console.log('Отправляемые данные:', JSON.stringify(data, null, 2));
-
-        RDT.save(data);
-    } catch (e) {
-        console.error('Ошибка при парсинге JSON:', e);
-    }
-}
