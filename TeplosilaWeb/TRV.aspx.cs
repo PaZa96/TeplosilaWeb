@@ -6,6 +6,7 @@ using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
@@ -7105,6 +7106,7 @@ public partial class TRV : System.Web.UI.Page
 
             string uniqueFileName = "";
             string saveDirectory = HttpContext.Current.Server.MapPath($"~/Files/TRV/PDF/{DateTime.Now:dd-MM-yyyy}");
+            AppUtils.EnsureDirectoryExists(saveDirectory);
 
             if (StateStore.Get<string>(_token, "BlockTypeCode") != null)
             {
@@ -7112,6 +7114,13 @@ public partial class TRV : System.Web.UI.Page
                 string fullPath = Path.Combine(saveDirectory, uniqueFileName + ".pdf");
 
                 ef.Save(fullPath);
+
+                int attempts = 0;
+                while (!AppUtils.IsFileReady(fullPath) && attempts < 20)
+                {
+                    Thread.Sleep(50);
+                    attempts++;
+                }
             }
             else
             {
@@ -7291,6 +7300,7 @@ public partial class TRV : System.Web.UI.Page
 
             string uniqueFileName = "";
             string saveDirectory = HttpContext.Current.Server.MapPath($"~/Files/TRV/PDF/{DateTime.Now:dd-MM-yyyy}");
+            AppUtils.EnsureDirectoryExists(saveDirectory);
 
             if (StateStore.Get<string>(_token, "BlockTypeCode") != null)
             {
@@ -7298,6 +7308,13 @@ public partial class TRV : System.Web.UI.Page
                 string fullPath = Path.Combine(saveDirectory, uniqueFileName + ".pdf");
 
                 ef.Save(fullPath);
+
+                int attempts = 0;
+                while (!AppUtils.IsFileReady(fullPath) && attempts < 20)
+                {
+                    Thread.Sleep(50);
+                    attempts++;
+                }
             }
             else
             {
