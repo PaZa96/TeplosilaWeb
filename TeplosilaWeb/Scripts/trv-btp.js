@@ -11,6 +11,7 @@ TRV.onSet((payload) => {
     const hfPayloadElement = document.getElementById('hfPayload');
     const hfVersionElement = document.getElementById('hfPayloadVersion');
     const formElement = document.getElementById('form2');
+    const hfReturnFlag = document.getElementById('hfReturnFlag');
 
     if (!hfPayloadElement || !hfVersionElement || !formElement) {
         console.error('Необходимые элементы DOM не найдены.');

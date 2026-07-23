@@ -753,7 +753,7 @@
                     </asp:UpdatePanel>
                     <div class="col non-padding padding-top-bottom">
                         <asp:Button ID="Button2" runat="server" Text="Сохранить в PDF"
-                            CssClass="btn btn-primary hide-btn" OnClick="Button2_Click" OnClientClick="returnData()"/>
+                            CssClass="btn btn-primary hide-btn" OnClick="Button2_Click"/>
                     </div>
                 </div>
             </div>
