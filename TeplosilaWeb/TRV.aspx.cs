@@ -1633,7 +1633,7 @@ public partial class TRV : System.Web.UI.Page
                         gRowMarkM = "70";
                         break;
 
-                    case "37-H": //TW5000-XD220-S.14
+                    case "342-Н": //TSL-10000-60-3A-230-IP65
                         hRowMark = "31";
                         gRowMarkH = "38";
                         gRowMarkM = "71";
@@ -1783,7 +1783,7 @@ public partial class TRV : System.Web.UI.Page
                         gRowMarkM = "70";
                         break;
 
-                    case "37-H": //TW5000-XD220-S.14
+                    case "342-Н": //TSL-10000-60-3A-230-IP65
                         hRowMark = "29";
                         gRowMarkH = "38";
                         gRowMarkM = "71";
@@ -3480,7 +3480,7 @@ public partial class TRV : System.Web.UI.Page
                                 case "150":
                                     tmpMarkPriv = "322-H"; break;
                                 case "200":
-                                    tmpMarkPriv = "37-H"; break;
+                                    tmpMarkPriv = "342-Н"; break;
                                 default:
                                     tmpMarkPriv = null; break;
                             }
@@ -3546,7 +3546,7 @@ public partial class TRV : System.Web.UI.Page
                                 case "150":
                                     tmpMarkPriv = "322-H"; break;
                                 case "200":
-                                    tmpMarkPriv = "37-H"; break;
+                                    tmpMarkPriv = "342-Н"; break;
                                 default:
                                     tmpMarkPriv = null; break;
                             }
@@ -3612,7 +3612,7 @@ public partial class TRV : System.Web.UI.Page
                                 case "150":
                                     tmpMarkPriv = "322-H"; break;
                                 case "200":
-                                    tmpMarkPriv = "37-H"; break;
+                                    tmpMarkPriv = "342-Н"; break;
                                 default:
                                     tmpMarkPriv = null; break;
                             }
@@ -4073,7 +4073,7 @@ public partial class TRV : System.Web.UI.Page
                                 case "150":
                                     tmpMarkPriv = "322-H"; break;
                                 case "200":
-                                    tmpMarkPriv = "37-H"; break;
+                                    tmpMarkPriv = "342-Н"; break;
                                 default:
                                     tmpMarkPriv = null; break;
                             }
@@ -4139,7 +4139,7 @@ public partial class TRV : System.Web.UI.Page
                                 case "150":
                                     tmpMarkPriv = "322-H"; break;
                                 case "200":
-                                    tmpMarkPriv = "37-H"; break;
+                                    tmpMarkPriv = "342-Н"; break;
                                 default:
                                     tmpMarkPriv = null; break;
                             }
@@ -4205,7 +4205,7 @@ public partial class TRV : System.Web.UI.Page
                                 case "150":
                                     tmpMarkPriv = "322-H"; break;
                                 case "200":
-                                    tmpMarkPriv = "37-H"; break;
+                                    tmpMarkPriv = "342-Н"; break;
                                 default:
                                     tmpMarkPriv = null; break;
                             }
