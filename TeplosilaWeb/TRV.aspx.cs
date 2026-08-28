@@ -2884,7 +2884,7 @@ public partial class TRV : System.Web.UI.Page
                             case "150":
                                 tmpMarkPriv = "322-H"; break;
                             case "200":
-                                tmpMarkPriv = "322-H"; break;
+                                tmpMarkPriv = "342-H"; break;
                             default:
                                 tmpMarkPriv = null; break;
                         }
@@ -2950,7 +2950,7 @@ public partial class TRV : System.Web.UI.Page
                             case "150":
                                 tmpMarkPriv = "322-H"; break;
                             case "200":
-                                tmpMarkPriv = "322-H"; break;
+                                tmpMarkPriv = "342-H"; break;
                             default:
                                 tmpMarkPriv = null; break;
                         }
@@ -2983,7 +2983,7 @@ public partial class TRV : System.Web.UI.Page
                             case "150":
                                 tmpMarkPriv = "-"; break;
                             case "200":
-                                tmpMarkPriv = "-"; break;
+                                tmpMarkPriv = "342-H"; break;
                             default:
                                 tmpMarkPriv = null; break;
                         }
@@ -3016,7 +3016,7 @@ public partial class TRV : System.Web.UI.Page
                             case "150":
                                 tmpMarkPriv = "322-H"; break;
                             case "200":
-                                tmpMarkPriv = "322-H"; break;
+                                tmpMarkPriv = "342-H"; break;
                             default:
                                 tmpMarkPriv = null; break;
                         }
@@ -3049,7 +3049,7 @@ public partial class TRV : System.Web.UI.Page
                             case "150":
                                 tmpMarkPriv = "-"; break;
                             case "200":
-                                tmpMarkPriv = "-"; break;
+                                tmpMarkPriv = "342-H"; break;
                             default:
                                 tmpMarkPriv = null; break;
                         }
@@ -3579,7 +3579,7 @@ public partial class TRV : System.Web.UI.Page
                                 case "150":
                                     tmpMarkPriv = "-"; break;
                                 case "200":
-                                    tmpMarkPriv = "-"; break;
+                                    tmpMarkPriv = "342-Н"; break;
                                 default:
                                     tmpMarkPriv = null; break;
                             }
@@ -3645,7 +3645,7 @@ public partial class TRV : System.Web.UI.Page
                                 case "150":
                                     tmpMarkPriv = "-"; break;
                                 case "200":
-                                    tmpMarkPriv = "-"; break;
+                                    tmpMarkPriv = "342-Н"; break;
                                 default:
                                     tmpMarkPriv = null; break;
                             }
@@ -4544,6 +4544,7 @@ public partial class TRV : System.Web.UI.Page
                 {
                     string DNName = "";
 
+                    /*убрал
                     if (tvRadioButtonList1.SelectedIndex == 1 && listResult["B"].ElementAt(i) == "560")
                     {
                         DNName = "201";
@@ -4551,7 +4552,8 @@ public partial class TRV : System.Web.UI.Page
                     else
                     {
                         DNName = listResult["C"].ElementAt(i);
-                    }
+                    }*/
+                    DNName = listResult["C"].ElementAt(i);
 
                     getDimsV(tvRadioButtonList1.SelectedIndex == 0, DNName, tmpMarkPriv, ref wsHtrv, ref wsGtrv,
                     ref tmpPP54, ref tmpPP55, ref tmpPP56, ref tmpPP57, ref tmpPP58, ref tmpPP59, ref tmpPP60,
