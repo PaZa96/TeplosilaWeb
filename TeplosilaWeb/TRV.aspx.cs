@@ -4172,7 +4172,7 @@ public partial class TRV : System.Web.UI.Page
                                 case "150":
                                     tmpMarkPriv = "-"; break;
                                 case "200":
-                                    tmpMarkPriv = "-"; break;
+                                    tmpMarkPriv = "342-Н"; break;
                                 default:
                                     tmpMarkPriv = null; break;
                             }
@@ -4238,7 +4238,7 @@ public partial class TRV : System.Web.UI.Page
                                 case "150":
                                     tmpMarkPriv = "-"; break;
                                 case "200":
-                                    tmpMarkPriv = "-"; break;
+                                    tmpMarkPriv = "342-Н"; break;
                                 default:
                                     tmpMarkPriv = null; break;
                             }
@@ -7273,31 +7273,31 @@ public partial class TRV : System.Web.UI.Page
             AppUtils.SetCellValue(ws, "J33", 62, v_input_dict);
             AppUtils.SetCellValue(ws, "K33", 63, v_input_dict, true);
 
-            AppUtils.SetCellValue(ws, "G39", 65, v_input_dict, true);
-            AppUtils.SetCellValue(ws, "G40", 66, v_input_dict, true);
-            AppUtils.SetCellValue(ws, "G41", 67, v_input_dict, true);
-            AppUtils.SetCellValue(ws, "G42", 68, v_input_dict, true);
+            AppUtils.SetCellValue(ws, "G38", 65, v_input_dict, true);
+            AppUtils.SetCellValue(ws, "G39", 66, v_input_dict, true);
+            AppUtils.SetCellValue(ws, "G40", 67, v_input_dict, true);
+            AppUtils.SetCellValue(ws, "G41", 68, v_input_dict, true);
 
             if (tvRadioButtonList1.SelectedIndex == 0)
             {
                 if ((v_input_dict[40] == "150 ˚С" && Convert.ToInt32(v_input_dict[43]) <= 150) || v_input_dict[40] == "220 ˚С" || Convert.ToInt32(v_input_dict[43]) == 200)
                 {
-                    ws.Pictures.Add(HttpContext.Current.Server.MapPath("\\Content\\images\\trv\\габаритный TRV и TRV-T.png"), "A39");
+                    ws.Pictures.Add(HttpContext.Current.Server.MapPath("\\Content\\images\\trv\\габаритный TRV и TRV-T.png"), "A38");
                 }
                 else
                 {
-                    ws.Pictures.Add(HttpContext.Current.Server.MapPath("\\Content\\images\\trv\\габаритный TRV (китай).png"), "A39");
+                    ws.Pictures.Add(HttpContext.Current.Server.MapPath("\\Content\\images\\trv\\габаритный TRV (китай).png"), "A38");
                 }
             }
             else
             {
                 if (Convert.ToInt32(v_input_dict[43]) >= 65)
                 {
-                    ws.Pictures.Add(HttpContext.Current.Server.MapPath("\\Content\\images\\trv\\габаритный TRV-3 (китай).png"), "A39");
+                    ws.Pictures.Add(HttpContext.Current.Server.MapPath("\\Content\\images\\trv\\габаритный TRV-3 (китай).png"), "A38");
                 }
                 else
                 {
-                    ws.Pictures.Add(HttpContext.Current.Server.MapPath("\\Content\\images\\trv\\Габаритный TRV-3.png"), "A39");
+                    ws.Pictures.Add(HttpContext.Current.Server.MapPath("\\Content\\images\\trv\\Габаритный TRV-3.png"), "A38");
                 }
             }
 
