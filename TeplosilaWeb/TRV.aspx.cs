@@ -1805,6 +1805,19 @@ public partial class TRV : System.Web.UI.Page
             paramPP62 = wsH.Cells["V" + hRowMark].Value.ToString();
             paramPP63 = wsH.Cells["W" + hRowMark].Value.ToString();
         }
+        else if (paramDN == "201") //trv-3 560
+        {
+            paramPP54 = wsH.Cells["N" + hRowMark].Value.ToString();
+            paramPP55 = wsH.Cells[ColDN + hRowMark].Value.ToString();
+            paramPP56 = wsH.Cells["P" + hRowMark].Value.ToString();
+            paramPP57 = wsH.Cells["Q" + hRowMark].Value.ToString();
+            paramPP58 = wsH.Cells["R" + hRowMark].Value.ToString();
+            paramPP59 = wsH.Cells["S" + hRowMark].Value.ToString();
+            paramPP60 = wsH.Cells["T" + hRowMark].Value.ToString();
+            paramPP61 = wsH.Cells["U" + hRowMark].Value.ToString();
+            paramPP62 = wsH.Cells["V" + hRowMark].Value.ToString();
+            paramPP63 = wsH.Cells["W" + hRowMark].Value.ToString();
+        }
         else //trv-3
         {
             paramPP54 = wsH.Cells[ColDN + hRowMark].Value.ToString();
@@ -4544,7 +4557,7 @@ public partial class TRV : System.Web.UI.Page
                 {
                     string DNName = "";
 
-                    /*убрал
+                    
                     if (tvRadioButtonList1.SelectedIndex == 1 && listResult["B"].ElementAt(i) == "560")
                     {
                         DNName = "201";
@@ -4552,8 +4565,8 @@ public partial class TRV : System.Web.UI.Page
                     else
                     {
                         DNName = listResult["C"].ElementAt(i);
-                    }*/
-                    DNName = listResult["C"].ElementAt(i);
+                    }
+                    
 
                     getDimsV(tvRadioButtonList1.SelectedIndex == 0, DNName, tmpMarkPriv, ref wsHtrv, ref wsGtrv,
                     ref tmpPP54, ref tmpPP55, ref tmpPP56, ref tmpPP57, ref tmpPP58, ref tmpPP59, ref tmpPP60,
