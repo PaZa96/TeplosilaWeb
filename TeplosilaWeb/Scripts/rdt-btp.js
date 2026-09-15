@@ -1,6 +1,6 @@
 ﻿'use strict'
 const RDT = new TeplosilaRDT({
-    baseUrl: 'https://ts-btp.techinby.com',
+    baseUrl: 'https://btp-ts.teplo-sila.com',
 });
 
 let onSetTriggered = false;

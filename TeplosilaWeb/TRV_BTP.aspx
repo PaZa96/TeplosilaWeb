@@ -762,7 +762,7 @@
 			<asp:HiddenField ID="hfPayloadVersion" runat="server" />
              <asp:HiddenField ID="hfReturnFlag" runat="server" />
 
-			<script src="https://ts-btp.techinby.com/libs/teplosila/trv/0.1.0/trv.min.js" type="text/javascript"></script>
+			<script src="https://btp-ts.teplo-sila.com/libs/teplosila/trv/0.1.0/trv.min.js" type="text/javascript"></script>
 			<script src="/Scripts/trv-btp.js" type="text/javascript"></script>
         </form>
     </div>
