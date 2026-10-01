@@ -1486,157 +1486,163 @@ public partial class TRV : System.Web.UI.Page
                     case "104М-Н": //TSL-1600-25-2М-230-IP67
                         hRowMark = "6";
                         gRowMarkH = "7";
-                        gRowMarkM = "40";
+                        gRowMarkM = "41";
                         break;
 
                     case "101R-H": //TSL-1600-25-1R-230-IP67
                         hRowMark = "7";
                         gRowMarkH = "9";
-                        gRowMarkM = "42";
+                        gRowMarkM = "43";
                         break;
 
                     case "105M-H": //TSL-1600-25-2М-24-IP67
                         hRowMark = "8";
                         gRowMarkH = "10";
-                        gRowMarkM = "43";
+                        gRowMarkM = "44";
                         break;
 
                     case "401-H": //TSL-1600-25-2T-230-IP67
                         hRowMark = "9";
                         gRowMarkH = "11";
-                        gRowMarkM = "44";
+                        gRowMarkM = "45";
                         break;
 
                     case "201R-H": //TSL-1600-25-1TR-230-IP67
                         hRowMark = "10";
                         gRowMarkH = "12";
-                        gRowMarkM = "45";
+                        gRowMarkM = "46";
                         break;
 
                     case "302-H": //TSL-1600-25-2A-230-IP67
                         hRowMark = "11";
                         gRowMarkH = "13";
-                        gRowMarkM = "46";
+                        gRowMarkM = "47";
                         break;
 
                     case "302R-H": //TSL-1600-25-2AR-230-IP67
                         hRowMark = "12";
                         gRowMarkH = "15";
-                        gRowMarkM = "48";
+                        gRowMarkM = "49";
                         break;
 
                     case "303-H": //TSL-1600-25-2A-24-IP67
                         hRowMark = "13";
                         gRowMarkH = "16";
-                        gRowMarkM = "49";
+                        gRowMarkM = "50";
                         break;
 
                     case "303R-H": //TSL-1600-25-2AR-24-IP67
                         hRowMark = "14";
                         gRowMarkH = "18";
-                        gRowMarkM = "51";
+                        gRowMarkM = "52";
                         break;
 
                     case "114М-Н": //TSL-2200-40-2М-230-IP67
                         hRowMark = "15";
                         gRowMarkH = "19";
-                        gRowMarkM = "52";
+                        gRowMarkM = "53";
                         break;
 
                     case "110R-H": //TSL-2200-40-1R-230-IP67
                         hRowMark = "16";
                         gRowMarkH = "21";
-                        gRowMarkM = "54";
+                        gRowMarkM = "55";
                         break;
 
                     case "115M-H": //TSL-2200-40-2M-24-IP67
                         hRowMark = "17";
                         gRowMarkH = "23";
-                        gRowMarkM = "56";
+                        gRowMarkM = "57";
                         break;
 
                     case "410-H": //TSL-2200-40-2T-230-IP67
                         hRowMark = "18";
                         gRowMarkH = "24";
-                        gRowMarkM = "57";
+                        gRowMarkM = "58";
                         break;
 
                     case "210R-H": //TSL-2200-40-1TR-230-IP67
                         hRowMark = "19";
                         gRowMarkH = "25";
-                        gRowMarkM = "58";
+                        gRowMarkM = "59";
                         break;
 
                     case "312-H": //TSL-2200-40-2A-230-IP67
                         hRowMark = "20";
                         gRowMarkH = "26";
-                        gRowMarkM = "59";
+                        gRowMarkM = "60";
                         break;
 
                     case "312R-H": //TSL-2200-40-2AR-230-IP67
                         hRowMark = "21";
                         gRowMarkH = "28";
-                        gRowMarkM = "61";
+                        gRowMarkM = "62";
                         break;
 
                     case "313-H": //TSL-2200-40-2A-24-IP67
                         hRowMark = "22";
                         gRowMarkH = "29";
-                        gRowMarkM = "62";
+                        gRowMarkM = "63";
                         break;
 
                     case "313R-H": //TSL-2200-40-2AR-24-IP67
                         hRowMark = "23";
                         gRowMarkH = "31";
-                        gRowMarkM = "64";
+                        gRowMarkM = "65";
                         break;
 
                     case "124М-Н": //TSL-3000-60-2М-230-IP67
                         hRowMark = "24";
                         gRowMarkH = "32";
-                        gRowMarkM = "65";
+                        gRowMarkM = "66";
                         break;
 
                     case "110RS-H": //TSL-3000-40-1RS-230-IP67
                         hRowMark = "25";
                         gRowMarkH = "22";
-                        gRowMarkM = "55";
+                        gRowMarkM = "56";
                         break;
 
                     case "125M-H": //TSL-3000-60-2M-24-IP67
                         hRowMark = "26";
                         gRowMarkH = "33";
-                        gRowMarkM = "66";
+                        gRowMarkM = "67";
                         break;
 
                     case "420-H": //TSL-3000-60-2T-230-IP67
                         hRowMark = "27";
                         gRowMarkH = "34";
-                        gRowMarkM = "67";
+                        gRowMarkM = "68";
                         break;
 
                     case "322-H": //TSL-3000-60-2A-230-IP67
                         hRowMark = "28";
                         gRowMarkH = "35";
-                        gRowMarkM = "68";
+                        gRowMarkM = "69";
                         break;
 
                     case "323-H": //TSL-3000-60-2A-24-IP67
                         hRowMark = "29";
                         gRowMarkH = "36";
-                        gRowMarkM = "69";
-                        break;
-
-                    case "130-H": //TSL-6000-60-1-230-IP67
-                        hRowMark = "30";
-                        gRowMarkH = "37";
                         gRowMarkM = "70";
                         break;
 
-                    case "342-Н": //TSL-10000-60-3A-230-IP65
+                    case "332-Н": //TSL-5000-60-2A-230-IP67
+                        hRowMark = "30";
+                        gRowMarkH = "37";
+                        gRowMarkM = "71";
+                        break;
+
+                    case "130-H": //TSL-6000-60-1-230-IP67
                         hRowMark = "31";
                         gRowMarkH = "38";
-                        gRowMarkM = "71";
+                        gRowMarkM = "72";
+                        break;
+
+                    case "342-Н": //TSL-10000-60-3A-230-IP65
+                        hRowMark = "32";
+                        gRowMarkH = "39";
+                        gRowMarkM = "73";
                         break;
                 }
             }
@@ -1648,145 +1654,151 @@ public partial class TRV : System.Web.UI.Page
                     case "101S-H": //TSL-2200-25-1S-230-IP67
                         hRowMark = "6";
                         gRowMarkH = "8";
-                        gRowMarkM = "41";
+                        gRowMarkM = "42";
                         break;
 
                     case "101R-H": //TSL-1600-25-1R-230-IP67
                         hRowMark = "7";
                         gRowMarkH = "9";
-                        gRowMarkM = "42";
+                        gRowMarkM = "43";
                         break;
 
                     case "105M-H": //TSL-1600-25-2M-24-IP67
                         hRowMark = "8";
                         gRowMarkH = "10";
-                        gRowMarkM = "43";
+                        gRowMarkM = "44";
                         break;
 
                     case "401-H": //TSL-1600-25-2T-230-IP67
                         hRowMark = "9";
                         gRowMarkH = "11";
-                        gRowMarkM = "44";
+                        gRowMarkM = "45";
                         break;
 
                     case "201R-H": //TSL-1600-25-1TR-230-IP67
                         hRowMark = "10";
                         gRowMarkH = "12";
-                        gRowMarkM = "45";
+                        gRowMarkM = "46";
                         break;
 
                     case "302S-H": //TSL-2200-25-2AS-230-IP67
                         hRowMark = "11";
                         gRowMarkH = "14";
-                        gRowMarkM = "47";
+                        gRowMarkM = "48";
                         break;
 
                     case "302R-H": //TSL-1600-25-2AR-230-IP67
                         hRowMark = "12";
                         gRowMarkH = "15";
-                        gRowMarkM = "48";
+                        gRowMarkM = "49";
                         break;
 
                     case "303S-H": //TSL-2200-25-2AS-24-IP67
                         hRowMark = "13";
                         gRowMarkH = "17";
-                        gRowMarkM = "50";
+                        gRowMarkM = "51";
                         break;
 
                     case "303R-H": //TSL-1600-25-2AR-24-IP67
                         hRowMark = "14";
                         gRowMarkH = "18";
-                        gRowMarkM = "51";
+                        gRowMarkM = "52";
                         break;
 
                     case "110S-H": //TSL-3000-40-1S-230-IP67
                         hRowMark = "15";
                         gRowMarkH = "20";
-                        gRowMarkM = "53";
+                        gRowMarkM = "54";
                         break;
 
                     case "110RS-H": //TSL-3000-40-1RS-230-IP67
                         hRowMark = "16";
                         gRowMarkH = "22";
-                        gRowMarkM = "55";
+                        gRowMarkM = "56";
                         break;
 
                     case "115M-H": //TSL-2200-40-2M-24-IP67
                         hRowMark = "17";
                         gRowMarkH = "23";
-                        gRowMarkM = "56";
+                        gRowMarkM = "57";
                         break;
 
                     case "410-H": //TSL-2200-40-2T-230-IP67
                         hRowMark = "18";
                         gRowMarkH = "24";
-                        gRowMarkM = "57";
+                        gRowMarkM = "58";
                         break;
 
                     case "210R-H": //TSL-2200-40-1TR-230-IP67
                         hRowMark = "19";
                         gRowMarkH = "25";
-                        gRowMarkM = "58";
+                        gRowMarkM = "59";
                         break;
 
                     case "312S-H": //TSL-3000-40-2AS-230-IP67
                         hRowMark = "20";
                         gRowMarkH = "27";
-                        gRowMarkM = "60";
+                        gRowMarkM = "61";
                         break;
 
                     case "312R-H": //TSL-2200-40-2AR-230-IP67
                         hRowMark = "21";
                         gRowMarkH = "28";
-                        gRowMarkM = "61";
+                        gRowMarkM = "62";
                         break;
 
                     case "313S-H": //TSL-3000-40-2AS-24-IP67
                         hRowMark = "22";
                         gRowMarkH = "30";
-                        gRowMarkM = "63";
+                        gRowMarkM = "64";
                         break;
 
                     case "313R-H": //TSL-2200-40-2AR-24-IP67
                         hRowMark = "23";
                         gRowMarkH = "31";
-                        gRowMarkM = "64";
+                        gRowMarkM = "65";
                         break;
 
                     case "125M-H": //TSL-3000-60-2M-24-IP67
                         hRowMark = "24";
                         gRowMarkH = "33";
-                        gRowMarkM = "66";
+                        gRowMarkM = "67";
                         break;
 
                     case "420-H": //TSL-3000-60-2T-230-IP67
                         hRowMark = "25";
                         gRowMarkH = "34";
-                        gRowMarkM = "67";
+                        gRowMarkM = "68";
                         break;
 
                     case "322-H": //TSL-3000-60-2A-230-IP67
                         hRowMark = "26";
                         gRowMarkH = "35";
-                        gRowMarkM = "68";
+                        gRowMarkM = "69";
                         break;
 
                     case "323-H": //TSL-3000-60-2A-24-IP67
                         hRowMark = "27";
                         gRowMarkH = "36";
-                        gRowMarkM = "69";
-                        break;
-
-                    case "130-H": //TSL-6000-60-1-230-IP67
-                        hRowMark = "28";
-                        gRowMarkH = "37";
                         gRowMarkM = "70";
                         break;
 
-                    case "342-Н": //TSL-10000-60-3A-230-IP65
+                    case "332-Н": //TSL-5000-60-2A-230-IP67
+                        hRowMark = "28";
+                        gRowMarkH = "37";
+                        gRowMarkM = "71";
+                        break;
+
+                    case "130-H": //TSL-6000-60-1-230-IP67
                         hRowMark = "29";
                         gRowMarkH = "38";
-                        gRowMarkM = "71";
+                        gRowMarkM = "72";
+                        break;
+
+                    case "342-Н": //TSL-10000-60-3A-230-IP65
+                        hRowMark = "30";
+                        gRowMarkH = "39";
+                        gRowMarkM = "73";
                         break;
                 }
             }
@@ -3493,7 +3505,7 @@ public partial class TRV : System.Web.UI.Page
                                 case "150":
                                     tmpMarkPriv = "322-H"; break;
                                 case "200":
-                                    tmpMarkPriv = "342-Н"; break;
+                                    tmpMarkPriv = "332-Н"; break;
                                 default:
                                     tmpMarkPriv = null; break;
                             }
@@ -3559,7 +3571,7 @@ public partial class TRV : System.Web.UI.Page
                                 case "150":
                                     tmpMarkPriv = "322-H"; break;
                                 case "200":
-                                    tmpMarkPriv = "342-Н"; break;
+                                    tmpMarkPriv = "332-Н"; break;
                                 default:
                                     tmpMarkPriv = null; break;
                             }
@@ -3625,7 +3637,7 @@ public partial class TRV : System.Web.UI.Page
                                 case "150":
                                     tmpMarkPriv = "322-H"; break;
                                 case "200":
-                                    tmpMarkPriv = "342-Н"; break;
+                                    tmpMarkPriv = "332-Н"; break;
                                 default:
                                     tmpMarkPriv = null; break;
                             }
@@ -4082,9 +4094,9 @@ public partial class TRV : System.Web.UI.Page
                                 case "100":
                                     tmpMarkPriv = "312S-H"; break;
                                 case "125":
-                                    tmpMarkPriv = "322-H"; break;
+                                    tmpMarkPriv = "332-Н"; break;
                                 case "150":
-                                    tmpMarkPriv = "322-H"; break;
+                                    tmpMarkPriv = "332-Н"; break;
                                 case "200":
                                     tmpMarkPriv = "342-Н"; break;
                                 default:
@@ -4148,9 +4160,9 @@ public partial class TRV : System.Web.UI.Page
                                 case "100":
                                     tmpMarkPriv = "312S-H"; break;
                                 case "125":
-                                    tmpMarkPriv = "322-H"; break;
+                                    tmpMarkPriv = "332-Н"; break;
                                 case "150":
-                                    tmpMarkPriv = "322-H"; break;
+                                    tmpMarkPriv = "332-Н"; break;
                                 case "200":
                                     tmpMarkPriv = "342-Н"; break;
                                 default:
@@ -4214,9 +4226,9 @@ public partial class TRV : System.Web.UI.Page
                                 case "100":
                                     tmpMarkPriv = "312S-H"; break;
                                 case "125":
-                                    tmpMarkPriv = "322-H"; break;
+                                    tmpMarkPriv = "332-Н"; break;
                                 case "150":
-                                    tmpMarkPriv = "322-H"; break;
+                                    tmpMarkPriv = "332-Н"; break;
                                 case "200":
                                     tmpMarkPriv = "342-Н"; break;
                                 default:
