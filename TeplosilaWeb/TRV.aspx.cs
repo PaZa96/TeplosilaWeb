@@ -1950,13 +1950,13 @@ public partial class TRV : System.Web.UI.Page
 
             if (ws2RadioButtonList1.SelectedIndex != 3)
             {
-                if (dPkl > dPto)
+                if (dPkl > (dPto * 2 / 3))
                 {
                     Kv_start = Kv = g_dict["vKv"] * (Gkl * 0.01) / (Math.Sqrt(dPkl * 0.001 * g));
                 }
                 else
                 {
-                    Kv_start = Kv = g_dict["vKv"] * (Gkl * 0.01) / (Math.Sqrt(dPto * 0.001 * g));
+                    Kv_start = Kv = g_dict["vKv"] * (Gkl * 0.01) / (Math.Sqrt((dPto * 2 / 3) * 0.001 * g));
                 }
             }
             else
@@ -2532,7 +2532,7 @@ public partial class TRV : System.Web.UI.Page
 
                 listI.Add(Math.Round(V, 2).ToString());
 
-                double Ia = dPf / (dPf + dPto / 100);
+                double Ia = dPf / (dPf + (dPto / 100));
 
                 listI1.Add(Math.Round(Ia, 2).ToString());
 
