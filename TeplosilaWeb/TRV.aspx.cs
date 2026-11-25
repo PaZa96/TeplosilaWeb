@@ -7312,7 +7312,7 @@ public partial class TRV : System.Web.UI.Page
             }
             else
             {
-                if (Convert.ToInt32(v_input_dict[43]) >= 65)
+                if (Convert.ToInt32(v_input_dict[43]) >= 100)
                 {
                     ws.Pictures.Add(HttpContext.Current.Server.MapPath("\\Content\\images\\trv\\габаритный TRV-3 (китай).png"), "A38");
                 }
